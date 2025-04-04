@@ -1,0 +1,33 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Payroc.Core;
+
+namespace Payroc;
+
+/// <summary>
+/// Object that contains information about the customer’s payment card.
+/// </summary>
+public record CardPayload
+{
+    /// <summary>
+    /// Indicates the customer’s account type.
+    /// **Note:** Credit card transactions don't require **accountType**.
+    /// </summary>
+    [JsonPropertyName("accountType")]
+    public CardPayloadAccountType? AccountType { get; set; }
+
+    [JsonPropertyName("cardDetails")]
+    public required CardPayloadCardDetails CardDetails { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

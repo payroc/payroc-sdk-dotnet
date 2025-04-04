@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payroc", "Payroc\Payroc.csproj", "{786AFBAD-2BD0-60A0-A74B-0E41A1DBF89F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payroc.Test", "Payroc.Test\Payroc.Test.csproj", "{5809CC70-D6AF-85E1-F3CA-A9E2A8601807}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{786AFBAD-2BD0-60A0-A74B-0E41A1DBF89F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{786AFBAD-2BD0-60A0-A74B-0E41A1DBF89F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{786AFBAD-2BD0-60A0-A74B-0E41A1DBF89F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{786AFBAD-2BD0-60A0-A74B-0E41A1DBF89F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5809CC70-D6AF-85E1-F3CA-A9E2A8601807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5809CC70-D6AF-85E1-F3CA-A9E2A8601807}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5809CC70-D6AF-85E1-F3CA-A9E2A8601807}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5809CC70-D6AF-85E1-F3CA-A9E2A8601807}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AA345C35-E098-4252-8DDD-E13ADC59911B}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,29 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Payroc.Core;
+
+namespace Payroc;
+
+/// <summary>
+/// Object that contains the token.
+/// </summary>
+public record SingleUseTokenAccountUpdate
+{
+    /// <summary>
+    /// Single-use token that the gateway assigned to the payment details.
+    /// </summary>
+    [JsonPropertyName("token")]
+    public required string Token { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

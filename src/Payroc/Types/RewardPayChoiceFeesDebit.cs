@@ -1,0 +1,38 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Payroc.Core;
+
+namespace Payroc;
+
+/// <summary>
+/// Object that contains information about fees for debit transactions.
+/// </summary>
+public record RewardPayChoiceFeesDebit
+{
+    [JsonPropertyName("option")]
+    public RewardPayChoiceFeesDebitOption? Option { get; set; }
+
+    /// <summary>
+    /// Percentage of the total transaction that the processor charges the merchant.
+    /// </summary>
+    [JsonPropertyName("volume")]
+    public required double Volume { get; set; }
+
+    /// <summary>
+    /// Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+    /// </summary>
+    [JsonPropertyName("transaction")]
+    public required int Transaction { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

@@ -1,0 +1,61 @@
+using System.Text.Json.Serialization;
+using Payroc.Core;
+
+namespace Payroc.Payments.BankTransferRefunds;
+
+[JsonConverter(typeof(StringEnumSerializer<ListBankTransferRefundsRequestTypeItem>))]
+public readonly record struct ListBankTransferRefundsRequestTypeItem : IStringEnum
+{
+    public static readonly ListBankTransferRefundsRequestTypeItem Refund = Custom(Values.Refund);
+
+    public static readonly ListBankTransferRefundsRequestTypeItem UnreferencedRefund = Custom(
+        Values.UnreferencedRefund
+    );
+
+    public ListBankTransferRefundsRequestTypeItem(string value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value { get; }
+
+    /// <summary>
+    /// Create a string enum with the given value.
+    /// </summary>
+    public static ListBankTransferRefundsRequestTypeItem Custom(string value)
+    {
+        return new ListBankTransferRefundsRequestTypeItem(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
+    }
+
+    /// <summary>
+    /// Returns the string value of the enum.
+    /// </summary>
+    public override string ToString()
+    {
+        return Value;
+    }
+
+    public static bool operator ==(ListBankTransferRefundsRequestTypeItem value1, string value2) =>
+        value1.Value.Equals(value2);
+
+    public static bool operator !=(ListBankTransferRefundsRequestTypeItem value1, string value2) =>
+        !value1.Value.Equals(value2);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    public static class Values
+    {
+        public const string Refund = "refund";
+
+        public const string UnreferencedRefund = "unreferencedRefund";
+    }
+}

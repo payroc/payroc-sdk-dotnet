@@ -1,0 +1,38 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Payroc.Core;
+
+namespace Payroc;
+
+public record PinDebit
+{
+    /// <summary>
+    /// Percentage of additional discount.
+    /// </summary>
+    [JsonPropertyName("additionalDiscount")]
+    public required double AdditionalDiscount { get; set; }
+
+    /// <summary>
+    /// Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+    /// </summary>
+    [JsonPropertyName("transaction")]
+    public required int Transaction { get; set; }
+
+    /// <summary>
+    /// Monthly access fee for using PIN-debit services. The value is in the currency's lowest denomination, for example, cents.
+    /// </summary>
+    [JsonPropertyName("monthlyAccess")]
+    public required int MonthlyAccess { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

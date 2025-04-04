@@ -1,0 +1,818 @@
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading;
+using Payroc;
+using Payroc.Core;
+
+namespace Payroc.Reporting.Settlement;
+
+public partial class SettlementClient
+{
+    private RawClient _client;
+
+    internal SettlementClient(RawClient client)
+    {
+        _client = client;
+    }
+
+    /// <summary>
+    /// Retrieve batch data for a specific date.
+    /// </summary>
+    /// <example><code>
+    /// await client.Reporting.Settlement.ListBatchesAsync(
+    ///     new ListReportingSettlementBatchesRequest
+    ///     {
+    ///         Before = "2571",
+    ///         After = "8516",
+    ///         Date = "2027-07-02",
+    ///         MerchantId = "4525644354",
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<PayrocPager<Batch>> ListBatchesAsync(
+        ListReportingSettlementBatchesRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _query = new Dictionary<string, object>();
+                _query["date"] = request.Date;
+                if (request.Before != null)
+                {
+                    _query["before"] = request.Before;
+                }
+                if (request.After != null)
+                {
+                    _query["after"] = request.After;
+                }
+                if (request.Limit != null)
+                {
+                    _query["limit"] = request.Limit.Value.ToString();
+                }
+                if (request.MerchantId != null)
+                {
+                    _query["merchantId"] = request.MerchantId;
+                }
+                var httpRequest = _client.CreateHttpRequest(
+                    new RawClient.JsonApiRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Get,
+                        Path = "batches",
+                        Query = _query,
+                        Options = options,
+                    }
+                );
+                var sendRequest = async (
+                    HttpRequestMessage httpRequest,
+                    CancellationToken cancellationToken
+                ) =>
+                {
+                    var response = await _client
+                        .SendRequestAsync(httpRequest, options, cancellationToken)
+                        .ConfigureAwait(false);
+                    if (response.StatusCode is >= 200 and < 400)
+                    {
+                        return response.Raw;
+                    }
+
+                    {
+                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        try
+                        {
+                            switch (response.StatusCode)
+                            {
+                                case 400:
+                                    throw new BadRequestError(
+                                        JsonUtils.Deserialize<FourHundred>(responseBody)
+                                    );
+                                case 401:
+                                    throw new UnauthorizedError(
+                                        JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                    );
+                                case 403:
+                                    throw new ForbiddenError(
+                                        JsonUtils.Deserialize<object>(responseBody)
+                                    );
+                                case 406:
+                                    throw new NotAcceptableError(
+                                        JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                    );
+                                case 500:
+                                    throw new InternalServerError(
+                                        JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                    );
+                            }
+                        }
+                        catch (JsonException)
+                        {
+                            // unable to map error response, throwing generic error
+                        }
+                        throw new PayrocApiException(
+                            $"Error with status code {response.StatusCode}",
+                            response.StatusCode,
+                            responseBody
+                        );
+                    }
+                };
+                return await PayrocPagerFactory
+                    .CreateAsync<Batch>(sendRequest, httpRequest, cancellationToken)
+                    .ConfigureAwait(false);
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Retrieve a specific batch.
+    /// </summary>
+    /// <example><code>
+    /// await client.Reporting.Settlement.GetBatchAsync(new GetBatchSettlementRequest { BatchId = 1 });
+    /// </code></example>
+    public async Task<Batch> GetBatchAsync(
+        GetBatchSettlementRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Get,
+                            Path = $"batches/{JsonUtils.SerializeAsString(request.BatchId)}",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<Batch>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new PayrocException("Failed to deserialize response", e);
+                    }
+                }
+
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestError(
+                                    JsonUtils.Deserialize<FourHundred>(responseBody)
+                                );
+                            case 401:
+                                throw new UnauthorizedError(
+                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                );
+                            case 403:
+                                throw new ForbiddenError(
+                                    JsonUtils.Deserialize<object>(responseBody)
+                                );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 406:
+                                throw new NotAcceptableError(
+                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 500:
+                                throw new InternalServerError(
+                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new PayrocApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Retrieve a list of transactions.
+    /// </summary>
+    /// <example><code>
+    /// await client.Reporting.Settlement.ListTransactionsAsync(
+    ///     new ListReportingSettlementTransactionsRequest
+    ///     {
+    ///         Before = "2571",
+    ///         After = "8516",
+    ///         Date = "2024-07-01",
+    ///         BatchId = 1,
+    ///         MerchantId = "4525644354",
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<PayrocPager<Transaction>> ListTransactionsAsync(
+        ListReportingSettlementTransactionsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _query = new Dictionary<string, object>();
+                _query["date"] = request.Date;
+                _query["batchId"] = request.BatchId.ToString();
+                if (request.Before != null)
+                {
+                    _query["before"] = request.Before;
+                }
+                if (request.After != null)
+                {
+                    _query["after"] = request.After;
+                }
+                if (request.Limit != null)
+                {
+                    _query["limit"] = request.Limit.Value.ToString();
+                }
+                if (request.MerchantId != null)
+                {
+                    _query["merchantId"] = request.MerchantId;
+                }
+                if (request.TransactionType != null)
+                {
+                    _query["transactionType"] = request.TransactionType.Value.Stringify();
+                }
+                var httpRequest = _client.CreateHttpRequest(
+                    new RawClient.JsonApiRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Get,
+                        Path = "transactions",
+                        Query = _query,
+                        Options = options,
+                    }
+                );
+                var sendRequest = async (
+                    HttpRequestMessage httpRequest,
+                    CancellationToken cancellationToken
+                ) =>
+                {
+                    var response = await _client
+                        .SendRequestAsync(httpRequest, options, cancellationToken)
+                        .ConfigureAwait(false);
+                    if (response.StatusCode is >= 200 and < 400)
+                    {
+                        return response.Raw;
+                    }
+
+                    {
+                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        try
+                        {
+                            switch (response.StatusCode)
+                            {
+                                case 400:
+                                    throw new BadRequestError(
+                                        JsonUtils.Deserialize<FourHundred>(responseBody)
+                                    );
+                                case 401:
+                                    throw new UnauthorizedError(
+                                        JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                    );
+                                case 403:
+                                    throw new ForbiddenError(
+                                        JsonUtils.Deserialize<object>(responseBody)
+                                    );
+                                case 406:
+                                    throw new NotAcceptableError(
+                                        JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                    );
+                                case 500:
+                                    throw new InternalServerError(
+                                        JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                    );
+                            }
+                        }
+                        catch (JsonException)
+                        {
+                            // unable to map error response, throwing generic error
+                        }
+                        throw new PayrocApiException(
+                            $"Error with status code {response.StatusCode}",
+                            response.StatusCode,
+                            responseBody
+                        );
+                    }
+                };
+                return await PayrocPagerFactory
+                    .CreateAsync<Transaction>(sendRequest, httpRequest, cancellationToken)
+                    .ConfigureAwait(false);
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Retrieve a specific transaction.
+    /// </summary>
+    /// <example><code>
+    /// await client.Reporting.Settlement.GetTransactionAsync(
+    ///     new GetTransactionSettlementRequest { TransactionId = 1 }
+    /// );
+    /// </code></example>
+    public async Task<Transaction> GetTransactionAsync(
+        GetTransactionSettlementRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Get,
+                            Path =
+                                $"transactions/{JsonUtils.SerializeAsString(request.TransactionId)}",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<Transaction>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new PayrocException("Failed to deserialize response", e);
+                    }
+                }
+
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestError(
+                                    JsonUtils.Deserialize<FourHundred>(responseBody)
+                                );
+                            case 401:
+                                throw new UnauthorizedError(
+                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                );
+                            case 403:
+                                throw new ForbiddenError(
+                                    JsonUtils.Deserialize<object>(responseBody)
+                                );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 406:
+                                throw new NotAcceptableError(
+                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 500:
+                                throw new InternalServerError(
+                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new PayrocApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Retrieve a list of authorizations.
+    /// </summary>
+    /// <example><code>
+    /// await client.Reporting.Settlement.ListAuthorizationsAsync(
+    ///     new ListReportingSettlementAuthorizationsRequest
+    ///     {
+    ///         Before = "2571",
+    ///         After = "8516",
+    ///         Date = "2024-07-01",
+    ///         BatchId = 1,
+    ///         MerchantId = "4525644354",
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<PayrocPager<Authorization>> ListAuthorizationsAsync(
+        ListReportingSettlementAuthorizationsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _query = new Dictionary<string, object>();
+                _query["date"] = request.Date;
+                _query["batchId"] = request.BatchId.ToString();
+                if (request.Before != null)
+                {
+                    _query["before"] = request.Before;
+                }
+                if (request.After != null)
+                {
+                    _query["after"] = request.After;
+                }
+                if (request.Limit != null)
+                {
+                    _query["limit"] = request.Limit.Value.ToString();
+                }
+                if (request.MerchantId != null)
+                {
+                    _query["merchantId"] = request.MerchantId;
+                }
+                var httpRequest = _client.CreateHttpRequest(
+                    new RawClient.JsonApiRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Get,
+                        Path = "authorizations",
+                        Query = _query,
+                        Options = options,
+                    }
+                );
+                var sendRequest = async (
+                    HttpRequestMessage httpRequest,
+                    CancellationToken cancellationToken
+                ) =>
+                {
+                    var response = await _client
+                        .SendRequestAsync(httpRequest, options, cancellationToken)
+                        .ConfigureAwait(false);
+                    if (response.StatusCode is >= 200 and < 400)
+                    {
+                        return response.Raw;
+                    }
+
+                    {
+                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        try
+                        {
+                            switch (response.StatusCode)
+                            {
+                                case 400:
+                                    throw new BadRequestError(
+                                        JsonUtils.Deserialize<FourHundred>(responseBody)
+                                    );
+                                case 401:
+                                    throw new UnauthorizedError(
+                                        JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                    );
+                                case 403:
+                                    throw new ForbiddenError(
+                                        JsonUtils.Deserialize<object>(responseBody)
+                                    );
+                                case 406:
+                                    throw new NotAcceptableError(
+                                        JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                    );
+                                case 500:
+                                    throw new InternalServerError(
+                                        JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                    );
+                            }
+                        }
+                        catch (JsonException)
+                        {
+                            // unable to map error response, throwing generic error
+                        }
+                        throw new PayrocApiException(
+                            $"Error with status code {response.StatusCode}",
+                            response.StatusCode,
+                            responseBody
+                        );
+                    }
+                };
+                return await PayrocPagerFactory
+                    .CreateAsync<Authorization>(sendRequest, httpRequest, cancellationToken)
+                    .ConfigureAwait(false);
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Retrieve a specific authorization.
+    /// </summary>
+    /// <example><code>
+    /// await client.Reporting.Settlement.GetAuthorizationAsync(
+    ///     new GetAuthorizationSettlementRequest { AuthorizationId = 1 }
+    /// );
+    /// </code></example>
+    public async Task<Authorization> GetAuthorizationAsync(
+        GetAuthorizationSettlementRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Get,
+                            Path =
+                                $"authorizations/{JsonUtils.SerializeAsString(request.AuthorizationId)}",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<Authorization>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new PayrocException("Failed to deserialize response", e);
+                    }
+                }
+
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestError(
+                                    JsonUtils.Deserialize<FourHundred>(responseBody)
+                                );
+                            case 401:
+                                throw new UnauthorizedError(
+                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                );
+                            case 403:
+                                throw new ForbiddenError(
+                                    JsonUtils.Deserialize<object>(responseBody)
+                                );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 406:
+                                throw new NotAcceptableError(
+                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 500:
+                                throw new InternalServerError(
+                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new PayrocApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Retrieve a list of disputes.
+    /// </summary>
+    /// <example><code>
+    /// await client.Reporting.Settlement.ListDisputesAsync(
+    ///     new ListReportingSettlementDisputesRequest
+    ///     {
+    ///         Before = "2571",
+    ///         After = "8516",
+    ///         Date = "2024-07-02",
+    ///         MerchantId = "4525644354",
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<PayrocPager<Dispute>> ListDisputesAsync(
+        ListReportingSettlementDisputesRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _query = new Dictionary<string, object>();
+                _query["date"] = request.Date;
+                if (request.Before != null)
+                {
+                    _query["before"] = request.Before;
+                }
+                if (request.After != null)
+                {
+                    _query["after"] = request.After;
+                }
+                if (request.Limit != null)
+                {
+                    _query["limit"] = request.Limit.Value.ToString();
+                }
+                if (request.MerchantId != null)
+                {
+                    _query["merchantId"] = request.MerchantId;
+                }
+                var httpRequest = _client.CreateHttpRequest(
+                    new RawClient.JsonApiRequest
+                    {
+                        BaseUrl = _client.Options.BaseUrl,
+                        Method = HttpMethod.Get,
+                        Path = "disputes",
+                        Query = _query,
+                        Options = options,
+                    }
+                );
+                var sendRequest = async (
+                    HttpRequestMessage httpRequest,
+                    CancellationToken cancellationToken
+                ) =>
+                {
+                    var response = await _client
+                        .SendRequestAsync(httpRequest, options, cancellationToken)
+                        .ConfigureAwait(false);
+                    if (response.StatusCode is >= 200 and < 400)
+                    {
+                        return response.Raw;
+                    }
+
+                    {
+                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        try
+                        {
+                            switch (response.StatusCode)
+                            {
+                                case 400:
+                                    throw new BadRequestError(
+                                        JsonUtils.Deserialize<FourHundred>(responseBody)
+                                    );
+                                case 401:
+                                    throw new UnauthorizedError(
+                                        JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                    );
+                                case 403:
+                                    throw new ForbiddenError(
+                                        JsonUtils.Deserialize<object>(responseBody)
+                                    );
+                                case 406:
+                                    throw new NotAcceptableError(
+                                        JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                    );
+                                case 500:
+                                    throw new InternalServerError(
+                                        JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                    );
+                            }
+                        }
+                        catch (JsonException)
+                        {
+                            // unable to map error response, throwing generic error
+                        }
+                        throw new PayrocApiException(
+                            $"Error with status code {response.StatusCode}",
+                            response.StatusCode,
+                            responseBody
+                        );
+                    }
+                };
+                return await PayrocPagerFactory
+                    .CreateAsync<Dispute>(sendRequest, httpRequest, cancellationToken)
+                    .ConfigureAwait(false);
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Retrieve the status history for a specific dispute.
+    /// </summary>
+    /// <example><code>
+    /// await client.Reporting.Settlement.GetDisputesStatusesAsync(
+    ///     new GetDisputesStatusesSettlementRequest { DisputeId = 1 }
+    /// );
+    /// </code></example>
+    public async Task<IEnumerable<DisputeStatus>> GetDisputesStatusesAsync(
+        GetDisputesStatusesSettlementRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new RawClient.JsonApiRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Get,
+                            Path =
+                                $"disputes/{JsonUtils.SerializeAsString(request.DisputeId)}/statuses",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<IEnumerable<DisputeStatus>>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new PayrocException("Failed to deserialize response", e);
+                    }
+                }
+
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestError(
+                                    JsonUtils.Deserialize<FourHundred>(responseBody)
+                                );
+                            case 401:
+                                throw new UnauthorizedError(
+                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                );
+                            case 403:
+                                throw new ForbiddenError(
+                                    JsonUtils.Deserialize<object>(responseBody)
+                                );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 406:
+                                throw new NotAcceptableError(
+                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 500:
+                                throw new InternalServerError(
+                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new PayrocApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+}

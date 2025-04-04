@@ -1,0 +1,75 @@
+using System.Text.Json.Serialization;
+using Payroc.Core;
+
+namespace Payroc;
+
+[JsonConverter(typeof(StringEnumSerializer<CardEntryMethod>))]
+public readonly record struct CardEntryMethod : IStringEnum
+{
+    public static readonly CardEntryMethod Icc = Custom(Values.Icc);
+
+    public static readonly CardEntryMethod Keyed = Custom(Values.Keyed);
+
+    public static readonly CardEntryMethod Swiped = Custom(Values.Swiped);
+
+    public static readonly CardEntryMethod SwipedFallback = Custom(Values.SwipedFallback);
+
+    public static readonly CardEntryMethod ContactlessIcc = Custom(Values.ContactlessIcc);
+
+    public static readonly CardEntryMethod ContactlessMsr = Custom(Values.ContactlessMsr);
+
+    public CardEntryMethod(string value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// The string value of the enum.
+    /// </summary>
+    public string Value { get; }
+
+    /// <summary>
+    /// Create a string enum with the given value.
+    /// </summary>
+    public static CardEntryMethod Custom(string value)
+    {
+        return new CardEntryMethod(value);
+    }
+
+    public bool Equals(string? other)
+    {
+        return Value.Equals(other);
+    }
+
+    /// <summary>
+    /// Returns the string value of the enum.
+    /// </summary>
+    public override string ToString()
+    {
+        return Value;
+    }
+
+    public static bool operator ==(CardEntryMethod value1, string value2) =>
+        value1.Value.Equals(value2);
+
+    public static bool operator !=(CardEntryMethod value1, string value2) =>
+        !value1.Value.Equals(value2);
+
+    /// <summary>
+    /// Constant strings for enum values
+    /// </summary>
+    public static class Values
+    {
+        public const string Icc = "icc";
+
+        public const string Keyed = "keyed";
+
+        public const string Swiped = "swiped";
+
+        public const string SwipedFallback = "swipedFallback";
+
+        public const string ContactlessIcc = "contactlessIcc";
+
+        public const string ContactlessMsr = "contactlessMsr";
+    }
+}

@@ -1,0 +1,47 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Payroc.Core;
+
+namespace Payroc;
+
+/// <summary>
+/// Object that contains the 3-D Secure information from a third party.
+/// </summary>
+public record ThirdPartyThreeDSecure
+{
+    /// <summary>
+    /// E-commerce indicator (ECI) is the result of the authentication check on the payment by the 3-D Secure service.
+    /// </summary>
+    [JsonPropertyName("eci")]
+    public required ThirdPartyThreeDSecureEci Eci { get; set; }
+
+    /// <summary>
+    /// Unique transaction identifier that the merchant assigned to the transaction and sent in the authentication request.
+    /// </summary>
+    [JsonPropertyName("xid")]
+    public string? Xid { get; set; }
+
+    /// <summary>
+    /// Cardholder Authentication Value is a cryptographic value that the card issuer sends to prove an online transaction was authorized.
+    /// </summary>
+    [JsonPropertyName("cavv")]
+    public string? Cavv { get; set; }
+
+    /// <summary>
+    /// Directory Server Transaction ID is a unique identifier that the processor assigned to the request.
+    /// </summary>
+    [JsonPropertyName("dsTransactionId")]
+    public string? DsTransactionId { get; set; }
+
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
