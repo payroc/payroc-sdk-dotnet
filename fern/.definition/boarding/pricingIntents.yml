@@ -1,0 +1,1488 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      auth: true
+      display-name: Create pricing intent
+      docs: Create a pricing intent.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.InternalServerError
+      examples:
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Interchange Plus
+          request:
+            services:
+              - enabled: true
+                name: hardwareAdvantagePlan
+            base:
+              addressVerification: 5
+              annualFee:
+                amount: 9900
+                billInMonth: june
+              batch: 1500
+              chargeback: 2500
+              earlyTermination: 57500
+              maintenance: 500
+              merchantAdvantage: 10
+              minimum: 100
+              pciNonCompliance: 4995
+              platinumSecurity:
+                billingFrequency: monthly
+              regulatoryAssistanceProgram: 15
+              retrieval: 1500
+              voiceAuthorization: 95
+            country: US
+            key: Your-Unique-Identifier
+            metadata:
+              yourCustomField: abc123
+            processor:
+              card:
+                fees:
+                  mastercardVisaDiscover: {}
+                planType: interchangePlus
+          response:
+            body:
+              services:
+                - enabled: true
+                  name: hardwareAdvantagePlan
+              base:
+                addressVerification: 5
+                annualFee:
+                  amount: 100
+                  billInMonth: june
+                batch: 1000
+                chargeback: 2500
+                earlyTermination: 57500
+                maintenance: 500
+                merchantAdvantage: 10
+                minimum: 100
+                pciNonCompliance: 4995
+                platinumSecurity:
+                  amount: 1295
+                  billingFrequency: monthly
+                regulatoryAssistanceProgram: 15
+                retrieval: 1500
+                voiceAuthorization: 95
+              country: US
+              createdDate: '2024-07-02T09:00:00Z'
+              gateway:
+                fees:
+                  monthly: 1000
+                  perDeviceMonthly: 0
+                  perTransaction: 0
+                  setup: 25000
+              id: '5'
+              key: string
+              lastUpdatedDate: '2024-07-02T09:00:00Z'
+              metadata:
+                yourCustomField: abc123
+              processor:
+                ach:
+                  fees:
+                    accountVerification: 100
+                    batch: 1000
+                    discountRateAbove10000: 10
+                    discountRateUnder10000: 5.25
+                    monthlyMinimum: 20000
+                    returns: 400
+                    statement: 800
+                    transaction: 50
+                    unauthorizedReturn: 1999
+                card:
+                  fees:
+                    amex:
+                      transaction: 1
+                      type: optBlue
+                      volume: 1.25
+                    enhancedInterchange:
+                      creditToMerchant: 1.25
+                      enrollment: 1
+                    mastercardVisaDiscover:
+                      volume: 1.25
+                    pinDebit:
+                      additionalDiscount: 1.25
+                      monthlyAccess: 1
+                      transaction: 1
+                  planType: interchangePlus
+              status: pendingReview
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Interchange Plus Plus
+          request:
+            services:
+              - enabled: true
+                name: hardwareAdvantagePlan
+            base:
+              addressVerification: 5
+              annualFee:
+                amount: 9900
+                billInMonth: june
+              batch: 1500
+              chargeback: 2500
+              earlyTermination: 57500
+              maintenance: 500
+              merchantAdvantage: 10
+              minimum: 100
+              pciNonCompliance: 4995
+              platinumSecurity:
+                billingFrequency: monthly
+              regulatoryAssistanceProgram: 15
+              retrieval: 1500
+              voiceAuthorization: 95
+            country: US
+            key: Your-Unique-Identifier
+            metadata:
+              yourCustomField: abc123
+            processor:
+              ach:
+                fees:
+                  accountVerification: 10
+                  batch: 5
+                  discountRateAbove10000: 1
+                  discountRateUnder10000: 0.5
+                  monthlyMinimum: 500
+                  returns: 400
+                  statement: 250
+                  transaction: 50
+                  unauthorizedReturn: 500
+              card:
+                fees:
+                  mastercardVisaDiscover:
+                    midQualRate: {}
+                    nonQualRate: {}
+                    qualifiedRate: {}
+                planType: interchangePlusPlus
+          response:
+            body:
+              services:
+                - enabled: true
+                  name: hardwareAdvantagePlan
+              base:
+                addressVerification: 5
+                annualFee:
+                  amount: 100
+                  billInMonth: june
+                batch: 1000
+                chargeback: 2500
+                earlyTermination: 57500
+                maintenance: 500
+                merchantAdvantage: 10
+                minimum: 100
+                pciNonCompliance: 4995
+                platinumSecurity:
+                  amount: 1295
+                  billingFrequency: monthly
+                regulatoryAssistanceProgram: 15
+                retrieval: 1500
+                voiceAuthorization: 95
+              country: US
+              createdDate: '2024-07-02T09:00:00Z'
+              gateway:
+                fees:
+                  monthly: 1000
+                  perDeviceMonthly: 0
+                  perTransaction: 0
+                  setup: 25000
+              id: '5'
+              key: string
+              lastUpdatedDate: '2024-07-02T09:00:00Z'
+              metadata:
+                yourCustomField: abc123
+              processor:
+                ach:
+                  fees:
+                    accountVerification: 100
+                    batch: 1000
+                    discountRateAbove10000: 10
+                    discountRateUnder10000: 5.25
+                    monthlyMinimum: 20000
+                    returns: 400
+                    statement: 800
+                    transaction: 50
+                    unauthorizedReturn: 1999
+                card:
+                  fees:
+                    amex:
+                      transaction: 1
+                      type: optBlue
+                      volume: 1.25
+                    enhancedInterchange:
+                      creditToMerchant: 1.25
+                      enrollment: 1
+                    mastercardVisaDiscover:
+                      volume: 1.25
+                    pinDebit:
+                      additionalDiscount: 1.25
+                      monthlyAccess: 1
+                      transaction: 1
+                  planType: interchangePlus
+              status: pendingReview
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Tiered 3
+          request:
+            services:
+              - enabled: true
+                name: hardwareAdvantagePlan
+            base:
+              addressVerification: 5
+              annualFee:
+                amount: 9900
+                billInMonth: june
+              batch: 1500
+              chargeback: 2500
+              earlyTermination: 57500
+              maintenance: 500
+              merchantAdvantage: 10
+              minimum: 100
+              pciNonCompliance: 4995
+              platinumSecurity:
+                billingFrequency: monthly
+              regulatoryAssistanceProgram: 15
+              retrieval: 1500
+              voiceAuthorization: 95
+            country: US
+            gateway:
+              fees:
+                monthly: 2000
+                perDeviceMonthly: 10
+                perTransaction: 2000
+                setup: 5000
+            key: Your-Unique-Identifier
+            metadata:
+              yourCustomField: abc123
+            processor:
+              ach:
+                fees:
+                  accountVerification: 10
+                  batch: 5
+                  discountRateAbove10000: 1
+                  discountRateUnder10000: 0.5
+                  monthlyMinimum: 500
+                  returns: 400
+                  statement: 250
+                  transaction: 50
+                  unauthorizedReturn: 500
+              card:
+                fees:
+                  mastercardVisaDiscover:
+                    midQualRate: {}
+                    nonQualRate: {}
+                    qualifiedRate: {}
+                planType: tiered3
+          response:
+            body:
+              services:
+                - enabled: true
+                  name: hardwareAdvantagePlan
+              base:
+                addressVerification: 5
+                annualFee:
+                  amount: 100
+                  billInMonth: june
+                batch: 1000
+                chargeback: 2500
+                earlyTermination: 57500
+                maintenance: 500
+                merchantAdvantage: 10
+                minimum: 100
+                pciNonCompliance: 4995
+                platinumSecurity:
+                  amount: 1295
+                  billingFrequency: monthly
+                regulatoryAssistanceProgram: 15
+                retrieval: 1500
+                voiceAuthorization: 95
+              country: US
+              createdDate: '2024-07-02T09:00:00Z'
+              gateway:
+                fees:
+                  monthly: 1000
+                  perDeviceMonthly: 0
+                  perTransaction: 0
+                  setup: 25000
+              id: '5'
+              key: string
+              lastUpdatedDate: '2024-07-02T09:00:00Z'
+              metadata:
+                yourCustomField: abc123
+              processor:
+                ach:
+                  fees:
+                    accountVerification: 100
+                    batch: 1000
+                    discountRateAbove10000: 10
+                    discountRateUnder10000: 5.25
+                    monthlyMinimum: 20000
+                    returns: 400
+                    statement: 800
+                    transaction: 50
+                    unauthorizedReturn: 1999
+                card:
+                  fees:
+                    amex:
+                      transaction: 1
+                      type: optBlue
+                      volume: 1.25
+                    enhancedInterchange:
+                      creditToMerchant: 1.25
+                      enrollment: 1
+                    mastercardVisaDiscover:
+                      volume: 1.25
+                    pinDebit:
+                      additionalDiscount: 1.25
+                      monthlyAccess: 1
+                      transaction: 1
+                  planType: interchangePlus
+              status: pendingReview
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Tiered 4
+          request:
+            services:
+              - enabled: true
+                name: hardwareAdvantagePlan
+            base:
+              addressVerification: 5
+              annualFee:
+                amount: 9900
+                billInMonth: june
+              batch: 1500
+              chargeback: 2500
+              earlyTermination: 57500
+              maintenance: 500
+              merchantAdvantage: 10
+              minimum: 100
+              pciNonCompliance: 4995
+              platinumSecurity:
+                billingFrequency: monthly
+              regulatoryAssistanceProgram: 15
+              retrieval: 1500
+              voiceAuthorization: 95
+            country: US
+            gateway:
+              fees:
+                monthly: 2000
+                perDeviceMonthly: 10
+                perTransaction: 2000
+                setup: 5000
+            key: Your-Unique-Identifier
+            metadata:
+              yourCustomField: abc123
+            processor:
+              ach:
+                fees:
+                  accountVerification: 10
+                  batch: 5
+                  discountRateAbove10000: 1
+                  discountRateUnder10000: 0.5
+                  monthlyMinimum: 500
+                  returns: 400
+                  statement: 250
+                  transaction: 50
+                  unauthorizedReturn: 500
+              card:
+                fees:
+                  mastercardVisaDiscover:
+                    midQualRate: {}
+                    nonQualRate: {}
+                    premiumRate: {}
+                    qualifiedRate: {}
+                planType: tiered4
+          response:
+            body:
+              services:
+                - enabled: true
+                  name: hardwareAdvantagePlan
+              base:
+                addressVerification: 5
+                annualFee:
+                  amount: 100
+                  billInMonth: june
+                batch: 1000
+                chargeback: 2500
+                earlyTermination: 57500
+                maintenance: 500
+                merchantAdvantage: 10
+                minimum: 100
+                pciNonCompliance: 4995
+                platinumSecurity:
+                  amount: 1295
+                  billingFrequency: monthly
+                regulatoryAssistanceProgram: 15
+                retrieval: 1500
+                voiceAuthorization: 95
+              country: US
+              createdDate: '2024-07-02T09:00:00Z'
+              gateway:
+                fees:
+                  monthly: 1000
+                  perDeviceMonthly: 0
+                  perTransaction: 0
+                  setup: 25000
+              id: '5'
+              key: string
+              lastUpdatedDate: '2024-07-02T09:00:00Z'
+              metadata:
+                yourCustomField: abc123
+              processor:
+                ach:
+                  fees:
+                    accountVerification: 100
+                    batch: 1000
+                    discountRateAbove10000: 10
+                    discountRateUnder10000: 5.25
+                    monthlyMinimum: 20000
+                    returns: 400
+                    statement: 800
+                    transaction: 50
+                    unauthorizedReturn: 1999
+                card:
+                  fees:
+                    amex:
+                      transaction: 1
+                      type: optBlue
+                      volume: 1.25
+                    enhancedInterchange:
+                      creditToMerchant: 1.25
+                      enrollment: 1
+                    mastercardVisaDiscover:
+                      volume: 1.25
+                    pinDebit:
+                      additionalDiscount: 1.25
+                      monthlyAccess: 1
+                      transaction: 1
+                  planType: interchangePlus
+              status: pendingReview
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Tiered 6
+          request:
+            services:
+              - enabled: true
+                name: hardwareAdvantagePlan
+            base:
+              addressVerification: 5
+              annualFee:
+                amount: 9900
+                billInMonth: june
+              batch: 1500
+              chargeback: 2500
+              earlyTermination: 57500
+              maintenance: 500
+              merchantAdvantage: 10
+              minimum: 100
+              pciNonCompliance: 4995
+              platinumSecurity:
+                billingFrequency: monthly
+              regulatoryAssistanceProgram: 15
+              retrieval: 1500
+              voiceAuthorization: 95
+            country: US
+            gateway:
+              fees:
+                monthly: 2000
+                perDeviceMonthly: 10
+                perTransaction: 2000
+                setup: 5000
+            key: Your-Unique-Identifier
+            metadata:
+              yourCustomField: abc123
+            processor:
+              ach:
+                fees:
+                  accountVerification: 10
+                  batch: 5
+                  discountRateAbove10000: 1
+                  discountRateUnder10000: 0.5
+                  monthlyMinimum: 500
+                  returns: 400
+                  statement: 250
+                  transaction: 50
+                  unauthorizedReturn: 500
+              card:
+                fees:
+                  mastercardVisaDiscover:
+                    midQualRate: {}
+                    nonQualRate: {}
+                    premiumRate: {}
+                    qualifiedRate: {}
+                    regulatedCheckCard: {}
+                    unregulatedCheckCard: {}
+                planType: tiered6
+          response:
+            body:
+              services:
+                - enabled: true
+                  name: hardwareAdvantagePlan
+              base:
+                addressVerification: 5
+                annualFee:
+                  amount: 100
+                  billInMonth: june
+                batch: 1000
+                chargeback: 2500
+                earlyTermination: 57500
+                maintenance: 500
+                merchantAdvantage: 10
+                minimum: 100
+                pciNonCompliance: 4995
+                platinumSecurity:
+                  amount: 1295
+                  billingFrequency: monthly
+                regulatoryAssistanceProgram: 15
+                retrieval: 1500
+                voiceAuthorization: 95
+              country: US
+              createdDate: '2024-07-02T09:00:00Z'
+              gateway:
+                fees:
+                  monthly: 1000
+                  perDeviceMonthly: 0
+                  perTransaction: 0
+                  setup: 25000
+              id: '5'
+              key: string
+              lastUpdatedDate: '2024-07-02T09:00:00Z'
+              metadata:
+                yourCustomField: abc123
+              processor:
+                ach:
+                  fees:
+                    accountVerification: 100
+                    batch: 1000
+                    discountRateAbove10000: 10
+                    discountRateUnder10000: 5.25
+                    monthlyMinimum: 20000
+                    returns: 400
+                    statement: 800
+                    transaction: 50
+                    unauthorizedReturn: 1999
+                card:
+                  fees:
+                    amex:
+                      transaction: 1
+                      type: optBlue
+                      volume: 1.25
+                    enhancedInterchange:
+                      creditToMerchant: 1.25
+                      enrollment: 1
+                    mastercardVisaDiscover:
+                      volume: 1.25
+                    pinDebit:
+                      additionalDiscount: 1.25
+                      monthlyAccess: 1
+                      transaction: 1
+                  planType: interchangePlus
+              status: pendingReview
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Flat Rate
+          request:
+            services:
+              - enabled: true
+                name: hardwareAdvantagePlan
+            base:
+              addressVerification: 5
+              annualFee:
+                amount: 9900
+                billInMonth: june
+              batch: 0
+              chargeback: 2500
+              earlyTermination: 57500
+              maintenance: 500
+              merchantAdvantage: 10
+              minimum: 0
+              pciNonCompliance: 4995
+              platinumSecurity:
+                billingFrequency: monthly
+              regulatoryAssistanceProgram: 15
+              retrieval: 1500
+              voiceAuthorization: 95
+            country: US
+            key: Your-Unique-Identifier
+            metadata:
+              yourCustomField: abc123
+            processor:
+              card:
+                fees:
+                  standardCards: {}
+                planType: flatRate
+          response:
+            body:
+              services:
+                - enabled: true
+                  name: hardwareAdvantagePlan
+              base:
+                addressVerification: 5
+                annualFee:
+                  amount: 100
+                  billInMonth: june
+                batch: 1000
+                chargeback: 2500
+                earlyTermination: 57500
+                maintenance: 500
+                merchantAdvantage: 10
+                minimum: 100
+                pciNonCompliance: 4995
+                platinumSecurity:
+                  amount: 1295
+                  billingFrequency: monthly
+                regulatoryAssistanceProgram: 15
+                retrieval: 1500
+                voiceAuthorization: 95
+              country: US
+              createdDate: '2024-07-02T09:00:00Z'
+              gateway:
+                fees:
+                  monthly: 1000
+                  perDeviceMonthly: 0
+                  perTransaction: 0
+                  setup: 25000
+              id: '5'
+              key: string
+              lastUpdatedDate: '2024-07-02T09:00:00Z'
+              metadata:
+                yourCustomField: abc123
+              processor:
+                ach:
+                  fees:
+                    accountVerification: 100
+                    batch: 1000
+                    discountRateAbove10000: 10
+                    discountRateUnder10000: 5.25
+                    monthlyMinimum: 20000
+                    returns: 400
+                    statement: 800
+                    transaction: 50
+                    unauthorizedReturn: 1999
+                card:
+                  fees:
+                    amex:
+                      transaction: 1
+                      type: optBlue
+                      volume: 1.25
+                    enhancedInterchange:
+                      creditToMerchant: 1.25
+                      enrollment: 1
+                    mastercardVisaDiscover:
+                      volume: 1.25
+                    pinDebit:
+                      additionalDiscount: 1.25
+                      monthlyAccess: 1
+                      transaction: 1
+                  planType: interchangePlus
+              status: pendingReview
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Consumer Choice
+          request:
+            services:
+              - enabled: true
+                name: hardwareAdvantagePlan
+            base:
+              addressVerification: 5
+              annualFee:
+                amount: 9900
+                billInMonth: june
+              batch: 1500
+              chargeback: 2500
+              earlyTermination: 57500
+              maintenance: 500
+              merchantAdvantage: 10
+              minimum: 100
+              pciNonCompliance: 4995
+              platinumSecurity:
+                billingFrequency: monthly
+              regulatoryAssistanceProgram: 15
+              retrieval: 1500
+              voiceAuthorization: 95
+            country: US
+            key: Your-Unique-Identifier
+            metadata:
+              yourCustomField: abc123
+            processor:
+              card:
+                fees:
+                  monthlySubscription: 1
+                  volume: 1.25
+                planType: consumerChoice
+          response:
+            body:
+              services:
+                - enabled: true
+                  name: hardwareAdvantagePlan
+              base:
+                addressVerification: 5
+                annualFee:
+                  amount: 100
+                  billInMonth: june
+                batch: 1000
+                chargeback: 2500
+                earlyTermination: 57500
+                maintenance: 500
+                merchantAdvantage: 10
+                minimum: 100
+                pciNonCompliance: 4995
+                platinumSecurity:
+                  amount: 1295
+                  billingFrequency: monthly
+                regulatoryAssistanceProgram: 15
+                retrieval: 1500
+                voiceAuthorization: 95
+              country: US
+              createdDate: '2024-07-02T09:00:00Z'
+              gateway:
+                fees:
+                  monthly: 1000
+                  perDeviceMonthly: 0
+                  perTransaction: 0
+                  setup: 25000
+              id: '5'
+              key: string
+              lastUpdatedDate: '2024-07-02T09:00:00Z'
+              metadata:
+                yourCustomField: abc123
+              processor:
+                ach:
+                  fees:
+                    accountVerification: 100
+                    batch: 1000
+                    discountRateAbove10000: 10
+                    discountRateUnder10000: 5.25
+                    monthlyMinimum: 20000
+                    returns: 400
+                    statement: 800
+                    transaction: 50
+                    unauthorizedReturn: 1999
+                card:
+                  fees:
+                    amex:
+                      transaction: 1
+                      type: optBlue
+                      volume: 1.25
+                    enhancedInterchange:
+                      creditToMerchant: 1.25
+                      enrollment: 1
+                    mastercardVisaDiscover:
+                      volume: 1.25
+                    pinDebit:
+                      additionalDiscount: 1.25
+                      monthlyAccess: 1
+                      transaction: 1
+                  planType: interchangePlus
+              status: pendingReview
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Reward Pay Choice
+          request:
+            services:
+              - enabled: true
+                name: hardwareAdvantagePlan
+            base:
+              addressVerification: 5
+              annualFee:
+                amount: 9900
+                billInMonth: june
+              batch: 1500
+              chargeback: 2500
+              earlyTermination: 57500
+              maintenance: 500
+              merchantAdvantage: 10
+              minimum: 100
+              pciNonCompliance: 4995
+              platinumSecurity:
+                billingFrequency: monthly
+              regulatoryAssistanceProgram: 15
+              retrieval: 1500
+              voiceAuthorization: 95
+            country: US
+            key: Your-Unique-Identifier
+            metadata:
+              yourCustomField: abc123
+            processor:
+              card:
+                fees:
+                  credit: {}
+                  debit:
+                    transaction: 1
+                    volume: 1.25
+                  monthlySubscription: 1
+                planType: rewardPayChoice
+          response:
+            body:
+              services:
+                - enabled: true
+                  name: hardwareAdvantagePlan
+              base:
+                addressVerification: 5
+                annualFee:
+                  amount: 100
+                  billInMonth: june
+                batch: 1000
+                chargeback: 2500
+                earlyTermination: 57500
+                maintenance: 500
+                merchantAdvantage: 10
+                minimum: 100
+                pciNonCompliance: 4995
+                platinumSecurity:
+                  amount: 1295
+                  billingFrequency: monthly
+                regulatoryAssistanceProgram: 15
+                retrieval: 1500
+                voiceAuthorization: 95
+              country: US
+              createdDate: '2024-07-02T09:00:00Z'
+              gateway:
+                fees:
+                  monthly: 1000
+                  perDeviceMonthly: 0
+                  perTransaction: 0
+                  setup: 25000
+              id: '5'
+              key: string
+              lastUpdatedDate: '2024-07-02T09:00:00Z'
+              metadata:
+                yourCustomField: abc123
+              processor:
+                ach:
+                  fees:
+                    accountVerification: 100
+                    batch: 1000
+                    discountRateAbove10000: 10
+                    discountRateUnder10000: 5.25
+                    monthlyMinimum: 20000
+                    returns: 400
+                    statement: 800
+                    transaction: 50
+                    unauthorizedReturn: 1999
+                card:
+                  fees:
+                    amex:
+                      transaction: 1
+                      type: optBlue
+                      volume: 1.25
+                    enhancedInterchange:
+                      creditToMerchant: 1.25
+                      enrollment: 1
+                    mastercardVisaDiscover:
+                      volume: 1.25
+                    pinDebit:
+                      additionalDiscount: 1.25
+                      monthlyAccess: 1
+                      transaction: 1
+                  planType: interchangePlus
+              status: pendingReview
+      method: POST
+      path: /pricing-intents
+      request:
+        body: root.PricingIntent
+        content-type: application/json
+        headers:
+          Idempotency-Key:
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+            name: idempotencyKey
+            type: string
+        name: CreatePricingIntentsRequest
+      response:
+        docs: >-
+          Successful response. We created the pricing intent and it is waiting
+          for approval.
+        status-code: 201
+        type: root.PricingIntent
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    delete:
+      auth: true
+      display-name: Delete pricing intent
+      docs: Delete a pricing intent.
+      errors:
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            pricingIntentId: '5'
+      method: DELETE
+      path: /pricing-intents/{pricingIntentId}
+      request:
+        name: DeletePricingIntentsRequest
+        path-parameters:
+          pricingIntentId:
+            docs: Unique identifier of the pricing intent.
+            type: string
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    get:
+      auth: true
+      display-name: Retrieve pricing intent
+      docs: Retrieve a specific pricing intent.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: Pricing intent
+          path-parameters:
+            pricingIntentId: '5'
+          response:
+            body:
+              services:
+                - enabled: true
+                  name: hardwareAdvantagePlan
+              base:
+                addressVerification: 5
+                annualFee:
+                  amount: 100
+                  billInMonth: june
+                batch: 1000
+                chargeback: 2500
+                earlyTermination: 57500
+                maintenance: 500
+                merchantAdvantage: 10
+                minimum: 100
+                pciNonCompliance: 4995
+                platinumSecurity:
+                  amount: 1295
+                  billingFrequency: monthly
+                regulatoryAssistanceProgram: 15
+                retrieval: 1500
+                voiceAuthorization: 95
+              country: US
+              createdDate: '2024-07-02T09:00:00Z'
+              gateway:
+                fees:
+                  monthly: 1000
+                  perDeviceMonthly: 0
+                  perTransaction: 0
+                  setup: 25000
+              id: '5'
+              key: string
+              lastUpdatedDate: '2024-07-02T09:00:00Z'
+              metadata:
+                yourCustomField: abc123
+              processor:
+                ach:
+                  fees:
+                    accountVerification: 100
+                    batch: 1000
+                    discountRateAbove10000: 10
+                    discountRateUnder10000: 5.25
+                    monthlyMinimum: 20000
+                    returns: 400
+                    statement: 800
+                    transaction: 50
+                    unauthorizedReturn: 1999
+                card:
+                  fees:
+                    amex:
+                      transaction: 1
+                      type: optBlue
+                      volume: 1.25
+                    enhancedInterchange:
+                      creditToMerchant: 1.25
+                      enrollment: 1
+                    mastercardVisaDiscover:
+                      volume: 1.25
+                    pinDebit:
+                      additionalDiscount: 1.25
+                      monthlyAccess: 1
+                      transaction: 1
+                  planType: interchangePlus
+              status: pendingReview
+      method: GET
+      path: /pricing-intents/{pricingIntentId}
+      request:
+        name: GetPricingIntentsRequest
+        path-parameters:
+          pricingIntentId:
+            docs: Unique identifier of the pricing intent.
+            type: string
+      response:
+        docs: Successful response. Returns the requested pricing intent.
+        status-code: 200
+        type: root.PricingIntent
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    list:
+      auth: true
+      display-name: List pricing intents
+      docs: Retrieve a list of pricing intents.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.InternalServerError
+      examples:
+        - name: Paginated pricing intent
+          query-parameters:
+            after: '8516'
+            before: '2571'
+          response:
+            body:
+              count: 1
+              data:
+                - services:
+                    - enabled: true
+                      name: hardwareAdvantagePlan
+                  base:
+                    addressVerification: 5
+                    annualFee:
+                      amount: 100
+                      billInMonth: june
+                    batch: 1000
+                    chargeback: 2500
+                    earlyTermination: 57500
+                    maintenance: 500
+                    merchantAdvantage: 10
+                    minimum: 100
+                    pciNonCompliance: 4995
+                    platinumSecurity:
+                      amount: 1295
+                      billingFrequency: monthly
+                    regulatoryAssistanceProgram: 15
+                    retrieval: 1500
+                    voiceAuthorization: 95
+                  country: US
+                  createdDate: '2024-07-02T09:00:00Z'
+                  gateway:
+                    fees:
+                      monthly: 1000
+                      perDeviceMonthly: 0
+                      perTransaction: 0
+                      setup: 25000
+                  id: '5'
+                  key: base
+                  lastUpdatedDate: '2024-07-02T09:00:00Z'
+                  metadata:
+                    yourCustomField: abc123
+                  processor:
+                    ach:
+                      fees:
+                        accountVerification: 100
+                        batch: 1000
+                        discountRateAbove10000: 10
+                        discountRateUnder10000: 5.25
+                        monthlyMinimum: 20000
+                        returns: 400
+                        statement: 800
+                        transaction: 50
+                        unauthorizedReturn: 1999
+                    card:
+                      fees:
+                        amex:
+                          transaction: 1
+                          type: optBlue
+                          volume: 1.25
+                        enhancedInterchange:
+                          creditToMerchant: 1.25
+                          enrollment: 1
+                        mastercardVisaDiscover:
+                          volume: 1.25
+                        pinDebit:
+                          additionalDiscount: 1.25
+                          monthlyAccess: 1
+                          transaction: 1
+                      planType: interchangePlus
+                  status: pendingReview
+              hasMore: true
+              limit: 1
+              links:
+                - href: https://api.payroc.com/v1/pricing-intents?before=5&limit=1
+                  method: get
+                  rel: previous
+                - href: https://api.payroc.com/v1/pricing-intents?after=5&limit=1
+                  method: get
+                  rel: next
+        - name: No records found
+          query-parameters:
+            after: '8516'
+            before: '2571'
+          response:
+            body:
+              count: 0
+              data:
+                - services:
+                    - enabled: true
+                      name: hardwareAdvantagePlan
+                  base:
+                    addressVerification: 5
+                    annualFee:
+                      amount: 100
+                    batch: 5
+                    chargeback: 2500
+                    earlyTermination: 57500
+                    maintenance: 1995
+                    merchantAdvantage: 10
+                    minimum: 100
+                    pciNonCompliance: 7495
+                    regulatoryAssistanceProgram: 15
+                    retrieval: 1500
+                    voiceAuthorization: 95
+                  country: US
+                  createdDate: '2024-07-02T09:00:00Z'
+                  gateway:
+                    fees:
+                      monthly: 1
+                      perDeviceMonthly: 1
+                      perTransaction: 1
+                      setup: 1
+                  id: id
+                  key: key
+                  lastUpdatedDate: '2024-07-02T09:00:00Z'
+                  metadata:
+                    yourCustomField: abc123
+                  processor:
+                    card:
+                      fees:
+                        amex:
+                          transaction: 1
+                          type: optBlue
+                          volume: 1.25
+                        enhancedInterchange:
+                          creditToMerchant: 1.25
+                          enrollment: 1
+                        mastercardVisaDiscover:
+                          volume: 1.25
+                        pinDebit:
+                          additionalDiscount: 1.25
+                          monthlyAccess: 1
+                          transaction: 1
+                      planType: interchangePlus
+                  status: active
+              hasMore: false
+              limit: 10
+              links:
+                - href: <uri>
+                  method: get
+                  rel: previous
+                - href: <uri>
+                  method: get
+                  rel: next
+      method: GET
+      pagination:
+        results: $response.data
+        type: custom
+      path: /pricing-intents
+      request:
+        name: ListPricingIntentsRequest
+        query-parameters:
+          after:
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results after. Typically, this is the last resource on the
+              previous page.
+            type: optional<string>
+          before:
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results before. Typically, this is the first resource on the
+              previous page.
+            type: optional<string>
+          limit:
+            default: 10
+            docs: States the total amount of results the response is limited to.
+            type: optional<integer>
+            validation:
+              max: 100
+      response:
+        docs: Successful response. Returns a list of pricing intents.
+        status-code: 200
+        type: root.PaginatedPricingIntent
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    patch:
+      auth: true
+      display-name: Partially update pricing intent
+      docs: |
+        Partially update an existing pricing intent.  
+
+        Structure your request to follow the RFC 6902 standard.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Partially update pricing intent
+          path-parameters:
+            pricingIntentId: '5'
+          request:
+            - op: remove
+              path: path
+            - op: remove
+              path: path
+            - op: remove
+              path: path
+          response:
+            body:
+              services:
+                - enabled: true
+                  name: hardwareAdvantagePlan
+              base:
+                addressVerification: 5
+                annualFee:
+                  amount: 100
+                  billInMonth: june
+                batch: 1000
+                chargeback: 2500
+                earlyTermination: 57500
+                maintenance: 500
+                merchantAdvantage: 10
+                minimum: 100
+                pciNonCompliance: 4995
+                platinumSecurity:
+                  amount: 1295
+                  billingFrequency: monthly
+                regulatoryAssistanceProgram: 15
+                retrieval: 1500
+                voiceAuthorization: 95
+              country: US
+              createdDate: '2024-07-02T09:00:00Z'
+              gateway:
+                fees:
+                  monthly: 1000
+                  perDeviceMonthly: 0
+                  perTransaction: 0
+                  setup: 25000
+              id: '5'
+              key: string
+              lastUpdatedDate: '2024-07-02T09:00:00Z'
+              metadata:
+                yourCustomField: abc123
+              processor:
+                ach:
+                  fees:
+                    accountVerification: 100
+                    batch: 1000
+                    discountRateAbove10000: 10
+                    discountRateUnder10000: 5.25
+                    monthlyMinimum: 20000
+                    returns: 400
+                    statement: 800
+                    transaction: 50
+                    unauthorizedReturn: 1999
+                card:
+                  fees:
+                    amex:
+                      transaction: 1
+                      type: optBlue
+                      volume: 1.25
+                    enhancedInterchange:
+                      creditToMerchant: 1.25
+                      enrollment: 1
+                    mastercardVisaDiscover:
+                      volume: 1.25
+                    pinDebit:
+                      additionalDiscount: 1.25
+                      monthlyAccess: 1
+                      transaction: 1
+                  planType: interchangePlus
+              status: pendingReview
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Example patch operations that apply the RFC 6902 standard
+          path-parameters:
+            pricingIntentId: '5'
+          request:
+            - op: remove
+              path: path
+            - op: remove
+              path: path
+            - op: remove
+              path: path
+            - from: from
+              op: move
+              path: path
+            - from: from
+              op: copy
+              path: path
+            - op: remove
+              path: path
+          response:
+            body:
+              services:
+                - enabled: true
+                  name: hardwareAdvantagePlan
+              base:
+                addressVerification: 5
+                annualFee:
+                  amount: 100
+                  billInMonth: june
+                batch: 1000
+                chargeback: 2500
+                earlyTermination: 57500
+                maintenance: 500
+                merchantAdvantage: 10
+                minimum: 100
+                pciNonCompliance: 4995
+                platinumSecurity:
+                  amount: 1295
+                  billingFrequency: monthly
+                regulatoryAssistanceProgram: 15
+                retrieval: 1500
+                voiceAuthorization: 95
+              country: US
+              createdDate: '2024-07-02T09:00:00Z'
+              gateway:
+                fees:
+                  monthly: 1000
+                  perDeviceMonthly: 0
+                  perTransaction: 0
+                  setup: 25000
+              id: '5'
+              key: string
+              lastUpdatedDate: '2024-07-02T09:00:00Z'
+              metadata:
+                yourCustomField: abc123
+              processor:
+                ach:
+                  fees:
+                    accountVerification: 100
+                    batch: 1000
+                    discountRateAbove10000: 10
+                    discountRateUnder10000: 5.25
+                    monthlyMinimum: 20000
+                    returns: 400
+                    statement: 800
+                    transaction: 50
+                    unauthorizedReturn: 1999
+                card:
+                  fees:
+                    amex:
+                      transaction: 1
+                      type: optBlue
+                      volume: 1.25
+                    enhancedInterchange:
+                      creditToMerchant: 1.25
+                      enrollment: 1
+                    mastercardVisaDiscover:
+                      volume: 1.25
+                    pinDebit:
+                      additionalDiscount: 1.25
+                      monthlyAccess: 1
+                      transaction: 1
+                  planType: interchangePlus
+              status: pendingReview
+      method: PATCH
+      path: /pricing-intents/{pricingIntentId}
+      request:
+        body: root.PatchRequest
+        content-type: application/json
+        headers:
+          Idempotency-Key:
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+            name: idempotencyKey
+            type: string
+        name: PatchPricingIntentsRequest
+        path-parameters:
+          pricingIntentId:
+            docs: Unique identifier of the pricing intent.
+            type: string
+      response:
+        docs: Successful request. We updated the pricing intent.
+        status-code: 200
+        type: root.PricingIntent
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    update:
+      auth: true
+      display-name: Update pricing intent
+      docs: Update a pricing intent.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Create pricing intent
+          path-parameters:
+            pricingIntentId: '5'
+          request:
+            services:
+              - enabled: true
+                name: hardwareAdvantagePlan
+            base:
+              addressVerification: 5
+              annualFee:
+                amount: 9900
+                billInMonth: june
+              batch: 1500
+              chargeback: 2500
+              earlyTermination: 57500
+              maintenance: 500
+              merchantAdvantage: 10
+              minimum: 100
+              pciNonCompliance: 4995
+              platinumSecurity:
+                billingFrequency: monthly
+              regulatoryAssistanceProgram: 15
+              retrieval: 1500
+              voiceAuthorization: 95
+            country: US
+            gateway:
+              fees:
+                monthly: 2000
+                perDeviceMonthly: 10
+                perTransaction: 2000
+                setup: 5000
+            key: Your-Unique-Identifier
+            metadata:
+              yourCustomField: abc123
+            processor:
+              ach:
+                fees:
+                  accountVerification: 10
+                  batch: 5
+                  discountRateAbove10000: 10
+                  discountRateUnder10000: 5.25
+                  monthlyMinimum: 20000
+                  returns: 400
+                  statement: 800
+                  transaction: 50
+                  unauthorizedReturn: 1999
+              card:
+                fees:
+                  mastercardVisaDiscover: {}
+                planType: interchangePlus
+      method: PUT
+      path: /pricing-intents/{pricingIntentId}
+      request:
+        body: root.PricingIntent
+        content-type: application/json
+        name: UpdatePricingIntentsRequest
+        path-parameters:
+          pricingIntentId:
+            docs: Unique identifier of the pricing intent.
+            type: string
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+  source:
+    openapi: openapi/external/universal-api-v1.yaml

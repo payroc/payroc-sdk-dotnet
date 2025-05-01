@@ -1,0 +1,1065 @@
+imports:
+  root: ../__package__.yml
+types:
+  BankTransferPaymentRequestPaymentMethod:
+    base-properties: {}
+    discriminant: type
+    docs: Object that contains information about the customer's payment details.
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+    union:
+      ach:
+        type: root.AchPayload
+      pad:
+        type: root.PadPayload
+      secureToken:
+        type: root.SecureTokenPayload
+      singleUseToken:
+        type: root.SingleUseTokenPayload
+  ListBankTransferPaymentsRequestSettlementState:
+    enum:
+      - settled
+      - unsettled
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+  ListBankTransferPaymentsRequestStatusItem:
+    enum:
+      - ready
+      - pending
+      - declined
+      - complete
+      - admin
+      - reversal
+      - returned
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+  ListBankTransferPaymentsRequestTypeItem:
+    enum:
+      - payment
+      - accountVerification
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+  RepresentmentPaymentMethod:
+    base-properties: {}
+    discriminant: type
+    docs: Object that contains information about the customer's payment details.
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+    union:
+      ach:
+        type: root.AchPayload
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      auth: true
+      display-name: Create payment
+      docs: Run a sale with a customer's bank account details.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Store Token Bank Transfer Payment
+          request:
+            credentialOnFile:
+              tokenize: true
+            customer:
+              contactMethods:
+                - type: email
+                  value: jane.doe@example.com
+              notificationLanguage: en
+            customFields:
+              - name: yourCustomField
+                value: abc123
+            order:
+              amount: 4999
+              breakdown:
+                subtotal: 4347
+                taxes:
+                  - name: Sales Tax
+                    rate: 5
+                tip:
+                  percentage: 10
+                  type: percentage
+              currency: USD
+              description: Large Pepperoni Pizza
+              orderId: OrderRef6543
+            paymentMethod:
+              accountNumber: '1234567890'
+              nameOnAccount: Shara Hazel Hopper
+              routingNumber: '123456789'
+              type: ach
+            processingTerminalId: '1234001'
+          response:
+            body:
+              bankAccount:
+                accountNumber: '123456789'
+                nameOnAccount: Sarah Hazel Hopper
+                routingNumber: '123456789'
+                secCode: web
+                secureToken:
+                  customerName: Sarah Hazel Hopper
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  status: notValidated
+                  token: '296753123456'
+                type: ach
+              customer:
+                contactMethods:
+                  - type: email
+                    value: jane.doe@example.com
+                notificationLanguage: en
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+              order:
+                amount: 4999
+                breakdown:
+                  subtotal: 4347
+                  taxes:
+                    - amount: 217
+                      name: Sales Tax
+                      rate: 5
+                  tip:
+                    amount: 435
+                    percentage: 10
+                    type: percentage
+                currency: USD
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Large Pepperoni Pizza
+                orderId: OrderRef6543
+              paymentId: M2MJOG6O2Y
+              processingTerminalId: '1017'
+              refunds:
+                - amount: 4999
+                  currency: AED
+                  dateTime: '2024-07-14T12:25:00Z'
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  refundId: CD3HN88U9F
+                  responseCode: A
+                  responseMessage: Transaction refunded
+                  status: ready
+              representment:
+                amount: 4999
+                currency: AED
+                dateTime: '2024-07-02T15:30:00Z'
+                link:
+                  href: <uri>
+                  method: get
+                  rel: previous
+                paymentId: M2MJOG6O2Y
+                responseCode: A
+                responseMessage: Transaction approved
+                status: ready
+              returns:
+                - date: '2024-07-02'
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  paymentId: M2MJOG6O2Y
+                  represented: false
+                  returnCode: R11
+                  returnReason: Customer advises not authorized
+              transactionResult:
+                authorizedAmount: 4999
+                currency: USD
+                processorResponseCode: '0'
+                responseCode: A
+                responseMessage: NoError
+                status: ready
+                type: payment
+      method: POST
+      path: /bank-transfer-payments
+      request:
+        body:
+          properties:
+            credentialOnFile: optional<root.CredentialOnFile>
+            customer: optional<root.BankTransferCustomer>
+            customFields:
+              docs: |
+                Array of customField objects.
+              type: optional<list<root.CustomField>>
+            order: root.BankTransferPaymentOrder
+            paymentMethod:
+              docs: >-
+                Object that contains information about the customer's payment
+                details.
+              type: BankTransferPaymentRequestPaymentMethod
+            processingTerminalId:
+              docs: Unique identifier that our gateway assigned to the terminal.
+              type: string
+              validation:
+                maxLength: 50
+                minLength: 4
+        content-type: application/json
+        headers:
+          Idempotency-Key:
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+            name: idempotencyKey
+            type: string
+        name: BankTransferPaymentRequest
+      response:
+        docs: Successful request. We processed the sale.
+        status-code: 201
+        type: root.BankTransferPayment
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    get:
+      auth: true
+      display-name: Retrieve payment
+      docs: Retrieve a specific payment.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Store Token Bank Transfer Payment
+          path-parameters:
+            paymentId: M2MJOG6O2Y
+          response:
+            body:
+              bankAccount:
+                accountNumber: '123456789'
+                nameOnAccount: Sarah Hazel Hopper
+                routingNumber: '123456789'
+                secCode: web
+                secureToken:
+                  customerName: Sarah Hazel Hopper
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  status: notValidated
+                  token: '296753123456'
+                type: ach
+              customer:
+                contactMethods:
+                  - type: email
+                    value: jane.doe@example.com
+                notificationLanguage: en
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+              order:
+                amount: 4999
+                breakdown:
+                  subtotal: 4347
+                  taxes:
+                    - amount: 217
+                      name: Sales Tax
+                      rate: 5
+                  tip:
+                    amount: 435
+                    percentage: 10
+                    type: percentage
+                currency: USD
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Large Pepperoni Pizza
+                orderId: OrderRef6543
+              paymentId: M2MJOG6O2Y
+              processingTerminalId: '1017'
+              refunds:
+                - amount: 4999
+                  currency: AED
+                  dateTime: '2024-07-14T12:25:00Z'
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  refundId: CD3HN88U9F
+                  responseCode: A
+                  responseMessage: Transaction refunded
+                  status: ready
+              representment:
+                amount: 4999
+                currency: AED
+                dateTime: '2024-07-02T15:30:00Z'
+                link:
+                  href: <uri>
+                  method: get
+                  rel: previous
+                paymentId: M2MJOG6O2Y
+                responseCode: A
+                responseMessage: Transaction approved
+                status: ready
+              returns:
+                - date: '2024-07-02'
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  paymentId: M2MJOG6O2Y
+                  represented: false
+                  returnCode: R11
+                  returnReason: Customer advises not authorized
+              transactionResult:
+                authorizedAmount: 4999
+                currency: USD
+                processorResponseCode: '0'
+                responseCode: A
+                responseMessage: NoError
+                status: ready
+                type: payment
+      method: GET
+      path: /bank-transfer-payments/{paymentId}
+      request:
+        name: GetBankTransferPaymentsRequest
+        path-parameters:
+          paymentId:
+            docs: Unique identifier that our gateway assigned to the payment.
+            type: string
+      response:
+        docs: Successful request. Returns the specific payment.
+        status-code: 200
+        type: root.BankTransferPayment
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    list:
+      auth: true
+      display-name: List payments
+      docs: Retrieve a list of payments.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Bank Transfer Payment
+          query-parameters:
+            after: '8516'
+            before: '2571'
+            dateFrom: '2024-07-01T00:00:00Z'
+            dateTo: '2024-07-31T23:59:59Z'
+            last4: '7890'
+            nameOnAccount: Sarah%20Hazel%20Hopper
+            orderId: OrderRef6543
+            processingTerminalId: '1234001'
+            settlementDate: '2024-07-15'
+          response:
+            body:
+              count: 2
+              data:
+                - bankAccount:
+                    accountNumber: '1234567890'
+                    institutionNumber: '543'
+                    nameOnAccount: Sarah Hazel Hopper
+                    secureToken:
+                      customerName: Sarah Hazel Hopper
+                      link:
+                        href: <uri>
+                        method: get
+                        rel: previous
+                      secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                      status: notValidated
+                      token: '296753123456'
+                    transitNumber: '76543'
+                    type: pad
+                  customer:
+                    contactMethods:
+                      - type: email
+                        value: jane.doe@example.com
+                    notificationLanguage: en
+                  customFields:
+                    - name: yourCustomField
+                      value: abc123
+                  order:
+                    amount: 4999
+                    breakdown:
+                      subtotal: 4347
+                      taxes:
+                        - amount: 217
+                          name: Sales Tax
+                          rate: 5
+                      tip:
+                        amount: 435
+                        percentage: 10
+                        type: percentage
+                    currency: USD
+                    dateTime: '2024-07-02T15:30:00Z'
+                    description: Large Pepperoni Pizza
+                    orderId: OrderRef6543
+                  paymentId: M2MJOG6O2Y
+                  processingTerminalId: '1234001'
+                  refunds:
+                    - amount: 4999
+                      currency: AED
+                      dateTime: '2024-07-14T12:25:00Z'
+                      link:
+                        href: <uri>
+                        method: get
+                        rel: previous
+                      refundId: CD3HN88U9F
+                      responseCode: A
+                      responseMessage: Transaction refunded
+                      status: ready
+                  representment:
+                    amount: 4999
+                    currency: AED
+                    dateTime: '2024-07-02T15:30:00Z'
+                    link:
+                      href: <uri>
+                      method: get
+                      rel: previous
+                    paymentId: M2MJOG6O2Y
+                    responseCode: A
+                    responseMessage: Transaction approved
+                    status: ready
+                  returns:
+                    - date: '2024-07-02'
+                      link:
+                        href: <uri>
+                        method: get
+                        rel: previous
+                      paymentId: M2MJOG6O2Y
+                      represented: false
+                      returnCode: R11
+                      returnReason: Customer advises not authorized
+                  transactionResult:
+                    authorizedAmount: 4999
+                    currency: USD
+                    processorResponseCode: A
+                    responseCode: A
+                    responseMessage: Payment Approved
+                    status: ready
+                    type: payment
+                - bankAccount:
+                    accountNumber: '1234567890'
+                    institutionNumber: '543'
+                    nameOnAccount: Sarah Hazel Hopper
+                    secureToken:
+                      customerName: Sarah Hazel Hopper
+                      link:
+                        href: <uri>
+                        method: get
+                        rel: previous
+                      secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                      status: notValidated
+                      token: '296753123456'
+                    transitNumber: '76543'
+                    type: pad
+                  customer:
+                    contactMethods:
+                      - type: email
+                        value: jane.doe@example.com
+                    notificationLanguage: en
+                  customFields:
+                    - name: yourCustomField
+                      value: abc123
+                  order:
+                    amount: 3999
+                    breakdown:
+                      subtotal: 3477
+                      taxes:
+                        - amount: 174
+                          name: Sales Tax
+                          rate: 5
+                      tip:
+                        amount: 348
+                        percentage: 10
+                        type: percentage
+                    currency: USD
+                    dateTime: '2024-07-02T15:30:00Z'
+                    description: test
+                    orderId: OrderRef7654
+                  paymentId: E29U8OU8Q4
+                  processingTerminalId: '1234001'
+                  refunds:
+                    - amount: 4999
+                      currency: AED
+                      dateTime: '2024-07-14T12:25:00Z'
+                      link:
+                        href: <uri>
+                        method: get
+                        rel: previous
+                      refundId: CD3HN88U9F
+                      responseCode: A
+                      responseMessage: Transaction refunded
+                      status: ready
+                  representment:
+                    amount: 4999
+                    currency: AED
+                    dateTime: '2024-07-02T15:30:00Z'
+                    link:
+                      href: <uri>
+                      method: get
+                      rel: previous
+                    paymentId: M2MJOG6O2Y
+                    responseCode: A
+                    responseMessage: Transaction approved
+                    status: ready
+                  returns:
+                    - date: '2024-07-02'
+                      link:
+                        href: <uri>
+                        method: get
+                        rel: previous
+                      paymentId: M2MJOG6O2Y
+                      represented: false
+                      returnCode: R11
+                      returnReason: Customer advises not authorized
+                  transactionResult:
+                    authorizedAmount: 3999
+                    currency: USD
+                    processorResponseCode: A
+                    responseCode: A
+                    responseMessage: Payment Approved
+                    status: ready
+                    type: payment
+              hasMore: true
+              limit: 2
+              links:
+                - href: >-
+                    https://api.payroc.com/v1/bank-transfer-payments?limit=2&processingTerminalId=1234001&after=E29U8OU8Q4
+                  method: get
+                  rel: next
+                - href: >-
+                    https://api.payroc.com/v1//bank-transfer-payments?limit=2&processingTerminalId=1234001&before=M2MJOG6O2Y
+                  method: get
+                  rel: previous
+        - name: No records found
+          query-parameters:
+            after: '8516'
+            before: '2571'
+            dateFrom: '2024-07-01T00:00:00Z'
+            dateTo: '2024-07-31T23:59:59Z'
+            last4: '7890'
+            nameOnAccount: Sarah%20Hazel%20Hopper
+            orderId: OrderRef6543
+            processingTerminalId: '1234001'
+            settlementDate: '2024-07-15'
+          response:
+            body:
+              count: 0
+              hasMore: false
+              limit: 10
+              links:
+                - href: <uri>
+                  method: get
+                  rel: previous
+                - href: <uri>
+                  method: get
+                  rel: next
+      method: GET
+      pagination:
+        results: $response.data
+        type: custom
+      path: /bank-transfer-payments
+      request:
+        name: ListBankTransferPaymentsRequest
+        query-parameters:
+          after:
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results after. Typically, this is the last resource on the
+              previous page.
+            type: optional<string>
+          before:
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results before. Typically, this is the first resource on the
+              previous page.
+            type: optional<string>
+          dateFrom:
+            docs: >-
+              Filter by payments that the merchant ran after a specific date.
+              The date follows the ISO 8601 standard.
+            type: optional<datetime>
+          dateTo:
+            docs: >-
+              Filter by payments that the merchant ran before a specific date.
+              The date follows the ISO 8601 standard.
+            type: optional<datetime>
+          last4:
+            docs: Filter payments by the last four digits of the account number.
+            type: optional<string>
+            validation:
+              pattern: '[0-9]{4}'
+          limit:
+            default: 10
+            docs: States the total amount of results the response is limited to.
+            type: optional<integer>
+            validation:
+              max: 100
+          nameOnAccount:
+            docs: Filter payments by the account holder's name.
+            type: optional<string>
+            validation:
+              maxLength: 50
+              minLength: 1
+          orderId:
+            docs: Filter payments by the order ID.
+            type: optional<string>
+            validation:
+              maxLength: 24
+              minLength: 1
+          processingTerminalId:
+            docs: >-
+              Filter payments by the unique identifier that our gateway assigned
+              to the terminal.
+            type: string
+            validation:
+              maxLength: 50
+              minLength: 4
+          settlementDate:
+            docs: >-
+              Filter by payments settled on a specific date. The format is in
+              **YYYY-MM-DD**.
+            type: optional<string>
+            validation:
+              format: date
+          settlementState:
+            docs: Filter by the settlement status of the payment.
+            type: optional<ListBankTransferPaymentsRequestSettlementState>
+          status:
+            allow-multiple: true
+            docs: Filter by the status of the payment.
+            type: optional<ListBankTransferPaymentsRequestStatusItem>
+          type:
+            allow-multiple: true
+            docs: Filter payments by transaction type.
+            type: optional<ListBankTransferPaymentsRequestTypeItem>
+      response:
+        docs: Successful request. Returns a list of payments.
+        status-code: 200
+        type: root.BankTransferPaymentPaginatedList
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    refund:
+      auth: true
+      display-name: Refund payment
+      docs: Refund a payment.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Reverse Bank Transfer Payment
+          path-parameters:
+            paymentId: M2MJOG6O2Y
+          request:
+            amount: 4999
+            description: amount to refund
+          response:
+            body:
+              bankAccount:
+                accountNumber: '1234567890'
+                institutionNumber: '543'
+                nameOnAccount: Sarah Hazel Hopper
+                secureToken:
+                  customerName: Sarah Hazel Hopper
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  status: notValidated
+                  token: '296753123456'
+                transitNumber: '76543'
+                type: pad
+              customer:
+                contactMethods:
+                  - type: email
+                    value: jane.doe@example.com
+                notificationLanguage: en
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+              order:
+                amount: 4999
+                breakdown:
+                  subtotal: 4347
+                  taxes:
+                    - amount: 217
+                      name: Sales Tax
+                      rate: 5
+                  tip:
+                    amount: 435
+                    percentage: 10
+                    type: percentage
+                currency: USD
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Refund for order OrderRef6543
+                orderId: OrderRef6543
+              paymentId: M2MJOG6O2Y
+              processingTerminalId: '1234001'
+              refunds:
+                - amount: 4999
+                  currency: AED
+                  dateTime: '2024-07-14T12:25:00Z'
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  refundId: CD3HN88U9F
+                  responseCode: A
+                  responseMessage: Transaction refunded
+                  status: ready
+              representment:
+                amount: 4999
+                currency: AED
+                dateTime: '2024-07-02T15:30:00Z'
+                link:
+                  href: <uri>
+                  method: get
+                  rel: previous
+                paymentId: M2MJOG6O2Y
+                responseCode: A
+                responseMessage: Transaction approved
+                status: ready
+              returns:
+                - date: '2024-07-02'
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  paymentId: M2MJOG6O2Y
+                  represented: false
+                  returnCode: R11
+                  returnReason: Customer advises not authorized
+              transactionResult:
+                authorizedAmount: 4999
+                currency: USD
+                processorResponseCode: A
+                responseCode: A
+                responseMessage: Payment Approved
+                status: reversal
+                type: payment
+      method: POST
+      path: /bank-transfer-payments/{paymentId}/refund
+      request:
+        body:
+          properties:
+            amount:
+              docs: >-
+                Total amount of the refund. The value is in the currency's
+                lowest denomination, for example, cents.
+              type: long
+            description:
+              docs: Description of the refund.
+              type: string
+              validation:
+                maxLength: 100
+                minLength: 1
+        content-type: application/json
+        headers:
+          Idempotency-Key:
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+            name: idempotencyKey
+            type: string
+        name: BankTransferReferencedRefund
+        path-parameters:
+          paymentId:
+            docs: Unique identifier that our gateway assigned to the payment.
+            type: string
+      response:
+        docs: Successful request. We refunded the payment.
+        status-code: 200
+        type: root.BankTransferPayment
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    represent:
+      auth: true
+      display-name: Re-present payment
+      docs: >-
+        Re-present a customer's bank account details if the first payment was
+        declined.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Store Token Bank Transfer Payment
+          path-parameters:
+            paymentId: M2MJOG6O2Y
+          request:
+            paymentMethod:
+              accountNumber: '1234567890'
+              nameOnAccount: Shara Hazel Hopper
+              routingNumber: '123456789'
+              type: ach
+          response:
+            body:
+              bankAccount:
+                accountNumber: '123456789'
+                nameOnAccount: Sarah Hazel Hopper
+                routingNumber: '123456789'
+                secCode: web
+                secureToken:
+                  customerName: Sarah Hazel Hopper
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  status: notValidated
+                  token: '296753123456'
+                type: ach
+              customer:
+                contactMethods:
+                  - type: email
+                    value: jane.doe@example.com
+                notificationLanguage: en
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+              order:
+                amount: 4999
+                breakdown:
+                  subtotal: 4347
+                  taxes:
+                    - amount: 217
+                      name: Sales Tax
+                      rate: 5
+                  tip:
+                    amount: 435
+                    percentage: 10
+                    type: percentage
+                currency: USD
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Large Pepperoni Pizza
+                orderId: OrderRef6543
+              paymentId: M2MJOG6O2Y
+              processingTerminalId: '1017'
+              refunds:
+                - amount: 4999
+                  currency: AED
+                  dateTime: '2024-07-14T12:25:00Z'
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  refundId: CD3HN88U9F
+                  responseCode: A
+                  responseMessage: Transaction refunded
+                  status: ready
+              representment:
+                amount: 4999
+                currency: AED
+                dateTime: '2024-07-02T15:30:00Z'
+                link:
+                  href: <uri>
+                  method: get
+                  rel: previous
+                paymentId: M2MJOG6O2Y
+                responseCode: A
+                responseMessage: Transaction approved
+                status: ready
+              returns:
+                - date: '2024-07-02'
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  paymentId: M2MJOG6O2Y
+                  represented: false
+                  returnCode: R11
+                  returnReason: Customer advises not authorized
+              transactionResult:
+                authorizedAmount: 4999
+                currency: USD
+                processorResponseCode: '0'
+                responseCode: A
+                responseMessage: NoError
+                status: ready
+                type: payment
+      method: POST
+      path: /bank-transfer-payments/{paymentId}/represent
+      request:
+        body:
+          properties:
+            paymentMethod:
+              docs: >-
+                Object that contains information about the customer's payment
+                details.
+              type: RepresentmentPaymentMethod
+        content-type: application/json
+        headers:
+          Idempotency-Key:
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+            name: idempotencyKey
+            type: string
+        name: Representment
+        path-parameters:
+          paymentId:
+            docs: Unique identifier that our gateway assigned to the payment.
+            type: string
+      response:
+        docs: Successful request. We processed the payment.
+        status-code: 200
+        type: root.BankTransferPayment
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    reverse:
+      auth: true
+      display-name: Reverse payment
+      docs: Cancel a payment in an open batch.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Reverse Bank Transfer Payment
+          path-parameters:
+            paymentId: M2MJOG6O2Y
+          response:
+            body:
+              bankAccount:
+                accountNumber: '1234567890'
+                institutionNumber: '543'
+                nameOnAccount: Sarah Hazel Hopper
+                secureToken:
+                  customerName: Sarah Hazel Hopper
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  status: notValidated
+                  token: '296753123456'
+                transitNumber: '76543'
+                type: pad
+              customer:
+                contactMethods:
+                  - type: email
+                    value: jane.doe@example.com
+                notificationLanguage: en
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+              order:
+                amount: 4999
+                breakdown:
+                  subtotal: 4347
+                  taxes:
+                    - amount: 217
+                      name: VAT
+                      rate: 5
+                  tip:
+                    percentage: 10
+                    type: percentage
+                currency: USD
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Large Pepperoni Pizza
+                orderId: OrderRef6543
+              paymentId: M2MJOG6O2Y
+              processingTerminalId: '1234001'
+              refunds:
+                - amount: 4999
+                  currency: AED
+                  dateTime: '2024-07-14T12:25:00Z'
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  refundId: CD3HN88U9F
+                  responseCode: A
+                  responseMessage: Transaction refunded
+                  status: ready
+              representment:
+                amount: 4999
+                currency: AED
+                dateTime: '2024-07-02T15:30:00Z'
+                link:
+                  href: <uri>
+                  method: get
+                  rel: previous
+                paymentId: M2MJOG6O2Y
+                responseCode: A
+                responseMessage: Transaction approved
+                status: ready
+              returns:
+                - date: '2024-07-02'
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  paymentId: M2MJOG6O2Y
+                  represented: false
+                  returnCode: R11
+                  returnReason: Customer advises not authorized
+              transactionResult:
+                authorizedAmount: 4999
+                currency: USD
+                processorResponseCode: A
+                responseCode: A
+                responseMessage: Payment Approved
+                status: reversal
+                type: payment
+      method: POST
+      path: /bank-transfer-payments/{paymentId}/reverse
+      request:
+        headers:
+          Idempotency-Key:
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+            name: idempotencyKey
+            type: string
+        name: ReverseBankTransferPaymentsRequest
+        path-parameters:
+          paymentId:
+            docs: Unique identifier that our gateway assigned to the payment.
+            type: string
+      response:
+        docs: Successful request. We voided the payment.
+        status-code: 200
+        type: root.BankTransferPayment
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+  source:
+    openapi: openapi/external/universal-api-v1.yaml

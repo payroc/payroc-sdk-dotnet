@@ -1,0 +1,117 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    delete:
+      auth: true
+      display-name: Delete contact
+      docs: Delete a contact.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            contactId: 1
+      method: DELETE
+      path: /contacts/{contactId}
+      request:
+        name: DeleteContactsRequest
+        path-parameters:
+          contactId:
+            docs: Unique identifier for the contact.
+            type: integer
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    get:
+      auth: true
+      display-name: Retrieve contact
+      docs: Retrieve a specific contact.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: Contact object
+          path-parameters:
+            contactId: 1
+          response:
+            body:
+              contactId: 1543
+              contactMethods:
+                - type: email
+                  value: jane.doe@example.com
+                - type: phone
+                  value: '2025550164'
+                - type: mobile
+                  value: '8445557624'
+                - type: fax
+                  value: '2025550110'
+              firstName: Jane
+              identifiers:
+                - type: nationalId
+                  value: xxxxx4320
+              lastName: Doe
+              middleName: Helen
+              type: manager
+      method: GET
+      path: /contacts/{contactId}
+      request:
+        name: GetContactsRequest
+        path-parameters:
+          contactId:
+            docs: Unique identifier for the contact.
+            type: integer
+      response:
+        docs: Successful request. Returns the requested contact.
+        status-code: 200
+        type: root.Contact
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    update:
+      auth: true
+      display-name: Update contact
+      docs: Update a specific contact.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Update contact
+          path-parameters:
+            contactId: 1
+          request:
+            contactMethods:
+              - type: email
+                value: jane.doe@example.com
+            firstName: Jane
+            identifiers:
+              - type: nationalId
+                value: 000-00-4320
+            lastName: Doe
+            middleName: Helen
+            type: manager
+      method: PUT
+      path: /contacts/{contactId}
+      request:
+        body:
+          type: root.Contact
+        content-type: application/json
+        name: UpdateContactsRequest
+        path-parameters:
+          contactId:
+            docs: Unique identifier for the contact.
+            type: integer
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+  source:
+    openapi: openapi/external/universal-api-v1.yaml

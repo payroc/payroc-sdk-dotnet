@@ -1,0 +1,137 @@
+imports:
+  root: ../__package__.yml
+types:
+  SingleUseTokenRequestChannel:
+    docs: Channel that the merchant used to receive the payment details.
+    enum:
+      - pos
+      - web
+      - moto
+    inline: true
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+  SingleUseTokenRequestSource:
+    base-properties: {}
+    discriminant: type
+    docs: Object that contains information about the payment method to tokenize.
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+    union:
+      ach:
+        type: root.AchPayload
+      card:
+        type: root.CardPayload
+      pad:
+        type: root.PadPayload
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      auth: true
+      display-name: Create single use token
+      docs: Create a single-use token. The token expires after 30 minutes.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Single Use Token Response
+          path-parameters:
+            processingTerminalId: '1234001'
+          request:
+            channel: web
+            operator: Jane
+            source:
+              cardDetails:
+                device:
+                  model: bbposChp
+                  serialNumber: PAX123456789
+                entryMethod: raw
+                rawData: >-
+                  A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+              type: card
+          response:
+            body:
+              expiresAt: '2024-08-05T17:50:05Z'
+              operator: Jane
+              paymentMethod:
+                accountType: checking
+                cardDetails:
+                  cardholderSignature: >-
+                    a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                  device:
+                    config:
+                      quickChip: false
+                    firmwareVersion: v1.2.3
+                    model: bbposChp
+                    serialNumber: PAX123456789
+                  downgradeTo: keyed
+                  entryMethod: raw
+                  rawData: >-
+                    A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+                type: card
+              processingTerminalId: '1234001'
+              source:
+                cardholderName: Sarah Hazel Hopper
+                cardNumber: '4539858876047062'
+                cardType: cardType
+                currency: AED
+                debit: true
+                expiryDate: '1225'
+                surcharging:
+                  allowed: true
+                  amount: 87
+                  disclosure: A 3% surcharge is applied to cover processing fees.
+                  percentage: 3
+                type: card
+              token: >-
+                fa2e9e51bc5265a33a5ca41449524d53d1def596ffd8c0904f222183a71a65cdb58835120a65196a48a6375abc4deafe2b7e948689ab9d6aba919e860f32e247
+      method: POST
+      path: /processing-terminals/{processingTerminalId}/single-use-tokens
+      request:
+        body:
+          properties:
+            channel:
+              docs: Channel that the merchant used to receive the payment details.
+              type: SingleUseTokenRequestChannel
+            operator:
+              docs: Operator who initiated the request.
+              type: optional<string>
+              validation:
+                maxLength: 50
+                minLength: 1
+            source:
+              docs: >-
+                Object that contains information about the payment method to
+                tokenize.
+              type: SingleUseTokenRequestSource
+        content-type: application/json
+        headers:
+          Idempotency-Key:
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+            name: idempotencyKey
+            type: string
+        name: SingleUseTokenRequest
+        path-parameters:
+          processingTerminalId:
+            docs: Unique identifier that our gateway assigned to the terminal.
+            type: string
+      response:
+        docs: Successful request. We created the single-use token.
+        status-code: 201
+        type: root.SingleUseToken
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+  source:
+    openapi: openapi/external/universal-api-v1.yaml

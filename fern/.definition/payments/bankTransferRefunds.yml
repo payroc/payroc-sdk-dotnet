@@ -1,0 +1,593 @@
+imports:
+  root: ../__package__.yml
+types:
+  BankTransferUnreferencedRefundRefundMethod:
+    base-properties: {}
+    discriminant: type
+    docs: >-
+      Object that contains information about how the merchant refunds the
+      customer.
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+    union:
+      ach:
+        type: root.AchPayload
+      pad:
+        type: root.SecureTokenPayload
+  ListBankTransferRefundsRequestSettlementState:
+    enum:
+      - settled
+      - unsettled
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+  ListBankTransferRefundsRequestStatusItem:
+    enum:
+      - ready
+      - pending
+      - declined
+      - complete
+      - admin
+      - reversal
+      - returned
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+  ListBankTransferRefundsRequestTypeItem:
+    enum:
+      - refund
+      - unreferencedRefund
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      auth: true
+      display-name: Create refund
+      docs: >
+        Send a refund to a customer's bank account. The refund transaction is
+        not linked to the previous transaction.  
+
+        *Note**: This function is available to only certain merchant accounts.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Bank Transfer Unreferenced Refund
+          request:
+            customFields:
+              - name: yourCustomField
+                value: abc123
+            order:
+              amount: 4999
+              currency: USD
+              description: Refund for order OrderRef6543
+              orderId: OrderRef6543
+            processingTerminalId: '1234001'
+            refundMethod:
+              accountNumber: '1234567890'
+              nameOnAccount: Shara Hazel Hopper
+              routingNumber: '123456789'
+              type: ach
+          response:
+            body:
+              bankAccount:
+                accountNumber: '123456789'
+                nameOnAccount: Sarah Hazel Hopper
+                routingNumber: '123456789'
+                secCode: web
+                secureToken:
+                  customerName: Sarah Hazel Hopper
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  status: notValidated
+                  token: '296753123456'
+                type: ach
+              customer:
+                contactMethods:
+                  - type: email
+                    value: jane.doe@example.com
+                notificationLanguage: en
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+              order:
+                amount: 4999
+                currency: USD
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Refund for order OrderRef6543
+                orderId: OrderRef6543
+              payment:
+                amount: 4999
+                currency: AED
+                dateTime: '2024-07-02T15:30:00Z'
+                link:
+                  href: <uri>
+                  method: get
+                  rel: previous
+                paymentId: M2MJOG6O2Y
+                responseCode: A
+                responseMessage: Transaction approved
+                status: ready
+              processingTerminalId: '1234001'
+              refundId: CD3HN88U9F
+              transactionResult:
+                authorizedAmount: -4999
+                currency: USD
+                processorResponseCode: '0'
+                responseCode: A
+                responseMessage: NoError
+                status: ready
+                type: unreferencedRefund
+      method: POST
+      path: /bank-transfer-refunds
+      request:
+        body:
+          properties:
+            customFields:
+              docs: |
+                Array of customField objects.
+              type: optional<list<root.CustomField>>
+            order: root.BankTransferRefundOrder
+            processingTerminalId:
+              docs: Unique identifier that our gateway assigned to the terminal.
+              type: string
+              validation:
+                maxLength: 50
+                minLength: 4
+            refundMethod:
+              docs: >-
+                Object that contains information about how the merchant refunds
+                the customer.
+              type: BankTransferUnreferencedRefundRefundMethod
+        content-type: application/json
+        headers:
+          Idempotency-Key:
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+            name: idempotencyKey
+            type: string
+        name: BankTransferUnreferencedRefund
+      response:
+        docs: Successful request. We sent the refund to the customer's bank account.
+        status-code: 201
+        type: root.BankTransferRefund
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    get:
+      auth: true
+      display-name: Retrieve refund
+      docs: Return a specific refund transaction.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Bank Transfer Unreferenced Refund
+          path-parameters:
+            refundId: CD3HN88U9F
+          response:
+            body:
+              bankAccount:
+                accountNumber: '123456789'
+                nameOnAccount: Sarah Hazel Hopper
+                routingNumber: '123456789'
+                secCode: web
+                secureToken:
+                  customerName: Sarah Hazel Hopper
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  status: notValidated
+                  token: '296753123456'
+                type: ach
+              customer:
+                contactMethods:
+                  - type: email
+                    value: jane.doe@example.com
+                notificationLanguage: en
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+              order:
+                amount: 4999
+                currency: USD
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Refund for order OrderRef6543
+                orderId: OrderRef6543
+              payment:
+                amount: 4999
+                currency: AED
+                dateTime: '2024-07-02T15:30:00Z'
+                link:
+                  href: <uri>
+                  method: get
+                  rel: previous
+                paymentId: M2MJOG6O2Y
+                responseCode: A
+                responseMessage: Transaction approved
+                status: ready
+              processingTerminalId: '1234001'
+              refundId: CD3HN88U9F
+              transactionResult:
+                authorizedAmount: -4999
+                currency: USD
+                processorResponseCode: '0'
+                responseCode: A
+                responseMessage: NoError
+                status: ready
+                type: unreferencedRefund
+      method: GET
+      path: /bank-transfer-refunds/{refundId}
+      request:
+        name: GetBankTransferRefundsRequest
+        path-parameters:
+          refundId:
+            docs: Unique identifier that our gateway assigned to the refund.
+            type: string
+      response:
+        docs: Successful request. Returns the specific refund.
+        status-code: 200
+        type: root.BankTransferRefund
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    list:
+      auth: true
+      display-name: List refunds
+      docs: Return a list of refund transactions.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Paginated Bank Transfer Unreferenced Refund
+          query-parameters:
+            after: '8516'
+            before: '2571'
+            dateFrom: '2024-07-01T00:00:00Z'
+            dateTo: '2024-07-31T23:59:59Z'
+            last4: '7062'
+            nameOnAccount: Sarah%20Hazel%20Hopper
+            orderId: OrderRef6543
+            processingTerminalId: '1234001'
+            settlementDate: '2024-07-15'
+          response:
+            body:
+              count: 2
+              data:
+                - bankAccount:
+                    accountNumber: '123456789'
+                    nameOnAccount: Sarah Hazel Hopper
+                    routingNumber: '123456789'
+                    secureToken:
+                      customerName: Sarah Hazel Hopper
+                      link:
+                        href: <uri>
+                        method: get
+                        rel: previous
+                      secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                      status: notValidated
+                      token: '296753123456'
+                    type: ach
+                  customer:
+                    contactMethods:
+                      - type: email
+                        value: jane.doe@example.com
+                    notificationLanguage: en
+                  customFields:
+                    - name: yourCustomField
+                      value: abc123
+                  order:
+                    amount: 4999
+                    currency: USD
+                    dateTime: '2024-07-02T15:30:00Z'
+                    description: refund example
+                    orderId: OrderRef6543
+                  payment:
+                    amount: 4999
+                    currency: AED
+                    dateTime: '2024-07-02T15:30:00Z'
+                    link:
+                      href: <uri>
+                      method: get
+                      rel: previous
+                    paymentId: M2MJOG6O2Y
+                    responseCode: A
+                    responseMessage: Transaction approved
+                    status: ready
+                  processingTerminalId: '1234001'
+                  refundId: CD3HN88U9F
+                  transactionResult:
+                    authorizedAmount: -4999
+                    currency: USD
+                    processorResponseCode: '0'
+                    responseCode: A
+                    responseMessage: NoError
+                    status: ready
+                    type: unreferencedRefund
+                - bankAccount:
+                    accountNumber: '123456789'
+                    nameOnAccount: Sarah Hazel Hopper
+                    routingNumber: '123456789'
+                    secureToken:
+                      customerName: Sarah Hazel Hopper
+                      link:
+                        href: <uri>
+                        method: get
+                        rel: previous
+                      secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                      status: notValidated
+                      token: '296753123456'
+                    type: ach
+                  customer:
+                    contactMethods:
+                      - type: email
+                        value: jane.doe@example.com
+                    notificationLanguage: en
+                  customFields:
+                    - name: yourCustomField
+                      value: abc123
+                  order:
+                    amount: 3999
+                    currency: USD
+                    dateTime: '2024-07-02T15:30:00Z'
+                    description: Refund for order OrderRef7654
+                    orderId: OrderRef7654
+                  payment:
+                    amount: 4999
+                    currency: AED
+                    dateTime: '2024-07-02T15:30:00Z'
+                    link:
+                      href: <uri>
+                      method: get
+                      rel: previous
+                    paymentId: M2MJOG6O2Y
+                    responseCode: A
+                    responseMessage: Transaction approved
+                    status: ready
+                  processingTerminalId: '1234001'
+                  refundId: B6ZOFZNVOP
+                  transactionResult:
+                    authorizedAmount: -3999
+                    currency: USD
+                    processorResponseCode: '0'
+                    responseCode: A
+                    responseMessage: NoError
+                    status: ready
+                    type: unreferencedRefund
+              hasMore: true
+              limit: 2
+              links:
+                - href: >-
+                    https://api.payroc.com/v1/bank-transfer-refunds?limit=2&processingTerminalId=1234001&after=B6ZOFZNVOP
+                  method: get
+                  rel: next
+                - href: >-
+                    https://api.payroc.com/v1/bank-transfer-refunds?processingTerminalId=1234001&limit=2&before=CD3HN88U9F
+                  method: get
+                  rel: previous
+        - name: No records found
+          query-parameters:
+            after: '8516'
+            before: '2571'
+            dateFrom: '2024-07-01T00:00:00Z'
+            dateTo: '2024-07-31T23:59:59Z'
+            last4: '7062'
+            nameOnAccount: Sarah%20Hazel%20Hopper
+            orderId: OrderRef6543
+            processingTerminalId: '1234001'
+            settlementDate: '2024-07-15'
+          response:
+            body:
+              count: 0
+              hasMore: false
+              limit: 10
+              links:
+                - href: <uri>
+                  method: get
+                  rel: previous
+                - href: <uri>
+                  method: get
+                  rel: next
+      method: GET
+      pagination:
+        results: $response.data
+        type: custom
+      path: /bank-transfer-refunds
+      request:
+        name: ListBankTransferRefundsRequest
+        query-parameters:
+          after:
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results after. Typically, this is the last resource on the
+              previous page.
+            type: optional<string>
+          before:
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results before. Typically, this is the first resource on the
+              previous page.
+            type: optional<string>
+          dateFrom:
+            docs: >-
+              Filter by refunds that the merchant ran after a specific date. The
+              date format follows the ISO-8601 standard.
+            type: optional<datetime>
+          dateTo:
+            docs: >-
+              Filter by the refunds that the merchant ran before a specific
+              date. The date format follows the ISO-8601 standard.
+            type: optional<datetime>
+          last4:
+            docs: Filter by the last four digits of the account number.
+            type: optional<string>
+            validation:
+              pattern: '[0-9]{4}'
+          limit:
+            default: 10
+            docs: States the total amount of results the response is limited to.
+            type: optional<integer>
+            validation:
+              max: 100
+          nameOnAccount:
+            docs: Filter by the account holder's name.
+            type: optional<string>
+            validation:
+              maxLength: 50
+              minLength: 1
+          orderId:
+            docs: Filter by the order ID.
+            type: optional<string>
+            validation:
+              maxLength: 24
+              minLength: 1
+          processingTerminalId:
+            docs: >-
+              Filter by the unique identifier that our gateway assigned to the
+              terminal.
+            type: string
+            validation:
+              maxLength: 50
+              minLength: 4
+          settlementDate:
+            docs: >-
+              Filter by refund transactions settled on a specific date. The date
+              format is **YYYY-MM-DD**.
+            type: optional<string>
+            validation:
+              format: date
+          settlementState:
+            docs: Filter by the settlement status of the refund.
+            type: optional<ListBankTransferRefundsRequestSettlementState>
+          status:
+            allow-multiple: true
+            docs: Filter by the status of the refund.
+            type: optional<ListBankTransferRefundsRequestStatusItem>
+          type:
+            allow-multiple: true
+            docs: Filter refunds by transaction type.
+            type: optional<ListBankTransferRefundsRequestTypeItem>
+      response:
+        docs: Successful request. Returns a list of refund transactions.
+        status-code: 200
+        type: root.BankTransferRefundPaginatedList
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    reverse:
+      auth: true
+      display-name: Reverse refund
+      docs: Void a refund transaction.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Bank Transfer Unreferenced Refund
+          path-parameters:
+            refundId: CD3HN88U9F
+          response:
+            body:
+              bankAccount:
+                accountNumber: '123456789'
+                nameOnAccount: Sarah Hazel Hopper
+                routingNumber: '123456789'
+                secCode: web
+                secureToken:
+                  customerName: Sarah Hazel Hopper
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  status: notValidated
+                  token: '296753123456'
+                type: ach
+              customer:
+                contactMethods:
+                  - type: email
+                    value: jane.doe@example.com
+                notificationLanguage: en
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+              order:
+                amount: 4999
+                currency: USD
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Refund for order OrderRef6543
+                orderId: OrderRef6543
+              payment:
+                amount: 4999
+                currency: AED
+                dateTime: '2024-07-02T15:30:00Z'
+                link:
+                  href: <uri>
+                  method: get
+                  rel: previous
+                paymentId: M2MJOG6O2Y
+                responseCode: A
+                responseMessage: Transaction approved
+                status: ready
+              processingTerminalId: '1234001'
+              refundId: CD3HN88U9F
+              transactionResult:
+                authorizedAmount: -4999
+                currency: USD
+                processorResponseCode: '0'
+                responseCode: A
+                responseMessage: NoError
+                status: reversal
+                type: unreferencedRefund
+      method: POST
+      path: /bank-transfer-refunds/{refundId}/reverse
+      request:
+        headers:
+          Idempotency-Key:
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+            name: idempotencyKey
+            type: string
+        name: ReverseBankTransferRefundsRequest
+        path-parameters:
+          refundId:
+            docs: Unique identifier that our gateway assigned to the refund.
+            type: string
+      response:
+        docs: Successful request. We reversed the refund transaction.
+        status-code: 200
+        type: root.BankTransferRefund
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+  source:
+    openapi: openapi/external/universal-api-v1.yaml

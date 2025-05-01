@@ -1,0 +1,146 @@
+imports:
+  root: ../__package__.yml
+types:
+  FxRateInquiryChannel:
+    docs: >-
+      Channel that the merchant used to receive payment details for the
+      transaction.
+    enum:
+      - pos
+      - web
+      - moto
+    inline: true
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+  FxRateInquiryPaymentMethod:
+    base-properties: {}
+    discriminant: type
+    docs: Object that contains information about the customer's payment details.
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+    union:
+      card:
+        type: root.CardPayload
+      digitalWallet:
+        type: root.DigitalWalletPayload
+      secureToken:
+        type: root.SecureTokenPayload
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getFxRates:
+      auth: true
+      display-name: Fx rates inquiry
+      docs: >
+        Check if a customer’s card is eligible for Dynamic Currency Conversion
+        (DCC).
+
+        If the card is eligible for DCC, offer currency conversion to the
+        customer during a transaction.  
+
+        **Note:** We offer this through the DCC service, which gives customers a
+        choice to pay in the local currency or their own currency.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Fx-Rate
+          request:
+            baseAmount: 10000
+            baseCurrency: USD
+            channel: web
+            operator: Jane
+            paymentMethod:
+              cardDetails:
+                device:
+                  model: bbposChp
+                  serialNumber: PAX123456789
+                entryMethod: raw
+                rawData: >-
+                  A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+              type: card
+            processingTerminalId: '1234001'
+          response:
+            body:
+              baseAmount: 10000
+              baseCurrency: USD
+              cardInfo:
+                cardNumber: 453985******7062
+                country: country
+                currency: AED
+                debit: true
+                surcharging:
+                  allowed: true
+                  amount: 87
+                  disclosure: A 3% surcharge is applied to cover processing fees.
+                  percentage: 3
+                type: MASTERCARD
+              dccOffer:
+                accepted: true
+                fxAmount: 13612
+                fxCurrency: JPY
+                fxCurrencyCode: '392'
+                fxCurrencyExponent: 0
+                fxRate: 136.1248
+                markup: 3
+                markupText: 3.5% mark-up applied.
+                offerReference: DCC123456789
+                provider: FEXCO
+                source: REUTERS WHOLESALE INTERBANK
+              inquiryResult:
+                causeOfRejection: Service unavailable
+                dccOffered: true
+              operator: Jane
+              processingTerminalId: '1234001'
+      method: POST
+      path: /fx-rates
+      request:
+        body:
+          properties:
+            baseAmount:
+              docs: >-
+                Total amount of the transaction in the local currency. The value
+                is in the currency’s lowest denomination, for example, cents.
+              type: long
+            baseCurrency: root.Currency
+            channel:
+              docs: >-
+                Channel that the merchant used to receive payment details for
+                the transaction.
+              type: FxRateInquiryChannel
+            operator:
+              docs: Operator who ran the transaction.
+              type: optional<string>
+              validation:
+                maxLength: 50
+                minLength: 1
+            paymentMethod:
+              docs: >-
+                Object that contains information about the customer's payment
+                details.
+              type: FxRateInquiryPaymentMethod
+            processingTerminalId:
+              docs: Unique identifier that our gateway assigned to the terminal.
+              type: string
+              validation:
+                maxLength: 50
+                minLength: 4
+        content-type: application/json
+        name: FxRateInquiry
+      response:
+        docs: >-
+          Successful request. Returns the currency conversion rate for the
+          transaction.
+        status-code: 200
+        type: root.FxRate
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+  source:
+    openapi: openapi/external/universal-api-v1.yaml

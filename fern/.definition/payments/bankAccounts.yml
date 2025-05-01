@@ -1,0 +1,96 @@
+imports:
+  root: ../__package__.yml
+types:
+  BankAccountVerificationRequestBankAccount:
+    base-properties: {}
+    discriminant: type
+    docs: Object that contains information about the bank account.
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+    union:
+      ach:
+        type: root.AchPayload
+      pad:
+        type: root.PadPayload
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    verify:
+      auth: true
+      display-name: Verify a bank account
+      docs: Verify the customer's bank account details.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: PAD Bank Account Verification Request
+          request:
+            bankAccount:
+              accountNumber: '1234567890'
+              institutionNumber: '543'
+              nameOnAccount: Sarah Hazel Hopper
+              transitNumber: '76543'
+              type: pad
+            processingTerminalId: '1234001'
+          response:
+            body:
+              processingTerminalId: '1234001'
+              verified: true
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: ACH Bank Account Verification Request
+          request:
+            bankAccount:
+              accountNumber: '1234567890'
+              nameOnAccount: Shara Hazel Hopper
+              routingNumber: '123456789'
+              type: ach
+            processingTerminalId: '1234001'
+          response:
+            body:
+              processingTerminalId: '1234001'
+              verified: true
+      method: POST
+      path: /bank-accounts/verify
+      request:
+        body:
+          properties:
+            bankAccount:
+              docs: Object that contains information about the bank account.
+              type: BankAccountVerificationRequestBankAccount
+            processingTerminalId:
+              docs: Unique identifier that our gateway assigned to the terminal.
+              type: string
+              validation:
+                maxLength: 50
+                minLength: 4
+        content-type: application/json
+        headers:
+          Idempotency-Key:
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+            name: idempotencyKey
+            type: string
+        name: BankAccountVerificationRequest
+      response:
+        docs: >-
+          Successful request. Returns the verification status of the customer's
+          bank account details.
+        status-code: 200
+        type: root.BankAccountVerificationResult
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+  source:
+    openapi: openapi/external/universal-api-v1.yaml

@@ -1,0 +1,287 @@
+imports:
+  root: ../__package__.yml
+types:
+  BalanceInquiryCard:
+    base-properties: {}
+    discriminant: type
+    docs: Object that contains information about the card.
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+    union:
+      card:
+        type: root.CardPayload
+      singleUseToken:
+        type: root.SingleUseTokenPayload
+  BinLookupCard:
+    base-properties: {}
+    discriminant: type
+    docs: Object that contains information about the card.
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+    union:
+      card:
+        type: root.CardPayload
+      cardBin:
+        type: root.CardBinPayload
+      digitalWallet:
+        type: root.DigitalWalletPayload
+      secureToken:
+        type: root.SecureTokenPayload
+  CardVerificationRequestCard:
+    base-properties: {}
+    discriminant: type
+    docs: Object that contains information about the card.
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+    union:
+      card:
+        type: root.CardPayload
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    balance:
+      auth: true
+      display-name: Balance inquiry
+      docs: Request the balance of an Electronic Benefit Transfer (EBT) card.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Card Balance
+          request:
+            card:
+              cardDetails:
+                device:
+                  model: bbposChp
+                  serialNumber: PAX123456789
+                entryMethod: raw
+                rawData: >-
+                  A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+              type: card
+            currency: USD
+            operator: Jane
+            processingTerminalId: '1234001'
+          response:
+            body:
+              card:
+                balances:
+                  - amount: 10000
+                    benefitCategory: cash
+                    currency: USD
+                cardholderName: Sarah Hazel Hopper
+                cardholderSignature: >-
+                  a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                cardNumber: 453985******7062
+                emvTags:
+                  - hex: 9F36
+                    value: '001234'
+                  - hex: 5F2A
+                    value: '0840'
+                entryMethod: keyed
+                expiryDate: '1225'
+                secureToken:
+                  customerName: Sarah Hazel Hopper
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  status: notValidated
+                  token: '296753123456'
+                securityChecks:
+                  avsResult: 'Y'
+                  cvvResult: M
+                type: Common Benefit Identification Card
+              operator: Jane
+              processingTerminalId: '1234001'
+              responseCode: A
+              responseMessage: Approved
+      method: POST
+      path: /cards/balance
+      request:
+        body:
+          properties:
+            card:
+              docs: Object that contains information about the card.
+              type: BalanceInquiryCard
+            currency: root.Currency
+            customer: optional<root.Customer>
+            operator:
+              docs: Operator who requested the balance inquiry.
+              type: optional<string>
+              validation:
+                maxLength: 50
+                minLength: 0
+            processingTerminalId:
+              docs: Unique identifier that our gateway assigned to the terminal.
+              type: string
+              validation:
+                maxLength: 50
+                minLength: 4
+        content-type: application/json
+        name: BalanceInquiry
+      response:
+        docs: Successful request. Returns the current balance of the EBT card.
+        status-code: 200
+        type: root.Balance
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    binLookup:
+      auth: true
+      display-name: Lookup BIN information
+      docs: >-
+        Perform a BIN (Bank Identification Number) lookup to retrieve
+        information about a card.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: BIN lookup
+          request:
+            card:
+              cardDetails:
+                device:
+                  model: bbposChp
+                  serialNumber: PAX123456789
+                entryMethod: raw
+                rawData: >-
+                  A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+              type: card
+            processingTerminalId: '1234001'
+          response:
+            body:
+              cardNumber: 453985******7062
+              country: US
+              currency: USD
+              debit: false
+              surcharging:
+                allowed: true
+                amount: 87
+                disclosure: A 3% surcharge is applied to cover processing fees.
+                percentage: 3
+              type: MASTERCARD
+      method: POST
+      path: /cards/bin-lookup
+      request:
+        body:
+          properties:
+            amount:
+              docs: >
+                The amount in the currency's lowest denomination.  
+
+                If the card is eligible for surcharging, sending this field will
+                allow the gateway to calculate and return the surcharge amount.
+              type: optional<long>
+            card:
+              docs: Object that contains information about the card.
+              type: BinLookupCard
+            currency: optional<root.Currency>
+            processingTerminalId:
+              docs: The terminal number assigned by the gateway.
+              type: optional<string>
+              validation:
+                maxLength: 50
+                minLength: 4
+        content-type: application/json
+        name: BinLookup
+      response:
+        docs: Successful request. Returns the BIN information.
+        status-code: 200
+        type: root.CardInfo
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    verify:
+      auth: true
+      display-name: Verify a card
+      docs: >-
+        Verify that a card is valid. For banks that do not support verification,
+        we charge a micro deposit that we void immediately.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Card Verification
+          request:
+            card:
+              cardDetails:
+                device:
+                  model: bbposChp
+                  serialNumber: PAX123456789
+                entryMethod: raw
+                rawData: >-
+                  A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+              type: card
+            operator: Jane
+            processingTerminalId: '1234001'
+          response:
+            body:
+              dateTime: '2024-07-02T15:30:00Z'
+              operator: Jane
+              processingTerminalId: '1234001'
+              processorResponseCode: A
+              responseCode: A
+              responseMessage: Refer to Card Issuer
+              verified: true
+      method: POST
+      path: /cards/verify
+      request:
+        body:
+          properties:
+            card:
+              docs: Object that contains information about the card.
+              type: CardVerificationRequestCard
+            customer: optional<root.Customer>
+            operator:
+              docs: Operator who requested to verify the card.
+              type: optional<string>
+              validation:
+                maxLength: 50
+                minLength: 0
+            processingTerminalId:
+              docs: Unique identifier that our gateway assigned to the terminal.
+              type: string
+              validation:
+                maxLength: 50
+                minLength: 4
+        content-type: application/json
+        headers:
+          Idempotency-Key:
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+            name: idempotencyKey
+            type: string
+        name: CardVerificationRequest
+      response:
+        docs: >-
+          Successful request. Returns the verification status of the card
+          details.
+        status-code: 200
+        type: root.CardVerificationResult
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+  source:
+    openapi: openapi/external/universal-api-v1.yaml

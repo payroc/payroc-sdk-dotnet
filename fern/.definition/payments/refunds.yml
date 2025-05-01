@@ -1,0 +1,1120 @@
+imports:
+  root: ../__package__.yml
+types:
+  ListRefundsRequestSettlementState:
+    enum:
+      - settled
+      - unsettled
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+  ListRefundsRequestStatusItem:
+    enum:
+      - ready
+      - pending
+      - declined
+      - complete
+      - referral
+      - pickup
+      - reversal
+      - admin
+      - expired
+      - accepted
+      - review
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+  ListRefundsRequestTender:
+    enum:
+      - ebt
+      - creditDebit
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+  RefundAdjustmentAdjustmentsItem:
+    base-properties: {}
+    discriminant: type
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+    union:
+      customer:
+        type: root.CustomerAdjustment
+      status:
+        type: root.StatusAdjustment
+  UnreferencedRefundChannel:
+    docs: Channel that the merchant used to request the refund.
+    enum:
+      - pos
+      - moto
+    inline: true
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+  UnreferencedRefundRefundMethod:
+    base-properties: {}
+    discriminant: type
+    docs: >-
+      Object that contains information about how the merchant refunds the
+      customer.
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+    union:
+      card:
+        type: root.CardPayload
+      secureToken:
+        type: root.SecureTokenPayload
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    adjust:
+      auth: true
+      display-name: Adjust refund
+      docs: Adjust an existing refund.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Adjust Refund
+          path-parameters:
+            refundId: CD3HN88U9F
+          request:
+            adjustments:
+              - type: customer
+            operator: Jane
+          response:
+            body:
+              card:
+                balances:
+                  - amount: 50000
+                    benefitCategory: cash
+                    currency: USD
+                  - amount: 10000
+                    benefitCategory: foodStamp
+                    currency: USD
+                cardholderName: Sarah Hazel Hopper
+                cardholderSignature: >-
+                  a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                cardNumber: 453985******7062
+                emvTags:
+                  - hex: 9F36
+                    value: '001234'
+                  - hex: 5F2A
+                    value: '0840'
+                entryMethod: keyed
+                expiryDate: '1225'
+                secureToken:
+                  customerName: Sarah Hazel Hopper
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  status: notValidated
+                  token: '296753123456'
+                securityChecks:
+                  avsResult: 'Y'
+                  cvvResult: M
+                type: Visa Credit
+              customer:
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  country: US
+                  postalCode: '60056'
+                  state: Illinois
+                contactMethods:
+                  - type: mobile
+                    value: '8445557624'
+                dateOfBirth: '1990-07-15'
+                firstName: Sarah
+                lastName: Hopper
+                notificationLanguage: en
+                referenceNumber: CustomerCode234567
+                shippingAddress:
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    country: US
+                    postalCode: '60056'
+                    state: Illinois
+                  recipientName: Sarah Hopper
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+              operator: Jane
+              order:
+                amount: 4999
+                currency: USD
+                dateTime: '2024-07-02T15:30:00Z'
+                dccOffer:
+                  accepted: true
+                  fxAmount: 3955
+                  fxCurrency: AED
+                  fxCurrencyCode: CAD
+                  fxCurrencyExponent: 2
+                  fxRate: 1.37
+                  markup: 3.5
+                  markupText: 3.5% mark-up applied.
+                  offerReference: DCC123456789
+                  provider: DCC Provider Inc.
+                  source: European Central Bank
+                description: Refund for order OrderRef6543
+                orderId: OrderRef6543
+              payment:
+                amount: 4999
+                currency: AED
+                dateTime: '2024-07-02T15:30:00Z'
+                link:
+                  href: <uri>
+                  method: get
+                  rel: previous
+                paymentId: M2MJOG6O2Y
+                responseCode: A
+                responseMessage: Transaction approved
+                status: ready
+              processingTerminalId: '1234001'
+              refundId: CD3HN88U9F
+              supportedOperations:
+                - capture
+                - refund
+                - fullyReverse
+                - partiallyReverse
+                - incrementAuthorization
+                - adjustTip
+                - addSignature
+                - setAsReady
+                - setAsPending
+                - setAsDeclined
+              transactionResult:
+                approvalCode: '000000'
+                authorizedAmount: -4999
+                cardSchemeReferenceId: cardSchemeReferenceId
+                currency: USD
+                ebtType: cashPurchase
+                processorResponseCode: processorResponseCode
+                responseCode: A
+                responseMessage: OK13
+                status: ready
+                type: refund
+      method: POST
+      path: /refunds/{refundId}/adjust
+      request:
+        body:
+          properties:
+            adjustments:
+              docs: >-
+                Array of objects that contain information about the adjustments
+                to the refund.
+              type: list<RefundAdjustmentAdjustmentsItem>
+            operator:
+              docs: Operator who requested the adjustment to the refund.
+              type: optional<string>
+              validation:
+                maxLength: 50
+                minLength: 0
+        content-type: application/json
+        headers:
+          Idempotency-Key:
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+            name: idempotencyKey
+            type: string
+        name: RefundAdjustment
+        path-parameters:
+          refundId:
+            docs: Unique identifier that our gateway assigned to the refund.
+            type: string
+      response:
+        docs: Successful request. We updated the refund.
+        status-code: 200
+        type: root.Refund
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    create:
+      auth: true
+      display-name: Create refund
+      docs: Create an unreferenced refund.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Refund
+          request:
+            channel: pos
+            customFields:
+              - name: yourCustomField
+                value: abc123
+            order:
+              amount: 4999
+              currency: USD
+              description: Refund for order OrderRef6543
+              orderId: OrderRef6543
+            processingTerminalId: '1234001'
+            refundMethod:
+              cardDetails:
+                device:
+                  model: bbposChp
+                  serialNumber: PAX123456789
+                entryMethod: raw
+                rawData: >-
+                  A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+              type: card
+          response:
+            body:
+              card:
+                balances:
+                  - amount: 50000
+                    benefitCategory: cash
+                    currency: USD
+                  - amount: 10000
+                    benefitCategory: foodStamp
+                    currency: USD
+                cardholderName: Sarah Hazel Hopper
+                cardholderSignature: >-
+                  a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                cardNumber: 453985******7062
+                emvTags:
+                  - hex: 9F36
+                    value: '001234'
+                  - hex: 5F2A
+                    value: '0840'
+                entryMethod: keyed
+                expiryDate: '1225'
+                secureToken:
+                  customerName: Sarah Hazel Hopper
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  status: notValidated
+                  token: '296753123456'
+                securityChecks:
+                  avsResult: 'Y'
+                  cvvResult: M
+                type: Visa Credit
+              customer:
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  country: US
+                  postalCode: '60056'
+                  state: Illinois
+                contactMethods:
+                  - type: email
+                    value: jane.doe@example.com
+                dateOfBirth: '1990-07-15'
+                firstName: Sarah
+                lastName: Hopper
+                notificationLanguage: en
+                referenceNumber: CustomerCode234567
+                shippingAddress:
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    country: US
+                    postalCode: '60056'
+                    state: Illinois
+                  recipientName: Sarah Hopper
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+              operator: Jane
+              order:
+                amount: 4999
+                currency: USD
+                dateTime: '2024-07-02T15:30:00Z'
+                dccOffer:
+                  accepted: true
+                  fxAmount: 3955
+                  fxCurrency: AED
+                  fxCurrencyCode: CAD
+                  fxCurrencyExponent: 2
+                  fxRate: 1.37
+                  markup: 3.5
+                  markupText: 3.5% mark-up applied.
+                  offerReference: DCC123456789
+                  provider: DCC Provider Inc.
+                  source: European Central Bank
+                description: Refund for order OrderRef6543
+                orderId: OrderRef6543
+              payment:
+                amount: 4999
+                currency: AED
+                dateTime: '2024-07-02T15:30:00Z'
+                link:
+                  href: <uri>
+                  method: get
+                  rel: previous
+                paymentId: M2MJOG6O2Y
+                responseCode: A
+                responseMessage: Transaction approved
+                status: ready
+              processingTerminalId: '1234001'
+              refundId: CD3HN88U9F
+              supportedOperations:
+                - capture
+                - refund
+                - fullyReverse
+                - partiallyReverse
+                - incrementAuthorization
+                - adjustTip
+                - addSignature
+                - setAsReady
+                - setAsPending
+                - setAsDeclined
+              transactionResult:
+                approvalCode: '000000'
+                authorizedAmount: -4999
+                cardSchemeReferenceId: cardSchemeReferenceId
+                currency: USD
+                ebtType: cashPurchase
+                processorResponseCode: processorResponseCode
+                responseCode: A
+                responseMessage: OK5
+                status: ready
+                type: refund
+      method: POST
+      path: /refunds
+      request:
+        body:
+          properties:
+            channel:
+              docs: Channel that the merchant used to request the refund.
+              type: UnreferencedRefundChannel
+            customer: optional<root.Customer>
+            customFields:
+              docs: |
+                Array of customField objects.
+              type: optional<list<root.CustomField>>
+            ipAddress: optional<root.IpAddress>
+            operator:
+              docs: Operator who initiated the request.
+              type: optional<string>
+              validation:
+                maxLength: 50
+                minLength: 0
+            order: root.RefundOrder
+            processingTerminalId:
+              docs: Unique identifier that our gateway assigned to the terminal.
+              type: string
+              validation:
+                maxLength: 50
+                minLength: 4
+            refundMethod:
+              docs: >-
+                Object that contains information about how the merchant refunds
+                the customer.
+              type: UnreferencedRefundRefundMethod
+        content-type: application/json
+        headers:
+          Idempotency-Key:
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+            name: idempotencyKey
+            type: string
+        name: UnreferencedRefund
+      response:
+        docs: Successful request. We processed the refund.
+        status-code: 201
+        type: root.Refund
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    get:
+      auth: true
+      display-name: Retrieve refund
+      docs: Retrieve a specific refund.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Refund
+          path-parameters:
+            refundId: CD3HN88U9F
+          response:
+            body:
+              card:
+                balances:
+                  - amount: 50000
+                    benefitCategory: cash
+                    currency: USD
+                  - amount: 10000
+                    benefitCategory: foodStamp
+                    currency: USD
+                cardholderName: Sarah Hazel Hopper
+                cardholderSignature: >-
+                  a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                cardNumber: 453985******7062
+                emvTags:
+                  - hex: 9F36
+                    value: '001234'
+                  - hex: 5F2A
+                    value: '0840'
+                entryMethod: keyed
+                expiryDate: '1225'
+                secureToken:
+                  customerName: Sarah Hazel Hopper
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  status: notValidated
+                  token: '296753123456'
+                securityChecks:
+                  avsResult: 'Y'
+                  cvvResult: M
+                type: Visa Credit
+              customer:
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  country: US
+                  postalCode: '60056'
+                  state: Illinois
+                contactMethods:
+                  - type: email
+                    value: jane.doe@example.com
+                dateOfBirth: '1990-07-15'
+                firstName: Sarah
+                lastName: Hopper
+                notificationLanguage: en
+                referenceNumber: CustomerCode234567
+                shippingAddress:
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    country: US
+                    postalCode: '60056'
+                    state: Illinois
+                  recipientName: Sarah Hopper
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+              operator: Jane
+              order:
+                amount: 4999
+                currency: USD
+                dateTime: '2024-07-02T15:30:00Z'
+                dccOffer:
+                  accepted: true
+                  fxAmount: 3955
+                  fxCurrency: AED
+                  fxCurrencyCode: CAD
+                  fxCurrencyExponent: 2
+                  fxRate: 1.37
+                  markup: 3.5
+                  markupText: 3.5% mark-up applied.
+                  offerReference: DCC123456789
+                  provider: DCC Provider Inc.
+                  source: European Central Bank
+                description: Refund for order OrderRef6543
+                orderId: OrderRef6543
+              payment:
+                amount: 4999
+                currency: AED
+                dateTime: '2024-07-02T15:30:00Z'
+                link:
+                  href: <uri>
+                  method: get
+                  rel: previous
+                paymentId: M2MJOG6O2Y
+                responseCode: A
+                responseMessage: Transaction approved
+                status: ready
+              processingTerminalId: '1234001'
+              refundId: CD3HN88U9F
+              supportedOperations:
+                - capture
+                - refund
+                - fullyReverse
+                - partiallyReverse
+                - incrementAuthorization
+                - adjustTip
+                - addSignature
+                - setAsReady
+                - setAsPending
+                - setAsDeclined
+              transactionResult:
+                approvalCode: '000000'
+                authorizedAmount: -4999
+                cardSchemeReferenceId: cardSchemeReferenceId
+                currency: USD
+                ebtType: cashPurchase
+                processorResponseCode: processorResponseCode
+                responseCode: A
+                responseMessage: OK5
+                status: ready
+                type: refund
+      method: GET
+      path: /refunds/{refundId}
+      request:
+        name: GetRefundsRequest
+        path-parameters:
+          refundId:
+            docs: Unique identifier that our gateway assigned to the refund.
+            type: string
+      response:
+        docs: Successful request. Returns the specific refund.
+        status-code: 200
+        type: root.Refund
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    list:
+      auth: true
+      display-name: List refunds
+      docs: |
+        Return a list of refunds.  
+        To filter your results, use query parameters.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Paginated Refund
+          query-parameters:
+            after: '8516'
+            before: '2571'
+            cardholderName: Sarah%20Hazel%20Hopper
+            dateFrom: '2024-07-01T15:30:00Z'
+            dateTo: '2024-07-03T15:30:00Z'
+            first6: '453985'
+            last4: '7062'
+            operator: Jane
+            orderId: OrderRef6543
+            processingTerminalId: '1234001'
+            settlementDate: '2024-07-02'
+          response:
+            body:
+              count: 2
+              data:
+                - card:
+                    balances:
+                      - amount: 50000
+                        benefitCategory: cash
+                        currency: USD
+                      - amount: 10000
+                        benefitCategory: foodStamp
+                        currency: USD
+                    cardholderName: Sarah Hazel Hopper
+                    cardholderSignature: >-
+                      a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                    cardNumber: 453985******7062
+                    emvTags:
+                      - hex: 9F36
+                        value: '001234'
+                      - hex: 5F2A
+                        value: '0840'
+                    entryMethod: icc
+                    expiryDate: '1225'
+                    secureToken:
+                      customerName: Sarah Hazel Hopper
+                      link:
+                        href: <uri>
+                        method: get
+                        rel: previous
+                      secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                      status: notValidated
+                      token: '296753123456'
+                    type: Visa Credit
+                  customer:
+                    billingAddress:
+                      address1: 1 Example Ave.
+                      address2: Example Address Line 2
+                      address3: Example Address Line 3
+                      city: Chicago
+                      country: US
+                      postalCode: '60056'
+                      state: Illinois
+                    contactMethods:
+                      - type: email
+                        value: jane.doe@example.com
+                    dateOfBirth: '1990-07-15'
+                    firstName: Sarah
+                    lastName: Hopper
+                    referenceNumber: CustomerCode234567
+                  customFields:
+                    - name: yourCustomField
+                      value: abc123
+                  operator: Jane
+                  order:
+                    amount: 4999
+                    currency: USD
+                    dateTime: '2024-07-02T15:30:00Z'
+                    dccOffer:
+                      accepted: true
+                      fxAmount: 3955
+                      fxCurrency: AED
+                      fxCurrencyCode: CAD
+                      fxCurrencyExponent: 2
+                      fxRate: 1.37
+                      markup: 3.5
+                      markupText: 3.5% mark-up applied.
+                      offerReference: DCC123456789
+                      provider: DCC Provider Inc.
+                      source: European Central Bank
+                    description: Refund for order OrderRef6543
+                    orderId: OrderRef6543
+                  payment:
+                    amount: 4999
+                    currency: AED
+                    dateTime: '2024-07-02T15:30:00Z'
+                    link:
+                      href: <uri>
+                      method: get
+                      rel: previous
+                    paymentId: M2MJOG6O2Y
+                    responseCode: A
+                    responseMessage: Transaction approved
+                    status: ready
+                  processingTerminalId: '1234001'
+                  refundId: CD3HN88U9F
+                  supportedOperations:
+                    - capture
+                    - refund
+                    - fullyReverse
+                    - partiallyReverse
+                    - incrementAuthorization
+                    - adjustTip
+                    - addSignature
+                    - setAsReady
+                    - setAsPending
+                    - setAsDeclined
+                  transactionResult:
+                    approvalCode: '000000'
+                    authorizedAmount: -4999
+                    currency: USD
+                    responseCode: A
+                    responseMessage: APPROVAL
+                    status: ready
+                    type: refund
+                - card:
+                    balances:
+                      - amount: 50000
+                        benefitCategory: cash
+                        currency: USD
+                      - amount: 10000
+                        benefitCategory: foodStamp
+                        currency: USD
+                    cardholderName: Sarah Hazel Hopper
+                    cardholderSignature: >-
+                      a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                    cardNumber: 500165******0000
+                    emvTags:
+                      - hex: 9F36
+                        value: '001234'
+                      - hex: 5F2A
+                        value: '0840'
+                    entryMethod: icc
+                    expiryDate: '0328'
+                    secureToken:
+                      customerName: Sarah Hazel Hopper
+                      link:
+                        href: <uri>
+                        method: get
+                        rel: previous
+                      secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                      status: notValidated
+                      token: '296753123456'
+                    type: MasterCard
+                  customer:
+                    billingAddress:
+                      address1: 1 Example Ave.
+                      address2: Example Address Line 2
+                      address3: Example Address Line 3
+                      city: Chicago
+                      country: US
+                      postalCode: '60056'
+                      state: Illinois
+                    contactMethods:
+                      - type: email
+                        value: jane.doe@example.com
+                    dateOfBirth: '1990-07-15'
+                    firstName: Sarah
+                    lastName: Hopper
+                    referenceNumber: CustomerCode234567
+                  customFields:
+                    - name: yourCustomField
+                      value: abc123
+                  operator: Jane
+                  order:
+                    amount: 3999
+                    currency: USD
+                    dateTime: '2024-07-02T15:30:00Z'
+                    dccOffer:
+                      accepted: true
+                      fxAmount: 3955
+                      fxCurrency: AED
+                      fxCurrencyCode: CAD
+                      fxCurrencyExponent: 2
+                      fxRate: 1.37
+                      markup: 3.5
+                      markupText: 3.5% mark-up applied.
+                      offerReference: DCC123456789
+                      provider: DCC Provider Inc.
+                      source: European Central Bank
+                    description: Refund for order OrderRef7654
+                    orderId: OrderRef7654
+                  payment:
+                    amount: 4999
+                    currency: AED
+                    dateTime: '2024-07-02T15:30:00Z'
+                    link:
+                      href: <uri>
+                      method: get
+                      rel: previous
+                    paymentId: M2MJOG6O2Y
+                    responseCode: A
+                    responseMessage: Transaction approved
+                    status: ready
+                  processingTerminalId: '1234001'
+                  refundId: B6ZOFZNVOP
+                  supportedOperations:
+                    - capture
+                    - refund
+                    - fullyReverse
+                    - partiallyReverse
+                    - incrementAuthorization
+                    - adjustTip
+                    - addSignature
+                    - setAsReady
+                    - setAsPending
+                    - setAsDeclined
+                  transactionResult:
+                    approvalCode: '000000'
+                    authorizedAmount: -3999
+                    currency: USD
+                    responseCode: A
+                    responseMessage: APPROVAL
+                    status: reversal
+                    type: refund
+              hasMore: true
+              limit: 2
+              links:
+                - href: >-
+                    https://api.payroc.com/v1/refunds?processingTerminalId=1234001&limit=2&after=B6ZOFZNVOP
+                  method: get
+                  rel: next
+                - href: >-
+                    https://api.payroc.com/v1/refunds?processingTerminalId=1234001&limit=2&before=CD3HN88U9F
+                  method: get
+                  rel: previous
+        - name: No records found
+          query-parameters:
+            after: '8516'
+            before: '2571'
+            cardholderName: Sarah%20Hazel%20Hopper
+            dateFrom: '2024-07-01T15:30:00Z'
+            dateTo: '2024-07-03T15:30:00Z'
+            first6: '453985'
+            last4: '7062'
+            operator: Jane
+            orderId: OrderRef6543
+            processingTerminalId: '1234001'
+            settlementDate: '2024-07-02'
+          response:
+            body:
+              count: 0
+              hasMore: false
+              limit: 10
+              links:
+                - href: <uri>
+                  method: get
+                  rel: previous
+                - href: <uri>
+                  method: get
+                  rel: next
+      method: GET
+      pagination:
+        results: $response.data
+        type: custom
+      path: /refunds
+      request:
+        name: ListRefundsRequest
+        query-parameters:
+          after:
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results after. Typically, this is the last resource on the
+              previous page.
+            type: optional<string>
+          before:
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results before. Typically, this is the first resource on the
+              previous page.
+            type: optional<string>
+          cardholderName:
+            docs: Filter refunds by cardholder name.
+            type: optional<string>
+            validation:
+              maxLength: 50
+              minLength: 1
+          dateFrom:
+            docs: >-
+              Filter by refunds processed after a specific date. The date format
+              follows the ISO 8601 standard.
+            type: optional<datetime>
+          dateTo:
+            docs: >-
+              Filter by refunds processed before a specific date. The date
+              format follows the ISO 8601 standard.
+            type: optional<datetime>
+          first6:
+            docs: Filter refunds by the first six digits of the card number.
+            type: optional<string>
+            validation:
+              pattern: '[0-9]{6}'
+          last4:
+            docs: Filter refunds by the last four digits of the card number.
+            type: optional<string>
+            validation:
+              pattern: '[0-9]{4}'
+          limit:
+            default: 10
+            docs: States the total amount of results the response is limited to.
+            type: optional<integer>
+            validation:
+              max: 100
+          operator:
+            docs: Filter refunds by the operator who initiated the request.
+            type: optional<string>
+            validation:
+              maxLength: 50
+              minLength: 1
+          orderId:
+            docs: >-
+              Filter refunds by the unique identifier that the merchant assigned
+              to the order.
+            type: optional<string>
+            validation:
+              maxLength: 24
+              minLength: 1
+          processingTerminalId:
+            docs: >-
+              Filter refunds by the unique identifier that our gateway assigned
+              to the terminal.
+            type: optional<string>
+            validation:
+              maxLength: 50
+              minLength: 4
+          settlementDate:
+            docs: Date the transaction was settled.
+            type: optional<string>
+            validation:
+              format: date
+          settlementState:
+            docs: Status of the settlement.
+            type: optional<ListRefundsRequestSettlementState>
+          status:
+            allow-multiple: true
+            docs: Filter refunds by the current status of the refund.
+            type: optional<ListRefundsRequestStatusItem>
+          tender:
+            docs: Filter by tender type.
+            type: optional<ListRefundsRequestTender>
+      response:
+        docs: Successful request. Returns a paginated list of refunds.
+        status-code: 200
+        type: root.RefundPaginatedList
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    reverse:
+      auth: true
+      display-name: Reverse refund
+      docs: Void an existing refund.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          name: Reverse Refund
+          path-parameters:
+            refundId: CD3HN88U9F
+          response:
+            body:
+              card:
+                balances:
+                  - amount: 50000
+                    benefitCategory: cash
+                    currency: USD
+                  - amount: 10000
+                    benefitCategory: foodStamp
+                    currency: USD
+                cardholderName: Sarah Hazel Hopper
+                cardholderSignature: >-
+                  a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                cardNumber: 453985******7062
+                emvTags:
+                  - hex: 9F36
+                    value: '001234'
+                  - hex: 5F2A
+                    value: '0840'
+                entryMethod: keyed
+                expiryDate: '1225'
+                secureToken:
+                  customerName: Sarah Hazel Hopper
+                  link:
+                    href: <uri>
+                    method: get
+                    rel: previous
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  status: notValidated
+                  token: '296753123456'
+                securityChecks:
+                  avsResult: 'Y'
+                  cvvResult: M
+                type: Visa Credit
+              customer:
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  country: US
+                  postalCode: '60056'
+                  state: Illinois
+                contactMethods:
+                  - type: email
+                    value: jane.doe@example.com
+                dateOfBirth: '1990-07-15'
+                firstName: Sarah
+                lastName: Hopper
+                notificationLanguage: en
+                referenceNumber: CustomerCode234567
+                shippingAddress:
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    country: US
+                    postalCode: '60056'
+                    state: Illinois
+                  recipientName: Sarah Hopper
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+              operator: Jane
+              order:
+                amount: 4999
+                currency: USD
+                dateTime: '2024-07-02T15:30:00Z'
+                dccOffer:
+                  accepted: true
+                  fxAmount: 3955
+                  fxCurrency: AED
+                  fxCurrencyCode: CAD
+                  fxCurrencyExponent: 2
+                  fxRate: 1.37
+                  markup: 3.5
+                  markupText: 3.5% mark-up applied.
+                  offerReference: DCC123456789
+                  provider: DCC Provider Inc.
+                  source: European Central Bank
+                description: Refund for order OrderRef6543
+                orderId: OrderRef6543
+              payment:
+                amount: 4999
+                currency: AED
+                dateTime: '2024-07-02T15:30:00Z'
+                link:
+                  href: <uri>
+                  method: get
+                  rel: previous
+                paymentId: M2MJOG6O2Y
+                responseCode: A
+                responseMessage: Transaction approved
+                status: ready
+              processingTerminalId: '1234001'
+              refundId: CD3HN88U9F
+              supportedOperations:
+                - capture
+                - refund
+                - fullyReverse
+                - partiallyReverse
+                - incrementAuthorization
+                - adjustTip
+                - addSignature
+                - setAsReady
+                - setAsPending
+                - setAsDeclined
+              transactionResult:
+                approvalCode: '000000'
+                authorizedAmount: -4999
+                cardSchemeReferenceId: cardSchemeReferenceId
+                currency: USD
+                ebtType: cashPurchase
+                processorResponseCode: processorResponseCode
+                responseCode: A
+                responseMessage: APPROVAL
+                status: reversal
+                type: refund
+      method: POST
+      path: /refunds/{refundId}/reverse
+      request:
+        headers:
+          Idempotency-Key:
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+            name: idempotencyKey
+            type: string
+        name: ReverseRefundsRequest
+        path-parameters:
+          refundId:
+            docs: Unique identifier that our gateway assigned to the refund.
+            type: string
+      response:
+        docs: Successful request. We voided the refund.
+        status-code: 200
+        type: root.Refund
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+  source:
+    openapi: openapi/external/universal-api-v1.yaml

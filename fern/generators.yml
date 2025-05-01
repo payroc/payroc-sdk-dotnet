@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ./read-only/openapi/external/universal-api-v1.yaml
+      overrides: ./read-only/openapi/openapi-overrides.yml
+      settings:
+        title-as-schema-name: false
+        coerce-enums-to-literals: false
+        inline-path-parameters: true
+        idiomatic-request-names: true
+groups:
+  csharp-sdk:
+    generators:
+      - name: fernapi/fern-csharp-sdk
+        version: 1.12.0-rc18
+        github:
+          repository: fern-demo/payroc-csharp-sdk
+          mode: pull-request
+        output:
+          location: nuget
+          package-name: Payroc
+          # api-key: ${NUGET_TOKEN}
+        config:
+          namespace: Payroc
+          client-class-name: BasePayrocClient
+          exported-client-class-name: PayrocClient
+          base-exception-class-name: PayrocException
+          base-api-exception-class-name: PayrocApiException
+          environment-class-name: PayrocEnvironment
+          explicit-namespaces: true
+          generate-mock-server-tests: true
+          inline-path-parameters: true
+          custom-pager-name: PayrocPager
+          include-exception-handler: true
+          experimental-enable-forward-compatible-enums: true
+          use-discriminated-unions: true

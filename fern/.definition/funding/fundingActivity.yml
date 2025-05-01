@@ -1,0 +1,310 @@
+imports:
+  root: ../__package__.yml
+types:
+  GetBalanceFundingActivityResponse:
+    extends:
+      - root.PaginatedList
+    properties:
+      data:
+        docs: Array of merchantBalance objects.
+        type: list<root.MerchantBalance>
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+  GetFundingActivityResponse:
+    extends:
+      - root.PaginatedList
+    properties:
+      data:
+        docs: Array of activityRecord objects.
+        type: list<root.ActivityRecord>
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      auth: true
+      display-name: List funding activity
+      docs: Retrieve funding activity for a specific date range.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Paginated activity records
+          query-parameters:
+            after: '8516'
+            before: '2571'
+            dateFrom: '2024-07-02'
+            dateTo: '2024-07-03'
+            merchantId: '4525644354'
+          response:
+            body:
+              count: 10
+              data:
+                - amount: 4999
+                  currency: USD
+                  date: '2024-07-02T17:00:00.000Z'
+                  description: Large Pepperoni Pizza
+                  id: 11
+                  merchant: Pizza Doe
+                  recipient: Pizza Doe
+                  type: credit
+                - amount: 3999
+                  currency: USD
+                  date: '2024-07-02T19:32:00.000Z'
+                  description: Medium Pepperoni Pizza
+                  id: 12
+                  merchant: Pizza Doe
+                  recipient: Pizza Doe
+                  type: credit
+                - amount: 3299
+                  currency: USD
+                  date: '2024-07-02T17:00:00.000Z'
+                  description: Small Pepperoni Pizza
+                  id: 13
+                  merchant: Pizza Doe
+                  recipient: Pizza Doe
+                  type: credit
+                - amount: 50
+                  currency: USD
+                  date: '2024-07-02T17:00:00.000Z'
+                  description: Interchange Fees
+                  id: 14
+                  merchant: Pizza Doe
+                  recipient: Payroc
+                  type: debit
+                - amount: 4999
+                  currency: USD
+                  date: '2024-07-02T09:10:00.000Z'
+                  description: Premium Club Subscription
+                  id: 15
+                  merchant: Pizza Doe
+                  recipient: Pizza Doe
+                  type: credit
+                - amount: 750
+                  currency: USD
+                  date: '2024-07-02T17:00:00.000Z'
+                  description: Adjustment
+                  id: 16
+                  merchant: Doe Hot Dogs
+                  recipient: Doe Hot Dogs
+                  type: credit
+                - amount: 5
+                  currency: USD
+                  date: '2024-07-02T17:00:00.000Z'
+                  description: Interchange Fees
+                  id: 17
+                  merchant: Doe Hot Dogs
+                  recipient: Payroc
+                  type: debit
+                - amount: 1000
+                  currency: USD
+                  date: '2024-07-02T17:00:00.000Z'
+                  description: Charge back
+                  id: 18
+                  merchant: Pizza Doe
+                  recipient: Payroc
+                  type: debit
+                - amount: 5999
+                  currency: USD
+                  date: '2024-07-02T17:00:00.000Z'
+                  description: Family Meal Deal
+                  id: 19
+                  merchant: Pizza Doe
+                  recipient: Pizza Doe
+                  type: credit
+                - amount: 1000
+                  currency: USD
+                  date: '2024-07-02T17:00:00.000Z'
+                  description: Reservation
+                  id: 20
+                  merchant: Pizza Doe
+                  recipient: Pizza Doe
+                  type: debit
+              hasMore: true
+              limit: 10
+              links:
+                - href: >-
+                    https://api.payroc.com/v1/funding-activity?before=11&limit=10&datefrom=2024-07-01&dateto=2024-07-03
+                  method: get
+                  rel: previous
+                - href: >-
+                    https://api.payroc.com/v1/funding-activity?after=20&limit=10&datefrom=2024-07-01&dateto=2024-07-03
+                  method: get
+                  rel: next
+        - name: No records found
+          query-parameters:
+            after: '8516'
+            before: '2571'
+            dateFrom: '2024-07-02'
+            dateTo: '2024-07-03'
+            merchantId: '4525644354'
+          response:
+            body:
+              count: 0
+              data:
+                - amount: 4999
+                  currency: USD
+                  date: '2024-07-02T15:30:00Z'
+                  description: Large Pepperoni Pizza
+                  id: 12345
+                  merchant: Pizza Doe
+                  recipient: Pizza Doe
+                  type: credit
+              hasMore: false
+              limit: 10
+              links:
+                - href: <uri>
+                  method: get
+                  rel: previous
+                - href: <uri>
+                  method: get
+                  rel: next
+      method: GET
+      path: /funding-activity
+      request:
+        name: GetFundingActivityRequest
+        query-parameters:
+          after:
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results after. Typically, this is the last resource on the
+              previous page.
+            type: optional<string>
+          before:
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results before. Typically, this is the first resource on the
+              previous page.
+            type: optional<string>
+          dateFrom:
+            docs: >-
+              Retrieve activity that occured since `dateFrom`. We can return
+              activity from only the last two years.
+            type: string
+            validation:
+              format: date
+          dateTo:
+            docs: Retrieve activity that occured before `dateTo`.
+            type: string
+            validation:
+              format: date
+          limit:
+            default: 10
+            docs: States the total amount of results the response is limited to.
+            type: optional<integer>
+            validation:
+              max: 100
+          merchantId:
+            docs: Unique identifier of the merchant.
+            type: optional<string>
+      response:
+        docs: >-
+          Successful request. Returns all available funding activity for the
+          date range.
+        status-code: 200
+        type: GetFundingActivityResponse
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+    getBalance:
+      auth: true
+      display-name: Retrieve funding balance
+      docs: Retrieve the balance of funds that are available for each merchant.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Paginated list of merchant balances
+          query-parameters:
+            after: '8516'
+            before: '2571'
+            merchantId: '4525644354'
+          response:
+            body:
+              count: 2
+              data:
+                - available: 69950
+                  currency: USD
+                  funds: 120000
+                  merchantId: '4525644354'
+                  pending: 50050
+                - available: 50000
+                  currency: USD
+                  funds: 50000
+                  merchantId: '9876543219'
+                  pending: 0
+              hasMore: true
+              limit: 2
+              links:
+                - href: >-
+                    https://api.payroc.com/v1/funding-balance?before=4525644354&limit=2
+                  method: get
+                  rel: previous
+                - href: >-
+                    https://api.payroc.com/v1/funding-balance?after=9876543219&limit=2
+                  method: get
+                  rel: next
+        - name: No records found
+          query-parameters:
+            after: '8516'
+            before: '2571'
+            merchantId: '4525644354'
+          response:
+            body:
+              count: 0
+              data:
+                - available: 69950
+                  currency: USD
+                  funds: 120000
+                  merchantId: '4525644354'
+                  pending: 50050
+              hasMore: false
+              limit: 10
+              links:
+                - href: <uri>
+                  method: get
+                  rel: previous
+                - href: <uri>
+                  method: get
+                  rel: next
+      method: GET
+      path: /funding-balance
+      request:
+        name: GetBalanceFundingActivityRequest
+        query-parameters:
+          after:
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results after. Typically, this is the last resource on the
+              previous page.
+            type: optional<string>
+          before:
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results before. Typically, this is the first resource on the
+              previous page.
+            type: optional<string>
+          limit:
+            default: 10
+            docs: States the total amount of results the response is limited to.
+            type: optional<integer>
+            validation:
+              max: 100
+          merchantId:
+            docs: Unique identifier of the merchant.
+            type: optional<string>
+      response:
+        docs: Successful request. Returns the balance available for each merchant.
+        status-code: 200
+        type: GetBalanceFundingActivityResponse
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+  source:
+    openapi: openapi/external/universal-api-v1.yaml
