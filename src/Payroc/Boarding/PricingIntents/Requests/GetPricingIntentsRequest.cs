@@ -11,6 +11,7 @@ public record GetPricingIntentsRequest
     [JsonIgnore]
     public required string PricingIntentId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

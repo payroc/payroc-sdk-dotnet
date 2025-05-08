@@ -57,9 +57,9 @@ public partial class SettlementClient
                     _query["merchantId"] = request.MerchantId;
                 }
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
                         Path = "batches",
                         Query = _query,
@@ -142,11 +142,14 @@ public partial class SettlementClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path = $"batches/{JsonUtils.SerializeAsString(request.BatchId)}",
+                            Path = string.Format(
+                                "batches/{0}",
+                                ValueConvert.ToPathParameterString(request.BatchId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -259,9 +262,9 @@ public partial class SettlementClient
                     _query["transactionType"] = request.TransactionType.Value.Stringify();
                 }
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
                         Path = "transactions",
                         Query = _query,
@@ -346,12 +349,14 @@ public partial class SettlementClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"transactions/{JsonUtils.SerializeAsString(request.TransactionId)}",
+                            Path = string.Format(
+                                "transactions/{0}",
+                                ValueConvert.ToPathParameterString(request.TransactionId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -460,9 +465,9 @@ public partial class SettlementClient
                     _query["merchantId"] = request.MerchantId;
                 }
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
                         Path = "authorizations",
                         Query = _query,
@@ -547,12 +552,14 @@ public partial class SettlementClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"authorizations/{JsonUtils.SerializeAsString(request.AuthorizationId)}",
+                            Path = string.Format(
+                                "authorizations/{0}",
+                                ValueConvert.ToPathParameterString(request.AuthorizationId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -659,9 +666,9 @@ public partial class SettlementClient
                     _query["merchantId"] = request.MerchantId;
                 }
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
                         Path = "disputes",
                         Query = _query,
@@ -746,12 +753,14 @@ public partial class SettlementClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"disputes/{JsonUtils.SerializeAsString(request.DisputeId)}/statuses",
+                            Path = string.Format(
+                                "disputes/{0}/statuses",
+                                ValueConvert.ToPathParameterString(request.DisputeId)
+                            ),
                             Options = options,
                         },
                         cancellationToken

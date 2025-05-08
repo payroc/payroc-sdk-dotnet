@@ -11,6 +11,7 @@ public record GetTransactionSettlementRequest
     [JsonIgnore]
     public required int TransactionId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

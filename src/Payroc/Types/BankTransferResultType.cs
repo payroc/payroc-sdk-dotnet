@@ -6,15 +6,15 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<BankTransferResultType>))]
 public readonly record struct BankTransferResultType : IStringEnum
 {
-    public static readonly BankTransferResultType Payment = Custom(Values.Payment);
+    public static readonly BankTransferResultType Payment = new(Values.Payment);
 
-    public static readonly BankTransferResultType Refund = Custom(Values.Refund);
+    public static readonly BankTransferResultType Refund = new(Values.Refund);
 
-    public static readonly BankTransferResultType UnreferencedRefund = Custom(
+    public static readonly BankTransferResultType UnreferencedRefund = new(
         Values.UnreferencedRefund
     );
 
-    public static readonly BankTransferResultType AccountVerification = Custom(
+    public static readonly BankTransferResultType AccountVerification = new(
         Values.AccountVerification
     );
 
@@ -31,7 +31,7 @@ public readonly record struct BankTransferResultType : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static BankTransferResultType Custom(string value)
+    public static BankTransferResultType FromCustom(string value)
     {
         return new BankTransferResultType(value);
     }
@@ -54,6 +54,10 @@ public readonly record struct BankTransferResultType : IStringEnum
 
     public static bool operator !=(BankTransferResultType value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(BankTransferResultType value) => value.Value;
+
+    public static explicit operator BankTransferResultType(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

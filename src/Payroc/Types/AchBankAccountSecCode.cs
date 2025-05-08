@@ -6,13 +6,13 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<AchBankAccountSecCode>))]
 public readonly record struct AchBankAccountSecCode : IStringEnum
 {
-    public static readonly AchBankAccountSecCode Web = Custom(Values.Web);
+    public static readonly AchBankAccountSecCode Web = new(Values.Web);
 
-    public static readonly AchBankAccountSecCode Tel = Custom(Values.Tel);
+    public static readonly AchBankAccountSecCode Tel = new(Values.Tel);
 
-    public static readonly AchBankAccountSecCode Ccd = Custom(Values.Ccd);
+    public static readonly AchBankAccountSecCode Ccd = new(Values.Ccd);
 
-    public static readonly AchBankAccountSecCode Ppd = Custom(Values.Ppd);
+    public static readonly AchBankAccountSecCode Ppd = new(Values.Ppd);
 
     public AchBankAccountSecCode(string value)
     {
@@ -27,7 +27,7 @@ public readonly record struct AchBankAccountSecCode : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static AchBankAccountSecCode Custom(string value)
+    public static AchBankAccountSecCode FromCustom(string value)
     {
         return new AchBankAccountSecCode(value);
     }
@@ -50,6 +50,10 @@ public readonly record struct AchBankAccountSecCode : IStringEnum
 
     public static bool operator !=(AchBankAccountSecCode value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(AchBankAccountSecCode value) => value.Value;
+
+    public static explicit operator AchBankAccountSecCode(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

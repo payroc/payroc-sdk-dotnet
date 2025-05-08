@@ -6,29 +6,29 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<BusinessOrganizationType>))]
 public readonly record struct BusinessOrganizationType : IStringEnum
 {
-    public static readonly BusinessOrganizationType PrivateCorporation = Custom(
+    public static readonly BusinessOrganizationType PrivateCorporation = new(
         Values.PrivateCorporation
     );
 
-    public static readonly BusinessOrganizationType PublicCorporation = Custom(
+    public static readonly BusinessOrganizationType PublicCorporation = new(
         Values.PublicCorporation
     );
 
-    public static readonly BusinessOrganizationType NonProfit = Custom(Values.NonProfit);
+    public static readonly BusinessOrganizationType NonProfit = new(Values.NonProfit);
 
-    public static readonly BusinessOrganizationType PrivateLlc = Custom(Values.PrivateLlc);
+    public static readonly BusinessOrganizationType PrivateLlc = new(Values.PrivateLlc);
 
-    public static readonly BusinessOrganizationType PublicLlc = Custom(Values.PublicLlc);
+    public static readonly BusinessOrganizationType PublicLlc = new(Values.PublicLlc);
 
-    public static readonly BusinessOrganizationType PrivatePartnership = Custom(
+    public static readonly BusinessOrganizationType PrivatePartnership = new(
         Values.PrivatePartnership
     );
 
-    public static readonly BusinessOrganizationType PublicPartnership = Custom(
+    public static readonly BusinessOrganizationType PublicPartnership = new(
         Values.PublicPartnership
     );
 
-    public static readonly BusinessOrganizationType SoleProprietor = Custom(Values.SoleProprietor);
+    public static readonly BusinessOrganizationType SoleProprietor = new(Values.SoleProprietor);
 
     public BusinessOrganizationType(string value)
     {
@@ -43,7 +43,7 @@ public readonly record struct BusinessOrganizationType : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static BusinessOrganizationType Custom(string value)
+    public static BusinessOrganizationType FromCustom(string value)
     {
         return new BusinessOrganizationType(value);
     }
@@ -66,6 +66,10 @@ public readonly record struct BusinessOrganizationType : IStringEnum
 
     public static bool operator !=(BusinessOrganizationType value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(BusinessOrganizationType value) => value.Value;
+
+    public static explicit operator BusinessOrganizationType(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

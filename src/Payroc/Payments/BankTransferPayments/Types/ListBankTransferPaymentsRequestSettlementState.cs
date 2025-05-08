@@ -6,11 +6,11 @@ namespace Payroc.Payments.BankTransferPayments;
 [JsonConverter(typeof(StringEnumSerializer<ListBankTransferPaymentsRequestSettlementState>))]
 public readonly record struct ListBankTransferPaymentsRequestSettlementState : IStringEnum
 {
-    public static readonly ListBankTransferPaymentsRequestSettlementState Settled = Custom(
+    public static readonly ListBankTransferPaymentsRequestSettlementState Settled = new(
         Values.Settled
     );
 
-    public static readonly ListBankTransferPaymentsRequestSettlementState Unsettled = Custom(
+    public static readonly ListBankTransferPaymentsRequestSettlementState Unsettled = new(
         Values.Unsettled
     );
 
@@ -27,7 +27,7 @@ public readonly record struct ListBankTransferPaymentsRequestSettlementState : I
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ListBankTransferPaymentsRequestSettlementState Custom(string value)
+    public static ListBankTransferPaymentsRequestSettlementState FromCustom(string value)
     {
         return new ListBankTransferPaymentsRequestSettlementState(value);
     }
@@ -54,6 +54,12 @@ public readonly record struct ListBankTransferPaymentsRequestSettlementState : I
         ListBankTransferPaymentsRequestSettlementState value1,
         string value2
     ) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(ListBankTransferPaymentsRequestSettlementState value) =>
+        value.Value;
+
+    public static explicit operator ListBankTransferPaymentsRequestSettlementState(string value) =>
+        new(value);
 
     /// <summary>
     /// Constant strings for enum values

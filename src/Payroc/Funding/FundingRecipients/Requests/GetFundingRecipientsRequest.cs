@@ -11,6 +11,7 @@ public record GetFundingRecipientsRequest
     [JsonIgnore]
     public required int RecipientId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

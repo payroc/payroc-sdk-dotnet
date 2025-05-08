@@ -1,0 +1,13 @@
+imports:
+  root: __package__.yml
+types:
+  Funding:
+    docs: Object that contains funding information.
+    properties:
+      fundingAccounts:
+        type: optional<list<root.FundingAccountSummary>>
+        access: read-only
+    extends:
+      - root.CommonFunding
+    source:
+      openapi: openapi/external/universal-api-v1.yaml

@@ -21,8 +21,8 @@ public record Tip
     /// - `prompted` – The customer was prompted to add a tip during payment.
     /// - `adjusted` – The customer added a tip on the receipt for the merchant to adjust post-transaction.
     /// </summary>
-    [JsonPropertyName("mode")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("mode")]
     public TipMode? Mode { get; set; }
 
     /// <summary>
@@ -40,10 +40,14 @@ public record Tip
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<SwipedCardDetailsDowngradeTo>))]
 public readonly record struct SwipedCardDetailsDowngradeTo : IStringEnum
 {
-    public static readonly SwipedCardDetailsDowngradeTo Keyed = Custom(Values.Keyed);
+    public static readonly SwipedCardDetailsDowngradeTo Keyed = new(Values.Keyed);
 
-    public static readonly SwipedCardDetailsDowngradeTo Swiped = Custom(Values.Swiped);
+    public static readonly SwipedCardDetailsDowngradeTo Swiped = new(Values.Swiped);
 
     public SwipedCardDetailsDowngradeTo(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct SwipedCardDetailsDowngradeTo : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static SwipedCardDetailsDowngradeTo Custom(string value)
+    public static SwipedCardDetailsDowngradeTo FromCustom(string value)
     {
         return new SwipedCardDetailsDowngradeTo(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct SwipedCardDetailsDowngradeTo : IStringEnum
 
     public static bool operator !=(SwipedCardDetailsDowngradeTo value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(SwipedCardDetailsDowngradeTo value) => value.Value;
+
+    public static explicit operator SwipedCardDetailsDowngradeTo(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

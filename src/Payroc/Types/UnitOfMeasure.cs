@@ -6,437 +6,437 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<UnitOfMeasure>))]
 public readonly record struct UnitOfMeasure : IStringEnum
 {
-    public static readonly UnitOfMeasure Acr = Custom(Values.Acr);
+    public static readonly UnitOfMeasure Acr = new(Values.Acr);
 
-    public static readonly UnitOfMeasure Amh = Custom(Values.Amh);
+    public static readonly UnitOfMeasure Amh = new(Values.Amh);
 
-    public static readonly UnitOfMeasure Amp = Custom(Values.Amp);
+    public static readonly UnitOfMeasure Amp = new(Values.Amp);
 
-    public static readonly UnitOfMeasure Apz = Custom(Values.Apz);
+    public static readonly UnitOfMeasure Apz = new(Values.Apz);
 
-    public static readonly UnitOfMeasure Are = Custom(Values.Are);
+    public static readonly UnitOfMeasure Are = new(Values.Are);
 
-    public static readonly UnitOfMeasure Asm = Custom(Values.Asm);
+    public static readonly UnitOfMeasure Asm = new(Values.Asm);
 
-    public static readonly UnitOfMeasure Asv = Custom(Values.Asv);
+    public static readonly UnitOfMeasure Asv = new(Values.Asv);
 
-    public static readonly UnitOfMeasure Atm = Custom(Values.Atm);
+    public static readonly UnitOfMeasure Atm = new(Values.Atm);
 
-    public static readonly UnitOfMeasure Att = Custom(Values.Att);
+    public static readonly UnitOfMeasure Att = new(Values.Att);
 
-    public static readonly UnitOfMeasure Bar = Custom(Values.Bar);
+    public static readonly UnitOfMeasure Bar = new(Values.Bar);
 
-    public static readonly UnitOfMeasure Bft = Custom(Values.Bft);
+    public static readonly UnitOfMeasure Bft = new(Values.Bft);
 
-    public static readonly UnitOfMeasure Bhp = Custom(Values.Bhp);
+    public static readonly UnitOfMeasure Bhp = new(Values.Bhp);
 
-    public static readonly UnitOfMeasure Bhx = Custom(Values.Bhx);
+    public static readonly UnitOfMeasure Bhx = new(Values.Bhx);
 
-    public static readonly UnitOfMeasure Bil = Custom(Values.Bil);
+    public static readonly UnitOfMeasure Bil = new(Values.Bil);
 
-    public static readonly UnitOfMeasure Bld = Custom(Values.Bld);
+    public static readonly UnitOfMeasure Bld = new(Values.Bld);
 
-    public static readonly UnitOfMeasure Bll = Custom(Values.Bll);
+    public static readonly UnitOfMeasure Bll = new(Values.Bll);
 
-    public static readonly UnitOfMeasure Bql = Custom(Values.Bql);
+    public static readonly UnitOfMeasure Bql = new(Values.Bql);
 
-    public static readonly UnitOfMeasure Btu = Custom(Values.Btu);
+    public static readonly UnitOfMeasure Btu = new(Values.Btu);
 
-    public static readonly UnitOfMeasure Bua = Custom(Values.Bua);
+    public static readonly UnitOfMeasure Bua = new(Values.Bua);
 
-    public static readonly UnitOfMeasure Bui = Custom(Values.Bui);
+    public static readonly UnitOfMeasure Bui = new(Values.Bui);
 
-    public static readonly UnitOfMeasure Bx = Custom(Values.Bx);
+    public static readonly UnitOfMeasure Bx = new(Values.Bx);
 
-    public static readonly UnitOfMeasure Cct = Custom(Values.Cct);
+    public static readonly UnitOfMeasure Cct = new(Values.Cct);
 
-    public static readonly UnitOfMeasure Cdl = Custom(Values.Cdl);
+    public static readonly UnitOfMeasure Cdl = new(Values.Cdl);
 
-    public static readonly UnitOfMeasure Cel = Custom(Values.Cel);
+    public static readonly UnitOfMeasure Cel = new(Values.Cel);
 
-    public static readonly UnitOfMeasure Cen = Custom(Values.Cen);
+    public static readonly UnitOfMeasure Cen = new(Values.Cen);
 
-    public static readonly UnitOfMeasure Cgm = Custom(Values.Cgm);
+    public static readonly UnitOfMeasure Cgm = new(Values.Cgm);
 
-    public static readonly UnitOfMeasure Ckg = Custom(Values.Ckg);
+    public static readonly UnitOfMeasure Ckg = new(Values.Ckg);
 
-    public static readonly UnitOfMeasure Clf = Custom(Values.Clf);
+    public static readonly UnitOfMeasure Clf = new(Values.Clf);
 
-    public static readonly UnitOfMeasure Clt = Custom(Values.Clt);
+    public static readonly UnitOfMeasure Clt = new(Values.Clt);
 
-    public static readonly UnitOfMeasure Cmk = Custom(Values.Cmk);
+    public static readonly UnitOfMeasure Cmk = new(Values.Cmk);
 
-    public static readonly UnitOfMeasure Cmt = Custom(Values.Cmt);
+    public static readonly UnitOfMeasure Cmt = new(Values.Cmt);
 
-    public static readonly UnitOfMeasure Cnp = Custom(Values.Cnp);
+    public static readonly UnitOfMeasure Cnp = new(Values.Cnp);
 
-    public static readonly UnitOfMeasure Cnt = Custom(Values.Cnt);
+    public static readonly UnitOfMeasure Cnt = new(Values.Cnt);
 
-    public static readonly UnitOfMeasure Cou = Custom(Values.Cou);
+    public static readonly UnitOfMeasure Cou = new(Values.Cou);
 
-    public static readonly UnitOfMeasure Cs = Custom(Values.Cs);
+    public static readonly UnitOfMeasure Cs = new(Values.Cs);
 
-    public static readonly UnitOfMeasure Ctm = Custom(Values.Ctm);
+    public static readonly UnitOfMeasure Ctm = new(Values.Ctm);
 
-    public static readonly UnitOfMeasure Cur = Custom(Values.Cur);
+    public static readonly UnitOfMeasure Cur = new(Values.Cur);
 
-    public static readonly UnitOfMeasure Cwa = Custom(Values.Cwa);
+    public static readonly UnitOfMeasure Cwa = new(Values.Cwa);
 
-    public static readonly UnitOfMeasure Daa = Custom(Values.Daa);
+    public static readonly UnitOfMeasure Daa = new(Values.Daa);
 
-    public static readonly UnitOfMeasure Dad = Custom(Values.Dad);
+    public static readonly UnitOfMeasure Dad = new(Values.Dad);
 
-    public static readonly UnitOfMeasure Day = Custom(Values.Day);
+    public static readonly UnitOfMeasure Day = new(Values.Day);
 
-    public static readonly UnitOfMeasure Dec = Custom(Values.Dec);
+    public static readonly UnitOfMeasure Dec = new(Values.Dec);
 
-    public static readonly UnitOfMeasure Dlt = Custom(Values.Dlt);
+    public static readonly UnitOfMeasure Dlt = new(Values.Dlt);
 
-    public static readonly UnitOfMeasure Dmk = Custom(Values.Dmk);
+    public static readonly UnitOfMeasure Dmk = new(Values.Dmk);
 
-    public static readonly UnitOfMeasure Dmq = Custom(Values.Dmq);
+    public static readonly UnitOfMeasure Dmq = new(Values.Dmq);
 
-    public static readonly UnitOfMeasure Dmt = Custom(Values.Dmt);
+    public static readonly UnitOfMeasure Dmt = new(Values.Dmt);
 
-    public static readonly UnitOfMeasure Dpc = Custom(Values.Dpc);
+    public static readonly UnitOfMeasure Dpc = new(Values.Dpc);
 
-    public static readonly UnitOfMeasure Dpt = Custom(Values.Dpt);
+    public static readonly UnitOfMeasure Dpt = new(Values.Dpt);
 
-    public static readonly UnitOfMeasure Dra = Custom(Values.Dra);
+    public static readonly UnitOfMeasure Dra = new(Values.Dra);
 
-    public static readonly UnitOfMeasure Dri = Custom(Values.Dri);
+    public static readonly UnitOfMeasure Dri = new(Values.Dri);
 
-    public static readonly UnitOfMeasure Drl = Custom(Values.Drl);
+    public static readonly UnitOfMeasure Drl = new(Values.Drl);
 
-    public static readonly UnitOfMeasure Drm = Custom(Values.Drm);
+    public static readonly UnitOfMeasure Drm = new(Values.Drm);
 
-    public static readonly UnitOfMeasure Dth = Custom(Values.Dth);
+    public static readonly UnitOfMeasure Dth = new(Values.Dth);
 
-    public static readonly UnitOfMeasure Dtn = Custom(Values.Dtn);
+    public static readonly UnitOfMeasure Dtn = new(Values.Dtn);
 
-    public static readonly UnitOfMeasure Dwt = Custom(Values.Dwt);
+    public static readonly UnitOfMeasure Dwt = new(Values.Dwt);
 
-    public static readonly UnitOfMeasure Dzn = Custom(Values.Dzn);
+    public static readonly UnitOfMeasure Dzn = new(Values.Dzn);
 
-    public static readonly UnitOfMeasure Dzp = Custom(Values.Dzp);
+    public static readonly UnitOfMeasure Dzp = new(Values.Dzp);
 
-    public static readonly UnitOfMeasure Dzr = Custom(Values.Dzr);
+    public static readonly UnitOfMeasure Dzr = new(Values.Dzr);
 
-    public static readonly UnitOfMeasure Ea = Custom(Values.Ea);
+    public static readonly UnitOfMeasure Ea = new(Values.Ea);
 
-    public static readonly UnitOfMeasure Eac = Custom(Values.Eac);
+    public static readonly UnitOfMeasure Eac = new(Values.Eac);
 
-    public static readonly UnitOfMeasure Fah = Custom(Values.Fah);
+    public static readonly UnitOfMeasure Fah = new(Values.Fah);
 
-    public static readonly UnitOfMeasure Far = Custom(Values.Far);
+    public static readonly UnitOfMeasure Far = new(Values.Far);
 
-    public static readonly UnitOfMeasure Fot = Custom(Values.Fot);
+    public static readonly UnitOfMeasure Fot = new(Values.Fot);
 
-    public static readonly UnitOfMeasure Ftk = Custom(Values.Ftk);
+    public static readonly UnitOfMeasure Ftk = new(Values.Ftk);
 
-    public static readonly UnitOfMeasure Ftq = Custom(Values.Ftq);
+    public static readonly UnitOfMeasure Ftq = new(Values.Ftq);
 
-    public static readonly UnitOfMeasure Gbq = Custom(Values.Gbq);
+    public static readonly UnitOfMeasure Gbq = new(Values.Gbq);
 
-    public static readonly UnitOfMeasure Gfi = Custom(Values.Gfi);
+    public static readonly UnitOfMeasure Gfi = new(Values.Gfi);
 
-    public static readonly UnitOfMeasure Ggr = Custom(Values.Ggr);
+    public static readonly UnitOfMeasure Ggr = new(Values.Ggr);
 
-    public static readonly UnitOfMeasure Gii = Custom(Values.Gii);
+    public static readonly UnitOfMeasure Gii = new(Values.Gii);
 
-    public static readonly UnitOfMeasure Gld = Custom(Values.Gld);
+    public static readonly UnitOfMeasure Gld = new(Values.Gld);
 
-    public static readonly UnitOfMeasure Gli = Custom(Values.Gli);
+    public static readonly UnitOfMeasure Gli = new(Values.Gli);
 
-    public static readonly UnitOfMeasure Gll = Custom(Values.Gll);
+    public static readonly UnitOfMeasure Gll = new(Values.Gll);
 
-    public static readonly UnitOfMeasure Grm = Custom(Values.Grm);
+    public static readonly UnitOfMeasure Grm = new(Values.Grm);
 
-    public static readonly UnitOfMeasure Grn = Custom(Values.Grn);
+    public static readonly UnitOfMeasure Grn = new(Values.Grn);
 
-    public static readonly UnitOfMeasure Gro = Custom(Values.Gro);
+    public static readonly UnitOfMeasure Gro = new(Values.Gro);
 
-    public static readonly UnitOfMeasure Grt = Custom(Values.Grt);
+    public static readonly UnitOfMeasure Grt = new(Values.Grt);
 
-    public static readonly UnitOfMeasure Gwh = Custom(Values.Gwh);
+    public static readonly UnitOfMeasure Gwh = new(Values.Gwh);
 
-    public static readonly UnitOfMeasure Har = Custom(Values.Har);
+    public static readonly UnitOfMeasure Har = new(Values.Har);
 
-    public static readonly UnitOfMeasure Hba = Custom(Values.Hba);
+    public static readonly UnitOfMeasure Hba = new(Values.Hba);
 
-    public static readonly UnitOfMeasure Hgm = Custom(Values.Hgm);
+    public static readonly UnitOfMeasure Hgm = new(Values.Hgm);
 
-    public static readonly UnitOfMeasure Hiu = Custom(Values.Hiu);
+    public static readonly UnitOfMeasure Hiu = new(Values.Hiu);
 
-    public static readonly UnitOfMeasure Hlt = Custom(Values.Hlt);
+    public static readonly UnitOfMeasure Hlt = new(Values.Hlt);
 
-    public static readonly UnitOfMeasure Hmq = Custom(Values.Hmq);
+    public static readonly UnitOfMeasure Hmq = new(Values.Hmq);
 
-    public static readonly UnitOfMeasure Hmt = Custom(Values.Hmt);
+    public static readonly UnitOfMeasure Hmt = new(Values.Hmt);
 
-    public static readonly UnitOfMeasure Hpa = Custom(Values.Hpa);
+    public static readonly UnitOfMeasure Hpa = new(Values.Hpa);
 
-    public static readonly UnitOfMeasure Htz = Custom(Values.Htz);
+    public static readonly UnitOfMeasure Htz = new(Values.Htz);
 
-    public static readonly UnitOfMeasure Hur = Custom(Values.Hur);
+    public static readonly UnitOfMeasure Hur = new(Values.Hur);
 
-    public static readonly UnitOfMeasure Inh = Custom(Values.Inh);
+    public static readonly UnitOfMeasure Inh = new(Values.Inh);
 
-    public static readonly UnitOfMeasure Ink = Custom(Values.Ink);
+    public static readonly UnitOfMeasure Ink = new(Values.Ink);
 
-    public static readonly UnitOfMeasure Inq = Custom(Values.Inq);
+    public static readonly UnitOfMeasure Inq = new(Values.Inq);
 
-    public static readonly UnitOfMeasure Itm = Custom(Values.Itm);
+    public static readonly UnitOfMeasure Itm = new(Values.Itm);
 
-    public static readonly UnitOfMeasure Jou = Custom(Values.Jou);
+    public static readonly UnitOfMeasure Jou = new(Values.Jou);
 
-    public static readonly UnitOfMeasure Kba = Custom(Values.Kba);
+    public static readonly UnitOfMeasure Kba = new(Values.Kba);
 
-    public static readonly UnitOfMeasure Kel = Custom(Values.Kel);
+    public static readonly UnitOfMeasure Kel = new(Values.Kel);
 
-    public static readonly UnitOfMeasure Kgm = Custom(Values.Kgm);
+    public static readonly UnitOfMeasure Kgm = new(Values.Kgm);
 
-    public static readonly UnitOfMeasure Kgs = Custom(Values.Kgs);
+    public static readonly UnitOfMeasure Kgs = new(Values.Kgs);
 
-    public static readonly UnitOfMeasure Khz = Custom(Values.Khz);
+    public static readonly UnitOfMeasure Khz = new(Values.Khz);
 
-    public static readonly UnitOfMeasure Kjo = Custom(Values.Kjo);
+    public static readonly UnitOfMeasure Kjo = new(Values.Kjo);
 
-    public static readonly UnitOfMeasure Kmh = Custom(Values.Kmh);
+    public static readonly UnitOfMeasure Kmh = new(Values.Kmh);
 
-    public static readonly UnitOfMeasure Kmk = Custom(Values.Kmk);
+    public static readonly UnitOfMeasure Kmk = new(Values.Kmk);
 
-    public static readonly UnitOfMeasure Kmq = Custom(Values.Kmq);
+    public static readonly UnitOfMeasure Kmq = new(Values.Kmq);
 
-    public static readonly UnitOfMeasure Kmt = Custom(Values.Kmt);
+    public static readonly UnitOfMeasure Kmt = new(Values.Kmt);
 
-    public static readonly UnitOfMeasure Kni = Custom(Values.Kni);
+    public static readonly UnitOfMeasure Kni = new(Values.Kni);
 
-    public static readonly UnitOfMeasure Kns = Custom(Values.Kns);
+    public static readonly UnitOfMeasure Kns = new(Values.Kns);
 
-    public static readonly UnitOfMeasure Knt = Custom(Values.Knt);
+    public static readonly UnitOfMeasure Knt = new(Values.Knt);
 
-    public static readonly UnitOfMeasure Kpa = Custom(Values.Kpa);
+    public static readonly UnitOfMeasure Kpa = new(Values.Kpa);
 
-    public static readonly UnitOfMeasure Kph = Custom(Values.Kph);
+    public static readonly UnitOfMeasure Kph = new(Values.Kph);
 
-    public static readonly UnitOfMeasure Kpo = Custom(Values.Kpo);
+    public static readonly UnitOfMeasure Kpo = new(Values.Kpo);
 
-    public static readonly UnitOfMeasure Kpp = Custom(Values.Kpp);
+    public static readonly UnitOfMeasure Kpp = new(Values.Kpp);
 
-    public static readonly UnitOfMeasure Ksd = Custom(Values.Ksd);
+    public static readonly UnitOfMeasure Ksd = new(Values.Ksd);
 
-    public static readonly UnitOfMeasure Ksh = Custom(Values.Ksh);
+    public static readonly UnitOfMeasure Ksh = new(Values.Ksh);
 
-    public static readonly UnitOfMeasure Ktn = Custom(Values.Ktn);
+    public static readonly UnitOfMeasure Ktn = new(Values.Ktn);
 
-    public static readonly UnitOfMeasure Kur = Custom(Values.Kur);
+    public static readonly UnitOfMeasure Kur = new(Values.Kur);
 
-    public static readonly UnitOfMeasure Kva = Custom(Values.Kva);
+    public static readonly UnitOfMeasure Kva = new(Values.Kva);
 
-    public static readonly UnitOfMeasure Kvr = Custom(Values.Kvr);
+    public static readonly UnitOfMeasure Kvr = new(Values.Kvr);
 
-    public static readonly UnitOfMeasure Kvt = Custom(Values.Kvt);
+    public static readonly UnitOfMeasure Kvt = new(Values.Kvt);
 
-    public static readonly UnitOfMeasure Kwh = Custom(Values.Kwh);
+    public static readonly UnitOfMeasure Kwh = new(Values.Kwh);
 
-    public static readonly UnitOfMeasure Kwt = Custom(Values.Kwt);
+    public static readonly UnitOfMeasure Kwt = new(Values.Kwt);
 
-    public static readonly UnitOfMeasure Lbr = Custom(Values.Lbr);
+    public static readonly UnitOfMeasure Lbr = new(Values.Lbr);
 
-    public static readonly UnitOfMeasure Lbs = Custom(Values.Lbs);
+    public static readonly UnitOfMeasure Lbs = new(Values.Lbs);
 
-    public static readonly UnitOfMeasure Lef = Custom(Values.Lef);
+    public static readonly UnitOfMeasure Lef = new(Values.Lef);
 
-    public static readonly UnitOfMeasure Lpa = Custom(Values.Lpa);
+    public static readonly UnitOfMeasure Lpa = new(Values.Lpa);
 
-    public static readonly UnitOfMeasure Ltn = Custom(Values.Ltn);
+    public static readonly UnitOfMeasure Ltn = new(Values.Ltn);
 
-    public static readonly UnitOfMeasure Ltr = Custom(Values.Ltr);
+    public static readonly UnitOfMeasure Ltr = new(Values.Ltr);
 
-    public static readonly UnitOfMeasure Lum = Custom(Values.Lum);
+    public static readonly UnitOfMeasure Lum = new(Values.Lum);
 
-    public static readonly UnitOfMeasure Lux = Custom(Values.Lux);
+    public static readonly UnitOfMeasure Lux = new(Values.Lux);
 
-    public static readonly UnitOfMeasure Mal = Custom(Values.Mal);
+    public static readonly UnitOfMeasure Mal = new(Values.Mal);
 
-    public static readonly UnitOfMeasure Mam = Custom(Values.Mam);
+    public static readonly UnitOfMeasure Mam = new(Values.Mam);
 
-    public static readonly UnitOfMeasure Maw = Custom(Values.Maw);
+    public static readonly UnitOfMeasure Maw = new(Values.Maw);
 
-    public static readonly UnitOfMeasure Mbe = Custom(Values.Mbe);
+    public static readonly UnitOfMeasure Mbe = new(Values.Mbe);
 
-    public static readonly UnitOfMeasure Mbf = Custom(Values.Mbf);
+    public static readonly UnitOfMeasure Mbf = new(Values.Mbf);
 
-    public static readonly UnitOfMeasure Mbr = Custom(Values.Mbr);
+    public static readonly UnitOfMeasure Mbr = new(Values.Mbr);
 
-    public static readonly UnitOfMeasure Mcu = Custom(Values.Mcu);
+    public static readonly UnitOfMeasure Mcu = new(Values.Mcu);
 
-    public static readonly UnitOfMeasure Mgm = Custom(Values.Mgm);
+    public static readonly UnitOfMeasure Mgm = new(Values.Mgm);
 
-    public static readonly UnitOfMeasure Mhz = Custom(Values.Mhz);
+    public static readonly UnitOfMeasure Mhz = new(Values.Mhz);
 
-    public static readonly UnitOfMeasure Mik = Custom(Values.Mik);
+    public static readonly UnitOfMeasure Mik = new(Values.Mik);
 
-    public static readonly UnitOfMeasure Mil = Custom(Values.Mil);
+    public static readonly UnitOfMeasure Mil = new(Values.Mil);
 
-    public static readonly UnitOfMeasure Min = Custom(Values.Min);
+    public static readonly UnitOfMeasure Min = new(Values.Min);
 
-    public static readonly UnitOfMeasure Mio = Custom(Values.Mio);
+    public static readonly UnitOfMeasure Mio = new(Values.Mio);
 
-    public static readonly UnitOfMeasure Miu = Custom(Values.Miu);
+    public static readonly UnitOfMeasure Miu = new(Values.Miu);
 
-    public static readonly UnitOfMeasure Mld = Custom(Values.Mld);
+    public static readonly UnitOfMeasure Mld = new(Values.Mld);
 
-    public static readonly UnitOfMeasure Mlt = Custom(Values.Mlt);
+    public static readonly UnitOfMeasure Mlt = new(Values.Mlt);
 
-    public static readonly UnitOfMeasure Mmk = Custom(Values.Mmk);
+    public static readonly UnitOfMeasure Mmk = new(Values.Mmk);
 
-    public static readonly UnitOfMeasure Mmq = Custom(Values.Mmq);
+    public static readonly UnitOfMeasure Mmq = new(Values.Mmq);
 
-    public static readonly UnitOfMeasure Mmt = Custom(Values.Mmt);
+    public static readonly UnitOfMeasure Mmt = new(Values.Mmt);
 
-    public static readonly UnitOfMeasure Mon = Custom(Values.Mon);
+    public static readonly UnitOfMeasure Mon = new(Values.Mon);
 
-    public static readonly UnitOfMeasure Mpa = Custom(Values.Mpa);
+    public static readonly UnitOfMeasure Mpa = new(Values.Mpa);
 
-    public static readonly UnitOfMeasure Mqh = Custom(Values.Mqh);
+    public static readonly UnitOfMeasure Mqh = new(Values.Mqh);
 
-    public static readonly UnitOfMeasure Mqs = Custom(Values.Mqs);
+    public static readonly UnitOfMeasure Mqs = new(Values.Mqs);
 
-    public static readonly UnitOfMeasure Msk = Custom(Values.Msk);
+    public static readonly UnitOfMeasure Msk = new(Values.Msk);
 
-    public static readonly UnitOfMeasure Mtk = Custom(Values.Mtk);
+    public static readonly UnitOfMeasure Mtk = new(Values.Mtk);
 
-    public static readonly UnitOfMeasure Mtq = Custom(Values.Mtq);
+    public static readonly UnitOfMeasure Mtq = new(Values.Mtq);
 
-    public static readonly UnitOfMeasure Mtr = Custom(Values.Mtr);
+    public static readonly UnitOfMeasure Mtr = new(Values.Mtr);
 
-    public static readonly UnitOfMeasure Mts = Custom(Values.Mts);
+    public static readonly UnitOfMeasure Mts = new(Values.Mts);
 
-    public static readonly UnitOfMeasure Mva = Custom(Values.Mva);
+    public static readonly UnitOfMeasure Mva = new(Values.Mva);
 
-    public static readonly UnitOfMeasure Mwh = Custom(Values.Mwh);
+    public static readonly UnitOfMeasure Mwh = new(Values.Mwh);
 
-    public static readonly UnitOfMeasure Nar = Custom(Values.Nar);
+    public static readonly UnitOfMeasure Nar = new(Values.Nar);
 
-    public static readonly UnitOfMeasure Nbb = Custom(Values.Nbb);
+    public static readonly UnitOfMeasure Nbb = new(Values.Nbb);
 
-    public static readonly UnitOfMeasure Ncl = Custom(Values.Ncl);
+    public static readonly UnitOfMeasure Ncl = new(Values.Ncl);
 
-    public static readonly UnitOfMeasure New = Custom(Values.New);
+    public static readonly UnitOfMeasure New = new(Values.New);
 
-    public static readonly UnitOfMeasure Niu = Custom(Values.Niu);
+    public static readonly UnitOfMeasure Niu = new(Values.Niu);
 
-    public static readonly UnitOfMeasure Nmb = Custom(Values.Nmb);
+    public static readonly UnitOfMeasure Nmb = new(Values.Nmb);
 
-    public static readonly UnitOfMeasure Nmi = Custom(Values.Nmi);
+    public static readonly UnitOfMeasure Nmi = new(Values.Nmi);
 
-    public static readonly UnitOfMeasure Nmp = Custom(Values.Nmp);
+    public static readonly UnitOfMeasure Nmp = new(Values.Nmp);
 
-    public static readonly UnitOfMeasure Nmr = Custom(Values.Nmr);
+    public static readonly UnitOfMeasure Nmr = new(Values.Nmr);
 
-    public static readonly UnitOfMeasure Npl = Custom(Values.Npl);
+    public static readonly UnitOfMeasure Npl = new(Values.Npl);
 
-    public static readonly UnitOfMeasure Npt = Custom(Values.Npt);
+    public static readonly UnitOfMeasure Npt = new(Values.Npt);
 
-    public static readonly UnitOfMeasure Nrl = Custom(Values.Nrl);
+    public static readonly UnitOfMeasure Nrl = new(Values.Nrl);
 
-    public static readonly UnitOfMeasure Ntt = Custom(Values.Ntt);
+    public static readonly UnitOfMeasure Ntt = new(Values.Ntt);
 
-    public static readonly UnitOfMeasure Ohm = Custom(Values.Ohm);
+    public static readonly UnitOfMeasure Ohm = new(Values.Ohm);
 
-    public static readonly UnitOfMeasure Onz = Custom(Values.Onz);
+    public static readonly UnitOfMeasure Onz = new(Values.Onz);
 
-    public static readonly UnitOfMeasure Oza = Custom(Values.Oza);
+    public static readonly UnitOfMeasure Oza = new(Values.Oza);
 
-    public static readonly UnitOfMeasure Ozi = Custom(Values.Ozi);
+    public static readonly UnitOfMeasure Ozi = new(Values.Ozi);
 
-    public static readonly UnitOfMeasure Pal = Custom(Values.Pal);
+    public static readonly UnitOfMeasure Pal = new(Values.Pal);
 
-    public static readonly UnitOfMeasure Pcb = Custom(Values.Pcb);
+    public static readonly UnitOfMeasure Pcb = new(Values.Pcb);
 
-    public static readonly UnitOfMeasure Pce = Custom(Values.Pce);
+    public static readonly UnitOfMeasure Pce = new(Values.Pce);
 
-    public static readonly UnitOfMeasure Pgl = Custom(Values.Pgl);
+    public static readonly UnitOfMeasure Pgl = new(Values.Pgl);
 
-    public static readonly UnitOfMeasure Pk = Custom(Values.Pk);
+    public static readonly UnitOfMeasure Pk = new(Values.Pk);
 
-    public static readonly UnitOfMeasure Psc = Custom(Values.Psc);
+    public static readonly UnitOfMeasure Psc = new(Values.Psc);
 
-    public static readonly UnitOfMeasure Ptd = Custom(Values.Ptd);
+    public static readonly UnitOfMeasure Ptd = new(Values.Ptd);
 
-    public static readonly UnitOfMeasure Pti = Custom(Values.Pti);
+    public static readonly UnitOfMeasure Pti = new(Values.Pti);
 
-    public static readonly UnitOfMeasure Ptl = Custom(Values.Ptl);
+    public static readonly UnitOfMeasure Ptl = new(Values.Ptl);
 
-    public static readonly UnitOfMeasure Qan = Custom(Values.Qan);
+    public static readonly UnitOfMeasure Qan = new(Values.Qan);
 
-    public static readonly UnitOfMeasure Qtd = Custom(Values.Qtd);
+    public static readonly UnitOfMeasure Qtd = new(Values.Qtd);
 
-    public static readonly UnitOfMeasure Qti = Custom(Values.Qti);
+    public static readonly UnitOfMeasure Qti = new(Values.Qti);
 
-    public static readonly UnitOfMeasure Qtl = Custom(Values.Qtl);
+    public static readonly UnitOfMeasure Qtl = new(Values.Qtl);
 
-    public static readonly UnitOfMeasure Qtr = Custom(Values.Qtr);
+    public static readonly UnitOfMeasure Qtr = new(Values.Qtr);
 
-    public static readonly UnitOfMeasure Rpm = Custom(Values.Rpm);
+    public static readonly UnitOfMeasure Rpm = new(Values.Rpm);
 
-    public static readonly UnitOfMeasure Rps = Custom(Values.Rps);
+    public static readonly UnitOfMeasure Rps = new(Values.Rps);
 
-    public static readonly UnitOfMeasure San = Custom(Values.San);
+    public static readonly UnitOfMeasure San = new(Values.San);
 
-    public static readonly UnitOfMeasure Sco = Custom(Values.Sco);
+    public static readonly UnitOfMeasure Sco = new(Values.Sco);
 
-    public static readonly UnitOfMeasure Scr = Custom(Values.Scr);
+    public static readonly UnitOfMeasure Scr = new(Values.Scr);
 
-    public static readonly UnitOfMeasure Sec = Custom(Values.Sec);
+    public static readonly UnitOfMeasure Sec = new(Values.Sec);
 
-    public static readonly UnitOfMeasure Set = Custom(Values.Set);
+    public static readonly UnitOfMeasure Set = new(Values.Set);
 
-    public static readonly UnitOfMeasure Sht = Custom(Values.Sht);
+    public static readonly UnitOfMeasure Sht = new(Values.Sht);
 
-    public static readonly UnitOfMeasure Sie = Custom(Values.Sie);
+    public static readonly UnitOfMeasure Sie = new(Values.Sie);
 
-    public static readonly UnitOfMeasure Smi = Custom(Values.Smi);
+    public static readonly UnitOfMeasure Smi = new(Values.Smi);
 
-    public static readonly UnitOfMeasure Sst = Custom(Values.Sst);
+    public static readonly UnitOfMeasure Sst = new(Values.Sst);
 
-    public static readonly UnitOfMeasure St = Custom(Values.St);
+    public static readonly UnitOfMeasure St = new(Values.St);
 
-    public static readonly UnitOfMeasure Sti = Custom(Values.Sti);
+    public static readonly UnitOfMeasure Sti = new(Values.Sti);
 
-    public static readonly UnitOfMeasure Tah = Custom(Values.Tah);
+    public static readonly UnitOfMeasure Tah = new(Values.Tah);
 
-    public static readonly UnitOfMeasure Tne = Custom(Values.Tne);
+    public static readonly UnitOfMeasure Tne = new(Values.Tne);
 
-    public static readonly UnitOfMeasure Tpr = Custom(Values.Tpr);
+    public static readonly UnitOfMeasure Tpr = new(Values.Tpr);
 
-    public static readonly UnitOfMeasure Tqd = Custom(Values.Tqd);
+    public static readonly UnitOfMeasure Tqd = new(Values.Tqd);
 
-    public static readonly UnitOfMeasure Trl = Custom(Values.Trl);
+    public static readonly UnitOfMeasure Trl = new(Values.Trl);
 
-    public static readonly UnitOfMeasure Tsd = Custom(Values.Tsd);
+    public static readonly UnitOfMeasure Tsd = new(Values.Tsd);
 
-    public static readonly UnitOfMeasure Tsh = Custom(Values.Tsh);
+    public static readonly UnitOfMeasure Tsh = new(Values.Tsh);
 
-    public static readonly UnitOfMeasure Vlt = Custom(Values.Vlt);
+    public static readonly UnitOfMeasure Vlt = new(Values.Vlt);
 
-    public static readonly UnitOfMeasure Wcd = Custom(Values.Wcd);
+    public static readonly UnitOfMeasure Wcd = new(Values.Wcd);
 
-    public static readonly UnitOfMeasure Web = Custom(Values.Web);
+    public static readonly UnitOfMeasure Web = new(Values.Web);
 
-    public static readonly UnitOfMeasure Wee = Custom(Values.Wee);
+    public static readonly UnitOfMeasure Wee = new(Values.Wee);
 
-    public static readonly UnitOfMeasure Whr = Custom(Values.Whr);
+    public static readonly UnitOfMeasure Whr = new(Values.Whr);
 
-    public static readonly UnitOfMeasure Wsd = Custom(Values.Wsd);
+    public static readonly UnitOfMeasure Wsd = new(Values.Wsd);
 
-    public static readonly UnitOfMeasure Wtt = Custom(Values.Wtt);
+    public static readonly UnitOfMeasure Wtt = new(Values.Wtt);
 
-    public static readonly UnitOfMeasure Ydk = Custom(Values.Ydk);
+    public static readonly UnitOfMeasure Ydk = new(Values.Ydk);
 
-    public static readonly UnitOfMeasure Ydq = Custom(Values.Ydq);
+    public static readonly UnitOfMeasure Ydq = new(Values.Ydq);
 
     public UnitOfMeasure(string value)
     {
@@ -451,7 +451,7 @@ public readonly record struct UnitOfMeasure : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static UnitOfMeasure Custom(string value)
+    public static UnitOfMeasure FromCustom(string value)
     {
         return new UnitOfMeasure(value);
     }
@@ -474,6 +474,10 @@ public readonly record struct UnitOfMeasure : IStringEnum
 
     public static bool operator !=(UnitOfMeasure value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(UnitOfMeasure value) => value.Value;
+
+    public static explicit operator UnitOfMeasure(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

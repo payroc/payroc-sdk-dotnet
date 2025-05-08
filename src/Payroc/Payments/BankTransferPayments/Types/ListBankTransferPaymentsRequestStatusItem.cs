@@ -6,27 +6,25 @@ namespace Payroc.Payments.BankTransferPayments;
 [JsonConverter(typeof(StringEnumSerializer<ListBankTransferPaymentsRequestStatusItem>))]
 public readonly record struct ListBankTransferPaymentsRequestStatusItem : IStringEnum
 {
-    public static readonly ListBankTransferPaymentsRequestStatusItem Ready = Custom(Values.Ready);
+    public static readonly ListBankTransferPaymentsRequestStatusItem Ready = new(Values.Ready);
 
-    public static readonly ListBankTransferPaymentsRequestStatusItem Pending = Custom(
-        Values.Pending
-    );
+    public static readonly ListBankTransferPaymentsRequestStatusItem Pending = new(Values.Pending);
 
-    public static readonly ListBankTransferPaymentsRequestStatusItem Declined = Custom(
+    public static readonly ListBankTransferPaymentsRequestStatusItem Declined = new(
         Values.Declined
     );
 
-    public static readonly ListBankTransferPaymentsRequestStatusItem Complete = Custom(
+    public static readonly ListBankTransferPaymentsRequestStatusItem Complete = new(
         Values.Complete
     );
 
-    public static readonly ListBankTransferPaymentsRequestStatusItem Admin = Custom(Values.Admin);
+    public static readonly ListBankTransferPaymentsRequestStatusItem Admin = new(Values.Admin);
 
-    public static readonly ListBankTransferPaymentsRequestStatusItem Reversal = Custom(
+    public static readonly ListBankTransferPaymentsRequestStatusItem Reversal = new(
         Values.Reversal
     );
 
-    public static readonly ListBankTransferPaymentsRequestStatusItem Returned = Custom(
+    public static readonly ListBankTransferPaymentsRequestStatusItem Returned = new(
         Values.Returned
     );
 
@@ -43,7 +41,7 @@ public readonly record struct ListBankTransferPaymentsRequestStatusItem : IStrin
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ListBankTransferPaymentsRequestStatusItem Custom(string value)
+    public static ListBankTransferPaymentsRequestStatusItem FromCustom(string value)
     {
         return new ListBankTransferPaymentsRequestStatusItem(value);
     }
@@ -70,6 +68,12 @@ public readonly record struct ListBankTransferPaymentsRequestStatusItem : IStrin
         ListBankTransferPaymentsRequestStatusItem value1,
         string value2
     ) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(ListBankTransferPaymentsRequestStatusItem value) =>
+        value.Value;
+
+    public static explicit operator ListBankTransferPaymentsRequestStatusItem(string value) =>
+        new(value);
 
     /// <summary>
     /// Constant strings for enum values

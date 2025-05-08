@@ -6,11 +6,11 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<CreateProcessingAccountSignature>))]
 public readonly record struct CreateProcessingAccountSignature : IStringEnum
 {
-    public static readonly CreateProcessingAccountSignature RequestedViaEmail = Custom(
+    public static readonly CreateProcessingAccountSignature RequestedViaEmail = new(
         Values.RequestedViaEmail
     );
 
-    public static readonly CreateProcessingAccountSignature RequestedViaDirectLink = Custom(
+    public static readonly CreateProcessingAccountSignature RequestedViaDirectLink = new(
         Values.RequestedViaDirectLink
     );
 
@@ -27,7 +27,7 @@ public readonly record struct CreateProcessingAccountSignature : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static CreateProcessingAccountSignature Custom(string value)
+    public static CreateProcessingAccountSignature FromCustom(string value)
     {
         return new CreateProcessingAccountSignature(value);
     }
@@ -50,6 +50,10 @@ public readonly record struct CreateProcessingAccountSignature : IStringEnum
 
     public static bool operator !=(CreateProcessingAccountSignature value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(CreateProcessingAccountSignature value) => value.Value;
+
+    public static explicit operator CreateProcessingAccountSignature(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

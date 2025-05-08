@@ -6,9 +6,9 @@ namespace Payroc.Payments.Refunds;
 [JsonConverter(typeof(StringEnumSerializer<UnreferencedRefundChannel>))]
 public readonly record struct UnreferencedRefundChannel : IStringEnum
 {
-    public static readonly UnreferencedRefundChannel Pos = Custom(Values.Pos);
+    public static readonly UnreferencedRefundChannel Pos = new(Values.Pos);
 
-    public static readonly UnreferencedRefundChannel Moto = Custom(Values.Moto);
+    public static readonly UnreferencedRefundChannel Moto = new(Values.Moto);
 
     public UnreferencedRefundChannel(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct UnreferencedRefundChannel : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static UnreferencedRefundChannel Custom(string value)
+    public static UnreferencedRefundChannel FromCustom(string value)
     {
         return new UnreferencedRefundChannel(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct UnreferencedRefundChannel : IStringEnum
 
     public static bool operator !=(UnreferencedRefundChannel value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(UnreferencedRefundChannel value) => value.Value;
+
+    public static explicit operator UnreferencedRefundChannel(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<SecureTokenPayloadAccountType>))]
 public readonly record struct SecureTokenPayloadAccountType : IStringEnum
 {
-    public static readonly SecureTokenPayloadAccountType Checking = Custom(Values.Checking);
+    public static readonly SecureTokenPayloadAccountType Checking = new(Values.Checking);
 
-    public static readonly SecureTokenPayloadAccountType Savings = Custom(Values.Savings);
+    public static readonly SecureTokenPayloadAccountType Savings = new(Values.Savings);
 
     public SecureTokenPayloadAccountType(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct SecureTokenPayloadAccountType : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static SecureTokenPayloadAccountType Custom(string value)
+    public static SecureTokenPayloadAccountType FromCustom(string value)
     {
         return new SecureTokenPayloadAccountType(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct SecureTokenPayloadAccountType : IStringEnum
 
     public static bool operator !=(SecureTokenPayloadAccountType value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(SecureTokenPayloadAccountType value) => value.Value;
+
+    public static explicit operator SecureTokenPayloadAccountType(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

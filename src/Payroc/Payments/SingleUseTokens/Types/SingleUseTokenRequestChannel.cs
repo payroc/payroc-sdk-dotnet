@@ -6,11 +6,11 @@ namespace Payroc.Payments.SingleUseTokens;
 [JsonConverter(typeof(StringEnumSerializer<SingleUseTokenRequestChannel>))]
 public readonly record struct SingleUseTokenRequestChannel : IStringEnum
 {
-    public static readonly SingleUseTokenRequestChannel Pos = Custom(Values.Pos);
+    public static readonly SingleUseTokenRequestChannel Pos = new(Values.Pos);
 
-    public static readonly SingleUseTokenRequestChannel Web = Custom(Values.Web);
+    public static readonly SingleUseTokenRequestChannel Web = new(Values.Web);
 
-    public static readonly SingleUseTokenRequestChannel Moto = Custom(Values.Moto);
+    public static readonly SingleUseTokenRequestChannel Moto = new(Values.Moto);
 
     public SingleUseTokenRequestChannel(string value)
     {
@@ -25,7 +25,7 @@ public readonly record struct SingleUseTokenRequestChannel : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static SingleUseTokenRequestChannel Custom(string value)
+    public static SingleUseTokenRequestChannel FromCustom(string value)
     {
         return new SingleUseTokenRequestChannel(value);
     }
@@ -48,6 +48,10 @@ public readonly record struct SingleUseTokenRequestChannel : IStringEnum
 
     public static bool operator !=(SingleUseTokenRequestChannel value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(SingleUseTokenRequestChannel value) => value.Value;
+
+    public static explicit operator SingleUseTokenRequestChannel(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

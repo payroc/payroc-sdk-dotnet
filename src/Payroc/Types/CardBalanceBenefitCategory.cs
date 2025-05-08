@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<CardBalanceBenefitCategory>))]
 public readonly record struct CardBalanceBenefitCategory : IStringEnum
 {
-    public static readonly CardBalanceBenefitCategory Cash = Custom(Values.Cash);
+    public static readonly CardBalanceBenefitCategory Cash = new(Values.Cash);
 
-    public static readonly CardBalanceBenefitCategory FoodStamp = Custom(Values.FoodStamp);
+    public static readonly CardBalanceBenefitCategory FoodStamp = new(Values.FoodStamp);
 
     public CardBalanceBenefitCategory(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct CardBalanceBenefitCategory : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static CardBalanceBenefitCategory Custom(string value)
+    public static CardBalanceBenefitCategory FromCustom(string value)
     {
         return new CardBalanceBenefitCategory(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct CardBalanceBenefitCategory : IStringEnum
 
     public static bool operator !=(CardBalanceBenefitCategory value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(CardBalanceBenefitCategory value) => value.Value;
+
+    public static explicit operator CardBalanceBenefitCategory(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

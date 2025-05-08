@@ -6,9 +6,9 @@ namespace Payroc.Payments.Refunds;
 [JsonConverter(typeof(StringEnumSerializer<ListRefundsRequestSettlementState>))]
 public readonly record struct ListRefundsRequestSettlementState : IStringEnum
 {
-    public static readonly ListRefundsRequestSettlementState Settled = Custom(Values.Settled);
+    public static readonly ListRefundsRequestSettlementState Settled = new(Values.Settled);
 
-    public static readonly ListRefundsRequestSettlementState Unsettled = Custom(Values.Unsettled);
+    public static readonly ListRefundsRequestSettlementState Unsettled = new(Values.Unsettled);
 
     public ListRefundsRequestSettlementState(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct ListRefundsRequestSettlementState : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ListRefundsRequestSettlementState Custom(string value)
+    public static ListRefundsRequestSettlementState FromCustom(string value)
     {
         return new ListRefundsRequestSettlementState(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct ListRefundsRequestSettlementState : IStringEnum
 
     public static bool operator !=(ListRefundsRequestSettlementState value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(ListRefundsRequestSettlementState value) => value.Value;
+
+    public static explicit operator ListRefundsRequestSettlementState(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

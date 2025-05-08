@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<CustomerNotificationLanguage>))]
 public readonly record struct CustomerNotificationLanguage : IStringEnum
 {
-    public static readonly CustomerNotificationLanguage En = Custom(Values.En);
+    public static readonly CustomerNotificationLanguage En = new(Values.En);
 
-    public static readonly CustomerNotificationLanguage Fr = Custom(Values.Fr);
+    public static readonly CustomerNotificationLanguage Fr = new(Values.Fr);
 
     public CustomerNotificationLanguage(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct CustomerNotificationLanguage : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static CustomerNotificationLanguage Custom(string value)
+    public static CustomerNotificationLanguage FromCustom(string value)
     {
         return new CustomerNotificationLanguage(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct CustomerNotificationLanguage : IStringEnum
 
     public static bool operator !=(CustomerNotificationLanguage value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(CustomerNotificationLanguage value) => value.Value;
+
+    public static explicit operator CustomerNotificationLanguage(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

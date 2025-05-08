@@ -6,19 +6,17 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<CreateProcessingAccountBusinessType>))]
 public readonly record struct CreateProcessingAccountBusinessType : IStringEnum
 {
-    public static readonly CreateProcessingAccountBusinessType Retail = Custom(Values.Retail);
+    public static readonly CreateProcessingAccountBusinessType Retail = new(Values.Retail);
 
-    public static readonly CreateProcessingAccountBusinessType Restaurant = Custom(
-        Values.Restaurant
-    );
+    public static readonly CreateProcessingAccountBusinessType Restaurant = new(Values.Restaurant);
 
-    public static readonly CreateProcessingAccountBusinessType Internet = Custom(Values.Internet);
+    public static readonly CreateProcessingAccountBusinessType Internet = new(Values.Internet);
 
-    public static readonly CreateProcessingAccountBusinessType Moto = Custom(Values.Moto);
+    public static readonly CreateProcessingAccountBusinessType Moto = new(Values.Moto);
 
-    public static readonly CreateProcessingAccountBusinessType Lodging = Custom(Values.Lodging);
+    public static readonly CreateProcessingAccountBusinessType Lodging = new(Values.Lodging);
 
-    public static readonly CreateProcessingAccountBusinessType NotForProfit = Custom(
+    public static readonly CreateProcessingAccountBusinessType NotForProfit = new(
         Values.NotForProfit
     );
 
@@ -35,7 +33,7 @@ public readonly record struct CreateProcessingAccountBusinessType : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static CreateProcessingAccountBusinessType Custom(string value)
+    public static CreateProcessingAccountBusinessType FromCustom(string value)
     {
         return new CreateProcessingAccountBusinessType(value);
     }
@@ -58,6 +56,11 @@ public readonly record struct CreateProcessingAccountBusinessType : IStringEnum
 
     public static bool operator !=(CreateProcessingAccountBusinessType value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(CreateProcessingAccountBusinessType value) =>
+        value.Value;
+
+    public static explicit operator CreateProcessingAccountBusinessType(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

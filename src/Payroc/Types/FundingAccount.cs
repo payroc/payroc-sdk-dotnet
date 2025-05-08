@@ -9,29 +9,29 @@ public record FundingAccount
     /// <summary>
     /// Unique identifier of the funding account.
     /// </summary>
-    [JsonPropertyName("fundingAccountId")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("fundingAccountId")]
     public int? FundingAccountId { get; set; }
 
     /// <summary>
     /// Date the funding account was created.
     /// </summary>
-    [JsonPropertyName("createdDate")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("createdDate")]
     public DateTime? CreatedDate { get; set; }
 
     /// <summary>
     /// Date the funding account was last modified.
     /// </summary>
-    [JsonPropertyName("lastModifiedDate")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("lastModifiedDate")]
     public DateTime? LastModifiedDate { get; set; }
 
     /// <summary>
     /// Status of the funding account.
     /// </summary>
-    [JsonPropertyName("status")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("status")]
     public FundingAccountStatus? Status { get; set; }
 
     /// <summary>
@@ -71,17 +71,21 @@ public record FundingAccount
     /// <summary>
     /// Array of HATEOAS links.
     /// </summary>
-    [JsonPropertyName("links")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("links")]
     public IEnumerable<Link>? Links { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

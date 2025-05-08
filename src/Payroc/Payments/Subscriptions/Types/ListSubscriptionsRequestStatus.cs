@@ -6,13 +6,13 @@ namespace Payroc.Payments.Subscriptions;
 [JsonConverter(typeof(StringEnumSerializer<ListSubscriptionsRequestStatus>))]
 public readonly record struct ListSubscriptionsRequestStatus : IStringEnum
 {
-    public static readonly ListSubscriptionsRequestStatus Active = Custom(Values.Active);
+    public static readonly ListSubscriptionsRequestStatus Active = new(Values.Active);
 
-    public static readonly ListSubscriptionsRequestStatus Completed = Custom(Values.Completed);
+    public static readonly ListSubscriptionsRequestStatus Completed = new(Values.Completed);
 
-    public static readonly ListSubscriptionsRequestStatus Suspended = Custom(Values.Suspended);
+    public static readonly ListSubscriptionsRequestStatus Suspended = new(Values.Suspended);
 
-    public static readonly ListSubscriptionsRequestStatus Cancelled = Custom(Values.Cancelled);
+    public static readonly ListSubscriptionsRequestStatus Cancelled = new(Values.Cancelled);
 
     public ListSubscriptionsRequestStatus(string value)
     {
@@ -27,7 +27,7 @@ public readonly record struct ListSubscriptionsRequestStatus : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ListSubscriptionsRequestStatus Custom(string value)
+    public static ListSubscriptionsRequestStatus FromCustom(string value)
     {
         return new ListSubscriptionsRequestStatus(value);
     }
@@ -50,6 +50,10 @@ public readonly record struct ListSubscriptionsRequestStatus : IStringEnum
 
     public static bool operator !=(ListSubscriptionsRequestStatus value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(ListSubscriptionsRequestStatus value) => value.Value;
+
+    public static explicit operator ListSubscriptionsRequestStatus(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

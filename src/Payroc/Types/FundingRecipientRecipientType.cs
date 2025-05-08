@@ -6,31 +6,31 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<FundingRecipientRecipientType>))]
 public readonly record struct FundingRecipientRecipientType : IStringEnum
 {
-    public static readonly FundingRecipientRecipientType PrivateCorporation = Custom(
+    public static readonly FundingRecipientRecipientType PrivateCorporation = new(
         Values.PrivateCorporation
     );
 
-    public static readonly FundingRecipientRecipientType PublicCorporation = Custom(
+    public static readonly FundingRecipientRecipientType PublicCorporation = new(
         Values.PublicCorporation
     );
 
-    public static readonly FundingRecipientRecipientType NonProfit = Custom(Values.NonProfit);
+    public static readonly FundingRecipientRecipientType NonProfit = new(Values.NonProfit);
 
-    public static readonly FundingRecipientRecipientType Government = Custom(Values.Government);
+    public static readonly FundingRecipientRecipientType Government = new(Values.Government);
 
-    public static readonly FundingRecipientRecipientType PrivateLlc = Custom(Values.PrivateLlc);
+    public static readonly FundingRecipientRecipientType PrivateLlc = new(Values.PrivateLlc);
 
-    public static readonly FundingRecipientRecipientType PublicLlc = Custom(Values.PublicLlc);
+    public static readonly FundingRecipientRecipientType PublicLlc = new(Values.PublicLlc);
 
-    public static readonly FundingRecipientRecipientType PrivatePartnership = Custom(
+    public static readonly FundingRecipientRecipientType PrivatePartnership = new(
         Values.PrivatePartnership
     );
 
-    public static readonly FundingRecipientRecipientType PublicPartnership = Custom(
+    public static readonly FundingRecipientRecipientType PublicPartnership = new(
         Values.PublicPartnership
     );
 
-    public static readonly FundingRecipientRecipientType SoleProprietor = Custom(
+    public static readonly FundingRecipientRecipientType SoleProprietor = new(
         Values.SoleProprietor
     );
 
@@ -47,7 +47,7 @@ public readonly record struct FundingRecipientRecipientType : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static FundingRecipientRecipientType Custom(string value)
+    public static FundingRecipientRecipientType FromCustom(string value)
     {
         return new FundingRecipientRecipientType(value);
     }
@@ -70,6 +70,10 @@ public readonly record struct FundingRecipientRecipientType : IStringEnum
 
     public static bool operator !=(FundingRecipientRecipientType value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(FundingRecipientRecipientType value) => value.Value;
+
+    public static explicit operator FundingRecipientRecipientType(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

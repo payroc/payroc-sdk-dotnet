@@ -6,23 +6,21 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<SecureTokenSummaryStatus>))]
 public readonly record struct SecureTokenSummaryStatus : IStringEnum
 {
-    public static readonly SecureTokenSummaryStatus NotValidated = Custom(Values.NotValidated);
+    public static readonly SecureTokenSummaryStatus NotValidated = new(Values.NotValidated);
 
-    public static readonly SecureTokenSummaryStatus CvvValidated = Custom(Values.CvvValidated);
+    public static readonly SecureTokenSummaryStatus CvvValidated = new(Values.CvvValidated);
 
-    public static readonly SecureTokenSummaryStatus ValidationFailed = Custom(
-        Values.ValidationFailed
-    );
+    public static readonly SecureTokenSummaryStatus ValidationFailed = new(Values.ValidationFailed);
 
-    public static readonly SecureTokenSummaryStatus IssueNumberValidated = Custom(
+    public static readonly SecureTokenSummaryStatus IssueNumberValidated = new(
         Values.IssueNumberValidated
     );
 
-    public static readonly SecureTokenSummaryStatus CardNumberValidated = Custom(
+    public static readonly SecureTokenSummaryStatus CardNumberValidated = new(
         Values.CardNumberValidated
     );
 
-    public static readonly SecureTokenSummaryStatus BankAccountValidated = Custom(
+    public static readonly SecureTokenSummaryStatus BankAccountValidated = new(
         Values.BankAccountValidated
     );
 
@@ -39,7 +37,7 @@ public readonly record struct SecureTokenSummaryStatus : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static SecureTokenSummaryStatus Custom(string value)
+    public static SecureTokenSummaryStatus FromCustom(string value)
     {
         return new SecureTokenSummaryStatus(value);
     }
@@ -62,6 +60,10 @@ public readonly record struct SecureTokenSummaryStatus : IStringEnum
 
     public static bool operator !=(SecureTokenSummaryStatus value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(SecureTokenSummaryStatus value) => value.Value;
+
+    public static explicit operator SecureTokenSummaryStatus(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

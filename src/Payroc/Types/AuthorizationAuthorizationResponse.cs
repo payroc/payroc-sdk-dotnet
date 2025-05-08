@@ -6,345 +6,336 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<AuthorizationAuthorizationResponse>))]
 public readonly record struct AuthorizationAuthorizationResponse : IStringEnum
 {
-    public static readonly AuthorizationAuthorizationResponse ActivityCountLimitExceeded = Custom(
+    public static readonly AuthorizationAuthorizationResponse ActivityCountLimitExceeded = new(
         Values.ActivityCountLimitExceeded
     );
 
-    public static readonly AuthorizationAuthorizationResponse AlreadyReversed = Custom(
+    public static readonly AuthorizationAuthorizationResponse AlreadyReversed = new(
         Values.AlreadyReversed
     );
 
-    public static readonly AuthorizationAuthorizationResponse Approved = Custom(Values.Approved);
+    public static readonly AuthorizationAuthorizationResponse Approved = new(Values.Approved);
 
-    public static readonly AuthorizationAuthorizationResponse ApproveVip = Custom(
-        Values.ApproveVip
-    );
+    public static readonly AuthorizationAuthorizationResponse ApproveVip = new(Values.ApproveVip);
 
-    public static readonly AuthorizationAuthorizationResponse ApproveWithId = Custom(
+    public static readonly AuthorizationAuthorizationResponse ApproveWithId = new(
         Values.ApproveWithId
     );
 
-    public static readonly AuthorizationAuthorizationResponse CannotVerifyPin = Custom(
+    public static readonly AuthorizationAuthorizationResponse CannotVerifyPin = new(
         Values.CannotVerifyPin
     );
 
-    public static readonly AuthorizationAuthorizationResponse CardAuthenticationFailed = Custom(
+    public static readonly AuthorizationAuthorizationResponse CardAuthenticationFailed = new(
         Values.CardAuthenticationFailed
     );
 
-    public static readonly AuthorizationAuthorizationResponse CardTypeVerificationError = Custom(
+    public static readonly AuthorizationAuthorizationResponse CardTypeVerificationError = new(
         Values.CardTypeVerificationError
     );
 
-    public static readonly AuthorizationAuthorizationResponse CashRequestExceedsIssuerLimit =
-        Custom(Values.CashRequestExceedsIssuerLimit);
+    public static readonly AuthorizationAuthorizationResponse CashRequestExceedsIssuerLimit = new(
+        Values.CashRequestExceedsIssuerLimit
+    );
 
-    public static readonly AuthorizationAuthorizationResponse CashServiceNotAvailable = Custom(
+    public static readonly AuthorizationAuthorizationResponse CashServiceNotAvailable = new(
         Values.CashServiceNotAvailable
     );
 
-    public static readonly AuthorizationAuthorizationResponse CidVerificationError = Custom(
+    public static readonly AuthorizationAuthorizationResponse CidVerificationError = new(
         Values.CidVerificationError
     );
 
-    public static readonly AuthorizationAuthorizationResponse ContactCardIssuer = Custom(
+    public static readonly AuthorizationAuthorizationResponse ContactCardIssuer = new(
         Values.ContactCardIssuer
     );
 
-    public static readonly AuthorizationAuthorizationResponse CryptographicFailure = Custom(
+    public static readonly AuthorizationAuthorizationResponse CryptographicFailure = new(
         Values.CryptographicFailure
     );
 
-    public static readonly AuthorizationAuthorizationResponse DailyThresholdExceeded = Custom(
+    public static readonly AuthorizationAuthorizationResponse DailyThresholdExceeded = new(
         Values.DailyThresholdExceeded
     );
 
-    public static readonly AuthorizationAuthorizationResponse DeclineCvv2Failure = Custom(
+    public static readonly AuthorizationAuthorizationResponse DeclineCvv2Failure = new(
         Values.DeclineCvv2Failure
     );
 
-    public static readonly AuthorizationAuthorizationResponse Deny = Custom(Values.Deny);
+    public static readonly AuthorizationAuthorizationResponse Deny = new(Values.Deny);
 
-    public static readonly AuthorizationAuthorizationResponse DenyAccountCanceled = Custom(
+    public static readonly AuthorizationAuthorizationResponse DenyAccountCanceled = new(
         Values.DenyAccountCanceled
     );
 
-    public static readonly AuthorizationAuthorizationResponse DenyClosedMerchant = Custom(
+    public static readonly AuthorizationAuthorizationResponse DenyClosedMerchant = new(
         Values.DenyClosedMerchant
     );
 
-    public static readonly AuthorizationAuthorizationResponse DenyNewCardIssued = Custom(
+    public static readonly AuthorizationAuthorizationResponse DenyNewCardIssued = new(
         Values.DenyNewCardIssued
     );
 
-    public static readonly AuthorizationAuthorizationResponse DenyPickUpCard = Custom(
+    public static readonly AuthorizationAuthorizationResponse DenyPickUpCard = new(
         Values.DenyPickUpCard
     );
 
     public static readonly AuthorizationAuthorizationResponse DestinationCannotBeFoundForRouting =
-        Custom(Values.DestinationCannotBeFoundForRouting);
+        new(Values.DestinationCannotBeFoundForRouting);
 
-    public static readonly AuthorizationAuthorizationResponse DoNotHonor = Custom(
-        Values.DoNotHonor
+    public static readonly AuthorizationAuthorizationResponse DoNotHonor = new(Values.DoNotHonor);
+
+    public static readonly AuthorizationAuthorizationResponse DuplicateTransmissionDetected = new(
+        Values.DuplicateTransmissionDetected
     );
 
-    public static readonly AuthorizationAuthorizationResponse DuplicateTransmissionDetected =
-        Custom(Values.DuplicateTransmissionDetected);
+    public static readonly AuthorizationAuthorizationResponse Error = new(Values.Error);
 
-    public static readonly AuthorizationAuthorizationResponse Error = Custom(Values.Error);
-
-    public static readonly AuthorizationAuthorizationResponse ExceedsWithdrawalAmountLimit = Custom(
+    public static readonly AuthorizationAuthorizationResponse ExceedsWithdrawalAmountLimit = new(
         Values.ExceedsWithdrawalAmountLimit
     );
 
-    public static readonly AuthorizationAuthorizationResponse ExpiredCard = Custom(
-        Values.ExpiredCard
-    );
+    public static readonly AuthorizationAuthorizationResponse ExpiredCard = new(Values.ExpiredCard);
 
-    public static readonly AuthorizationAuthorizationResponse FileTemporarilyUnavailable = Custom(
+    public static readonly AuthorizationAuthorizationResponse FileTemporarilyUnavailable = new(
         Values.FileTemporarilyUnavailable
     );
 
-    public static readonly AuthorizationAuthorizationResponse ForceStip = Custom(Values.ForceStip);
+    public static readonly AuthorizationAuthorizationResponse ForceStip = new(Values.ForceStip);
 
-    public static readonly AuthorizationAuthorizationResponse FormatError = Custom(
-        Values.FormatError
-    );
+    public static readonly AuthorizationAuthorizationResponse FormatError = new(Values.FormatError);
 
-    public static readonly AuthorizationAuthorizationResponse ForwardToIssuer = Custom(
+    public static readonly AuthorizationAuthorizationResponse ForwardToIssuer = new(
         Values.ForwardToIssuer
     );
 
-    public static readonly AuthorizationAuthorizationResponse FunctionNotSupported = Custom(
+    public static readonly AuthorizationAuthorizationResponse FunctionNotSupported = new(
         Values.FunctionNotSupported
     );
 
-    public static readonly AuthorizationAuthorizationResponse HonorWithId = Custom(
-        Values.HonorWithId
-    );
+    public static readonly AuthorizationAuthorizationResponse HonorWithId = new(Values.HonorWithId);
 
-    public static readonly AuthorizationAuthorizationResponse IncorrectCvv = Custom(
+    public static readonly AuthorizationAuthorizationResponse IncorrectCvv = new(
         Values.IncorrectCvv
     );
 
-    public static readonly AuthorizationAuthorizationResponse IncorrectPin = Custom(
+    public static readonly AuthorizationAuthorizationResponse IncorrectPin = new(
         Values.IncorrectPin
     );
 
-    public static readonly AuthorizationAuthorizationResponse IneligibleForResubmission = Custom(
+    public static readonly AuthorizationAuthorizationResponse IneligibleForResubmission = new(
         Values.IneligibleForResubmission
     );
 
-    public static readonly AuthorizationAuthorizationResponse InsufficientFunds = Custom(
+    public static readonly AuthorizationAuthorizationResponse InsufficientFunds = new(
         Values.InsufficientFunds
     );
 
-    public static readonly AuthorizationAuthorizationResponse InvalidAccount = Custom(
+    public static readonly AuthorizationAuthorizationResponse InvalidAccount = new(
         Values.InvalidAccount
     );
 
-    public static readonly AuthorizationAuthorizationResponse InvalidAccountNumber = Custom(
+    public static readonly AuthorizationAuthorizationResponse InvalidAccountNumber = new(
         Values.InvalidAccountNumber
     );
 
-    public static readonly AuthorizationAuthorizationResponse InvalidAmount = Custom(
+    public static readonly AuthorizationAuthorizationResponse InvalidAmount = new(
         Values.InvalidAmount
     );
 
-    public static readonly AuthorizationAuthorizationResponse InvalidAuthorizationLifeCycle =
-        Custom(Values.InvalidAuthorizationLifeCycle);
+    public static readonly AuthorizationAuthorizationResponse InvalidAuthorizationLifeCycle = new(
+        Values.InvalidAuthorizationLifeCycle
+    );
 
-    public static readonly AuthorizationAuthorizationResponse InvalidBillerInformation = Custom(
+    public static readonly AuthorizationAuthorizationResponse InvalidBillerInformation = new(
         Values.InvalidBillerInformation
     );
 
-    public static readonly AuthorizationAuthorizationResponse InvalidCardSecurityCode = Custom(
+    public static readonly AuthorizationAuthorizationResponse InvalidCardSecurityCode = new(
         Values.InvalidCardSecurityCode
     );
 
-    public static readonly AuthorizationAuthorizationResponse InvalidCurrencyCode = Custom(
+    public static readonly AuthorizationAuthorizationResponse InvalidCurrencyCode = new(
         Values.InvalidCurrencyCode
     );
 
-    public static readonly AuthorizationAuthorizationResponse InvalidMerchant = Custom(
+    public static readonly AuthorizationAuthorizationResponse InvalidMerchant = new(
         Values.InvalidMerchant
     );
 
-    public static readonly AuthorizationAuthorizationResponse InvalidResponse = Custom(
+    public static readonly AuthorizationAuthorizationResponse InvalidResponse = new(
         Values.InvalidResponse
     );
 
-    public static readonly AuthorizationAuthorizationResponse InvalidTransaction = Custom(
+    public static readonly AuthorizationAuthorizationResponse InvalidTransaction = new(
         Values.InvalidTransaction
     );
 
-    public static readonly AuthorizationAuthorizationResponse IssuerNotAvailable = Custom(
+    public static readonly AuthorizationAuthorizationResponse IssuerNotAvailable = new(
         Values.IssuerNotAvailable
     );
 
-    public static readonly AuthorizationAuthorizationResponse IssuerTimeout = Custom(
+    public static readonly AuthorizationAuthorizationResponse IssuerTimeout = new(
         Values.IssuerTimeout
     );
 
-    public static readonly AuthorizationAuthorizationResponse IssuerUnavailable = Custom(
+    public static readonly AuthorizationAuthorizationResponse IssuerUnavailable = new(
         Values.IssuerUnavailable
     );
 
-    public static readonly AuthorizationAuthorizationResponse NoActionTaken = Custom(
+    public static readonly AuthorizationAuthorizationResponse NoActionTaken = new(
         Values.NoActionTaken
     );
 
-    public static readonly AuthorizationAuthorizationResponse NoCardRecord = Custom(
+    public static readonly AuthorizationAuthorizationResponse NoCardRecord = new(
         Values.NoCardRecord
     );
 
-    public static readonly AuthorizationAuthorizationResponse NoCheckingAccount = Custom(
+    public static readonly AuthorizationAuthorizationResponse NoCheckingAccount = new(
         Values.NoCheckingAccount
     );
 
-    public static readonly AuthorizationAuthorizationResponse NoCreditAccount = Custom(
+    public static readonly AuthorizationAuthorizationResponse NoCreditAccount = new(
         Values.NoCreditAccount
     );
 
-    public static readonly AuthorizationAuthorizationResponse NoFinancialImpact = Custom(
+    public static readonly AuthorizationAuthorizationResponse NoFinancialImpact = new(
         Values.NoFinancialImpact
     );
 
-    public static readonly AuthorizationAuthorizationResponse NoReasonToDecline = Custom(
+    public static readonly AuthorizationAuthorizationResponse NoReasonToDecline = new(
         Values.NoReasonToDecline
     );
 
-    public static readonly AuthorizationAuthorizationResponse NoSavingsAccount = Custom(
+    public static readonly AuthorizationAuthorizationResponse NoSavingsAccount = new(
         Values.NoSavingsAccount
     );
 
-    public static readonly AuthorizationAuthorizationResponse NoSuchIssuer = Custom(
+    public static readonly AuthorizationAuthorizationResponse NoSuchIssuer = new(
         Values.NoSuchIssuer
     );
 
-    public static readonly AuthorizationAuthorizationResponse PartialApproval = Custom(
+    public static readonly AuthorizationAuthorizationResponse PartialApproval = new(
         Values.PartialApproval
     );
 
-    public static readonly AuthorizationAuthorizationResponse PartialAuthorization = Custom(
+    public static readonly AuthorizationAuthorizationResponse PartialAuthorization = new(
         Values.PartialAuthorization
     );
 
-    public static readonly AuthorizationAuthorizationResponse PickUpCard = Custom(
-        Values.PickUpCard
-    );
+    public static readonly AuthorizationAuthorizationResponse PickUpCard = new(Values.PickUpCard);
 
-    public static readonly AuthorizationAuthorizationResponse PickUpCardSpecialCondition = Custom(
+    public static readonly AuthorizationAuthorizationResponse PickUpCardSpecialCondition = new(
         Values.PickUpCardSpecialCondition
     );
 
-    public static readonly AuthorizationAuthorizationResponse PinChangeRequestDeclined = Custom(
+    public static readonly AuthorizationAuthorizationResponse PinChangeRequestDeclined = new(
         Values.PinChangeRequestDeclined
     );
 
-    public static readonly AuthorizationAuthorizationResponse PinCryptographicErrorFound = Custom(
+    public static readonly AuthorizationAuthorizationResponse PinCryptographicErrorFound = new(
         Values.PinCryptographicErrorFound
     );
 
-    public static readonly AuthorizationAuthorizationResponse PinEntryTriesExceeded = Custom(
+    public static readonly AuthorizationAuthorizationResponse PinEntryTriesExceeded = new(
         Values.PinEntryTriesExceeded
     );
 
-    public static readonly AuthorizationAuthorizationResponse PinNotChanged = Custom(
+    public static readonly AuthorizationAuthorizationResponse PinNotChanged = new(
         Values.PinNotChanged
     );
 
-    public static readonly AuthorizationAuthorizationResponse PleaseCallIssuer = Custom(
+    public static readonly AuthorizationAuthorizationResponse PleaseCallIssuer = new(
         Values.PleaseCallIssuer
     );
 
-    public static readonly AuthorizationAuthorizationResponse ReenterTransaction = Custom(
+    public static readonly AuthorizationAuthorizationResponse ReenterTransaction = new(
         Values.ReenterTransaction
     );
 
-    public static readonly AuthorizationAuthorizationResponse ReferToCardIssuer = Custom(
+    public static readonly AuthorizationAuthorizationResponse ReferToCardIssuer = new(
         Values.ReferToCardIssuer
     );
 
     public static readonly AuthorizationAuthorizationResponse ReferToCardIssuerSpecialCondition =
-        Custom(Values.ReferToCardIssuerSpecialCondition);
+        new(Values.ReferToCardIssuerSpecialCondition);
 
-    public static readonly AuthorizationAuthorizationResponse RestrictedCard = Custom(
+    public static readonly AuthorizationAuthorizationResponse RestrictedCard = new(
         Values.RestrictedCard
     );
 
-    public static readonly AuthorizationAuthorizationResponse Reversal = Custom(Values.Reversal);
+    public static readonly AuthorizationAuthorizationResponse Reversal = new(Values.Reversal);
 
-    public static readonly AuthorizationAuthorizationResponse ReversalDataInconsistent = Custom(
+    public static readonly AuthorizationAuthorizationResponse ReversalDataInconsistent = new(
         Values.ReversalDataInconsistent
     );
 
-    public static readonly AuthorizationAuthorizationResponse RevokeAllAuthorizationsOrder = Custom(
+    public static readonly AuthorizationAuthorizationResponse RevokeAllAuthorizationsOrder = new(
         Values.RevokeAllAuthorizationsOrder
     );
 
     public static readonly AuthorizationAuthorizationResponse ScheduledTransactionstoppedByCardholder =
-        Custom(Values.ScheduledTransactionstoppedByCardholder);
+        new(Values.ScheduledTransactionstoppedByCardholder);
 
-    public static readonly AuthorizationAuthorizationResponse SecurityViolation = Custom(
+    public static readonly AuthorizationAuthorizationResponse SecurityViolation = new(
         Values.SecurityViolation
     );
 
-    public static readonly AuthorizationAuthorizationResponse Successful = Custom(
-        Values.Successful
-    );
+    public static readonly AuthorizationAuthorizationResponse Successful = new(Values.Successful);
 
-    public static readonly AuthorizationAuthorizationResponse SurchargeAmountNotPermitted = Custom(
+    public static readonly AuthorizationAuthorizationResponse SurchargeAmountNotPermitted = new(
         Values.SurchargeAmountNotPermitted
     );
 
-    public static readonly AuthorizationAuthorizationResponse SuspectFraud = Custom(
+    public static readonly AuthorizationAuthorizationResponse SuspectFraud = new(
         Values.SuspectFraud
     );
 
-    public static readonly AuthorizationAuthorizationResponse SystemMalfunction = Custom(
+    public static readonly AuthorizationAuthorizationResponse SystemMalfunction = new(
         Values.SystemMalfunction
     );
 
     public static readonly AuthorizationAuthorizationResponse TransactionAmountExceedsApprovalAmount =
-        Custom(Values.TransactionAmountExceedsApprovalAmount);
+        new(Values.TransactionAmountExceedsApprovalAmount);
 
-    public static readonly AuthorizationAuthorizationResponse TransactionCannotBeCompleted = Custom(
+    public static readonly AuthorizationAuthorizationResponse TransactionCannotBeCompleted = new(
         Values.TransactionCannotBeCompleted
     );
 
-    public static readonly AuthorizationAuthorizationResponse TransactionNotAllowedAtMerchant =
-        Custom(Values.TransactionNotAllowedAtMerchant);
+    public static readonly AuthorizationAuthorizationResponse TransactionNotAllowedAtMerchant = new(
+        Values.TransactionNotAllowedAtMerchant
+    );
 
-    public static readonly AuthorizationAuthorizationResponse TransactionNotAllowedAtTerminal =
-        Custom(Values.TransactionNotAllowedAtTerminal);
+    public static readonly AuthorizationAuthorizationResponse TransactionNotAllowedAtTerminal = new(
+        Values.TransactionNotAllowedAtTerminal
+    );
 
-    public static readonly AuthorizationAuthorizationResponse TransactionNotPermitted = Custom(
+    public static readonly AuthorizationAuthorizationResponse TransactionNotPermitted = new(
         Values.TransactionNotPermitted
     );
 
     public static readonly AuthorizationAuthorizationResponse TransactionNotPermittedToCardholder =
-        Custom(Values.TransactionNotPermittedToCardholder);
+        new(Values.TransactionNotPermittedToCardholder);
 
-    public static readonly AuthorizationAuthorizationResponse UnableToGoOnline = Custom(
+    public static readonly AuthorizationAuthorizationResponse UnableToGoOnline = new(
         Values.UnableToGoOnline
     );
 
-    public static readonly AuthorizationAuthorizationResponse UnableToLocateRecordInFile = Custom(
+    public static readonly AuthorizationAuthorizationResponse UnableToLocateRecordInFile = new(
         Values.UnableToLocateRecordInFile
     );
 
-    public static readonly AuthorizationAuthorizationResponse UnableToVerifyPin = Custom(
+    public static readonly AuthorizationAuthorizationResponse UnableToVerifyPin = new(
         Values.UnableToVerifyPin
     );
 
-    public static readonly AuthorizationAuthorizationResponse UnacceptablePin = Custom(
+    public static readonly AuthorizationAuthorizationResponse UnacceptablePin = new(
         Values.UnacceptablePin
     );
 
-    public static readonly AuthorizationAuthorizationResponse Unknown = Custom(Values.Unknown);
+    public static readonly AuthorizationAuthorizationResponse Unknown = new(Values.Unknown);
 
-    public static readonly AuthorizationAuthorizationResponse UnsafePin = Custom(Values.UnsafePin);
+    public static readonly AuthorizationAuthorizationResponse UnsafePin = new(Values.UnsafePin);
 
     public AuthorizationAuthorizationResponse(string value)
     {
@@ -359,7 +350,7 @@ public readonly record struct AuthorizationAuthorizationResponse : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static AuthorizationAuthorizationResponse Custom(string value)
+    public static AuthorizationAuthorizationResponse FromCustom(string value)
     {
         return new AuthorizationAuthorizationResponse(value);
     }
@@ -382,6 +373,10 @@ public readonly record struct AuthorizationAuthorizationResponse : IStringEnum
 
     public static bool operator !=(AuthorizationAuthorizationResponse value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(AuthorizationAuthorizationResponse value) => value.Value;
+
+    public static explicit operator AuthorizationAuthorizationResponse(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

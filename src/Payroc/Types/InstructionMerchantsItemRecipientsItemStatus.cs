@@ -6,33 +6,27 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<InstructionMerchantsItemRecipientsItemStatus>))]
 public readonly record struct InstructionMerchantsItemRecipientsItemStatus : IStringEnum
 {
-    public static readonly InstructionMerchantsItemRecipientsItemStatus Accepted = Custom(
+    public static readonly InstructionMerchantsItemRecipientsItemStatus Accepted = new(
         Values.Accepted
     );
 
-    public static readonly InstructionMerchantsItemRecipientsItemStatus Pending = Custom(
+    public static readonly InstructionMerchantsItemRecipientsItemStatus Pending = new(
         Values.Pending
     );
 
-    public static readonly InstructionMerchantsItemRecipientsItemStatus Released = Custom(
+    public static readonly InstructionMerchantsItemRecipientsItemStatus Released = new(
         Values.Released
     );
 
-    public static readonly InstructionMerchantsItemRecipientsItemStatus Funded = Custom(
-        Values.Funded
-    );
+    public static readonly InstructionMerchantsItemRecipientsItemStatus Funded = new(Values.Funded);
 
-    public static readonly InstructionMerchantsItemRecipientsItemStatus Failed = Custom(
-        Values.Failed
-    );
+    public static readonly InstructionMerchantsItemRecipientsItemStatus Failed = new(Values.Failed);
 
-    public static readonly InstructionMerchantsItemRecipientsItemStatus Rejected = Custom(
+    public static readonly InstructionMerchantsItemRecipientsItemStatus Rejected = new(
         Values.Rejected
     );
 
-    public static readonly InstructionMerchantsItemRecipientsItemStatus OnHold = Custom(
-        Values.OnHold
-    );
+    public static readonly InstructionMerchantsItemRecipientsItemStatus OnHold = new(Values.OnHold);
 
     public InstructionMerchantsItemRecipientsItemStatus(string value)
     {
@@ -47,7 +41,7 @@ public readonly record struct InstructionMerchantsItemRecipientsItemStatus : ISt
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static InstructionMerchantsItemRecipientsItemStatus Custom(string value)
+    public static InstructionMerchantsItemRecipientsItemStatus FromCustom(string value)
     {
         return new InstructionMerchantsItemRecipientsItemStatus(value);
     }
@@ -74,6 +68,12 @@ public readonly record struct InstructionMerchantsItemRecipientsItemStatus : ISt
         InstructionMerchantsItemRecipientsItemStatus value1,
         string value2
     ) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(InstructionMerchantsItemRecipientsItemStatus value) =>
+        value.Value;
+
+    public static explicit operator InstructionMerchantsItemRecipientsItemStatus(string value) =>
+        new(value);
 
     /// <summary>
     /// Constant strings for enum values

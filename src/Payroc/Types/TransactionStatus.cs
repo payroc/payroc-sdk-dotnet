@@ -6,39 +6,37 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<TransactionStatus>))]
 public readonly record struct TransactionStatus : IStringEnum
 {
-    public static readonly TransactionStatus FullSuspense = Custom(Values.FullSuspense);
+    public static readonly TransactionStatus FullSuspense = new(Values.FullSuspense);
 
-    public static readonly TransactionStatus HeldAudited = Custom(Values.HeldAudited);
+    public static readonly TransactionStatus HeldAudited = new(Values.HeldAudited);
 
-    public static readonly TransactionStatus HeldReleasedAudited = Custom(
-        Values.HeldReleasedAudited
-    );
+    public static readonly TransactionStatus HeldReleasedAudited = new(Values.HeldReleasedAudited);
 
-    public static readonly TransactionStatus HoldForSettlement30Days = Custom(
+    public static readonly TransactionStatus HoldForSettlement30Days = new(
         Values.HoldForSettlement30Days
     );
 
-    public static readonly TransactionStatus HoldForSettlementDuplicate = Custom(
+    public static readonly TransactionStatus HoldForSettlementDuplicate = new(
         Values.HoldForSettlementDuplicate
     );
 
-    public static readonly TransactionStatus HoldLongTerm = Custom(Values.HoldLongTerm);
+    public static readonly TransactionStatus HoldLongTerm = new(Values.HoldLongTerm);
 
-    public static readonly TransactionStatus Paid = Custom(Values.Paid);
+    public static readonly TransactionStatus Paid = new(Values.Paid);
 
-    public static readonly TransactionStatus PaidByThirdParty = Custom(Values.PaidByThirdParty);
+    public static readonly TransactionStatus PaidByThirdParty = new(Values.PaidByThirdParty);
 
-    public static readonly TransactionStatus PartialRelease = Custom(Values.PartialRelease);
+    public static readonly TransactionStatus PartialRelease = new(Values.PartialRelease);
 
-    public static readonly TransactionStatus Pull = Custom(Values.Pull);
+    public static readonly TransactionStatus Pull = new(Values.Pull);
 
-    public static readonly TransactionStatus Release = Custom(Values.Release);
+    public static readonly TransactionStatus Release = new(Values.Release);
 
-    public static readonly TransactionStatus New = Custom(Values.New);
+    public static readonly TransactionStatus New = new(Values.New);
 
-    public static readonly TransactionStatus Held = Custom(Values.Held);
+    public static readonly TransactionStatus Held = new(Values.Held);
 
-    public static readonly TransactionStatus Unknown = Custom(Values.Unknown);
+    public static readonly TransactionStatus Unknown = new(Values.Unknown);
 
     public TransactionStatus(string value)
     {
@@ -53,7 +51,7 @@ public readonly record struct TransactionStatus : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static TransactionStatus Custom(string value)
+    public static TransactionStatus FromCustom(string value)
     {
         return new TransactionStatus(value);
     }
@@ -76,6 +74,10 @@ public readonly record struct TransactionStatus : IStringEnum
 
     public static bool operator !=(TransactionStatus value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(TransactionStatus value) => value.Value;
+
+    public static explicit operator TransactionStatus(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

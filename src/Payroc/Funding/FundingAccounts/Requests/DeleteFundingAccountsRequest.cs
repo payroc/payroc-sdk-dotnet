@@ -11,6 +11,7 @@ public record DeleteFundingAccountsRequest
     [JsonIgnore]
     public required int FundingAccountId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

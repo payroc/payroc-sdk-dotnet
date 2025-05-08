@@ -52,12 +52,14 @@ public partial class PaymentPlansClient
                     _query["limit"] = request.Limit.Value.ToString();
                 }
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
-                        Path =
-                            $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/payment-plans",
+                        Path = string.Format(
+                            "processing-terminals/{0}/payment-plans",
+                            ValueConvert.ToPathParameterString(request.ProcessingTerminalId)
+                        ),
                         Query = _query,
                         Options = options,
                     }
@@ -189,12 +191,14 @@ public partial class PaymentPlansClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/payment-plans",
+                            Path = string.Format(
+                                "processing-terminals/{0}/payment-plans",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId)
+                            ),
                             Body = request.Body,
                             Headers = _headers,
                             ContentType = "application/json",
@@ -285,12 +289,15 @@ public partial class PaymentPlansClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/payment-plans/{JsonUtils.SerializeAsString(request.PaymentPlanId)}",
+                            Path = string.Format(
+                                "processing-terminals/{0}/payment-plans/{1}",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId),
+                                ValueConvert.ToPathParameterString(request.PaymentPlanId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -379,12 +386,15 @@ public partial class PaymentPlansClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Delete,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/payment-plans/{JsonUtils.SerializeAsString(request.PaymentPlanId)}",
+                            Path = string.Format(
+                                "processing-terminals/{0}/payment-plans/{1}",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId),
+                                ValueConvert.ToPathParameterString(request.PaymentPlanId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -474,12 +484,15 @@ public partial class PaymentPlansClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethodExtensions.Patch,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/payment-plans/{JsonUtils.SerializeAsString(request.PaymentPlanId)}",
+                            Path = string.Format(
+                                "processing-terminals/{0}/payment-plans/{1}",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId),
+                                ValueConvert.ToPathParameterString(request.PaymentPlanId)
+                            ),
                             Body = request.Body,
                             Headers = _headers,
                             ContentType = "application/json",

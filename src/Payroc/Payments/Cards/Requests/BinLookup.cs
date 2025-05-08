@@ -28,6 +28,7 @@ public record BinLookup
     [JsonPropertyName("card")]
     public required BinLookupCard Card { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

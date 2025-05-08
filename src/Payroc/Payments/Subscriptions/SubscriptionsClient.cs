@@ -92,12 +92,14 @@ public partial class SubscriptionsClient
                     }
                 );
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
-                        Path =
-                            $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/subscriptions",
+                        Path = string.Format(
+                            "processing-terminals/{0}/subscriptions",
+                            ValueConvert.ToPathParameterString(request.ProcessingTerminalId)
+                        ),
                         Query = _query,
                         Headers = _headers,
                         Options = options,
@@ -235,12 +237,14 @@ public partial class SubscriptionsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/subscriptions",
+                            Path = string.Format(
+                                "processing-terminals/{0}/subscriptions",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId)
+                            ),
                             Body = request,
                             Headers = _headers,
                             ContentType = "application/json",
@@ -331,12 +335,15 @@ public partial class SubscriptionsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/subscriptions/{JsonUtils.SerializeAsString(request.SubscriptionId)}",
+                            Path = string.Format(
+                                "processing-terminals/{0}/subscriptions/{1}",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId),
+                                ValueConvert.ToPathParameterString(request.SubscriptionId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -439,12 +446,15 @@ public partial class SubscriptionsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethodExtensions.Patch,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/subscriptions/{JsonUtils.SerializeAsString(request.SubscriptionId)}",
+                            Path = string.Format(
+                                "processing-terminals/{0}/subscriptions/{1}",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId),
+                                ValueConvert.ToPathParameterString(request.SubscriptionId)
+                            ),
                             Body = request.Body,
                             Headers = _headers,
                             ContentType = "application/json",
@@ -543,12 +553,15 @@ public partial class SubscriptionsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/subscriptions/{JsonUtils.SerializeAsString(request.SubscriptionId)}/deactivate",
+                            Path = string.Format(
+                                "processing-terminals/{0}/subscriptions/{1}/deactivate",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId),
+                                ValueConvert.ToPathParameterString(request.SubscriptionId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -644,12 +657,15 @@ public partial class SubscriptionsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/subscriptions/{JsonUtils.SerializeAsString(request.SubscriptionId)}/reactivate",
+                            Path = string.Format(
+                                "processing-terminals/{0}/subscriptions/{1}/reactivate",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId),
+                                ValueConvert.ToPathParameterString(request.SubscriptionId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -771,12 +787,15 @@ public partial class SubscriptionsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/subscriptions/{JsonUtils.SerializeAsString(request.SubscriptionId)}/pay",
+                            Path = string.Format(
+                                "processing-terminals/{0}/subscriptions/{1}/pay",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId),
+                                ValueConvert.ToPathParameterString(request.SubscriptionId)
+                            ),
                             Body = request,
                             Headers = _headers,
                             ContentType = "application/json",

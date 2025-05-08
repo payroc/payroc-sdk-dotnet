@@ -17,6 +17,7 @@ public record DeletePaymentPlansRequest
     [JsonIgnore]
     public required string PaymentPlanId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

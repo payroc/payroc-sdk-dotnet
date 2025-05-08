@@ -6,11 +6,11 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<DualPricingAlternativeTender>))]
 public readonly record struct DualPricingAlternativeTender : IStringEnum
 {
-    public static readonly DualPricingAlternativeTender Card = Custom(Values.Card);
+    public static readonly DualPricingAlternativeTender Card = new(Values.Card);
 
-    public static readonly DualPricingAlternativeTender Cash = Custom(Values.Cash);
+    public static readonly DualPricingAlternativeTender Cash = new(Values.Cash);
 
-    public static readonly DualPricingAlternativeTender BankTransfer = Custom(Values.BankTransfer);
+    public static readonly DualPricingAlternativeTender BankTransfer = new(Values.BankTransfer);
 
     public DualPricingAlternativeTender(string value)
     {
@@ -25,7 +25,7 @@ public readonly record struct DualPricingAlternativeTender : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static DualPricingAlternativeTender Custom(string value)
+    public static DualPricingAlternativeTender FromCustom(string value)
     {
         return new DualPricingAlternativeTender(value);
     }
@@ -48,6 +48,10 @@ public readonly record struct DualPricingAlternativeTender : IStringEnum
 
     public static bool operator !=(DualPricingAlternativeTender value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(DualPricingAlternativeTender value) => value.Value;
+
+    public static explicit operator DualPricingAlternativeTender(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

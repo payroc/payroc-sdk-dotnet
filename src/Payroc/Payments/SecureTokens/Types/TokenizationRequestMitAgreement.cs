@@ -6,11 +6,11 @@ namespace Payroc.Payments.SecureTokens;
 [JsonConverter(typeof(StringEnumSerializer<TokenizationRequestMitAgreement>))]
 public readonly record struct TokenizationRequestMitAgreement : IStringEnum
 {
-    public static readonly TokenizationRequestMitAgreement Unscheduled = Custom(Values.Unscheduled);
+    public static readonly TokenizationRequestMitAgreement Unscheduled = new(Values.Unscheduled);
 
-    public static readonly TokenizationRequestMitAgreement Recurring = Custom(Values.Recurring);
+    public static readonly TokenizationRequestMitAgreement Recurring = new(Values.Recurring);
 
-    public static readonly TokenizationRequestMitAgreement Installment = Custom(Values.Installment);
+    public static readonly TokenizationRequestMitAgreement Installment = new(Values.Installment);
 
     public TokenizationRequestMitAgreement(string value)
     {
@@ -25,7 +25,7 @@ public readonly record struct TokenizationRequestMitAgreement : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static TokenizationRequestMitAgreement Custom(string value)
+    public static TokenizationRequestMitAgreement FromCustom(string value)
     {
         return new TokenizationRequestMitAgreement(value);
     }
@@ -48,6 +48,10 @@ public readonly record struct TokenizationRequestMitAgreement : IStringEnum
 
     public static bool operator !=(TokenizationRequestMitAgreement value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(TokenizationRequestMitAgreement value) => value.Value;
+
+    public static explicit operator TokenizationRequestMitAgreement(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

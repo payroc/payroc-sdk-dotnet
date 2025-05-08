@@ -41,6 +41,7 @@ public record HostedFieldsCreateSessionRequest
     [JsonPropertyName("secureTokenId")]
     public string? SecureTokenId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

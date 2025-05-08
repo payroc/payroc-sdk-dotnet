@@ -1,0 +1,158 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    send:
+      path: /devices/{serialNumber}/payment-instructions
+      method: POST
+      auth: true
+      docs: Submit an instruction request to initiate a sale on a payment device.
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+      display-name: Submit payment instruction
+      request:
+        name: PaymentInstructionRequest
+        path-parameters:
+          serialNumber:
+            type: string
+            docs: Serial number that identifies the merchant’s payment device.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+        body:
+          properties:
+            operator:
+              type: optional<string>
+              docs: Operator who initiated the request.
+              validation:
+                minLength: 0
+                maxLength: 50
+            processingTerminalId:
+              type: string
+              docs: Unique identifier that our gateway assigned to the terminal.
+              validation:
+                minLength: 4
+                maxLength: 50
+            order: root.PaymentInstructionOrder
+            customer: optional<root.Customer>
+            ipAddress: optional<root.IpAddress>
+            credentialOnFile: optional<root.CredentialOnFile>
+            customizationOptions: optional<root.CustomizationOptions>
+            autoCapture:
+              type: optional<boolean>
+              docs: >
+                Indicates if we should automatically capture the payment
+                amount.  
+
+
+                - `true` - Run a sale and automatically capture the transaction.
+
+                - `false`- Run a pre-authorization and capture the transaction
+                later.  
+
+
+                **Note**: If you send `false` and the terminal doesn't support
+                pre-authorization, we set the transaction's status to pending.
+                The merchant must capture the transaction to take payment from
+                the customer.
+              default: true
+            processAsSale:
+              type: optional<boolean>
+              docs: >
+                Indicates if we should immediately settle the sale transaction.
+                The merchant cannot adjust the transaction if we immediately
+                settle it.  
+
+                **Note**: If the value for **processAsSale** is `true`, the
+                gateway ignores the value in **autoCapture**.
+              default: false
+        content-type: application/json
+      response:
+        docs: Successful request. We accepted the payment instruction to process.
+        type: root.PaymentInstruction
+        status-code: 202
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Payment instruction
+          path-parameters:
+            serialNumber: '1850010868'
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            operator: Jane
+            processingTerminalId: '1234001'
+            order:
+              orderId: OrderRef6543
+              amount: 4999
+              currency: USD
+            customizationOptions:
+              entryMethod: deviceRead
+            autoCapture: true
+          response:
+            body:
+              status: inProgress
+              errorMessage: errorMessage
+              link:
+                rel: self
+                method: GET
+                href: >-
+                  https://api.payroc.com/v1/payment-instructions/a37439165d134678a9100ebba3b29597
+              paymentInstructionId: a37439165d134678a9100ebba3b29597
+    get:
+      path: /payment-instructions/{paymentInstructionId}
+      method: GET
+      auth: true
+      docs: Retrieve the current status of a specific payment instruction.
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+      display-name: Retrieve payment instruction
+      request:
+        name: GetPaymentInstructionsRequest
+        path-parameters:
+          paymentInstructionId:
+            type: string
+            docs: Unique identifier of the payment instruction.
+      response:
+        docs: >-
+          Successful request. Returns the current status of the requested
+          payment instruction.
+        type: root.PaymentInstruction
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Payment instruction
+          path-parameters:
+            paymentInstructionId: e743a9165d134678a9100ebba3b29597
+          response:
+            body:
+              status: completed
+              errorMessage: errorMessage
+              link:
+                rel: payment
+                method: GET
+                href: https://api.payroc.com/v1/payments/M2MJOG6O2Y
+              paymentInstructionId: a37439165d134678a9100ebba3b29597
+  source:
+    openapi: openapi/external/universal-api-v1.yaml

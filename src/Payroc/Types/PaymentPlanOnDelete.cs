@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<PaymentPlanOnDelete>))]
 public readonly record struct PaymentPlanOnDelete : IStringEnum
 {
-    public static readonly PaymentPlanOnDelete Complete = Custom(Values.Complete);
+    public static readonly PaymentPlanOnDelete Complete = new(Values.Complete);
 
-    public static readonly PaymentPlanOnDelete Continue = Custom(Values.Continue);
+    public static readonly PaymentPlanOnDelete Continue = new(Values.Continue);
 
     public PaymentPlanOnDelete(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct PaymentPlanOnDelete : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static PaymentPlanOnDelete Custom(string value)
+    public static PaymentPlanOnDelete FromCustom(string value)
     {
         return new PaymentPlanOnDelete(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct PaymentPlanOnDelete : IStringEnum
 
     public static bool operator !=(PaymentPlanOnDelete value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(PaymentPlanOnDelete value) => value.Value;
+
+    public static explicit operator PaymentPlanOnDelete(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

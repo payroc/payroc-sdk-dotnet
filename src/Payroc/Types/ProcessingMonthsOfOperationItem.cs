@@ -6,29 +6,29 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<ProcessingMonthsOfOperationItem>))]
 public readonly record struct ProcessingMonthsOfOperationItem : IStringEnum
 {
-    public static readonly ProcessingMonthsOfOperationItem Jan = Custom(Values.Jan);
+    public static readonly ProcessingMonthsOfOperationItem Jan = new(Values.Jan);
 
-    public static readonly ProcessingMonthsOfOperationItem Feb = Custom(Values.Feb);
+    public static readonly ProcessingMonthsOfOperationItem Feb = new(Values.Feb);
 
-    public static readonly ProcessingMonthsOfOperationItem Mar = Custom(Values.Mar);
+    public static readonly ProcessingMonthsOfOperationItem Mar = new(Values.Mar);
 
-    public static readonly ProcessingMonthsOfOperationItem Apr = Custom(Values.Apr);
+    public static readonly ProcessingMonthsOfOperationItem Apr = new(Values.Apr);
 
-    public static readonly ProcessingMonthsOfOperationItem May = Custom(Values.May);
+    public static readonly ProcessingMonthsOfOperationItem May = new(Values.May);
 
-    public static readonly ProcessingMonthsOfOperationItem Jun = Custom(Values.Jun);
+    public static readonly ProcessingMonthsOfOperationItem Jun = new(Values.Jun);
 
-    public static readonly ProcessingMonthsOfOperationItem Jul = Custom(Values.Jul);
+    public static readonly ProcessingMonthsOfOperationItem Jul = new(Values.Jul);
 
-    public static readonly ProcessingMonthsOfOperationItem Aug = Custom(Values.Aug);
+    public static readonly ProcessingMonthsOfOperationItem Aug = new(Values.Aug);
 
-    public static readonly ProcessingMonthsOfOperationItem Sep = Custom(Values.Sep);
+    public static readonly ProcessingMonthsOfOperationItem Sep = new(Values.Sep);
 
-    public static readonly ProcessingMonthsOfOperationItem Oct = Custom(Values.Oct);
+    public static readonly ProcessingMonthsOfOperationItem Oct = new(Values.Oct);
 
-    public static readonly ProcessingMonthsOfOperationItem Nov = Custom(Values.Nov);
+    public static readonly ProcessingMonthsOfOperationItem Nov = new(Values.Nov);
 
-    public static readonly ProcessingMonthsOfOperationItem Dec = Custom(Values.Dec);
+    public static readonly ProcessingMonthsOfOperationItem Dec = new(Values.Dec);
 
     public ProcessingMonthsOfOperationItem(string value)
     {
@@ -43,7 +43,7 @@ public readonly record struct ProcessingMonthsOfOperationItem : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ProcessingMonthsOfOperationItem Custom(string value)
+    public static ProcessingMonthsOfOperationItem FromCustom(string value)
     {
         return new ProcessingMonthsOfOperationItem(value);
     }
@@ -66,6 +66,10 @@ public readonly record struct ProcessingMonthsOfOperationItem : IStringEnum
 
     public static bool operator !=(ProcessingMonthsOfOperationItem value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(ProcessingMonthsOfOperationItem value) => value.Value;
+
+    public static explicit operator ProcessingMonthsOfOperationItem(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

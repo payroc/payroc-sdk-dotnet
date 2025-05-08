@@ -23,6 +23,7 @@ public record Representment
     [JsonPropertyName("paymentMethod")]
     public required RepresentmentPaymentMethod PaymentMethod { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

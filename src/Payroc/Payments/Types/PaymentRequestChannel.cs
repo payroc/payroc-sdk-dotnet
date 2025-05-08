@@ -6,11 +6,11 @@ namespace Payroc.Payments;
 [JsonConverter(typeof(StringEnumSerializer<PaymentRequestChannel>))]
 public readonly record struct PaymentRequestChannel : IStringEnum
 {
-    public static readonly PaymentRequestChannel Pos = Custom(Values.Pos);
+    public static readonly PaymentRequestChannel Pos = new(Values.Pos);
 
-    public static readonly PaymentRequestChannel Web = Custom(Values.Web);
+    public static readonly PaymentRequestChannel Web = new(Values.Web);
 
-    public static readonly PaymentRequestChannel Moto = Custom(Values.Moto);
+    public static readonly PaymentRequestChannel Moto = new(Values.Moto);
 
     public PaymentRequestChannel(string value)
     {
@@ -25,7 +25,7 @@ public readonly record struct PaymentRequestChannel : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static PaymentRequestChannel Custom(string value)
+    public static PaymentRequestChannel FromCustom(string value)
     {
         return new PaymentRequestChannel(value);
     }
@@ -48,6 +48,10 @@ public readonly record struct PaymentRequestChannel : IStringEnum
 
     public static bool operator !=(PaymentRequestChannel value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(PaymentRequestChannel value) => value.Value;
+
+    public static explicit operator PaymentRequestChannel(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

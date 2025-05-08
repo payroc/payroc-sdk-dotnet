@@ -6,11 +6,9 @@ namespace Payroc.Payments.HostedFields;
 [JsonConverter(typeof(StringEnumSerializer<HostedFieldsCreateSessionRequestScenario>))]
 public readonly record struct HostedFieldsCreateSessionRequestScenario : IStringEnum
 {
-    public static readonly HostedFieldsCreateSessionRequestScenario Payment = Custom(
-        Values.Payment
-    );
+    public static readonly HostedFieldsCreateSessionRequestScenario Payment = new(Values.Payment);
 
-    public static readonly HostedFieldsCreateSessionRequestScenario Tokenization = Custom(
+    public static readonly HostedFieldsCreateSessionRequestScenario Tokenization = new(
         Values.Tokenization
     );
 
@@ -27,7 +25,7 @@ public readonly record struct HostedFieldsCreateSessionRequestScenario : IString
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static HostedFieldsCreateSessionRequestScenario Custom(string value)
+    public static HostedFieldsCreateSessionRequestScenario FromCustom(string value)
     {
         return new HostedFieldsCreateSessionRequestScenario(value);
     }
@@ -54,6 +52,12 @@ public readonly record struct HostedFieldsCreateSessionRequestScenario : IString
         HostedFieldsCreateSessionRequestScenario value1,
         string value2
     ) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(HostedFieldsCreateSessionRequestScenario value) =>
+        value.Value;
+
+    public static explicit operator HostedFieldsCreateSessionRequestScenario(string value) =>
+        new(value);
 
     /// <summary>
     /// Constant strings for enum values

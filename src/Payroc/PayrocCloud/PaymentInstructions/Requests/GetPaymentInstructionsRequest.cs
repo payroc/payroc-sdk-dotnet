@@ -11,6 +11,7 @@ public record GetPaymentInstructionsRequest
     [JsonIgnore]
     public required string PaymentInstructionId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

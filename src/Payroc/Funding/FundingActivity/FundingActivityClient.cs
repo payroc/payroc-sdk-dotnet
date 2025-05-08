@@ -56,9 +56,9 @@ public partial class FundingActivityClient
                 }
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
                             Path = "funding-balance",
                             Query = _query,
@@ -169,9 +169,9 @@ public partial class FundingActivityClient
                 }
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
                             Path = "funding-activity",
                             Query = _query,

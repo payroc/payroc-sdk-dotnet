@@ -39,6 +39,7 @@ public record SubscriptionPaymentRequest
     [JsonPropertyName("customFields")]
     public IEnumerable<CustomField>? CustomFields { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

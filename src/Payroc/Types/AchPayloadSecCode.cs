@@ -6,13 +6,13 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<AchPayloadSecCode>))]
 public readonly record struct AchPayloadSecCode : IStringEnum
 {
-    public static readonly AchPayloadSecCode Web = Custom(Values.Web);
+    public static readonly AchPayloadSecCode Web = new(Values.Web);
 
-    public static readonly AchPayloadSecCode Tel = Custom(Values.Tel);
+    public static readonly AchPayloadSecCode Tel = new(Values.Tel);
 
-    public static readonly AchPayloadSecCode Ccd = Custom(Values.Ccd);
+    public static readonly AchPayloadSecCode Ccd = new(Values.Ccd);
 
-    public static readonly AchPayloadSecCode Ppd = Custom(Values.Ppd);
+    public static readonly AchPayloadSecCode Ppd = new(Values.Ppd);
 
     public AchPayloadSecCode(string value)
     {
@@ -27,7 +27,7 @@ public readonly record struct AchPayloadSecCode : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static AchPayloadSecCode Custom(string value)
+    public static AchPayloadSecCode FromCustom(string value)
     {
         return new AchPayloadSecCode(value);
     }
@@ -50,6 +50,10 @@ public readonly record struct AchPayloadSecCode : IStringEnum
 
     public static bool operator !=(AchPayloadSecCode value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(AchPayloadSecCode value) => value.Value;
+
+    public static explicit operator AchPayloadSecCode(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

@@ -6,11 +6,11 @@ namespace Payroc.Reporting.Settlement;
 [JsonConverter(typeof(StringEnumSerializer<ListTransactionsSettlementRequestTransactionType>))]
 public readonly record struct ListTransactionsSettlementRequestTransactionType : IStringEnum
 {
-    public static readonly ListTransactionsSettlementRequestTransactionType Capture = Custom(
+    public static readonly ListTransactionsSettlementRequestTransactionType Capture = new(
         Values.Capture
     );
 
-    public static readonly ListTransactionsSettlementRequestTransactionType Return = Custom(
+    public static readonly ListTransactionsSettlementRequestTransactionType Return = new(
         Values.Return
     );
 
@@ -27,7 +27,7 @@ public readonly record struct ListTransactionsSettlementRequestTransactionType :
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ListTransactionsSettlementRequestTransactionType Custom(string value)
+    public static ListTransactionsSettlementRequestTransactionType FromCustom(string value)
     {
         return new ListTransactionsSettlementRequestTransactionType(value);
     }
@@ -54,6 +54,14 @@ public readonly record struct ListTransactionsSettlementRequestTransactionType :
         ListTransactionsSettlementRequestTransactionType value1,
         string value2
     ) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(
+        ListTransactionsSettlementRequestTransactionType value
+    ) => value.Value;
+
+    public static explicit operator ListTransactionsSettlementRequestTransactionType(
+        string value
+    ) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

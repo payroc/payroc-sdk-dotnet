@@ -30,6 +30,7 @@ public record PaymentAdjustment
     public IEnumerable<PaymentAdjustmentAdjustmentsItem> Adjustments { get; set; } =
         new List<PaymentAdjustmentAdjustmentsItem>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

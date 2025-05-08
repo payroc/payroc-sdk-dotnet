@@ -41,6 +41,7 @@ public record ListReportingSettlementAuthorizationsRequest
     [JsonIgnore]
     public string? MerchantId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

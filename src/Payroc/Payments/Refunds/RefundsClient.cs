@@ -105,9 +105,9 @@ public partial class RefundsClient
                     _query["limit"] = request.Limit.Value.ToString();
                 }
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
                         Path = "refunds",
                         Query = _query,
@@ -235,9 +235,9 @@ public partial class RefundsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
                             Path = "refunds",
                             Body = request,
@@ -328,11 +328,14 @@ public partial class RefundsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path = $"refunds/{JsonUtils.SerializeAsString(request.RefundId)}",
+                            Path = string.Format(
+                                "refunds/{0}",
+                                ValueConvert.ToPathParameterString(request.RefundId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -433,12 +436,14 @@ public partial class RefundsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"refunds/{JsonUtils.SerializeAsString(request.RefundId)}/adjust",
+                            Path = string.Format(
+                                "refunds/{0}/adjust",
+                                ValueConvert.ToPathParameterString(request.RefundId)
+                            ),
                             Body = request,
                             Headers = _headers,
                             ContentType = "application/json",
@@ -543,12 +548,14 @@ public partial class RefundsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"refunds/{JsonUtils.SerializeAsString(request.RefundId)}/reverse",
+                            Path = string.Format(
+                                "refunds/{0}/reverse",
+                                ValueConvert.ToPathParameterString(request.RefundId)
+                            ),
                             Headers = _headers,
                             Options = options,
                         },

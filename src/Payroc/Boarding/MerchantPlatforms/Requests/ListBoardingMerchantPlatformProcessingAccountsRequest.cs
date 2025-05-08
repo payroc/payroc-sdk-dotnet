@@ -35,6 +35,7 @@ public record ListBoardingMerchantPlatformProcessingAccountsRequest
     [JsonIgnore]
     public bool? IncludeClosed { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

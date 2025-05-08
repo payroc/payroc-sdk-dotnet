@@ -35,6 +35,7 @@ public record SingleUseTokenRequest
     [JsonPropertyName("source")]
     public required SingleUseTokenRequestSource Source { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

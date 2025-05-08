@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<BankTransferCustomerNotificationLanguage>))]
 public readonly record struct BankTransferCustomerNotificationLanguage : IStringEnum
 {
-    public static readonly BankTransferCustomerNotificationLanguage En = Custom(Values.En);
+    public static readonly BankTransferCustomerNotificationLanguage En = new(Values.En);
 
-    public static readonly BankTransferCustomerNotificationLanguage Fr = Custom(Values.Fr);
+    public static readonly BankTransferCustomerNotificationLanguage Fr = new(Values.Fr);
 
     public BankTransferCustomerNotificationLanguage(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct BankTransferCustomerNotificationLanguage : IString
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static BankTransferCustomerNotificationLanguage Custom(string value)
+    public static BankTransferCustomerNotificationLanguage FromCustom(string value)
     {
         return new BankTransferCustomerNotificationLanguage(value);
     }
@@ -50,6 +50,12 @@ public readonly record struct BankTransferCustomerNotificationLanguage : IString
         BankTransferCustomerNotificationLanguage value1,
         string value2
     ) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(BankTransferCustomerNotificationLanguage value) =>
+        value.Value;
+
+    public static explicit operator BankTransferCustomerNotificationLanguage(string value) =>
+        new(value);
 
     /// <summary>
     /// Constant strings for enum values

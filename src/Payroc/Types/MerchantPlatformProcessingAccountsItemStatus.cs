@@ -6,45 +6,43 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<MerchantPlatformProcessingAccountsItemStatus>))]
 public readonly record struct MerchantPlatformProcessingAccountsItemStatus : IStringEnum
 {
-    public static readonly MerchantPlatformProcessingAccountsItemStatus Entered = Custom(
+    public static readonly MerchantPlatformProcessingAccountsItemStatus Entered = new(
         Values.Entered
     );
 
-    public static readonly MerchantPlatformProcessingAccountsItemStatus Pending = Custom(
+    public static readonly MerchantPlatformProcessingAccountsItemStatus Pending = new(
         Values.Pending
     );
 
-    public static readonly MerchantPlatformProcessingAccountsItemStatus Approved = Custom(
+    public static readonly MerchantPlatformProcessingAccountsItemStatus Approved = new(
         Values.Approved
     );
 
-    public static readonly MerchantPlatformProcessingAccountsItemStatus SubjectTo = Custom(
+    public static readonly MerchantPlatformProcessingAccountsItemStatus SubjectTo = new(
         Values.SubjectTo
     );
 
-    public static readonly MerchantPlatformProcessingAccountsItemStatus Dormant = Custom(
+    public static readonly MerchantPlatformProcessingAccountsItemStatus Dormant = new(
         Values.Dormant
     );
 
-    public static readonly MerchantPlatformProcessingAccountsItemStatus NonProcessing = Custom(
+    public static readonly MerchantPlatformProcessingAccountsItemStatus NonProcessing = new(
         Values.NonProcessing
     );
 
-    public static readonly MerchantPlatformProcessingAccountsItemStatus Rejected = Custom(
+    public static readonly MerchantPlatformProcessingAccountsItemStatus Rejected = new(
         Values.Rejected
     );
 
-    public static readonly MerchantPlatformProcessingAccountsItemStatus Terminated = Custom(
+    public static readonly MerchantPlatformProcessingAccountsItemStatus Terminated = new(
         Values.Terminated
     );
 
-    public static readonly MerchantPlatformProcessingAccountsItemStatus Cancelled = Custom(
+    public static readonly MerchantPlatformProcessingAccountsItemStatus Cancelled = new(
         Values.Cancelled
     );
 
-    public static readonly MerchantPlatformProcessingAccountsItemStatus Failed = Custom(
-        Values.Failed
-    );
+    public static readonly MerchantPlatformProcessingAccountsItemStatus Failed = new(Values.Failed);
 
     public MerchantPlatformProcessingAccountsItemStatus(string value)
     {
@@ -59,7 +57,7 @@ public readonly record struct MerchantPlatformProcessingAccountsItemStatus : ISt
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static MerchantPlatformProcessingAccountsItemStatus Custom(string value)
+    public static MerchantPlatformProcessingAccountsItemStatus FromCustom(string value)
     {
         return new MerchantPlatformProcessingAccountsItemStatus(value);
     }
@@ -86,6 +84,12 @@ public readonly record struct MerchantPlatformProcessingAccountsItemStatus : ISt
         MerchantPlatformProcessingAccountsItemStatus value1,
         string value2
     ) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(MerchantPlatformProcessingAccountsItemStatus value) =>
+        value.Value;
+
+    public static explicit operator MerchantPlatformProcessingAccountsItemStatus(string value) =>
+        new(value);
 
     /// <summary>
     /// Constant strings for enum values

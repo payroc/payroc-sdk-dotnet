@@ -6,11 +6,11 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<CredentialOnFileMitAgreement>))]
 public readonly record struct CredentialOnFileMitAgreement : IStringEnum
 {
-    public static readonly CredentialOnFileMitAgreement Unscheduled = Custom(Values.Unscheduled);
+    public static readonly CredentialOnFileMitAgreement Unscheduled = new(Values.Unscheduled);
 
-    public static readonly CredentialOnFileMitAgreement Recurring = Custom(Values.Recurring);
+    public static readonly CredentialOnFileMitAgreement Recurring = new(Values.Recurring);
 
-    public static readonly CredentialOnFileMitAgreement Installment = Custom(Values.Installment);
+    public static readonly CredentialOnFileMitAgreement Installment = new(Values.Installment);
 
     public CredentialOnFileMitAgreement(string value)
     {
@@ -25,7 +25,7 @@ public readonly record struct CredentialOnFileMitAgreement : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static CredentialOnFileMitAgreement Custom(string value)
+    public static CredentialOnFileMitAgreement FromCustom(string value)
     {
         return new CredentialOnFileMitAgreement(value);
     }
@@ -48,6 +48,10 @@ public readonly record struct CredentialOnFileMitAgreement : IStringEnum
 
     public static bool operator !=(CredentialOnFileMitAgreement value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(CredentialOnFileMitAgreement value) => value.Value;
+
+    public static explicit operator CredentialOnFileMitAgreement(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

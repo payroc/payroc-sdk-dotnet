@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<IpAddressType>))]
 public readonly record struct IpAddressType : IStringEnum
 {
-    public static readonly IpAddressType Ipv4 = Custom(Values.Ipv4);
+    public static readonly IpAddressType Ipv4 = new(Values.Ipv4);
 
-    public static readonly IpAddressType Ipv6 = Custom(Values.Ipv6);
+    public static readonly IpAddressType Ipv6 = new(Values.Ipv6);
 
     public IpAddressType(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct IpAddressType : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static IpAddressType Custom(string value)
+    public static IpAddressType FromCustom(string value)
     {
         return new IpAddressType(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct IpAddressType : IStringEnum
 
     public static bool operator !=(IpAddressType value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(IpAddressType value) => value.Value;
+
+    public static explicit operator IpAddressType(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

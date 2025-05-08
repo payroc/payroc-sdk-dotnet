@@ -66,6 +66,7 @@ public record CreateFundingRecipient
     [JsonPropertyName("fundingAccounts")]
     public IEnumerable<FundingAccount> FundingAccounts { get; set; } = new List<FundingAccount>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

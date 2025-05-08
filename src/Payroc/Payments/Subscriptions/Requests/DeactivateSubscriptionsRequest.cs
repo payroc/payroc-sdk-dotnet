@@ -17,6 +17,7 @@ public record DeactivateSubscriptionsRequest
     [JsonIgnore]
     public required string SubscriptionId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

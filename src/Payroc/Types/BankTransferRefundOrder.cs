@@ -18,8 +18,8 @@ public record BankTransferRefundOrder
     /// <summary>
     /// Date and time that we processed the transaction. We return this value in the ISO 8601 format.
     /// </summary>
-    [JsonPropertyName("dateTime")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("dateTime")]
     public DateTime? DateTime { get; set; }
 
     /// <summary>
@@ -40,10 +40,14 @@ public record BankTransferRefundOrder
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

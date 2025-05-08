@@ -21,6 +21,7 @@ public record CreateOwnerFundingRecipientsRequest
     [JsonIgnore]
     public required Owner Body { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

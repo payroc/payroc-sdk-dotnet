@@ -11,6 +11,7 @@ public record DeleteContactsRequest
     [JsonIgnore]
     public required int ContactId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

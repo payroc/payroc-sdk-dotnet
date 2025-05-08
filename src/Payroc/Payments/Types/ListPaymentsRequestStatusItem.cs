@@ -6,27 +6,27 @@ namespace Payroc.Payments;
 [JsonConverter(typeof(StringEnumSerializer<ListPaymentsRequestStatusItem>))]
 public readonly record struct ListPaymentsRequestStatusItem : IStringEnum
 {
-    public static readonly ListPaymentsRequestStatusItem Ready = Custom(Values.Ready);
+    public static readonly ListPaymentsRequestStatusItem Ready = new(Values.Ready);
 
-    public static readonly ListPaymentsRequestStatusItem Pending = Custom(Values.Pending);
+    public static readonly ListPaymentsRequestStatusItem Pending = new(Values.Pending);
 
-    public static readonly ListPaymentsRequestStatusItem Declined = Custom(Values.Declined);
+    public static readonly ListPaymentsRequestStatusItem Declined = new(Values.Declined);
 
-    public static readonly ListPaymentsRequestStatusItem Complete = Custom(Values.Complete);
+    public static readonly ListPaymentsRequestStatusItem Complete = new(Values.Complete);
 
-    public static readonly ListPaymentsRequestStatusItem Referral = Custom(Values.Referral);
+    public static readonly ListPaymentsRequestStatusItem Referral = new(Values.Referral);
 
-    public static readonly ListPaymentsRequestStatusItem Pickup = Custom(Values.Pickup);
+    public static readonly ListPaymentsRequestStatusItem Pickup = new(Values.Pickup);
 
-    public static readonly ListPaymentsRequestStatusItem Reversal = Custom(Values.Reversal);
+    public static readonly ListPaymentsRequestStatusItem Reversal = new(Values.Reversal);
 
-    public static readonly ListPaymentsRequestStatusItem Admin = Custom(Values.Admin);
+    public static readonly ListPaymentsRequestStatusItem Admin = new(Values.Admin);
 
-    public static readonly ListPaymentsRequestStatusItem Expired = Custom(Values.Expired);
+    public static readonly ListPaymentsRequestStatusItem Expired = new(Values.Expired);
 
-    public static readonly ListPaymentsRequestStatusItem Accepted = Custom(Values.Accepted);
+    public static readonly ListPaymentsRequestStatusItem Accepted = new(Values.Accepted);
 
-    public static readonly ListPaymentsRequestStatusItem Review = Custom(Values.Review);
+    public static readonly ListPaymentsRequestStatusItem Review = new(Values.Review);
 
     public ListPaymentsRequestStatusItem(string value)
     {
@@ -41,7 +41,7 @@ public readonly record struct ListPaymentsRequestStatusItem : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ListPaymentsRequestStatusItem Custom(string value)
+    public static ListPaymentsRequestStatusItem FromCustom(string value)
     {
         return new ListPaymentsRequestStatusItem(value);
     }
@@ -64,6 +64,10 @@ public readonly record struct ListPaymentsRequestStatusItem : IStringEnum
 
     public static bool operator !=(ListPaymentsRequestStatusItem value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(ListPaymentsRequestStatusItem value) => value.Value;
+
+    public static explicit operator ListPaymentsRequestStatusItem(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

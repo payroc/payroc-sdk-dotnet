@@ -6,21 +6,19 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<SecureTokenStatus>))]
 public readonly record struct SecureTokenStatus : IStringEnum
 {
-    public static readonly SecureTokenStatus NotValidated = Custom(Values.NotValidated);
+    public static readonly SecureTokenStatus NotValidated = new(Values.NotValidated);
 
-    public static readonly SecureTokenStatus CvvValidated = Custom(Values.CvvValidated);
+    public static readonly SecureTokenStatus CvvValidated = new(Values.CvvValidated);
 
-    public static readonly SecureTokenStatus ValidationFailed = Custom(Values.ValidationFailed);
+    public static readonly SecureTokenStatus ValidationFailed = new(Values.ValidationFailed);
 
-    public static readonly SecureTokenStatus IssueNumberValidated = Custom(
+    public static readonly SecureTokenStatus IssueNumberValidated = new(
         Values.IssueNumberValidated
     );
 
-    public static readonly SecureTokenStatus CardNumberValidated = Custom(
-        Values.CardNumberValidated
-    );
+    public static readonly SecureTokenStatus CardNumberValidated = new(Values.CardNumberValidated);
 
-    public static readonly SecureTokenStatus BankAccountValidated = Custom(
+    public static readonly SecureTokenStatus BankAccountValidated = new(
         Values.BankAccountValidated
     );
 
@@ -37,7 +35,7 @@ public readonly record struct SecureTokenStatus : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static SecureTokenStatus Custom(string value)
+    public static SecureTokenStatus FromCustom(string value)
     {
         return new SecureTokenStatus(value);
     }
@@ -60,6 +58,10 @@ public readonly record struct SecureTokenStatus : IStringEnum
 
     public static bool operator !=(SecureTokenStatus value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(SecureTokenStatus value) => value.Value;
+
+    public static explicit operator SecureTokenStatus(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

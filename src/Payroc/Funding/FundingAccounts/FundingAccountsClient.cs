@@ -47,9 +47,9 @@ public partial class FundingAccountsClient
                     _query["limit"] = request.Limit.Value.ToString();
                 }
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
                         Path = "funding-accounts",
                         Query = _query,
@@ -134,12 +134,14 @@ public partial class FundingAccountsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"funding-accounts/{JsonUtils.SerializeAsString(request.FundingAccountId)}",
+                            Path = string.Format(
+                                "funding-accounts/{0}",
+                                ValueConvert.ToPathParameterString(request.FundingAccountId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -232,12 +234,14 @@ public partial class FundingAccountsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Put,
-                            Path =
-                                $"funding-accounts/{JsonUtils.SerializeAsString(request.FundingAccountId)}",
+                            Path = string.Format(
+                                "funding-accounts/{0}",
+                                ValueConvert.ToPathParameterString(request.FundingAccountId)
+                            ),
                             Body = request.Body,
                             ContentType = "application/json",
                             Options = options,
@@ -314,12 +318,14 @@ public partial class FundingAccountsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Delete,
-                            Path =
-                                $"funding-accounts/{JsonUtils.SerializeAsString(request.FundingAccountId)}",
+                            Path = string.Format(
+                                "funding-accounts/{0}",
+                                ValueConvert.ToPathParameterString(request.FundingAccountId)
+                            ),
                             Options = options,
                         },
                         cancellationToken

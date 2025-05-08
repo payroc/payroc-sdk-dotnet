@@ -6,13 +6,13 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<StandingInstructionsProcessingModel>))]
 public readonly record struct StandingInstructionsProcessingModel : IStringEnum
 {
-    public static readonly StandingInstructionsProcessingModel Unscheduled = Custom(
+    public static readonly StandingInstructionsProcessingModel Unscheduled = new(
         Values.Unscheduled
     );
 
-    public static readonly StandingInstructionsProcessingModel Recurring = Custom(Values.Recurring);
+    public static readonly StandingInstructionsProcessingModel Recurring = new(Values.Recurring);
 
-    public static readonly StandingInstructionsProcessingModel Installment = Custom(
+    public static readonly StandingInstructionsProcessingModel Installment = new(
         Values.Installment
     );
 
@@ -29,7 +29,7 @@ public readonly record struct StandingInstructionsProcessingModel : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static StandingInstructionsProcessingModel Custom(string value)
+    public static StandingInstructionsProcessingModel FromCustom(string value)
     {
         return new StandingInstructionsProcessingModel(value);
     }
@@ -52,6 +52,11 @@ public readonly record struct StandingInstructionsProcessingModel : IStringEnum
 
     public static bool operator !=(StandingInstructionsProcessingModel value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(StandingInstructionsProcessingModel value) =>
+        value.Value;
+
+    public static explicit operator StandingInstructionsProcessingModel(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

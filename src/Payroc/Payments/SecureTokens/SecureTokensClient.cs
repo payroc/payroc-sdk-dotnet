@@ -87,12 +87,14 @@ public partial class SecureTokensClient
                     _query["limit"] = request.Limit.Value.ToString();
                 }
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
-                        Path =
-                            $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/secure-tokens",
+                        Path = string.Format(
+                            "processing-terminals/{0}/secure-tokens",
+                            ValueConvert.ToPathParameterString(request.ProcessingTerminalId)
+                        ),
                         Query = _query,
                         Options = options,
                     }
@@ -253,12 +255,14 @@ public partial class SecureTokensClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/secure-tokens",
+                            Path = string.Format(
+                                "processing-terminals/{0}/secure-tokens",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId)
+                            ),
                             Body = request,
                             Headers = _headers,
                             ContentType = "application/json",
@@ -353,12 +357,15 @@ public partial class SecureTokensClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/secure-tokens/{JsonUtils.SerializeAsString(request.SecureTokenId)}",
+                            Path = string.Format(
+                                "processing-terminals/{0}/secure-tokens/{1}",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId),
+                                ValueConvert.ToPathParameterString(request.SecureTokenId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -447,12 +454,15 @@ public partial class SecureTokensClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Delete,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/secure-tokens/{JsonUtils.SerializeAsString(request.SecureTokenId)}",
+                            Path = string.Format(
+                                "processing-terminals/{0}/secure-tokens/{1}",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId),
+                                ValueConvert.ToPathParameterString(request.SecureTokenId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -542,12 +552,15 @@ public partial class SecureTokensClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethodExtensions.Patch,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/secure-tokens/{JsonUtils.SerializeAsString(request.SecureTokenId)}",
+                            Path = string.Format(
+                                "processing-terminals/{0}/secure-tokens/{1}",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId),
+                                ValueConvert.ToPathParameterString(request.SecureTokenId)
+                            ),
                             Body = request.Body,
                             Headers = _headers,
                             ContentType = "application/json",
@@ -667,12 +680,15 @@ public partial class SecureTokensClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/secure-tokens/{JsonUtils.SerializeAsString(request.SecureTokenId)}/update-account",
+                            Path = string.Format(
+                                "processing-terminals/{0}/secure-tokens/{1}/update-account",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId),
+                                ValueConvert.ToPathParameterString(request.SecureTokenId)
+                            ),
                             Body = request.Body,
                             Headers = _headers,
                             ContentType = "application/json",

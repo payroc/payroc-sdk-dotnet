@@ -64,9 +64,9 @@ public partial class CurrencyConversionClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
                             Path = "fx-rates",
                             Body = request,

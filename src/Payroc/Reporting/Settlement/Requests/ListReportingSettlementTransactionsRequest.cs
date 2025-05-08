@@ -47,6 +47,7 @@ public record ListReportingSettlementTransactionsRequest
     [JsonIgnore]
     public ListTransactionsSettlementRequestTransactionType? TransactionType { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

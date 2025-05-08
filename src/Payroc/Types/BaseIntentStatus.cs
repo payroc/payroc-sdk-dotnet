@@ -6,11 +6,11 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<BaseIntentStatus>))]
 public readonly record struct BaseIntentStatus : IStringEnum
 {
-    public static readonly BaseIntentStatus Active = Custom(Values.Active);
+    public static readonly BaseIntentStatus Active = new(Values.Active);
 
-    public static readonly BaseIntentStatus PendingReview = Custom(Values.PendingReview);
+    public static readonly BaseIntentStatus PendingReview = new(Values.PendingReview);
 
-    public static readonly BaseIntentStatus Rejected = Custom(Values.Rejected);
+    public static readonly BaseIntentStatus Rejected = new(Values.Rejected);
 
     public BaseIntentStatus(string value)
     {
@@ -25,7 +25,7 @@ public readonly record struct BaseIntentStatus : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static BaseIntentStatus Custom(string value)
+    public static BaseIntentStatus FromCustom(string value)
     {
         return new BaseIntentStatus(value);
     }
@@ -48,6 +48,10 @@ public readonly record struct BaseIntentStatus : IStringEnum
 
     public static bool operator !=(BaseIntentStatus value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(BaseIntentStatus value) => value.Value;
+
+    public static explicit operator BaseIntentStatus(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

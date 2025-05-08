@@ -6,9 +6,9 @@ namespace Payroc.Payments.BankTransferRefunds;
 [JsonConverter(typeof(StringEnumSerializer<ListBankTransferRefundsRequestTypeItem>))]
 public readonly record struct ListBankTransferRefundsRequestTypeItem : IStringEnum
 {
-    public static readonly ListBankTransferRefundsRequestTypeItem Refund = Custom(Values.Refund);
+    public static readonly ListBankTransferRefundsRequestTypeItem Refund = new(Values.Refund);
 
-    public static readonly ListBankTransferRefundsRequestTypeItem UnreferencedRefund = Custom(
+    public static readonly ListBankTransferRefundsRequestTypeItem UnreferencedRefund = new(
         Values.UnreferencedRefund
     );
 
@@ -25,7 +25,7 @@ public readonly record struct ListBankTransferRefundsRequestTypeItem : IStringEn
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ListBankTransferRefundsRequestTypeItem Custom(string value)
+    public static ListBankTransferRefundsRequestTypeItem FromCustom(string value)
     {
         return new ListBankTransferRefundsRequestTypeItem(value);
     }
@@ -48,6 +48,12 @@ public readonly record struct ListBankTransferRefundsRequestTypeItem : IStringEn
 
     public static bool operator !=(ListBankTransferRefundsRequestTypeItem value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(ListBankTransferRefundsRequestTypeItem value) =>
+        value.Value;
+
+    public static explicit operator ListBankTransferRefundsRequestTypeItem(string value) =>
+        new(value);
 
     /// <summary>
     /// Constant strings for enum values

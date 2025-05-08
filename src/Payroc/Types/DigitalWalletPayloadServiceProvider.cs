@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<DigitalWalletPayloadServiceProvider>))]
 public readonly record struct DigitalWalletPayloadServiceProvider : IStringEnum
 {
-    public static readonly DigitalWalletPayloadServiceProvider Apple = Custom(Values.Apple);
+    public static readonly DigitalWalletPayloadServiceProvider Apple = new(Values.Apple);
 
-    public static readonly DigitalWalletPayloadServiceProvider Google = Custom(Values.Google);
+    public static readonly DigitalWalletPayloadServiceProvider Google = new(Values.Google);
 
     public DigitalWalletPayloadServiceProvider(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct DigitalWalletPayloadServiceProvider : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static DigitalWalletPayloadServiceProvider Custom(string value)
+    public static DigitalWalletPayloadServiceProvider FromCustom(string value)
     {
         return new DigitalWalletPayloadServiceProvider(value);
     }
@@ -46,6 +46,11 @@ public readonly record struct DigitalWalletPayloadServiceProvider : IStringEnum
 
     public static bool operator !=(DigitalWalletPayloadServiceProvider value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(DigitalWalletPayloadServiceProvider value) =>
+        value.Value;
+
+    public static explicit operator DigitalWalletPayloadServiceProvider(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

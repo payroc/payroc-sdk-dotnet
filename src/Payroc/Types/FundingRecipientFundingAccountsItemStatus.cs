@@ -6,19 +6,17 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<FundingRecipientFundingAccountsItemStatus>))]
 public readonly record struct FundingRecipientFundingAccountsItemStatus : IStringEnum
 {
-    public static readonly FundingRecipientFundingAccountsItemStatus Approved = Custom(
+    public static readonly FundingRecipientFundingAccountsItemStatus Approved = new(
         Values.Approved
     );
 
-    public static readonly FundingRecipientFundingAccountsItemStatus Rejected = Custom(
+    public static readonly FundingRecipientFundingAccountsItemStatus Rejected = new(
         Values.Rejected
     );
 
-    public static readonly FundingRecipientFundingAccountsItemStatus Pending = Custom(
-        Values.Pending
-    );
+    public static readonly FundingRecipientFundingAccountsItemStatus Pending = new(Values.Pending);
 
-    public static readonly FundingRecipientFundingAccountsItemStatus Hold = Custom(Values.Hold);
+    public static readonly FundingRecipientFundingAccountsItemStatus Hold = new(Values.Hold);
 
     public FundingRecipientFundingAccountsItemStatus(string value)
     {
@@ -33,7 +31,7 @@ public readonly record struct FundingRecipientFundingAccountsItemStatus : IStrin
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static FundingRecipientFundingAccountsItemStatus Custom(string value)
+    public static FundingRecipientFundingAccountsItemStatus FromCustom(string value)
     {
         return new FundingRecipientFundingAccountsItemStatus(value);
     }
@@ -60,6 +58,12 @@ public readonly record struct FundingRecipientFundingAccountsItemStatus : IStrin
         FundingRecipientFundingAccountsItemStatus value1,
         string value2
     ) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(FundingRecipientFundingAccountsItemStatus value) =>
+        value.Value;
+
+    public static explicit operator FundingRecipientFundingAccountsItemStatus(string value) =>
+        new(value);
 
     /// <summary>
     /// Constant strings for enum values

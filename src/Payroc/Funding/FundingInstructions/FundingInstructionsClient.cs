@@ -55,9 +55,9 @@ public partial class FundingInstructionsClient
                     _query["limit"] = request.Limit.Value.ToString();
                 }
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
                         Path = "funding-instructions",
                         Query = _query,
@@ -156,9 +156,9 @@ public partial class FundingInstructionsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
                             Path = "funding-instructions",
                             Body = request.Body,
@@ -247,12 +247,14 @@ public partial class FundingInstructionsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"funding-instructions/{JsonUtils.SerializeAsString(request.InstructionId)}",
+                            Path = string.Format(
+                                "funding-instructions/{0}",
+                                ValueConvert.ToPathParameterString(request.InstructionId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -336,12 +338,14 @@ public partial class FundingInstructionsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Put,
-                            Path =
-                                $"funding-instructions/{JsonUtils.SerializeAsString(request.InstructionId)}",
+                            Path = string.Format(
+                                "funding-instructions/{0}",
+                                ValueConvert.ToPathParameterString(request.InstructionId)
+                            ),
                             Body = request.Body,
                             ContentType = "application/json",
                             Options = options,
@@ -414,12 +418,14 @@ public partial class FundingInstructionsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Delete,
-                            Path =
-                                $"funding-instructions/{JsonUtils.SerializeAsString(request.InstructionId)}",
+                            Path = string.Format(
+                                "funding-instructions/{0}",
+                                ValueConvert.ToPathParameterString(request.InstructionId)
+                            ),
                             Options = options,
                         },
                         cancellationToken

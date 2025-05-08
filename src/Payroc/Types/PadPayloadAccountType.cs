@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<PadPayloadAccountType>))]
 public readonly record struct PadPayloadAccountType : IStringEnum
 {
-    public static readonly PadPayloadAccountType Checking = Custom(Values.Checking);
+    public static readonly PadPayloadAccountType Checking = new(Values.Checking);
 
-    public static readonly PadPayloadAccountType Savings = Custom(Values.Savings);
+    public static readonly PadPayloadAccountType Savings = new(Values.Savings);
 
     public PadPayloadAccountType(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct PadPayloadAccountType : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static PadPayloadAccountType Custom(string value)
+    public static PadPayloadAccountType FromCustom(string value)
     {
         return new PadPayloadAccountType(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct PadPayloadAccountType : IStringEnum
 
     public static bool operator !=(PadPayloadAccountType value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(PadPayloadAccountType value) => value.Value;
+
+    public static explicit operator PadPayloadAccountType(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

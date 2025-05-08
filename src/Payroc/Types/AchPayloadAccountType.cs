@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<AchPayloadAccountType>))]
 public readonly record struct AchPayloadAccountType : IStringEnum
 {
-    public static readonly AchPayloadAccountType Checking = Custom(Values.Checking);
+    public static readonly AchPayloadAccountType Checking = new(Values.Checking);
 
-    public static readonly AchPayloadAccountType Savings = Custom(Values.Savings);
+    public static readonly AchPayloadAccountType Savings = new(Values.Savings);
 
     public AchPayloadAccountType(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct AchPayloadAccountType : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static AchPayloadAccountType Custom(string value)
+    public static AchPayloadAccountType FromCustom(string value)
     {
         return new AchPayloadAccountType(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct AchPayloadAccountType : IStringEnum
 
     public static bool operator !=(AchPayloadAccountType value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(AchPayloadAccountType value) => value.Value;
+
+    public static explicit operator AchPayloadAccountType(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

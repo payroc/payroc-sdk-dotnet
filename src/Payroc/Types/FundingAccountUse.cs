@@ -6,11 +6,11 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<FundingAccountUse>))]
 public readonly record struct FundingAccountUse : IStringEnum
 {
-    public static readonly FundingAccountUse Credit = Custom(Values.Credit);
+    public static readonly FundingAccountUse Credit = new(Values.Credit);
 
-    public static readonly FundingAccountUse Debit = Custom(Values.Debit);
+    public static readonly FundingAccountUse Debit = new(Values.Debit);
 
-    public static readonly FundingAccountUse CreditAndDebit = Custom(Values.CreditAndDebit);
+    public static readonly FundingAccountUse CreditAndDebit = new(Values.CreditAndDebit);
 
     public FundingAccountUse(string value)
     {
@@ -25,7 +25,7 @@ public readonly record struct FundingAccountUse : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static FundingAccountUse Custom(string value)
+    public static FundingAccountUse FromCustom(string value)
     {
         return new FundingAccountUse(value);
     }
@@ -48,6 +48,10 @@ public readonly record struct FundingAccountUse : IStringEnum
 
     public static bool operator !=(FundingAccountUse value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(FundingAccountUse value) => value.Value;
+
+    public static explicit operator FundingAccountUse(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

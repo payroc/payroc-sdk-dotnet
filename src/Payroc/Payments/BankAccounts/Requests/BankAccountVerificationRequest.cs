@@ -23,6 +23,7 @@ public record BankAccountVerificationRequest
     [JsonPropertyName("bankAccount")]
     public required BankAccountVerificationRequestBankAccount BankAccount { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -21,6 +21,7 @@ public record PatchPricingIntentsRequest
     [JsonIgnore]
     public IEnumerable<PatchDocument> Body { get; set; } = new List<PatchDocument>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

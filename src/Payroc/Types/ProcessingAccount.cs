@@ -9,22 +9,22 @@ public record ProcessingAccount
     /// <summary>
     /// Unique identifier of the processing account.
     /// </summary>
-    [JsonPropertyName("processingAccountId")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("processingAccountId")]
     public string? ProcessingAccountId { get; set; }
 
     /// <summary>
     /// Date that the processing account was created.
     /// </summary>
-    [JsonPropertyName("createdDate")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("createdDate")]
     public DateTime? CreatedDate { get; set; }
 
     /// <summary>
     /// Date that the processing account was last modified.
     /// </summary>
-    [JsonPropertyName("lastModifiedDate")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("lastModifiedDate")]
     public DateTime? LastModifiedDate { get; set; }
 
     /// <summary>
@@ -39,8 +39,8 @@ public record ProcessingAccount
     /// - `terminated` - Processing account is closed.
     /// - `cancelled` - Merchant withdrew the application for the processing account.
     /// </summary>
-    [JsonPropertyName("status")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("status")]
     public ProcessingAccountStatus? Status { get; set; }
 
     /// <summary>
@@ -52,8 +52,8 @@ public record ProcessingAccount
     /// <summary>
     /// Object that contains information about the owners of the business.
     /// </summary>
-    [JsonPropertyName("owners")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("owners")]
     public IEnumerable<ProcessingAccountOwnersItem> Owners { get; set; } =
         new List<ProcessingAccountOwnersItem>();
 
@@ -117,8 +117,8 @@ public record ProcessingAccount
     /// <summary>
     /// Array of contact objects.
     /// </summary>
-    [JsonPropertyName("contacts")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("contacts")]
     public IEnumerable<ProcessingAccountContactsItem>? Contacts { get; set; }
 
     [JsonPropertyName("signature")]
@@ -139,10 +139,14 @@ public record ProcessingAccount
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

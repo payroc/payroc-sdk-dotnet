@@ -29,6 +29,7 @@ public record BankTransferReferencedRefund
     [JsonPropertyName("description")]
     public required string Description { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -6,13 +6,13 @@ namespace Payroc.Payments;
 [JsonConverter(typeof(StringEnumSerializer<ListPaymentsRequestTypeItem>))]
 public readonly record struct ListPaymentsRequestTypeItem : IStringEnum
 {
-    public static readonly ListPaymentsRequestTypeItem Sale = Custom(Values.Sale);
+    public static readonly ListPaymentsRequestTypeItem Sale = new(Values.Sale);
 
-    public static readonly ListPaymentsRequestTypeItem PreAuthorization = Custom(
+    public static readonly ListPaymentsRequestTypeItem PreAuthorization = new(
         Values.PreAuthorization
     );
 
-    public static readonly ListPaymentsRequestTypeItem PreAuthorizationCompletion = Custom(
+    public static readonly ListPaymentsRequestTypeItem PreAuthorizationCompletion = new(
         Values.PreAuthorizationCompletion
     );
 
@@ -29,7 +29,7 @@ public readonly record struct ListPaymentsRequestTypeItem : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ListPaymentsRequestTypeItem Custom(string value)
+    public static ListPaymentsRequestTypeItem FromCustom(string value)
     {
         return new ListPaymentsRequestTypeItem(value);
     }
@@ -52,6 +52,10 @@ public readonly record struct ListPaymentsRequestTypeItem : IStringEnum
 
     public static bool operator !=(ListPaymentsRequestTypeItem value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(ListPaymentsRequestTypeItem value) => value.Value;
+
+    public static explicit operator ListPaymentsRequestTypeItem(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

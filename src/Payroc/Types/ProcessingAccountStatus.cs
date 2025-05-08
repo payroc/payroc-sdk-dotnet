@@ -6,23 +6,23 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<ProcessingAccountStatus>))]
 public readonly record struct ProcessingAccountStatus : IStringEnum
 {
-    public static readonly ProcessingAccountStatus Entered = Custom(Values.Entered);
+    public static readonly ProcessingAccountStatus Entered = new(Values.Entered);
 
-    public static readonly ProcessingAccountStatus Pending = Custom(Values.Pending);
+    public static readonly ProcessingAccountStatus Pending = new(Values.Pending);
 
-    public static readonly ProcessingAccountStatus Approved = Custom(Values.Approved);
+    public static readonly ProcessingAccountStatus Approved = new(Values.Approved);
 
-    public static readonly ProcessingAccountStatus SubjectTo = Custom(Values.SubjectTo);
+    public static readonly ProcessingAccountStatus SubjectTo = new(Values.SubjectTo);
 
-    public static readonly ProcessingAccountStatus Dormant = Custom(Values.Dormant);
+    public static readonly ProcessingAccountStatus Dormant = new(Values.Dormant);
 
-    public static readonly ProcessingAccountStatus NonProcessing = Custom(Values.NonProcessing);
+    public static readonly ProcessingAccountStatus NonProcessing = new(Values.NonProcessing);
 
-    public static readonly ProcessingAccountStatus Rejected = Custom(Values.Rejected);
+    public static readonly ProcessingAccountStatus Rejected = new(Values.Rejected);
 
-    public static readonly ProcessingAccountStatus Terminated = Custom(Values.Terminated);
+    public static readonly ProcessingAccountStatus Terminated = new(Values.Terminated);
 
-    public static readonly ProcessingAccountStatus Cancelled = Custom(Values.Cancelled);
+    public static readonly ProcessingAccountStatus Cancelled = new(Values.Cancelled);
 
     public ProcessingAccountStatus(string value)
     {
@@ -37,7 +37,7 @@ public readonly record struct ProcessingAccountStatus : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ProcessingAccountStatus Custom(string value)
+    public static ProcessingAccountStatus FromCustom(string value)
     {
         return new ProcessingAccountStatus(value);
     }
@@ -60,6 +60,10 @@ public readonly record struct ProcessingAccountStatus : IStringEnum
 
     public static bool operator !=(ProcessingAccountStatus value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(ProcessingAccountStatus value) => value.Value;
+
+    public static explicit operator ProcessingAccountStatus(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

@@ -21,6 +21,7 @@ public record CreateProcessingAccountMerchantPlatformsRequest
     [JsonIgnore]
     public required CreateProcessingAccount Body { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -33,11 +33,14 @@ public partial class ContactsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path = $"contacts/{JsonUtils.SerializeAsString(request.ContactId)}",
+                            Path = string.Format(
+                                "contacts/{0}",
+                                ValueConvert.ToPathParameterString(request.ContactId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -139,11 +142,14 @@ public partial class ContactsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Put,
-                            Path = $"contacts/{JsonUtils.SerializeAsString(request.ContactId)}",
+                            Path = string.Format(
+                                "contacts/{0}",
+                                ValueConvert.ToPathParameterString(request.ContactId)
+                            ),
                             Body = request.Body,
                             ContentType = "application/json",
                             Options = options,
@@ -218,11 +224,14 @@ public partial class ContactsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Delete,
-                            Path = $"contacts/{JsonUtils.SerializeAsString(request.ContactId)}",
+                            Path = string.Format(
+                                "contacts/{0}",
+                                ValueConvert.ToPathParameterString(request.ContactId)
+                            ),
                             Options = options,
                         },
                         cancellationToken

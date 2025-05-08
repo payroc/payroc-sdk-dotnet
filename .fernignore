@@ -1,0 +1,7 @@
+# Specify files that shouldn't be modified by Fern
+src/Payroc/Payroc.Custom.props
+src/Payroc/PayrocClient.cs
+src/Payroc/Core/PayrocPager.cs
+src/Payroc/Core/PayrocExceptionInterceptor.cs
+src/Payroc.Test/Unit/PayrocPagerTest.cs
+src/Payroc.Test/Integration

@@ -6,27 +6,27 @@ namespace Payroc.Payments.Refunds;
 [JsonConverter(typeof(StringEnumSerializer<ListRefundsRequestStatusItem>))]
 public readonly record struct ListRefundsRequestStatusItem : IStringEnum
 {
-    public static readonly ListRefundsRequestStatusItem Ready = Custom(Values.Ready);
+    public static readonly ListRefundsRequestStatusItem Ready = new(Values.Ready);
 
-    public static readonly ListRefundsRequestStatusItem Pending = Custom(Values.Pending);
+    public static readonly ListRefundsRequestStatusItem Pending = new(Values.Pending);
 
-    public static readonly ListRefundsRequestStatusItem Declined = Custom(Values.Declined);
+    public static readonly ListRefundsRequestStatusItem Declined = new(Values.Declined);
 
-    public static readonly ListRefundsRequestStatusItem Complete = Custom(Values.Complete);
+    public static readonly ListRefundsRequestStatusItem Complete = new(Values.Complete);
 
-    public static readonly ListRefundsRequestStatusItem Referral = Custom(Values.Referral);
+    public static readonly ListRefundsRequestStatusItem Referral = new(Values.Referral);
 
-    public static readonly ListRefundsRequestStatusItem Pickup = Custom(Values.Pickup);
+    public static readonly ListRefundsRequestStatusItem Pickup = new(Values.Pickup);
 
-    public static readonly ListRefundsRequestStatusItem Reversal = Custom(Values.Reversal);
+    public static readonly ListRefundsRequestStatusItem Reversal = new(Values.Reversal);
 
-    public static readonly ListRefundsRequestStatusItem Admin = Custom(Values.Admin);
+    public static readonly ListRefundsRequestStatusItem Admin = new(Values.Admin);
 
-    public static readonly ListRefundsRequestStatusItem Expired = Custom(Values.Expired);
+    public static readonly ListRefundsRequestStatusItem Expired = new(Values.Expired);
 
-    public static readonly ListRefundsRequestStatusItem Accepted = Custom(Values.Accepted);
+    public static readonly ListRefundsRequestStatusItem Accepted = new(Values.Accepted);
 
-    public static readonly ListRefundsRequestStatusItem Review = Custom(Values.Review);
+    public static readonly ListRefundsRequestStatusItem Review = new(Values.Review);
 
     public ListRefundsRequestStatusItem(string value)
     {
@@ -41,7 +41,7 @@ public readonly record struct ListRefundsRequestStatusItem : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ListRefundsRequestStatusItem Custom(string value)
+    public static ListRefundsRequestStatusItem FromCustom(string value)
     {
         return new ListRefundsRequestStatusItem(value);
     }
@@ -64,6 +64,10 @@ public readonly record struct ListRefundsRequestStatusItem : IStringEnum
 
     public static bool operator !=(ListRefundsRequestStatusItem value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(ListRefundsRequestStatusItem value) => value.Value;
+
+    public static explicit operator ListRefundsRequestStatusItem(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

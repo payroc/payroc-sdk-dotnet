@@ -21,6 +21,7 @@ public record CreatePaymentPlansRequest
     [JsonIgnore]
     public required PaymentPlan Body { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

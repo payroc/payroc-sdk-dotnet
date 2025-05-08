@@ -6,13 +6,13 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<TransactionResultType>))]
 public readonly record struct TransactionResultType : IStringEnum
 {
-    public static readonly TransactionResultType Sale = Custom(Values.Sale);
+    public static readonly TransactionResultType Sale = new(Values.Sale);
 
-    public static readonly TransactionResultType Refund = Custom(Values.Refund);
+    public static readonly TransactionResultType Refund = new(Values.Refund);
 
-    public static readonly TransactionResultType PreAuthorization = Custom(Values.PreAuthorization);
+    public static readonly TransactionResultType PreAuthorization = new(Values.PreAuthorization);
 
-    public static readonly TransactionResultType PreAuthorizationCompletion = Custom(
+    public static readonly TransactionResultType PreAuthorizationCompletion = new(
         Values.PreAuthorizationCompletion
     );
 
@@ -29,7 +29,7 @@ public readonly record struct TransactionResultType : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static TransactionResultType Custom(string value)
+    public static TransactionResultType FromCustom(string value)
     {
         return new TransactionResultType(value);
     }
@@ -52,6 +52,10 @@ public readonly record struct TransactionResultType : IStringEnum
 
     public static bool operator !=(TransactionResultType value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(TransactionResultType value) => value.Value;
+
+    public static explicit operator TransactionResultType(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

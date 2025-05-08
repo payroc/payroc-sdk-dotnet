@@ -6,17 +6,17 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<ProcessingCardAcceptanceCardsAcceptedItem>))]
 public readonly record struct ProcessingCardAcceptanceCardsAcceptedItem : IStringEnum
 {
-    public static readonly ProcessingCardAcceptanceCardsAcceptedItem Visa = Custom(Values.Visa);
+    public static readonly ProcessingCardAcceptanceCardsAcceptedItem Visa = new(Values.Visa);
 
-    public static readonly ProcessingCardAcceptanceCardsAcceptedItem Mastercard = Custom(
+    public static readonly ProcessingCardAcceptanceCardsAcceptedItem Mastercard = new(
         Values.Mastercard
     );
 
-    public static readonly ProcessingCardAcceptanceCardsAcceptedItem Discover = Custom(
+    public static readonly ProcessingCardAcceptanceCardsAcceptedItem Discover = new(
         Values.Discover
     );
 
-    public static readonly ProcessingCardAcceptanceCardsAcceptedItem AmexOptBlue = Custom(
+    public static readonly ProcessingCardAcceptanceCardsAcceptedItem AmexOptBlue = new(
         Values.AmexOptBlue
     );
 
@@ -33,7 +33,7 @@ public readonly record struct ProcessingCardAcceptanceCardsAcceptedItem : IStrin
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ProcessingCardAcceptanceCardsAcceptedItem Custom(string value)
+    public static ProcessingCardAcceptanceCardsAcceptedItem FromCustom(string value)
     {
         return new ProcessingCardAcceptanceCardsAcceptedItem(value);
     }
@@ -60,6 +60,12 @@ public readonly record struct ProcessingCardAcceptanceCardsAcceptedItem : IStrin
         ProcessingCardAcceptanceCardsAcceptedItem value1,
         string value2
     ) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(ProcessingCardAcceptanceCardsAcceptedItem value) =>
+        value.Value;
+
+    public static explicit operator ProcessingCardAcceptanceCardsAcceptedItem(string value) =>
+        new(value);
 
     /// <summary>
     /// Constant strings for enum values

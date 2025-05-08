@@ -15,6 +15,7 @@ public record UpdateFundingInstructionsRequest
     [JsonIgnore]
     public required Instruction Body { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

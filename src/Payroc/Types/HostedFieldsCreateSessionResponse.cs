@@ -25,17 +25,21 @@ public record HostedFieldsCreateSessionResponse
     /// <summary>
     /// Date and time that the token expires. We return this value in the ISO 8601 format.
     /// </summary>
-    [JsonPropertyName("expiresAt")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("expiresAt")]
     public required DateTime ExpiresAt { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -6,39 +6,37 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<TransactionEntryMethod>))]
 public readonly record struct TransactionEntryMethod : IStringEnum
 {
-    public static readonly TransactionEntryMethod BarcodeRead = Custom(Values.BarcodeRead);
+    public static readonly TransactionEntryMethod BarcodeRead = new(Values.BarcodeRead);
 
-    public static readonly TransactionEntryMethod SmartChipRead = Custom(Values.SmartChipRead);
+    public static readonly TransactionEntryMethod SmartChipRead = new(Values.SmartChipRead);
 
-    public static readonly TransactionEntryMethod SwipedOriginUnknown = Custom(
+    public static readonly TransactionEntryMethod SwipedOriginUnknown = new(
         Values.SwipedOriginUnknown
     );
 
-    public static readonly TransactionEntryMethod ContactlessChip = Custom(Values.ContactlessChip);
+    public static readonly TransactionEntryMethod ContactlessChip = new(Values.ContactlessChip);
 
-    public static readonly TransactionEntryMethod Ecommerce = Custom(Values.Ecommerce);
+    public static readonly TransactionEntryMethod Ecommerce = new(Values.Ecommerce);
 
-    public static readonly TransactionEntryMethod ManuallyEntered = Custom(Values.ManuallyEntered);
+    public static readonly TransactionEntryMethod ManuallyEntered = new(Values.ManuallyEntered);
 
-    public static readonly TransactionEntryMethod ManuallyEnteredFallback = Custom(
+    public static readonly TransactionEntryMethod ManuallyEnteredFallback = new(
         Values.ManuallyEnteredFallback
     );
 
-    public static readonly TransactionEntryMethod Swiped = Custom(Values.Swiped);
+    public static readonly TransactionEntryMethod Swiped = new(Values.Swiped);
 
-    public static readonly TransactionEntryMethod SwipedFallback = Custom(Values.SwipedFallback);
+    public static readonly TransactionEntryMethod SwipedFallback = new(Values.SwipedFallback);
 
-    public static readonly TransactionEntryMethod SwipedError = Custom(Values.SwipedError);
+    public static readonly TransactionEntryMethod SwipedError = new(Values.SwipedError);
 
-    public static readonly TransactionEntryMethod ScannedCheckReader = Custom(
+    public static readonly TransactionEntryMethod ScannedCheckReader = new(
         Values.ScannedCheckReader
     );
 
-    public static readonly TransactionEntryMethod CredentialOnFile = Custom(
-        Values.CredentialOnFile
-    );
+    public static readonly TransactionEntryMethod CredentialOnFile = new(Values.CredentialOnFile);
 
-    public static readonly TransactionEntryMethod Unknown = Custom(Values.Unknown);
+    public static readonly TransactionEntryMethod Unknown = new(Values.Unknown);
 
     public TransactionEntryMethod(string value)
     {
@@ -53,7 +51,7 @@ public readonly record struct TransactionEntryMethod : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static TransactionEntryMethod Custom(string value)
+    public static TransactionEntryMethod FromCustom(string value)
     {
         return new TransactionEntryMethod(value);
     }
@@ -76,6 +74,10 @@ public readonly record struct TransactionEntryMethod : IStringEnum
 
     public static bool operator !=(TransactionEntryMethod value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(TransactionEntryMethod value) => value.Value;
+
+    public static explicit operator TransactionEntryMethod(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

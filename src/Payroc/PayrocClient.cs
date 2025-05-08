@@ -2,8 +2,8 @@ using Payroc.Core;
 
 namespace Payroc;
 
-public class PayrocClient(string? token = null, ClientOptions? clientOptions = null)
-    : BasePayrocClient(token, CreateClientOptions(clientOptions))
+public class PayrocClient(string? apiKey = null, ClientOptions? clientOptions = null)
+    : BasePayrocClient(apiKey, CreateClientOptions(clientOptions))
 {
     private static ClientOptions CreateClientOptions(ClientOptions? clientOptions)
     {

@@ -17,6 +17,7 @@ public record DeleteSecureTokensRequest
     [JsonIgnore]
     public required string SecureTokenId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

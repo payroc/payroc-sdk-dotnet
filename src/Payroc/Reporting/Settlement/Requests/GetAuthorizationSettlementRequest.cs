@@ -11,6 +11,7 @@ public record GetAuthorizationSettlementRequest
     [JsonIgnore]
     public required int AuthorizationId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

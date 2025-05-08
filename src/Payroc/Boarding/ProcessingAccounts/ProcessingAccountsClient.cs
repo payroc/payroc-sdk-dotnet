@@ -34,12 +34,14 @@ public partial class ProcessingAccountsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"processing-accounts/{JsonUtils.SerializeAsString(request.ProcessingAccountId)}",
+                            Path = string.Format(
+                                "processing-accounts/{0}",
+                                ValueConvert.ToPathParameterString(request.ProcessingAccountId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -123,12 +125,14 @@ public partial class ProcessingAccountsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"processing-accounts/{JsonUtils.SerializeAsString(request.ProcessingAccountId)}/funding-accounts",
+                            Path = string.Format(
+                                "processing-accounts/{0}/funding-accounts",
+                                ValueConvert.ToPathParameterString(request.ProcessingAccountId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -230,12 +234,14 @@ public partial class ProcessingAccountsClient
                 }
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"processing-accounts/{JsonUtils.SerializeAsString(request.ProcessingAccountId)}/contacts",
+                            Path = string.Format(
+                                "processing-accounts/{0}/contacts",
+                                ValueConvert.ToPathParameterString(request.ProcessingAccountId)
+                            ),
                             Query = _query,
                             Options = options,
                         },
@@ -316,12 +322,14 @@ public partial class ProcessingAccountsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"processing-accounts/{JsonUtils.SerializeAsString(request.ProcessingAccountId)}/pricing",
+                            Path = string.Format(
+                                "processing-accounts/{0}/pricing",
+                                ValueConvert.ToPathParameterString(request.ProcessingAccountId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -424,12 +432,14 @@ public partial class ProcessingAccountsClient
                     _query["limit"] = request.Limit.Value.ToString();
                 }
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
-                        Path =
-                            $"processing-accounts/{JsonUtils.SerializeAsString(request.ProcessingAccountId)}/owners",
+                        Path = string.Format(
+                            "processing-accounts/{0}/owners",
+                            ValueConvert.ToPathParameterString(request.ProcessingAccountId)
+                        ),
                         Query = _query,
                         Options = options,
                     }
@@ -494,8 +504,8 @@ public partial class ProcessingAccountsClient
     }
 
     /// <summary>
-    /// When you create a processing account, we send a copy of the pricing agreement to the merchant to sign. You can choose to send them a copy of the pricing agreement by email, or you can generate a link to the pricing agreement.<br/>
-    /// If you requested the merchant's signature by email and they don't respond, use our Reminders endpoint to create a reminder and to send another email.<br/>
+    /// When you create a processing account, we send a copy of the pricing agreement to the merchant to sign. You can choose to send them a copy of the pricing agreement by email, or you can generate a link to the pricing agreement.&lt;br/&gt;
+    /// If you requested the merchant's signature by email and they don't respond, use our Reminders endpoint to create a reminder and to send another email.&lt;br/&gt;
     /// **Note:** You can use the Reminders endpoint only if you request the merchant's signature by email. If you generate a link to the pricing agreement, you can't use the Reminders endpoint.
     /// </summary>
     /// <example><code>
@@ -522,12 +532,14 @@ public partial class ProcessingAccountsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"processing-accounts/{JsonUtils.SerializeAsString(request.ProcessingAccountId)}/reminders",
+                            Path = string.Format(
+                                "processing-accounts/{0}/reminders",
+                                ValueConvert.ToPathParameterString(request.ProcessingAccountId)
+                            ),
                             Body = request.Body,
                             ContentType = "application/json",
                             Options = options,

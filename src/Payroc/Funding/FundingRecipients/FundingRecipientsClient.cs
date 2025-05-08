@@ -47,9 +47,9 @@ public partial class FundingRecipientsClient
                     _query["limit"] = request.Limit.Value.ToString();
                 }
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
                         Path = "funding-recipients",
                         Query = _query,
@@ -198,9 +198,9 @@ public partial class FundingRecipientsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
                             Path = "funding-recipients",
                             Body = request,
@@ -289,12 +289,14 @@ public partial class FundingRecipientsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"funding-recipients/{JsonUtils.SerializeAsString(request.RecipientId)}",
+                            Path = string.Format(
+                                "funding-recipients/{0}",
+                                ValueConvert.ToPathParameterString(request.RecipientId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -425,12 +427,14 @@ public partial class FundingRecipientsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Put,
-                            Path =
-                                $"funding-recipients/{JsonUtils.SerializeAsString(request.RecipientId)}",
+                            Path = string.Format(
+                                "funding-recipients/{0}",
+                                ValueConvert.ToPathParameterString(request.RecipientId)
+                            ),
                             Body = request.Body,
                             ContentType = "application/json",
                             Options = options,
@@ -507,12 +511,14 @@ public partial class FundingRecipientsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Delete,
-                            Path =
-                                $"funding-recipients/{JsonUtils.SerializeAsString(request.RecipientId)}",
+                            Path = string.Format(
+                                "funding-recipients/{0}",
+                                ValueConvert.ToPathParameterString(request.RecipientId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -583,12 +589,14 @@ public partial class FundingRecipientsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"funding-recipients/{JsonUtils.SerializeAsString(request.RecipientId)}/funding-accounts",
+                            Path = string.Format(
+                                "funding-recipients/{0}/funding-accounts",
+                                ValueConvert.ToPathParameterString(request.RecipientId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -688,12 +696,14 @@ public partial class FundingRecipientsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"funding-recipients/{JsonUtils.SerializeAsString(request.RecipientId)}/funding-accounts",
+                            Path = string.Format(
+                                "funding-recipients/{0}/funding-accounts",
+                                ValueConvert.ToPathParameterString(request.RecipientId)
+                            ),
                             Body = request.Body,
                             Headers = _headers,
                             ContentType = "application/json",
@@ -784,12 +794,14 @@ public partial class FundingRecipientsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"funding-recipients/{JsonUtils.SerializeAsString(request.RecipientId)}/owners",
+                            Path = string.Format(
+                                "funding-recipients/{0}/owners",
+                                ValueConvert.ToPathParameterString(request.RecipientId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -906,12 +918,14 @@ public partial class FundingRecipientsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"funding-recipients/{JsonUtils.SerializeAsString(request.RecipientId)}/owners",
+                            Path = string.Format(
+                                "funding-recipients/{0}/owners",
+                                ValueConvert.ToPathParameterString(request.RecipientId)
+                            ),
                             Body = request.Body,
                             Headers = _headers,
                             ContentType = "application/json",

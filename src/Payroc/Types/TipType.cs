@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<TipType>))]
 public readonly record struct TipType : IStringEnum
 {
-    public static readonly TipType Percentage = Custom(Values.Percentage);
+    public static readonly TipType Percentage = new(Values.Percentage);
 
-    public static readonly TipType FixedAmount = Custom(Values.FixedAmount);
+    public static readonly TipType FixedAmount = new(Values.FixedAmount);
 
     public TipType(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct TipType : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static TipType Custom(string value)
+    public static TipType FromCustom(string value)
     {
         return new TipType(value);
     }
@@ -44,6 +44,10 @@ public readonly record struct TipType : IStringEnum
     public static bool operator ==(TipType value1, string value2) => value1.Value.Equals(value2);
 
     public static bool operator !=(TipType value1, string value2) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(TipType value) => value.Value;
+
+    public static explicit operator TipType(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

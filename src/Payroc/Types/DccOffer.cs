@@ -12,8 +12,8 @@ public record DccOffer
     /// <summary>
     /// Indicates if the cardholder accepted the dynamic currency conversion (DCC) offer.
     /// </summary>
-    [JsonPropertyName("accepted")]
     [JsonAccess(JsonAccessType.WriteOnly)]
+    [JsonPropertyName("accepted")]
     public bool? Accepted { get; set; }
 
     /// <summary>
@@ -34,8 +34,8 @@ public record DccOffer
     /// <summary>
     /// Three-digit currency code for the cardholder’s account. This code follows the ISO 4217 standard.
     /// </summary>
-    [JsonPropertyName("fxCurrencyCode")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("fxCurrencyCode")]
     public string? FxCurrencyCode { get; set; }
 
     /// <summary>
@@ -44,8 +44,8 @@ public record DccOffer
     /// For example, for GBP, the smallest currency unit is 1p and it is equal to £0.01.
     /// If you use GBP, the value for **fxCurrencyExponent** is 2.
     /// </summary>
-    [JsonPropertyName("fxCurrencyExponent")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("fxCurrencyExponent")]
     public int? FxCurrencyExponent { get; set; }
 
     /// <summary>
@@ -63,31 +63,35 @@ public record DccOffer
     /// <summary>
     /// Supporting text for the mark-up rate.
     /// </summary>
-    [JsonPropertyName("markupText")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("markupText")]
     public string? MarkupText { get; set; }
 
     /// <summary>
     /// Name of the DCC provider.
     /// </summary>
-    [JsonPropertyName("provider")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("provider")]
     public string? Provider { get; set; }
 
     /// <summary>
     /// Source that the DCC provider uses to get the foreign exchange rates.
     /// </summary>
-    [JsonPropertyName("source")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("source")]
     public string? Source { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

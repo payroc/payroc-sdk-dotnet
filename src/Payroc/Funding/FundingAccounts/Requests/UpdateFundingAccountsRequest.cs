@@ -15,6 +15,7 @@ public record UpdateFundingAccountsRequest
     [JsonIgnore]
     public required FundingAccount Body { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

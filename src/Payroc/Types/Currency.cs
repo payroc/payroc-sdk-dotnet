@@ -6,347 +6,347 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<Currency>))]
 public readonly record struct Currency : IStringEnum
 {
-    public static readonly Currency Aed = Custom(Values.Aed);
+    public static readonly Currency Aed = new(Values.Aed);
 
-    public static readonly Currency Afn = Custom(Values.Afn);
+    public static readonly Currency Afn = new(Values.Afn);
 
-    public static readonly Currency All = Custom(Values.All);
+    public static readonly Currency All = new(Values.All);
 
-    public static readonly Currency Amd = Custom(Values.Amd);
+    public static readonly Currency Amd = new(Values.Amd);
 
-    public static readonly Currency Ang = Custom(Values.Ang);
+    public static readonly Currency Ang = new(Values.Ang);
 
-    public static readonly Currency Aoa = Custom(Values.Aoa);
+    public static readonly Currency Aoa = new(Values.Aoa);
 
-    public static readonly Currency Ars = Custom(Values.Ars);
+    public static readonly Currency Ars = new(Values.Ars);
 
-    public static readonly Currency Aud = Custom(Values.Aud);
+    public static readonly Currency Aud = new(Values.Aud);
 
-    public static readonly Currency Awg = Custom(Values.Awg);
+    public static readonly Currency Awg = new(Values.Awg);
 
-    public static readonly Currency Azn = Custom(Values.Azn);
+    public static readonly Currency Azn = new(Values.Azn);
 
-    public static readonly Currency Bam = Custom(Values.Bam);
+    public static readonly Currency Bam = new(Values.Bam);
 
-    public static readonly Currency Bbd = Custom(Values.Bbd);
+    public static readonly Currency Bbd = new(Values.Bbd);
 
-    public static readonly Currency Bdt = Custom(Values.Bdt);
+    public static readonly Currency Bdt = new(Values.Bdt);
 
-    public static readonly Currency Bgn = Custom(Values.Bgn);
+    public static readonly Currency Bgn = new(Values.Bgn);
 
-    public static readonly Currency Bhd = Custom(Values.Bhd);
+    public static readonly Currency Bhd = new(Values.Bhd);
 
-    public static readonly Currency Bif = Custom(Values.Bif);
+    public static readonly Currency Bif = new(Values.Bif);
 
-    public static readonly Currency Bmd = Custom(Values.Bmd);
+    public static readonly Currency Bmd = new(Values.Bmd);
 
-    public static readonly Currency Bnd = Custom(Values.Bnd);
+    public static readonly Currency Bnd = new(Values.Bnd);
 
-    public static readonly Currency Bob = Custom(Values.Bob);
+    public static readonly Currency Bob = new(Values.Bob);
 
-    public static readonly Currency Bov = Custom(Values.Bov);
+    public static readonly Currency Bov = new(Values.Bov);
 
-    public static readonly Currency Brl = Custom(Values.Brl);
+    public static readonly Currency Brl = new(Values.Brl);
 
-    public static readonly Currency Bsd = Custom(Values.Bsd);
+    public static readonly Currency Bsd = new(Values.Bsd);
 
-    public static readonly Currency Btn = Custom(Values.Btn);
+    public static readonly Currency Btn = new(Values.Btn);
 
-    public static readonly Currency Bwp = Custom(Values.Bwp);
+    public static readonly Currency Bwp = new(Values.Bwp);
 
-    public static readonly Currency Byr = Custom(Values.Byr);
+    public static readonly Currency Byr = new(Values.Byr);
 
-    public static readonly Currency Bzd = Custom(Values.Bzd);
+    public static readonly Currency Bzd = new(Values.Bzd);
 
-    public static readonly Currency Cad = Custom(Values.Cad);
+    public static readonly Currency Cad = new(Values.Cad);
 
-    public static readonly Currency Cdf = Custom(Values.Cdf);
+    public static readonly Currency Cdf = new(Values.Cdf);
 
-    public static readonly Currency Che = Custom(Values.Che);
+    public static readonly Currency Che = new(Values.Che);
 
-    public static readonly Currency Chf = Custom(Values.Chf);
+    public static readonly Currency Chf = new(Values.Chf);
 
-    public static readonly Currency Chw = Custom(Values.Chw);
+    public static readonly Currency Chw = new(Values.Chw);
 
-    public static readonly Currency Clf = Custom(Values.Clf);
+    public static readonly Currency Clf = new(Values.Clf);
 
-    public static readonly Currency Clp = Custom(Values.Clp);
+    public static readonly Currency Clp = new(Values.Clp);
 
-    public static readonly Currency Cny = Custom(Values.Cny);
+    public static readonly Currency Cny = new(Values.Cny);
 
-    public static readonly Currency Cop = Custom(Values.Cop);
+    public static readonly Currency Cop = new(Values.Cop);
 
-    public static readonly Currency Cou = Custom(Values.Cou);
+    public static readonly Currency Cou = new(Values.Cou);
 
-    public static readonly Currency Crc = Custom(Values.Crc);
+    public static readonly Currency Crc = new(Values.Crc);
 
-    public static readonly Currency Cuc = Custom(Values.Cuc);
+    public static readonly Currency Cuc = new(Values.Cuc);
 
-    public static readonly Currency Cup = Custom(Values.Cup);
+    public static readonly Currency Cup = new(Values.Cup);
 
-    public static readonly Currency Cve = Custom(Values.Cve);
+    public static readonly Currency Cve = new(Values.Cve);
 
-    public static readonly Currency Czk = Custom(Values.Czk);
+    public static readonly Currency Czk = new(Values.Czk);
 
-    public static readonly Currency Djf = Custom(Values.Djf);
+    public static readonly Currency Djf = new(Values.Djf);
 
-    public static readonly Currency Dkk = Custom(Values.Dkk);
+    public static readonly Currency Dkk = new(Values.Dkk);
 
-    public static readonly Currency Dop = Custom(Values.Dop);
+    public static readonly Currency Dop = new(Values.Dop);
 
-    public static readonly Currency Dzd = Custom(Values.Dzd);
+    public static readonly Currency Dzd = new(Values.Dzd);
 
-    public static readonly Currency Egp = Custom(Values.Egp);
+    public static readonly Currency Egp = new(Values.Egp);
 
-    public static readonly Currency Ern = Custom(Values.Ern);
+    public static readonly Currency Ern = new(Values.Ern);
 
-    public static readonly Currency Etb = Custom(Values.Etb);
+    public static readonly Currency Etb = new(Values.Etb);
 
-    public static readonly Currency Eur = Custom(Values.Eur);
+    public static readonly Currency Eur = new(Values.Eur);
 
-    public static readonly Currency Fjd = Custom(Values.Fjd);
+    public static readonly Currency Fjd = new(Values.Fjd);
 
-    public static readonly Currency Fkp = Custom(Values.Fkp);
+    public static readonly Currency Fkp = new(Values.Fkp);
 
-    public static readonly Currency Gbp = Custom(Values.Gbp);
+    public static readonly Currency Gbp = new(Values.Gbp);
 
-    public static readonly Currency Gel = Custom(Values.Gel);
+    public static readonly Currency Gel = new(Values.Gel);
 
-    public static readonly Currency Ghs = Custom(Values.Ghs);
+    public static readonly Currency Ghs = new(Values.Ghs);
 
-    public static readonly Currency Gip = Custom(Values.Gip);
+    public static readonly Currency Gip = new(Values.Gip);
 
-    public static readonly Currency Gmd = Custom(Values.Gmd);
+    public static readonly Currency Gmd = new(Values.Gmd);
 
-    public static readonly Currency Gnf = Custom(Values.Gnf);
+    public static readonly Currency Gnf = new(Values.Gnf);
 
-    public static readonly Currency Gtq = Custom(Values.Gtq);
+    public static readonly Currency Gtq = new(Values.Gtq);
 
-    public static readonly Currency Gyd = Custom(Values.Gyd);
+    public static readonly Currency Gyd = new(Values.Gyd);
 
-    public static readonly Currency Hkd = Custom(Values.Hkd);
+    public static readonly Currency Hkd = new(Values.Hkd);
 
-    public static readonly Currency Hnl = Custom(Values.Hnl);
+    public static readonly Currency Hnl = new(Values.Hnl);
 
-    public static readonly Currency Hrk = Custom(Values.Hrk);
+    public static readonly Currency Hrk = new(Values.Hrk);
 
-    public static readonly Currency Htg = Custom(Values.Htg);
+    public static readonly Currency Htg = new(Values.Htg);
 
-    public static readonly Currency Huf = Custom(Values.Huf);
+    public static readonly Currency Huf = new(Values.Huf);
 
-    public static readonly Currency Idr = Custom(Values.Idr);
+    public static readonly Currency Idr = new(Values.Idr);
 
-    public static readonly Currency Ils = Custom(Values.Ils);
+    public static readonly Currency Ils = new(Values.Ils);
 
-    public static readonly Currency Inr = Custom(Values.Inr);
+    public static readonly Currency Inr = new(Values.Inr);
 
-    public static readonly Currency Iqd = Custom(Values.Iqd);
+    public static readonly Currency Iqd = new(Values.Iqd);
 
-    public static readonly Currency Irr = Custom(Values.Irr);
+    public static readonly Currency Irr = new(Values.Irr);
 
-    public static readonly Currency Isk = Custom(Values.Isk);
+    public static readonly Currency Isk = new(Values.Isk);
 
-    public static readonly Currency Jmd = Custom(Values.Jmd);
+    public static readonly Currency Jmd = new(Values.Jmd);
 
-    public static readonly Currency Jod = Custom(Values.Jod);
+    public static readonly Currency Jod = new(Values.Jod);
 
-    public static readonly Currency Jpy = Custom(Values.Jpy);
+    public static readonly Currency Jpy = new(Values.Jpy);
 
-    public static readonly Currency Kes = Custom(Values.Kes);
+    public static readonly Currency Kes = new(Values.Kes);
 
-    public static readonly Currency Kgs = Custom(Values.Kgs);
+    public static readonly Currency Kgs = new(Values.Kgs);
 
-    public static readonly Currency Khr = Custom(Values.Khr);
+    public static readonly Currency Khr = new(Values.Khr);
 
-    public static readonly Currency Kmf = Custom(Values.Kmf);
+    public static readonly Currency Kmf = new(Values.Kmf);
 
-    public static readonly Currency Kpw = Custom(Values.Kpw);
+    public static readonly Currency Kpw = new(Values.Kpw);
 
-    public static readonly Currency Krw = Custom(Values.Krw);
+    public static readonly Currency Krw = new(Values.Krw);
 
-    public static readonly Currency Kwd = Custom(Values.Kwd);
+    public static readonly Currency Kwd = new(Values.Kwd);
 
-    public static readonly Currency Kyd = Custom(Values.Kyd);
+    public static readonly Currency Kyd = new(Values.Kyd);
 
-    public static readonly Currency Kzt = Custom(Values.Kzt);
+    public static readonly Currency Kzt = new(Values.Kzt);
 
-    public static readonly Currency Lak = Custom(Values.Lak);
+    public static readonly Currency Lak = new(Values.Lak);
 
-    public static readonly Currency Lbp = Custom(Values.Lbp);
+    public static readonly Currency Lbp = new(Values.Lbp);
 
-    public static readonly Currency Lkr = Custom(Values.Lkr);
+    public static readonly Currency Lkr = new(Values.Lkr);
 
-    public static readonly Currency Lrd = Custom(Values.Lrd);
+    public static readonly Currency Lrd = new(Values.Lrd);
 
-    public static readonly Currency Lsl = Custom(Values.Lsl);
+    public static readonly Currency Lsl = new(Values.Lsl);
 
-    public static readonly Currency Ltl = Custom(Values.Ltl);
+    public static readonly Currency Ltl = new(Values.Ltl);
 
-    public static readonly Currency Lvl = Custom(Values.Lvl);
+    public static readonly Currency Lvl = new(Values.Lvl);
 
-    public static readonly Currency Lyd = Custom(Values.Lyd);
+    public static readonly Currency Lyd = new(Values.Lyd);
 
-    public static readonly Currency Mad = Custom(Values.Mad);
+    public static readonly Currency Mad = new(Values.Mad);
 
-    public static readonly Currency Mdl = Custom(Values.Mdl);
+    public static readonly Currency Mdl = new(Values.Mdl);
 
-    public static readonly Currency Mga = Custom(Values.Mga);
+    public static readonly Currency Mga = new(Values.Mga);
 
-    public static readonly Currency Mkd = Custom(Values.Mkd);
+    public static readonly Currency Mkd = new(Values.Mkd);
 
-    public static readonly Currency Mmk = Custom(Values.Mmk);
+    public static readonly Currency Mmk = new(Values.Mmk);
 
-    public static readonly Currency Mnt = Custom(Values.Mnt);
+    public static readonly Currency Mnt = new(Values.Mnt);
 
-    public static readonly Currency Mop = Custom(Values.Mop);
+    public static readonly Currency Mop = new(Values.Mop);
 
-    public static readonly Currency Mro = Custom(Values.Mro);
+    public static readonly Currency Mro = new(Values.Mro);
 
-    public static readonly Currency Mru = Custom(Values.Mru);
+    public static readonly Currency Mru = new(Values.Mru);
 
-    public static readonly Currency Mur = Custom(Values.Mur);
+    public static readonly Currency Mur = new(Values.Mur);
 
-    public static readonly Currency Mvr = Custom(Values.Mvr);
+    public static readonly Currency Mvr = new(Values.Mvr);
 
-    public static readonly Currency Mwk = Custom(Values.Mwk);
+    public static readonly Currency Mwk = new(Values.Mwk);
 
-    public static readonly Currency Mxn = Custom(Values.Mxn);
+    public static readonly Currency Mxn = new(Values.Mxn);
 
-    public static readonly Currency Mxv = Custom(Values.Mxv);
+    public static readonly Currency Mxv = new(Values.Mxv);
 
-    public static readonly Currency Myr = Custom(Values.Myr);
+    public static readonly Currency Myr = new(Values.Myr);
 
-    public static readonly Currency Mzn = Custom(Values.Mzn);
+    public static readonly Currency Mzn = new(Values.Mzn);
 
-    public static readonly Currency Nad = Custom(Values.Nad);
+    public static readonly Currency Nad = new(Values.Nad);
 
-    public static readonly Currency Ngn = Custom(Values.Ngn);
+    public static readonly Currency Ngn = new(Values.Ngn);
 
-    public static readonly Currency Nio = Custom(Values.Nio);
+    public static readonly Currency Nio = new(Values.Nio);
 
-    public static readonly Currency Nok = Custom(Values.Nok);
+    public static readonly Currency Nok = new(Values.Nok);
 
-    public static readonly Currency Npr = Custom(Values.Npr);
+    public static readonly Currency Npr = new(Values.Npr);
 
-    public static readonly Currency Nzd = Custom(Values.Nzd);
+    public static readonly Currency Nzd = new(Values.Nzd);
 
-    public static readonly Currency Omr = Custom(Values.Omr);
+    public static readonly Currency Omr = new(Values.Omr);
 
-    public static readonly Currency Pab = Custom(Values.Pab);
+    public static readonly Currency Pab = new(Values.Pab);
 
-    public static readonly Currency Pen = Custom(Values.Pen);
+    public static readonly Currency Pen = new(Values.Pen);
 
-    public static readonly Currency Pgk = Custom(Values.Pgk);
+    public static readonly Currency Pgk = new(Values.Pgk);
 
-    public static readonly Currency Php = Custom(Values.Php);
+    public static readonly Currency Php = new(Values.Php);
 
-    public static readonly Currency Pkr = Custom(Values.Pkr);
+    public static readonly Currency Pkr = new(Values.Pkr);
 
-    public static readonly Currency Pln = Custom(Values.Pln);
+    public static readonly Currency Pln = new(Values.Pln);
 
-    public static readonly Currency Pyg = Custom(Values.Pyg);
+    public static readonly Currency Pyg = new(Values.Pyg);
 
-    public static readonly Currency Qar = Custom(Values.Qar);
+    public static readonly Currency Qar = new(Values.Qar);
 
-    public static readonly Currency Ron = Custom(Values.Ron);
+    public static readonly Currency Ron = new(Values.Ron);
 
-    public static readonly Currency Rsd = Custom(Values.Rsd);
+    public static readonly Currency Rsd = new(Values.Rsd);
 
-    public static readonly Currency Rub = Custom(Values.Rub);
+    public static readonly Currency Rub = new(Values.Rub);
 
-    public static readonly Currency Rwf = Custom(Values.Rwf);
+    public static readonly Currency Rwf = new(Values.Rwf);
 
-    public static readonly Currency Sar = Custom(Values.Sar);
+    public static readonly Currency Sar = new(Values.Sar);
 
-    public static readonly Currency Sbd = Custom(Values.Sbd);
+    public static readonly Currency Sbd = new(Values.Sbd);
 
-    public static readonly Currency Scr = Custom(Values.Scr);
+    public static readonly Currency Scr = new(Values.Scr);
 
-    public static readonly Currency Sdg = Custom(Values.Sdg);
+    public static readonly Currency Sdg = new(Values.Sdg);
 
-    public static readonly Currency Sek = Custom(Values.Sek);
+    public static readonly Currency Sek = new(Values.Sek);
 
-    public static readonly Currency Sgd = Custom(Values.Sgd);
+    public static readonly Currency Sgd = new(Values.Sgd);
 
-    public static readonly Currency Shp = Custom(Values.Shp);
+    public static readonly Currency Shp = new(Values.Shp);
 
-    public static readonly Currency Sll = Custom(Values.Sll);
+    public static readonly Currency Sll = new(Values.Sll);
 
-    public static readonly Currency Sos = Custom(Values.Sos);
+    public static readonly Currency Sos = new(Values.Sos);
 
-    public static readonly Currency Srd = Custom(Values.Srd);
+    public static readonly Currency Srd = new(Values.Srd);
 
-    public static readonly Currency Ssp = Custom(Values.Ssp);
+    public static readonly Currency Ssp = new(Values.Ssp);
 
-    public static readonly Currency Std = Custom(Values.Std);
+    public static readonly Currency Std = new(Values.Std);
 
-    public static readonly Currency Stn = Custom(Values.Stn);
+    public static readonly Currency Stn = new(Values.Stn);
 
-    public static readonly Currency Svc = Custom(Values.Svc);
+    public static readonly Currency Svc = new(Values.Svc);
 
-    public static readonly Currency Syp = Custom(Values.Syp);
+    public static readonly Currency Syp = new(Values.Syp);
 
-    public static readonly Currency Szl = Custom(Values.Szl);
+    public static readonly Currency Szl = new(Values.Szl);
 
-    public static readonly Currency Thb = Custom(Values.Thb);
+    public static readonly Currency Thb = new(Values.Thb);
 
-    public static readonly Currency Tjs = Custom(Values.Tjs);
+    public static readonly Currency Tjs = new(Values.Tjs);
 
-    public static readonly Currency Tmt = Custom(Values.Tmt);
+    public static readonly Currency Tmt = new(Values.Tmt);
 
-    public static readonly Currency Tnd = Custom(Values.Tnd);
+    public static readonly Currency Tnd = new(Values.Tnd);
 
-    public static readonly Currency Top = Custom(Values.Top);
+    public static readonly Currency Top = new(Values.Top);
 
-    public static readonly Currency Try = Custom(Values.Try);
+    public static readonly Currency Try = new(Values.Try);
 
-    public static readonly Currency Ttd = Custom(Values.Ttd);
+    public static readonly Currency Ttd = new(Values.Ttd);
 
-    public static readonly Currency Twd = Custom(Values.Twd);
+    public static readonly Currency Twd = new(Values.Twd);
 
-    public static readonly Currency Tzs = Custom(Values.Tzs);
+    public static readonly Currency Tzs = new(Values.Tzs);
 
-    public static readonly Currency Uah = Custom(Values.Uah);
+    public static readonly Currency Uah = new(Values.Uah);
 
-    public static readonly Currency Ugx = Custom(Values.Ugx);
+    public static readonly Currency Ugx = new(Values.Ugx);
 
-    public static readonly Currency Usd = Custom(Values.Usd);
+    public static readonly Currency Usd = new(Values.Usd);
 
-    public static readonly Currency Usn = Custom(Values.Usn);
+    public static readonly Currency Usn = new(Values.Usn);
 
-    public static readonly Currency Uss = Custom(Values.Uss);
+    public static readonly Currency Uss = new(Values.Uss);
 
-    public static readonly Currency Uyi = Custom(Values.Uyi);
+    public static readonly Currency Uyi = new(Values.Uyi);
 
-    public static readonly Currency Uyu = Custom(Values.Uyu);
+    public static readonly Currency Uyu = new(Values.Uyu);
 
-    public static readonly Currency Uzs = Custom(Values.Uzs);
+    public static readonly Currency Uzs = new(Values.Uzs);
 
-    public static readonly Currency Vef = Custom(Values.Vef);
+    public static readonly Currency Vef = new(Values.Vef);
 
-    public static readonly Currency Ves = Custom(Values.Ves);
+    public static readonly Currency Ves = new(Values.Ves);
 
-    public static readonly Currency Vnd = Custom(Values.Vnd);
+    public static readonly Currency Vnd = new(Values.Vnd);
 
-    public static readonly Currency Vuv = Custom(Values.Vuv);
+    public static readonly Currency Vuv = new(Values.Vuv);
 
-    public static readonly Currency Wst = Custom(Values.Wst);
+    public static readonly Currency Wst = new(Values.Wst);
 
-    public static readonly Currency Xaf = Custom(Values.Xaf);
+    public static readonly Currency Xaf = new(Values.Xaf);
 
-    public static readonly Currency Xcd = Custom(Values.Xcd);
+    public static readonly Currency Xcd = new(Values.Xcd);
 
-    public static readonly Currency Xof = Custom(Values.Xof);
+    public static readonly Currency Xof = new(Values.Xof);
 
-    public static readonly Currency Xpf = Custom(Values.Xpf);
+    public static readonly Currency Xpf = new(Values.Xpf);
 
-    public static readonly Currency Yer = Custom(Values.Yer);
+    public static readonly Currency Yer = new(Values.Yer);
 
-    public static readonly Currency Zar = Custom(Values.Zar);
+    public static readonly Currency Zar = new(Values.Zar);
 
-    public static readonly Currency Zmw = Custom(Values.Zmw);
+    public static readonly Currency Zmw = new(Values.Zmw);
 
-    public static readonly Currency Zwl = Custom(Values.Zwl);
+    public static readonly Currency Zwl = new(Values.Zwl);
 
     public Currency(string value)
     {
@@ -361,7 +361,7 @@ public readonly record struct Currency : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static Currency Custom(string value)
+    public static Currency FromCustom(string value)
     {
         return new Currency(value);
     }
@@ -382,6 +382,10 @@ public readonly record struct Currency : IStringEnum
     public static bool operator ==(Currency value1, string value2) => value1.Value.Equals(value2);
 
     public static bool operator !=(Currency value1, string value2) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(Currency value) => value.Value;
+
+    public static explicit operator Currency(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

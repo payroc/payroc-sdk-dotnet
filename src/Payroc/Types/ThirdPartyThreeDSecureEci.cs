@@ -6,11 +6,11 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<ThirdPartyThreeDSecureEci>))]
 public readonly record struct ThirdPartyThreeDSecureEci : IStringEnum
 {
-    public static readonly ThirdPartyThreeDSecureEci FullyAuthenticated = Custom(
+    public static readonly ThirdPartyThreeDSecureEci FullyAuthenticated = new(
         Values.FullyAuthenticated
     );
 
-    public static readonly ThirdPartyThreeDSecureEci AttemptedAuthentication = Custom(
+    public static readonly ThirdPartyThreeDSecureEci AttemptedAuthentication = new(
         Values.AttemptedAuthentication
     );
 
@@ -27,7 +27,7 @@ public readonly record struct ThirdPartyThreeDSecureEci : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ThirdPartyThreeDSecureEci Custom(string value)
+    public static ThirdPartyThreeDSecureEci FromCustom(string value)
     {
         return new ThirdPartyThreeDSecureEci(value);
     }
@@ -50,6 +50,10 @@ public readonly record struct ThirdPartyThreeDSecureEci : IStringEnum
 
     public static bool operator !=(ThirdPartyThreeDSecureEci value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(ThirdPartyThreeDSecureEci value) => value.Value;
+
+    public static explicit operator ThirdPartyThreeDSecureEci(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

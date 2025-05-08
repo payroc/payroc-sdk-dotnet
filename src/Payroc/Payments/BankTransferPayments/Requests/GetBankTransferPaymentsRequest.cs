@@ -11,6 +11,7 @@ public record GetBankTransferPaymentsRequest
     [JsonIgnore]
     public required string PaymentId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

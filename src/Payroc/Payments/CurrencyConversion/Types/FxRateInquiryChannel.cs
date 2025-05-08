@@ -6,11 +6,11 @@ namespace Payroc.Payments.CurrencyConversion;
 [JsonConverter(typeof(StringEnumSerializer<FxRateInquiryChannel>))]
 public readonly record struct FxRateInquiryChannel : IStringEnum
 {
-    public static readonly FxRateInquiryChannel Pos = Custom(Values.Pos);
+    public static readonly FxRateInquiryChannel Pos = new(Values.Pos);
 
-    public static readonly FxRateInquiryChannel Web = Custom(Values.Web);
+    public static readonly FxRateInquiryChannel Web = new(Values.Web);
 
-    public static readonly FxRateInquiryChannel Moto = Custom(Values.Moto);
+    public static readonly FxRateInquiryChannel Moto = new(Values.Moto);
 
     public FxRateInquiryChannel(string value)
     {
@@ -25,7 +25,7 @@ public readonly record struct FxRateInquiryChannel : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static FxRateInquiryChannel Custom(string value)
+    public static FxRateInquiryChannel FromCustom(string value)
     {
         return new FxRateInquiryChannel(value);
     }
@@ -48,6 +48,10 @@ public readonly record struct FxRateInquiryChannel : IStringEnum
 
     public static bool operator !=(FxRateInquiryChannel value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(FxRateInquiryChannel value) => value.Value;
+
+    public static explicit operator FxRateInquiryChannel(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

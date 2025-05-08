@@ -14,6 +14,7 @@ public record CreateReminderProcessingAccountsRequest
     [JsonIgnore]
     public required CreateReminderProcessingAccountsRequestBody Body { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

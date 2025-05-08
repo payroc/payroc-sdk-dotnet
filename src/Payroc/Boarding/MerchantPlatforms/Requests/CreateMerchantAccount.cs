@@ -28,6 +28,7 @@ public record CreateMerchantAccount
     [JsonPropertyName("metadata")]
     public Dictionary<string, string>? Metadata { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

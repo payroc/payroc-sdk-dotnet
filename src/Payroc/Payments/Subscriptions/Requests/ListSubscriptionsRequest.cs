@@ -79,6 +79,7 @@ public record ListSubscriptionsRequest
     [JsonIgnore]
     public required string IdempotencyKey { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

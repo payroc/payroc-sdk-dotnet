@@ -6,13 +6,13 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<SecurityCheckCvvResult>))]
 public readonly record struct SecurityCheckCvvResult : IStringEnum
 {
-    public static readonly SecurityCheckCvvResult M = Custom(Values.M);
+    public static readonly SecurityCheckCvvResult M = new(Values.M);
 
-    public static readonly SecurityCheckCvvResult N = Custom(Values.N);
+    public static readonly SecurityCheckCvvResult N = new(Values.N);
 
-    public static readonly SecurityCheckCvvResult P = Custom(Values.P);
+    public static readonly SecurityCheckCvvResult P = new(Values.P);
 
-    public static readonly SecurityCheckCvvResult U = Custom(Values.U);
+    public static readonly SecurityCheckCvvResult U = new(Values.U);
 
     public SecurityCheckCvvResult(string value)
     {
@@ -27,7 +27,7 @@ public readonly record struct SecurityCheckCvvResult : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static SecurityCheckCvvResult Custom(string value)
+    public static SecurityCheckCvvResult FromCustom(string value)
     {
         return new SecurityCheckCvvResult(value);
     }
@@ -50,6 +50,10 @@ public readonly record struct SecurityCheckCvvResult : IStringEnum
 
     public static bool operator !=(SecurityCheckCvvResult value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(SecurityCheckCvvResult value) => value.Value;
+
+    public static explicit operator SecurityCheckCvvResult(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

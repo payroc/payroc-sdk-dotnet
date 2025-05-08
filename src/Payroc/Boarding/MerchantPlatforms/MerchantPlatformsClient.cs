@@ -46,9 +46,9 @@ public partial class MerchantPlatformsClient
                     _query["limit"] = request.Limit.Value.ToString();
                 }
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
                         Path = "merchant-platforms",
                         Query = _query,
@@ -113,13 +113,13 @@ public partial class MerchantPlatformsClient
     /// <summary>
     /// Use this method to create the entity that represents a business, including its legal information and all its processing accounts.
     ///
-    /// > **Note**: To add a processing account to an existing merchant platform, go to [Create a processing account](#createProcessingAccount).
+    /// &gt; **Note**: To add a processing account to an existing merchant platform, go to [Create a processing account](#createProcessingAccount).
     ///
     /// The response contains some fields that we require for other methods:
     /// - **merchantPlatformId** - Unique identifier that we assign to the merchant platform. Use the merchantPlatformId to retrieve and update information about the merchant platform.
     ///
     /// - **processingAccountId**- Unique identifier that we assign to each processing account. Use the processingAccountId to retrieve and update information about the processing account.
-    ///   <br/>
+    ///   &lt;br/&gt;
     /// For more information about how to create a merchant platform, go to [Create a merchant platform.](/guides/integrate/boarding/merchant-platform)
     /// </summary>
     /// <example><code>
@@ -379,9 +379,9 @@ public partial class MerchantPlatformsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
                             Path = "merchant-platforms",
                             Body = request,
@@ -472,12 +472,14 @@ public partial class MerchantPlatformsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"merchant-platforms/{JsonUtils.SerializeAsString(request.MerchantPlatformId)}",
+                            Path = string.Format(
+                                "merchant-platforms/{0}",
+                                ValueConvert.ToPathParameterString(request.MerchantPlatformId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -547,7 +549,7 @@ public partial class MerchantPlatformsClient
     ///
     /// When you created the merchant platform, we sent you its merchantPlatformId in the response. Send this merchantPlatformId as a path parameter in your endpoint.
     ///
-    /// > **Note**: By default, we return only open processing accounts. To include closed processing accounts, send a value of `true` for the includeClosed query parameter.
+    /// &gt; **Note**: By default, we return only open processing accounts. To include closed processing accounts, send a value of `true` for the includeClosed query parameter.
     /// </summary>
     /// <example><code>
     /// await client.Boarding.MerchantPlatforms.ListProcessingAccountsAsync(
@@ -586,12 +588,14 @@ public partial class MerchantPlatformsClient
                     _query["includeClosed"] = JsonUtils.Serialize(request.IncludeClosed.Value);
                 }
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
-                        Path =
-                            $"merchant-platforms/{JsonUtils.SerializeAsString(request.MerchantPlatformId)}/processing-accounts",
+                        Path = string.Format(
+                            "merchant-platforms/{0}/processing-accounts",
+                            ValueConvert.ToPathParameterString(request.MerchantPlatformId)
+                        ),
                         Query = _query,
                         Options = options,
                     }
@@ -657,7 +661,7 @@ public partial class MerchantPlatformsClient
 
     /// <summary>
     /// Use this method to create a processing account and add it to a merchant platform.
-    ///     > **Note**: You can create and add a processing account only to an existing merchant platform. If you have not already created a merchant platform, go to [Create a merchant platform.](#createMerchant)
+    ///     &gt; **Note**: You can create and add a processing account only to an existing merchant platform. If you have not already created a merchant platform, go to [Create a merchant platform.](#createMerchant)
     ///
     /// In the response we return a processingAccountId for the processing account, which you need for the following methods.
     /// - [Retrieve processing account](#getProcessingAcccounts)
@@ -888,12 +892,14 @@ public partial class MerchantPlatformsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"merchant-platforms/{JsonUtils.SerializeAsString(request.MerchantPlatformId)}/processing-accounts",
+                            Path = string.Format(
+                                "merchant-platforms/{0}/processing-accounts",
+                                ValueConvert.ToPathParameterString(request.MerchantPlatformId)
+                            ),
                             Body = request.Body,
                             Headers = _headers,
                             ContentType = "application/json",

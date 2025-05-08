@@ -67,12 +67,14 @@ public partial class SingleUseTokensClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/single-use-tokens",
+                            Path = string.Format(
+                                "processing-terminals/{0}/single-use-tokens",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId)
+                            ),
                             Body = request,
                             Headers = _headers,
                             ContentType = "application/json",

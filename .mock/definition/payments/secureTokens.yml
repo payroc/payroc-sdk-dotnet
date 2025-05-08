@@ -1,0 +1,930 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /processing-terminals/{processingTerminalId}/secure-tokens
+      method: GET
+      auth: true
+      docs: Return a list of secure tokens that are currently saved on the terminal.
+      pagination:
+        type: custom
+        results: $response.data
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+      display-name: List secure tokens
+      request:
+        name: ListSecureTokensRequest
+        path-parameters:
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that our gateway assigned to the terminal.
+        query-parameters:
+          secureTokenId:
+            type: optional<string>
+            docs: Filter by the unique secure token.
+            validation:
+              minLength: 1
+              maxLength: 200
+          customerName:
+            type: optional<string>
+            docs: Filter by the customer's name.
+            validation:
+              minLength: 1
+              maxLength: 50
+          phone:
+            type: optional<string>
+            docs: Filter by the customer's phone number.
+            validation:
+              minLength: 1
+              maxLength: 15
+          email:
+            type: optional<string>
+            docs: Filter by the customer's email address.
+            validation:
+              minLength: 1
+              maxLength: 100
+          token:
+            type: optional<string>
+            docs: >-
+              Filter by the token that the merchant used in a transaction to
+              represent the customer's payment details.
+            validation:
+              minLength: 12
+              maxLength: 19
+          first6:
+            type: optional<string>
+            docs: Filter by the first six digits of the card number.
+            validation:
+              pattern: '[0-9]{6}'
+          last4:
+            type: optional<string>
+            docs: Filter by the last four digits of the card or account number.
+            validation:
+              pattern: '[0-9]{4}'
+          before:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results before. Typically, this is the first resource on the
+              previous page.
+          after:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results after. Typically, this is the last resource on the
+              previous page.
+          limit:
+            type: optional<integer>
+            default: 10
+            docs: States the total amount of results the response is limited to.
+            validation:
+              max: 100
+      response:
+        docs: >-
+          Successful request. Returns a list of secure tokens that are currently
+          saved on the terminal.
+        type: root.SecureTokenPaginatedList
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Paginated Secure Token
+          path-parameters:
+            processingTerminalId: '1234001'
+          query-parameters:
+            secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+            customerName: Sarah%20Hazel%20Hopper
+            phone: '2025550165'
+            email: sarah.hopper@example.com
+            token: '296753123456'
+            first6: '453985'
+            last4: '7062'
+            before: '2571'
+            after: '8516'
+          response:
+            body:
+              limit: 2
+              count: 2
+              hasMore: true
+              links:
+                - rel: next
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/processing-terminals/1234001/secure-tokens?limit=2&after=MREF_fe0d9876-cba5-432f-e10d-9cb87654a3f2e1
+                - rel: previous
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/processing-terminals/1234001/secure-tokens?limit=2&before=MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+              data:
+                - secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  processingTerminalId: '1234001'
+                  mitAgreement: unscheduled
+                  customer:
+                    firstName: Sarah
+                    lastName: Hopper
+                    dateOfBirth: '1990-07-15'
+                    referenceNumber: Customer-12
+                    billingAddress:
+                      address1: 1 Example Ave.
+                      address2: Example Address Line 2
+                      address3: Example Address Line 3
+                      city: Chicago
+                      state: Illinois
+                      country: US
+                      postalCode: '60056'
+                    shippingAddress:
+                      recipientName: Sarah Hopper
+                      address:
+                        address1: 1 Example Ave.
+                        address2: Example Address Line 2
+                        address3: Example Address Line 3
+                        city: Chicago
+                        state: Illinois
+                        country: US
+                        postalCode: '60056'
+                    contactMethods:
+                      - value: jane.doe@example.com
+                        type: email
+                  source:
+                    cardholderName: Sarah Hazel Hopper
+                    cardNumber: '4539858876047062'
+                    expiryDate: '1225'
+                    surcharging:
+                      allowed: true
+                      amount: 87
+                      percentage: 3
+                      disclosure: A 3% surcharge is applied to cover processing fees.
+                    type: card
+                  token: '296753123456'
+                  status: notValidated
+                  customFields:
+                    - name: yourCustomField
+                      value: abc123
+                - secureTokenId: MREF_fe0d9876-cba5-432f-e10d-9cb87654a3f2e1
+                  processingTerminalId: '1234001'
+                  mitAgreement: unscheduled
+                  customer:
+                    firstName: Sarah
+                    lastName: Hopper
+                    dateOfBirth: '1990-07-15'
+                    referenceNumber: Customer-12
+                    billingAddress:
+                      address1: 1 Example Ave.
+                      address2: Example Address Line 2
+                      address3: Example Address Line 3
+                      city: Chicago
+                      state: Illinois
+                      country: US
+                      postalCode: '60056'
+                    shippingAddress:
+                      recipientName: Sarah Hopper
+                      address:
+                        address1: 1 Example Ave.
+                        address2: Example Address Line 2
+                        address3: Example Address Line 3
+                        city: Chicago
+                        state: Illinois
+                        country: US
+                        postalCode: '60056'
+                    contactMethods:
+                      - value: jane.doe@example.com
+                        type: email
+                  source:
+                    cardholderName: Sarah Hazel Hopper
+                    cardNumber: '4539858876047062'
+                    expiryDate: '1225'
+                    surcharging:
+                      allowed: true
+                      amount: 87
+                      percentage: 3
+                      disclosure: A 3% surcharge is applied to cover processing fees.
+                    type: card
+                  token: '307864234567'
+                  status: notValidated
+                  customFields:
+                    - name: yourCustomField
+                      value: abc123
+        - name: No records found
+          path-parameters:
+            processingTerminalId: '1234001'
+          query-parameters:
+            secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+            customerName: Sarah%20Hazel%20Hopper
+            phone: '2025550165'
+            email: sarah.hopper@example.com
+            token: '296753123456'
+            first6: '453985'
+            last4: '7062'
+            before: '2571'
+            after: '8516'
+          response:
+            body:
+              limit: 10
+              count: 0
+              hasMore: false
+              links:
+                - rel: previous
+                  method: get
+                  href: <uri>
+                - rel: next
+                  method: get
+                  href: <uri>
+              data:
+                - secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  processingTerminalId: '1234001'
+                  mitAgreement: unscheduled
+                  customer:
+                    firstName: Sarah
+                    lastName: Hopper
+                    dateOfBirth: '1990-07-15'
+                    referenceNumber: CustomerCode234567
+                    billingAddress:
+                      address1: 1 Example Ave.
+                      address2: Example Address Line 2
+                      address3: Example Address Line 3
+                      city: Chicago
+                      state: Illinois
+                      country: US
+                      postalCode: '60056'
+                    contactMethods:
+                      - value: jane.doe@example.com
+                        type: email
+                  source:
+                    nameOnAccount: Sarah Hazel Hopper
+                    accountNumber: '123456789'
+                    routingNumber: '123456789'
+                    type: ach
+                  token: '296753123456'
+                  status: notValidated
+                  customFields:
+                    - name: yourCustomField
+                      value: abc123
+    create:
+      path: /processing-terminals/{processingTerminalId}/secure-tokens
+      method: POST
+      auth: true
+      docs: Save the customer's payment details to use in future transactions.
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+      display-name: Create secure token
+      request:
+        name: TokenizationRequest
+        path-parameters:
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that our gateway assigned to the terminal.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+        body:
+          properties:
+            secureTokenId:
+              type: optional<string>
+              docs: >
+                Unique identifier that the merchant created for the secure token
+                that represents the customer's payment details. 
+
+                If the merchant doesn't create a secureTokenId, the gateway
+                generates one and returns it in the response.
+              validation:
+                minLength: 1
+                maxLength: 200
+            operator:
+              type: optional<string>
+              docs: Operator who saved the customer's payment details.
+              validation:
+                minLength: 1
+                maxLength: 50
+            mitAgreement:
+              type: optional<TokenizationRequestMitAgreement>
+              docs: >
+                Indicates how the merchant can use the customer's card details,
+                as agreed by the customer:  
+
+
+                - `unscheduled` - Transactions for a fixed or variable amount
+                that are run at a certain pre-defined event.  
+
+                - `recurring` - Transactions for a fixed amount that are run at
+                regular intervals, for example, monthly. Recurring transactions
+                don't have a fixed duration and run until the customer cancels
+                the agreement.  
+
+                - `installment` - Transactions for a fixed amount that are run
+                at regular intervals, for example, monthly. Installment
+                transactions have a fixed duration.
+            customer: optional<root.Customer>
+            ipAddress: optional<root.IpAddress>
+            source:
+              type: TokenizationRequestSource
+              docs: >-
+                Object that contains information about the payment method to
+                tokenize.
+            threeDSecure:
+              type: optional<TokenizationRequestThreeDSecure>
+              docs: >-
+                Object that contains information for an authentication check on
+                the customer's payment details using the 3-D Secure protocol.
+            customFields:
+              type: optional<list<root.CustomField>>
+              docs: |
+                Array of customField objects.
+        content-type: application/json
+      response:
+        docs: >-
+          Successful request. We created a secure token that represents your
+          customer's payment details.
+        type: root.SecureToken
+        status-code: 201
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Secure Token
+          path-parameters:
+            processingTerminalId: '1234001'
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            operator: Jane
+            mitAgreement: unscheduled
+            customer:
+              firstName: Sarah
+              lastName: Hopper
+              dateOfBirth: '1990-07-15'
+              referenceNumber: Customer-12
+              billingAddress:
+                address1: 1 Example Ave.
+                address2: Example Address Line 2
+                address3: Example Address Line 3
+                city: Chicago
+                state: Illinois
+                country: US
+                postalCode: '60056'
+              shippingAddress:
+                recipientName: Sarah Hopper
+                address:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+              contactMethods:
+                - value: jane.doe@example.com
+                  type: email
+              notificationLanguage: en
+            ipAddress:
+              type: ipv4
+              value: 104.18.24.203
+            source:
+              cardDetails:
+                device:
+                  model: bbposChp
+                  serialNumber: PAX123456789
+                rawData: >-
+                  A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+                entryMethod: raw
+              type: card
+            customFields:
+              - name: yourCustomField
+                value: abc123
+          response:
+            body:
+              secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+              processingTerminalId: '1234001'
+              mitAgreement: unscheduled
+              customer:
+                firstName: Sarah
+                lastName: Hopper
+                dateOfBirth: '1990-07-15'
+                referenceNumber: Customer-12
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+                shippingAddress:
+                  recipientName: Sarah Hopper
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                contactMethods:
+                  - value: jane.doe@example.com
+                    type: email
+                notificationLanguage: en
+              source:
+                cardholderName: Sarah Hazel Hopper
+                cardNumber: '4539858876047062'
+                expiryDate: '1225'
+                cardType: cardType
+                currency: AED
+                debit: true
+                surcharging:
+                  allowed: true
+                  amount: 87
+                  percentage: 3
+                  disclosure: A 3% surcharge is applied to cover processing fees.
+                type: card
+              token: '296753123456'
+              status: notValidated
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+    get:
+      path: >-
+        /processing-terminals/{processingTerminalId}/secure-tokens/{secureTokenId}
+      method: GET
+      auth: true
+      docs: Return a secure token and its related payment details.
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+      display-name: Retrieve secure token
+      request:
+        name: GetSecureTokensRequest
+        path-parameters:
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that our gateway assigned to the terminal.
+          secureTokenId:
+            type: string
+            docs: Filter by the unique secure token.
+      response:
+        docs: >-
+          Successful request. Returns the secure token and its related payment
+          details.
+        type: root.SecureToken
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Secure Token
+          path-parameters:
+            processingTerminalId: '1234001'
+            secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+          response:
+            body:
+              secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+              processingTerminalId: '1234001'
+              mitAgreement: unscheduled
+              customer:
+                firstName: Sarah
+                lastName: Hopper
+                dateOfBirth: '1990-07-15'
+                referenceNumber: Customer-12
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+                shippingAddress:
+                  recipientName: Sarah Hopper
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                contactMethods:
+                  - value: jane.doe@example.com
+                    type: email
+                notificationLanguage: en
+              source:
+                cardholderName: Sarah Hazel Hopper
+                cardNumber: '4539858876047062'
+                expiryDate: '1225'
+                cardType: cardType
+                currency: AED
+                debit: true
+                surcharging:
+                  allowed: true
+                  amount: 87
+                  percentage: 3
+                  disclosure: A 3% surcharge is applied to cover processing fees.
+                type: card
+              token: '296753123456'
+              status: notValidated
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+    delete:
+      path: >-
+        /processing-terminals/{processingTerminalId}/secure-tokens/{secureTokenId}
+      method: DELETE
+      auth: true
+      docs: |
+        Delete a secure token and its represented payment details.  
+        **Note**: If you delete a token, you can't reuse its identifier.
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+      display-name: Delete secure token
+      request:
+        name: DeleteSecureTokensRequest
+        path-parameters:
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that our gateway assigned to the terminal.
+          secureTokenId:
+            type: string
+            docs: Filter by the unique secure token.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            processingTerminalId: '1234001'
+            secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+    update:
+      path: >-
+        /processing-terminals/{processingTerminalId}/secure-tokens/{secureTokenId}
+      method: PATCH
+      auth: true
+      docs: >
+        Update the customer's payment details that are represented by the secure
+        token.  
+
+
+        Structure your request to follow the RFC 6902 standard.
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+      display-name: Update secure token
+      request:
+        body: root.PatchRequest
+        path-parameters:
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that our gateway assigned to the terminal.
+          secureTokenId:
+            type: string
+            docs: Filter by the unique secure token.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+        name: UpdateSecureTokensRequest
+        content-type: application/json
+      response:
+        docs: Successful request. We updated the customer's payment details.
+        type: root.SecureToken
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Partially update secure token
+          path-parameters:
+            processingTerminalId: '1234001'
+            secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            - path: path
+              op: remove
+            - path: path
+              op: remove
+            - path: path
+              op: remove
+          response:
+            body:
+              secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+              processingTerminalId: '1234001'
+              mitAgreement: unscheduled
+              customer:
+                firstName: Sarah
+                lastName: Hopper
+                dateOfBirth: '1990-07-15'
+                referenceNumber: Customer-12
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+                shippingAddress:
+                  recipientName: Sarah Hopper
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                contactMethods:
+                  - value: jane.doe@example.com
+                    type: email
+                notificationLanguage: en
+              source:
+                cardholderName: Sarah Hazel Hopper
+                cardNumber: '4539858876047062'
+                expiryDate: '1225'
+                cardType: cardType
+                currency: AED
+                debit: true
+                surcharging:
+                  allowed: true
+                  amount: 87
+                  percentage: 3
+                  disclosure: A 3% surcharge is applied to cover processing fees.
+                type: card
+              token: '296753123456'
+              status: notValidated
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+        - name: Example patch operations that apply the RFC 6902 standard
+          path-parameters:
+            processingTerminalId: '1234001'
+            secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            - path: path
+              op: remove
+            - path: path
+              op: remove
+            - path: path
+              op: remove
+            - from: from
+              path: path
+              op: move
+            - from: from
+              path: path
+              op: copy
+            - path: path
+              op: remove
+          response:
+            body:
+              secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+              processingTerminalId: '1234001'
+              mitAgreement: unscheduled
+              customer:
+                firstName: Sarah
+                lastName: Hopper
+                dateOfBirth: '1990-07-15'
+                referenceNumber: Customer-12
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+                shippingAddress:
+                  recipientName: Sarah Hopper
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                contactMethods:
+                  - value: jane.doe@example.com
+                    type: email
+                notificationLanguage: en
+              source:
+                cardholderName: Sarah Hazel Hopper
+                cardNumber: '4539858876047062'
+                expiryDate: '1225'
+                cardType: cardType
+                currency: AED
+                debit: true
+                surcharging:
+                  allowed: true
+                  amount: 87
+                  percentage: 3
+                  disclosure: A 3% surcharge is applied to cover processing fees.
+                type: card
+              token: '296753123456'
+              status: notValidated
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+    accountUpdate:
+      path: >-
+        /processing-terminals/{processingTerminalId}/secure-tokens/{secureTokenId}/update-account
+      method: POST
+      auth: true
+      docs: >
+        If you have a single-use token, use this method to update payment
+        details that are represented by a secure token.
+
+
+        If you don’t have a single-use token, and you want to update payment
+        details represented by a secure token, go to 
+
+        [updateSecureToken](https://docs.payroc.com/api/resources#updateSecureToken).
+
+
+        **Note**: For more information about tokenization, go to
+        [tokenization](https://docs.payroc.com/knowledge/basic-concepts/tokenization).
+      source:
+        openapi: openapi/external/universal-api-v1.yaml
+      display-name: Update account details
+      request:
+        body: root.AccountUpdate
+        path-parameters:
+          secureTokenId:
+            type: string
+            docs: Unique identifier that the merchant assigned to the secure token.
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that our gateway assigned to the terminal.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+        name: AccountUpdateSecureTokensRequest
+        content-type: application/json
+      response:
+        docs: >-
+          Successful request. We updated the payment details represented by the
+          secure token.
+        type: root.SecureToken
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.ContentTooLargeError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Secure Token
+          path-parameters:
+            secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+            processingTerminalId: '1234001'
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            token: >-
+              abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890
+            type: singleUseToken
+          response:
+            body:
+              secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+              processingTerminalId: '1234001'
+              mitAgreement: unscheduled
+              customer:
+                firstName: Sarah
+                lastName: Hopper
+                dateOfBirth: '1990-07-15'
+                referenceNumber: Customer-12
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+                shippingAddress:
+                  recipientName: Sarah Hopper
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                contactMethods:
+                  - value: jane.doe@example.com
+                    type: email
+                notificationLanguage: en
+              source:
+                cardholderName: Sarah Hazel Hopper
+                cardNumber: '4539858876047062'
+                expiryDate: '1225'
+                cardType: cardType
+                currency: AED
+                debit: true
+                surcharging:
+                  allowed: true
+                  amount: 87
+                  percentage: 3
+                  disclosure: A 3% surcharge is applied to cover processing fees.
+                type: card
+              token: '296753123456'
+              status: notValidated
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+  source:
+    openapi: openapi/external/universal-api-v1.yaml
+types:
+  TokenizationRequestMitAgreement:
+    enum:
+      - unscheduled
+      - recurring
+      - installment
+    docs: >
+      Indicates how the merchant can use the customer's card details, as agreed
+      by the customer:  
+
+
+      - `unscheduled` - Transactions for a fixed or variable amount that are run
+      at a certain pre-defined event.  
+
+      - `recurring` - Transactions for a fixed amount that are run at regular
+      intervals, for example, monthly. Recurring transactions don't have a fixed
+      duration and run until the customer cancels the agreement.  
+
+      - `installment` - Transactions for a fixed amount that are run at regular
+      intervals, for example, monthly. Installment transactions have a fixed
+      duration.
+    inline: true
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+  TokenizationRequestSource:
+    discriminant: type
+    base-properties: {}
+    docs: Object that contains information about the payment method to tokenize.
+    union:
+      ach:
+        type: root.AchPayload
+      pad:
+        type: root.PadPayload
+      card:
+        type: root.CardPayload
+      singleUseToken:
+        type: root.SingleUseTokenPayload
+    source:
+      openapi: openapi/external/universal-api-v1.yaml
+  TokenizationRequestThreeDSecure:
+    discriminant: type
+    base-properties: {}
+    docs: >-
+      Object that contains information for an authentication check on the
+      customer's payment details using the 3-D Secure protocol.
+    union:
+      gatewayThreeDSecure:
+        type: root.GatewayThreeDSecure
+      thirdPartyThreeDSecure:
+        type: root.ThirdPartyThreeDSecure
+    source:
+      openapi: openapi/external/universal-api-v1.yaml

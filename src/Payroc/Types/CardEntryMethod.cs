@@ -6,17 +6,17 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<CardEntryMethod>))]
 public readonly record struct CardEntryMethod : IStringEnum
 {
-    public static readonly CardEntryMethod Icc = Custom(Values.Icc);
+    public static readonly CardEntryMethod Icc = new(Values.Icc);
 
-    public static readonly CardEntryMethod Keyed = Custom(Values.Keyed);
+    public static readonly CardEntryMethod Keyed = new(Values.Keyed);
 
-    public static readonly CardEntryMethod Swiped = Custom(Values.Swiped);
+    public static readonly CardEntryMethod Swiped = new(Values.Swiped);
 
-    public static readonly CardEntryMethod SwipedFallback = Custom(Values.SwipedFallback);
+    public static readonly CardEntryMethod SwipedFallback = new(Values.SwipedFallback);
 
-    public static readonly CardEntryMethod ContactlessIcc = Custom(Values.ContactlessIcc);
+    public static readonly CardEntryMethod ContactlessIcc = new(Values.ContactlessIcc);
 
-    public static readonly CardEntryMethod ContactlessMsr = Custom(Values.ContactlessMsr);
+    public static readonly CardEntryMethod ContactlessMsr = new(Values.ContactlessMsr);
 
     public CardEntryMethod(string value)
     {
@@ -31,7 +31,7 @@ public readonly record struct CardEntryMethod : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static CardEntryMethod Custom(string value)
+    public static CardEntryMethod FromCustom(string value)
     {
         return new CardEntryMethod(value);
     }
@@ -54,6 +54,10 @@ public readonly record struct CardEntryMethod : IStringEnum
 
     public static bool operator !=(CardEntryMethod value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(CardEntryMethod value) => value.Value;
+
+    public static explicit operator CardEntryMethod(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

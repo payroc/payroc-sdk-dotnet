@@ -63,6 +63,7 @@ public record PaymentInstructionRequest
     [JsonPropertyName("processAsSale")]
     public bool? ProcessAsSale { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

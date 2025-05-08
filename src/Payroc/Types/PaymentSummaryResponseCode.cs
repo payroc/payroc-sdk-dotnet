@@ -6,17 +6,17 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<PaymentSummaryResponseCode>))]
 public readonly record struct PaymentSummaryResponseCode : IStringEnum
 {
-    public static readonly PaymentSummaryResponseCode A = Custom(Values.A);
+    public static readonly PaymentSummaryResponseCode A = new(Values.A);
 
-    public static readonly PaymentSummaryResponseCode D = Custom(Values.D);
+    public static readonly PaymentSummaryResponseCode D = new(Values.D);
 
-    public static readonly PaymentSummaryResponseCode E = Custom(Values.E);
+    public static readonly PaymentSummaryResponseCode E = new(Values.E);
 
-    public static readonly PaymentSummaryResponseCode P = Custom(Values.P);
+    public static readonly PaymentSummaryResponseCode P = new(Values.P);
 
-    public static readonly PaymentSummaryResponseCode R = Custom(Values.R);
+    public static readonly PaymentSummaryResponseCode R = new(Values.R);
 
-    public static readonly PaymentSummaryResponseCode C = Custom(Values.C);
+    public static readonly PaymentSummaryResponseCode C = new(Values.C);
 
     public PaymentSummaryResponseCode(string value)
     {
@@ -31,7 +31,7 @@ public readonly record struct PaymentSummaryResponseCode : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static PaymentSummaryResponseCode Custom(string value)
+    public static PaymentSummaryResponseCode FromCustom(string value)
     {
         return new PaymentSummaryResponseCode(value);
     }
@@ -54,6 +54,10 @@ public readonly record struct PaymentSummaryResponseCode : IStringEnum
 
     public static bool operator !=(PaymentSummaryResponseCode value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(PaymentSummaryResponseCode value) => value.Value;
+
+    public static explicit operator PaymentSummaryResponseCode(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

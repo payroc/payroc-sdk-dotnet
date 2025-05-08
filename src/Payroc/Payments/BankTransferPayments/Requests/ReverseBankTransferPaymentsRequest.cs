@@ -17,6 +17,7 @@ public record ReverseBankTransferPaymentsRequest
     [JsonIgnore]
     public required string IdempotencyKey { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

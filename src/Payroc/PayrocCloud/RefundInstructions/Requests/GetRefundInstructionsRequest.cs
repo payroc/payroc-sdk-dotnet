@@ -11,6 +11,7 @@ public record GetRefundInstructionsRequest
     [JsonIgnore]
     public required string RefundInstructionId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

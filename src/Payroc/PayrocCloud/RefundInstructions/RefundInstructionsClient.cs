@@ -57,12 +57,14 @@ public partial class RefundInstructionsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"devices/{JsonUtils.SerializeAsString(request.SerialNumber)}/refund-instructions",
+                            Path = string.Format(
+                                "devices/{0}/refund-instructions",
+                                ValueConvert.ToPathParameterString(request.SerialNumber)
+                            ),
                             Body = request,
                             Headers = _headers,
                             ContentType = "application/json",
@@ -157,12 +159,14 @@ public partial class RefundInstructionsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"refund-instructions/{JsonUtils.SerializeAsString(request.RefundInstructionId)}",
+                            Path = string.Format(
+                                "refund-instructions/{0}",
+                                ValueConvert.ToPathParameterString(request.RefundInstructionId)
+                            ),
                             Options = options,
                         },
                         cancellationToken

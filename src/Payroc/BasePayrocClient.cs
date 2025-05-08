@@ -1,3 +1,4 @@
+using Payroc.Auth;
 using Payroc.Boarding;
 using Payroc.Core;
 using Payroc.Funding;
@@ -11,15 +12,18 @@ public partial class BasePayrocClient
 {
     private readonly RawClient _client;
 
-    public BasePayrocClient(string? token = null, ClientOptions? clientOptions = null)
+    public BasePayrocClient(
+        string? apiKey = null,
+        ClientOptions? clientOptions = null
+    )
     {
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
-                { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Payroc" },
                 { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Payroc/0.0.28" },
             }
         );
         clientOptions ??= new ClientOptions();
@@ -30,21 +34,31 @@ public partial class BasePayrocClient
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
+        var tokenProvider = new OAuthTokenProvider(
+            apiKey,
+            new AuthClient(new RawClient(clientOptions.Clone()))
+        );
+        clientOptions.Headers["Authorization"] = new Func<string>(() =>
+            tokenProvider.GetAccessTokenAsync().Result
+        );
         _client = new RawClient(clientOptions);
         Payments = new PaymentsClient(_client);
+        Auth = new AuthClient(_client);
         Funding = new FundingClient(_client);
         Boarding = new BoardingClient(_client);
         PayrocCloud = new PayrocCloudClient(_client);
         Reporting = new ReportingClient(_client);
     }
 
-    public PaymentsClient Payments { get; init; }
+    public PaymentsClient Payments { get; }
 
-    public FundingClient Funding { get; init; }
+    public AuthClient Auth { get; }
 
-    public BoardingClient Boarding { get; init; }
+    public FundingClient Funding { get; }
 
-    public PayrocCloudClient PayrocCloud { get; init; }
+    public BoardingClient Boarding { get; }
 
-    public ReportingClient Reporting { get; init; }
+    public PayrocCloudClient PayrocCloud { get; }
+
+    public ReportingClient Reporting { get; }
 }

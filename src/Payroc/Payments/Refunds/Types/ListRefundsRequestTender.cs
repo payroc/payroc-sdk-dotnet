@@ -6,9 +6,9 @@ namespace Payroc.Payments.Refunds;
 [JsonConverter(typeof(StringEnumSerializer<ListRefundsRequestTender>))]
 public readonly record struct ListRefundsRequestTender : IStringEnum
 {
-    public static readonly ListRefundsRequestTender Ebt = Custom(Values.Ebt);
+    public static readonly ListRefundsRequestTender Ebt = new(Values.Ebt);
 
-    public static readonly ListRefundsRequestTender CreditDebit = Custom(Values.CreditDebit);
+    public static readonly ListRefundsRequestTender CreditDebit = new(Values.CreditDebit);
 
     public ListRefundsRequestTender(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct ListRefundsRequestTender : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ListRefundsRequestTender Custom(string value)
+    public static ListRefundsRequestTender FromCustom(string value)
     {
         return new ListRefundsRequestTender(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct ListRefundsRequestTender : IStringEnum
 
     public static bool operator !=(ListRefundsRequestTender value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(ListRefundsRequestTender value) => value.Value;
+
+    public static explicit operator ListRefundsRequestTender(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

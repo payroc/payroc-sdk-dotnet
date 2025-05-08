@@ -33,6 +33,7 @@ public record CardVerificationRequest
     [JsonPropertyName("card")]
     public required CardVerificationRequestCard Card { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

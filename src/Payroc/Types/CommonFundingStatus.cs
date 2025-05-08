@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<CommonFundingStatus>))]
 public readonly record struct CommonFundingStatus : IStringEnum
 {
-    public static readonly CommonFundingStatus Enabled = Custom(Values.Enabled);
+    public static readonly CommonFundingStatus Enabled = new(Values.Enabled);
 
-    public static readonly CommonFundingStatus Disabled = Custom(Values.Disabled);
+    public static readonly CommonFundingStatus Disabled = new(Values.Disabled);
 
     public CommonFundingStatus(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct CommonFundingStatus : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static CommonFundingStatus Custom(string value)
+    public static CommonFundingStatus FromCustom(string value)
     {
         return new CommonFundingStatus(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct CommonFundingStatus : IStringEnum
 
     public static bool operator !=(CommonFundingStatus value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(CommonFundingStatus value) => value.Value;
+
+    public static explicit operator CommonFundingStatus(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

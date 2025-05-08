@@ -40,6 +40,7 @@ public record PaymentCapture
     [JsonPropertyName("breakdown")]
     public ItemizedBreakdown? Breakdown { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

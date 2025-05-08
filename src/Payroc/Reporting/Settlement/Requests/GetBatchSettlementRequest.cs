@@ -11,6 +11,7 @@ public record GetBatchSettlementRequest
     [JsonIgnore]
     public required int BatchId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

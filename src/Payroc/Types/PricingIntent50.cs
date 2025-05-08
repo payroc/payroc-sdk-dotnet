@@ -12,29 +12,29 @@ public record PricingIntent50
     /// <summary>
     /// Unique identifier of the pricing intent.
     /// </summary>
-    [JsonPropertyName("id")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("id")]
     public string? Id { get; set; }
 
     /// <summary>
     /// Creation date of the pricing intent.
     /// </summary>
-    [JsonPropertyName("createdDate")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("createdDate")]
     public DateTime? CreatedDate { get; set; }
 
     /// <summary>
     /// Date of the most recent change to the pricing intent.
     /// </summary>
-    [JsonPropertyName("lastUpdatedDate")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("lastUpdatedDate")]
     public DateTime? LastUpdatedDate { get; set; }
 
     /// <summary>
     /// Status of the pricing intent.
     /// </summary>
-    [JsonPropertyName("status")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("status")]
     public BaseIntentStatus? Status { get; set; }
 
     /// <summary>
@@ -73,10 +73,14 @@ public record PricingIntent50
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

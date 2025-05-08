@@ -9,29 +9,29 @@ public record FundingRecipient
     /// <summary>
     /// Unique identifier of the funding recipient.
     /// </summary>
-    [JsonPropertyName("recipientId")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("recipientId")]
     public int? RecipientId { get; set; }
 
     /// <summary>
     /// Indicates if we have approved the funding recipient.
     /// </summary>
-    [JsonPropertyName("status")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("status")]
     public FundingRecipientStatus? Status { get; set; }
 
     /// <summary>
     /// Date the funding recipient was created.
     /// </summary>
-    [JsonPropertyName("createdDate")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("createdDate")]
     public DateTime? CreatedDate { get; set; }
 
     /// <summary>
     /// Date the funding recipient was last modified.
     /// </summary>
-    [JsonPropertyName("lastModifiedDate")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("lastModifiedDate")]
     public DateTime? LastModifiedDate { get; set; }
 
     /// <summary>
@@ -79,26 +79,30 @@ public record FundingRecipient
     /// <summary>
     /// Array of owner objects associated with the funding recipient.
     /// </summary>
-    [JsonPropertyName("owners")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("owners")]
     public IEnumerable<FundingRecipientOwnersItem> Owners { get; set; } =
         new List<FundingRecipientOwnersItem>();
 
     /// <summary>
     /// Array of fundingAccount objects associated with the funding recipient.
     /// </summary>
-    [JsonPropertyName("fundingAccounts")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("fundingAccounts")]
     public IEnumerable<FundingRecipientFundingAccountsItem> FundingAccounts { get; set; } =
         new List<FundingRecipientFundingAccountsItem>();
 
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

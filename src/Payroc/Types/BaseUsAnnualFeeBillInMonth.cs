@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<BaseUsAnnualFeeBillInMonth>))]
 public readonly record struct BaseUsAnnualFeeBillInMonth : IStringEnum
 {
-    public static readonly BaseUsAnnualFeeBillInMonth June = Custom(Values.June);
+    public static readonly BaseUsAnnualFeeBillInMonth June = new(Values.June);
 
-    public static readonly BaseUsAnnualFeeBillInMonth December = Custom(Values.December);
+    public static readonly BaseUsAnnualFeeBillInMonth December = new(Values.December);
 
     public BaseUsAnnualFeeBillInMonth(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct BaseUsAnnualFeeBillInMonth : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static BaseUsAnnualFeeBillInMonth Custom(string value)
+    public static BaseUsAnnualFeeBillInMonth FromCustom(string value)
     {
         return new BaseUsAnnualFeeBillInMonth(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct BaseUsAnnualFeeBillInMonth : IStringEnum
 
     public static bool operator !=(BaseUsAnnualFeeBillInMonth value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(BaseUsAnnualFeeBillInMonth value) => value.Value;
+
+    public static explicit operator BaseUsAnnualFeeBillInMonth(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

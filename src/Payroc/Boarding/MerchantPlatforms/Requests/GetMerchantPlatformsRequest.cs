@@ -11,6 +11,7 @@ public record GetMerchantPlatformsRequest
     [JsonIgnore]
     public required string MerchantPlatformId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

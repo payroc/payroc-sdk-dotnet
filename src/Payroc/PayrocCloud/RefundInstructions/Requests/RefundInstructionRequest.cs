@@ -42,6 +42,7 @@ public record RefundInstructionRequest
     [JsonPropertyName("customizationOptions")]
     public CustomizationOptions? CustomizationOptions { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

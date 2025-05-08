@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<DigitalWalletPayloadAccountType>))]
 public readonly record struct DigitalWalletPayloadAccountType : IStringEnum
 {
-    public static readonly DigitalWalletPayloadAccountType Checking = Custom(Values.Checking);
+    public static readonly DigitalWalletPayloadAccountType Checking = new(Values.Checking);
 
-    public static readonly DigitalWalletPayloadAccountType Savings = Custom(Values.Savings);
+    public static readonly DigitalWalletPayloadAccountType Savings = new(Values.Savings);
 
     public DigitalWalletPayloadAccountType(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct DigitalWalletPayloadAccountType : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static DigitalWalletPayloadAccountType Custom(string value)
+    public static DigitalWalletPayloadAccountType FromCustom(string value)
     {
         return new DigitalWalletPayloadAccountType(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct DigitalWalletPayloadAccountType : IStringEnum
 
     public static bool operator !=(DigitalWalletPayloadAccountType value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(DigitalWalletPayloadAccountType value) => value.Value;
+
+    public static explicit operator DigitalWalletPayloadAccountType(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

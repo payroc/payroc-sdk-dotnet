@@ -6,12 +6,12 @@ namespace Payroc;
 
 public record FundingAccountSummary
 {
-    [JsonPropertyName("fundingAccountId")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("fundingAccountId")]
     public int? FundingAccountId { get; set; }
 
-    [JsonPropertyName("status")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("status")]
     public FundingAccountSummaryStatus? Status { get; set; }
 
     [JsonPropertyName("link")]
@@ -20,10 +20,14 @@ public record FundingAccountSummary
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

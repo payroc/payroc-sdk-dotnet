@@ -39,6 +39,7 @@ public record FxRateInquiry
     [JsonPropertyName("paymentMethod")]
     public required FxRateInquiryPaymentMethod PaymentMethod { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

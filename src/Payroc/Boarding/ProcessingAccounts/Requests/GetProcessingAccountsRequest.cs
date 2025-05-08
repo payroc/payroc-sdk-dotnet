@@ -11,6 +11,7 @@ public record GetProcessingAccountsRequest
     [JsonIgnore]
     public required string ProcessingAccountId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

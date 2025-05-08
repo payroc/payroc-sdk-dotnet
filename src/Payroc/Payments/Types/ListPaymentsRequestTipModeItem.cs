@@ -6,11 +6,11 @@ namespace Payroc.Payments;
 [JsonConverter(typeof(StringEnumSerializer<ListPaymentsRequestTipModeItem>))]
 public readonly record struct ListPaymentsRequestTipModeItem : IStringEnum
 {
-    public static readonly ListPaymentsRequestTipModeItem NoTip = Custom(Values.NoTip);
+    public static readonly ListPaymentsRequestTipModeItem NoTip = new(Values.NoTip);
 
-    public static readonly ListPaymentsRequestTipModeItem Prompted = Custom(Values.Prompted);
+    public static readonly ListPaymentsRequestTipModeItem Prompted = new(Values.Prompted);
 
-    public static readonly ListPaymentsRequestTipModeItem Adjusted = Custom(Values.Adjusted);
+    public static readonly ListPaymentsRequestTipModeItem Adjusted = new(Values.Adjusted);
 
     public ListPaymentsRequestTipModeItem(string value)
     {
@@ -25,7 +25,7 @@ public readonly record struct ListPaymentsRequestTipModeItem : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ListPaymentsRequestTipModeItem Custom(string value)
+    public static ListPaymentsRequestTipModeItem FromCustom(string value)
     {
         return new ListPaymentsRequestTipModeItem(value);
     }
@@ -48,6 +48,10 @@ public readonly record struct ListPaymentsRequestTipModeItem : IStringEnum
 
     public static bool operator !=(ListPaymentsRequestTipModeItem value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(ListPaymentsRequestTipModeItem value) => value.Value;
+
+    public static explicit operator ListPaymentsRequestTipModeItem(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

@@ -35,6 +35,7 @@ public record ListFundingInstructionsRequest
     [JsonIgnore]
     public required string DateTo { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

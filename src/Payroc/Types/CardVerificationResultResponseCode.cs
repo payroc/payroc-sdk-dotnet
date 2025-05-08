@@ -6,17 +6,17 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<CardVerificationResultResponseCode>))]
 public readonly record struct CardVerificationResultResponseCode : IStringEnum
 {
-    public static readonly CardVerificationResultResponseCode A = Custom(Values.A);
+    public static readonly CardVerificationResultResponseCode A = new(Values.A);
 
-    public static readonly CardVerificationResultResponseCode D = Custom(Values.D);
+    public static readonly CardVerificationResultResponseCode D = new(Values.D);
 
-    public static readonly CardVerificationResultResponseCode E = Custom(Values.E);
+    public static readonly CardVerificationResultResponseCode E = new(Values.E);
 
-    public static readonly CardVerificationResultResponseCode P = Custom(Values.P);
+    public static readonly CardVerificationResultResponseCode P = new(Values.P);
 
-    public static readonly CardVerificationResultResponseCode R = Custom(Values.R);
+    public static readonly CardVerificationResultResponseCode R = new(Values.R);
 
-    public static readonly CardVerificationResultResponseCode C = Custom(Values.C);
+    public static readonly CardVerificationResultResponseCode C = new(Values.C);
 
     public CardVerificationResultResponseCode(string value)
     {
@@ -31,7 +31,7 @@ public readonly record struct CardVerificationResultResponseCode : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static CardVerificationResultResponseCode Custom(string value)
+    public static CardVerificationResultResponseCode FromCustom(string value)
     {
         return new CardVerificationResultResponseCode(value);
     }
@@ -54,6 +54,10 @@ public readonly record struct CardVerificationResultResponseCode : IStringEnum
 
     public static bool operator !=(CardVerificationResultResponseCode value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(CardVerificationResultResponseCode value) => value.Value;
+
+    public static explicit operator CardVerificationResultResponseCode(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

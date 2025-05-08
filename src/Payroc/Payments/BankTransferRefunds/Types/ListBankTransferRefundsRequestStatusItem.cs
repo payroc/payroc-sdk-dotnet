@@ -6,29 +6,19 @@ namespace Payroc.Payments.BankTransferRefunds;
 [JsonConverter(typeof(StringEnumSerializer<ListBankTransferRefundsRequestStatusItem>))]
 public readonly record struct ListBankTransferRefundsRequestStatusItem : IStringEnum
 {
-    public static readonly ListBankTransferRefundsRequestStatusItem Ready = Custom(Values.Ready);
+    public static readonly ListBankTransferRefundsRequestStatusItem Ready = new(Values.Ready);
 
-    public static readonly ListBankTransferRefundsRequestStatusItem Pending = Custom(
-        Values.Pending
-    );
+    public static readonly ListBankTransferRefundsRequestStatusItem Pending = new(Values.Pending);
 
-    public static readonly ListBankTransferRefundsRequestStatusItem Declined = Custom(
-        Values.Declined
-    );
+    public static readonly ListBankTransferRefundsRequestStatusItem Declined = new(Values.Declined);
 
-    public static readonly ListBankTransferRefundsRequestStatusItem Complete = Custom(
-        Values.Complete
-    );
+    public static readonly ListBankTransferRefundsRequestStatusItem Complete = new(Values.Complete);
 
-    public static readonly ListBankTransferRefundsRequestStatusItem Admin = Custom(Values.Admin);
+    public static readonly ListBankTransferRefundsRequestStatusItem Admin = new(Values.Admin);
 
-    public static readonly ListBankTransferRefundsRequestStatusItem Reversal = Custom(
-        Values.Reversal
-    );
+    public static readonly ListBankTransferRefundsRequestStatusItem Reversal = new(Values.Reversal);
 
-    public static readonly ListBankTransferRefundsRequestStatusItem Returned = Custom(
-        Values.Returned
-    );
+    public static readonly ListBankTransferRefundsRequestStatusItem Returned = new(Values.Returned);
 
     public ListBankTransferRefundsRequestStatusItem(string value)
     {
@@ -43,7 +33,7 @@ public readonly record struct ListBankTransferRefundsRequestStatusItem : IString
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ListBankTransferRefundsRequestStatusItem Custom(string value)
+    public static ListBankTransferRefundsRequestStatusItem FromCustom(string value)
     {
         return new ListBankTransferRefundsRequestStatusItem(value);
     }
@@ -70,6 +60,12 @@ public readonly record struct ListBankTransferRefundsRequestStatusItem : IString
         ListBankTransferRefundsRequestStatusItem value1,
         string value2
     ) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(ListBankTransferRefundsRequestStatusItem value) =>
+        value.Value;
+
+    public static explicit operator ListBankTransferRefundsRequestStatusItem(string value) =>
+        new(value);
 
     /// <summary>
     /// Constant strings for enum values

@@ -18,22 +18,22 @@ public record RewardPayFees
     /// <summary>
     /// Percentage of the total transaction amount that the processor charges the cardholder.
     /// </summary>
-    [JsonPropertyName("cardChargePercentage")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("cardChargePercentage")]
     public double? CardChargePercentage { get; set; }
 
     /// <summary>
     /// Percentage of the total transaction amount that the processor charges the merchant.
     /// </summary>
-    [JsonPropertyName("merchantChargePercentage")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("merchantChargePercentage")]
     public double? MerchantChargePercentage { get; set; }
 
     /// <summary>
     /// Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
     /// </summary>
-    [JsonPropertyName("transaction")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("transaction")]
     public int? Transaction { get; set; }
 
     /// <summary>
@@ -48,10 +48,14 @@ public record RewardPayFees
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

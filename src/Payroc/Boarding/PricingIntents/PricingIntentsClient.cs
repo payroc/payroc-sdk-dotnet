@@ -47,9 +47,9 @@ public partial class PricingIntentsClient
                     _query["limit"] = request.Limit.Value.ToString();
                 }
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
                         Path = "pricing-intents",
                         Query = _query,
@@ -189,9 +189,9 @@ public partial class PricingIntentsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
                             Path = "pricing-intents",
                             Body = request.Body,
@@ -280,12 +280,14 @@ public partial class PricingIntentsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"pricing-intents/{JsonUtils.SerializeAsString(request.PricingIntentId)}",
+                            Path = string.Format(
+                                "pricing-intents/{0}",
+                                ValueConvert.ToPathParameterString(request.PricingIntentId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -443,12 +445,14 @@ public partial class PricingIntentsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Put,
-                            Path =
-                                $"pricing-intents/{JsonUtils.SerializeAsString(request.PricingIntentId)}",
+                            Path = string.Format(
+                                "pricing-intents/{0}",
+                                ValueConvert.ToPathParameterString(request.PricingIntentId)
+                            ),
                             Body = request.Body,
                             ContentType = "application/json",
                             Options = options,
@@ -525,12 +529,14 @@ public partial class PricingIntentsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Delete,
-                            Path =
-                                $"pricing-intents/{JsonUtils.SerializeAsString(request.PricingIntentId)}",
+                            Path = string.Format(
+                                "pricing-intents/{0}",
+                                ValueConvert.ToPathParameterString(request.PricingIntentId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -615,12 +621,14 @@ public partial class PricingIntentsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethodExtensions.Patch,
-                            Path =
-                                $"pricing-intents/{JsonUtils.SerializeAsString(request.PricingIntentId)}",
+                            Path = string.Format(
+                                "pricing-intents/{0}",
+                                ValueConvert.ToPathParameterString(request.PricingIntentId)
+                            ),
                             Body = request.Body,
                             Headers = _headers,
                             ContentType = "application/json",

@@ -6,39 +6,39 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<CreateProcessingAccountTimezone>))]
 public readonly record struct CreateProcessingAccountTimezone : IStringEnum
 {
-    public static readonly CreateProcessingAccountTimezone PacificMidway = Custom(
+    public static readonly CreateProcessingAccountTimezone PacificMidway = new(
         Values.PacificMidway
     );
 
-    public static readonly CreateProcessingAccountTimezone PacificHonolulu = Custom(
+    public static readonly CreateProcessingAccountTimezone PacificHonolulu = new(
         Values.PacificHonolulu
     );
 
-    public static readonly CreateProcessingAccountTimezone AmericaAnchorage = Custom(
+    public static readonly CreateProcessingAccountTimezone AmericaAnchorage = new(
         Values.AmericaAnchorage
     );
 
-    public static readonly CreateProcessingAccountTimezone AmericaLosAngeles = Custom(
+    public static readonly CreateProcessingAccountTimezone AmericaLosAngeles = new(
         Values.AmericaLosAngeles
     );
 
-    public static readonly CreateProcessingAccountTimezone AmericaDenver = Custom(
+    public static readonly CreateProcessingAccountTimezone AmericaDenver = new(
         Values.AmericaDenver
     );
 
-    public static readonly CreateProcessingAccountTimezone AmericaPhoenix = Custom(
+    public static readonly CreateProcessingAccountTimezone AmericaPhoenix = new(
         Values.AmericaPhoenix
     );
 
-    public static readonly CreateProcessingAccountTimezone AmericaChicago = Custom(
+    public static readonly CreateProcessingAccountTimezone AmericaChicago = new(
         Values.AmericaChicago
     );
 
-    public static readonly CreateProcessingAccountTimezone AmericaIndianaIndianapolis = Custom(
+    public static readonly CreateProcessingAccountTimezone AmericaIndianaIndianapolis = new(
         Values.AmericaIndianaIndianapolis
     );
 
-    public static readonly CreateProcessingAccountTimezone AmericaNewYork = Custom(
+    public static readonly CreateProcessingAccountTimezone AmericaNewYork = new(
         Values.AmericaNewYork
     );
 
@@ -55,7 +55,7 @@ public readonly record struct CreateProcessingAccountTimezone : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static CreateProcessingAccountTimezone Custom(string value)
+    public static CreateProcessingAccountTimezone FromCustom(string value)
     {
         return new CreateProcessingAccountTimezone(value);
     }
@@ -78,6 +78,10 @@ public readonly record struct CreateProcessingAccountTimezone : IStringEnum
 
     public static bool operator !=(CreateProcessingAccountTimezone value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(CreateProcessingAccountTimezone value) => value.Value;
+
+    public static explicit operator CreateProcessingAccountTimezone(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

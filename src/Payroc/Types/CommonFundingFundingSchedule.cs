@@ -6,11 +6,11 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<CommonFundingFundingSchedule>))]
 public readonly record struct CommonFundingFundingSchedule : IStringEnum
 {
-    public static readonly CommonFundingFundingSchedule Standard = Custom(Values.Standard);
+    public static readonly CommonFundingFundingSchedule Standard = new(Values.Standard);
 
-    public static readonly CommonFundingFundingSchedule Nextday = Custom(Values.Nextday);
+    public static readonly CommonFundingFundingSchedule Nextday = new(Values.Nextday);
 
-    public static readonly CommonFundingFundingSchedule Sameday = Custom(Values.Sameday);
+    public static readonly CommonFundingFundingSchedule Sameday = new(Values.Sameday);
 
     public CommonFundingFundingSchedule(string value)
     {
@@ -25,7 +25,7 @@ public readonly record struct CommonFundingFundingSchedule : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static CommonFundingFundingSchedule Custom(string value)
+    public static CommonFundingFundingSchedule FromCustom(string value)
     {
         return new CommonFundingFundingSchedule(value);
     }
@@ -48,6 +48,10 @@ public readonly record struct CommonFundingFundingSchedule : IStringEnum
 
     public static bool operator !=(CommonFundingFundingSchedule value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(CommonFundingFundingSchedule value) => value.Value;
+
+    public static explicit operator CommonFundingFundingSchedule(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

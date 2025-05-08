@@ -6,11 +6,11 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<RewardPayFeesTips>))]
 public readonly record struct RewardPayFeesTips : IStringEnum
 {
-    public static readonly RewardPayFeesTips NoTips = Custom(Values.NoTips);
+    public static readonly RewardPayFeesTips NoTips = new(Values.NoTips);
 
-    public static readonly RewardPayFeesTips Prompt = Custom(Values.Prompt);
+    public static readonly RewardPayFeesTips Prompt = new(Values.Prompt);
 
-    public static readonly RewardPayFeesTips TipAdjust = Custom(Values.TipAdjust);
+    public static readonly RewardPayFeesTips TipAdjust = new(Values.TipAdjust);
 
     public RewardPayFeesTips(string value)
     {
@@ -25,7 +25,7 @@ public readonly record struct RewardPayFeesTips : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static RewardPayFeesTips Custom(string value)
+    public static RewardPayFeesTips FromCustom(string value)
     {
         return new RewardPayFeesTips(value);
     }
@@ -48,6 +48,10 @@ public readonly record struct RewardPayFeesTips : IStringEnum
 
     public static bool operator !=(RewardPayFeesTips value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(RewardPayFeesTips value) => value.Value;
+
+    public static explicit operator RewardPayFeesTips(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

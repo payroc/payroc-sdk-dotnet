@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<DeviceCategory>))]
 public readonly record struct DeviceCategory : IStringEnum
 {
-    public static readonly DeviceCategory Attended = Custom(Values.Attended);
+    public static readonly DeviceCategory Attended = new(Values.Attended);
 
-    public static readonly DeviceCategory Unattended = Custom(Values.Unattended);
+    public static readonly DeviceCategory Unattended = new(Values.Unattended);
 
     public DeviceCategory(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct DeviceCategory : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static DeviceCategory Custom(string value)
+    public static DeviceCategory FromCustom(string value)
     {
         return new DeviceCategory(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct DeviceCategory : IStringEnum
 
     public static bool operator !=(DeviceCategory value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(DeviceCategory value) => value.Value;
+
+    public static explicit operator DeviceCategory(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

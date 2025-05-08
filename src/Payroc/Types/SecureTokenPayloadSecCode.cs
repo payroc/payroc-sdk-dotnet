@@ -6,13 +6,13 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<SecureTokenPayloadSecCode>))]
 public readonly record struct SecureTokenPayloadSecCode : IStringEnum
 {
-    public static readonly SecureTokenPayloadSecCode Web = Custom(Values.Web);
+    public static readonly SecureTokenPayloadSecCode Web = new(Values.Web);
 
-    public static readonly SecureTokenPayloadSecCode Tel = Custom(Values.Tel);
+    public static readonly SecureTokenPayloadSecCode Tel = new(Values.Tel);
 
-    public static readonly SecureTokenPayloadSecCode Ccd = Custom(Values.Ccd);
+    public static readonly SecureTokenPayloadSecCode Ccd = new(Values.Ccd);
 
-    public static readonly SecureTokenPayloadSecCode Ppd = Custom(Values.Ppd);
+    public static readonly SecureTokenPayloadSecCode Ppd = new(Values.Ppd);
 
     public SecureTokenPayloadSecCode(string value)
     {
@@ -27,7 +27,7 @@ public readonly record struct SecureTokenPayloadSecCode : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static SecureTokenPayloadSecCode Custom(string value)
+    public static SecureTokenPayloadSecCode FromCustom(string value)
     {
         return new SecureTokenPayloadSecCode(value);
     }
@@ -50,6 +50,10 @@ public readonly record struct SecureTokenPayloadSecCode : IStringEnum
 
     public static bool operator !=(SecureTokenPayloadSecCode value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(SecureTokenPayloadSecCode value) => value.Value;
+
+    public static explicit operator SecureTokenPayloadSecCode(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

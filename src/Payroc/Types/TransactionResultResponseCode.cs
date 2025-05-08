@@ -6,17 +6,17 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<TransactionResultResponseCode>))]
 public readonly record struct TransactionResultResponseCode : IStringEnum
 {
-    public static readonly TransactionResultResponseCode A = Custom(Values.A);
+    public static readonly TransactionResultResponseCode A = new(Values.A);
 
-    public static readonly TransactionResultResponseCode D = Custom(Values.D);
+    public static readonly TransactionResultResponseCode D = new(Values.D);
 
-    public static readonly TransactionResultResponseCode E = Custom(Values.E);
+    public static readonly TransactionResultResponseCode E = new(Values.E);
 
-    public static readonly TransactionResultResponseCode P = Custom(Values.P);
+    public static readonly TransactionResultResponseCode P = new(Values.P);
 
-    public static readonly TransactionResultResponseCode R = Custom(Values.R);
+    public static readonly TransactionResultResponseCode R = new(Values.R);
 
-    public static readonly TransactionResultResponseCode C = Custom(Values.C);
+    public static readonly TransactionResultResponseCode C = new(Values.C);
 
     public TransactionResultResponseCode(string value)
     {
@@ -31,7 +31,7 @@ public readonly record struct TransactionResultResponseCode : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static TransactionResultResponseCode Custom(string value)
+    public static TransactionResultResponseCode FromCustom(string value)
     {
         return new TransactionResultResponseCode(value);
     }
@@ -54,6 +54,10 @@ public readonly record struct TransactionResultResponseCode : IStringEnum
 
     public static bool operator !=(TransactionResultResponseCode value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(TransactionResultResponseCode value) => value.Value;
+
+    public static explicit operator TransactionResultResponseCode(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

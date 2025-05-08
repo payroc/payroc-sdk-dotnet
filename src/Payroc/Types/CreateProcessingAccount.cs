@@ -9,8 +9,8 @@ public record CreateProcessingAccount
     /// <summary>
     /// Unique identifier of the processing account.
     /// </summary>
-    [JsonPropertyName("processingAccountId")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("processingAccountId")]
     public int? ProcessingAccountId { get; set; }
 
     /// <summary>
@@ -104,10 +104,14 @@ public record CreateProcessingAccount
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

@@ -9,8 +9,8 @@ public record Contact
     /// <summary>
     /// Unique identifier of the contact.
     /// </summary>
-    [JsonPropertyName("contactId")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("contactId")]
     public int? ContactId { get; set; }
 
     /// <summary>
@@ -53,10 +53,14 @@ public record Contact
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

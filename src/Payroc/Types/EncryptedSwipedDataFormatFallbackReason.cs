@@ -6,15 +6,15 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<EncryptedSwipedDataFormatFallbackReason>))]
 public readonly record struct EncryptedSwipedDataFormatFallbackReason : IStringEnum
 {
-    public static readonly EncryptedSwipedDataFormatFallbackReason Technical = Custom(
+    public static readonly EncryptedSwipedDataFormatFallbackReason Technical = new(
         Values.Technical
     );
 
-    public static readonly EncryptedSwipedDataFormatFallbackReason RepeatFallback = Custom(
+    public static readonly EncryptedSwipedDataFormatFallbackReason RepeatFallback = new(
         Values.RepeatFallback
     );
 
-    public static readonly EncryptedSwipedDataFormatFallbackReason EmptyCandidateList = Custom(
+    public static readonly EncryptedSwipedDataFormatFallbackReason EmptyCandidateList = new(
         Values.EmptyCandidateList
     );
 
@@ -31,7 +31,7 @@ public readonly record struct EncryptedSwipedDataFormatFallbackReason : IStringE
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static EncryptedSwipedDataFormatFallbackReason Custom(string value)
+    public static EncryptedSwipedDataFormatFallbackReason FromCustom(string value)
     {
         return new EncryptedSwipedDataFormatFallbackReason(value);
     }
@@ -54,6 +54,12 @@ public readonly record struct EncryptedSwipedDataFormatFallbackReason : IStringE
 
     public static bool operator !=(EncryptedSwipedDataFormatFallbackReason value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(EncryptedSwipedDataFormatFallbackReason value) =>
+        value.Value;
+
+    public static explicit operator EncryptedSwipedDataFormatFallbackReason(string value) =>
+        new(value);
 
     /// <summary>
     /// Constant strings for enum values

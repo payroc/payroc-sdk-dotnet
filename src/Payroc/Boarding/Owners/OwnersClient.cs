@@ -33,11 +33,14 @@ public partial class OwnersClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path = $"owners/{JsonUtils.SerializeAsString(request.OwnerId)}",
+                            Path = string.Format(
+                                "owners/{0}",
+                                ValueConvert.ToPathParameterString(request.OwnerId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -156,11 +159,14 @@ public partial class OwnersClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Put,
-                            Path = $"owners/{JsonUtils.SerializeAsString(request.OwnerId)}",
+                            Path = string.Format(
+                                "owners/{0}",
+                                ValueConvert.ToPathParameterString(request.OwnerId)
+                            ),
                             Body = request.Body,
                             ContentType = "application/json",
                             Options = options,
@@ -235,11 +241,14 @@ public partial class OwnersClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Delete,
-                            Path = $"owners/{JsonUtils.SerializeAsString(request.OwnerId)}",
+                            Path = string.Format(
+                                "owners/{0}",
+                                ValueConvert.ToPathParameterString(request.OwnerId)
+                            ),
                             Options = options,
                         },
                         cancellationToken

@@ -50,12 +50,14 @@ public partial class HostedFieldsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"processing-terminals/{JsonUtils.SerializeAsString(request.ProcessingTerminalId)}/hosted-fields-sessions",
+                            Path = string.Format(
+                                "processing-terminals/{0}/hosted-fields-sessions",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId)
+                            ),
                             Body = request,
                             Headers = _headers,
                             ContentType = "application/json",

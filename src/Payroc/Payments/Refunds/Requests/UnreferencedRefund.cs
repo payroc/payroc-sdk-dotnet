@@ -51,6 +51,7 @@ public record UnreferencedRefund
     [JsonPropertyName("customFields")]
     public IEnumerable<CustomField>? CustomFields { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

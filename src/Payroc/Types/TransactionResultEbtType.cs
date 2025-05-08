@@ -6,37 +6,35 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<TransactionResultEbtType>))]
 public readonly record struct TransactionResultEbtType : IStringEnum
 {
-    public static readonly TransactionResultEbtType CashPurchase = Custom(Values.CashPurchase);
+    public static readonly TransactionResultEbtType CashPurchase = new(Values.CashPurchase);
 
-    public static readonly TransactionResultEbtType CashPurchaseWithCashback = Custom(
+    public static readonly TransactionResultEbtType CashPurchaseWithCashback = new(
         Values.CashPurchaseWithCashback
     );
 
-    public static readonly TransactionResultEbtType FoodStampPurchase = Custom(
+    public static readonly TransactionResultEbtType FoodStampPurchase = new(
         Values.FoodStampPurchase
     );
 
-    public static readonly TransactionResultEbtType FoodStampVoucherPurchase = Custom(
+    public static readonly TransactionResultEbtType FoodStampVoucherPurchase = new(
         Values.FoodStampVoucherPurchase
     );
 
-    public static readonly TransactionResultEbtType FoodStampReturn = Custom(
-        Values.FoodStampReturn
-    );
+    public static readonly TransactionResultEbtType FoodStampReturn = new(Values.FoodStampReturn);
 
-    public static readonly TransactionResultEbtType FoodStampVoucherReturn = Custom(
+    public static readonly TransactionResultEbtType FoodStampVoucherReturn = new(
         Values.FoodStampVoucherReturn
     );
 
-    public static readonly TransactionResultEbtType CashBalanceInquiry = Custom(
+    public static readonly TransactionResultEbtType CashBalanceInquiry = new(
         Values.CashBalanceInquiry
     );
 
-    public static readonly TransactionResultEbtType FoodStampBalanceInquiry = Custom(
+    public static readonly TransactionResultEbtType FoodStampBalanceInquiry = new(
         Values.FoodStampBalanceInquiry
     );
 
-    public static readonly TransactionResultEbtType CashWithdrawal = Custom(Values.CashWithdrawal);
+    public static readonly TransactionResultEbtType CashWithdrawal = new(Values.CashWithdrawal);
 
     public TransactionResultEbtType(string value)
     {
@@ -51,7 +49,7 @@ public readonly record struct TransactionResultEbtType : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static TransactionResultEbtType Custom(string value)
+    public static TransactionResultEbtType FromCustom(string value)
     {
         return new TransactionResultEbtType(value);
     }
@@ -74,6 +72,10 @@ public readonly record struct TransactionResultEbtType : IStringEnum
 
     public static bool operator !=(TransactionResultEbtType value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(TransactionResultEbtType value) => value.Value;
+
+    public static explicit operator TransactionResultEbtType(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

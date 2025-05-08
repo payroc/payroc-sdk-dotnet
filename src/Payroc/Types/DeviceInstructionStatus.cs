@@ -6,13 +6,13 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<DeviceInstructionStatus>))]
 public readonly record struct DeviceInstructionStatus : IStringEnum
 {
-    public static readonly DeviceInstructionStatus Canceled = Custom(Values.Canceled);
+    public static readonly DeviceInstructionStatus Canceled = new(Values.Canceled);
 
-    public static readonly DeviceInstructionStatus Completed = Custom(Values.Completed);
+    public static readonly DeviceInstructionStatus Completed = new(Values.Completed);
 
-    public static readonly DeviceInstructionStatus Failure = Custom(Values.Failure);
+    public static readonly DeviceInstructionStatus Failure = new(Values.Failure);
 
-    public static readonly DeviceInstructionStatus InProgress = Custom(Values.InProgress);
+    public static readonly DeviceInstructionStatus InProgress = new(Values.InProgress);
 
     public DeviceInstructionStatus(string value)
     {
@@ -27,7 +27,7 @@ public readonly record struct DeviceInstructionStatus : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static DeviceInstructionStatus Custom(string value)
+    public static DeviceInstructionStatus FromCustom(string value)
     {
         return new DeviceInstructionStatus(value);
     }
@@ -50,6 +50,10 @@ public readonly record struct DeviceInstructionStatus : IStringEnum
 
     public static bool operator !=(DeviceInstructionStatus value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(DeviceInstructionStatus value) => value.Value;
+
+    public static explicit operator DeviceInstructionStatus(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

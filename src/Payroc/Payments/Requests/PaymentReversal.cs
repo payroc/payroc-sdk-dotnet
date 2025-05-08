@@ -30,6 +30,7 @@ public record PaymentReversal
     [JsonPropertyName("amount")]
     public long? Amount { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

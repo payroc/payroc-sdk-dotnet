@@ -6,15 +6,15 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<PaymentPlanFrequency>))]
 public readonly record struct PaymentPlanFrequency : IStringEnum
 {
-    public static readonly PaymentPlanFrequency Weekly = Custom(Values.Weekly);
+    public static readonly PaymentPlanFrequency Weekly = new(Values.Weekly);
 
-    public static readonly PaymentPlanFrequency Fortnightly = Custom(Values.Fortnightly);
+    public static readonly PaymentPlanFrequency Fortnightly = new(Values.Fortnightly);
 
-    public static readonly PaymentPlanFrequency Monthly = Custom(Values.Monthly);
+    public static readonly PaymentPlanFrequency Monthly = new(Values.Monthly);
 
-    public static readonly PaymentPlanFrequency Quarterly = Custom(Values.Quarterly);
+    public static readonly PaymentPlanFrequency Quarterly = new(Values.Quarterly);
 
-    public static readonly PaymentPlanFrequency Yearly = Custom(Values.Yearly);
+    public static readonly PaymentPlanFrequency Yearly = new(Values.Yearly);
 
     public PaymentPlanFrequency(string value)
     {
@@ -29,7 +29,7 @@ public readonly record struct PaymentPlanFrequency : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static PaymentPlanFrequency Custom(string value)
+    public static PaymentPlanFrequency FromCustom(string value)
     {
         return new PaymentPlanFrequency(value);
     }
@@ -52,6 +52,10 @@ public readonly record struct PaymentPlanFrequency : IStringEnum
 
     public static bool operator !=(PaymentPlanFrequency value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(PaymentPlanFrequency value) => value.Value;
+
+    public static explicit operator PaymentPlanFrequency(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

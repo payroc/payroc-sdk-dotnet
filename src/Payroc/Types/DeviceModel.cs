@@ -6,83 +6,83 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<DeviceModel>))]
 public readonly record struct DeviceModel : IStringEnum
 {
-    public static readonly DeviceModel BbposChp = Custom(Values.BbposChp);
+    public static readonly DeviceModel BbposChp = new(Values.BbposChp);
 
-    public static readonly DeviceModel BbposChp2X = Custom(Values.BbposChp2X);
+    public static readonly DeviceModel BbposChp2X = new(Values.BbposChp2X);
 
-    public static readonly DeviceModel BbposChp3X = Custom(Values.BbposChp3X);
+    public static readonly DeviceModel BbposChp3X = new(Values.BbposChp3X);
 
-    public static readonly DeviceModel BbposRambler = Custom(Values.BbposRambler);
+    public static readonly DeviceModel BbposRambler = new(Values.BbposRambler);
 
-    public static readonly DeviceModel BbposWp = Custom(Values.BbposWp);
+    public static readonly DeviceModel BbposWp = new(Values.BbposWp);
 
-    public static readonly DeviceModel BbposWp2 = Custom(Values.BbposWp2);
+    public static readonly DeviceModel BbposWp2 = new(Values.BbposWp2);
 
-    public static readonly DeviceModel BbposWp3 = Custom(Values.BbposWp3);
+    public static readonly DeviceModel BbposWp3 = new(Values.BbposWp3);
 
-    public static readonly DeviceModel GenericCtlsMsr = Custom(Values.GenericCtlsMsr);
+    public static readonly DeviceModel GenericCtlsMsr = new(Values.GenericCtlsMsr);
 
-    public static readonly DeviceModel GenericMsr = Custom(Values.GenericMsr);
+    public static readonly DeviceModel GenericMsr = new(Values.GenericMsr);
 
-    public static readonly DeviceModel IdtechAugusta = Custom(Values.IdtechAugusta);
+    public static readonly DeviceModel IdtechAugusta = new(Values.IdtechAugusta);
 
-    public static readonly DeviceModel IdtechMinismart = Custom(Values.IdtechMinismart);
+    public static readonly DeviceModel IdtechMinismart = new(Values.IdtechMinismart);
 
-    public static readonly DeviceModel IdtechSredkey = Custom(Values.IdtechSredkey);
+    public static readonly DeviceModel IdtechSredkey = new(Values.IdtechSredkey);
 
-    public static readonly DeviceModel IdtechVp3300 = Custom(Values.IdtechVp3300);
+    public static readonly DeviceModel IdtechVp3300 = new(Values.IdtechVp3300);
 
-    public static readonly DeviceModel IdtechVp5300 = Custom(Values.IdtechVp5300);
+    public static readonly DeviceModel IdtechVp5300 = new(Values.IdtechVp5300);
 
-    public static readonly DeviceModel IdtechVp6300 = Custom(Values.IdtechVp6300);
+    public static readonly DeviceModel IdtechVp6300 = new(Values.IdtechVp6300);
 
-    public static readonly DeviceModel IdtechVp6800 = Custom(Values.IdtechVp6800);
+    public static readonly DeviceModel IdtechVp6800 = new(Values.IdtechVp6800);
 
-    public static readonly DeviceModel IngenicoAxiumDx4000 = Custom(Values.IngenicoAxiumDx4000);
+    public static readonly DeviceModel IngenicoAxiumDx4000 = new(Values.IngenicoAxiumDx4000);
 
-    public static readonly DeviceModel IngenicoAxiumDx8000 = Custom(Values.IngenicoAxiumDx8000);
+    public static readonly DeviceModel IngenicoAxiumDx8000 = new(Values.IngenicoAxiumDx8000);
 
-    public static readonly DeviceModel IngenicoAxiumEx8000 = Custom(Values.IngenicoAxiumEx8000);
+    public static readonly DeviceModel IngenicoAxiumEx8000 = new(Values.IngenicoAxiumEx8000);
 
-    public static readonly DeviceModel IngenicoIct220 = Custom(Values.IngenicoIct220);
+    public static readonly DeviceModel IngenicoIct220 = new(Values.IngenicoIct220);
 
-    public static readonly DeviceModel IngenicoIpp320 = Custom(Values.IngenicoIpp320);
+    public static readonly DeviceModel IngenicoIpp320 = new(Values.IngenicoIpp320);
 
-    public static readonly DeviceModel IngenicoIpp350 = Custom(Values.IngenicoIpp350);
+    public static readonly DeviceModel IngenicoIpp350 = new(Values.IngenicoIpp350);
 
-    public static readonly DeviceModel IngenicoIuc285 = Custom(Values.IngenicoIuc285);
+    public static readonly DeviceModel IngenicoIuc285 = new(Values.IngenicoIuc285);
 
-    public static readonly DeviceModel IngenicoL3000 = Custom(Values.IngenicoL3000);
+    public static readonly DeviceModel IngenicoL3000 = new(Values.IngenicoL3000);
 
-    public static readonly DeviceModel IngenicoL7000 = Custom(Values.IngenicoL7000);
+    public static readonly DeviceModel IngenicoL7000 = new(Values.IngenicoL7000);
 
-    public static readonly DeviceModel IngenicoS2000 = Custom(Values.IngenicoS2000);
+    public static readonly DeviceModel IngenicoS2000 = new(Values.IngenicoS2000);
 
-    public static readonly DeviceModel IngenicoS3000 = Custom(Values.IngenicoS3000);
+    public static readonly DeviceModel IngenicoS3000 = new(Values.IngenicoS3000);
 
-    public static readonly DeviceModel IngenicoS4000 = Custom(Values.IngenicoS4000);
+    public static readonly DeviceModel IngenicoS4000 = new(Values.IngenicoS4000);
 
-    public static readonly DeviceModel IngenicoS5000 = Custom(Values.IngenicoS5000);
+    public static readonly DeviceModel IngenicoS5000 = new(Values.IngenicoS5000);
 
-    public static readonly DeviceModel IngenicoS7000 = Custom(Values.IngenicoS7000);
+    public static readonly DeviceModel IngenicoS7000 = new(Values.IngenicoS7000);
 
-    public static readonly DeviceModel PaxA80 = Custom(Values.PaxA80);
+    public static readonly DeviceModel PaxA80 = new(Values.PaxA80);
 
-    public static readonly DeviceModel PaxA920 = Custom(Values.PaxA920);
+    public static readonly DeviceModel PaxA920 = new(Values.PaxA920);
 
-    public static readonly DeviceModel PaxA920Pro = Custom(Values.PaxA920Pro);
+    public static readonly DeviceModel PaxA920Pro = new(Values.PaxA920Pro);
 
-    public static readonly DeviceModel PaxE500 = Custom(Values.PaxE500);
+    public static readonly DeviceModel PaxE500 = new(Values.PaxE500);
 
-    public static readonly DeviceModel PaxE700 = Custom(Values.PaxE700);
+    public static readonly DeviceModel PaxE700 = new(Values.PaxE700);
 
-    public static readonly DeviceModel PaxE800 = Custom(Values.PaxE800);
+    public static readonly DeviceModel PaxE800 = new(Values.PaxE800);
 
-    public static readonly DeviceModel PaxIm30 = Custom(Values.PaxIm30);
+    public static readonly DeviceModel PaxIm30 = new(Values.PaxIm30);
 
-    public static readonly DeviceModel Uic680 = Custom(Values.Uic680);
+    public static readonly DeviceModel Uic680 = new(Values.Uic680);
 
-    public static readonly DeviceModel UicBezel8 = Custom(Values.UicBezel8);
+    public static readonly DeviceModel UicBezel8 = new(Values.UicBezel8);
 
     public DeviceModel(string value)
     {
@@ -97,7 +97,7 @@ public readonly record struct DeviceModel : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static DeviceModel Custom(string value)
+    public static DeviceModel FromCustom(string value)
     {
         return new DeviceModel(value);
     }
@@ -120,6 +120,10 @@ public readonly record struct DeviceModel : IStringEnum
 
     public static bool operator !=(DeviceModel value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(DeviceModel value) => value.Value;
+
+    public static explicit operator DeviceModel(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

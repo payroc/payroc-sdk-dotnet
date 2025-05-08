@@ -6,29 +6,29 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<PaymentSummaryStatus>))]
 public readonly record struct PaymentSummaryStatus : IStringEnum
 {
-    public static readonly PaymentSummaryStatus Ready = Custom(Values.Ready);
+    public static readonly PaymentSummaryStatus Ready = new(Values.Ready);
 
-    public static readonly PaymentSummaryStatus Pending = Custom(Values.Pending);
+    public static readonly PaymentSummaryStatus Pending = new(Values.Pending);
 
-    public static readonly PaymentSummaryStatus Declined = Custom(Values.Declined);
+    public static readonly PaymentSummaryStatus Declined = new(Values.Declined);
 
-    public static readonly PaymentSummaryStatus Complete = Custom(Values.Complete);
+    public static readonly PaymentSummaryStatus Complete = new(Values.Complete);
 
-    public static readonly PaymentSummaryStatus Referral = Custom(Values.Referral);
+    public static readonly PaymentSummaryStatus Referral = new(Values.Referral);
 
-    public static readonly PaymentSummaryStatus Pickup = Custom(Values.Pickup);
+    public static readonly PaymentSummaryStatus Pickup = new(Values.Pickup);
 
-    public static readonly PaymentSummaryStatus Reversal = Custom(Values.Reversal);
+    public static readonly PaymentSummaryStatus Reversal = new(Values.Reversal);
 
-    public static readonly PaymentSummaryStatus Returned = Custom(Values.Returned);
+    public static readonly PaymentSummaryStatus Returned = new(Values.Returned);
 
-    public static readonly PaymentSummaryStatus Admin = Custom(Values.Admin);
+    public static readonly PaymentSummaryStatus Admin = new(Values.Admin);
 
-    public static readonly PaymentSummaryStatus Expired = Custom(Values.Expired);
+    public static readonly PaymentSummaryStatus Expired = new(Values.Expired);
 
-    public static readonly PaymentSummaryStatus Accepted = Custom(Values.Accepted);
+    public static readonly PaymentSummaryStatus Accepted = new(Values.Accepted);
 
-    public static readonly PaymentSummaryStatus Review = Custom(Values.Review);
+    public static readonly PaymentSummaryStatus Review = new(Values.Review);
 
     public PaymentSummaryStatus(string value)
     {
@@ -43,7 +43,7 @@ public readonly record struct PaymentSummaryStatus : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static PaymentSummaryStatus Custom(string value)
+    public static PaymentSummaryStatus FromCustom(string value)
     {
         return new PaymentSummaryStatus(value);
     }
@@ -66,6 +66,10 @@ public readonly record struct PaymentSummaryStatus : IStringEnum
 
     public static bool operator !=(PaymentSummaryStatus value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(PaymentSummaryStatus value) => value.Value;
+
+    public static explicit operator PaymentSummaryStatus(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

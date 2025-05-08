@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<StandingInstructionsSequence>))]
 public readonly record struct StandingInstructionsSequence : IStringEnum
 {
-    public static readonly StandingInstructionsSequence First = Custom(Values.First);
+    public static readonly StandingInstructionsSequence First = new(Values.First);
 
-    public static readonly StandingInstructionsSequence Subsequent = Custom(Values.Subsequent);
+    public static readonly StandingInstructionsSequence Subsequent = new(Values.Subsequent);
 
     public StandingInstructionsSequence(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct StandingInstructionsSequence : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static StandingInstructionsSequence Custom(string value)
+    public static StandingInstructionsSequence FromCustom(string value)
     {
         return new StandingInstructionsSequence(value);
     }
@@ -46,6 +46,10 @@ public readonly record struct StandingInstructionsSequence : IStringEnum
 
     public static bool operator !=(StandingInstructionsSequence value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(StandingInstructionsSequence value) => value.Value;
+
+    public static explicit operator StandingInstructionsSequence(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

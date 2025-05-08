@@ -57,12 +57,14 @@ public partial class PaymentInstructionsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"devices/{JsonUtils.SerializeAsString(request.SerialNumber)}/payment-instructions",
+                            Path = string.Format(
+                                "devices/{0}/payment-instructions",
+                                ValueConvert.ToPathParameterString(request.SerialNumber)
+                            ),
                             Body = request,
                             Headers = _headers,
                             ContentType = "application/json",
@@ -157,12 +159,14 @@ public partial class PaymentInstructionsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"payment-instructions/{JsonUtils.SerializeAsString(request.PaymentInstructionId)}",
+                            Path = string.Format(
+                                "payment-instructions/{0}",
+                                ValueConvert.ToPathParameterString(request.PaymentInstructionId)
+                            ),
                             Options = options,
                         },
                         cancellationToken

@@ -6,17 +6,15 @@ namespace Payroc.Payments.Subscriptions;
 [JsonConverter(typeof(StringEnumSerializer<ListSubscriptionsRequestFrequency>))]
 public readonly record struct ListSubscriptionsRequestFrequency : IStringEnum
 {
-    public static readonly ListSubscriptionsRequestFrequency Weekly = Custom(Values.Weekly);
+    public static readonly ListSubscriptionsRequestFrequency Weekly = new(Values.Weekly);
 
-    public static readonly ListSubscriptionsRequestFrequency Fortnightly = Custom(
-        Values.Fortnightly
-    );
+    public static readonly ListSubscriptionsRequestFrequency Fortnightly = new(Values.Fortnightly);
 
-    public static readonly ListSubscriptionsRequestFrequency Monthly = Custom(Values.Monthly);
+    public static readonly ListSubscriptionsRequestFrequency Monthly = new(Values.Monthly);
 
-    public static readonly ListSubscriptionsRequestFrequency Quarterly = Custom(Values.Quarterly);
+    public static readonly ListSubscriptionsRequestFrequency Quarterly = new(Values.Quarterly);
 
-    public static readonly ListSubscriptionsRequestFrequency Yearly = Custom(Values.Yearly);
+    public static readonly ListSubscriptionsRequestFrequency Yearly = new(Values.Yearly);
 
     public ListSubscriptionsRequestFrequency(string value)
     {
@@ -31,7 +29,7 @@ public readonly record struct ListSubscriptionsRequestFrequency : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static ListSubscriptionsRequestFrequency Custom(string value)
+    public static ListSubscriptionsRequestFrequency FromCustom(string value)
     {
         return new ListSubscriptionsRequestFrequency(value);
     }
@@ -54,6 +52,10 @@ public readonly record struct ListSubscriptionsRequestFrequency : IStringEnum
 
     public static bool operator !=(ListSubscriptionsRequestFrequency value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(ListSubscriptionsRequestFrequency value) => value.Value;
+
+    public static explicit operator ListSubscriptionsRequestFrequency(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

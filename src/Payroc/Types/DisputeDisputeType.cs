@@ -6,15 +6,15 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<DisputeDisputeType>))]
 public readonly record struct DisputeDisputeType : IStringEnum
 {
-    public static readonly DisputeDisputeType Prearbitration = Custom(Values.Prearbitration);
+    public static readonly DisputeDisputeType Prearbitration = new(Values.Prearbitration);
 
-    public static readonly DisputeDisputeType IssuerReversal = Custom(Values.IssuerReversal);
+    public static readonly DisputeDisputeType IssuerReversal = new(Values.IssuerReversal);
 
-    public static readonly DisputeDisputeType FirstDisputeWithReversal = Custom(
+    public static readonly DisputeDisputeType FirstDisputeWithReversal = new(
         Values.FirstDisputeWithReversal
     );
 
-    public static readonly DisputeDisputeType FirstDispute = Custom(Values.FirstDispute);
+    public static readonly DisputeDisputeType FirstDispute = new(Values.FirstDispute);
 
     public DisputeDisputeType(string value)
     {
@@ -29,7 +29,7 @@ public readonly record struct DisputeDisputeType : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static DisputeDisputeType Custom(string value)
+    public static DisputeDisputeType FromCustom(string value)
     {
         return new DisputeDisputeType(value);
     }
@@ -52,6 +52,10 @@ public readonly record struct DisputeDisputeType : IStringEnum
 
     public static bool operator !=(DisputeDisputeType value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(DisputeDisputeType value) => value.Value;
+
+    public static explicit operator DisputeDisputeType(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

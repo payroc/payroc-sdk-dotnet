@@ -30,8 +30,8 @@ public record InstructionMerchantsItemRecipientsItem
     /// <summary>
     /// Status of the funding instruction.
     /// </summary>
-    [JsonPropertyName("status")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("status")]
     public InstructionMerchantsItemRecipientsItemStatus? Status { get; set; }
 
     /// <summary>
@@ -43,17 +43,21 @@ public record InstructionMerchantsItemRecipientsItem
     /// <summary>
     /// Array of HATEOAS links for viewing a funding account.
     /// </summary>
-    [JsonPropertyName("link")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("link")]
     public InstructionMerchantsItemRecipientsItemLink? Link { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

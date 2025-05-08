@@ -15,8 +15,8 @@ public record PaymentPlan
     /// <summary>
     /// Unique identifier of the terminal that the payment plan is assigned to.
     /// </summary>
-    [JsonPropertyName("processingTerminalId")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("processingTerminalId")]
     public string? ProcessingTerminalId { get; set; }
 
     /// <summary>
@@ -86,10 +86,14 @@ public record PaymentPlan
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

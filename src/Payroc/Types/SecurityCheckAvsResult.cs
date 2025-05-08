@@ -6,27 +6,27 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<SecurityCheckAvsResult>))]
 public readonly record struct SecurityCheckAvsResult : IStringEnum
 {
-    public static readonly SecurityCheckAvsResult Y = Custom(Values.Y);
+    public static readonly SecurityCheckAvsResult Y = new(Values.Y);
 
-    public static readonly SecurityCheckAvsResult A = Custom(Values.A);
+    public static readonly SecurityCheckAvsResult A = new(Values.A);
 
-    public static readonly SecurityCheckAvsResult Z = Custom(Values.Z);
+    public static readonly SecurityCheckAvsResult Z = new(Values.Z);
 
-    public static readonly SecurityCheckAvsResult N = Custom(Values.N);
+    public static readonly SecurityCheckAvsResult N = new(Values.N);
 
-    public static readonly SecurityCheckAvsResult U = Custom(Values.U);
+    public static readonly SecurityCheckAvsResult U = new(Values.U);
 
-    public static readonly SecurityCheckAvsResult R = Custom(Values.R);
+    public static readonly SecurityCheckAvsResult R = new(Values.R);
 
-    public static readonly SecurityCheckAvsResult G = Custom(Values.G);
+    public static readonly SecurityCheckAvsResult G = new(Values.G);
 
-    public static readonly SecurityCheckAvsResult S = Custom(Values.S);
+    public static readonly SecurityCheckAvsResult S = new(Values.S);
 
-    public static readonly SecurityCheckAvsResult F = Custom(Values.F);
+    public static readonly SecurityCheckAvsResult F = new(Values.F);
 
-    public static readonly SecurityCheckAvsResult W = Custom(Values.W);
+    public static readonly SecurityCheckAvsResult W = new(Values.W);
 
-    public static readonly SecurityCheckAvsResult X = Custom(Values.X);
+    public static readonly SecurityCheckAvsResult X = new(Values.X);
 
     public SecurityCheckAvsResult(string value)
     {
@@ -41,7 +41,7 @@ public readonly record struct SecurityCheckAvsResult : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static SecurityCheckAvsResult Custom(string value)
+    public static SecurityCheckAvsResult FromCustom(string value)
     {
         return new SecurityCheckAvsResult(value);
     }
@@ -64,6 +64,10 @@ public readonly record struct SecurityCheckAvsResult : IStringEnum
 
     public static bool operator !=(SecurityCheckAvsResult value1, string value2) =>
         !value1.Value.Equals(value2);
+
+    public static explicit operator string(SecurityCheckAvsResult value) => value.Value;
+
+    public static explicit operator SecurityCheckAvsResult(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

@@ -6,9 +6,9 @@ namespace Payroc;
 [JsonConverter(typeof(StringEnumSerializer<TipMode>))]
 public readonly record struct TipMode : IStringEnum
 {
-    public static readonly TipMode Prompted = Custom(Values.Prompted);
+    public static readonly TipMode Prompted = new(Values.Prompted);
 
-    public static readonly TipMode Adjusted = Custom(Values.Adjusted);
+    public static readonly TipMode Adjusted = new(Values.Adjusted);
 
     public TipMode(string value)
     {
@@ -23,7 +23,7 @@ public readonly record struct TipMode : IStringEnum
     /// <summary>
     /// Create a string enum with the given value.
     /// </summary>
-    public static TipMode Custom(string value)
+    public static TipMode FromCustom(string value)
     {
         return new TipMode(value);
     }
@@ -44,6 +44,10 @@ public readonly record struct TipMode : IStringEnum
     public static bool operator ==(TipMode value1, string value2) => value1.Value.Equals(value2);
 
     public static bool operator !=(TipMode value1, string value2) => !value1.Value.Equals(value2);
+
+    public static explicit operator string(TipMode value) => value.Value;
+
+    public static explicit operator TipMode(string value) => new(value);
 
     /// <summary>
     /// Constant strings for enum values

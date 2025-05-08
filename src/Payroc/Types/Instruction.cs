@@ -12,29 +12,29 @@ public record Instruction
     /// <summary>
     /// Unique identifier of the funding instruction.
     /// </summary>
-    [JsonPropertyName("instructionId")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("instructionId")]
     public int? InstructionId { get; set; }
 
     /// <summary>
     /// Date that we created the funding instruction.
     /// </summary>
-    [JsonPropertyName("createdDate")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("createdDate")]
     public string? CreatedDate { get; set; }
 
     /// <summary>
     /// Date of the most recent change to the funding instruction.
     /// </summary>
-    [JsonPropertyName("lastModifiedDate")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("lastModifiedDate")]
     public string? LastModifiedDate { get; set; }
 
     /// <summary>
     /// Status of the funding instruction.
     /// </summary>
-    [JsonPropertyName("status")]
     [JsonAccess(JsonAccessType.ReadOnly)]
+    [JsonPropertyName("status")]
     public InstructionStatus? Status { get; set; }
 
     /// <summary>
@@ -52,10 +52,14 @@ public record Instruction
     /// <summary>
     /// Additional properties received from the response, if any.
     /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
     [JsonExtensionData]
     public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
         new Dictionary<string, JsonElement>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

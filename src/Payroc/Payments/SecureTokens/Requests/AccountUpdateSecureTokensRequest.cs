@@ -27,6 +27,7 @@ public record AccountUpdateSecureTokensRequest
     [JsonIgnore]
     public required AccountUpdate Body { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

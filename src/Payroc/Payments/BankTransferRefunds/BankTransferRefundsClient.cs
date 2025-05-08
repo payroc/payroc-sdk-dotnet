@@ -88,9 +88,9 @@ public partial class BankTransferRefundsClient
                     _query["limit"] = request.Limit.Value.ToString();
                 }
                 var httpRequest = _client.CreateHttpRequest(
-                    new RawClient.JsonApiRequest
+                    new JsonRequest
                     {
-                        BaseUrl = _client.Options.BaseUrl,
+                        BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
                         Path = "bank-transfer-refunds",
                         Query = _query,
@@ -207,9 +207,9 @@ public partial class BankTransferRefundsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
                             Path = "bank-transfer-refunds",
                             Body = request,
@@ -302,12 +302,14 @@ public partial class BankTransferRefundsClient
             {
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
-                            Path =
-                                $"bank-transfer-refunds/{JsonUtils.SerializeAsString(request.RefundId)}",
+                            Path = string.Format(
+                                "bank-transfer-refunds/{0}",
+                                ValueConvert.ToPathParameterString(request.RefundId)
+                            ),
                             Options = options,
                         },
                         cancellationToken
@@ -401,12 +403,14 @@ public partial class BankTransferRefundsClient
                 );
                 var response = await _client
                     .SendRequestAsync(
-                        new RawClient.JsonApiRequest
+                        new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
+                            BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Post,
-                            Path =
-                                $"bank-transfer-refunds/{JsonUtils.SerializeAsString(request.RefundId)}/reverse",
+                            Path = string.Format(
+                                "bank-transfer-refunds/{0}/reverse",
+                                ValueConvert.ToPathParameterString(request.RefundId)
+                            ),
                             Headers = _headers,
                             Options = options,
                         },
