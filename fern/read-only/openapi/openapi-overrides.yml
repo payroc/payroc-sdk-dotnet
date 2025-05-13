@@ -752,12 +752,34 @@ paths:
         - reporting
         - settlement
       x-fern-sdk-method-name: getDisputesStatuses
+  /ach-deposits:
+    get:
+      x-fern-sdk-group-name:
+        - reporting
+        - settlement
+      x-fern-sdk-method-name: listAchDeposits
+      x-fern-request-name: ListReportingSettlementAchDepositsRequest
+      x-fern-pagination: true
+  /ach-deposits/{achDepositId}:
+    get:
+      x-fern-sdk-group-name:
+        - reporting
+        - settlement
+      x-fern-sdk-method-name: getAchDeposit
+  /ach-deposit-fees:
+    get:
+      x-fern-sdk-group-name:
+        - reporting
+        - settlement
+      x-fern-sdk-method-name: listAchDepositFees
+      x-fern-request-name: ListReportingSettlementAchDepositFeesRequest
+      x-fern-pagination: true
 
   # authentication
   /authorize:
     post:
       summary: Request an access token
-      description: Obtain an OAuth2 access token using client credentials
+      description: Obtain an access token using client credentials
       tags:
         - Authentication
       x-fern-sdk-group-name:
@@ -792,7 +814,7 @@ paths:
                 - token_type
                 - expires_in
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
