@@ -753,6 +753,62 @@ paths:
         - settlement
       x-fern-sdk-method-name: getDisputesStatuses
 
+  # authentication
+  /authorize:
+    post:
+      summary: Request an access token
+      description: Obtain an OAuth2 access token using client credentials
+      tags:
+        - Authentication
+      x-fern-sdk-group-name:
+        - auth
+      x-fern-sdk-method-name: getToken
+      x-fern-server-name: identity
+      # parameters:
+      #   - in: header
+      #     name: x-api-key
+      #     required: true
+      #     schema:
+      #       type: string
+      #     description: The API key of the application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  description: The client ID of the application
+                client_secret:
+                  type: string
+                  description: The client secret of the application
+              required:
+                - client_id
+                - client_secret
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                x-fern-type-name: GetTokenResponse
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                  expires_in:
+                    type: integer
+                  scope:
+                    type: string
+                required:
+                  - access_token
+                  - token_type
+                  - expires_in
+
 components:
   schemas:
     funding:
@@ -761,3 +817,5 @@ components:
 servers:
   - url: https://api.payroc.com/v1
     x-fern-server-name: Production
+  - url: https://api.uat.payroc.com/v1
+    x-fern-server-name: UAT
