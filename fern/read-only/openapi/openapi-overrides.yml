@@ -764,29 +764,33 @@ paths:
         - auth
       x-fern-sdk-method-name: getToken
       x-fern-server-name: identity
-      # parameters:
-      #   - in: header
-      #     name: x-api-key
-      #     required: true
-      #     schema:
-      #       type: string
-      #     description: The API key of the application
+      parameters:
+        - in: header
+          name: x-api-key
+          required: true
+          schema:
+            type: string
+          description: The API key of the application
       requestBody:
         required: true
         content:
           application/json:
             schema:
+              x-fern-type-name: GetTokenResponse
               type: object
               properties:
-                client_id:
+                access_token:
                   type: string
-                  description: The client ID of the application
-                client_secret:
+                token_type:
                   type: string
-                  description: The client secret of the application
+                expires_in:
+                  type: integer
+                scope:
+                  type: string
               required:
-                - client_id
-                - client_secret
+                - access_token
+                - token_type
+                - expires_in
       responses:
         "200":
           description: Successful response
