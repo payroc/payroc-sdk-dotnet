@@ -28,7 +28,7 @@ groups:
       - name: fernapi/fern-csharp-sdk
         version: 1.17.2
         github:
-          repository: fern-demo/payroc-csharp-sdk
+          repository: payroc/payroc-sdk-dotnet
           mode: pull-request
         output:
           location: nuget
