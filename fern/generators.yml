@@ -12,8 +12,12 @@ api:
   environments:
     Production:
       urls:
-        api: https://api.payroc.com
+        api: https://api.payroc.com/v1
         identity: https://identity.payroc.com
+    UAT:
+      urls:
+        api: https://api.uat.payroc.com/v1
+        identity: https://identity.uat.payroc.com
   specs:
     - openapi: ./read-only/openapi/external/universal-api-v1.yaml
       overrides: ./read-only/openapi/openapi-overrides.yml
