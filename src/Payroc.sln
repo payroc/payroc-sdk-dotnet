@@ -7,13 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payroc", "Payroc\Payroc.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payroc.Test", "Payroc.Test\Payroc.Test.csproj", "{77D638BF-B8E6-4BC1-8551-ED9FDEAD47B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payroc.TestHarness", "Payroc.TestHarness\Payroc.TestHarness.csproj", "{1A847921-8489-4D02-B926-7F8D6F1DAB0F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FC4FD600-0219-4187-883C-E9934393F258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -24,5 +23,15 @@ Global
 		{77D638BF-B8E6-4BC1-8551-ED9FDEAD47B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77D638BF-B8E6-4BC1-8551-ED9FDEAD47B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77D638BF-B8E6-4BC1-8551-ED9FDEAD47B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A847921-8489-4D02-B926-7F8D6F1DAB0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A847921-8489-4D02-B926-7F8D6F1DAB0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A847921-8489-4D02-B926-7F8D6F1DAB0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A847921-8489-4D02-B926-7F8D6F1DAB0F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4E6446CF-B1D8-41EC-9D9A-5BBB5CBC4DB9}
 	EndGlobalSection
 EndGlobal
