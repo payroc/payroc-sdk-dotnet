@@ -9,6 +9,6 @@ public class MerchantAccountFactory
         {
             IdempotencyKey = Guid.NewGuid().ToString(),
             Business = BusinessFactory.Create(),
-            ProcessingAccounts = []
+            ProcessingAccounts = [ CreateProcessingAccountFactory.Create() ]
         };
 }

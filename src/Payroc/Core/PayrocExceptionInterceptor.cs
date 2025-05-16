@@ -4,6 +4,7 @@ public class PayrocExceptionInterceptor : IExceptionInterceptor
 {
     public Exception Intercept(Exception exception)
     {
+        /*
         using (
             SentrySdk.Init(o =>
             {
@@ -15,7 +16,7 @@ public class PayrocExceptionInterceptor : IExceptionInterceptor
         {
             SentrySdk.CaptureException(exception);
         }
-
+        */
         return exception;
     }
 }

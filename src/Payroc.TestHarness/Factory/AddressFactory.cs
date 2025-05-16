@@ -9,7 +9,7 @@ public class AddressFactory
             City = "Chicago",
             State = "IL",
             PostalCode = "60056",
-            Country = "US"
+            Country = "US"            
         };
 
     public static LegalAddress CreateLegalAddress()
@@ -19,6 +19,7 @@ public class AddressFactory
             City = "Chicago",
             State = "Illinois",
             Country = "US",
-            PostalCode = "60477"
+            PostalCode = "60477",
+            Type = "legalAddress"
         };
 }
