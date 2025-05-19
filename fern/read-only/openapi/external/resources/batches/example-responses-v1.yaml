@@ -32,10 +32,11 @@ components:
             merchant: 
               merchantId: '4525644354'
               doingBusinessAs: Pizza Doe
+              processingAccountId: '38765'
               link: 
-                rel: merchant
+                rel: processingAccount
                 method: get
-                href: 'https://api.payroc.com/v1/merchants/4525644354'
+                href: 'https://api.payroc.com/v1/processing-accounts/38765'
             links:
               - rel: transactions
                 method: get
@@ -55,10 +56,11 @@ components:
             merchant: 
               merchantId: '9876543219'
               doingBusinessAs: Joe Bloggs Shoes
+              processingAccountId: '68437'
               link: 
-                rel: merchant
+                rel: processingAccount
                 method: get
-                href: 'https://api.payroc.com/v1/merchants/9876543219'
+                href: 'https://api.payroc.com/v1/processing-accounts/68437'
             links:
               - rel: transactions
                 method: get

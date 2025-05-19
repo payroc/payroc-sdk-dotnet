@@ -26,10 +26,11 @@ components:
             merchant: 
               merchantId: '4525644354'
               doingBusinessAs: Pizza Doe
+              processingAccountId: '38765'
               link: 
-                rel: merchant
+                rel: processingAccount
                 method: get
-                href: 'https://api.payroc.com/v1/merchants/4525644354'
+                href: 'https://api.payroc.com/v1/processing-accounts/38765'
             batch: 
               batchId: 12
               date: '2024-07-02'
@@ -47,7 +48,7 @@ components:
             transaction: 
               transactionId: 12345
               type: capture
-              date: ''
+              date: '2024-07-02'
               entryMethod: swiped
               amount: 100
               link: 

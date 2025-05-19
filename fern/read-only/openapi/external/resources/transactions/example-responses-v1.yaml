@@ -45,13 +45,19 @@ components:
             merchant: 
               merchantId: '4525644354'
               doingBusinessAs: Pizza Doe
+              processingAccountId: '38765'
               link: 
-                rel: merchant
+                rel: processingAccount
                 method: get
-                href: 'https://api.payroc.com/v1/merchants/4525644354'
+                href: 'https://api.payroc.com/v1/processing-accounts/38765'
             settled: 
               settledBy: 3rd party
               achDate: '2024-07-02'
+              achDepositId: 99
+              link:
+                rel: achDeposit
+                method: 'get'
+                href: 'https://api.payroc.com/v1/ach-deposits/99'
             batch: 
               batchId: 12
               date: '2024-07-02'

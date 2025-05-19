@@ -29,7 +29,7 @@ components:
                 href: https://api.payroc.com/v1/disputes/65/statuses
             createdDate: '2024-07-02'
             lastModifiedDate: '2024-07-02'
-            receivedDate: ''
+            receivedDate: '2024-07-02'
             description: ''
             referenceNumber: '35435435'
             disputeAmount: 1000
@@ -40,10 +40,11 @@ components:
             merchant: 
               merchantId: '4525644354'
               doingBusinessAs: Pizza Doe
+              processingAccountId: '38765'
               link: 
                 rel: merchant
                 method: get
-                href: https://api.payroc.com/v1/merchants/4525644354
+                href: https://api.payroc.com/v1/processing-accounts/38765
             card:
               cardNumber: '12456**********4124'
               type: visa
@@ -53,7 +54,7 @@ components:
             transaction: 
               transactionId: 12345
               type: capture
-              date: ''
+              date: '2024-07-02'
               entryMethod: swiped
               amount: 100
               link: 

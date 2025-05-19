@@ -9,7 +9,9 @@ info:
     email: helpdesk@payroc.com
 servers:
   - url: https://api.payroc.com/v1
-    description: External URL
+    description: Production
+  - url: https://api.uat.payroc.com/v1
+    description: UAT
 
 security:
 - bearerAuth: []
@@ -98,10 +100,9 @@ components:
           description: | 
             Version of the Hosted Fields JavaScript library that you are using.  
             
-            The current production version is `1.3.0.135534`.
+            The current production version is `1.6.0.172441`.
 
-          example:
-            1.0.0.123
+          example: '1.6.0.172441'
         scenario:
           type: string
           enum:

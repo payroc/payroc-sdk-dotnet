@@ -135,8 +135,10 @@ x-tagGroups:
       - Event Subscriptions
 
 servers:
-- url: https://api.payroc.com/v1
-  description: External URL
+  - url: https://api.payroc.com/v1
+    description: Production
+  - url: https://api.uat.payroc.com/v1
+    description: UAT
 
 security:
 - bearerAuth: []
@@ -304,9 +306,14 @@ paths:
     $ref: ./resources/event-subscriptions/event-subscriptions-v1.yaml#/paths/~1event-subscriptions
   /event-subscriptions/{subscriptionId}:
     $ref: ./resources/event-subscriptions/event-subscriptions-v1.yaml#/paths/~1event-subscriptions~1{subscriptionId}
-  
   /terminal-orders/{terminalOrderId}:
     $ref: ./resources/terminal-orders/terminal-orders-v1.yaml#/paths/~1terminal-orders~1{terminalOrderId}
+  /ach-deposits:
+    $ref: ./resources/ach-deposits/ach-deposits-v1.yaml#/paths/~1ach-deposits
+  /ach-deposits/{achDepositId}:
+    $ref: ./resources/ach-deposits/ach-deposits-v1.yaml#/paths/~1ach-deposits~1{achDepositId}
+  /ach-deposit-fees:
+    $ref: ./resources/ach-deposits/ach-deposits-v1.yaml#/paths/~1ach-deposit-fees
   
 components:
   securitySchemes:

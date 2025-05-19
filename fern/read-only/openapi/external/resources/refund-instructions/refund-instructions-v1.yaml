@@ -10,7 +10,9 @@ info:
 
 servers:
   - url: https://api.payroc.com/v1
-    description: External URL
+    description: Production
+  - url: https://api.uat.payroc.com/v1
+    description: UAT
 
 tags:
 - name: Refund instructions
