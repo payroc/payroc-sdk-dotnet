@@ -5,3 +5,5 @@ src/Payroc/Core/PayrocPager.cs
 src/Payroc/Core/PayrocExceptionInterceptor.cs
 src/Payroc.Test/Unit/PayrocPagerTest.cs
 src/Payroc.Test/Integration
+src/Payroc/Auth/AuthClient.cs
+src/Payroc/Core/OAuthTokenProvider.cs
