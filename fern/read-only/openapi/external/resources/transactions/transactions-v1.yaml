@@ -121,6 +121,19 @@ components:
           format: date
           description: Date that the processor settled the transaction. The format of this value is **YYYY-MM-DD**.
           example: '2024-07-02'
+        achDepositId:
+          type: integer
+          description: Unique identifier of the ACH deposit.
+        link:
+          $ref: '../../../common/schemas/common/link/link-v1.yaml#/components/schemas/link'
+      example:
+        settledBy: '3rd party'
+        achDate: '2024-07-02'
+        achDepositId: 99
+        link: 
+          rel: achDeposit
+          method: get
+          href: 'https://api.payroc.com/v1/ach-deposits/99?merchantId=4525644354'
            
     authorizationSummary:
       type: object

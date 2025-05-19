@@ -71,7 +71,7 @@ components:
       schema:
         type: string
         format: date
-      example: '2025-07-01T00:00:00Z'
+      example: '2025-07-01'
       
     nextDueDate:
       name: nextDueDate
@@ -82,7 +82,7 @@ components:
       schema:
         type: string
         format: date
-      example: '2024-08-01T00:00:00Z'
+      example: '2024-08-01'
 
     subscriptionId:
       name: subscriptionId

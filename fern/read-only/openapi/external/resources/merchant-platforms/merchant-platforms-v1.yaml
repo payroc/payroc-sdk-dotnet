@@ -226,12 +226,12 @@ paths:
             > **Note:** You can create and add a processing account only to an existing merchant platform. If you have not already created a merchant platform, go to [Create a merchant platform.](/api/schema/boarding/merchant-platforms/create)  
           
         In the response we return a processingAccountId for the processing account, which you need for the following methods.  
-        - [Retrieve processing account](#getProcessingAcccounts)  
-        - [List processing account's funding accounts](#listProcessingAccountsFundingAccounts)  
-        - [List contacts](#listProcessingAccountContacts)  
-        - [Get a processing account pricing agreement](#retrieveProcessingAccountPricing)  
-        - [List owners](#listMerchantOwners)  
-        - [Create reminder for processing account](#createReminder)  
+        - [Retrieve processing account](/api/schema/boarding/processing-accounts/get)  
+        - [List processing account's funding accounts](/api/schema/boarding/processing-accounts/list-funding-accounts)  
+        - [List contacts](/api/schema/boarding/processing-accounts/contacts)  
+        - [Get a processing account pricing agreement](/api/schema/boarding/processing-accounts/pricing)  
+        - [List owners](/api/schema/boarding/processing-accounts/list-owners)  
+        - [Create reminder for processing account](/api/schema/boarding/processing-accounts/create-reminder)  
       operationId: createProcessingAccount
       parameters:
       - $ref: './parameters-v1.yaml#/components/parameters/merchantPlatformId'

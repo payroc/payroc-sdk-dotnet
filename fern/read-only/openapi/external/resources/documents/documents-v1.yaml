@@ -23,7 +23,10 @@ tags:
     description: Use the Documents resource to upload documents to our gateway.
 
 servers:
-- url: https://api.payroc.com/v1
+  - url: https://api.payroc.com/v1
+    description: Production
+  - url: https://api.uat.payroc.com/v1
+    description: UAT
 
 paths:
   /documents:
