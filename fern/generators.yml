@@ -54,6 +54,7 @@ groups:
           include-exception-handler: true
           experimental-enable-forward-compatible-enums: true
           use-discriminated-unions: true
+          generate-wire-tests: true
   ts-sdk:
     generators:
       - name: fernapi/fern-typescript-node-sdk
