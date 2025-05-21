@@ -73,7 +73,7 @@ public class CreateProcessingAccountFactory
                             FleetMerchantId = "1234"
                         }
                     },
-                    
+
                 },
                 Ach = new()
                 {
@@ -99,7 +99,7 @@ public class CreateProcessingAccountFactory
                         NameOnAccount  = "Jane Doe",
                         PaymentMethods  =
                         [
-                            new (new PaymentMethodsItem.Ach(new(){ Value = new(){ RoutingNumber="063100277", AccountNumber="32183159" } })){ }
+                            new (new PaymentMethodsItem.Ach(new(){ Value = new(){ RoutingNumber="063100277", AccountNumber="321831591" } })){ }
                         ]
                     },
                     new FundingAccount
@@ -109,18 +109,18 @@ public class CreateProcessingAccountFactory
                         NameOnAccount  = "John Doe",
                         PaymentMethods  =
                         [
-                            new (new PaymentMethodsItem.Ach(new(){ Value = new(){ RoutingNumber="063100277", AccountNumber="32183159" } })){ }
+                            new (new PaymentMethodsItem.Ach(new(){ Value = new(){ RoutingNumber="063100277", AccountNumber="321831591" } })){ }
                         ]
                     }
                 ],
                 Status = CommonFundingStatus.Disabled,
                 FundingSchedule = CommonFundingFundingSchedule.Nextday,
-                AcceleratedFundingFee = 1999, 
+                AcceleratedFundingFee = 1999,
                 DailyDiscount = true,
-            },            
-            Pricing = new(new Pricing.Intent(new() { PricingIntentId = 3164 })) { },//6123
-            Signature = CreateProcessingAccountSignature.RequestedViaEmail,
-            Contacts = 
+            },
+            Pricing = new(new Pricing.Intent(new() { PricingIntentId = 1602 })) { },//6123//3164
+            Signature = new() { Type = CreateProcessingAccountSignature.RequestedViaEmail },
+            Contacts =
             [
                 new()
                 {

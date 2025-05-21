@@ -1,4 +1,5 @@
 ﻿using Payroc;
+using Payroc.TestHarness.Debugging;
 using Payroc.TestHarness.Factory;
 
 Console.WriteLine("Starting Payroc SDK test harness...");
@@ -14,11 +15,16 @@ var client = new PayrocClient(
     }
 );
 
-var createMerchantAccountRequest = MerchantAccountFactory.Create();
+// Debug Json
+JsonTester.TestJson<PricingIntent50>(DebugPayload.DataUnderTest);
 
+// Pricing intent
+//var createPricingIntentRequest = PricingIntentFactory.Create();
+//var pricingIntent = await client.Boarding.PricingIntents.CreateAsync(createPricingIntentRequest);
 
-Console.WriteLine("Creating Merchant Account...");
-var merchantPlatform = await client.Boarding.MerchantPlatforms.CreateAsync(createMerchantAccountRequest);
+// Merchant account
+//var createMerchantAccountRequest = MerchantAccountFactory.Create();
+//var merchantPlatform = await client.Boarding.MerchantPlatforms.CreateAsync(createMerchantAccountRequest);
 
-Console.WriteLine("Created Merchant Account...");
+Console.WriteLine("Testing complete...");
 Console.ReadLine();
