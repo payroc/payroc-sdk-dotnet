@@ -798,21 +798,17 @@ paths:
         content:
           application/json:
             schema:
-              x-fern-type-name: GetTokenResponse
               type: object
               properties:
-                access_token:
+                client_id:
                   type: string
-                token_type:
+                  description: The client ID of the application
+                client_secret:
                   type: string
-                expires_in:
-                  type: integer
-                scope:
-                  type: string
+                  description: The client secret of the application
               required:
-                - access_token
-                - token_type
-                - expires_in
+                - client_id
+                - client_secret
       responses:
         '200':
           description: Successful response
