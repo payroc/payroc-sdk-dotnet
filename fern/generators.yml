@@ -67,8 +67,7 @@ groups:
           # token: ${NPM_TOKEN}
         github:
           repository: "fern-demo/payroc-typescript"
-          # uncomment to switch to generating to pull requests
-          # mode: pull-request
+          mode: pull-request
         config:
           namespaceExport: Payroc
           allowCustomFetcher: true
