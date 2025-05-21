@@ -12,8 +12,12 @@ api:
   environments:
     Production:
       urls:
-        api: https://api.payroc.com
+        api: https://api.payroc.com/v1
         identity: https://identity.payroc.com
+    UAT:
+      urls:
+        api: https://api.uat.payroc.com/v1
+        identity: https://identity.uat.payroc.com
   specs:
     - openapi: ./read-only/openapi/external/universal-api-v1.yaml
       overrides: ./read-only/openapi/openapi-overrides.yml
@@ -22,13 +26,14 @@ api:
         coerce-enums-to-literals: false
         inline-path-parameters: true
         idiomatic-request-names: true
+        type-dates-as-strings: false
 groups:
   csharp-sdk:
     generators:
       - name: fernapi/fern-csharp-sdk
-        version: 1.17.2
+        version: 1.17.4
         github:
-          repository: fern-demo/payroc-csharp-sdk
+          repository: payroc/payroc-sdk-dotnet
           mode: pull-request
         output:
           location: nuget
@@ -36,6 +41,7 @@ groups:
           # api-key: ${NUGET_TOKEN}
         config:
           namespace: Payroc
+          package-id: Payroc          
           client-class-name: BasePayrocClient
           exported-client-class-name: PayrocClient
           base-exception-class-name: PayrocException
@@ -48,3 +54,45 @@ groups:
           include-exception-handler: true
           experimental-enable-forward-compatible-enums: true
           use-discriminated-unions: true
+  ts-sdk:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        # version: 0.44.5
+        version: 0.51.4
+        output:
+          location: npm
+          package-name: "payroc"
+          # uncomment to publish to npm
+          # token: ${NPM_TOKEN}
+        github:
+          repository: "fern-demo/payroc-typescript"
+          # uncomment to switch to generating to pull requests
+          # mode: pull-request
+        config:
+          namespaceExport: Payroc
+          allowCustomFetcher: true
+          skipResponseValidation: true
+          includeApiReference: true
+          noSerdeLayer: true
+        smart-casing: true
+  python-sdk:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 4.17.0
+        output:
+          location: pypi
+          package-name: payroc
+          # token: ${PYPI_TOKEN}
+        github:
+          repository: fern-demo/payroc-python-sdk
+          mode: pull-request
+        config:
+          client_class_name: Payroc
+  go-sdk:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: 0.37.2
+        github:
+          repository: fern-demo/payroc-go-sdk
+        config:
+          packageName: payroc

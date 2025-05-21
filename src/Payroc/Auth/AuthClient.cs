@@ -40,9 +40,9 @@ public partial class AuthClient
                             BaseUrl = _client.Options.Environment.Identity,
                             Method = HttpMethod.Post,
                             Path = "authorize",
-                            Body = request,
                             ContentType = "application/json",
                             Options = options,
+                            Headers = { { "x-api-key", request.ApiKey } }
                         },
                         cancellationToken
                     )

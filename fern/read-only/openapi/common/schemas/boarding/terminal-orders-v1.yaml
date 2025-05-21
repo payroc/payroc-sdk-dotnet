@@ -226,8 +226,6 @@ components:
                   type: string
                   description: Unique identifier of the gateway terminal template.
                   maxLength: 100
-              required:
-                - terminalTemplateId
             applicationSettings:
               type: object
               description: Object that contains the application settings for the solution.

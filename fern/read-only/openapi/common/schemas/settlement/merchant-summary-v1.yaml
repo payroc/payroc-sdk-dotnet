@@ -29,13 +29,18 @@ components:
         doingBusinessAs:
           type: string
           description: Legal name that the business operates as.
-          example: Doe Hot Dogs
+          example: Pizza Doe
+        processingAccountId:
+            type: string
+            description: Unique identifier of the processing account.
+            example: '38765'
         link:
           $ref: '../common/link/link-v1.yaml#/components/schemas/link'
       example:
         merchantId: '4525644354'
-        doingBusinessAs: Doe Hot Dogs
+        doingBusinessAs: Pizza Doe
+        processingAccountId: '38765'
         link: 
-          rel: merchant
+          rel: processingAccount
           method: get
-          href: 'https://api.payroc.com/v1/merchants/4525644354'
+          href: 'https://api.payroc.com/v1/processing-accounts/38765'
