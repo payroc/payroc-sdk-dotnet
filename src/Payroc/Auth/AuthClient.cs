@@ -36,6 +36,7 @@ public partial class AuthClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
+                            Headers = { { "x-api-key", request.ApiKey } },
                             BaseUrl = _client.Options.Environment.Identity,
                             Method = HttpMethod.Post,
                             Path = "authorize",

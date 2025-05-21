@@ -87,7 +87,7 @@ public record CreateProcessingAccount
     /// **Note:** If you request the owner’s signature by email and they don’t respond, use our Reminders endpoint to create a reminder and to send another email.
     /// </summary>
     [JsonPropertyName("signature")]
-    public required CreateProcessingAccountSignature Signature { get; set; }
+    public required SignatureWrapper Signature { get; set; }
 
     /// <summary>
     /// Array of contact objects.
