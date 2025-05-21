@@ -4,8 +4,14 @@ public class PayrocEnvironment
 {
     public static readonly PayrocEnvironment Production = new PayrocEnvironment
     {
-        Api = "https://api.payroc.com",
+        Api = "https://api.payroc.com/v1",
         Identity = "https://identity.payroc.com",
+    };
+
+    public static readonly PayrocEnvironment Test = new PayrocEnvironment
+    {
+        Api = "https://api.uat.payroc.com/v1",
+        Identity = "https://identity.uat.payroc.com",
     };
 
     /// <summary>

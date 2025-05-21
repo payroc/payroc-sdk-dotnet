@@ -10,6 +10,12 @@ namespace Payroc;
 public record PricingIntent50
 {
     /// <summary>
+    /// Version of the pricing intent.
+    /// </summary>
+    [JsonPropertyName("version")]
+    public string Version { get; set; } = "5.0";
+
+    /// <summary>
     /// Unique identifier of the pricing intent.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]

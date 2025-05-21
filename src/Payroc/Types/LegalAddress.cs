@@ -10,7 +10,7 @@ public record LegalAddress
     /// Type of address
     /// </summary>
     [JsonPropertyName("type")]
-    public string? Type { get; set; }
+    public required string Type { get; set; }
 
     /// <summary>
     /// Address Line.
