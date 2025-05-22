@@ -41,8 +41,7 @@ public partial class AuthClient
                             Method = HttpMethod.Post,
                             Path = "authorize",
                             ContentType = "application/json",
-                            Options = options,
-                            Headers = { { "x-api-key", request.ApiKey } }
+                            Options = options
                         },
                         cancellationToken
                     )
