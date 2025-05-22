@@ -9,6 +9,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payroc.Test", "Payroc.Test\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payroc.TestHarness", "Payroc.TestHarness\Payroc.TestHarness.csproj", "{1A847921-8489-4D02-B926-7F8D6F1DAB0F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
+		..\.fernignore = ..\.fernignore
+		..\.gitignore = ..\.gitignore
+		..\LICENSE = ..\LICENSE
+		..\local-spec-update.ps1 = ..\local-spec-update.ps1
+		..\README.md = ..\README.md
+		..\reference.md = ..\reference.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
