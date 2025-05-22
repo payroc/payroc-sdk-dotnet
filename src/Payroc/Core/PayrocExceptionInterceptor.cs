@@ -4,11 +4,10 @@ public class PayrocExceptionInterceptor : IExceptionInterceptor
 {
     public Exception Intercept(Exception exception)
     {
-        /*
         using (
             SentrySdk.Init(o =>
             {
-                o.Dsn = "your_dsn_here"; // TODO: Replace with your actual Sentry DSN
+                o.Dsn = "https://c3d832677ad08b915dcc3fdafc8afe26@o4505201678483456.ingest.us.sentry.io/4509367402954752";
 #if DEBUG
                 o.Debug = true;
 #endif
@@ -16,7 +15,7 @@ public class PayrocExceptionInterceptor : IExceptionInterceptor
         {
             SentrySdk.CaptureException(exception);
         }
-        */
+
         return exception;
     }
 }
