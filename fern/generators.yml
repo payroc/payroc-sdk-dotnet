@@ -5,6 +5,7 @@ auth-schemes:
     type: client-credentials
     get-token:
       endpoint: POST /authorize
+
 api:
   default-environment: Production
   default-url: api
@@ -38,6 +39,7 @@ groups:
         output:
           location: nuget
           package-name: Payroc
+          # uncomment to publish to registry
           # api-key: ${NUGET_TOKEN}
         config:
           namespace: Payroc
@@ -63,7 +65,7 @@ groups:
         output:
           location: npm
           package-name: "payroc"
-          # uncomment to publish to npm
+          # uncomment to publish to registry
           # token: ${NPM_TOKEN}
         github:
           repository: "fern-demo/payroc-typescript"
@@ -82,6 +84,7 @@ groups:
         output:
           location: pypi
           package-name: payroc
+          # uncomment to publish to registry
           # token: ${PYPI_TOKEN}
         github:
           repository: fern-demo/payroc-python-sdk
