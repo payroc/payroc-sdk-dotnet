@@ -2,7 +2,7 @@
 
 public class CreateProcessingAccountFactory
 {
-    public static CreateProcessingAccount Create()
+    public static CreateProcessingAccount Create(int pricingIntentId = 1602)
         => new()
         {
             Owners =
@@ -118,7 +118,7 @@ public class CreateProcessingAccountFactory
                 AcceleratedFundingFee = 1999,
                 DailyDiscount = true,
             },
-            Pricing = new(new Pricing.Intent(new() { PricingIntentId = 1602 })) { },//6123//3164
+            Pricing = new(new Pricing.Intent(new() { PricingIntentId = pricingIntentId })) { },//1602//6123//3164
             Signature = new() { Type = CreateProcessingAccountSignature.RequestedViaEmail },
             Contacts =
             [
