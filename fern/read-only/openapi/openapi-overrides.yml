@@ -775,7 +775,7 @@ paths:
       x-fern-request-name: ListReportingSettlementAchDepositFeesRequest
       x-fern-pagination: true
 
-# Special Identity Definition, to be used in conjunction with base URLs defined in Fern's generators.yml in consuming repos (docs / SDKs)
+# Special Identity method definition, to be used in conjunction with base URLs defined in Fern's generators.yml in consuming repos (docs / SDKs)
   /authorize:
     post:
       summary: Request an access token
@@ -800,9 +800,11 @@ paths:
             schema:
               type: object
               properties:
+                # Fake field entry, required to trick / silence generator
                 client_id:
                   type: string
                   description: The client ID of the application
+                # Fake field entry, required to trick / silence generator
                 client_secret:
                   type: string
                   description: The client secret of the application

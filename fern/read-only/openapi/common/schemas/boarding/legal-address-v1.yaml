@@ -26,13 +26,21 @@ components:
       - address1
       - postalCode
       - state
-      allOf:
-        - type: object
-          properties:
-            type:
-              type: string
-              description: Type of address
-              enum:
-                - "legalAddress"
-              default: "legalAddress"
+      allOf:      
+        - $ref: '#/components/schemas/addressType'
         - $ref: '../common/address-v1.yaml#/components/schemas/address'
+
+    # Broken into a discrete named object for more accurate requiredness in generated code
+    # See: https://github.com/payroc/papi-specs-fern_collaboration/issues/29
+    addressType:
+      type: object
+      description: Type of address
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          description: Type of address
+          enum:
+            - legalAddress
+          default: legalAddress

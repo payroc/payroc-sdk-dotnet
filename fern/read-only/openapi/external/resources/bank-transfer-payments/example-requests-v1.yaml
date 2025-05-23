@@ -20,7 +20,7 @@ components:
           type: ach
           accountType: checking
           nameOnAccount: Sarah Hopper
-          accountNumber: '32183159'
+          accountNumber: '321831591'
           routingNumber: '063100277'
           secCode: tel
     bankTransferPaymentRequestStoreTokenRequest:
@@ -52,7 +52,7 @@ components:
           type: ach
           accountType: checking
           nameOnAccount: Sarah Hazel Hopper
-          accountNumber: '32183159'
+          accountNumber: '321831591'
           routingNumber: '063100277'
           secCode: web
         customFields:
