@@ -13,7 +13,7 @@ public class PaymentRequestFactory
             Operator = "Jane",
             Order = new()
             {
-                OrderId = "OrderRef6543",
+                OrderId = ("Order" + Guid.NewGuid().ToString())[..23],
                 Description = "Large Pepperoni Pizza",
                 Currency = Currency.Usd,
                 Amount = 4999
