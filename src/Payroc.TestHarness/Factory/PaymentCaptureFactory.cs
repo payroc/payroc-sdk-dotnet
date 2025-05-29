@@ -10,11 +10,8 @@ public class PaymentCaptureFactory
             IdempotencyKey = Guid.NewGuid().ToString(),
             ProcessingTerminalId = processingTerminalId,
             PaymentId = paymentId,
-
-
             Operator = "Jane",
             Amount = 4999,
-
             Breakdown = new()
             {
                 DutyAmount = 499,
