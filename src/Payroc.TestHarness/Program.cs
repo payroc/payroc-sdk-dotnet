@@ -16,6 +16,8 @@ var client = new PayrocClient(
     }
 );
 
+var processingTerminalId = "5984001";
+
 // Debug Json
 // JsonTester.TestJson<PricingIntent50>(DebugPayload.DataUnderTest);
 
@@ -34,14 +36,17 @@ var client = new PayrocClient(
 // var fundingRecipient = await client.Funding.FundingRecipients.CreateAsync(fundingRecipientRequest);
 
 // Payment
-var processingTerminalId = "5984001";
 // var paymentRequest = PaymentRequestFactory.Create(processingTerminalId);
 // var payment = await client.Payments.CreateAsync(paymentRequest);
+var paymentId = "GFL9F9AXXZ";
 
 // Payment Capture
-var paymentId = "GFL9F9AXXZ";
 var paymentCaptureRequest = PaymentCaptureFactory.Create(processingTerminalId, paymentId);
 var paymentCapture = await client.Payments.CaptureAsync(paymentCaptureRequest);
+
+// Payment Reversal
+var reversalRequest = PaymentReversalFactory.Create(processingTerminalId, paymentId);
+var reversal = await client.Payments.ReverseAsync(reversalRequest);
 
 Console.WriteLine("Testing complete...");
 Console.ReadLine();
