@@ -229,6 +229,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/paymentCapture'
+            examples:
+              paymentCapture:
+                $ref: './example-requests-v1.yaml#/components/examples/paymentCaptureRequest'
       responses:
         '200':
           description: Successful request. We captured the payment.
