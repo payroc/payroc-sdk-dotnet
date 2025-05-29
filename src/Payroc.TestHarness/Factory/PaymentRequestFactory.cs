@@ -4,7 +4,7 @@ namespace Payroc.TestHarness.Factory;
 
 public class PaymentRequestFactory
 {
-    public static PaymentRequest Create(string processingTerminalId = "1234001")
+    public static PaymentRequest Create(string processingTerminalId = "5984001")
         => new()
         {
             IdempotencyKey = Guid.NewGuid().ToString(),
