@@ -12,7 +12,7 @@ components:
       value:
         paymentId: M2MJOG6O2Y
         processingTerminalId: '1234001'
-        operator: Postman
+        operator: Jane
         order:
           orderId: OrderRef6543
           dateTime: '2024-07-02T15:30:00Z'

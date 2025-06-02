@@ -12,7 +12,7 @@ components:
       value:
         channel: web
         processingTerminalId: '1234001'
-        operator: Postman
+        operator: Jane
         order:
           orderId: OrderRef6543
           description: Large Pepperoni Pizza
