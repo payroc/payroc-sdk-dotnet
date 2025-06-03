@@ -16,7 +16,7 @@ public record SecureToken
     public required string SecureTokenId { get; set; }
 
     /// <summary>
-    /// Unique identifier that our gateway assigned to the terminal.
+    /// Unique identifier that we assigned to the terminal.
     /// </summary>
     [JsonPropertyName("processingTerminalId")]
     public required string ProcessingTerminalId { get; set; }
@@ -51,7 +51,7 @@ public record SecureToken
 
     /// <summary>
     /// Status of the customer's bank account. The processor performs a security check on the customer's bank account and returns the status of the account.
-    /// **Note**: Depending on the merchant's account settings, this feature may be unavailable.
+    /// **Note:** Depending on the merchant's account settings, this feature may be unavailable.
     /// </summary>
     [JsonPropertyName("status")]
     public required SecureTokenStatus Status { get; set; }

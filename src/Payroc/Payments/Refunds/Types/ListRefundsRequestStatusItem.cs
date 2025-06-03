@@ -26,8 +26,6 @@ public readonly record struct ListRefundsRequestStatusItem : IStringEnum
 
     public static readonly ListRefundsRequestStatusItem Accepted = new(Values.Accepted);
 
-    public static readonly ListRefundsRequestStatusItem Review = new(Values.Review);
-
     public ListRefundsRequestStatusItem(string value)
     {
         Value = value;
@@ -93,7 +91,5 @@ public readonly record struct ListRefundsRequestStatusItem : IStringEnum
         public const string Expired = "expired";
 
         public const string Accepted = "accepted";
-
-        public const string Review = "review";
     }
 }

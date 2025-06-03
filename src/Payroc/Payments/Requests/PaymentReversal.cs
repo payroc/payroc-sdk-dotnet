@@ -25,7 +25,7 @@ public record PaymentReversal
 
     /// <summary>
     /// Amount of the payment that the merchant wants to reverse. The value is in the currency’s lowest denomination, for example, cents.
-    /// **Note**: If the merchant doesn’t send an amount, we reverse the total amount of the transaction.
+    /// **Note:** If the merchant doesn’t send an amount, we reverse the total amount of the transaction.
     /// </summary>
     [JsonPropertyName("amount")]
     public long? Amount { get; set; }

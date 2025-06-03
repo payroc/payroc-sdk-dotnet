@@ -28,7 +28,7 @@ public partial class BankTransferRefundsClient
     ///         Last4 = "7062",
     ///         DateFrom = new DateTime(2024, 07, 01, 00, 00, 00, 000),
     ///         DateTo = new DateTime(2024, 07, 31, 23, 59, 59, 000),
-    ///         SettlementDate = "2024-07-15",
+    ///         SettlementDate = new DateOnly(2024, 7, 15),
     ///         Before = "2571",
     ///         After = "8516",
     ///     }
@@ -73,7 +73,9 @@ public partial class BankTransferRefundsClient
                 }
                 if (request.SettlementDate != null)
                 {
-                    _query["settlementDate"] = request.SettlementDate;
+                    _query["settlementDate"] = request.SettlementDate.Value.ToString(
+                        Constants.DateFormat
+                    );
                 }
                 if (request.Before != null)
                 {
@@ -158,7 +160,7 @@ public partial class BankTransferRefundsClient
 
     /// <summary>
     /// Send a refund to a customer's bank account. The refund transaction is not linked to the previous transaction.
-    /// *Note**: This function is available to only certain merchant accounts.
+    /// **Note:** This function is available to only certain merchant accounts.
     /// </summary>
     /// <example><code>
     /// await client.Payments.BankTransferRefunds.CreateAsync(

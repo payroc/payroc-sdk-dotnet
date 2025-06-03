@@ -27,8 +27,8 @@ public partial class SubscriptionsClient
     ///         CustomerName = "Sarah%20Hazel%20Hopper",
     ///         Last4 = "7062",
     ///         PaymentPlan = "Premium%20Club",
-    ///         EndDate = "2025-07-01T00:00:00Z",
-    ///         NextDueDate = "2024-08-01T00:00:00Z",
+    ///         EndDate = new DateOnly(2025, 7, 1),
+    ///         NextDueDate = new DateOnly(2024, 8, 1),
     ///         Before = "2571",
     ///         After = "8516",
     ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
@@ -67,11 +67,13 @@ public partial class SubscriptionsClient
                 }
                 if (request.EndDate != null)
                 {
-                    _query["endDate"] = request.EndDate;
+                    _query["endDate"] = request.EndDate.Value.ToString(Constants.DateFormat);
                 }
                 if (request.NextDueDate != null)
                 {
-                    _query["nextDueDate"] = request.NextDueDate;
+                    _query["nextDueDate"] = request.NextDueDate.Value.ToString(
+                        Constants.DateFormat
+                    );
                 }
                 if (request.Before != null)
                 {
@@ -209,8 +211,8 @@ public partial class SubscriptionsClient
     ///                 },
     ///             },
     ///         },
-    ///         StartDate = "2024-07-02",
-    ///         EndDate = "2025-07-01",
+    ///         StartDate = new DateOnly(2024, 7, 2),
+    ///         EndDate = new DateOnly(2025, 7, 1),
     ///         Length = 12,
     ///         PauseCollectionFor = 0,
     ///         CustomFields = new List&lt;CustomField&gt;()

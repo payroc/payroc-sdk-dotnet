@@ -113,7 +113,7 @@ public partial class MerchantPlatformsClient
     /// <summary>
     /// Use this method to create the entity that represents a business, including its legal information and all its processing accounts.
     ///
-    /// &gt; **Note**: To add a processing account to an existing merchant platform, go to [Create a processing account](#createProcessingAccount).
+    /// &gt; **Note:** To add a processing account to an existing merchant platform, go to [Create a processing account](/api/schema/boarding/merchant-platforms/create-processing-account).
     ///
     /// The response contains some fields that we require for other methods:
     /// - **merchantPlatformId** - Unique identifier that we assign to the merchant platform. Use the merchantPlatformId to retrieve and update information about the merchant platform.
@@ -168,7 +168,7 @@ public partial class MerchantPlatformsClient
     ///                         FirstName = "Jane",
     ///                         MiddleName = "Helen",
     ///                         LastName = "Doe",
-    ///                         DateOfBirth = "1964-03-22",
+    ///                         DateOfBirth = new DateOnly(1964, 3, 22),
     ///                         Address = new Address
     ///                         {
     ///                             Address1 = "1 Example Ave.",
@@ -204,8 +204,8 @@ public partial class MerchantPlatformsClient
     ///                 BusinessType = CreateProcessingAccountBusinessType.Restaurant,
     ///                 CategoryCode = 5999,
     ///                 MerchandiseOrServiceSold = "Pizza",
-    ///                 BusinessStartDate = "2020-01-01",
-    ///                 Timezone = CreateProcessingAccountTimezone.AmericaChicago,
+    ///                 BusinessStartDate = new DateOnly(2020, 1, 1),
+    ///                 Timezone = Timezone.AmericaChicago,
     ///                 Address = new Address
     ///                 {
     ///                     Address1 = "1 Example Ave.",
@@ -549,7 +549,7 @@ public partial class MerchantPlatformsClient
     ///
     /// When you created the merchant platform, we sent you its merchantPlatformId in the response. Send this merchantPlatformId as a path parameter in your endpoint.
     ///
-    /// &gt; **Note**: By default, we return only open processing accounts. To include closed processing accounts, send a value of `true` for the includeClosed query parameter.
+    /// &gt; **Note:** By default, we return only open processing accounts. To include closed processing accounts, send a value of `true` for the includeClosed query parameter.
     /// </summary>
     /// <example><code>
     /// await client.Boarding.MerchantPlatforms.ListProcessingAccountsAsync(
@@ -661,15 +661,15 @@ public partial class MerchantPlatformsClient
 
     /// <summary>
     /// Use this method to create a processing account and add it to a merchant platform.
-    ///     &gt; **Note**: You can create and add a processing account only to an existing merchant platform. If you have not already created a merchant platform, go to [Create a merchant platform.](#createMerchant)
+    ///     &gt; **Note:** You can create and add a processing account only to an existing merchant platform. If you have not already created a merchant platform, go to [Create a merchant platform.](/api/schema/boarding/merchant-platforms/create)
     ///
     /// In the response we return a processingAccountId for the processing account, which you need for the following methods.
-    /// - [Retrieve processing account](#getProcessingAcccounts)
-    /// - [List processing account's funding accounts](#listProcessingAccountsFundingAccounts)
-    /// - [List contacts](#listProcessingAccountContacts)
-    /// - [Get a processing account pricing agreement](#retrieveProcessingAccountPricing)
-    /// - [List owners](#listMerchantOwners)
-    /// - [Create reminder for processing account](#createReminder)
+    /// - [Retrieve processing account](/api/schema/boarding/processing-accounts/get)
+    /// - [List processing account's funding accounts](/api/schema/boarding/processing-accounts/list-funding-accounts)
+    /// - [List contacts](/api/schema/boarding/processing-accounts/contacts)
+    /// - [Get a processing account pricing agreement](/api/schema/boarding/processing-accounts/pricing)
+    /// - [List owners](/api/schema/boarding/processing-accounts/list-owners)
+    /// - [Create reminder for processing account](/api/schema/boarding/processing-accounts/create-reminder)
     /// </summary>
     /// <example><code>
     /// await client.Boarding.MerchantPlatforms.CreateProcessingAccountAsync(
@@ -687,7 +687,7 @@ public partial class MerchantPlatformsClient
     ///                     FirstName = "Jane",
     ///                     MiddleName = "Helen",
     ///                     LastName = "Doe",
-    ///                     DateOfBirth = "1964-03-22",
+    ///                     DateOfBirth = new DateOnly(1964, 3, 22),
     ///                     Address = new Address
     ///                     {
     ///                         Address1 = "1 Example Ave.",
@@ -723,8 +723,8 @@ public partial class MerchantPlatformsClient
     ///             BusinessType = CreateProcessingAccountBusinessType.Restaurant,
     ///             CategoryCode = 5999,
     ///             MerchandiseOrServiceSold = "Pizza",
-    ///             BusinessStartDate = "2020-01-01",
-    ///             Timezone = CreateProcessingAccountTimezone.AmericaChicago,
+    ///             BusinessStartDate = new DateOnly(2020, 1, 1),
+    ///             Timezone = Timezone.AmericaChicago,
     ///             Address = new Address
     ///             {
     ///                 Address1 = "1 Example Ave.",

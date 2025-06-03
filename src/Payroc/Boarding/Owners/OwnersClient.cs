@@ -114,7 +114,7 @@ public partial class OwnersClient
     ///             FirstName = "Jane",
     ///             MiddleName = "Helen",
     ///             LastName = "Doe",
-    ///             DateOfBirth = "1964-03-22",
+    ///             DateOfBirth = new DateOnly(1964, 3, 22),
     ///             Address = new Address
     ///             {
     ///                 Address1 = "1 Example Ave.",

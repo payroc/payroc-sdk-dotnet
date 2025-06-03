@@ -25,8 +25,8 @@ public partial class FundingInstructionsClient
     ///     {
     ///         Before = "2571",
     ///         After = "8516",
-    ///         DateFrom = "2024-07-01",
-    ///         DateTo = "2024-07-03",
+    ///         DateFrom = new DateOnly(2024, 7, 1),
+    ///         DateTo = new DateOnly(2024, 7, 3),
     ///     }
     /// );
     /// </code></example>
@@ -40,8 +40,8 @@ public partial class FundingInstructionsClient
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
-                _query["dateFrom"] = request.DateFrom;
-                _query["dateTo"] = request.DateTo;
+                _query["dateFrom"] = request.DateFrom.ToString(Constants.DateFormat);
+                _query["dateTo"] = request.DateTo.ToString(Constants.DateFormat);
                 if (request.Before != null)
                 {
                     _query["before"] = request.Before;

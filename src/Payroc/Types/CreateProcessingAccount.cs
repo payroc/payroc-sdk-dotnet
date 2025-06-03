@@ -55,13 +55,10 @@ public record CreateProcessingAccount
     /// Date that the business was established. The format of the value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("businessStartDate")]
-    public required string BusinessStartDate { get; set; }
+    public required DateOnly BusinessStartDate { get; set; }
 
-    /// <summary>
-    /// Time zone of the processing account.
-    /// </summary>
     [JsonPropertyName("timezone")]
-    public required CreateProcessingAccountTimezone Timezone { get; set; }
+    public required Timezone Timezone { get; set; }
 
     [JsonPropertyName("address")]
     public required Address Address { get; set; }

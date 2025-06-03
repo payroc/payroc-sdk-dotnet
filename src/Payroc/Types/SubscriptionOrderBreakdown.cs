@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains information about the taxes that apply to the transaction.
+/// Object that contains information about the surcharge and taxes that apply to the transaction.
 /// </summary>
 public record SubscriptionOrderBreakdown
 {
@@ -21,6 +21,9 @@ public record SubscriptionOrderBreakdown
     [JsonPropertyName("taxes")]
     public IEnumerable<Tax>? Taxes { get; set; }
 
+    /// <summary>
+    /// Object that contains information about the [surcharge](https://docs.payroc.com/knowledge/card-payments/surcharging) that we applied to the transaction.
+    /// </summary>
     [JsonPropertyName("surcharge")]
     public Surcharge? Surcharge { get; set; }
 

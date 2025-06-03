@@ -28,8 +28,6 @@ public readonly record struct PaymentSummaryStatus : IStringEnum
 
     public static readonly PaymentSummaryStatus Accepted = new(Values.Accepted);
 
-    public static readonly PaymentSummaryStatus Review = new(Values.Review);
-
     public PaymentSummaryStatus(string value)
     {
         Value = value;
@@ -97,7 +95,5 @@ public readonly record struct PaymentSummaryStatus : IStringEnum
         public const string Expired = "expired";
 
         public const string Accepted = "accepted";
-
-        public const string Review = "review";
     }
 }

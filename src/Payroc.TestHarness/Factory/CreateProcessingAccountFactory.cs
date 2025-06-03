@@ -11,7 +11,7 @@ public class CreateProcessingAccountFactory
                 {
                     FirstName = "Jane",
                     LastName = "Doe",
-                    DateOfBirth = "1964-03-22",
+                    DateOfBirth = new(1964,03,22),
                     Address = AddressFactory.CreateAddress(),
                     Identifiers =
                     [
@@ -43,8 +43,8 @@ public class CreateProcessingAccountFactory
             BusinessType = CreateProcessingAccountBusinessType.Restaurant,
             CategoryCode = 5999,
             MerchandiseOrServiceSold = "Pizza",
-            BusinessStartDate = "2020-01-01",
-            Timezone = CreateProcessingAccountTimezone.AmericaChicago,
+            BusinessStartDate = new(2020,01,01),
+            Timezone = Timezone.AmericaChicago,
             Address = AddressFactory.CreateAddress(),
             Processing = new()
             {

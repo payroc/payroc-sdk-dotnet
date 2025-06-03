@@ -27,7 +27,7 @@ public record ListReportingSettlementDisputesRequest
     /// Date that the dispute was submitted.
     /// </summary>
     [JsonIgnore]
-    public required string Date { get; set; }
+    public required DateOnly Date { get; set; }
 
     /// <summary>
     /// Unique identifier of the merchant.

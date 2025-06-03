@@ -7,7 +7,7 @@ namespace Payroc.Payments.Cards;
 public record BinLookup
 {
     /// <summary>
-    /// The terminal number assigned by the gateway.
+    /// Unique identifier that we assigned to the terminal.
     /// </summary>
     [JsonPropertyName("processingTerminalId")]
     public string? ProcessingTerminalId { get; set; }

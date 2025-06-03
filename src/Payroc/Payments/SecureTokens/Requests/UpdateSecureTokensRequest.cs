@@ -7,13 +7,13 @@ namespace Payroc.Payments.SecureTokens;
 public record UpdateSecureTokensRequest
 {
     /// <summary>
-    /// Unique identifier that our gateway assigned to the terminal.
+    /// Unique identifier that we assigned to the terminal.
     /// </summary>
     [JsonIgnore]
     public required string ProcessingTerminalId { get; set; }
 
     /// <summary>
-    /// Filter by the unique secure token.
+    /// Unique identifier that the merchant assigned to the secure token.
     /// </summary>
     [JsonIgnore]
     public required string SecureTokenId { get; set; }

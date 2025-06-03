@@ -81,16 +81,14 @@ public record FundingRecipient
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("owners")]
-    public IEnumerable<FundingRecipientOwnersItem> Owners { get; set; } =
-        new List<FundingRecipientOwnersItem>();
+    public IEnumerable<FundingRecipientOwnersItem>? Owners { get; set; }
 
     /// <summary>
     /// Array of fundingAccount objects associated with the funding recipient.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("fundingAccounts")]
-    public IEnumerable<FundingRecipientFundingAccountsItem> FundingAccounts { get; set; } =
-        new List<FundingRecipientFundingAccountsItem>();
+    public IEnumerable<FundingRecipientFundingAccountsItem>? FundingAccounts { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

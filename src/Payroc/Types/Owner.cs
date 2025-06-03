@@ -35,7 +35,7 @@ public record Owner
     /// Owner's date of birth. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("dateOfBirth")]
-    public required string DateOfBirth { get; set; }
+    public required DateOnly DateOfBirth { get; set; }
 
     [JsonPropertyName("address")]
     public required Address Address { get; set; }
@@ -48,7 +48,7 @@ public record Owner
 
     /// <summary>
     /// Array of contactMethod objects.
-    /// **Note**: If you are adding information about an owner, you must provide at least an email address. If you are adding information about a contact, you must provide at least a contact number.
+    /// **Note:** If you are adding information about an owner, you must provide at least an email address. If you are adding information about a contact, you must provide at least a contact number.
     /// </summary>
     [JsonPropertyName("contactMethods")]
     public IEnumerable<ContactMethod> ContactMethods { get; set; } = new List<ContactMethod>();

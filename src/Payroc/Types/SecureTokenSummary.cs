@@ -32,7 +32,7 @@ public record SecureTokenSummary
 
     /// <summary>
     /// Status of the customer's bank account. The processor performs a security check on the customer's bank account and returns the status of the account.
-    /// **Note**: Depending on the merchant's account settings, this feature may be unavailable.
+    /// **Note:** Depending on the merchant's account settings, this feature may be unavailable.
     /// </summary>
     [JsonPropertyName("status")]
     public required SecureTokenSummaryStatus Status { get; set; }

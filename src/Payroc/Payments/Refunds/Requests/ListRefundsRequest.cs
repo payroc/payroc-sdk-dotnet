@@ -6,7 +6,7 @@ namespace Payroc.Payments.Refunds;
 public record ListRefundsRequest
 {
     /// <summary>
-    /// Filter refunds by the unique identifier that our gateway assigned to the terminal.
+    /// Filter by terminal ID.
     /// </summary>
     [JsonIgnore]
     public string? ProcessingTerminalId { get; set; }
@@ -76,7 +76,7 @@ public record ListRefundsRequest
     /// Date the transaction was settled.
     /// </summary>
     [JsonIgnore]
-    public string? SettlementDate { get; set; }
+    public DateOnly? SettlementDate { get; set; }
 
     /// <summary>
     /// Points to the resource identifier that you want to receive your results before. Typically, this is the first resource on the previous page.

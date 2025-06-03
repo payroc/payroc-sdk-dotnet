@@ -19,7 +19,7 @@ public record PaymentRequest
     public required PaymentRequestChannel Channel { get; set; }
 
     /// <summary>
-    /// Unique identifier that our gateway assigned to the terminal.
+    /// Unique identifier that we assigned to the terminal.
     /// </summary>
     [JsonPropertyName("processingTerminalId")]
     public required string ProcessingTerminalId { get; set; }
@@ -52,7 +52,7 @@ public record PaymentRequest
     public PaymentRequestThreeDSecure? ThreeDSecure { get; set; }
 
     [JsonPropertyName("credentialOnFile")]
-    public CredentialOnFile? CredentialOnFile { get; set; }
+    public SchemasCredentialOnFile? CredentialOnFile { get; set; }
 
     [JsonPropertyName("offlineProcessing")]
     public OfflineProcessing? OfflineProcessing { get; set; }
@@ -63,14 +63,14 @@ public record PaymentRequest
     /// - `true` - Run a sale and automatically capture the transaction.
     /// - `false`- Run a pre-authorization and capture the transaction later.
     ///
-    /// **Note**: If you send `false` and the terminal doesn't support pre-authorization, we set the transaction's status to pending. The merchant must capture the transaction to take payment from the customer.
+    /// **Note:** If you send `false` and the terminal doesn't support pre-authorization, we set the transaction's status to pending. The merchant must capture the transaction to take payment from the customer.
     /// </summary>
     [JsonPropertyName("autoCapture")]
     public bool? AutoCapture { get; set; }
 
     /// <summary>
     /// Indicates if we should immediately settle the sale transaction. The merchant cannot adjust the transaction if we immediately settle it.
-    /// **Note**: If the value for **processAsSale** is `true`, the gateway ignores the value in **autoCapture**.
+    /// **Note:** If the value for **processAsSale** is `true`, the gateway ignores the value in **autoCapture**.
     /// </summary>
     [JsonPropertyName("processAsSale")]
     public bool? ProcessAsSale { get; set; }

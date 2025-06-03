@@ -35,8 +35,7 @@ public record MerchantPlatform
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("processingAccounts")]
-    public IEnumerable<MerchantPlatformProcessingAccountsItem> ProcessingAccounts { get; set; } =
-        new List<MerchantPlatformProcessingAccountsItem>();
+    public IEnumerable<MerchantPlatformProcessingAccountsItem>? ProcessingAccounts { get; set; }
 
     /// <summary>
     /// Object that you can send to include custom metadata in the request.

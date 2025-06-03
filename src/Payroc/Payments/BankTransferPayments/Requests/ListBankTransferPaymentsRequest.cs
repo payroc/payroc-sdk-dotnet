@@ -65,7 +65,13 @@ public record ListBankTransferPaymentsRequest
     /// Filter by payments settled on a specific date. The format is in **YYYY-MM-DD**.
     /// </summary>
     [JsonIgnore]
-    public string? SettlementDate { get; set; }
+    public DateOnly? SettlementDate { get; set; }
+
+    /// <summary>
+    /// Unique identifier that our gateway assigned to the payment link.
+    /// </summary>
+    [JsonIgnore]
+    public string? PaymentLinkId { get; set; }
 
     /// <summary>
     /// Points to the resource identifier that you want to receive your results before. Typically, this is the first resource on the previous page.

@@ -10,12 +10,6 @@ namespace Payroc;
 public record PricingIntent50
 {
     /// <summary>
-    /// Version of the pricing intent.
-    /// </summary>
-    [JsonPropertyName("version")]
-    public string Version { get; set; } = "5.0";
-
-    /// <summary>
     /// Unique identifier of the pricing intent.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
@@ -23,21 +17,24 @@ public record PricingIntent50
     public string? Id { get; set; }
 
     /// <summary>
-    /// Creation date of the pricing intent.
+    /// Date and time that we received your request to create the pricing intent in our system.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("createdDate")]
     public DateTime? CreatedDate { get; set; }
 
     /// <summary>
-    /// Date of the most recent change to the pricing intent.
+    /// Date and time that the pricing intent was last modified.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("lastUpdatedDate")]
     public DateTime? LastUpdatedDate { get; set; }
 
     /// <summary>
-    /// Status of the pricing intent.
+    /// Status of the pricing intent. The value can be one of the following:
+    /// - `active` - We have approved the pricing intent.
+    /// - `pendingReview` - We have not yet reviewed the pricing intent.
+    /// - `rejected` - We have rejected the pricing intent.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("status")]

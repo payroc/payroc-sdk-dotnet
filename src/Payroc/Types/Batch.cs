@@ -16,19 +16,19 @@ public record Batch
     /// Date that the merchant submitted the batch. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("date")]
-    public string? Date { get; set; }
+    public DateOnly? Date { get; set; }
 
     /// <summary>
     /// Date that we created a record for the batch. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("createdDate")]
-    public string? CreatedDate { get; set; }
+    public DateOnly? CreatedDate { get; set; }
 
     /// <summary>
     /// Date that the batch was last changed. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("lastModifiedDate")]
-    public string? LastModifiedDate { get; set; }
+    public DateOnly? LastModifiedDate { get; set; }
 
     /// <summary>
     /// Total value of sales. We return the value in the currency's lowest denomination, for example, cents.

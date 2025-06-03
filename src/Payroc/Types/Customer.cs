@@ -25,7 +25,7 @@ public record Customer
     /// Customer's date of birth. The format for this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("dateOfBirth")]
-    public string? DateOfBirth { get; set; }
+    public DateOnly? DateOfBirth { get; set; }
 
     /// <summary>
     /// Identifier of the transaction, also known as a customer code.

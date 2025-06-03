@@ -27,7 +27,7 @@ public record ListReportingSettlementAuthorizationsRequest
     /// Date to retrieve results from. The format of this value is **YYYY-MM-DD**. You must provide either the 'batchId' or the 'date'.
     /// </summary>
     [JsonIgnore]
-    public required string Date { get; set; }
+    public required DateOnly Date { get; set; }
 
     /// <summary>
     /// Unique identifier of the batch. You must provide either the 'batchId' or the 'date'.

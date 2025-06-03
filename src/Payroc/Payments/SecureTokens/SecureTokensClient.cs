@@ -173,7 +173,7 @@ public partial class SecureTokensClient
     ///         {
     ///             FirstName = "Sarah",
     ///             LastName = "Hopper",
-    ///             DateOfBirth = "1990-07-15",
+    ///             DateOfBirth = new DateOnly(1990, 7, 15),
     ///             ReferenceNumber = "Customer-12",
     ///             BillingAddress = new Address
     ///             {
@@ -221,7 +221,7 @@ public partial class SecureTokensClient
     ///                                 Device = new Device
     ///                                 {
     ///                                     Model = DeviceModel.BbposChp,
-    ///                                     SerialNumber = "PAX123456789",
+    ///                                     SerialNumber = "1850010868",
     ///                                 },
     ///                                 RawData =
     ///                                     "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
@@ -432,7 +432,7 @@ public partial class SecureTokensClient
 
     /// <summary>
     /// Delete a secure token and its represented payment details.
-    /// **Note**: If you delete a token, you can't reuse its identifier.
+    /// **Note:** If you delete a token, you can't reuse its identifier.
     /// </summary>
     /// <example><code>
     /// await client.Payments.SecureTokens.DeleteAsync(
@@ -642,14 +642,14 @@ public partial class SecureTokensClient
     /// If you don’t have a single-use token, and you want to update payment details represented by a secure token, go to
     /// [updateSecureToken](https://docs.payroc.com/api/resources#updateSecureToken).
     ///
-    /// **Note**: For more information about tokenization, go to [tokenization](https://docs.payroc.com/knowledge/basic-concepts/tokenization).
+    /// **Note:** For more information about tokenization, go to [tokenization](https://docs.payroc.com/knowledge/basic-concepts/tokenization).
     /// </summary>
     /// <example><code>
     /// await client.Payments.SecureTokens.AccountUpdateAsync(
     ///     new AccountUpdateSecureTokensRequest
     ///     {
-    ///         SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
     ///         ProcessingTerminalId = "1234001",
+    ///         SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
     ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
     ///         Body = new AccountUpdate(
     ///             new AccountUpdate.SingleUseToken(
