@@ -4,6 +4,15 @@ Write-Host "PAPI SDK Copy Preview Script" -ForegroundColor Cyan
 Write-Host "----------------------------" -ForegroundColor Cyan
 Write-Host ""
 
+$ErrorActionPreference = "Stop"
+
+# Define paths
+$root = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$previewRoot = Join-Path $root "fern\.preview"
+$previewSrc = Join-Path $previewRoot "fern-csharp-sdk\src"
+$targetSrc = Join-Path $root "src"
+$fernignorePath = Join-Path $root ".fernignore"
+
 # Clean start: remove the whole .preview folder
 if (Test-Path $previewRoot) {
     Write-Host "Removing entire .preview folder: $previewRoot"
@@ -21,15 +30,6 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host "Fern CLI generation complete." -ForegroundColor Green
-
-$ErrorActionPreference = "Stop"
-
-# Define paths
-$root = Split-Path -Parent $MyInvocation.MyCommand.Definition
-$previewRoot = Join-Path $root "fern\.preview"
-$previewSrc = Join-Path $previewRoot "fern-csharp-sdk\src"
-$targetSrc = Join-Path $root "src"
-$fernignorePath = Join-Path $root ".fernignore"
 
 # Parse .fernignore
 $ignoredPaths = @()
