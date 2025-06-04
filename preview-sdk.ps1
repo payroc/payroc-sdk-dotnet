@@ -13,9 +13,9 @@ $previewSrc = Join-Path $previewRoot "fern-csharp-sdk\src"
 $targetSrc = Join-Path $root "src"
 $fernignorePath = Join-Path $root ".fernignore"
 
-# Clean start: remove the whole .preview folder
+# Clean start: remove the whole .preview folder (just in case)
 if (Test-Path $previewRoot) {
-    Write-Host "Removing entire .preview folder: $previewRoot"
+    Write-Host "Removing existing .preview folder: $previewRoot"
     Remove-Item -Recurse -Force $previewRoot
 }
 
@@ -65,11 +65,11 @@ foreach ($folder in $foldersToSync) {
         }
     }
 
-    # Copy files EXCEPT ignored paths
-    Write-Host "Copying $sourceFolder to $targetFolder"
+    # Copy contents of source folder EXCEPT ignored files
+    Write-Host "Copying contents of $sourceFolder to $targetFolder"
     Get-ChildItem -Path $sourceFolder -Recurse -Force | ForEach-Object {
         $relativePath = $_.FullName.Substring($previewSrc.Length + 1)
-        $targetPath = Join-Path $targetFolder $relativePath
+        $targetPath = Join-Path $targetSrc $relativePath
 
         $shouldIgnore = $ignoredPaths | Where-Object { $relativePath -like "$_" }
         if (-not $shouldIgnore) {
@@ -85,7 +85,7 @@ foreach ($folder in $foldersToSync) {
 
 # Cleanup: remove the whole .preview folder
 if (Test-Path $previewRoot) {
-    Write-Host "Removing entire .preview folder: $previewRoot"
+    Write-Host "Removing .preview folder after copy: $previewRoot"
     Remove-Item -Recurse -Force $previewRoot
 }
 
