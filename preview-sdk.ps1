@@ -89,4 +89,4 @@ if (Test-Path $previewRoot) {
     Remove-Item -Recurse -Force $previewRoot
 }
 
-Write-Host "`n✅ Sync complete."
+Write-Host "Preview ready."
