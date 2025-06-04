@@ -1,3 +1,21 @@
+Write-Host ""
+Write-Host "----------------------------" -ForegroundColor Cyan
+Write-Host "PAPI SDK Copy Preview Script" -ForegroundColor Cyan
+Write-Host "----------------------------" -ForegroundColor Cyan
+Write-Host ""
+
+Write-Host "Running Fern CLI to generate preview SDK..." -ForegroundColor Yellow
+
+$fernCmd = "fern generate --group csharp-sdk --api api --preview"
+$fernResult = & $fernCmd
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "Fern generation failed. Exiting script."
+    exit 1
+}
+
+Write-Host "Fern CLI generation complete." -ForegroundColor Green
+
 $ErrorActionPreference = "Stop"
 
 # Define paths
@@ -5,6 +23,17 @@ $root = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $previewRoot = Join-Path $root "fern\.preview"
 $previewSrc = Join-Path $previewRoot "fern-csharp-sdk\src"
 $targetSrc = Join-Path $root "src"
+$fernignorePath = Join-Path $root ".fernignore"
+
+# Parse .fernignore
+$ignoredPaths = @()
+if (Test-Path $fernignorePath) {
+    $ignoredPaths = Get-Content $fernignorePath | Where-Object {
+        $_ -and -not $_.Trim().StartsWith("#")
+    } | ForEach-Object {
+        ($_ -replace "/", "\").Trim()
+    }
+}
 
 # Define subfolders to sync
 $foldersToSync = @("Payroc", "Payroc.Test")
@@ -18,13 +47,34 @@ foreach ($folder in $foldersToSync) {
         continue
     }
 
+    # Delete target contents EXCEPT ignored paths
     if (Test-Path $targetFolder) {
-        Write-Host "Removing old target folder: $targetFolder"
-        Remove-Item -Recurse -Force $targetFolder
+        Write-Host "Cleaning target folder: $targetFolder"
+
+        Get-ChildItem -Recurse -Force $targetFolder | ForEach-Object {
+            $relativePath = $_.FullName.Substring($root.Length + 1)
+            if ($ignoredPaths -notcontains $relativePath) {
+                Remove-Item -Recurse -Force $_.FullName -ErrorAction SilentlyContinue
+            }
+        }
     }
 
+    # Copy files EXCEPT ignored paths
     Write-Host "Copying $sourceFolder to $targetFolder"
-    Copy-Item -Recurse -Force $sourceFolder $targetFolder
+    Get-ChildItem -Path $sourceFolder -Recurse -Force | ForEach-Object {
+        $relativePath = $_.FullName.Substring($previewSrc.Length + 1)
+        $targetPath = Join-Path $targetFolder $relativePath
+
+        $shouldIgnore = $ignoredPaths | Where-Object { $relativePath -like "$_" }
+        if (-not $shouldIgnore) {
+            $targetDir = Split-Path $targetPath
+            if (-not (Test-Path $targetDir)) {
+                New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
+            }
+
+            Copy-Item -Path $_.FullName -Destination $targetPath -Force
+        }
+    }
 }
 
 # Cleanup: remove the whole .preview folder
