@@ -36,7 +36,7 @@ public class GetHostConfigurationTest : BaseMockServerTest
                   "internetAllowed": true,
                   "cardPresentAllowed": true
                 },
-                "processor": "processor"
+                "processor": "tsys"
               }
             }
             """;

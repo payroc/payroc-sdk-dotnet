@@ -18,11 +18,11 @@ public record HostConfigurationConfiguration
     }
 
     /// <summary>
-    /// Create an instance of HostConfigurationConfiguration with <see cref="HostConfigurationConfiguration.Processor"/>.
+    /// Create an instance of HostConfigurationConfiguration with <see cref="HostConfigurationConfiguration.Tsys"/>.
     /// </summary>
-    public HostConfigurationConfiguration(HostConfigurationConfiguration.ProcessorType value)
+    public HostConfigurationConfiguration(HostConfigurationConfiguration.Tsys value)
     {
-        Processor = "processor";
+        Processor = "tsys";
         Value = value.Value;
     }
 
@@ -38,34 +38,34 @@ public record HostConfigurationConfiguration
     public object? Value { get; internal set; }
 
     /// <summary>
-    /// Returns true if <see cref="Processor"/> is "processor"
+    /// Returns true if <see cref="Processor"/> is "tsys"
     /// </summary>
-    public bool IsProcessor => Processor == "processor";
+    public bool IsTsys => Processor == "tsys";
 
     /// <summary>
-    /// Returns the value as a <see cref="Payroc.Tsys"/> if <see cref="Processor"/> is 'processor', otherwise throws an exception.
+    /// Returns the value as a <see cref="Payroc.Tsys"/> if <see cref="Processor"/> is 'tsys', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="Exception">Thrown when <see cref="Processor"/> is not 'processor'.</exception>
-    public Payroc.Tsys AsProcessor() =>
-        IsProcessor
+    /// <exception cref="Exception">Thrown when <see cref="Processor"/> is not 'tsys'.</exception>
+    public Payroc.Tsys AsTsys() =>
+        IsTsys
             ? (Payroc.Tsys)Value!
-            : throw new Exception("HostConfigurationConfiguration.Processor is not 'processor'");
+            : throw new Exception("HostConfigurationConfiguration.Processor is not 'tsys'");
 
-    public T Match<T>(Func<Payroc.Tsys, T> onProcessor, Func<string, object?, T> onUnknown_)
+    public T Match<T>(Func<Payroc.Tsys, T> onTsys, Func<string, object?, T> onUnknown_)
     {
         return Processor switch
         {
-            "processor" => onProcessor(AsProcessor()),
+            "tsys" => onTsys(AsTsys()),
             _ => onUnknown_(Processor, Value),
         };
     }
 
-    public void Visit(Action<Payroc.Tsys> onProcessor, Action<string, object?> onUnknown_)
+    public void Visit(Action<Payroc.Tsys> onTsys, Action<string, object?> onUnknown_)
     {
         switch (Processor)
         {
-            case "processor":
-                onProcessor(AsProcessor());
+            case "tsys":
+                onTsys(AsTsys());
                 break;
             default:
                 onUnknown_(Processor, Value);
@@ -76,9 +76,9 @@ public record HostConfigurationConfiguration
     /// <summary>
     /// Attempts to cast the value to a <see cref="Payroc.Tsys"/> and returns true if successful.
     /// </summary>
-    public bool TryAsProcessor(out Payroc.Tsys? value)
+    public bool TryAsTsys(out Payroc.Tsys? value)
     {
-        if (Processor == "processor")
+        if (Processor == "tsys")
         {
             value = (Payroc.Tsys)Value!;
             return true;
@@ -90,7 +90,7 @@ public record HostConfigurationConfiguration
     public override string ToString() => JsonUtils.Serialize(this);
 
     public static implicit operator HostConfigurationConfiguration(
-        HostConfigurationConfiguration.ProcessorType value
+        HostConfigurationConfiguration.Tsys value
     ) => new(value);
 
     internal sealed class JsonConverter : JsonConverter<HostConfigurationConfiguration>
@@ -127,7 +127,7 @@ public record HostConfigurationConfiguration
 
             var value = discriminator switch
             {
-                "processor" => json.Deserialize<Payroc.Tsys>(options)
+                "tsys" => json.Deserialize<Payroc.Tsys>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.Tsys"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -143,7 +143,7 @@ public record HostConfigurationConfiguration
             JsonNode json =
                 value.Processor switch
                 {
-                    "processor" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "tsys" => JsonSerializer.SerializeToNode(value.Value, options),
                     _ => JsonSerializer.SerializeToNode(value.Value, options),
                 } ?? new JsonObject();
             json["processor"] = value.Processor;
@@ -152,11 +152,11 @@ public record HostConfigurationConfiguration
     }
 
     /// <summary>
-    /// Discriminated union type for processor
+    /// Discriminated union type for tsys
     /// </summary>
-    public struct ProcessorType
+    public struct Tsys
     {
-        public ProcessorType(Payroc.Tsys value)
+        public Tsys(Payroc.Tsys value)
         {
             Value = value;
         }
@@ -165,6 +165,6 @@ public record HostConfigurationConfiguration
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator ProcessorType(Payroc.Tsys value) => new(value);
+        public static implicit operator Tsys(Payroc.Tsys value) => new(value);
     }
 }

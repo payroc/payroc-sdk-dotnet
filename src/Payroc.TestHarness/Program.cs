@@ -12,7 +12,7 @@ var client = new PayrocClient(
     apiKey,
     new ClientOptions
     {
-        Environment = PayrocEnvironment.Test
+        Environment = PayrocEnvironment.Uat
     }
 );
 
