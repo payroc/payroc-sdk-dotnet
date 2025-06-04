@@ -133,8 +133,8 @@ public partial class FundingActivityClient
     ///     {
     ///         Before = "2571",
     ///         After = "8516",
-    ///         DateFrom = "2024-07-02",
-    ///         DateTo = "2024-07-03",
+    ///         DateFrom = new DateOnly(2024, 7, 2),
+    ///         DateTo = new DateOnly(2024, 7, 3),
     ///         MerchantId = "4525644354",
     ///     }
     /// );
@@ -149,8 +149,8 @@ public partial class FundingActivityClient
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
-                _query["dateFrom"] = request.DateFrom;
-                _query["dateTo"] = request.DateTo;
+                _query["dateFrom"] = request.DateFrom.ToString(Constants.DateFormat);
+                _query["dateTo"] = request.DateTo.ToString(Constants.DateFormat);
                 if (request.Before != null)
                 {
                     _query["before"] = request.Before;

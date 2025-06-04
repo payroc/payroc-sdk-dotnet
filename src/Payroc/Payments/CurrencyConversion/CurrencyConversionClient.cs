@@ -40,7 +40,7 @@ public partial class CurrencyConversionClient
     ///                                 Device = new Device
     ///                                 {
     ///                                     Model = DeviceModel.BbposChp,
-    ///                                     SerialNumber = "PAX123456789",
+    ///                                     SerialNumber = "1850010868",
     ///                                 },
     ///                                 RawData =
     ///                                     "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",

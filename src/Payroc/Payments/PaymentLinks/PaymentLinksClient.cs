@@ -1,0 +1,631 @@
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading;
+using Payroc;
+using Payroc.Core;
+using Payroc.Payments.PaymentLinks.SharingEvents;
+
+namespace Payroc.Payments.PaymentLinks;
+
+public partial class PaymentLinksClient
+{
+    private RawClient _client;
+
+    internal PaymentLinksClient(RawClient client)
+    {
+        _client = client;
+        SharingEvents = new SharingEventsClient(_client);
+    }
+
+    public SharingEventsClient SharingEvents { get; }
+
+    /// <summary>
+    /// Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of payment links for a processing terminal.
+    /// </summary>
+    /// <example><code>
+    /// await client.Payments.PaymentLinks.ListAsync(
+    ///     new ListPaymentLinksRequest
+    ///     {
+    ///         ProcessingTerminalId = "1234001",
+    ///         MerchantReference = "LinkRef6543",
+    ///         RecipientName = "Sarah Hazel Hopper",
+    ///         RecipientEmail = "sarah.hopper@example.com",
+    ///         CreatedOn = new DateOnly(2024, 7, 2),
+    ///         ExpiresOn = new DateOnly(2024, 8, 2),
+    ///         Before = "2571",
+    ///         After = "8516",
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<PayrocPager<PaymentLinkPaginatedListDataItem>> ListAsync(
+        ListPaymentLinksRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _query = new Dictionary<string, object>();
+                if (request.MerchantReference != null)
+                {
+                    _query["merchantReference"] = request.MerchantReference;
+                }
+                if (request.LinkType != null)
+                {
+                    _query["linkType"] = request.LinkType.Value.Stringify();
+                }
+                if (request.ChargeType != null)
+                {
+                    _query["chargeType"] = request.ChargeType.Value.Stringify();
+                }
+                if (request.Status != null)
+                {
+                    _query["status"] = request.Status.Value.Stringify();
+                }
+                if (request.RecipientName != null)
+                {
+                    _query["recipientName"] = request.RecipientName;
+                }
+                if (request.RecipientEmail != null)
+                {
+                    _query["recipientEmail"] = request.RecipientEmail;
+                }
+                if (request.CreatedOn != null)
+                {
+                    _query["createdOn"] = request.CreatedOn.Value.ToString(Constants.DateFormat);
+                }
+                if (request.ExpiresOn != null)
+                {
+                    _query["expiresOn"] = request.ExpiresOn.Value.ToString(Constants.DateFormat);
+                }
+                if (request.Before != null)
+                {
+                    _query["before"] = request.Before;
+                }
+                if (request.After != null)
+                {
+                    _query["after"] = request.After;
+                }
+                if (request.Limit != null)
+                {
+                    _query["limit"] = request.Limit.Value.ToString();
+                }
+                var httpRequest = _client.CreateHttpRequest(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.Environment.Api,
+                        Method = HttpMethod.Get,
+                        Path = string.Format(
+                            "processing-terminals/{0}/payment-links",
+                            ValueConvert.ToPathParameterString(request.ProcessingTerminalId)
+                        ),
+                        Query = _query,
+                        Options = options,
+                    }
+                );
+                var sendRequest = async (
+                    HttpRequestMessage httpRequest,
+                    CancellationToken cancellationToken
+                ) =>
+                {
+                    var response = await _client
+                        .SendRequestAsync(httpRequest, options, cancellationToken)
+                        .ConfigureAwait(false);
+                    if (response.StatusCode is >= 200 and < 400)
+                    {
+                        return response.Raw;
+                    }
+
+                    {
+                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        try
+                        {
+                            switch (response.StatusCode)
+                            {
+                                case 400:
+                                    throw new BadRequestError(
+                                        JsonUtils.Deserialize<FourHundred>(responseBody)
+                                    );
+                                case 401:
+                                    throw new UnauthorizedError(
+                                        JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                    );
+                                case 403:
+                                    throw new ForbiddenError(
+                                        JsonUtils.Deserialize<object>(responseBody)
+                                    );
+                                case 404:
+                                    throw new NotFoundError(
+                                        JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                    );
+                                case 406:
+                                    throw new NotAcceptableError(
+                                        JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                    );
+                                case 500:
+                                    throw new InternalServerError(
+                                        JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                    );
+                            }
+                        }
+                        catch (JsonException)
+                        {
+                            // unable to map error response, throwing generic error
+                        }
+                        throw new PayrocApiException(
+                            $"Error with status code {response.StatusCode}",
+                            response.StatusCode,
+                            responseBody
+                        );
+                    }
+                };
+                return await PayrocPagerFactory
+                    .CreateAsync<PaymentLinkPaginatedListDataItem>(
+                        sendRequest,
+                        httpRequest,
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Use this method to create a payment link that a customer can use to make a payment for goods or services. The request contains the following settings for the payment link:
+    /// - **type** - Indicates whether the link can be used only once or if it can be used multiple times.
+    /// - **authType** - Indicates whether the transaction is a sale or a pre-authorization.
+    /// - **paymentMethod** - Indicates the payment methods that the merchant accepts.
+    /// - **charge** - Indicates whether the merchant or the customer enters the amount for the transaction.
+    /// The response contains a paymentLinkId that you can use to [share the payment link](#sharePaymentLink) or to [retrieve information about the link](#retrievePaymentLink).
+    /// </summary>
+    /// <example><code>
+    /// await client.Payments.PaymentLinks.CreateAsync(
+    ///     new CreatePaymentLinksRequest
+    ///     {
+    ///         ProcessingTerminalId = "1234001",
+    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         Body = new CreatePaymentLinksRequestBody(
+    ///             new CreatePaymentLinksRequestBody.MultiUse(
+    ///                 new MultiUsePaymentLink
+    ///                 {
+    ///                     MerchantReference = "LinkRef6543",
+    ///                     Order = new MultiUsePaymentLinkOrder
+    ///                     {
+    ///                         Charge = new MultiUsePaymentLinkOrderCharge(
+    ///                             new MultiUsePaymentLinkOrderCharge.Prompt(
+    ///                                 new PromptPaymentLinkCharge { Currency = Currency.Aed }
+    ///                             )
+    ///                         ),
+    ///                     },
+    ///                     AuthType = MultiUsePaymentLinkAuthType.Sale,
+    ///                     PaymentMethods = new List&lt;MultiUsePaymentLinkPaymentMethodsItem&gt;()
+    ///                     {
+    ///                         MultiUsePaymentLinkPaymentMethodsItem.Card,
+    ///                     },
+    ///                 }
+    ///             )
+    ///         ),
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<CreatePaymentLinksResponse> CreateAsync(
+        CreatePaymentLinksRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = new Headers(
+                    new Dictionary<string, string>()
+                    {
+                        { "Idempotency-Key", request.IdempotencyKey },
+                    }
+                );
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.Environment.Api,
+                            Method = HttpMethod.Post,
+                            Path = string.Format(
+                                "processing-terminals/{0}/payment-links",
+                                ValueConvert.ToPathParameterString(request.ProcessingTerminalId)
+                            ),
+                            Body = request.Body,
+                            Headers = _headers,
+                            ContentType = "application/json",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<CreatePaymentLinksResponse>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new PayrocException("Failed to deserialize response", e);
+                    }
+                }
+
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestError(
+                                    JsonUtils.Deserialize<FourHundred>(responseBody)
+                                );
+                            case 401:
+                                throw new UnauthorizedError(
+                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                );
+                            case 403:
+                                throw new ForbiddenError(
+                                    JsonUtils.Deserialize<object>(responseBody)
+                                );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 406:
+                                throw new NotAcceptableError(
+                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 409:
+                                throw new ConflictError(
+                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
+                                );
+                            case 415:
+                                throw new UnsupportedMediaTypeError(
+                                    JsonUtils.Deserialize<FourHundredFifteen>(responseBody)
+                                );
+                            case 500:
+                                throw new InternalServerError(
+                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new PayrocApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Use this method to retrieve information about a payment link.
+    /// You need the paymentLinkId that we sent to you when you created the payment link.
+    /// </summary>
+    /// <example><code>
+    /// await client.Payments.PaymentLinks.GetAsync(
+    ///     new GetPaymentLinksRequest { PaymentLinkId = "JZURRJBUPS" }
+    /// );
+    /// </code></example>
+    public async Task<GetPaymentLinksResponse> GetAsync(
+        GetPaymentLinksRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.Environment.Api,
+                            Method = HttpMethod.Get,
+                            Path = string.Format(
+                                "payment-links/{0}",
+                                ValueConvert.ToPathParameterString(request.PaymentLinkId)
+                            ),
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<GetPaymentLinksResponse>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new PayrocException("Failed to deserialize response", e);
+                    }
+                }
+
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestError(
+                                    JsonUtils.Deserialize<FourHundred>(responseBody)
+                                );
+                            case 401:
+                                throw new UnauthorizedError(
+                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                );
+                            case 403:
+                                throw new ForbiddenError(
+                                    JsonUtils.Deserialize<object>(responseBody)
+                                );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 406:
+                                throw new NotAcceptableError(
+                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 500:
+                                throw new InternalServerError(
+                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new PayrocApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Use this method to partially update a payment link. Structure your request to follow the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
+    ///
+    /// You can update the following properties of a multi-use link:
+    /// - **expiresOn parameter** - Expiration date of the link.
+    /// - **customLabels object** - Label for the payment button.
+    /// - **credentialOnFile object** - Settings for saving the customer's payment details.
+    ///
+    /// You can update the following properties of a single-use link:
+    /// - **expiresOn parameter** - Expiration date of the link.
+    /// - **authType parameter** - Transaction type of the payment link.
+    /// - **amount parameter** - Total amount of the transaction.
+    /// - **currency parameter** - Currency of the transaction.
+    /// - **description parameter** - Brief description of the transaction.
+    /// - **customLabels object** - Label for the payment button.
+    /// - **credentialOnFile object** - Settings for saving the customer's payment details.
+    ///
+    /// **Note:** When a merchant updates a single-use link, we update the payment URL and HTML code in the assets object. The customer can't use the original link to make a payment.
+    /// </summary>
+    /// <example><code>
+    /// await client.Payments.PaymentLinks.UpdateAsync(
+    ///     new UpdatePaymentLinksRequest
+    ///     {
+    ///         PaymentLinkId = "JZURRJBUPS",
+    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         Body = new List&lt;PatchDocument&gt;()
+    ///         {
+    ///             new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<UpdatePaymentLinksResponse> UpdateAsync(
+        UpdatePaymentLinksRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = new Headers(
+                    new Dictionary<string, string>()
+                    {
+                        { "Idempotency-Key", request.IdempotencyKey },
+                    }
+                );
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.Environment.Api,
+                            Method = HttpMethodExtensions.Patch,
+                            Path = string.Format(
+                                "payment-links/{0}",
+                                ValueConvert.ToPathParameterString(request.PaymentLinkId)
+                            ),
+                            Body = request.Body,
+                            Headers = _headers,
+                            ContentType = "application/json",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<UpdatePaymentLinksResponse>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new PayrocException("Failed to deserialize response", e);
+                    }
+                }
+
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestError(
+                                    JsonUtils.Deserialize<FourHundred>(responseBody)
+                                );
+                            case 401:
+                                throw new UnauthorizedError(
+                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                );
+                            case 403:
+                                throw new ForbiddenError(
+                                    JsonUtils.Deserialize<object>(responseBody)
+                                );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 406:
+                                throw new NotAcceptableError(
+                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 409:
+                                throw new ConflictError(
+                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
+                                );
+                            case 415:
+                                throw new UnsupportedMediaTypeError(
+                                    JsonUtils.Deserialize<FourHundredFifteen>(responseBody)
+                                );
+                            case 500:
+                                throw new InternalServerError(
+                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new PayrocApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Use this method to deactivate a payment link. If the merchant deactivates a payment link, they can't reactivate it. To take payment, the merchant must create a new payment link.
+    /// **Note:** After the merchant deactivates a payment link, a customer can't use the link to make a payment.
+    /// </summary>
+    /// <example><code>
+    /// await client.Payments.PaymentLinks.DeactivateAsync(
+    ///     new DeactivatePaymentLinksRequest { PaymentLinkId = "JZURRJBUPS" }
+    /// );
+    /// </code></example>
+    public async Task<DeactivatePaymentLinksResponse> DeactivateAsync(
+        DeactivatePaymentLinksRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.Environment.Api,
+                            Method = HttpMethod.Post,
+                            Path = string.Format(
+                                "payment-links/{0}/deactivate",
+                                ValueConvert.ToPathParameterString(request.PaymentLinkId)
+                            ),
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<DeactivatePaymentLinksResponse>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new PayrocException("Failed to deserialize response", e);
+                    }
+                }
+
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestError(
+                                    JsonUtils.Deserialize<FourHundred>(responseBody)
+                                );
+                            case 401:
+                                throw new UnauthorizedError(
+                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                );
+                            case 403:
+                                throw new ForbiddenError(
+                                    JsonUtils.Deserialize<object>(responseBody)
+                                );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 406:
+                                throw new NotAcceptableError(
+                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 409:
+                                throw new ConflictError(
+                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
+                                );
+                            case 500:
+                                throw new InternalServerError(
+                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new PayrocApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+}

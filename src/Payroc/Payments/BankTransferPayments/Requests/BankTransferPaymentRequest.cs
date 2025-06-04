@@ -13,7 +13,7 @@ public record BankTransferPaymentRequest
     public required string IdempotencyKey { get; set; }
 
     /// <summary>
-    /// Unique identifier that our gateway assigned to the terminal.
+    /// Unique identifier that we assigned to the terminal.
     /// </summary>
     [JsonPropertyName("processingTerminalId")]
     public required string ProcessingTerminalId { get; set; }
@@ -25,7 +25,7 @@ public record BankTransferPaymentRequest
     public BankTransferCustomer? Customer { get; set; }
 
     [JsonPropertyName("credentialOnFile")]
-    public CredentialOnFile? CredentialOnFile { get; set; }
+    public SchemasCredentialOnFile? CredentialOnFile { get; set; }
 
     /// <summary>
     /// Object that contains information about the customer's payment details.

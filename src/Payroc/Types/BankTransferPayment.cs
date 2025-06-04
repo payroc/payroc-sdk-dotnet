@@ -10,13 +10,13 @@ namespace Payroc;
 public record BankTransferPayment
 {
     /// <summary>
-    /// Unique identifier that our gateway assigned to the payment.
+    /// Unique identifier that we assigned to the payment.
     /// </summary>
     [JsonPropertyName("paymentId")]
     public required string PaymentId { get; set; }
 
     /// <summary>
-    /// Unique identifier that our gateway assigned to the terminal.
+    /// Unique identifier that we assigned to the terminal.
     /// </summary>
     [JsonPropertyName("processingTerminalId")]
     public required string ProcessingTerminalId { get; set; }

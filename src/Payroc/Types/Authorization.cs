@@ -19,13 +19,13 @@ public record Authorization
     /// Date that we received the authorization. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("createdDate")]
-    public string? CreatedDate { get; set; }
+    public DateOnly? CreatedDate { get; set; }
 
     /// <summary>
     /// Date that the authorization was last changed. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("lastModifiedDate")]
-    public string? LastModifiedDate { get; set; }
+    public DateOnly? LastModifiedDate { get; set; }
 
     /// <summary>
     /// Code that indicates the response for the authorization.

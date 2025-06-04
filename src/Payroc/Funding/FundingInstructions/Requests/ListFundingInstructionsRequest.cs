@@ -27,13 +27,13 @@ public record ListFundingInstructionsRequest
     /// Retrieve activity that occured since `dateFrom`. We can return activity from only the last two years.
     /// </summary>
     [JsonIgnore]
-    public required string DateFrom { get; set; }
+    public required DateOnly DateFrom { get; set; }
 
     /// <summary>
     /// Retrieve activity that occured before `dateTo`.
     /// </summary>
     [JsonIgnore]
-    public required string DateTo { get; set; }
+    public required DateOnly DateTo { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

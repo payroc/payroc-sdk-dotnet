@@ -31,7 +31,7 @@ public partial class RefundsClient
     ///         Last4 = "7062",
     ///         DateFrom = new DateTime(2024, 07, 01, 15, 30, 00, 000),
     ///         DateTo = new DateTime(2024, 07, 03, 15, 30, 00, 000),
-    ///         SettlementDate = "2024-07-02",
+    ///         SettlementDate = new DateOnly(2024, 7, 2),
     ///         Before = "2571",
     ///         After = "8516",
     ///     }
@@ -90,7 +90,9 @@ public partial class RefundsClient
                 }
                 if (request.SettlementDate != null)
                 {
-                    _query["settlementDate"] = request.SettlementDate;
+                    _query["settlementDate"] = request.SettlementDate.Value.ToString(
+                        Constants.DateFormat
+                    );
                 }
                 if (request.Before != null)
                 {
@@ -201,7 +203,7 @@ public partial class RefundsClient
     ///                                 Device = new Device
     ///                                 {
     ///                                     Model = DeviceModel.BbposChp,
-    ///                                     SerialNumber = "PAX123456789",
+    ///                                     SerialNumber = "1850010868",
     ///                                 },
     ///                                 RawData =
     ///                                     "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",

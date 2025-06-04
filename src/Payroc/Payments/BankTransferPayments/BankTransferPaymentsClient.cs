@@ -28,7 +28,8 @@ public partial class BankTransferPaymentsClient
     ///         Last4 = "7890",
     ///         DateFrom = new DateTime(2024, 07, 01, 00, 00, 00, 000),
     ///         DateTo = new DateTime(2024, 07, 31, 23, 59, 59, 000),
-    ///         SettlementDate = "2024-07-15",
+    ///         SettlementDate = new DateOnly(2024, 7, 15),
+    ///         PaymentLinkId = "JZURRJBUPS",
     ///         Before = "2571",
     ///         After = "8516",
     ///     }
@@ -73,7 +74,13 @@ public partial class BankTransferPaymentsClient
                 }
                 if (request.SettlementDate != null)
                 {
-                    _query["settlementDate"] = request.SettlementDate;
+                    _query["settlementDate"] = request.SettlementDate.Value.ToString(
+                        Constants.DateFormat
+                    );
+                }
+                if (request.PaymentLinkId != null)
+                {
+                    _query["paymentLinkId"] = request.PaymentLinkId;
                 }
                 if (request.Before != null)
                 {
@@ -193,7 +200,7 @@ public partial class BankTransferPaymentsClient
     ///                 ),
     ///             },
     ///         },
-    ///         CredentialOnFile = new CredentialOnFile { Tokenize = true },
+    ///         CredentialOnFile = new SchemasCredentialOnFile { Tokenize = true },
     ///         PaymentMethod = new BankTransferPaymentRequestPaymentMethod(
     ///             new BankTransferPaymentRequestPaymentMethod.Ach(
     ///                 new AchPayload

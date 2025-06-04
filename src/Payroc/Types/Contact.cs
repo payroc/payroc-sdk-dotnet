@@ -45,7 +45,7 @@ public record Contact
 
     /// <summary>
     /// Array of contactMethod objects.
-    /// **Note**: If you are adding information about an owner, you must provide at least an email address. If you are adding information about a contact, you must provide at least a contact number.
+    /// **Note:** If you are adding information about an owner, you must provide at least an email address. If you are adding information about a contact, you must provide at least a contact number.
     /// </summary>
     [JsonPropertyName("contactMethods")]
     public IEnumerable<ContactMethod> ContactMethods { get; set; } = new List<ContactMethod>();

@@ -3,6 +3,8 @@ using Payroc.Boarding.MerchantPlatforms;
 using Payroc.Boarding.Owners;
 using Payroc.Boarding.PricingIntents;
 using Payroc.Boarding.ProcessingAccounts;
+using Payroc.Boarding.ProcessingTerminals;
+using Payroc.Boarding.TerminalOrders;
 using Payroc.Core;
 
 namespace Payroc.Boarding;
@@ -18,7 +20,9 @@ public partial class BoardingClient
         PricingIntents = new PricingIntentsClient(_client);
         MerchantPlatforms = new MerchantPlatformsClient(_client);
         ProcessingAccounts = new ProcessingAccountsClient(_client);
+        ProcessingTerminals = new ProcessingTerminalsClient(_client);
         Contacts = new ContactsClient(_client);
+        TerminalOrders = new TerminalOrdersClient(_client);
     }
 
     public OwnersClient Owners { get; }
@@ -29,5 +33,9 @@ public partial class BoardingClient
 
     public ProcessingAccountsClient ProcessingAccounts { get; }
 
+    public ProcessingTerminalsClient ProcessingTerminals { get; }
+
     public ContactsClient Contacts { get; }
+
+    public TerminalOrdersClient TerminalOrders { get; }
 }

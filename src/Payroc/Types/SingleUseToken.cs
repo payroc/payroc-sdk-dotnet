@@ -7,11 +7,11 @@ namespace Payroc;
 public record SingleUseToken
 {
     /// <summary>
-    /// Unique identifier that our gateway assigned to the terminal.
+    /// Unique identifier that we assigned to the terminal.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("processingTerminalId")]
-    public required string ProcessingTerminalId { get; set; }
+    public string? ProcessingTerminalId { get; set; }
 
     /// <summary>
     /// Operator who initiated the request.
@@ -33,14 +33,14 @@ public record SingleUseToken
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("token")]
-    public required string Token { get; set; }
+    public string? Token { get; set; }
 
     /// <summary>
     /// Date and time that the token expires. We return this value in the ISO 8601 format.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("expiresAt")]
-    public required DateTime ExpiresAt { get; set; }
+    public DateTime? ExpiresAt { get; set; }
 
     /// <summary>
     /// Object that contains information about the payment method that we tokenized.

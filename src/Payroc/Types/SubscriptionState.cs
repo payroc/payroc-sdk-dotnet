@@ -24,7 +24,7 @@ public record SubscriptionState
     /// Date that the merchant collects the next payment.
     /// </summary>
     [JsonPropertyName("nextDueDate")]
-    public string? NextDueDate { get; set; }
+    public DateOnly? NextDueDate { get; set; }
 
     /// <summary>
     /// Number of payments that the merchant has collected.

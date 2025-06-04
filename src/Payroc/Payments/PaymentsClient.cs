@@ -3,12 +3,14 @@ using System.Text.Json;
 using System.Threading;
 using Payroc;
 using Payroc.Core;
+using Payroc.Payments.ApplePaySessions;
 using Payroc.Payments.BankAccounts;
 using Payroc.Payments.BankTransferPayments;
 using Payroc.Payments.BankTransferRefunds;
 using Payroc.Payments.Cards;
 using Payroc.Payments.CurrencyConversion;
 using Payroc.Payments.HostedFields;
+using Payroc.Payments.PaymentLinks;
 using Payroc.Payments.PaymentPlans;
 using Payroc.Payments.Refunds;
 using Payroc.Payments.SecureTokens;
@@ -24,11 +26,13 @@ public partial class PaymentsClient
     internal PaymentsClient(RawClient client)
     {
         _client = client;
+        PaymentLinks = new PaymentLinksClient(_client);
         PaymentPlans = new PaymentPlansClient(_client);
         Subscriptions = new SubscriptionsClient(_client);
         SecureTokens = new SecureTokensClient(_client);
         SingleUseTokens = new SingleUseTokensClient(_client);
         HostedFields = new HostedFieldsClient(_client);
+        ApplePaySessions = new ApplePaySessionsClient(_client);
         Refunds = new RefundsClient(_client);
         Cards = new CardsClient(_client);
         CurrencyConversion = new CurrencyConversionClient(_client);
@@ -36,6 +40,8 @@ public partial class PaymentsClient
         BankTransferRefunds = new BankTransferRefundsClient(_client);
         BankAccounts = new BankAccountsClient(_client);
     }
+
+    public PaymentLinksClient PaymentLinks { get; }
 
     public PaymentPlansClient PaymentPlans { get; }
 
@@ -46,6 +52,8 @@ public partial class PaymentsClient
     public SingleUseTokensClient SingleUseTokens { get; }
 
     public HostedFieldsClient HostedFields { get; }
+
+    public ApplePaySessionsClient ApplePaySessions { get; }
 
     public RefundsClient Refunds { get; }
 
@@ -74,7 +82,8 @@ public partial class PaymentsClient
     ///         Last4 = "7062",
     ///         DateFrom = new DateTime(2024, 07, 01, 15, 30, 00, 000),
     ///         DateTo = new DateTime(2024, 07, 03, 15, 30, 00, 000),
-    ///         SettlementDate = "2024-07-02",
+    ///         SettlementDate = new DateOnly(2024, 7, 2),
+    ///         PaymentLinkId = "JZURRJBUPS",
     ///         Before = "2571",
     ///         After = "8516",
     ///     }
@@ -135,7 +144,13 @@ public partial class PaymentsClient
                 }
                 if (request.SettlementDate != null)
                 {
-                    _query["settlementDate"] = request.SettlementDate;
+                    _query["settlementDate"] = request.SettlementDate.Value.ToString(
+                        Constants.DateFormat
+                    );
+                }
+                if (request.PaymentLinkId != null)
+                {
+                    _query["paymentLinkId"] = request.PaymentLinkId;
                 }
                 if (request.Before != null)
                 {
@@ -231,7 +246,7 @@ public partial class PaymentsClient
     ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
     ///         Channel = PaymentRequestChannel.Web,
     ///         ProcessingTerminalId = "1234001",
-    ///         Operator = "Postman",
+    ///         Operator = "Jane",
     ///         Order = new PaymentOrder
     ///         {
     ///             OrderId = "OrderRef6543",
@@ -279,7 +294,7 @@ public partial class PaymentsClient
     ///                                 Device = new Device
     ///                                 {
     ///                                     Model = DeviceModel.BbposChp,
-    ///                                     SerialNumber = "PAX123456789",
+    ///                                     SerialNumber = "1850010868",
     ///                                 },
     ///                                 RawData =
     ///                                     "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
@@ -608,6 +623,19 @@ public partial class PaymentsClient
     ///     {
     ///         PaymentId = "M2MJOG6O2Y",
     ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "1234001",
+    ///         Operator = "Jane",
+    ///         Amount = 4999,
+    ///         Breakdown = new ItemizedBreakdown
+    ///         {
+    ///             Subtotal = 4999,
+    ///             DutyAmount = 499,
+    ///             FreightAmount = 500,
+    ///             Items = new List&lt;LineItem&gt;()
+    ///             {
+    ///                 new LineItem { UnitPrice = 4000, Quantity = 1 },
+    ///             },
+    ///         },
     ///     }
     /// );
     /// </code></example>

@@ -6,7 +6,7 @@ namespace Payroc.Payments.Subscriptions;
 public record ListSubscriptionsRequest
 {
     /// <summary>
-    /// Unique identifier that our gateway assigned to the terminal.
+    /// Unique identifier that we assigned to the terminal.
     /// </summary>
     [JsonIgnore]
     public required string ProcessingTerminalId { get; set; }
@@ -46,14 +46,14 @@ public record ListSubscriptionsRequest
     /// Filter subscriptions that end on a specific date.
     /// </summary>
     [JsonIgnore]
-    public string? EndDate { get; set; }
+    public DateOnly? EndDate { get; set; }
 
     /// <summary>
     /// Format: `YYYY-MM-DD`
     /// Filter subscriptions by the date that the next payment is collected.
     /// </summary>
     [JsonIgnore]
-    public string? NextDueDate { get; set; }
+    public DateOnly? NextDueDate { get; set; }
 
     /// <summary>
     /// Points to the resource identifier that you want to receive your results before. Typically, this is the first resource on the previous page.

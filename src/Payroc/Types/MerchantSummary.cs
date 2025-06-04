@@ -21,6 +21,12 @@ public record MerchantSummary
     [JsonPropertyName("doingBusinessAs")]
     public string? DoingBusinessAs { get; set; }
 
+    /// <summary>
+    /// Unique identifier of the processing account.
+    /// </summary>
+    [JsonPropertyName("processingAccountId")]
+    public string? ProcessingAccountId { get; set; }
+
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

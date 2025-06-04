@@ -6,7 +6,7 @@ namespace Payroc.Payments;
 public record ListPaymentsRequest
 {
     /// <summary>
-    /// Filter payments by terminal ID.
+    /// Filter by terminal ID.
     /// </summary>
     [JsonIgnore]
     public string? ProcessingTerminalId { get; set; }
@@ -90,7 +90,13 @@ public record ListPaymentsRequest
     /// Filter by payments that the processor settled on a specific date in the format **YYYY-MM-DD**.
     /// </summary>
     [JsonIgnore]
-    public string? SettlementDate { get; set; }
+    public DateOnly? SettlementDate { get; set; }
+
+    /// <summary>
+    /// Unique identifier that our gateway assigned to the payment link.
+    /// </summary>
+    [JsonIgnore]
+    public string? PaymentLinkId { get; set; }
 
     /// <summary>
     /// Points to the resource identifier that you want to receive your results before. Typically, this is the first resource on the previous page.

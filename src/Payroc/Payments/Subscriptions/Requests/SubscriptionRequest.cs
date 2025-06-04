@@ -7,7 +7,7 @@ namespace Payroc.Payments.Subscriptions;
 public record SubscriptionRequest
 {
     /// <summary>
-    /// Unique identifier that our gateway assigned to the terminal.
+    /// Unique identifier that we assigned to the terminal.
     /// </summary>
     [JsonIgnore]
     public required string ProcessingTerminalId { get; set; }
@@ -61,7 +61,7 @@ public record SubscriptionRequest
     /// Subscription's start date.
     /// </summary>
     [JsonPropertyName("startDate")]
-    public required string StartDate { get; set; }
+    public required DateOnly StartDate { get; set; }
 
     /// <summary>
     /// Format: **YYYY-MM-DD**
@@ -70,7 +70,7 @@ public record SubscriptionRequest
     /// our gateway uses the value for **endDate** to determine when the subscription should end.
     /// </summary>
     [JsonPropertyName("endDate")]
-    public string? EndDate { get; set; }
+    public DateOnly? EndDate { get; set; }
 
     /// <summary>
     /// Total number of billing cycles. To indicate that the subscription should run indefinitely, send a value of `0`.

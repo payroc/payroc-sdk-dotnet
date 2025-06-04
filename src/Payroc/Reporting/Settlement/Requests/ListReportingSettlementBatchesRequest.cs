@@ -27,7 +27,7 @@ public record ListReportingSettlementBatchesRequest
     /// Date that the merchant submitted the batch. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonIgnore]
-    public required string Date { get; set; }
+    public required DateOnly Date { get; set; }
 
     /// <summary>
     /// Unique identifier of the merchant.

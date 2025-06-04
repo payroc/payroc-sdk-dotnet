@@ -25,7 +25,7 @@ public record DisputeStatus
     /// Date that the status changed. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("statusDate")]
-    public string? StatusDate { get; set; }
+    public DateOnly? StatusDate { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

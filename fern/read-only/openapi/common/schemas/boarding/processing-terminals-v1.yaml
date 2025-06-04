@@ -320,7 +320,7 @@ components:
           discriminator:
             propertyName: processor
             mapping:
-              processor: '#/components/schemas/tsys'
+              tsys: '#/components/schemas/tsys'
           oneOf:
             - $ref: '#/components/schemas/tsys'      
       required:
@@ -332,8 +332,8 @@ components:
         processor:
           type: string
           description: Name of the host processor.
-          example: 'tsys'
-          enum: 
+          example: tsys
+          enum:
             - tsys
           maxLength: 50
         merchant:

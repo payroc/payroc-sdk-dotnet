@@ -1,7 +1,7 @@
 Write-Host ""
-Write-Host "-------------------------------------" -ForegroundColor Cyan
-Write-Host "PAPI UI Docs Local Spec Update Script" -ForegroundColor Cyan
-Write-Host "-------------------------------------" -ForegroundColor Cyan
+Write-Host "---------------------------------" -ForegroundColor Cyan
+Write-Host "PAPI SDK Local Spec Update Script" -ForegroundColor Cyan
+Write-Host "---------------------------------" -ForegroundColor Cyan
 Write-Host ""
 
 $path = "fern\read-only"

@@ -14,14 +14,14 @@ public record ProcessingAccount
     public string? ProcessingAccountId { get; set; }
 
     /// <summary>
-    /// Date that the processing account was created.
+    /// Date and time that we received your request to create the processing account in our system.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("createdDate")]
     public DateTime? CreatedDate { get; set; }
 
     /// <summary>
-    /// Date that the processing account was last modified.
+    /// Date and time that the processing account was last modified.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("lastModifiedDate")]
@@ -54,8 +54,7 @@ public record ProcessingAccount
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("owners")]
-    public IEnumerable<ProcessingAccountOwnersItem> Owners { get; set; } =
-        new List<ProcessingAccountOwnersItem>();
+    public IEnumerable<ProcessingAccountOwnersItem>? Owners { get; set; }
 
     /// <summary>
     /// Website address of the business.
@@ -85,13 +84,10 @@ public record ProcessingAccount
     /// Date that the business was established. The format of the value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("businessStartDate")]
-    public string? BusinessStartDate { get; set; }
+    public DateOnly? BusinessStartDate { get; set; }
 
-    /// <summary>
-    /// Time zone for the processing account.
-    /// </summary>
     [JsonPropertyName("timezone")]
-    public required ProcessingAccountTimezone Timezone { get; set; }
+    public required Timezone Timezone { get; set; }
 
     [JsonPropertyName("address")]
     public required Address Address { get; set; }

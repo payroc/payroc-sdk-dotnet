@@ -7,7 +7,7 @@ namespace Payroc;
 public record HostedFieldsCreateSessionResponse
 {
     /// <summary>
-    /// Unique identifier that our gateway assigned to the terminal.
+    /// Unique identifier that we assigned to the terminal.
     /// </summary>
     [JsonPropertyName("processingTerminalId")]
     public required string ProcessingTerminalId { get; set; }
@@ -27,7 +27,7 @@ public record HostedFieldsCreateSessionResponse
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("expiresAt")]
-    public required DateTime ExpiresAt { get; set; }
+    public DateTime? ExpiresAt { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

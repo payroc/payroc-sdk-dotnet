@@ -14,21 +14,25 @@ public record FundingAccount
     public int? FundingAccountId { get; set; }
 
     /// <summary>
-    /// Date the funding account was created.
+    /// Date and time that we received your request to create the funding account in our system.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("createdDate")]
     public DateTime? CreatedDate { get; set; }
 
     /// <summary>
-    /// Date the funding account was last modified.
+    /// Date and time that the funding account was last modified.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("lastModifiedDate")]
     public DateTime? LastModifiedDate { get; set; }
 
     /// <summary>
-    /// Status of the funding account.
+    /// Status of the funding account. The value is one of the following:
+    /// - `approved` - We approved the funding account.
+    /// - `rejected` - We rejected the funding account.
+    /// - `pending` - We have not yet approved the funding account.
+    /// - `hold` - Our Risk team have temporarily placed a hold on the funding account.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("status")]

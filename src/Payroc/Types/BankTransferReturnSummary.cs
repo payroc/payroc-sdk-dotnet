@@ -19,7 +19,7 @@ public record BankTransferReturnSummary
     /// The date that the check was returned.
     /// </summary>
     [JsonPropertyName("date")]
-    public required string Date { get; set; }
+    public required DateOnly Date { get; set; }
 
     /// <summary>
     /// The NACHA return code.

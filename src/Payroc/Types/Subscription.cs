@@ -53,7 +53,7 @@ public record Subscription
     /// Subscription's start date.
     /// </summary>
     [JsonPropertyName("startDate")]
-    public required string StartDate { get; set; }
+    public required DateOnly StartDate { get; set; }
 
     /// <summary>
     /// Format: **YYYY-MM-DD**
@@ -62,7 +62,7 @@ public record Subscription
     /// our gateway uses the value for **endDate** to determine when the subscription should end.
     /// </summary>
     [JsonPropertyName("endDate")]
-    public string? EndDate { get; set; }
+    public DateOnly? EndDate { get; set; }
 
     /// <summary>
     /// Total number of billing cycles. To indicate that the subscription should run indefinitely, send a value of `0`. This value replaces the **length** inherited from the payment plan.

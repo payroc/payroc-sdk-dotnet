@@ -7,7 +7,7 @@ namespace Payroc.Boarding.MerchantPlatforms;
 public record CreateProcessingAccountMerchantPlatformsRequest
 {
     /// <summary>
-    /// Unique identifier of the merchant platform.
+    /// Unique identifier of the merchant platform that we sent to you when you created the merchant platform.
     /// </summary>
     [JsonIgnore]
     public required string MerchantPlatformId { get; set; }

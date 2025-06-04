@@ -6,7 +6,7 @@ namespace Payroc.Payments.SecureTokens;
 public record ListSecureTokensRequest
 {
     /// <summary>
-    /// Unique identifier that our gateway assigned to the terminal.
+    /// Unique identifier that we assigned to the terminal.
     /// </summary>
     [JsonIgnore]
     public required string ProcessingTerminalId { get; set; }

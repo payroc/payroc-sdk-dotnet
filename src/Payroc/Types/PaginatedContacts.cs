@@ -7,7 +7,7 @@ namespace Payroc;
 public record PaginatedContacts
 {
     /// <summary>
-    /// An array of contact objects.
+    /// Array of contact objects.
     /// </summary>
     [JsonPropertyName("data")]
     public IEnumerable<Contact>? Data { get; set; }

@@ -28,19 +28,19 @@ public record Dispute
     /// Date that we received the dispute. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("createdDate")]
-    public string? CreatedDate { get; set; }
+    public DateOnly? CreatedDate { get; set; }
 
     /// <summary>
     /// Date that the dispute was last changed. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("lastModifiedDate")]
-    public string? LastModifiedDate { get; set; }
+    public DateOnly? LastModifiedDate { get; set; }
 
     /// <summary>
     /// Date that the acquiring bank received the dispute. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("receivedDate")]
-    public string? ReceivedDate { get; set; }
+    public DateOnly? ReceivedDate { get; set; }
 
     /// <summary>
     /// Description of the dispute.

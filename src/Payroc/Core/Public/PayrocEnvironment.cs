@@ -8,7 +8,7 @@ public class PayrocEnvironment
         Identity = "https://identity.payroc.com",
     };
 
-    public static readonly PayrocEnvironment Test = new PayrocEnvironment
+    public static readonly PayrocEnvironment Uat = new PayrocEnvironment
     {
         Api = "https://api.uat.payroc.com/v1",
         Identity = "https://identity.uat.payroc.com",

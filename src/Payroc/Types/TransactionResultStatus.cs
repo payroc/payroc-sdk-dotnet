@@ -26,8 +26,6 @@ public readonly record struct TransactionResultStatus : IStringEnum
 
     public static readonly TransactionResultStatus Accepted = new(Values.Accepted);
 
-    public static readonly TransactionResultStatus Review = new(Values.Review);
-
     public TransactionResultStatus(string value)
     {
         Value = value;
@@ -93,7 +91,5 @@ public readonly record struct TransactionResultStatus : IStringEnum
         public const string Expired = "expired";
 
         public const string Accepted = "accepted";
-
-        public const string Review = "review";
     }
 }

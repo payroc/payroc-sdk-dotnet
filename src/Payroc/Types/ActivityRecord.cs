@@ -28,10 +28,10 @@ public record ActivityRecord
     public required string Merchant { get; set; }
 
     /// <summary>
-    /// Recipient of the credit.
+    /// Recipient of the debit.
     /// </summary>
     [JsonPropertyName("recipient")]
-    public required string Recipient { get; set; }
+    public string? Recipient { get; set; }
 
     /// <summary>
     /// Description of the activity.

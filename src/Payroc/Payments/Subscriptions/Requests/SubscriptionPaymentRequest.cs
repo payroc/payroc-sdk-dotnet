@@ -7,13 +7,13 @@ namespace Payroc.Payments.Subscriptions;
 public record SubscriptionPaymentRequest
 {
     /// <summary>
-    /// Unique identifier that our gateway assigned to the terminal.
+    /// Unique identifier that we assigned to the terminal.
     /// </summary>
     [JsonIgnore]
     public required string ProcessingTerminalId { get; set; }
 
     /// <summary>
-    /// Unique identifier of the subscription that you want to make a payment to.
+    /// Unique identifier that the merchant assigned to the subscription.
     /// </summary>
     [JsonIgnore]
     public required string SubscriptionId { get; set; }

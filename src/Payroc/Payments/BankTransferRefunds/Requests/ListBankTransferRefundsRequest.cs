@@ -65,7 +65,7 @@ public record ListBankTransferRefundsRequest
     /// Filter by refund transactions settled on a specific date. The date format is **YYYY-MM-DD**.
     /// </summary>
     [JsonIgnore]
-    public string? SettlementDate { get; set; }
+    public DateOnly? SettlementDate { get; set; }
 
     /// <summary>
     /// Points to the resource identifier that you want to receive your results before. Typically, this is the first resource on the previous page.

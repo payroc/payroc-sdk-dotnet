@@ -29,7 +29,7 @@ public class CreateFundingRecipientFactory
                 {
                     FirstName = "Mark",
                       LastName= "FirstPerson4101",
-                      DateOfBirth= "1964-03-22T00:00:00.000Z",
+                      DateOfBirth= new (1964, 03, 22),
                       Address= new()
                       {
                         Address1= "1 Person Ln.",

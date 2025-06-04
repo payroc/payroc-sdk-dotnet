@@ -25,7 +25,7 @@ public record Transaction
     /// Date of the transaction. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("date")]
-    public string? Date { get; set; }
+    public DateOnly? Date { get; set; }
 
     /// <summary>
     /// Transaction amount. We return the value in the currency's lowest denomination, for example, cents.
@@ -43,13 +43,13 @@ public record Transaction
     /// Date that we received the transaction.  The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("createdDate")]
-    public string? CreatedDate { get; set; }
+    public DateOnly? CreatedDate { get; set; }
 
     /// <summary>
     /// Date that the transaction was last changed.  The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("lastModifiedDate")]
-    public string? LastModifiedDate { get; set; }
+    public DateOnly? LastModifiedDate { get; set; }
 
     /// <summary>
     /// Indicates the status of the transaction.

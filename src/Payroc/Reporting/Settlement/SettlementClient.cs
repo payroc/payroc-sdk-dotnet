@@ -24,7 +24,7 @@ public partial class SettlementClient
     ///     {
     ///         Before = "2571",
     ///         After = "8516",
-    ///         Date = "2027-07-02",
+    ///         Date = new DateOnly(2027, 7, 2),
     ///         MerchantId = "4525644354",
     ///     }
     /// );
@@ -39,7 +39,7 @@ public partial class SettlementClient
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
-                _query["date"] = request.Date;
+                _query["date"] = request.Date.ToString(Constants.DateFormat);
                 if (request.Before != null)
                 {
                     _query["before"] = request.Before;
@@ -223,7 +223,7 @@ public partial class SettlementClient
     ///     {
     ///         Before = "2571",
     ///         After = "8516",
-    ///         Date = "2024-07-01",
+    ///         Date = new DateOnly(2024, 7, 1),
     ///         BatchId = 1,
     ///         MerchantId = "4525644354",
     ///     }
@@ -239,7 +239,7 @@ public partial class SettlementClient
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
-                _query["date"] = request.Date;
+                _query["date"] = request.Date.ToString(Constants.DateFormat);
                 _query["batchId"] = request.BatchId.ToString();
                 if (request.Before != null)
                 {
@@ -430,7 +430,7 @@ public partial class SettlementClient
     ///     {
     ///         Before = "2571",
     ///         After = "8516",
-    ///         Date = "2024-07-01",
+    ///         Date = new DateOnly(2024, 7, 1),
     ///         BatchId = 1,
     ///         MerchantId = "4525644354",
     ///     }
@@ -446,7 +446,7 @@ public partial class SettlementClient
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
-                _query["date"] = request.Date;
+                _query["date"] = request.Date.ToString(Constants.DateFormat);
                 _query["batchId"] = request.BatchId.ToString();
                 if (request.Before != null)
                 {
@@ -633,7 +633,7 @@ public partial class SettlementClient
     ///     {
     ///         Before = "2571",
     ///         After = "8516",
-    ///         Date = "2024-07-02",
+    ///         Date = new DateOnly(2024, 7, 2),
     ///         MerchantId = "4525644354",
     ///     }
     /// );
@@ -648,7 +648,7 @@ public partial class SettlementClient
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _query = new Dictionary<string, object>();
-                _query["date"] = request.Date;
+                _query["date"] = request.Date.ToString(Constants.DateFormat);
                 if (request.Before != null)
                 {
                     _query["before"] = request.Before;
@@ -821,6 +821,319 @@ public partial class SettlementClient
                         responseBody
                     );
                 }
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Retrieve a list of ACH deposits.
+    /// </summary>
+    /// <example><code>
+    /// await client.Reporting.Settlement.ListAchDepositsAsync(
+    ///     new ListReportingSettlementAchDepositsRequest
+    ///     {
+    ///         Before = "2571",
+    ///         After = "8516",
+    ///         Date = new DateOnly(2024, 7, 2),
+    ///         MerchantId = "4525644354",
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<PayrocPager<AchDeposit>> ListAchDepositsAsync(
+        ListReportingSettlementAchDepositsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _query = new Dictionary<string, object>();
+                _query["date"] = request.Date.ToString(Constants.DateFormat);
+                if (request.Before != null)
+                {
+                    _query["before"] = request.Before;
+                }
+                if (request.After != null)
+                {
+                    _query["after"] = request.After;
+                }
+                if (request.Limit != null)
+                {
+                    _query["limit"] = request.Limit.Value.ToString();
+                }
+                if (request.MerchantId != null)
+                {
+                    _query["merchantId"] = request.MerchantId;
+                }
+                var httpRequest = _client.CreateHttpRequest(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.Environment.Api,
+                        Method = HttpMethod.Get,
+                        Path = "ach-deposits",
+                        Query = _query,
+                        Options = options,
+                    }
+                );
+                var sendRequest = async (
+                    HttpRequestMessage httpRequest,
+                    CancellationToken cancellationToken
+                ) =>
+                {
+                    var response = await _client
+                        .SendRequestAsync(httpRequest, options, cancellationToken)
+                        .ConfigureAwait(false);
+                    if (response.StatusCode is >= 200 and < 400)
+                    {
+                        return response.Raw;
+                    }
+
+                    {
+                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        try
+                        {
+                            switch (response.StatusCode)
+                            {
+                                case 400:
+                                    throw new BadRequestError(
+                                        JsonUtils.Deserialize<FourHundred>(responseBody)
+                                    );
+                                case 401:
+                                    throw new UnauthorizedError(
+                                        JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                    );
+                                case 403:
+                                    throw new ForbiddenError(
+                                        JsonUtils.Deserialize<object>(responseBody)
+                                    );
+                                case 406:
+                                    throw new NotAcceptableError(
+                                        JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                    );
+                                case 500:
+                                    throw new InternalServerError(
+                                        JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                    );
+                            }
+                        }
+                        catch (JsonException)
+                        {
+                            // unable to map error response, throwing generic error
+                        }
+                        throw new PayrocApiException(
+                            $"Error with status code {response.StatusCode}",
+                            response.StatusCode,
+                            responseBody
+                        );
+                    }
+                };
+                return await PayrocPagerFactory
+                    .CreateAsync<AchDeposit>(sendRequest, httpRequest, cancellationToken)
+                    .ConfigureAwait(false);
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Retrieve a specific ACH deposit.
+    /// </summary>
+    /// <example><code>
+    /// await client.Reporting.Settlement.GetAchDepositAsync(
+    ///     new GetAchDepositSettlementRequest { AchDepositId = 99 }
+    /// );
+    /// </code></example>
+    public async Task<AchDeposit> GetAchDepositAsync(
+        GetAchDepositSettlementRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.Environment.Api,
+                            Method = HttpMethod.Get,
+                            Path = string.Format(
+                                "ach-deposits/{0}",
+                                ValueConvert.ToPathParameterString(request.AchDepositId)
+                            ),
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<AchDeposit>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new PayrocException("Failed to deserialize response", e);
+                    }
+                }
+
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestError(
+                                    JsonUtils.Deserialize<FourHundred>(responseBody)
+                                );
+                            case 401:
+                                throw new UnauthorizedError(
+                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                );
+                            case 403:
+                                throw new ForbiddenError(
+                                    JsonUtils.Deserialize<object>(responseBody)
+                                );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 406:
+                                throw new NotAcceptableError(
+                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 500:
+                                throw new InternalServerError(
+                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new PayrocApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Retrieve a list of ACH deposit fees.
+    /// </summary>
+    /// <example><code>
+    /// await client.Reporting.Settlement.ListAchDepositFeesAsync(
+    ///     new ListReportingSettlementAchDepositFeesRequest
+    ///     {
+    ///         Before = "2571",
+    ///         After = "8516",
+    ///         Date = new DateOnly(2024, 7, 2),
+    ///         AchDepositId = 99,
+    ///         MerchantId = "4525644354",
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<PayrocPager<AchDepositFee>> ListAchDepositFeesAsync(
+        ListReportingSettlementAchDepositFeesRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _query = new Dictionary<string, object>();
+                _query["date"] = request.Date.ToString(Constants.DateFormat);
+                _query["achDepositId"] = request.AchDepositId.ToString();
+                if (request.Before != null)
+                {
+                    _query["before"] = request.Before;
+                }
+                if (request.After != null)
+                {
+                    _query["after"] = request.After;
+                }
+                if (request.Limit != null)
+                {
+                    _query["limit"] = request.Limit.Value.ToString();
+                }
+                if (request.MerchantId != null)
+                {
+                    _query["merchantId"] = request.MerchantId;
+                }
+                var httpRequest = _client.CreateHttpRequest(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.Environment.Api,
+                        Method = HttpMethod.Get,
+                        Path = "ach-deposit-fees",
+                        Query = _query,
+                        Options = options,
+                    }
+                );
+                var sendRequest = async (
+                    HttpRequestMessage httpRequest,
+                    CancellationToken cancellationToken
+                ) =>
+                {
+                    var response = await _client
+                        .SendRequestAsync(httpRequest, options, cancellationToken)
+                        .ConfigureAwait(false);
+                    if (response.StatusCode is >= 200 and < 400)
+                    {
+                        return response.Raw;
+                    }
+
+                    {
+                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        try
+                        {
+                            switch (response.StatusCode)
+                            {
+                                case 400:
+                                    throw new BadRequestError(
+                                        JsonUtils.Deserialize<FourHundred>(responseBody)
+                                    );
+                                case 401:
+                                    throw new UnauthorizedError(
+                                        JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                    );
+                                case 403:
+                                    throw new ForbiddenError(
+                                        JsonUtils.Deserialize<object>(responseBody)
+                                    );
+                                case 406:
+                                    throw new NotAcceptableError(
+                                        JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                    );
+                                case 500:
+                                    throw new InternalServerError(
+                                        JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                    );
+                            }
+                        }
+                        catch (JsonException)
+                        {
+                            // unable to map error response, throwing generic error
+                        }
+                        throw new PayrocApiException(
+                            $"Error with status code {response.StatusCode}",
+                            response.StatusCode,
+                            responseBody
+                        );
+                    }
+                };
+                return await PayrocPagerFactory
+                    .CreateAsync<AchDepositFee>(sendRequest, httpRequest, cancellationToken)
+                    .ConfigureAwait(false);
             })
             .ConfigureAwait(false);
     }

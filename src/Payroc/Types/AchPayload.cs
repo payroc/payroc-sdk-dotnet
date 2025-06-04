@@ -41,7 +41,6 @@ public record AchPayload
 
     /// <summary>
     /// Routing number of the customer’s account.
-    /// **Note:** In responses, our gateway shows only the last four digits of the account’s routing number. For example, *****4162.
     /// </summary>
     [JsonPropertyName("routingNumber")]
     public required string RoutingNumber { get; set; }

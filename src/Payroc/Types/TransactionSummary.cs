@@ -25,7 +25,7 @@ public record TransactionSummary
     /// Date of the transaction. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("date")]
-    public string? Date { get; set; }
+    public DateOnly? Date { get; set; }
 
     /// <summary>
     /// Describes how the merchant received the payment details. If we can't match a dispute to a transaction, we don't return an 'entryMethod' object.

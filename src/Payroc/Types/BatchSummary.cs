@@ -19,7 +19,7 @@ public record BatchSummary
     /// Date that the merchant submitted the batch.
     /// </summary>
     [JsonPropertyName("date")]
-    public string? Date { get; set; }
+    public DateOnly? Date { get; set; }
 
     /// <summary>
     /// Indicates the cycle that contains the batch.

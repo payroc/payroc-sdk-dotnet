@@ -141,7 +141,7 @@ public partial class FundingRecipientsClient
     ///             {
     ///                 FirstName = "Jane",
     ///                 LastName = "Doe",
-    ///                 DateOfBirth = "1964-03-22",
+    ///                 DateOfBirth = new DateOnly(1964, 3, 22),
     ///                 Address = new Address
     ///                 {
     ///                     Address1 = "1 Example Ave.",
@@ -385,32 +385,6 @@ public partial class FundingRecipientsClient
     ///                         new ContactMethodEmail { Value = "jane.doe@example.com" }
     ///                     )
     ///                 ),
-    ///             },
-    ///             Owners = new List&lt;FundingRecipientOwnersItem&gt;() { new FundingRecipientOwnersItem() },
-    ///             FundingAccounts = new List&lt;FundingRecipientFundingAccountsItem&gt;()
-    ///             {
-    ///                 new FundingRecipientFundingAccountsItem
-    ///                 {
-    ///                     FundingAccountId = 123,
-    ///                     Status = FundingRecipientFundingAccountsItemStatus.Approved,
-    ///                     Link = new FundingRecipientFundingAccountsItemLink
-    ///                     {
-    ///                         Rel = "fundingAccount",
-    ///                         Href = "https://api.payroc.com/v1/funding-accounts/123",
-    ///                         Method = "get",
-    ///                     },
-    ///                 },
-    ///                 new FundingRecipientFundingAccountsItem
-    ///                 {
-    ///                     FundingAccountId = 124,
-    ///                     Status = FundingRecipientFundingAccountsItemStatus.Rejected,
-    ///                     Link = new FundingRecipientFundingAccountsItemLink
-    ///                     {
-    ///                         Rel = "fundingAccount",
-    ///                         Href = "https://api.payroc.com/v1/funding-accounts/124",
-    ///                         Method = "get",
-    ///                     },
-    ///                 },
     ///             },
     ///         },
     ///     }
@@ -875,7 +849,7 @@ public partial class FundingRecipientsClient
     ///         {
     ///             FirstName = "Jane",
     ///             LastName = "Doe",
-    ///             DateOfBirth = "1964-03-22",
+    ///             DateOfBirth = new DateOnly(1964, 3, 22),
     ///             Address = new Address
     ///             {
     ///                 Address1 = "1 Example Ave.",

@@ -6,7 +6,7 @@ namespace Payroc.Payments.HostedFields;
 public record HostedFieldsCreateSessionRequest
 {
     /// <summary>
-    /// Unique identifier that our gateway assigned to the terminal.
+    /// Unique identifier that we assigned to the terminal.
     /// </summary>
     [JsonIgnore]
     public required string ProcessingTerminalId { get; set; }
@@ -20,7 +20,7 @@ public record HostedFieldsCreateSessionRequest
     /// <summary>
     /// Version of the Hosted Fields JavaScript library that you are using.
     ///
-    /// The current production version is `1.3.0.135534`.
+    /// The current production version is `1.6.0.172441`.
     /// </summary>
     [JsonPropertyName("libVersion")]
     public required string LibVersion { get; set; }

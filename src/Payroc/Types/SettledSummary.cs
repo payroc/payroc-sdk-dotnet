@@ -19,7 +19,16 @@ public record SettledSummary
     /// Date that the processor settled the transaction. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("achDate")]
-    public string? AchDate { get; set; }
+    public DateOnly? AchDate { get; set; }
+
+    /// <summary>
+    /// Unique identifier of the ACH deposit.
+    /// </summary>
+    [JsonPropertyName("achDepositId")]
+    public int? AchDepositId { get; set; }
+
+    [JsonPropertyName("link")]
+    public Link? Link { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.

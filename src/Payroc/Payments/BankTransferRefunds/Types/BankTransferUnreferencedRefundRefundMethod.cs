@@ -33,13 +33,13 @@ public record BankTransferUnreferencedRefundRefundMethod
     }
 
     /// <summary>
-    /// Create an instance of BankTransferUnreferencedRefundRefundMethod with <see cref="BankTransferUnreferencedRefundRefundMethod.Pad"/>.
+    /// Create an instance of BankTransferUnreferencedRefundRefundMethod with <see cref="BankTransferUnreferencedRefundRefundMethod.SecureToken"/>.
     /// </summary>
     public BankTransferUnreferencedRefundRefundMethod(
-        BankTransferUnreferencedRefundRefundMethod.Pad value
+        BankTransferUnreferencedRefundRefundMethod.SecureToken value
     )
     {
-        Type = "pad";
+        Type = "secureToken";
         Value = value.Value;
     }
 
@@ -60,9 +60,9 @@ public record BankTransferUnreferencedRefundRefundMethod
     public bool IsAch => Type == "ach";
 
     /// <summary>
-    /// Returns true if <see cref="Type"/> is "pad"
+    /// Returns true if <see cref="Type"/> is "secureToken"
     /// </summary>
-    public bool IsPad => Type == "pad";
+    public bool IsSecureToken => Type == "secureToken";
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.AchPayload"/> if <see cref="Type"/> is 'ach', otherwise throws an exception.
@@ -74,31 +74,33 @@ public record BankTransferUnreferencedRefundRefundMethod
             : throw new Exception("BankTransferUnreferencedRefundRefundMethod.Type is not 'ach'");
 
     /// <summary>
-    /// Returns the value as a <see cref="Payroc.SecureTokenPayload"/> if <see cref="Type"/> is 'pad', otherwise throws an exception.
+    /// Returns the value as a <see cref="Payroc.SecureTokenPayload"/> if <see cref="Type"/> is 'secureToken', otherwise throws an exception.
     /// </summary>
-    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'pad'.</exception>
-    public Payroc.SecureTokenPayload AsPad() =>
-        IsPad
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'secureToken'.</exception>
+    public Payroc.SecureTokenPayload AsSecureToken() =>
+        IsSecureToken
             ? (Payroc.SecureTokenPayload)Value!
-            : throw new Exception("BankTransferUnreferencedRefundRefundMethod.Type is not 'pad'");
+            : throw new Exception(
+                "BankTransferUnreferencedRefundRefundMethod.Type is not 'secureToken'"
+            );
 
     public T Match<T>(
         Func<Payroc.AchPayload, T> onAch,
-        Func<Payroc.SecureTokenPayload, T> onPad,
+        Func<Payroc.SecureTokenPayload, T> onSecureToken,
         Func<string, object?, T> onUnknown_
     )
     {
         return Type switch
         {
             "ach" => onAch(AsAch()),
-            "pad" => onPad(AsPad()),
+            "secureToken" => onSecureToken(AsSecureToken()),
             _ => onUnknown_(Type, Value),
         };
     }
 
     public void Visit(
         Action<Payroc.AchPayload> onAch,
-        Action<Payroc.SecureTokenPayload> onPad,
+        Action<Payroc.SecureTokenPayload> onSecureToken,
         Action<string, object?> onUnknown_
     )
     {
@@ -107,8 +109,8 @@ public record BankTransferUnreferencedRefundRefundMethod
             case "ach":
                 onAch(AsAch());
                 break;
-            case "pad":
-                onPad(AsPad());
+            case "secureToken":
+                onSecureToken(AsSecureToken());
                 break;
             default:
                 onUnknown_(Type, Value);
@@ -133,9 +135,9 @@ public record BankTransferUnreferencedRefundRefundMethod
     /// <summary>
     /// Attempts to cast the value to a <see cref="Payroc.SecureTokenPayload"/> and returns true if successful.
     /// </summary>
-    public bool TryAsPad(out Payroc.SecureTokenPayload? value)
+    public bool TryAsSecureToken(out Payroc.SecureTokenPayload? value)
     {
-        if (Type == "pad")
+        if (Type == "secureToken")
         {
             value = (Payroc.SecureTokenPayload)Value!;
             return true;
@@ -151,7 +153,7 @@ public record BankTransferUnreferencedRefundRefundMethod
     ) => new(value);
 
     public static implicit operator BankTransferUnreferencedRefundRefundMethod(
-        BankTransferUnreferencedRefundRefundMethod.Pad value
+        BankTransferUnreferencedRefundRefundMethod.SecureToken value
     ) => new(value);
 
     internal sealed class JsonConverter : JsonConverter<BankTransferUnreferencedRefundRefundMethod>
@@ -190,7 +192,7 @@ public record BankTransferUnreferencedRefundRefundMethod
             {
                 "ach" => json.Deserialize<Payroc.AchPayload>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.AchPayload"),
-                "pad" => json.Deserialize<Payroc.SecureTokenPayload>(options)
+                "secureToken" => json.Deserialize<Payroc.SecureTokenPayload>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.SecureTokenPayload"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -207,7 +209,7 @@ public record BankTransferUnreferencedRefundRefundMethod
                 value.Type switch
                 {
                     "ach" => JsonSerializer.SerializeToNode(value.Value, options),
-                    "pad" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "secureToken" => JsonSerializer.SerializeToNode(value.Value, options),
                     _ => JsonSerializer.SerializeToNode(value.Value, options),
                 } ?? new JsonObject();
             json["type"] = value.Type;
@@ -233,11 +235,11 @@ public record BankTransferUnreferencedRefundRefundMethod
     }
 
     /// <summary>
-    /// Discriminated union type for pad
+    /// Discriminated union type for secureToken
     /// </summary>
-    public struct Pad
+    public struct SecureToken
     {
-        public Pad(Payroc.SecureTokenPayload value)
+        public SecureToken(Payroc.SecureTokenPayload value)
         {
             Value = value;
         }
@@ -246,6 +248,6 @@ public record BankTransferUnreferencedRefundRefundMethod
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Pad(Payroc.SecureTokenPayload value) => new(value);
+        public static implicit operator SecureToken(Payroc.SecureTokenPayload value) => new(value);
     }
 }
