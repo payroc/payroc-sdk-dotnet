@@ -6,8 +6,8 @@ Write-Host ""
 
 Write-Host "Running Fern CLI to generate preview SDK..." -ForegroundColor Yellow
 
-$fernCmd = "fern generate --group csharp-sdk --api api --preview"
-$fernResult = & $fernCmd
+# Correctly invoke Fern CLI
+& fern generate --group csharp-sdk --api api --preview
 
 if ($LASTEXITCODE -ne 0) {
     Write-Error "Fern generation failed. Exiting script."
