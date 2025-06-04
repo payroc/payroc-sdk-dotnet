@@ -4,6 +4,12 @@ Write-Host "PAPI SDK Copy Preview Script" -ForegroundColor Cyan
 Write-Host "----------------------------" -ForegroundColor Cyan
 Write-Host ""
 
+# Clean start: remove the whole .preview folder
+if (Test-Path $previewRoot) {
+    Write-Host "Removing entire .preview folder: $previewRoot"
+    Remove-Item -Recurse -Force $previewRoot
+}
+
 Write-Host "Running Fern CLI to generate preview SDK..." -ForegroundColor Yellow
 
 # Correctly invoke Fern CLI
