@@ -12,3 +12,5 @@ src/Payroc.Test/Unit/MockServer/BaseMockServerTest.cs
 src/Payroc.Test/Unit/MockServer/GetTokenTest.cs
 src/Payroc/BasePayrocClient.cs
 src/Payroc.sln
+src/Payroc.Test/Unit/MockServer/GetTokenTest.cs
+src/Payroc.Test/Unit/MockServer/CreateProcessingAccountTest.cs

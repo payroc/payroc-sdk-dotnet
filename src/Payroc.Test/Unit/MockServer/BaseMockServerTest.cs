@@ -1,3 +1,4 @@
+using System.Net;
 using NUnit.Framework;
 using Payroc;
 using WireMock.Logging;
@@ -17,13 +18,6 @@ public class BaseMockServerTest
 
     private void MockOAuthEndpoint()
     {
-        const string requestJson = """
-            {
-              "client_id": "CLIENT_ID",
-              "client_secret": "CLIENT_SECRET"
-            }
-            """;
-
         const string mockResponse = """
             {
               "access_token": "access_token",
@@ -38,10 +32,8 @@ public class BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/authorize")
-                    .WithHeader("x-api-key", "x-api-key")
-                    .WithHeader("Content-Type", "application/json")
+                    .WithHeader("x-api-key", "API_KEY")
                     .UsingPost()
-                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -56,8 +48,16 @@ public class BaseMockServerTest
     {
         // Start the WireMock server
         Server = WireMockServer.Start(
-            new WireMockServerSettings { Logger = new WireMockConsoleLogger() }
+            new WireMockServerSettings 
+            { 
+                Logger = new WireMockConsoleLogger(),
+                AllowPartialMapping = true,
+                RequestLogExpirationDuration = 0 // Don't expire logs
+            }
         );
+
+        // Set up OAuth mock endpoint before creating client
+        MockOAuthEndpoint();
 
         // Initialize the Client
         Client = new BasePayrocClient(
@@ -72,7 +72,6 @@ public class BaseMockServerTest
                 MaxRetries = 0,
             }
         );
-        MockOAuthEndpoint();
     }
 
     [OneTimeTearDown]
