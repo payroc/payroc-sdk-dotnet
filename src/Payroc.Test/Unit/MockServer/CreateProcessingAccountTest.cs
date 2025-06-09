@@ -135,9 +135,6 @@ public class CreateProcessingAccountTest : BaseMockServerTest
                 }
               },
               "funding": {
-                "fundingSchedule": "nextday",
-                "acceleratedFundingFee": 1999,
-                "dailyDiscount": false,
                 "fundingAccounts": [
                   {
                     "type": "checking",
@@ -152,13 +149,18 @@ public class CreateProcessingAccountTest : BaseMockServerTest
                       "yourCustomField": "abc123"
                     }
                   }
-                ]
+                ],
+                "fundingSchedule": "nextday",
+                "acceleratedFundingFee": 1999,
+                "dailyDiscount": false
               },
               "pricing": {
                 "pricingIntentId": 6123,
                 "type": "intent"
               },
-              "signature": "requestedViaDirectLink",
+              "signature": {
+                "type": "requestedViaDirectLink"
+              },
               "contacts": [
                 {
                   "type": "manager",
@@ -350,7 +352,7 @@ public class CreateProcessingAccountTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("merchant-platforms/12345/processing-accounts")
+                    .WithPath("/merchant-platforms/12345/processing-accounts")
                     .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()

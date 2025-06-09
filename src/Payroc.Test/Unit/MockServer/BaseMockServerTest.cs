@@ -51,8 +51,6 @@ public class BaseMockServerTest
             new WireMockServerSettings 
             { 
                 Logger = new WireMockConsoleLogger(),
-                AllowPartialMapping = true,
-                RequestLogExpirationDuration = 0 // Don't expire logs
             }
         );
 
