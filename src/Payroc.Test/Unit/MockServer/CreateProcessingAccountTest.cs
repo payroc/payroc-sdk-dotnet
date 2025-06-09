@@ -350,7 +350,7 @@ public class CreateProcessingAccountTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/merchant-platforms/12345/processing-accounts")
+                    .WithPath("merchant-platforms/12345/processing-accounts")
                     .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
