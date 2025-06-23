@@ -133,9 +133,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '../pricing-intents/pricing-intents-v1.yaml#/components/schemas/pricingAgreementUs4.0'
-                  - $ref: '../pricing-intents/pricing-intents-v1.yaml#/components/schemas/pricingAgreementUs5.0'
+                $ref: '../pricing-intents/pricing-intents-v1.yaml#/components/schemas/pricingAgreement'
               examples:
                 paginatedContacts:
                   $ref: './example-responses-v1.yaml#/components/examples/retrieveProcessingAccountPricingAgreement'

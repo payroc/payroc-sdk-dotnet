@@ -255,7 +255,14 @@ components:
       description: Object that contains information about a pricing intent.
       oneOf:
         - $ref: '#/components/schemas/pricingIntent5.0'
-  
+
+    pricingAgreement:
+      type: object
+      title: pricing agreement
+      description: Object that contains information about a pricing agreement.
+      oneOf:
+        - $ref: '#/components/schemas/pricingAgreementUs5.0'
+
     baseIntent:
       type: object
       title: base pricing intent
