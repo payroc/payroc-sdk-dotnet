@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// A Patch Test Operation.
 /// </summary>
+[Serializable]
 public record PatchTest
 {
     /// <summary>

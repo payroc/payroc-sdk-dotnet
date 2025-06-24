@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the tip options for transactions ran on the terminal.
 /// </summary>
+[Serializable]
 public record OrderItemSolutionSetupTips
 {
     /// <summary>

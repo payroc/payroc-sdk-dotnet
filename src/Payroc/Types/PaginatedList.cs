@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Contains the pagination properties that you use to navigate through a list of results.
 /// </summary>
+[Serializable]
 public record PaginatedList
 {
     /// <summary>

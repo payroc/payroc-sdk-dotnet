@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the customer's account details.
 /// </summary>
+[Serializable]
 public record PadBankAccount
 {
     /// <summary>

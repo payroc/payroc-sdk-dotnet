@@ -12,6 +12,7 @@ namespace Payroc;
 /// Object that contains information about card fees.
 /// </summary>
 [JsonConverter(typeof(PricingAgreementUs50ProcessorCard.JsonConverter))]
+[Serializable]
 public record PricingAgreementUs50ProcessorCard
 {
     internal PricingAgreementUs50ProcessorCard(string type, object? value)
@@ -445,6 +446,7 @@ public record PricingAgreementUs50ProcessorCard
         PricingAgreementUs50ProcessorCard.RewardPayChoice value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<PricingAgreementUs50ProcessorCard>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -527,6 +529,7 @@ public record PricingAgreementUs50ProcessorCard
     /// <summary>
     /// Discriminated union type for interchangePlus
     /// </summary>
+    [Serializable]
     public struct InterchangePlus
     {
         public InterchangePlus(Payroc.InterchangePlus value)
@@ -544,6 +547,7 @@ public record PricingAgreementUs50ProcessorCard
     /// <summary>
     /// Discriminated union type for interchangePlusPlus
     /// </summary>
+    [Serializable]
     public struct InterchangePlusPlus
     {
         public InterchangePlusPlus(Payroc.InterchangePlusPlus value)
@@ -562,6 +566,7 @@ public record PricingAgreementUs50ProcessorCard
     /// <summary>
     /// Discriminated union type for tiered3
     /// </summary>
+    [Serializable]
     public struct Tiered3
     {
         public Tiered3(Payroc.Tiered3 value)
@@ -579,6 +584,7 @@ public record PricingAgreementUs50ProcessorCard
     /// <summary>
     /// Discriminated union type for tiered4
     /// </summary>
+    [Serializable]
     public struct Tiered4
     {
         public Tiered4(Payroc.Tiered4 value)
@@ -596,6 +602,7 @@ public record PricingAgreementUs50ProcessorCard
     /// <summary>
     /// Discriminated union type for tiered6
     /// </summary>
+    [Serializable]
     public struct Tiered6
     {
         public Tiered6(Payroc.Tiered6 value)
@@ -613,6 +620,7 @@ public record PricingAgreementUs50ProcessorCard
     /// <summary>
     /// Discriminated union type for flatRate
     /// </summary>
+    [Serializable]
     public struct FlatRate
     {
         public FlatRate(Payroc.FlatRate value)
@@ -630,6 +638,7 @@ public record PricingAgreementUs50ProcessorCard
     /// <summary>
     /// Discriminated union type for consumerChoice
     /// </summary>
+    [Serializable]
     public struct ConsumerChoice
     {
         public ConsumerChoice(Payroc.ConsumerChoice value)
@@ -647,6 +656,7 @@ public record PricingAgreementUs50ProcessorCard
     /// <summary>
     /// Discriminated union type for rewardPayChoice
     /// </summary>
+    [Serializable]
     public struct RewardPayChoice
     {
         public RewardPayChoice(Payroc.RewardPayChoice value)

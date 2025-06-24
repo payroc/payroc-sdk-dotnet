@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the partially-encrypted card data for keyed transactions.
 /// </summary>
+[Serializable]
 public record PartiallyEncryptedKeyedDataFormat
 {
     [JsonPropertyName("device")]
