@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<TipType>))]
+[Serializable]
 public readonly record struct TipType : IStringEnum
 {
     public static readonly TipType Percentage = new(Values.Percentage);
@@ -52,6 +53,7 @@ public readonly record struct TipType : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Percentage = "percentage";

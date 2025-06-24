@@ -10,6 +10,7 @@ using Payroc.Core;
 namespace Payroc.Payments;
 
 [JsonConverter(typeof(PaymentAdjustmentAdjustmentsItem.JsonConverter))]
+[Serializable]
 public record PaymentAdjustmentAdjustmentsItem
 {
     internal PaymentAdjustmentAdjustmentsItem(string type, object? value)
@@ -241,6 +242,7 @@ public record PaymentAdjustmentAdjustmentsItem
         PaymentAdjustmentAdjustmentsItem.Signature value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<PaymentAdjustmentAdjustmentsItem>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -311,6 +313,7 @@ public record PaymentAdjustmentAdjustmentsItem
     /// <summary>
     /// Discriminated union type for order
     /// </summary>
+    [Serializable]
     public struct Order
     {
         public Order(Payroc.OrderAdjustment value)
@@ -328,6 +331,7 @@ public record PaymentAdjustmentAdjustmentsItem
     /// <summary>
     /// Discriminated union type for status
     /// </summary>
+    [Serializable]
     public struct Status
     {
         public Status(Payroc.StatusAdjustment value)
@@ -345,6 +349,7 @@ public record PaymentAdjustmentAdjustmentsItem
     /// <summary>
     /// Discriminated union type for customer
     /// </summary>
+    [Serializable]
     public struct Customer
     {
         public Customer(Payroc.CustomerAdjustment value)
@@ -362,6 +367,7 @@ public record PaymentAdjustmentAdjustmentsItem
     /// <summary>
     /// Discriminated union type for signature
     /// </summary>
+    [Serializable]
     public struct Signature
     {
         public Signature(Payroc.SignatureAdjustment value)

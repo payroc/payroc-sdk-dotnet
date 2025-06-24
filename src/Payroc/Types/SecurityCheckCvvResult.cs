@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<SecurityCheckCvvResult>))]
+[Serializable]
 public readonly record struct SecurityCheckCvvResult : IStringEnum
 {
     public static readonly SecurityCheckCvvResult M = new(Values.M);
@@ -58,6 +59,7 @@ public readonly record struct SecurityCheckCvvResult : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string M = "M";

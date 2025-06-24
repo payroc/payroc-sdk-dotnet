@@ -4,6 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.Payments.Cards;
 
+[Serializable]
 public record CardVerificationRequest
 {
     /// <summary>

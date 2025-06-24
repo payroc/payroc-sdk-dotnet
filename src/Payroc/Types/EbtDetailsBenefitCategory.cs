@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<EbtDetailsBenefitCategory>))]
+[Serializable]
 public readonly record struct EbtDetailsBenefitCategory : IStringEnum
 {
     public static readonly EbtDetailsBenefitCategory Cash = new(Values.Cash);
@@ -54,6 +55,7 @@ public readonly record struct EbtDetailsBenefitCategory : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Cash = "cash";

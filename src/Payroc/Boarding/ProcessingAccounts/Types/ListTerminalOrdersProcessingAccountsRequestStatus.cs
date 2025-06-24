@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc.Boarding.ProcessingAccounts;
 
 [JsonConverter(typeof(StringEnumSerializer<ListTerminalOrdersProcessingAccountsRequestStatus>))]
+[Serializable]
 public readonly record struct ListTerminalOrdersProcessingAccountsRequestStatus : IStringEnum
 {
     public static readonly ListTerminalOrdersProcessingAccountsRequestStatus Open = new(
@@ -78,6 +79,7 @@ public readonly record struct ListTerminalOrdersProcessingAccountsRequestStatus 
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Open = "open";

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Indicates how authorized transactions will be batched for settlement
 /// </summary>
+[Serializable]
 public record SchemasAutomaticBatchClose
 {
     /// <summary>

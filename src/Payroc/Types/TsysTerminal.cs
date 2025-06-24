@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the configuration settings for the terminal.
 /// </summary>
+[Serializable]
 public record TsysTerminal
 {
     /// <summary>

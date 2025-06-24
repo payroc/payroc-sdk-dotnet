@@ -4,6 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.Payments.PaymentLinks;
 
+[Serializable]
 public record UpdatePaymentLinksRequest
 {
     /// <summary>

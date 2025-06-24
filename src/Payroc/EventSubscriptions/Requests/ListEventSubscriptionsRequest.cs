@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.EventSubscriptions;
 
+[Serializable]
 public record ListEventSubscriptionsRequest
 {
     /// <summary>

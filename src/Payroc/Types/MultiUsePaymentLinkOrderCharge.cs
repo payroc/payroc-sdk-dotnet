@@ -9,6 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(MultiUsePaymentLinkOrderCharge.JsonConverter))]
+[Serializable]
 public record MultiUsePaymentLinkOrderCharge
 {
     internal MultiUsePaymentLinkOrderCharge(string type, object? value)
@@ -146,6 +147,7 @@ public record MultiUsePaymentLinkOrderCharge
         MultiUsePaymentLinkOrderCharge.Preset value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<MultiUsePaymentLinkOrderCharge>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -214,6 +216,7 @@ public record MultiUsePaymentLinkOrderCharge
     /// <summary>
     /// Discriminated union type for prompt
     /// </summary>
+    [Serializable]
     public struct Prompt
     {
         public Prompt(Payroc.PromptPaymentLinkCharge value)
@@ -231,6 +234,7 @@ public record MultiUsePaymentLinkOrderCharge
     /// <summary>
     /// Discriminated union type for preset
     /// </summary>
+    [Serializable]
     public struct Preset
     {
         public Preset(Payroc.PresetPaymentLinkCharge value)

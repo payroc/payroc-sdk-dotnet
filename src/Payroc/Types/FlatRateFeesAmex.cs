@@ -9,6 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(FlatRateFeesAmex.JsonConverter))]
+[Serializable]
 public record FlatRateFeesAmex
 {
     internal FlatRateFeesAmex(string type, object? value)
@@ -97,6 +98,7 @@ public record FlatRateFeesAmex
 
     public static implicit operator FlatRateFeesAmex(FlatRateFeesAmex.Direct value) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<FlatRateFeesAmex>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -158,6 +160,7 @@ public record FlatRateFeesAmex
     /// <summary>
     /// Discriminated union type for direct
     /// </summary>
+    [Serializable]
     public struct Direct
     {
         public Direct(Payroc.FlatRateAmexDirect value)

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the Electronic Benefit Transfer (EBT) transaction.
 /// </summary>
+[Serializable]
 public record EbtDetails
 {
     /// <summary>

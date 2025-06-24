@@ -8,6 +8,7 @@ namespace Payroc;
 /// Object that contains the signature for the transaction.
 /// **Note:** If the merchant previously added a signature to the transaction, they can’t adjust or delete the signature.
 /// </summary>
+[Serializable]
 public record SignatureAdjustment
 {
     /// <summary>

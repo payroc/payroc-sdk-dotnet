@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<StandingInstructionsSequence>))]
+[Serializable]
 public readonly record struct StandingInstructionsSequence : IStringEnum
 {
     public static readonly StandingInstructionsSequence First = new(Values.First);
@@ -54,6 +55,7 @@ public readonly record struct StandingInstructionsSequence : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string First = "first";

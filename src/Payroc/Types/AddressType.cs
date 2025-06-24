@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Type of address
 /// </summary>
+[Serializable]
 public record AddressType
 {
     /// <summary>

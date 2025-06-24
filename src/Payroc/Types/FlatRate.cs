@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about Flat Rate.
 /// </summary>
+[Serializable]
 public record FlatRate
 {
     /// <summary>

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the secure token.
 /// </summary>
+[Serializable]
 public record SecureToken
 {
     /// <summary>

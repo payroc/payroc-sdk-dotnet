@@ -5,6 +5,7 @@ using Payroc.Core;
 
 namespace Payroc.Funding.FundingActivity;
 
+[Serializable]
 public record GetFundingActivityResponse
 {
     /// <summary>

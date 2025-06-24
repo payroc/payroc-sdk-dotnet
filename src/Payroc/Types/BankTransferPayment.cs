@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the sale and the customer's bank details.
 /// </summary>
+[Serializable]
 public record BankTransferPayment
 {
     /// <summary>

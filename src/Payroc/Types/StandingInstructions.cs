@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// If you don't use our Subscriptions mechanism, include this section to configure your standing/recurring orders.
 /// </summary>
+[Serializable]
 public record StandingInstructions
 {
     /// <summary>

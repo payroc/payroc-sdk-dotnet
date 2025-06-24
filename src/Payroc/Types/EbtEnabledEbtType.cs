@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<EbtEnabledEbtType>))]
+[Serializable]
 public readonly record struct EbtEnabledEbtType : IStringEnum
 {
     public static readonly EbtEnabledEbtType FoodStamp = new(Values.FoodStamp);
@@ -56,6 +57,7 @@ public readonly record struct EbtEnabledEbtType : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string FoodStamp = "foodStamp";

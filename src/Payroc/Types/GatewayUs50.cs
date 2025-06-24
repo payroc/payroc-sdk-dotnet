@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the gateway fees for MPA 5.0.
 /// </summary>
+[Serializable]
 public record GatewayUs50
 {
     /// <summary>

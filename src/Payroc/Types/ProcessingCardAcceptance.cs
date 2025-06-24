@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Information around the type of cards that will be accepted.
 /// </summary>
+[Serializable]
 public record ProcessingCardAcceptance
 {
     /// <summary>

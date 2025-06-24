@@ -1,5 +1,6 @@
 namespace Payroc;
 
+[Serializable]
 public class PayrocEnvironment
 {
     public static readonly PayrocEnvironment Production = new PayrocEnvironment

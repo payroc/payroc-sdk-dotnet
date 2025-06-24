@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the settlement.
 /// </summary>
+[Serializable]
 public record SettledSummary
 {
     /// <summary>

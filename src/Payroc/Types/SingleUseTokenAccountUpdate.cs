@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the token.
 /// </summary>
+[Serializable]
 public record SingleUseTokenAccountUpdate
 {
     /// <summary>

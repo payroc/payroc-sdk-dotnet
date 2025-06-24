@@ -4,6 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.Boarding.Contacts;
 
+[Serializable]
 public record UpdateContactsRequest
 {
     /// <summary>

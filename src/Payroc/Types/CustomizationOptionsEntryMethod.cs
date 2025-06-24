@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<CustomizationOptionsEntryMethod>))]
+[Serializable]
 public readonly record struct CustomizationOptionsEntryMethod : IStringEnum
 {
     public static readonly CustomizationOptionsEntryMethod DeviceRead = new(Values.DeviceRead);
@@ -54,6 +55,7 @@ public readonly record struct CustomizationOptionsEntryMethod : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string DeviceRead = "deviceRead";

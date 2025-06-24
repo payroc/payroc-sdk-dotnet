@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains shareable assets for the payment link.
 /// </summary>
+[Serializable]
 public record PaymentLinkAssets
 {
     /// <summary>

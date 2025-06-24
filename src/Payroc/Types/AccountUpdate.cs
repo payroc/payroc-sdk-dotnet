@@ -12,6 +12,7 @@ namespace Payroc;
 /// Object that contains information about the token.
 /// </summary>
 [JsonConverter(typeof(AccountUpdate.JsonConverter))]
+[Serializable]
 public record AccountUpdate
 {
     internal AccountUpdate(string type, object? value)
@@ -100,6 +101,7 @@ public record AccountUpdate
 
     public static implicit operator AccountUpdate(AccountUpdate.SingleUseToken value) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<AccountUpdate>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -163,6 +165,7 @@ public record AccountUpdate
     /// <summary>
     /// Discriminated union type for singleUseToken
     /// </summary>
+    [Serializable]
     public struct SingleUseToken
     {
         public SingleUseToken(Payroc.SingleUseTokenAccountUpdate value)

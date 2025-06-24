@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Boarding.Owners;
 
+[Serializable]
 public record DeleteOwnersRequest
 {
     /// <summary>

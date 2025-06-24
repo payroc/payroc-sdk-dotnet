@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<TipMode>))]
+[Serializable]
 public readonly record struct TipMode : IStringEnum
 {
     public static readonly TipMode Prompted = new(Values.Prompted);
@@ -52,6 +53,7 @@ public readonly record struct TipMode : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Prompted = "prompted";

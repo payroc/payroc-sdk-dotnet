@@ -9,6 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(SwipedCardDetailsSwipedData.JsonConverter))]
+[Serializable]
 public record SwipedCardDetailsSwipedData
 {
     internal SwipedCardDetailsSwipedData(string type, object? value)
@@ -146,6 +147,7 @@ public record SwipedCardDetailsSwipedData
         SwipedCardDetailsSwipedData.PlainText value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<SwipedCardDetailsSwipedData>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -214,6 +216,7 @@ public record SwipedCardDetailsSwipedData
     /// <summary>
     /// Discriminated union type for encrypted
     /// </summary>
+    [Serializable]
     public struct Encrypted
     {
         public Encrypted(Payroc.EncryptedSwipedDataFormat value)
@@ -232,6 +235,7 @@ public record SwipedCardDetailsSwipedData
     /// <summary>
     /// Discriminated union type for plainText
     /// </summary>
+    [Serializable]
     public struct PlainText
     {
         public PlainText(Payroc.PlainTextSwipedDataFormat value)

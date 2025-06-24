@@ -13,6 +13,7 @@ namespace Payroc.Payments.Refunds;
 /// Object that contains information about how the merchant refunds the customer.
 /// </summary>
 [JsonConverter(typeof(UnreferencedRefundRefundMethod.JsonConverter))]
+[Serializable]
 public record UnreferencedRefundRefundMethod
 {
     internal UnreferencedRefundRefundMethod(string type, object? value)
@@ -150,6 +151,7 @@ public record UnreferencedRefundRefundMethod
         UnreferencedRefundRefundMethod.SecureToken value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnreferencedRefundRefundMethod>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -214,6 +216,7 @@ public record UnreferencedRefundRefundMethod
     /// <summary>
     /// Discriminated union type for card
     /// </summary>
+    [Serializable]
     public struct Card
     {
         public Card(Payroc.CardPayload value)
@@ -231,6 +234,7 @@ public record UnreferencedRefundRefundMethod
     /// <summary>
     /// Discriminated union type for secureToken
     /// </summary>
+    [Serializable]
     public struct SecureToken
     {
         public SecureToken(Payroc.SecureTokenPayload value)

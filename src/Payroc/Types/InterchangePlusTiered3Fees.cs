@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the fees.
 /// </summary>
+[Serializable]
 public record InterchangePlusTiered3Fees
 {
     [JsonPropertyName("mastercardVisaDiscover")]

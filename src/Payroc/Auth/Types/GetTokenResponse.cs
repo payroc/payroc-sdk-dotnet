@@ -4,6 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.Auth;
 
+[Serializable]
 public record GetTokenResponse
 {
     [JsonPropertyName("access_token")]

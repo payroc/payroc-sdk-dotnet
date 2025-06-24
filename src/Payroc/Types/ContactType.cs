@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<ContactType>))]
+[Serializable]
 public readonly record struct ContactType : IStringEnum
 {
     public static readonly ContactType Manager = new(Values.Manager);
@@ -56,6 +57,7 @@ public readonly record struct ContactType : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Manager = "manager";

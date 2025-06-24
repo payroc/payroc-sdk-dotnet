@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the customer’s card details for swiped transactions.
 /// </summary>
+[Serializable]
 public record SwipedCardDetails
 {
     /// <summary>

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about U.S. pricing intents for Merchant Processing Agreement (MPA) 4.0.
 /// </summary>
+[Serializable]
 public record PricingAgreementUs40
 {
     /// <summary>

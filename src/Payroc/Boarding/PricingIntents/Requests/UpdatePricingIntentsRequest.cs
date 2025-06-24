@@ -4,6 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.Boarding.PricingIntents;
 
+[Serializable]
 public record UpdatePricingIntentsRequest
 {
     /// <summary>

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the plain-text card data for keyed transactions.
 /// </summary>
+[Serializable]
 public record PlainTextKeyedDataFormat
 {
     [JsonPropertyName("device")]

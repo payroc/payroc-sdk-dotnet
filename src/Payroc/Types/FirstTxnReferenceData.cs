@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the initial payment for the payment instruction.
 /// </summary>
+[Serializable]
 public record FirstTxnReferenceData
 {
     /// <summary>

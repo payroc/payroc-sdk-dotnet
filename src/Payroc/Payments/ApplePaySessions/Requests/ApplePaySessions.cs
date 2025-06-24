@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Payments.ApplePaySessions;
 
+[Serializable]
 public record ApplePaySessions
 {
     /// <summary>

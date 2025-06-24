@@ -13,6 +13,7 @@ namespace Payroc.Payments.BankTransferPayments;
 /// Object that contains information about the customer's payment details.
 /// </summary>
 [JsonConverter(typeof(BankTransferPaymentRequestPaymentMethod.JsonConverter))]
+[Serializable]
 public record BankTransferPaymentRequestPaymentMethod
 {
     internal BankTransferPaymentRequestPaymentMethod(string type, object? value)
@@ -256,6 +257,7 @@ public record BankTransferPaymentRequestPaymentMethod
         BankTransferPaymentRequestPaymentMethod.SingleUseToken value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<BankTransferPaymentRequestPaymentMethod>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -328,6 +330,7 @@ public record BankTransferPaymentRequestPaymentMethod
     /// <summary>
     /// Discriminated union type for ach
     /// </summary>
+    [Serializable]
     public struct Ach
     {
         public Ach(Payroc.AchPayload value)
@@ -345,6 +348,7 @@ public record BankTransferPaymentRequestPaymentMethod
     /// <summary>
     /// Discriminated union type for pad
     /// </summary>
+    [Serializable]
     public struct Pad
     {
         public Pad(Payroc.PadPayload value)
@@ -362,6 +366,7 @@ public record BankTransferPaymentRequestPaymentMethod
     /// <summary>
     /// Discriminated union type for secureToken
     /// </summary>
+    [Serializable]
     public struct SecureToken
     {
         public SecureToken(Payroc.SecureTokenPayload value)
@@ -379,6 +384,7 @@ public record BankTransferPaymentRequestPaymentMethod
     /// <summary>
     /// Discriminated union type for singleUseToken
     /// </summary>
+    [Serializable]
     public struct SingleUseToken
     {
         public SingleUseToken(Payroc.SingleUseTokenPayload value)

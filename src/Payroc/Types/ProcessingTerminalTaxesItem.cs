@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains a tax rate with a short description of the tax rate.
 /// </summary>
+[Serializable]
 public record ProcessingTerminalTaxesItem
 {
     /// <summary>

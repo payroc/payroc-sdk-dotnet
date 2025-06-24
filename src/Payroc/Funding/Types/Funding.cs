@@ -8,6 +8,7 @@ namespace Payroc.Funding;
 /// <summary>
 /// Object that contains funding information.
 /// </summary>
+[Serializable]
 public record Funding
 {
     [JsonAccess(JsonAccessType.ReadOnly)]

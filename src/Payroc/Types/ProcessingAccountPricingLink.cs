@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// HATEOAS link for pricing information.
 /// </summary>
+[Serializable]
 public record ProcessingAccountPricingLink
 {
     /// <summary>

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the unencrypted PIN details.
 /// </summary>
+[Serializable]
 public record RawPinDetails
 {
     /// <summary>

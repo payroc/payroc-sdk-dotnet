@@ -9,6 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(HostConfigurationConfiguration.JsonConverter))]
+[Serializable]
 public record HostConfigurationConfiguration
 {
     internal HostConfigurationConfiguration(string type, object? value)
@@ -93,6 +94,7 @@ public record HostConfigurationConfiguration
         HostConfigurationConfiguration.Tsys value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<HostConfigurationConfiguration>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -154,6 +156,7 @@ public record HostConfigurationConfiguration
     /// <summary>
     /// Discriminated union type for tsys
     /// </summary>
+    [Serializable]
     public struct Tsys
     {
         public Tsys(Payroc.Tsys value)

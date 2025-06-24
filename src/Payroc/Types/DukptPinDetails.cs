@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about encrypted PIN details.
 /// </summary>
+[Serializable]
 public record DukptPinDetails
 {
     /// <summary>

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about tiered pricing with six tiers.
 /// </summary>
+[Serializable]
 public record Tiered6
 {
     /// <summary>

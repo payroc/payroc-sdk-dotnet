@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<IpAddressType>))]
+[Serializable]
 public readonly record struct IpAddressType : IStringEnum
 {
     public static readonly IpAddressType Ipv4 = new(Values.Ipv4);
@@ -54,6 +55,7 @@ public readonly record struct IpAddressType : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Ipv4 = "ipv4";

@@ -10,6 +10,7 @@ using Payroc.Core;
 namespace Payroc.Payments.Refunds;
 
 [JsonConverter(typeof(RefundAdjustmentAdjustmentsItem.JsonConverter))]
+[Serializable]
 public record RefundAdjustmentAdjustmentsItem
 {
     internal RefundAdjustmentAdjustmentsItem(string type, object? value)
@@ -147,6 +148,7 @@ public record RefundAdjustmentAdjustmentsItem
         RefundAdjustmentAdjustmentsItem.Customer value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<RefundAdjustmentAdjustmentsItem>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -211,6 +213,7 @@ public record RefundAdjustmentAdjustmentsItem
     /// <summary>
     /// Discriminated union type for status
     /// </summary>
+    [Serializable]
     public struct Status
     {
         public Status(Payroc.StatusAdjustment value)
@@ -228,6 +231,7 @@ public record RefundAdjustmentAdjustmentsItem
     /// <summary>
     /// Discriminated union type for customer
     /// </summary>
+    [Serializable]
     public struct Customer
     {
         public Customer(Payroc.CustomerAdjustment value)

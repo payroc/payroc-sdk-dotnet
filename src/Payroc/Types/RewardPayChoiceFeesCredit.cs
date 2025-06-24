@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about fees for credit transactions.
 /// </summary>
+[Serializable]
 public record RewardPayChoiceFeesCredit
 {
     /// <summary>

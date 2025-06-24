@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<UnitOfMeasure>))]
+[Serializable]
 public readonly record struct UnitOfMeasure : IStringEnum
 {
     public static readonly UnitOfMeasure Acr = new(Values.Acr);
@@ -482,6 +483,7 @@ public readonly record struct UnitOfMeasure : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Acr = "ACR";

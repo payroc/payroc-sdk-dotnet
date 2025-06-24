@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the payment details in the customer’s digital wallet.
 /// </summary>
+[Serializable]
 public record DigitalWalletPayload
 {
     /// <summary>

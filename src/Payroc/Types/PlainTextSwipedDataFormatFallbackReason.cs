@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<PlainTextSwipedDataFormatFallbackReason>))]
+[Serializable]
 public readonly record struct PlainTextSwipedDataFormatFallbackReason : IStringEnum
 {
     public static readonly PlainTextSwipedDataFormatFallbackReason Technical = new(
@@ -64,6 +65,7 @@ public readonly record struct PlainTextSwipedDataFormatFallbackReason : IStringE
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Technical = "technical";

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Array of activityRecord objects.
 /// </summary>
+[Serializable]
 public record ActivityRecord
 {
     /// <summary>

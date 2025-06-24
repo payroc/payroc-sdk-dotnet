@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc.Payments.Refunds;
 
 [JsonConverter(typeof(StringEnumSerializer<UnreferencedRefundChannel>))]
+[Serializable]
 public readonly record struct UnreferencedRefundChannel : IStringEnum
 {
     public static readonly UnreferencedRefundChannel Pos = new(Values.Pos);
@@ -54,6 +55,7 @@ public readonly record struct UnreferencedRefundChannel : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Pos = "pos";

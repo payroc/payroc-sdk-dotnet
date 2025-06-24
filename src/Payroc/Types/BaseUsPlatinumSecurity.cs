@@ -12,6 +12,7 @@ namespace Payroc;
 /// Object that contains information about the Platinum Security fee.
 /// </summary>
 [JsonConverter(typeof(BaseUsPlatinumSecurity.JsonConverter))]
+[Serializable]
 public record BaseUsPlatinumSecurity
 {
     internal BaseUsPlatinumSecurity(string type, object? value)
@@ -147,6 +148,7 @@ public record BaseUsPlatinumSecurity
     public static implicit operator BaseUsPlatinumSecurity(BaseUsPlatinumSecurity.Annual value) =>
         new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<BaseUsPlatinumSecurity>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -211,6 +213,7 @@ public record BaseUsPlatinumSecurity
     /// <summary>
     /// Discriminated union type for monthly
     /// </summary>
+    [Serializable]
     public struct Monthly
     {
         public Monthly(Payroc.BaseUsMonthly value)
@@ -228,6 +231,7 @@ public record BaseUsPlatinumSecurity
     /// <summary>
     /// Discriminated union type for annual
     /// </summary>
+    [Serializable]
     public struct Annual
     {
         public Annual(Payroc.BaseUsAnnual value)

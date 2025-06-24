@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the customer and their shipping address.
 /// </summary>
+[Serializable]
 public record Shipping
 {
     /// <summary>

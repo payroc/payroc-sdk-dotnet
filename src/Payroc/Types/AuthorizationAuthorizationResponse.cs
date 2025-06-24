@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<AuthorizationAuthorizationResponse>))]
+[Serializable]
 public readonly record struct AuthorizationAuthorizationResponse : IStringEnum
 {
     public static readonly AuthorizationAuthorizationResponse ActivityCountLimitExceeded = new(
@@ -381,6 +382,7 @@ public readonly record struct AuthorizationAuthorizationResponse : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string ActivityCountLimitExceeded = "activityCountLimitExceeded";

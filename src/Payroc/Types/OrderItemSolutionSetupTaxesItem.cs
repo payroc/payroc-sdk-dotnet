@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Tax that applies to the merchant's transactions.
 /// </summary>
+[Serializable]
 public record OrderItemSolutionSetupTaxesItem
 {
     /// <summary>

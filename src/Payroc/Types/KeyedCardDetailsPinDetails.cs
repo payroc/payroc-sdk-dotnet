@@ -9,6 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(KeyedCardDetailsPinDetails.JsonConverter))]
+[Serializable]
 public record KeyedCardDetailsPinDetails
 {
     internal KeyedCardDetailsPinDetails(string type, object? value)
@@ -93,6 +94,7 @@ public record KeyedCardDetailsPinDetails
         KeyedCardDetailsPinDetails.Dukpt value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<KeyedCardDetailsPinDetails>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -154,6 +156,7 @@ public record KeyedCardDetailsPinDetails
     /// <summary>
     /// Discriminated union type for dukpt
     /// </summary>
+    [Serializable]
     public struct Dukpt
     {
         public Dukpt(Payroc.DukptPinDetails value)

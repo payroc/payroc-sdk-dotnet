@@ -13,6 +13,7 @@ namespace Payroc.Payments.BankTransferPayments;
 /// Object that contains information about the customer's payment details.
 /// </summary>
 [JsonConverter(typeof(RepresentmentPaymentMethod.JsonConverter))]
+[Serializable]
 public record RepresentmentPaymentMethod
 {
     internal RepresentmentPaymentMethod(string type, object? value)
@@ -97,6 +98,7 @@ public record RepresentmentPaymentMethod
         RepresentmentPaymentMethod.Ach value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<RepresentmentPaymentMethod>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -158,6 +160,7 @@ public record RepresentmentPaymentMethod
     /// <summary>
     /// Discriminated union type for ach
     /// </summary>
+    [Serializable]
     public struct Ach
     {
         public Ach(Payroc.AchPayload value)

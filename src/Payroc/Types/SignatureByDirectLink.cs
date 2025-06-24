@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// We return a link to the pricing agreement in the response.
 /// </summary>
+[Serializable]
 public record SignatureByDirectLink
 {
     [JsonPropertyName("link")]

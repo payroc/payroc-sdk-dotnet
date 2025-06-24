@@ -33,7 +33,7 @@ groups:
   csharp-sdk:
     generators:
       - name: fernapi/fern-csharp-sdk
-        version: 1.17.4
+        version: 1.18.1
         github:
           repository: payroc/payroc-sdk-dotnet
           mode: pull-request
@@ -81,7 +81,7 @@ groups:
   python-sdk:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.21.2
+        version: 4.22.0
         output:
           location: pypi
           package-name: payroc

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about a HATEOAS link. If we can't match a dispute to a transaction, we don't return a 'link' object.
 /// </summary>
+[Serializable]
 public record Link
 {
     [JsonPropertyName("rel")]

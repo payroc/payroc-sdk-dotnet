@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Boarding.MerchantPlatforms;
 
+[Serializable]
 public record ListBoardingMerchantPlatformProcessingAccountsRequest
 {
     /// <summary>

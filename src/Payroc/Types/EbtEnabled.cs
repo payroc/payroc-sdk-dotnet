@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains details about EBT transactions.
 /// </summary>
+[Serializable]
 public record EbtEnabled
 {
     /// <summary>

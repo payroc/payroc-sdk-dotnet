@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the status of the instruction
 /// </summary>
+[Serializable]
 public record DeviceInstruction
 {
     /// <summary>

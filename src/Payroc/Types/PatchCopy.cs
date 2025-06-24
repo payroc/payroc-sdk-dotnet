@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// A Patch Copy Operation.
 /// </summary>
+[Serializable]
 public record PatchCopy
 {
     /// <summary>

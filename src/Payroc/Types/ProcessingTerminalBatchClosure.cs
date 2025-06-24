@@ -12,6 +12,7 @@ namespace Payroc;
 /// Object that contains information about when and how the terminal closes the batch.
 /// </summary>
 [JsonConverter(typeof(ProcessingTerminalBatchClosure.JsonConverter))]
+[Serializable]
 public record ProcessingTerminalBatchClosure
 {
     internal ProcessingTerminalBatchClosure(string type, object? value)
@@ -151,6 +152,7 @@ public record ProcessingTerminalBatchClosure
         ProcessingTerminalBatchClosure.Manual value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<ProcessingTerminalBatchClosure>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -219,6 +221,7 @@ public record ProcessingTerminalBatchClosure
     /// <summary>
     /// Discriminated union type for automatic
     /// </summary>
+    [Serializable]
     public struct Automatic
     {
         public Automatic(Payroc.SchemasAutomaticBatchClose value)
@@ -237,6 +240,7 @@ public record ProcessingTerminalBatchClosure
     /// <summary>
     /// Discriminated union type for manual
     /// </summary>
+    [Serializable]
     public struct Manual
     {
         public Manual(Payroc.SchemasManualBatchClose value)

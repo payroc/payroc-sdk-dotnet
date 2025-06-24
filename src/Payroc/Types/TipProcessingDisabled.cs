@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Tip settings
 /// </summary>
+[Serializable]
 public record TipProcessingDisabled
 {
     /// <summary>

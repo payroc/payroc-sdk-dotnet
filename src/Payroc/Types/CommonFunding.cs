@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the funding schedule of the processing account.
 /// </summary>
+[Serializable]
 public record CommonFunding
 {
     /// <summary>

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the 3-D Secure information from a third party.
 /// </summary>
+[Serializable]
 public record ThirdPartyThreeDSecure
 {
     /// <summary>

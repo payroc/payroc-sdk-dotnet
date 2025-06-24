@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about card verification and security checks.
 /// </summary>
+[Serializable]
 public record SecurityCheck
 {
     /// <summary>
