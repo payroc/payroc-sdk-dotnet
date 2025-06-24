@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<DeviceInstructionStatus>))]
+[Serializable]
 public readonly record struct DeviceInstructionStatus : IStringEnum
 {
     public static readonly DeviceInstructionStatus Canceled = new(Values.Canceled);
@@ -58,6 +59,7 @@ public readonly record struct DeviceInstructionStatus : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Canceled = "canceled";

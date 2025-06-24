@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Array of HATEOAS links for viewing a funding account.
 /// </summary>
+[Serializable]
 public record InstructionMerchantsItemRecipientsItemLink
 {
     [JsonPropertyName("rel")]

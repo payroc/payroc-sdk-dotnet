@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about Interchange Plus.
 /// </summary>
+[Serializable]
 public record InterchangePlus
 {
     /// <summary>

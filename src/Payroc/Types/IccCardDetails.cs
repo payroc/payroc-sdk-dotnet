@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the Integrated Circuit Card (ICC).
 /// </summary>
+[Serializable]
 public record IccCardDetails
 {
     /// <summary>

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the 3-D Secure information from our gateway.
 /// </summary>
+[Serializable]
 public record GatewayThreeDSecure
 {
     /// <summary>

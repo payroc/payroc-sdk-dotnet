@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the adjustment to the transaction. Send this object if the merchant is adjusting the customer’s contact details.
 /// </summary>
+[Serializable]
 public record CustomerAdjustment
 {
     [JsonPropertyName("shippingAddress")]

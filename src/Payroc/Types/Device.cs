@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the physical device the merchant used to capture the customer’s card details.
 /// </summary>
+[Serializable]
 public record Device
 {
     /// <summary>

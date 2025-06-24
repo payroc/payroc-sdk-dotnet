@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains available options to customize certain aspects of an instruction.
 /// </summary>
+[Serializable]
 public record CustomizationOptions
 {
     [JsonPropertyName("ebtDetails")]
