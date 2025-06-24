@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<ThirdPartyThreeDSecureEci>))]
+[Serializable]
 public readonly record struct ThirdPartyThreeDSecureEci : IStringEnum
 {
     public static readonly ThirdPartyThreeDSecureEci FullyAuthenticated = new(
@@ -58,6 +59,7 @@ public readonly record struct ThirdPartyThreeDSecureEci : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string FullyAuthenticated = "fullyAuthenticated";

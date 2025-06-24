@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about fees for debit transactions.
 /// </summary>
+[Serializable]
 public record RewardPayChoiceFeesDebit
 {
     [JsonPropertyName("option")]

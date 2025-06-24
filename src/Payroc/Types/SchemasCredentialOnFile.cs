@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about saving the customer’s payment details.
 /// </summary>
+[Serializable]
 public record SchemasCredentialOnFile
 {
     /// <summary>

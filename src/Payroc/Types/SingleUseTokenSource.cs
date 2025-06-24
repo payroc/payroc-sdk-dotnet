@@ -12,6 +12,7 @@ namespace Payroc;
 /// Object that contains information about the payment method that we tokenized.
 /// </summary>
 [JsonConverter(typeof(SingleUseTokenSource.JsonConverter))]
+[Serializable]
 public record SingleUseTokenSource
 {
     internal SingleUseTokenSource(string type, object? value)
@@ -193,6 +194,7 @@ public record SingleUseTokenSource
     public static implicit operator SingleUseTokenSource(SingleUseTokenSource.Card value) =>
         new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<SingleUseTokenSource>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -260,6 +262,7 @@ public record SingleUseTokenSource
     /// <summary>
     /// Discriminated union type for ach
     /// </summary>
+    [Serializable]
     public struct Ach
     {
         public Ach(Payroc.AchSource value)
@@ -277,6 +280,7 @@ public record SingleUseTokenSource
     /// <summary>
     /// Discriminated union type for pad
     /// </summary>
+    [Serializable]
     public struct Pad
     {
         public Pad(Payroc.PadSource value)
@@ -294,6 +298,7 @@ public record SingleUseTokenSource
     /// <summary>
     /// Discriminated union type for card
     /// </summary>
+    [Serializable]
     public struct Card
     {
         public Card(Payroc.CardSource value)

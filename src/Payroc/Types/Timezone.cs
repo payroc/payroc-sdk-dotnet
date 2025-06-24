@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<Timezone>))]
+[Serializable]
 public readonly record struct Timezone : IStringEnum
 {
     public static readonly Timezone PacificMidway = new(Values.PacificMidway);
@@ -68,6 +69,7 @@ public readonly record struct Timezone : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string PacificMidway = "Pacific/Midway";

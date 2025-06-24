@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the interchange fees for the transaction.
 /// </summary>
+[Serializable]
 public record TransactionInterchange
 {
     /// <summary>

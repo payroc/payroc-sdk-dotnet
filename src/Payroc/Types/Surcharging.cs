@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains surcharge information. Our gateway returns this object only if the merchant adds a surcharge to transactions.
 /// </summary>
+[Serializable]
 public record Surcharging
 {
     /// <summary>

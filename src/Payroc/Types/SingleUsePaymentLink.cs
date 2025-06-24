@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about a single-use payment link.
 /// </summary>
+[Serializable]
 public record SingleUsePaymentLink
 {
     /// <summary>

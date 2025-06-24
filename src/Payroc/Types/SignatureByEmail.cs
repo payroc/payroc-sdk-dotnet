@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Owner's signature by email.
 /// </summary>
+[Serializable]
 public record SignatureByEmail
 {
     /// <summary>

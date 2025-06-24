@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// A snapshot of the subscription's current state.
 /// </summary>
+[Serializable]
 public record SubscriptionState
 {
     /// <summary>

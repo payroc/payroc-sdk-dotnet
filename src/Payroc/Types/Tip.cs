@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the tip.
 /// </summary>
+[Serializable]
 public record Tip
 {
     /// <summary>

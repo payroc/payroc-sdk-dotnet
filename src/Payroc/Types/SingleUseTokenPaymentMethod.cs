@@ -12,6 +12,7 @@ namespace Payroc;
 /// Object that contains information about the customer's payment details.
 /// </summary>
 [JsonConverter(typeof(SingleUseTokenPaymentMethod.JsonConverter))]
+[Serializable]
 public record SingleUseTokenPaymentMethod
 {
     internal SingleUseTokenPaymentMethod(string type, object? value)
@@ -96,6 +97,7 @@ public record SingleUseTokenPaymentMethod
         SingleUseTokenPaymentMethod.Card value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<SingleUseTokenPaymentMethod>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -157,6 +159,7 @@ public record SingleUseTokenPaymentMethod
     /// <summary>
     /// Discriminated union type for card
     /// </summary>
+    [Serializable]
     public struct Card
     {
         public Card(Payroc.CardPayload value)

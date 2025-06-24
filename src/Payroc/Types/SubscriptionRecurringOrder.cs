@@ -8,6 +8,7 @@ namespace Payroc;
 /// Object that contains information about the cost of each payment.
 /// **Note:** Send this object only if the value for **type** is `automatic`.
 /// </summary>
+[Serializable]
 public record SubscriptionRecurringOrder
 {
     /// <summary>

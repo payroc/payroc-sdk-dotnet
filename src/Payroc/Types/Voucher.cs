@@ -8,6 +8,7 @@ namespace Payroc;
 /// Object that contains information about the EBT voucher.
 /// **Note:** Voucher is available only for EBT Cash benefit accounts.
 /// </summary>
+[Serializable]
 public record Voucher
 {
     /// <summary>

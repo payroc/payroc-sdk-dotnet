@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the shipping address for the terminal order.
 /// </summary>
+[Serializable]
 public record TerminalOrderShippingAddress
 {
     /// <summary>

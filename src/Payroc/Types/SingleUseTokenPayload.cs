@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the single-use token, which represents the customer’s payment details.
 /// </summary>
+[Serializable]
 public record SingleUseTokenPayload
 {
     /// <summary>

@@ -9,6 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(SingleUseTokenPayloadPinDetails.JsonConverter))]
+[Serializable]
 public record SingleUseTokenPayloadPinDetails
 {
     internal SingleUseTokenPayloadPinDetails(string type, object? value)
@@ -146,6 +147,7 @@ public record SingleUseTokenPayloadPinDetails
         SingleUseTokenPayloadPinDetails.Raw value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<SingleUseTokenPayloadPinDetails>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -210,6 +212,7 @@ public record SingleUseTokenPayloadPinDetails
     /// <summary>
     /// Discriminated union type for dukpt
     /// </summary>
+    [Serializable]
     public struct Dukpt
     {
         public Dukpt(Payroc.DukptPinDetails value)
@@ -227,6 +230,7 @@ public record SingleUseTokenPayloadPinDetails
     /// <summary>
     /// Discriminated union type for raw
     /// </summary>
+    [Serializable]
     public struct Raw
     {
         public Raw(Payroc.RawPinDetails value)
