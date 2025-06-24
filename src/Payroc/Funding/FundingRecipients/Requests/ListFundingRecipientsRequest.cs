@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Funding.FundingRecipients;
 
+[Serializable]
 public record ListFundingRecipientsRequest
 {
     /// <summary>

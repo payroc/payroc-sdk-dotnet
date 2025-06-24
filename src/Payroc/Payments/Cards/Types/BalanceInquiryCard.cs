@@ -13,6 +13,7 @@ namespace Payroc.Payments.Cards;
 /// Object that contains information about the card.
 /// </summary>
 [JsonConverter(typeof(BalanceInquiryCard.JsonConverter))]
+[Serializable]
 public record BalanceInquiryCard
 {
     internal BalanceInquiryCard(string type, object? value)
@@ -147,6 +148,7 @@ public record BalanceInquiryCard
     public static implicit operator BalanceInquiryCard(BalanceInquiryCard.SingleUseToken value) =>
         new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<BalanceInquiryCard>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -213,6 +215,7 @@ public record BalanceInquiryCard
     /// <summary>
     /// Discriminated union type for card
     /// </summary>
+    [Serializable]
     public struct Card
     {
         public Card(Payroc.CardPayload value)
@@ -230,6 +233,7 @@ public record BalanceInquiryCard
     /// <summary>
     /// Discriminated union type for singleUseToken
     /// </summary>
+    [Serializable]
     public struct SingleUseToken
     {
         public SingleUseToken(Payroc.SingleUseTokenPayload value)

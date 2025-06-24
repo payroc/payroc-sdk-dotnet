@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc.Payments.PaymentLinks;
 
 [JsonConverter(typeof(StringEnumSerializer<ListPaymentLinksRequestChargeType>))]
+[Serializable]
 public readonly record struct ListPaymentLinksRequestChargeType : IStringEnum
 {
     public static readonly ListPaymentLinksRequestChargeType Preset = new(Values.Preset);
@@ -54,6 +55,7 @@ public readonly record struct ListPaymentLinksRequestChargeType : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Preset = "preset";

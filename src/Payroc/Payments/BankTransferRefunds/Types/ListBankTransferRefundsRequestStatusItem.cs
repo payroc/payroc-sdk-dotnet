@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc.Payments.BankTransferRefunds;
 
 [JsonConverter(typeof(StringEnumSerializer<ListBankTransferRefundsRequestStatusItem>))]
+[Serializable]
 public readonly record struct ListBankTransferRefundsRequestStatusItem : IStringEnum
 {
     public static readonly ListBankTransferRefundsRequestStatusItem Ready = new(Values.Ready);
@@ -70,6 +71,7 @@ public readonly record struct ListBankTransferRefundsRequestStatusItem : IString
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Ready = "ready";

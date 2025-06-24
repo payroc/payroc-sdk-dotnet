@@ -4,6 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.Payments.CurrencyConversion;
 
+[Serializable]
 public record FxRateInquiry
 {
     /// <summary>

@@ -13,6 +13,7 @@ namespace Payroc.Payments.BankAccounts;
 /// Object that contains information about the bank account.
 /// </summary>
 [JsonConverter(typeof(BankAccountVerificationRequestBankAccount.JsonConverter))]
+[Serializable]
 public record BankAccountVerificationRequestBankAccount
 {
     internal BankAccountVerificationRequestBankAccount(string type, object? value)
@@ -154,6 +155,7 @@ public record BankAccountVerificationRequestBankAccount
         BankAccountVerificationRequestBankAccount.Pad value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<BankAccountVerificationRequestBankAccount>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -218,6 +220,7 @@ public record BankAccountVerificationRequestBankAccount
     /// <summary>
     /// Discriminated union type for ach
     /// </summary>
+    [Serializable]
     public struct Ach
     {
         public Ach(Payroc.AchPayload value)
@@ -235,6 +238,7 @@ public record BankAccountVerificationRequestBankAccount
     /// <summary>
     /// Discriminated union type for pad
     /// </summary>
+    [Serializable]
     public struct Pad
     {
         public Pad(Payroc.PadPayload value)

@@ -13,6 +13,7 @@ namespace Payroc.Payments.CurrencyConversion;
 /// Object that contains information about the customer's payment details.
 /// </summary>
 [JsonConverter(typeof(FxRateInquiryPaymentMethod.JsonConverter))]
+[Serializable]
 public record FxRateInquiryPaymentMethod
 {
     internal FxRateInquiryPaymentMethod(string type, object? value)
@@ -197,6 +198,7 @@ public record FxRateInquiryPaymentMethod
         FxRateInquiryPaymentMethod.DigitalWallet value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<FxRateInquiryPaymentMethod>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -264,6 +266,7 @@ public record FxRateInquiryPaymentMethod
     /// <summary>
     /// Discriminated union type for card
     /// </summary>
+    [Serializable]
     public struct Card
     {
         public Card(Payroc.CardPayload value)
@@ -281,6 +284,7 @@ public record FxRateInquiryPaymentMethod
     /// <summary>
     /// Discriminated union type for secureToken
     /// </summary>
+    [Serializable]
     public struct SecureToken
     {
         public SecureToken(Payroc.SecureTokenPayload value)
@@ -298,6 +302,7 @@ public record FxRateInquiryPaymentMethod
     /// <summary>
     /// Discriminated union type for digitalWallet
     /// </summary>
+    [Serializable]
     public struct DigitalWallet
     {
         public DigitalWallet(Payroc.DigitalWalletPayload value)

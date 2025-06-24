@@ -4,6 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.Payments.BankTransferRefunds;
 
+[Serializable]
 public record BankTransferUnreferencedRefund
 {
     /// <summary>

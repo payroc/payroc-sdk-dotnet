@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc.Payments.CurrencyConversion;
 
 [JsonConverter(typeof(StringEnumSerializer<FxRateInquiryChannel>))]
+[Serializable]
 public readonly record struct FxRateInquiryChannel : IStringEnum
 {
     public static readonly FxRateInquiryChannel Pos = new(Values.Pos);
@@ -56,6 +57,7 @@ public readonly record struct FxRateInquiryChannel : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Pos = "pos";

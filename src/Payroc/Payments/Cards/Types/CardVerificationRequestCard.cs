@@ -13,6 +13,7 @@ namespace Payroc.Payments.Cards;
 /// Object that contains information about the card.
 /// </summary>
 [JsonConverter(typeof(CardVerificationRequestCard.JsonConverter))]
+[Serializable]
 public record CardVerificationRequestCard
 {
     internal CardVerificationRequestCard(string type, object? value)
@@ -97,6 +98,7 @@ public record CardVerificationRequestCard
         CardVerificationRequestCard.Card value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<CardVerificationRequestCard>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -158,6 +160,7 @@ public record CardVerificationRequestCard
     /// <summary>
     /// Discriminated union type for card
     /// </summary>
+    [Serializable]
     public struct Card
     {
         public Card(Payroc.CardPayload value)

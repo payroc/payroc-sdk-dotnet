@@ -7,6 +7,7 @@ namespace Payroc.Boarding.ProcessingAccounts;
 /// <summary>
 /// Object that contains the shipping preferences for the terminal order.
 /// </summary>
+[Serializable]
 public record CreateTerminalOrderShippingPreferences
 {
     /// <summary>

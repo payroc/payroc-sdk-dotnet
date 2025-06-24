@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Payments;
 
+[Serializable]
 public record ListPaymentsRequest
 {
     /// <summary>

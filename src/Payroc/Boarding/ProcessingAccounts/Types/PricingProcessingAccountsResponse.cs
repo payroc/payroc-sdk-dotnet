@@ -10,6 +10,7 @@ using Payroc.Core;
 namespace Payroc.Boarding.ProcessingAccounts;
 
 [JsonConverter(typeof(PricingProcessingAccountsResponse.JsonConverter))]
+[Serializable]
 public record PricingProcessingAccountsResponse
 {
     internal PricingProcessingAccountsResponse(string type, object? value)
@@ -147,6 +148,7 @@ public record PricingProcessingAccountsResponse
         PricingProcessingAccountsResponse._50 value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<PricingProcessingAccountsResponse>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -211,6 +213,7 @@ public record PricingProcessingAccountsResponse
     /// <summary>
     /// Discriminated union type for 4.0
     /// </summary>
+    [Serializable]
     public struct _40
     {
         public _40(Payroc.PricingAgreementUs40 value)
@@ -228,6 +231,7 @@ public record PricingProcessingAccountsResponse
     /// <summary>
     /// Discriminated union type for 5.0
     /// </summary>
+    [Serializable]
     public struct _50
     {
         public _50(Payroc.PricingAgreementUs50 value)

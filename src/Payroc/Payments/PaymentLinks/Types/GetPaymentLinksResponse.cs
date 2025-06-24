@@ -10,6 +10,7 @@ using Payroc.Core;
 namespace Payroc.Payments.PaymentLinks;
 
 [JsonConverter(typeof(GetPaymentLinksResponse.JsonConverter))]
+[Serializable]
 public record GetPaymentLinksResponse
 {
     internal GetPaymentLinksResponse(string type, object? value)
@@ -147,6 +148,7 @@ public record GetPaymentLinksResponse
         GetPaymentLinksResponse.SingleUse value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<GetPaymentLinksResponse>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -211,6 +213,7 @@ public record GetPaymentLinksResponse
     /// <summary>
     /// Discriminated union type for multiUse
     /// </summary>
+    [Serializable]
     public struct MultiUse
     {
         public MultiUse(Payroc.MultiUsePaymentLink value)
@@ -228,6 +231,7 @@ public record GetPaymentLinksResponse
     /// <summary>
     /// Discriminated union type for singleUse
     /// </summary>
+    [Serializable]
     public struct SingleUse
     {
         public SingleUse(Payroc.SingleUsePaymentLink value)
