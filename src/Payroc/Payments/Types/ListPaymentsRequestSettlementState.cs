@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc.Payments;
 
 [JsonConverter(typeof(StringEnumSerializer<ListPaymentsRequestSettlementState>))]
+[Serializable]
 public readonly record struct ListPaymentsRequestSettlementState : IStringEnum
 {
     public static readonly ListPaymentsRequestSettlementState Settled = new(Values.Settled);
@@ -54,6 +55,7 @@ public readonly record struct ListPaymentsRequestSettlementState : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Settled = "settled";

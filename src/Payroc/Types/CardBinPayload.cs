@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the card's bank identification number (BIN).
 /// </summary>
+[Serializable]
 public record CardBinPayload
 {
     [JsonPropertyName("bin")]

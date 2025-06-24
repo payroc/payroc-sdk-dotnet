@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<BaseIntentStatus>))]
+[Serializable]
 public readonly record struct BaseIntentStatus : IStringEnum
 {
     public static readonly BaseIntentStatus Active = new(Values.Active);
@@ -56,6 +57,7 @@ public readonly record struct BaseIntentStatus : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Active = "active";

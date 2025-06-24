@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<CardEntryMethod>))]
+[Serializable]
 public readonly record struct CardEntryMethod : IStringEnum
 {
     public static readonly CardEntryMethod Icc = new(Values.Icc);
@@ -62,6 +63,7 @@ public readonly record struct CardEntryMethod : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Icc = "icc";

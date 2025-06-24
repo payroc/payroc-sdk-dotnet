@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the customer’s payment card.
 /// </summary>
+[Serializable]
 public record CardPayload
 {
     /// <summary>

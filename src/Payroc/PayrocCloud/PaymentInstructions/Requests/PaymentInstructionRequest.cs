@@ -4,6 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.PayrocCloud.PaymentInstructions;
 
+[Serializable]
 public record PaymentInstructionRequest
 {
     /// <summary>

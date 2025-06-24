@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the tip amount of a transaction.
 /// </summary>
+[Serializable]
 public record BreakdownAdjustment
 {
     [JsonPropertyName("tip")]

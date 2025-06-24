@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the annual fee.
 /// </summary>
+[Serializable]
 public record BaseUsAnnualFee
 {
     /// <summary>

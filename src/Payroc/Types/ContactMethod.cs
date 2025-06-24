@@ -9,6 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(ContactMethod.JsonConverter))]
+[Serializable]
 public record ContactMethod
 {
     internal ContactMethod(string type, object? value)
@@ -232,6 +233,7 @@ public record ContactMethod
 
     public static implicit operator ContactMethod(ContactMethod.Fax value) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<ContactMethod>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -302,6 +304,7 @@ public record ContactMethod
     /// <summary>
     /// Discriminated union type for email
     /// </summary>
+    [Serializable]
     public struct Email
     {
         public Email(Payroc.ContactMethodEmail value)
@@ -319,6 +322,7 @@ public record ContactMethod
     /// <summary>
     /// Discriminated union type for phone
     /// </summary>
+    [Serializable]
     public struct Phone
     {
         public Phone(Payroc.ContactMethodPhone value)
@@ -336,6 +340,7 @@ public record ContactMethod
     /// <summary>
     /// Discriminated union type for mobile
     /// </summary>
+    [Serializable]
     public struct Mobile
     {
         public Mobile(Payroc.ContactMethodMobile value)
@@ -353,6 +358,7 @@ public record ContactMethod
     /// <summary>
     /// Discriminated union type for fax
     /// </summary>
+    [Serializable]
     public struct Fax
     {
         public Fax(Payroc.ContactMethodFax value)

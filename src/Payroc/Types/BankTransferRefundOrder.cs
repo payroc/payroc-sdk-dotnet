@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the order.
 /// </summary>
+[Serializable]
 public record BankTransferRefundOrder
 {
     /// <summary>

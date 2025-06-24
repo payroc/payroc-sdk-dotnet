@@ -8,6 +8,7 @@ namespace Payroc;
 /// The choice rate.
 /// **Note:** This field is required if dual pricing was offered.
 /// </summary>
+[Serializable]
 public record ChoiceRate
 {
     /// <summary>

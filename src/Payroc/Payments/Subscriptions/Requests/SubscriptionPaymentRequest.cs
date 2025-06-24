@@ -4,6 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.Payments.Subscriptions;
 
+[Serializable]
 public record SubscriptionPaymentRequest
 {
     /// <summary>

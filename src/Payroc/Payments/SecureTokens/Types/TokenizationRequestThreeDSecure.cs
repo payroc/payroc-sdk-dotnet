@@ -13,6 +13,7 @@ namespace Payroc.Payments.SecureTokens;
 /// Object that contains information for an authentication check on the customer's payment details using the 3-D Secure protocol.
 /// </summary>
 [JsonConverter(typeof(TokenizationRequestThreeDSecure.JsonConverter))]
+[Serializable]
 public record TokenizationRequestThreeDSecure
 {
     internal TokenizationRequestThreeDSecure(string type, object? value)
@@ -158,6 +159,7 @@ public record TokenizationRequestThreeDSecure
         TokenizationRequestThreeDSecure.ThirdPartyThreeDSecure value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<TokenizationRequestThreeDSecure>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -227,6 +229,7 @@ public record TokenizationRequestThreeDSecure
     /// <summary>
     /// Discriminated union type for gatewayThreeDSecure
     /// </summary>
+    [Serializable]
     public struct GatewayThreeDSecure
     {
         public GatewayThreeDSecure(Payroc.GatewayThreeDSecure value)
@@ -245,6 +248,7 @@ public record TokenizationRequestThreeDSecure
     /// <summary>
     /// Discriminated union type for thirdPartyThreeDSecure
     /// </summary>
+    [Serializable]
     public struct ThirdPartyThreeDSecure
     {
         public ThirdPartyThreeDSecure(Payroc.ThirdPartyThreeDSecure value)

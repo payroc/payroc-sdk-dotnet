@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Payments.Subscriptions;
 
+[Serializable]
 public record ReactivateSubscriptionsRequest
 {
     /// <summary>

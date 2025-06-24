@@ -13,6 +13,7 @@ namespace Payroc.Payments.Subscriptions;
 /// Object that contains information about the customer's payment details.
 /// </summary>
 [JsonConverter(typeof(SubscriptionRequestPaymentMethod.JsonConverter))]
+[Serializable]
 public record SubscriptionRequestPaymentMethod
 {
     internal SubscriptionRequestPaymentMethod(string type, object? value)
@@ -103,6 +104,7 @@ public record SubscriptionRequestPaymentMethod
         SubscriptionRequestPaymentMethod.SecureToken value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<SubscriptionRequestPaymentMethod>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -164,6 +166,7 @@ public record SubscriptionRequestPaymentMethod
     /// <summary>
     /// Discriminated union type for secureToken
     /// </summary>
+    [Serializable]
     public struct SecureToken
     {
         public SecureToken(Payroc.SecureTokenPayload value)

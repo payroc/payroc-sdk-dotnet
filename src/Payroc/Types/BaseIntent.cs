@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the base fees.
 /// </summary>
+[Serializable]
 public record BaseIntent
 {
     /// <summary>

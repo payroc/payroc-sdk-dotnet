@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the authorization.
 /// </summary>
+[Serializable]
 public record Authorization
 {
     /// <summary>

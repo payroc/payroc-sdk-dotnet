@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the ACH deposit.
 /// </summary>
+[Serializable]
 public record AchDeposit
 {
     /// <summary>

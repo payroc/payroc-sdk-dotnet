@@ -13,6 +13,7 @@ namespace Payroc.Payments;
 /// Object that contains information about the customer's payment details.
 /// </summary>
 [JsonConverter(typeof(PaymentRequestPaymentMethod.JsonConverter))]
+[Serializable]
 public record PaymentRequestPaymentMethod
 {
     internal PaymentRequestPaymentMethod(string type, object? value)
@@ -244,6 +245,7 @@ public record PaymentRequestPaymentMethod
         PaymentRequestPaymentMethod.SingleUseToken value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<PaymentRequestPaymentMethod>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -316,6 +318,7 @@ public record PaymentRequestPaymentMethod
     /// <summary>
     /// Discriminated union type for card
     /// </summary>
+    [Serializable]
     public struct Card
     {
         public Card(Payroc.CardPayload value)
@@ -333,6 +336,7 @@ public record PaymentRequestPaymentMethod
     /// <summary>
     /// Discriminated union type for secureToken
     /// </summary>
+    [Serializable]
     public struct SecureToken
     {
         public SecureToken(Payroc.SecureTokenPayload value)
@@ -350,6 +354,7 @@ public record PaymentRequestPaymentMethod
     /// <summary>
     /// Discriminated union type for digitalWallet
     /// </summary>
+    [Serializable]
     public struct DigitalWallet
     {
         public DigitalWallet(Payroc.DigitalWalletPayload value)
@@ -368,6 +373,7 @@ public record PaymentRequestPaymentMethod
     /// <summary>
     /// Discriminated union type for singleUseToken
     /// </summary>
+    [Serializable]
     public struct SingleUseToken
     {
         public SingleUseToken(Payroc.SingleUseTokenPayload value)

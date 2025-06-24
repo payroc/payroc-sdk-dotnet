@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the address.
 /// </summary>
+[Serializable]
 public record Address
 {
     /// <summary>

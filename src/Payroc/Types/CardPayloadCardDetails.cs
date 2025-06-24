@@ -9,6 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(CardPayloadCardDetails.JsonConverter))]
+[Serializable]
 public record CardPayloadCardDetails
 {
     internal CardPayloadCardDetails(string type, object? value)
@@ -236,6 +237,7 @@ public record CardPayloadCardDetails
     public static implicit operator CardPayloadCardDetails(CardPayloadCardDetails.Swiped value) =>
         new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<CardPayloadCardDetails>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -306,6 +308,7 @@ public record CardPayloadCardDetails
     /// <summary>
     /// Discriminated union type for raw
     /// </summary>
+    [Serializable]
     public struct Raw
     {
         public Raw(Payroc.RawCardDetails value)
@@ -323,6 +326,7 @@ public record CardPayloadCardDetails
     /// <summary>
     /// Discriminated union type for icc
     /// </summary>
+    [Serializable]
     public struct Icc
     {
         public Icc(Payroc.IccCardDetails value)
@@ -340,6 +344,7 @@ public record CardPayloadCardDetails
     /// <summary>
     /// Discriminated union type for keyed
     /// </summary>
+    [Serializable]
     public struct Keyed
     {
         public Keyed(Payroc.KeyedCardDetails value)
@@ -357,6 +362,7 @@ public record CardPayloadCardDetails
     /// <summary>
     /// Discriminated union type for swiped
     /// </summary>
+    [Serializable]
     public struct Swiped
     {
         public Swiped(Payroc.SwipedCardDetails value)
