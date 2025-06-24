@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the tokenization settings and AVS settings for the terminal.
 /// </summary>
+[Serializable]
 public record ProcessingTerminalSecurity
 {
     /// <summary>

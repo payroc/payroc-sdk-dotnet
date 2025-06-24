@@ -6,6 +6,7 @@ namespace Payroc;
 [JsonConverter(
     typeof(StringEnumSerializer<ProcessingTerminalFeaturesEnhancedProcessingTransactionDataLevel>)
 )]
+[Serializable]
 public readonly record struct ProcessingTerminalFeaturesEnhancedProcessingTransactionDataLevel
     : IStringEnum
 {
@@ -69,6 +70,7 @@ public readonly record struct ProcessingTerminalFeaturesEnhancedProcessingTransa
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Level2 = "level2";

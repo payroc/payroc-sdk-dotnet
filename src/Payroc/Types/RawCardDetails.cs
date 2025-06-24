@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the unencrypted card details.
 /// </summary>
+[Serializable]
 public record RawCardDetails
 {
     /// <summary>

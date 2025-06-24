@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains details about payment links.
 /// </summary>
+[Serializable]
 public record ProcessingTerminalFeaturesPaymentLinks
 {
     /// <summary>

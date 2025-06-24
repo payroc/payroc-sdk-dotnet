@@ -6,6 +6,7 @@ namespace Payroc;
 [JsonConverter(
     typeof(StringEnumSerializer<ProcessingTerminalFeaturesEnhancedProcessingShippingAddressMode>)
 )]
+[Serializable]
 public readonly record struct ProcessingTerminalFeaturesEnhancedProcessingShippingAddressMode
     : IStringEnum
 {
@@ -69,6 +70,7 @@ public readonly record struct ProcessingTerminalFeaturesEnhancedProcessingShippi
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string FullAddress = "fullAddress";

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the details of the device.
 /// </summary>
+[Serializable]
 public record ProcessingTerminalDevicesItem
 {
     /// <summary>

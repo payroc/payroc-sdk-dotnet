@@ -9,6 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(ProcessingTerminalFeaturesTips.JsonConverter))]
+[Serializable]
 public record ProcessingTerminalFeaturesTips
 {
     internal ProcessingTerminalFeaturesTips(string type, object? value)
@@ -146,6 +147,7 @@ public record ProcessingTerminalFeaturesTips
         ProcessingTerminalFeaturesTips.False value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<ProcessingTerminalFeaturesTips>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -212,6 +214,7 @@ public record ProcessingTerminalFeaturesTips
     /// <summary>
     /// Discriminated union type for true
     /// </summary>
+    [Serializable]
     public struct True
     {
         public True(Payroc.TipProcessingEnabled value)
@@ -229,6 +232,7 @@ public record ProcessingTerminalFeaturesTips
     /// <summary>
     /// Discriminated union type for false
     /// </summary>
+    [Serializable]
     public struct False
     {
         public False(Payroc.TipProcessingDisabled value)

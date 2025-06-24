@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the types of transactions ran by the processing account. The percentages for transaction types must total 100%.
 /// </summary>
+[Serializable]
 public record ProcessingVolumeBreakdown
 {
     /// <summary>

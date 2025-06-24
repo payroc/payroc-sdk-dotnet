@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the processor fees.
 /// </summary>
+[Serializable]
 public record ProcessorFee
 {
     /// <summary>
