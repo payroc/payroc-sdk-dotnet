@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the settings for the solution, including gateway settings, device settings, and application settings.
 /// </summary>
+[Serializable]
 public record OrderItemSolutionSetup
 {
     [JsonPropertyName("timezone")]

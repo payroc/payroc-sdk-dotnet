@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that indicates if the terminal can send email receipts, text receipts, or both.
 /// </summary>
+[Serializable]
 public record OrderItemSolutionSetupReceiptNotifications
 {
     /// <summary>

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the device settings if the solution includes a terminal or a peripheral device such as a printer.
 /// </summary>
+[Serializable]
 public record OrderItemSolutionSetupDeviceSettings
 {
     /// <summary>

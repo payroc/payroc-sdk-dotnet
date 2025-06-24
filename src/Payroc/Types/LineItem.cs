@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// List of line items.
 /// </summary>
+[Serializable]
 public record LineItem
 {
     /// <summary>

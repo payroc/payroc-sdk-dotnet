@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<OfflineProcessingOperation>))]
+[Serializable]
 public readonly record struct OfflineProcessingOperation : IStringEnum
 {
     public static readonly OfflineProcessingOperation OfflineDecline = new(Values.OfflineDecline);
@@ -58,6 +59,7 @@ public readonly record struct OfflineProcessingOperation : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string OfflineDecline = "offlineDecline";

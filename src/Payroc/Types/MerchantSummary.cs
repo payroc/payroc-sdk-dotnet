@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the merchant.
 /// </summary>
+[Serializable]
 public record MerchantSummary
 {
     /// <summary>

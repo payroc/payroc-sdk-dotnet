@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the keyed card details.
 /// </summary>
+[Serializable]
 public record KeyedCardDetails
 {
     [JsonPropertyName("keyedData")]

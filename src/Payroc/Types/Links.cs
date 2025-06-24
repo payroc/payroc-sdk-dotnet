@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Array of links related to your request. For more information about HATEOAS, go to [HATEOAS.](https://docs.payroc.com/knowledge/basic-concepts/HATEOAS)
 /// </summary>
+[Serializable]
 public record Links
 {
     [JsonPropertyName("links")]
