@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the encryption details of the POS terminal.
 /// </summary>
+[Serializable]
 public record EncryptionCapableDevice
 {
     /// <summary>

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Customer contact and address details.
 /// </summary>
+[Serializable]
 public record Customer
 {
     /// <summary>

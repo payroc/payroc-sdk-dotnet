@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the payment.
 /// </summary>
+[Serializable]
 public record PaymentInstructionOrder
 {
     [JsonPropertyName("breakdown")]

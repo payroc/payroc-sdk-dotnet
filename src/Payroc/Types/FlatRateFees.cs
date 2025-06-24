@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the Flat Rate fees.
 /// </summary>
+[Serializable]
 public record FlatRateFees
 {
     [JsonPropertyName("standardCards")]

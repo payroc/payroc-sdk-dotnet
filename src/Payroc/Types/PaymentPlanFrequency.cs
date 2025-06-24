@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<PaymentPlanFrequency>))]
+[Serializable]
 public readonly record struct PaymentPlanFrequency : IStringEnum
 {
     public static readonly PaymentPlanFrequency Weekly = new(Values.Weekly);
@@ -60,6 +61,7 @@ public readonly record struct PaymentPlanFrequency : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Weekly = "weekly";

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains summary information about the transaction.
 /// </summary>
+[Serializable]
 public record TransactionSummary
 {
     /// <summary>

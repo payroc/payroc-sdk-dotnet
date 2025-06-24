@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<SecureTokenStatus>))]
+[Serializable]
 public readonly record struct SecureTokenStatus : IStringEnum
 {
     public static readonly SecureTokenStatus NotValidated = new(Values.NotValidated);
@@ -66,6 +67,7 @@ public readonly record struct SecureTokenStatus : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string NotValidated = "notValidated";

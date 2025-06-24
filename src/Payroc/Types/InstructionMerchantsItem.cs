@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Instruction indicating which recipients should receive funding from the specific merchant balance.
 /// </summary>
+[Serializable]
 public record InstructionMerchantsItem
 {
     /// <summary>

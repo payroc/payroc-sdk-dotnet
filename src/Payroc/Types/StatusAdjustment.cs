@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the adjustment to the transaction. Send this object if the merchant is adjusting the status of the transaction.
 /// </summary>
+[Serializable]
 public record StatusAdjustment
 {
     /// <summary>

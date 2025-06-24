@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the batch. If we can't match a dispute to a batch, we don't return 'batch' object.
 /// </summary>
+[Serializable]
 public record BatchSummary
 {
     /// <summary>

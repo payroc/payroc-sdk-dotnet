@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Reporting.Settlement;
 
+[Serializable]
 public record ListReportingSettlementAuthorizationsRequest
 {
     /// <summary>

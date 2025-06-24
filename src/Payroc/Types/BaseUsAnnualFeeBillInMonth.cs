@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<BaseUsAnnualFeeBillInMonth>))]
+[Serializable]
 public readonly record struct BaseUsAnnualFeeBillInMonth : IStringEnum
 {
     public static readonly BaseUsAnnualFeeBillInMonth June = new(Values.June);
@@ -54,6 +55,7 @@ public readonly record struct BaseUsAnnualFeeBillInMonth : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string June = "june";

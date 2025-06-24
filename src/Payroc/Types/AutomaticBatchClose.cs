@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Indicates how the merchant batches their transactions.
 /// </summary>
+[Serializable]
 public record AutomaticBatchClose
 {
     /// <summary>

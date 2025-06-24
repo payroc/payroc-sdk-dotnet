@@ -12,6 +12,7 @@ namespace Payroc;
 /// Object that contains pricing information.
 /// </summary>
 [JsonConverter(typeof(Pricing.JsonConverter))]
+[Serializable]
 public record Pricing
 {
     internal Pricing(string type, object? value)
@@ -145,6 +146,7 @@ public record Pricing
 
     public static implicit operator Pricing(Pricing.Agreement value) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<Pricing>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -209,6 +211,7 @@ public record Pricing
     /// <summary>
     /// Discriminated union type for intent
     /// </summary>
+    [Serializable]
     public struct Intent
     {
         public Intent(Payroc.PricingTemplate value)
@@ -226,6 +229,7 @@ public record Pricing
     /// <summary>
     /// Discriminated union type for agreement
     /// </summary>
+    [Serializable]
     public struct Agreement
     {
         public Agreement(Payroc.PricingAgreement value)

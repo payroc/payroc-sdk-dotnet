@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Inform the payfac what to do with the specified funds. **
 /// </summary>
+[Serializable]
 public record Instruction
 {
     /// <summary>

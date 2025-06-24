@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the transaction if the merchant ran it when the terminal was offline.
 /// </summary>
+[Serializable]
 public record OfflineProcessing
 {
     /// <summary>

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the taxes that apply to the transaction.
 /// </summary>
+[Serializable]
 public record PaymentPlanOrderBreakdown
 {
     /// <summary>

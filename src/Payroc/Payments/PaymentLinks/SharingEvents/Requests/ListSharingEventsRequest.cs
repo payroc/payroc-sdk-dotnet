@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Payments.PaymentLinks.SharingEvents;
 
+[Serializable]
 public record ListSharingEventsRequest
 {
     /// <summary>

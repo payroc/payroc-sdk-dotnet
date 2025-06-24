@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the payment details for the customer’s preauthorized electronic debit (PAD) transactions.
 /// </summary>
+[Serializable]
 public record PadPayload
 {
     /// <summary>

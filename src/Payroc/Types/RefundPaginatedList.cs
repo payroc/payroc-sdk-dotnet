@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about refund objects.
 /// </summary>
+[Serializable]
 public record RefundPaginatedList
 {
     /// <summary>

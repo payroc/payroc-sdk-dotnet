@@ -4,6 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.Funding.FundingAccounts;
 
+[Serializable]
 public record UpdateFundingAccountsRequest
 {
     /// <summary>

@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<ProcessingTerminalSecurityAvsLevel>))]
+[Serializable]
 public readonly record struct ProcessingTerminalSecurityAvsLevel : IStringEnum
 {
     public static readonly ProcessingTerminalSecurityAvsLevel FullAddress = new(Values.FullAddress);
@@ -54,6 +55,7 @@ public readonly record struct ProcessingTerminalSecurityAvsLevel : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string FullAddress = "fullAddress";

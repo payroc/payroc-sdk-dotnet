@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<IccCardDetailsDowngradeTo>))]
+[Serializable]
 public readonly record struct IccCardDetailsDowngradeTo : IStringEnum
 {
     public static readonly IccCardDetailsDowngradeTo Keyed = new(Values.Keyed);
@@ -54,6 +55,7 @@ public readonly record struct IccCardDetailsDowngradeTo : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Keyed = "keyed";

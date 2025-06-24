@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the monthly processing amounts for the processing account.
 /// </summary>
+[Serializable]
 public record ProcessingMonthlyAmounts
 {
     /// <summary>

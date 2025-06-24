@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the IP address of the device that sent the request.
 /// </summary>
+[Serializable]
 public record IpAddress
 {
     /// <summary>

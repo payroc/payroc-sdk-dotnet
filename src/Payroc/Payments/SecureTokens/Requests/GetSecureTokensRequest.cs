@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Payments.SecureTokens;
 
+[Serializable]
 public record GetSecureTokensRequest
 {
     /// <summary>

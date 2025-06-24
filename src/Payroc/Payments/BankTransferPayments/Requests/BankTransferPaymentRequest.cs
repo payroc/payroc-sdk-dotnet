@@ -4,6 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.Payments.BankTransferPayments;
 
+[Serializable]
 public record BankTransferPaymentRequest
 {
     /// <summary>

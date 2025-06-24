@@ -9,6 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(KeyedCardDetailsKeyedData.JsonConverter))]
+[Serializable]
 public record KeyedCardDetailsKeyedData
 {
     internal KeyedCardDetailsKeyedData(string type, object? value)
@@ -195,6 +196,7 @@ public record KeyedCardDetailsKeyedData
         KeyedCardDetailsKeyedData.PlainText value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<KeyedCardDetailsKeyedData>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -270,6 +272,7 @@ public record KeyedCardDetailsKeyedData
     /// <summary>
     /// Discriminated union type for fullyEncrypted
     /// </summary>
+    [Serializable]
     public struct FullyEncrypted
     {
         public FullyEncrypted(Payroc.FullyEncryptedKeyedDataFormat value)
@@ -289,6 +292,7 @@ public record KeyedCardDetailsKeyedData
     /// <summary>
     /// Discriminated union type for partiallyEncrypted
     /// </summary>
+    [Serializable]
     public struct PartiallyEncrypted
     {
         public PartiallyEncrypted(Payroc.PartiallyEncryptedKeyedDataFormat value)
@@ -308,6 +312,7 @@ public record KeyedCardDetailsKeyedData
     /// <summary>
     /// Discriminated union type for plainText
     /// </summary>
+    [Serializable]
     public struct PlainText
     {
         public PlainText(Payroc.PlainTextKeyedDataFormat value)

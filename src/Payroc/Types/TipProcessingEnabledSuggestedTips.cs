@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains up to three tip amounts that the terminal displays during a sale.
 /// </summary>
+[Serializable]
 public record TipProcessingEnabledSuggestedTips
 {
     /// <summary>

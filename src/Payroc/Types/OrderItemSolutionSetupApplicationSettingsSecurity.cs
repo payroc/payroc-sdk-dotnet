@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the password settings when running specific transaction types.
 /// </summary>
+[Serializable]
 public record OrderItemSolutionSetupApplicationSettingsSecurity
 {
     /// <summary>

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the shipping details for the terminal order. If you don't provide a shipping address, we use the Doing Business As (DBA) address of the processing account.
 /// </summary>
+[Serializable]
 public record TerminalOrderShipping
 {
     /// <summary>

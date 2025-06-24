@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the owner's relationship to the business.
 /// </summary>
+[Serializable]
 public record OwnerRelationship
 {
     /// <summary>

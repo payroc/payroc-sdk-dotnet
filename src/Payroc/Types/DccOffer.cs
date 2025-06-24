@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the exchange rates offer for a foreign card.
 /// </summary>
+[Serializable]
 public record DccOffer
 {
     /// <summary>

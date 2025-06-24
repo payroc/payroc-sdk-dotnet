@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<SecureTokenMitAgreement>))]
+[Serializable]
 public readonly record struct SecureTokenMitAgreement : IStringEnum
 {
     public static readonly SecureTokenMitAgreement Unscheduled = new(Values.Unscheduled);
@@ -56,6 +57,7 @@ public readonly record struct SecureTokenMitAgreement : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Unscheduled = "unscheduled";

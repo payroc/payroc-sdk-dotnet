@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the initial cost that a customer pays to set up the subscription.
 /// </summary>
+[Serializable]
 public record SubscriptionPaymentOrder
 {
     /// <summary>

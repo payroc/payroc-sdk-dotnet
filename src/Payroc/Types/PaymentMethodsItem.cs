@@ -9,6 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(PaymentMethodsItem.JsonConverter))]
+[Serializable]
 public record PaymentMethodsItem
 {
     internal PaymentMethodsItem(string type, object? value)
@@ -91,6 +92,7 @@ public record PaymentMethodsItem
 
     public static implicit operator PaymentMethodsItem(PaymentMethodsItem.Ach value) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<PaymentMethodsItem>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -152,6 +154,7 @@ public record PaymentMethodsItem
     /// <summary>
     /// Discriminated union type for ach
     /// </summary>
+    [Serializable]
     public struct Ach
     {
         public Ach(Payroc.PaymentMethodAch value)

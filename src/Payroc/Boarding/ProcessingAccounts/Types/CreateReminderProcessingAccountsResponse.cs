@@ -10,6 +10,7 @@ using Payroc.Core;
 namespace Payroc.Boarding.ProcessingAccounts;
 
 [JsonConverter(typeof(CreateReminderProcessingAccountsResponse.JsonConverter))]
+[Serializable]
 public record CreateReminderProcessingAccountsResponse
 {
     internal CreateReminderProcessingAccountsResponse(string type, object? value)
@@ -104,6 +105,7 @@ public record CreateReminderProcessingAccountsResponse
         CreateReminderProcessingAccountsResponse.PricingAgreement value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<CreateReminderProcessingAccountsResponse>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -167,6 +169,7 @@ public record CreateReminderProcessingAccountsResponse
     /// <summary>
     /// Discriminated union type for pricingAgreement
     /// </summary>
+    [Serializable]
     public struct PricingAgreement
     {
         public PricingAgreement(Payroc.PricingAgreementReminder value)

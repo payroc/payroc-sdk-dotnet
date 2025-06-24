@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the EMV tag.
 /// </summary>
+[Serializable]
 public record EmvTag
 {
     /// <summary>

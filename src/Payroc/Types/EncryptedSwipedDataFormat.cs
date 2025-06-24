@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the encrypted swiped card data.
 /// </summary>
+[Serializable]
 public record EncryptedSwipedDataFormat
 {
     [JsonPropertyName("device")]

@@ -8,6 +8,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the feature settings for the terminal.
 /// </summary>
+[Serializable]
 public record ProcessingTerminalFeatures
 {
     [JsonPropertyName("tips")]

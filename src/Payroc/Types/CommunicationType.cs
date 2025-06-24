@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<CommunicationType>))]
+[Serializable]
 public readonly record struct CommunicationType : IStringEnum
 {
     public static readonly CommunicationType Bluetooth = new(Values.Bluetooth);
@@ -58,6 +59,7 @@ public readonly record struct CommunicationType : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Bluetooth = "bluetooth";

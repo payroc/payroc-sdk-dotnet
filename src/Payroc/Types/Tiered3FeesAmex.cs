@@ -9,6 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(Tiered3FeesAmex.JsonConverter))]
+[Serializable]
 public record Tiered3FeesAmex
 {
     internal Tiered3FeesAmex(string type, object? value)
@@ -142,6 +143,7 @@ public record Tiered3FeesAmex
 
     public static implicit operator Tiered3FeesAmex(Tiered3FeesAmex.Direct value) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<Tiered3FeesAmex>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -206,6 +208,7 @@ public record Tiered3FeesAmex
     /// <summary>
     /// Discriminated union type for optBlue
     /// </summary>
+    [Serializable]
     public struct OptBlue
     {
         public OptBlue(Payroc.Tiered3AmexOptBlue value)
@@ -223,6 +226,7 @@ public record Tiered3FeesAmex
     /// <summary>
     /// Discriminated union type for direct
     /// </summary>
+    [Serializable]
     public struct Direct
     {
         public Direct(Payroc.Tiered3AmexDirect value)

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains HATEOAS links for the contact.
 /// </summary>
+[Serializable]
 public record ProcessingAccountContactsItemLink
 {
     /// <summary>

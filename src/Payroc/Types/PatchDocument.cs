@@ -12,6 +12,7 @@ namespace Payroc;
 /// A JSON Patch operation as defined by RFC 6902.
 /// </summary>
 [JsonConverter(typeof(PatchDocument.JsonConverter))]
+[Serializable]
 public record PatchDocument
 {
     internal PatchDocument(string type, object? value)
@@ -317,6 +318,7 @@ public record PatchDocument
 
     public static implicit operator PatchDocument(PatchDocument.Test value) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<PatchDocument>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -393,6 +395,7 @@ public record PatchDocument
     /// <summary>
     /// Discriminated union type for add
     /// </summary>
+    [Serializable]
     public struct Add
     {
         public Add(Payroc.PatchAdd value)
@@ -410,6 +413,7 @@ public record PatchDocument
     /// <summary>
     /// Discriminated union type for remove
     /// </summary>
+    [Serializable]
     public struct Remove
     {
         public Remove(Payroc.PatchRemove value)
@@ -427,6 +431,7 @@ public record PatchDocument
     /// <summary>
     /// Discriminated union type for replace
     /// </summary>
+    [Serializable]
     public struct Replace
     {
         public Replace(Payroc.PatchReplace value)
@@ -444,6 +449,7 @@ public record PatchDocument
     /// <summary>
     /// Discriminated union type for move
     /// </summary>
+    [Serializable]
     public struct Move
     {
         public Move(Payroc.PatchMove value)
@@ -461,6 +467,7 @@ public record PatchDocument
     /// <summary>
     /// Discriminated union type for copy
     /// </summary>
+    [Serializable]
     public struct Copy
     {
         public Copy(Payroc.PatchCopy value)
@@ -478,6 +485,7 @@ public record PatchDocument
     /// <summary>
     /// Discriminated union type for test
     /// </summary>
+    [Serializable]
     public struct Test
     {
         public Test(Payroc.PatchTest value)

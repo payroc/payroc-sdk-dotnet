@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the total funds available in the card.
 /// </summary>
+[Serializable]
 public record CardBalance
 {
     /// <summary>

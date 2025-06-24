@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the payment details for the customer’s automated clearing house (ACH) transactions.
 /// </summary>
+[Serializable]
 public record AchPayload
 {
     /// <summary>

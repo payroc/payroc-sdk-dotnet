@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains convenience fee information for the transaction.
 /// </summary>
+[Serializable]
 public record ConvenienceFee
 {
     /// <summary>

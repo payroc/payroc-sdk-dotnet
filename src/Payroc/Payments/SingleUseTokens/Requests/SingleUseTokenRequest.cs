@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Payments.SingleUseTokens;
 
+[Serializable]
 public record SingleUseTokenRequest
 {
     /// <summary>

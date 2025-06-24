@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about plain-text swiped card data.
 /// </summary>
+[Serializable]
 public record PlainTextSwipedDataFormat
 {
     [JsonPropertyName("device")]

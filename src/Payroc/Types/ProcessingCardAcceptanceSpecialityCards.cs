@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Information about the speciality cards that the merchant accepts.
 /// </summary>
+[Serializable]
 public record ProcessingCardAcceptanceSpecialityCards
 {
     [JsonPropertyName("americanExpressDirect")]

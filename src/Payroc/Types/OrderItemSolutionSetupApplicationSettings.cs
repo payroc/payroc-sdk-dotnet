@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the application settings for the solution.
 /// </summary>
+[Serializable]
 public record OrderItemSolutionSetupApplicationSettings
 {
     /// <summary>

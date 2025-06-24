@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc.Payments.PaymentLinks;
 
 [JsonConverter(typeof(StringEnumSerializer<ListPaymentLinksRequestLinkType>))]
+[Serializable]
 public readonly record struct ListPaymentLinksRequestLinkType : IStringEnum
 {
     public static readonly ListPaymentLinksRequestLinkType MultiUse = new(Values.MultiUse);
@@ -54,6 +55,7 @@ public readonly record struct ListPaymentLinksRequestLinkType : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string MultiUse = "multiUse";

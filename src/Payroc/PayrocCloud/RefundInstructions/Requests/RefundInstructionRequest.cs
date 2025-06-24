@@ -4,6 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.PayrocCloud.RefundInstructions;
 
+[Serializable]
 public record RefundInstructionRequest
 {
     /// <summary>

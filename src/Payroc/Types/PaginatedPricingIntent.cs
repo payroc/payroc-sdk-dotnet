@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about your pricing intents.
 /// </summary>
+[Serializable]
 public record PaginatedPricingIntent
 {
     /// <summary>

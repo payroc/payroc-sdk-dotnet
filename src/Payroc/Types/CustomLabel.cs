@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the information for the custom label.
 /// </summary>
+[Serializable]
 public record CustomLabel
 {
     /// <summary>

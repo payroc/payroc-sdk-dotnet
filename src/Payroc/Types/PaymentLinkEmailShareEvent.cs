@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the information to email a payment link.
 /// </summary>
+[Serializable]
 public record PaymentLinkEmailShareEvent
 {
     /// <summary>

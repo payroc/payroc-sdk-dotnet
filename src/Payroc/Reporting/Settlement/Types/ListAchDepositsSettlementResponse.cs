@@ -5,6 +5,7 @@ using Payroc.Core;
 
 namespace Payroc.Reporting.Settlement;
 
+[Serializable]
 public record ListAchDepositsSettlementResponse
 {
     /// <summary>

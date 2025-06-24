@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.PayrocCloud.PaymentInstructions;
 
+[Serializable]
 public record GetPaymentInstructionsRequest
 {
     /// <summary>

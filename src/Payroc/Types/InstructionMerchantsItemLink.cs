@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Array of HATEOAS links to view the merchant.
 /// </summary>
+[Serializable]
 public record InstructionMerchantsItemLink
 {
     [JsonPropertyName("rel")]

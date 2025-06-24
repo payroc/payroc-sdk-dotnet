@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the contact details of the recipient.
 /// </summary>
+[Serializable]
 public record PaymentLinkEmailRecipient
 {
     /// <summary>

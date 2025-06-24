@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<CreateProcessingAccountSignature>))]
+[Serializable]
 public readonly record struct CreateProcessingAccountSignature : IStringEnum
 {
     public static readonly CreateProcessingAccountSignature RequestedViaEmail = new(
@@ -58,6 +59,7 @@ public readonly record struct CreateProcessingAccountSignature : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string RequestedViaEmail = "requestedViaEmail";

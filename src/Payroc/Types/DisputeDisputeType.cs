@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<DisputeDisputeType>))]
+[Serializable]
 public readonly record struct DisputeDisputeType : IStringEnum
 {
     public static readonly DisputeDisputeType Prearbitration = new(Values.Prearbitration);
@@ -60,6 +61,7 @@ public readonly record struct DisputeDisputeType : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Prearbitration = "prearbitration";

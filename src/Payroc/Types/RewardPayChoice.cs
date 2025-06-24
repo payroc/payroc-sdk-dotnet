@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about RewardPayChoice.
 /// </summary>
+[Serializable]
 public record RewardPayChoice
 {
     /// <summary>

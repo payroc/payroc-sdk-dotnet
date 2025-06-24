@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the configuration settings for the merchant.
 /// </summary>
+[Serializable]
 public record TsysMerchant
 {
     /// <summary>

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about U.S. processor fees.
 /// </summary>
+[Serializable]
 public record PricingAgreementUs40Processor
 {
     /// <summary>

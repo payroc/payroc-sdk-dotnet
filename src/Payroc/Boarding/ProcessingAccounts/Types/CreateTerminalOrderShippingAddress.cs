@@ -7,6 +7,7 @@ namespace Payroc.Boarding.ProcessingAccounts;
 /// <summary>
 /// Object that contains the shipping address for the terminal order.
 /// </summary>
+[Serializable]
 public record CreateTerminalOrderShippingAddress
 {
     /// <summary>

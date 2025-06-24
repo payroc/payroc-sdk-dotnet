@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<AchPayloadSecCode>))]
+[Serializable]
 public readonly record struct AchPayloadSecCode : IStringEnum
 {
     public static readonly AchPayloadSecCode Web = new(Values.Web);
@@ -58,6 +59,7 @@ public readonly record struct AchPayloadSecCode : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Web = "web";

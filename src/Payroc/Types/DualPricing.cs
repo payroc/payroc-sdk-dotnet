@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about dual pricing.
 /// </summary>
+[Serializable]
 public record DualPricing
 {
     /// <summary>

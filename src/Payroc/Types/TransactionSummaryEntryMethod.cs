@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<TransactionSummaryEntryMethod>))]
+[Serializable]
 public readonly record struct TransactionSummaryEntryMethod : IStringEnum
 {
     public static readonly TransactionSummaryEntryMethod BarcodeRead = new(Values.BarcodeRead);
@@ -90,6 +91,7 @@ public readonly record struct TransactionSummaryEntryMethod : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string BarcodeRead = "barcodeRead";

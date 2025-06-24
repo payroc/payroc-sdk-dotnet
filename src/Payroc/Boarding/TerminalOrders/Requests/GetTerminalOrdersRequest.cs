@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Boarding.TerminalOrders;
 
+[Serializable]
 public record GetTerminalOrdersRequest
 {
     /// <summary>

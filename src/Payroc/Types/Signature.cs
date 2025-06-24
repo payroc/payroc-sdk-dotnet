@@ -12,6 +12,7 @@ namespace Payroc;
 /// Object containing the method we used to capture the owner's signature.
 /// </summary>
 [JsonConverter(typeof(Signature.JsonConverter))]
+[Serializable]
 public record Signature
 {
     internal Signature(string type, object? value)
@@ -145,6 +146,7 @@ public record Signature
 
     public static implicit operator Signature(Signature.RequestedViaEmail value) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<Signature>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -214,6 +216,7 @@ public record Signature
     /// <summary>
     /// Discriminated union type for requestedViaDirectLink
     /// </summary>
+    [Serializable]
     public struct RequestedViaDirectLink
     {
         public RequestedViaDirectLink(Payroc.SignatureByDirectLink value)
@@ -233,6 +236,7 @@ public record Signature
     /// <summary>
     /// Discriminated union type for requestedViaEmail
     /// </summary>
+    [Serializable]
     public struct RequestedViaEmail
     {
         public RequestedViaEmail(Payroc.SignatureByEmail value)

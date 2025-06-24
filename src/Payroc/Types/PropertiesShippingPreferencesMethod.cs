@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(StringEnumSerializer<PropertiesShippingPreferencesMethod>))]
+[Serializable]
 public readonly record struct PropertiesShippingPreferencesMethod : IStringEnum
 {
     public static readonly PropertiesShippingPreferencesMethod NextDay = new(Values.NextDay);
@@ -55,6 +56,7 @@ public readonly record struct PropertiesShippingPreferencesMethod : IStringEnum
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string NextDay = "nextDay";

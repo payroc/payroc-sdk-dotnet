@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the dispute.
 /// </summary>
+[Serializable]
 public record Dispute
 {
     /// <summary>

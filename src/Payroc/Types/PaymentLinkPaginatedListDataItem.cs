@@ -9,6 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(PaymentLinkPaginatedListDataItem.JsonConverter))]
+[Serializable]
 public record PaymentLinkPaginatedListDataItem
 {
     internal PaymentLinkPaginatedListDataItem(string type, object? value)
@@ -146,6 +147,7 @@ public record PaymentLinkPaginatedListDataItem
         PaymentLinkPaginatedListDataItem.SingleUse value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<PaymentLinkPaginatedListDataItem>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -210,6 +212,7 @@ public record PaymentLinkPaginatedListDataItem
     /// <summary>
     /// Discriminated union type for multiUse
     /// </summary>
+    [Serializable]
     public struct MultiUse
     {
         public MultiUse(Payroc.MultiUsePaymentLink value)
@@ -227,6 +230,7 @@ public record PaymentLinkPaginatedListDataItem
     /// <summary>
     /// Discriminated union type for singleUse
     /// </summary>
+    [Serializable]
     public struct SingleUse
     {
         public SingleUse(Payroc.SingleUsePaymentLink value)

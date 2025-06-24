@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc.Payments.HostedFields;
 
 [JsonConverter(typeof(StringEnumSerializer<HostedFieldsCreateSessionRequestScenario>))]
+[Serializable]
 public readonly record struct HostedFieldsCreateSessionRequestScenario : IStringEnum
 {
     public static readonly HostedFieldsCreateSessionRequestScenario Payment = new(Values.Payment);
@@ -62,6 +63,7 @@ public readonly record struct HostedFieldsCreateSessionRequestScenario : IString
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Payment = "payment";

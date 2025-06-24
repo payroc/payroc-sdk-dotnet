@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Payments.HostedFields;
 
+[Serializable]
 public record HostedFieldsCreateSessionRequest
 {
     /// <summary>

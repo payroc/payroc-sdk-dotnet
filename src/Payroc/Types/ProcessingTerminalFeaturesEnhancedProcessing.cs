@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains details about level two and level three transactions.
 /// </summary>
+[Serializable]
 public record ProcessingTerminalFeaturesEnhancedProcessing
 {
     /// <summary>

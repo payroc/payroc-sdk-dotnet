@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the currency conversion rate.
 /// </summary>
+[Serializable]
 public record FxRateInquiryResult
 {
     /// <summary>

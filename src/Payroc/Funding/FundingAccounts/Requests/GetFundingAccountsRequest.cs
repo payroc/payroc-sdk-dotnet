@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Funding.FundingAccounts;
 
+[Serializable]
 public record GetFundingAccountsRequest
 {
     /// <summary>

@@ -4,6 +4,7 @@ using Payroc.Core;
 
 namespace Payroc;
 
+[Serializable]
 public record Tiered4AmexDirect
 {
     /// <summary>

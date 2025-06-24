@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the terminal's host configuration.
 /// </summary>
+[Serializable]
 public record HostConfiguration
 {
     /// <summary>

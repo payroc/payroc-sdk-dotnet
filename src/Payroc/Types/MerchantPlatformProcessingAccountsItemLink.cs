@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains HATEOAS links for the processing account.
 /// </summary>
+[Serializable]
 public record MerchantPlatformProcessingAccountsItemLink
 {
     /// <summary>

@@ -9,6 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(ServiceUs50.JsonConverter))]
+[Serializable]
 public record ServiceUs50
 {
     internal ServiceUs50(string type, object? value)
@@ -98,6 +99,7 @@ public record ServiceUs50
     public static implicit operator ServiceUs50(ServiceUs50.HardwareAdvantagePlan value) =>
         new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<ServiceUs50>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -161,6 +163,7 @@ public record ServiceUs50
     /// <summary>
     /// Discriminated union type for hardwareAdvantagePlan
     /// </summary>
+    [Serializable]
     public struct HardwareAdvantagePlan
     {
         public HardwareAdvantagePlan(Payroc.HardwareAdvantagePlan value)

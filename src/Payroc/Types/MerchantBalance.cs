@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the total funds available to the merchant.
 /// </summary>
+[Serializable]
 public record MerchantBalance
 {
     /// <summary>

@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains pricing information.
 /// </summary>
+[Serializable]
 public record ProcessingAccountPricing
 {
     /// <summary>

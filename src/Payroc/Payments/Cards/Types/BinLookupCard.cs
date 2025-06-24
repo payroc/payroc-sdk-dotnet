@@ -13,6 +13,7 @@ namespace Payroc.Payments.Cards;
 /// Object that contains information about the card.
 /// </summary>
 [JsonConverter(typeof(BinLookupCard.JsonConverter))]
+[Serializable]
 public record BinLookupCard
 {
     internal BinLookupCard(string type, object? value)
@@ -236,6 +237,7 @@ public record BinLookupCard
 
     public static implicit operator BinLookupCard(BinLookupCard.DigitalWallet value) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<BinLookupCard>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -306,6 +308,7 @@ public record BinLookupCard
     /// <summary>
     /// Discriminated union type for card
     /// </summary>
+    [Serializable]
     public struct Card
     {
         public Card(Payroc.CardPayload value)
@@ -323,6 +326,7 @@ public record BinLookupCard
     /// <summary>
     /// Discriminated union type for cardBin
     /// </summary>
+    [Serializable]
     public struct CardBin
     {
         public CardBin(Payroc.CardBinPayload value)
@@ -340,6 +344,7 @@ public record BinLookupCard
     /// <summary>
     /// Discriminated union type for secureToken
     /// </summary>
+    [Serializable]
     public struct SecureToken
     {
         public SecureToken(Payroc.SecureTokenPayload value)
@@ -357,6 +362,7 @@ public record BinLookupCard
     /// <summary>
     /// Discriminated union type for digitalWallet
     /// </summary>
+    [Serializable]
     public struct DigitalWallet
     {
         public DigitalWallet(Payroc.DigitalWalletPayload value)

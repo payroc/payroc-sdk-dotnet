@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Boarding.ProcessingAccounts;
 
+[Serializable]
 public record PricingProcessingAccountsRequest
 {
     /// <summary>

@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Payments.Refunds;
 
+[Serializable]
 public record GetRefundsRequest
 {
     /// <summary>

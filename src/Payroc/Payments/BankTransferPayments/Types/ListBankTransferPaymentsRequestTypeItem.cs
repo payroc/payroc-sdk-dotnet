@@ -4,6 +4,7 @@ using Payroc.Core;
 namespace Payroc.Payments.BankTransferPayments;
 
 [JsonConverter(typeof(StringEnumSerializer<ListBankTransferPaymentsRequestTypeItem>))]
+[Serializable]
 public readonly record struct ListBankTransferPaymentsRequestTypeItem : IStringEnum
 {
     public static readonly ListBankTransferPaymentsRequestTypeItem Payment = new(Values.Payment);
@@ -58,6 +59,7 @@ public readonly record struct ListBankTransferPaymentsRequestTypeItem : IStringE
     /// <summary>
     /// Constant strings for enum values
     /// </summary>
+    [Serializable]
     public static class Values
     {
         public const string Payment = "payment";

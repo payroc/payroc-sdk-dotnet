@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Foreign exchange rate for the transaction.
 /// </summary>
+[Serializable]
 public record FxRate
 {
     /// <summary>

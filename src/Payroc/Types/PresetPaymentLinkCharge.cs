@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the charge when the merchant enters the amount of the transaction.
 /// </summary>
+[Serializable]
 public record PresetPaymentLinkCharge
 {
     /// <summary>

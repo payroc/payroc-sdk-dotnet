@@ -3,6 +3,7 @@ using Payroc.Core;
 
 namespace Payroc.Payments.BankAccounts;
 
+[Serializable]
 public record BankAccountVerificationRequest
 {
     /// <summary>

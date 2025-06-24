@@ -9,6 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 [JsonConverter(typeof(Notification.JsonConverter))]
+[Serializable]
 public record Notification
 {
     internal Notification(string type, object? value)
@@ -91,6 +92,7 @@ public record Notification
 
     public static implicit operator Notification(Notification.Webhook value) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<Notification>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -152,6 +154,7 @@ public record Notification
     /// <summary>
     /// Discriminated union type for webhook
     /// </summary>
+    [Serializable]
     public struct Webhook
     {
         public Webhook(Payroc.Webhook value)

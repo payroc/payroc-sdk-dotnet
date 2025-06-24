@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the business.
 /// </summary>
+[Serializable]
 public record Business
 {
     /// <summary>

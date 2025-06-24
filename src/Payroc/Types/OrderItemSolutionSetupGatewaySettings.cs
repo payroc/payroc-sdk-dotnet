@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains the gateway settings for the solution.
 /// </summary>
+[Serializable]
 public record OrderItemSolutionSetupGatewaySettings
 {
     /// <summary>

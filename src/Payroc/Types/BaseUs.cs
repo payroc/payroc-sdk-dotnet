@@ -7,6 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about U.S. base fees.
 /// </summary>
+[Serializable]
 public record BaseUs
 {
     /// <summary>

@@ -12,6 +12,7 @@ namespace Payroc;
 /// Object that contains information about when and how the terminal closes the batch.
 /// </summary>
 [JsonConverter(typeof(OrderItemSolutionSetupBatchClosure.JsonConverter))]
+[Serializable]
 public record OrderItemSolutionSetupBatchClosure
 {
     internal OrderItemSolutionSetupBatchClosure(string type, object? value)
@@ -153,6 +154,7 @@ public record OrderItemSolutionSetupBatchClosure
         OrderItemSolutionSetupBatchClosure.Manual value
     ) => new(value);
 
+    [Serializable]
     internal sealed class JsonConverter : JsonConverter<OrderItemSolutionSetupBatchClosure>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
@@ -217,6 +219,7 @@ public record OrderItemSolutionSetupBatchClosure
     /// <summary>
     /// Discriminated union type for automatic
     /// </summary>
+    [Serializable]
     public struct Automatic
     {
         public Automatic(Payroc.AutomaticBatchClose value)
@@ -234,6 +237,7 @@ public record OrderItemSolutionSetupBatchClosure
     /// <summary>
     /// Discriminated union type for manual
     /// </summary>
+    [Serializable]
     public struct Manual
     {
         public Manual(Payroc.ManualBatchClose value)
