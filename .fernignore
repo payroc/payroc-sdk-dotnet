@@ -15,3 +15,6 @@ src/Payroc/BasePayrocClient.cs
 src/Payroc.sln
 src/Payroc.Test/Unit/MockServer/GetTokenTest.cs
 src/Payroc.Test/Unit/MockServer/CreateProcessingAccountTest.cs
+# Workarounds:
+# src/Payroc/Types/CreateProcessingAccount.cs
+# src/Payroc/Types/SignatureWrapper.cs
