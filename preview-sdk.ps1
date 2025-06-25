@@ -89,4 +89,4 @@ if (Test-Path $previewRoot) {
     Remove-Item -Recurse -Force $previewRoot
 }
 
-Write-Host "Preview ready."
+Write-Host "Preview ready." -ForegroundColor Green
