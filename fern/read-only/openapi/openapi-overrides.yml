@@ -135,6 +135,12 @@ paths:
         - boarding
         - processingAccounts
       x-fern-sdk-method-name: pricing
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: 
+                x-fern-discriminated: false
   /processing-accounts/{processingAccountId}/owners:
     get:
       x-fern-sdk-group-name:
