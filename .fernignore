@@ -8,6 +8,7 @@ src/Payroc.Test/Integration
 src/Payroc/Auth/AuthClient.cs
 src/Payroc/Core/OAuthTokenProvider.cs
 src/Payroc/Auth/Requests/GetTokenAuthRequest.cs
+src/Payroc.Test/Unit/Custom
 src/Payroc.Test/Unit/MockServer/BaseMockServerTest.cs
 src/Payroc.Test/Unit/MockServer/GetTokenTest.cs
 src/Payroc/BasePayrocClient.cs
