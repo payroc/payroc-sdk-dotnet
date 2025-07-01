@@ -381,7 +381,7 @@ components:
         - taxId
         - owners
         - fundingAccounts
-        - doingBuinessAs
+        - doingBusinessAs
       type: object
       title: create funding recipient
       properties:
@@ -483,7 +483,7 @@ components:
         - taxId
         - owners
         - fundingAccounts
-        - doingBuinessAs
+        - doingBusinessAs
       type: object
       title: funding recipient
       properties:
@@ -534,7 +534,7 @@ components:
         charityId:
           type: string
           description: Government identifier of the charity. 
-        doingBuinessAs:
+        doingBusinessAs:
           type: string
           description: Legal name that the business operates under.
         address:

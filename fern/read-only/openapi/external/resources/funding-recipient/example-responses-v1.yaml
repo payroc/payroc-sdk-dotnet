@@ -25,7 +25,7 @@ components:
             lastModifiedDate: '2024-07-02T15:30:00Z'
             recipientType: privateCorporation
             taxId: '12-3456789'
-            doingBuinessAs: Pizza Doe
+            doingBusinessAs: Pizza Doe
             address: 
               address1: 1 Example Ave.
               city: Chicago
@@ -67,7 +67,7 @@ components:
         lastModifiedDate: '2024-07-02T15:30:00Z'
         recipientType: privateCorporation
         taxId: '12-3456789'
-        doingBuinessAs: Pizza Doe
+        doingBusinessAs: Pizza Doe
         address: 
           address1: 1 Example Ave.
           city: Chicago
