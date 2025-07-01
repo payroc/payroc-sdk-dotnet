@@ -2839,7 +2839,7 @@ await client.Funding.FundingRecipients.UpdateAsync(
         {
             RecipientType = FundingRecipientRecipientType.PrivateCorporation,
             TaxId = "12-3456789",
-            DoingBuinessAs = "doingBuinessAs",
+            DoingBusinessAs  = "doingBusinessAs",
             Address = new Address
             {
                 Address1 = "1 Example Ave.",
