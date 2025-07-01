@@ -3766,7 +3766,7 @@ public class PaginationComparisonTestsData
         		{
         			"rel": "previous",
         			"method": "get",
-        			"href": "https://api.payroc.com/v1/payments?processingTerminalId=1234001&limit=2&beforeE29U8OUQ01"
+        			"href": "https://api.payroc.com/v1/payments?processingTerminalId=1234001&limit=2&before=E29U8OUQ01"
         		}
         	]
         }
@@ -3801,7 +3801,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -3854,7 +3854,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -3907,7 +3907,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -3960,7 +3960,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4013,7 +4013,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4066,7 +4066,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4119,7 +4119,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4172,7 +4172,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4225,7 +4225,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4278,7 +4278,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4312,12 +4312,12 @@ public class PaginationComparisonTestsData
         		{
         			"rel": "next",
         			"method": "get",
-        			"href": "{Server.Urls[0]}/v1/payments?processingTerminalId=1234001&limit=2&after=E29U8OUQ11"
+        			"href": "{Server.Urls[0]}/payments?processingTerminalId=1234001&limit=2&after=E29U8OUQ11"
         		},
         		{
         			"rel": "previous",
         			"method": "get",
-        			"href": "{Server.Urls[0]}/v1/payments?processingTerminalId=1234001&limit=2&beforeE29U8OUQ00"
+        			"href": "{Server.Urls[0]}/payments?processingTerminalId=1234001&limit=2&before=E29U8OUQ00"
         		}
         	]
         }
@@ -4352,7 +4352,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4405,7 +4405,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4458,7 +4458,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4511,7 +4511,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4564,7 +4564,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4617,7 +4617,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4670,7 +4670,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4723,7 +4723,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4776,7 +4776,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4829,7 +4829,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4863,12 +4863,12 @@ public class PaginationComparisonTestsData
         		{
         			"rel": "next",
         			"method": "get",
-        			"href": "{Server.Urls[0]}/v1/payments?processingTerminalId=1234001&limit=2&after=E29U8OUQ21"
+        			"href": "{Server.Urls[0]}/payments?processingTerminalId=1234001&limit=2&after=E29U8OUQ21"
         		},
         		{
         			"rel": "previous",
         			"method": "get",
-        			"href": "{Server.Urls[0]}/v1/payments?processingTerminalId=1234001&limit=2&beforeE29U8OUQ10"
+        			"href": "{Server.Urls[0]}/payments?processingTerminalId=1234001&limit=2&before=E29U8OUQ10"
         		}
         	]
         }
@@ -4903,7 +4903,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -4956,7 +4956,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -5009,7 +5009,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -5062,7 +5062,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -5115,7 +5115,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -5168,7 +5168,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -5221,7 +5221,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -5274,7 +5274,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -5327,7 +5327,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -5380,7 +5380,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -5414,12 +5414,12 @@ public class PaginationComparisonTestsData
         		{
         			"rel": "next",
         			"method": "get",
-        			"href": "{Server.Urls[0]}/v1/payments?processingTerminalId=1234001&limit=2&after=E29U8OUQ31"
+        			"href": "{Server.Urls[0]}/payments?processingTerminalId=1234001&limit=2&after=E29U8OUQ31"
         		},
         		{
         			"rel": "previous",
         			"method": "get",
-        			"href": "{Server.Urls[0]}/v1/payments?processingTerminalId=1234001&limit=2&beforeE29U8OUQ20"
+        			"href": "{Server.Urls[0]}/payments?processingTerminalId=1234001&limit=2&before=E29U8OUQ20"
         		}
         	]
         }
@@ -5454,7 +5454,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -5507,7 +5507,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -5560,7 +5560,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -5613,7 +5613,7 @@ public class PaginationComparisonTestsData
         					"link": {
         						"rel": "self",
         						"method": "GET",
-        						"href": "{Server.Urls[0]}/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+        						"href": "{Server.Urls[0]}/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
         					}
         				},
         				"securityChecks": {
@@ -5647,12 +5647,12 @@ public class PaginationComparisonTestsData
         		{
         			"rel": "next",
         			"method": "get",
-        			"href": "{Server.Urls[0]}/v1/payments?processingTerminalId=1234001&limit=2&after=E29U8OUQ35"
+        			"href": "{Server.Urls[0]}/payments?processingTerminalId=1234001&limit=2&after=E29U8OUQ35"
         		},
         		{
         			"rel": "previous",
         			"method": "get",
-        			"href": "{Server.Urls[0]}/v1/payments?processingTerminalId=1234001&limit=2&beforeE29U8OUQ30"
+        			"href": "{Server.Urls[0]}/payments?processingTerminalId=1234001&limit=2&before=E29U8OUQ30"
         		}
         	]
         }
