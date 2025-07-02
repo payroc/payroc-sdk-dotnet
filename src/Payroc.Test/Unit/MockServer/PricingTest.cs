@@ -1,5 +1,7 @@
 using global::System.Threading.Tasks;
 using NUnit.Framework;
+using OneOf;
+using Payroc;
 using Payroc.Boarding.ProcessingAccounts;
 using Payroc.Core;
 
@@ -14,20 +16,21 @@ public class PricingTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
+              "version": "5.0",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
-                  "billInMonth": "june",
-                  "amount": 100
+                  "billInMonth": "december",
+                  "amount": 9900
                 },
                 "regulatoryAssistanceProgram": 15,
-                "pciNonCompliance": 7495,
+                "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
                   "amount": 1295,
                   "billingFrequency": "monthly"
                 },
-                "maintenance": 1995,
+                "maintenance": 500,
                 "minimum": 100,
                 "voiceAuthorization": 95,
                 "chargeback": 2500,
@@ -74,10 +77,10 @@ public class PricingTest : BaseMockServerTest
               },
               "gateway": {
                 "fees": {
-                  "monthly": 1,
-                  "setup": 1,
-                  "perTransaction": 1,
-                  "perDeviceMonthly": 1
+                  "monthly": 0,
+                  "setup": 0,
+                  "perTransaction": 0,
+                  "perDeviceMonthly": 0
                 }
               },
               "services": [
@@ -85,8 +88,7 @@ public class PricingTest : BaseMockServerTest
                   "enabled": true,
                   "name": "hardwareAdvantagePlan"
                 }
-              ],
-              "version": "5.0"
+              ]
             }
             """;
 
@@ -108,8 +110,14 @@ public class PricingTest : BaseMockServerTest
             new PricingProcessingAccountsRequest { ProcessingAccountId = "38765" }
         );
         Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PricingProcessingAccountsResponse>(mockResponse))
+            response.Value,
+            Is.EqualTo(
+                    JsonUtils
+                        .Deserialize<OneOf<PricingAgreementUs40, PricingAgreementUs50>>(
+                            mockResponse
+                        )
+                        .Value
+                )
                 .UsingDefaults()
         );
     }

@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using OneOf;
 using Payroc.Core;
 
 namespace Payroc;
@@ -62,7 +63,7 @@ public record CreateProcessingAccount
     public required Timezone Timezone { get; set; }
 
     [JsonPropertyName("address")]
-    public required Address Address { get; set; }
+    public required OneOf<Address> Address { get; set; }
 
     /// <summary>
     /// Array of contactMethod objects. One contact method must be an email address.

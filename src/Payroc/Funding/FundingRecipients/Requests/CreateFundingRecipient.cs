@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using OneOf;
 using Payroc;
 using Payroc.Core;
 
@@ -35,13 +36,13 @@ public record CreateFundingRecipient
     /// Legal name that the business operates under.
     /// </summary>
     [JsonPropertyName("doingBusinessAs")]
-    public string? DoingBusinessAs { get; set; }
+    public required string DoingBusinessAs { get; set; }
 
     /// <summary>
     /// Address of the funding recipient.
     /// </summary>
     [JsonPropertyName("address")]
-    public required Address Address { get; set; }
+    public required OneOf<Address> Address { get; set; }
 
     /// <summary>
     /// Array of contactMethod objects that you can use to add contact methods for the funding recipient. You must provide at least an email address.

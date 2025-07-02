@@ -1,5 +1,6 @@
 using global::System.Threading.Tasks;
 using NUnit.Framework;
+using OneOf;
 using Payroc;
 using Payroc.Boarding.PricingIntents;
 using Payroc.Core;
@@ -32,6 +33,7 @@ public class PatchTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
+              "version": "5.0",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -146,8 +148,9 @@ public class PatchTest : BaseMockServerTest
             }
         );
         Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PricingIntent50>(mockResponse)).UsingDefaults()
+            response.Value,
+            Is.EqualTo(JsonUtils.Deserialize<OneOf<PricingIntent50>>(mockResponse).Value)
+                .UsingDefaults()
         );
     }
 
@@ -188,6 +191,7 @@ public class PatchTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
+              "version": "5.0",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -309,8 +313,9 @@ public class PatchTest : BaseMockServerTest
             }
         );
         Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PricingIntent50>(mockResponse)).UsingDefaults()
+            response.Value,
+            Is.EqualTo(JsonUtils.Deserialize<OneOf<PricingIntent50>>(mockResponse).Value)
+                .UsingDefaults()
         );
     }
 }

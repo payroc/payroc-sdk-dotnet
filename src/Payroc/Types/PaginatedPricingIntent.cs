@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using OneOf;
 using Payroc.Core;
 
 namespace Payroc;
@@ -14,7 +15,7 @@ public record PaginatedPricingIntent
     /// Array of pricing intent objects.
     /// </summary>
     [JsonPropertyName("data")]
-    public IEnumerable<PricingIntent50>? Data { get; set; }
+    public IEnumerable<OneOf<PricingIntent50>>? Data { get; set; }
 
     /// <summary>
     /// Maximum number of results that we return for each page.

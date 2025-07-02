@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using OneOf;
 using Payroc;
 using Payroc.Core;
 
@@ -30,7 +31,7 @@ public partial class SharingEventsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<PayrocPager<PaymentLinkEmailShareEvent>> ListAsync(
+    public async Task<PayrocPager<OneOf<PaymentLinkEmailShareEvent>>> ListAsync(
         ListSharingEventsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -130,7 +131,7 @@ public partial class SharingEventsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<PaymentLinkEmailShareEvent>(
+                    .CreateAsync<OneOf<PaymentLinkEmailShareEvent>>(
                         sendRequest,
                         httpRequest,
                         cancellationToken
@@ -168,7 +169,7 @@ public partial class SharingEventsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<PaymentLinkEmailShareEvent> ShareAsync(
+    public async Task<OneOf<PaymentLinkEmailShareEvent>> ShareAsync(
         ShareSharingEventsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -206,7 +207,9 @@ public partial class SharingEventsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<PaymentLinkEmailShareEvent>(responseBody)!;
+                        return JsonUtils.Deserialize<OneOf<PaymentLinkEmailShareEvent>>(
+                            responseBody
+                        )!;
                     }
                     catch (JsonException e)
                     {

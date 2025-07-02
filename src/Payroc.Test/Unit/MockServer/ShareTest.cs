@@ -1,5 +1,6 @@
 using global::System.Threading.Tasks;
 using NUnit.Framework;
+using OneOf;
 using Payroc;
 using Payroc.Core;
 using Payroc.Payments.PaymentLinks.SharingEvents;
@@ -82,8 +83,8 @@ public class ShareTest : BaseMockServerTest
             }
         );
         Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PaymentLinkEmailShareEvent>(mockResponse))
+            response.Value,
+            Is.EqualTo(JsonUtils.Deserialize<OneOf<PaymentLinkEmailShareEvent>>(mockResponse).Value)
                 .UsingDefaults()
         );
     }

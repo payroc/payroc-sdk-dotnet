@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using OneOf;
 using Payroc;
 using Payroc.Core;
 
@@ -14,7 +15,7 @@ public record CreatePricingIntentsRequest
     public required string IdempotencyKey { get; set; }
 
     [JsonIgnore]
-    public required PricingIntent50 Body { get; set; }
+    public required OneOf<PricingIntent50> Body { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

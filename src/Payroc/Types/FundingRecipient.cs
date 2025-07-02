@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using OneOf;
 using Payroc.Core;
 
 namespace Payroc;
@@ -57,13 +58,13 @@ public record FundingRecipient
     /// Legal name that the business operates under.
     /// </summary>
     [JsonPropertyName("doingBusinessAs")]
-    public required string DoingBusinessAs  { get; set; }
+    public required string DoingBusinessAs { get; set; }
 
     /// <summary>
     /// Address of the funding recipient.
     /// </summary>
     [JsonPropertyName("address")]
-    public required Address Address { get; set; }
+    public required OneOf<Address> Address { get; set; }
 
     /// <summary>
     /// Array of contactMethod objects for the funding recipient.

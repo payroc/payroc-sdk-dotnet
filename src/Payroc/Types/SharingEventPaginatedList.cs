@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using OneOf;
 using Payroc.Core;
 
 namespace Payroc;
@@ -11,7 +12,7 @@ public record SharingEventPaginatedList
     /// Array of payment link sharing events.
     /// </summary>
     [JsonPropertyName("data")]
-    public IEnumerable<PaymentLinkEmailShareEvent>? Data { get; set; }
+    public IEnumerable<OneOf<PaymentLinkEmailShareEvent>>? Data { get; set; }
 
     /// <summary>
     /// Maximum number of results that we return for each page.

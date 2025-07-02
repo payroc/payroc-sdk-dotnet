@@ -133,7 +133,7 @@ public partial class MerchantPlatformsClient
     ///             TaxId = "12-3456789",
     ///             OrganizationType = BusinessOrganizationType.PrivateCorporation,
     ///             CountryOfOperation = "US",
-    ///             Addresses = new List&lt;LegalAddress&gt;()
+    ///             Addresses = new List&lt;OneOf&lt;LegalAddress&gt;&gt;()
     ///             {
     ///                 new LegalAddress
     ///                 {

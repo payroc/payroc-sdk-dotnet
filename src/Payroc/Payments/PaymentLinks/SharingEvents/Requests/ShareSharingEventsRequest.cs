@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using OneOf;
 using Payroc;
 using Payroc.Core;
 
@@ -20,7 +21,7 @@ public record ShareSharingEventsRequest
     public required string IdempotencyKey { get; set; }
 
     [JsonIgnore]
-    public required PaymentLinkEmailShareEvent Body { get; set; }
+    public required OneOf<PaymentLinkEmailShareEvent> Body { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

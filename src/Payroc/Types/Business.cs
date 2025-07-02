@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using OneOf;
 using Payroc.Core;
 
 namespace Payroc;
@@ -38,7 +39,8 @@ public record Business
     /// Array of address objects.
     /// </summary>
     [JsonPropertyName("addresses")]
-    public IEnumerable<LegalAddress> Addresses { get; set; } = new List<LegalAddress>();
+    public IEnumerable<OneOf<LegalAddress>> Addresses { get; set; } =
+        new List<OneOf<LegalAddress>>();
 
     /// <summary>
     /// An array of contactMethod objects. Email should always be provided.

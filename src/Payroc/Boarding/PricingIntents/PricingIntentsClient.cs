@@ -2,6 +2,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using global::System.Threading.Tasks;
+using OneOf;
 using Payroc;
 using Payroc.Core;
 
@@ -24,7 +25,7 @@ public partial class PricingIntentsClient
     ///     new ListPricingIntentsRequest { Before = "2571", After = "8516" }
     /// );
     /// </code></example>
-    public async Task<PayrocPager<PricingIntent50>> ListAsync(
+    public async Task<PayrocPager<OneOf<PricingIntent50>>> ListAsync(
         ListPricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -105,7 +106,11 @@ public partial class PricingIntentsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<PricingIntent50>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<OneOf<PricingIntent50>>(
+                        sendRequest,
+                        httpRequest,
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);
@@ -122,6 +127,7 @@ public partial class PricingIntentsClient
     ///         Body = new PricingIntent50
     ///         {
     ///             Country = "US",
+    ///             Version = "5.0",
     ///             Base = new BaseUs
     ///             {
     ///                 AddressVerification = 5,
@@ -172,7 +178,7 @@ public partial class PricingIntentsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<PricingIntent50> CreateAsync(
+    public async Task<OneOf<PricingIntent50>> CreateAsync(
         CreatePricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -207,7 +213,7 @@ public partial class PricingIntentsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<PricingIntent50>(responseBody)!;
+                        return JsonUtils.Deserialize<OneOf<PricingIntent50>>(responseBody)!;
                     }
                     catch (JsonException e)
                     {
@@ -269,7 +275,7 @@ public partial class PricingIntentsClient
     ///     new GetPricingIntentsRequest { PricingIntentId = "5" }
     /// );
     /// </code></example>
-    public async Task<PricingIntent50> GetAsync(
+    public async Task<OneOf<PricingIntent50>> GetAsync(
         GetPricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -298,7 +304,7 @@ public partial class PricingIntentsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<PricingIntent50>(responseBody)!;
+                        return JsonUtils.Deserialize<OneOf<PricingIntent50>>(responseBody)!;
                     }
                     catch (JsonException e)
                     {
@@ -359,6 +365,7 @@ public partial class PricingIntentsClient
     ///         Body = new PricingIntent50
     ///         {
     ///             Country = "US",
+    ///             Version = "5.0",
     ///             Base = new BaseUs
     ///             {
     ///                 AddressVerification = 5,
@@ -604,7 +611,7 @@ public partial class PricingIntentsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<PricingIntent50> PatchAsync(
+    public async Task<OneOf<PricingIntent50>> PatchAsync(
         PatchPricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -642,7 +649,7 @@ public partial class PricingIntentsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<PricingIntent50>(responseBody)!;
+                        return JsonUtils.Deserialize<OneOf<PricingIntent50>>(responseBody)!;
                     }
                     catch (JsonException e)
                     {
