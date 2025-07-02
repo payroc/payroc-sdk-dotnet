@@ -35,7 +35,7 @@ public record CreateFundingRecipient
     /// Legal name that the business operates under.
     /// </summary>
     [JsonPropertyName("doingBusinessAs")]
-    public string? DoingBusinessAs { get; set; }
+    public required string DoingBusinessAs { get; set; }
 
     /// <summary>
     /// Address of the funding recipient.

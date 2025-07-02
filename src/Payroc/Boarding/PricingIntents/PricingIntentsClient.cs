@@ -122,6 +122,7 @@ public partial class PricingIntentsClient
     ///         Body = new PricingIntent50
     ///         {
     ///             Country = "US",
+    ///             Version = "5.0",
     ///             Base = new BaseUs
     ///             {
     ///                 AddressVerification = 5,
@@ -359,6 +360,7 @@ public partial class PricingIntentsClient
     ///         Body = new PricingIntent50
     ///         {
     ///             Country = "US",
+    ///             Version = "5.0",
     ///             Base = new BaseUs
     ///             {
     ///                 AddressVerification = 5,

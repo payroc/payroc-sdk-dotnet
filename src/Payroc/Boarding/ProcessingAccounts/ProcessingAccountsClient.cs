@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using OneOf;
 using Payroc;
 using Payroc.Core;
 
@@ -311,7 +312,7 @@ public partial class ProcessingAccountsClient
     ///     new PricingProcessingAccountsRequest { ProcessingAccountId = "38765" }
     /// );
     /// </code></example>
-    public async Task<PricingProcessingAccountsResponse> PricingAsync(
+    public async Task<OneOf<PricingAgreementUs40, PricingAgreementUs50>> PricingAsync(
         PricingProcessingAccountsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -340,9 +341,9 @@ public partial class ProcessingAccountsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<PricingProcessingAccountsResponse>(
-                            responseBody
-                        )!;
+                        return JsonUtils.Deserialize<
+                            OneOf<PricingAgreementUs40, PricingAgreementUs50>
+                        >(responseBody)!;
                     }
                     catch (JsonException e)
                     {

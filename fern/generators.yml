@@ -28,7 +28,7 @@ api:
         inline-path-parameters: true
         idiomatic-request-names: true
         type-dates-as-strings: false
-        preserve-single-schema-oneof: true
+        preserve-single-schema-oneof: false
 groups:
   csharp-sdk:
     generators:

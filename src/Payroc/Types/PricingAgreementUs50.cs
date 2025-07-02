@@ -16,6 +16,12 @@ public record PricingAgreementUs50
     [JsonPropertyName("country")]
     public string Country { get; set; } = "US";
 
+    /// <summary>
+    /// Version of the MPA.
+    /// </summary>
+    [JsonPropertyName("version")]
+    public string Version { get; set; } = "5.0";
+
     [JsonPropertyName("base")]
     public required BaseUs Base { get; set; }
 

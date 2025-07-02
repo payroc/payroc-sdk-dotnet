@@ -32,6 +32,7 @@ public class PatchTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
+              "version": "5.0",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -188,6 +189,7 @@ public class PatchTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
+              "version": "5.0",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
