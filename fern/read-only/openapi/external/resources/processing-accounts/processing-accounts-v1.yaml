@@ -755,15 +755,7 @@ components:
         pricing: 
           $ref: '#/components/schemas/pricing'
         signature:
-          type: string
-          description: | 
-            Method that you use to capture the owner's signature.  
-
-            **Note:** If you request the owner’s signature by email and they don’t respond, use our [Reminders endpoint](/api/resources#createReminder) to send another email to capture their signature.
-          enum:
-            - requestedViaEmail
-            - requestedViaDirectLink
-          example: requestedViaEmail
+          $ref: '#/components/schemas/signature'
         contacts:
           type: array
           description: Array of contact objects.
