@@ -332,7 +332,9 @@ public partial class MerchantPlatformsClient
     ///                 Pricing = new Pricing(
     ///                     new Pricing.Intent(new PricingTemplate { PricingIntentId = 6123 })
     ///                 ),
-    ///                 Signature = CreateProcessingAccountSignature.RequestedViaDirectLink,
+    ///                 Signature = new Signature(
+    ///                     new Signature.RequestedViaDirectLink(new SignatureByDirectLink())
+    ///                 ),
     ///                 Contacts = new List&lt;Contact&gt;()
     ///                 {
     ///                     new Contact
@@ -847,7 +849,9 @@ public partial class MerchantPlatformsClient
     ///             Pricing = new Pricing(
     ///                 new Pricing.Intent(new PricingTemplate { PricingIntentId = 6123 })
     ///             ),
-    ///             Signature = CreateProcessingAccountSignature.RequestedViaDirectLink,
+    ///             Signature = new Signature(
+    ///                 new Signature.RequestedViaDirectLink(new SignatureByDirectLink())
+    ///             ),
     ///             Contacts = new List&lt;Contact&gt;()
     ///             {
     ///                 new Contact

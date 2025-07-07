@@ -11,7 +11,7 @@ namespace Payroc;
 public record StatusAdjustment
 {
     /// <summary>
-    /// Status of the transaction.
+    /// Status that you want to change the transaction to.
     /// </summary>
     [JsonPropertyName("toStatus")]
     public required StatusAdjustmentToStatus ToStatus { get; set; }

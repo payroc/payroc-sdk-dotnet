@@ -21,7 +21,7 @@ public record PlainTextKeyedDataFormat
 
     /// <summary>
     /// Expiry date of the customer’s card.
-    /// **Note:** This field is required for most BIN lookups or electronic voucher transactions.
+    /// **Note:** We require you to send an expiry date for most BIN lookups and electronic voucher transactions.
     /// </summary>
     [JsonPropertyName("expiryDate")]
     public string? ExpiryDate { get; set; }

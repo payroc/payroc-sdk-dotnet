@@ -8,7 +8,13 @@ namespace Payroc;
 public record ListFundingAccounts
 {
     /// <summary>
-    /// Array of fundingAccount objects.
+    /// Array of funding account objects for the processing account. Each processing account must have:
+    ///
+    /// - One funding account that accepts both credits to the account and debits from the account.
+    ///
+    /// OR
+    ///
+    /// - Two funding accounts - one for credits to the account, and another account for debits from the account.
     /// </summary>
     [JsonPropertyName("data")]
     public IEnumerable<FundingAccount> Data { get; set; } = new List<FundingAccount>();
@@ -32,7 +38,7 @@ public record ListFundingAccounts
     public bool? HasMore { get; set; }
 
     /// <summary>
-    /// Reference links to navigate to the previous page of results, or to the next page of results.
+    /// Reference links to navigate to the previous page of results or to the next page of results.
     /// </summary>
     [JsonPropertyName("links")]
     public IEnumerable<Link>? Links { get; set; }

@@ -16,7 +16,18 @@ public partial class BankTransferRefundsClient
     }
 
     /// <summary>
-    /// Return a list of refund transactions.
+    /// Use this method to return a [paginated](/api/pagination) list of bank transfer refunds.
+    ///
+    /// **Note:** If you want to view a specific refund and you have its refundId, use our Retrieve Refund method.
+    ///
+    /// Use query parameters to filter the list of results that we return, for example, to search for refunds for a customer, an orderId, or a date range.
+    ///
+    /// Our gateway returns the following information about each refund in the list:
+    ///
+    /// -	Order details, including the refund amount and when it was processed.
+    /// -	Bank account details, including the customer’s name and account number.
+    ///
+    /// For referenced refunds, our gateway also returns details about the payment that the refund is linked to.
     /// </summary>
     /// <example><code>
     /// await client.Payments.BankTransferRefunds.ListAsync(
@@ -159,8 +170,16 @@ public partial class BankTransferRefundsClient
     }
 
     /// <summary>
-    /// Send a refund to a customer's bank account. The refund transaction is not linked to the previous transaction.
-    /// **Note:** This function is available to only certain merchant accounts.
+    /// Use this method to create an unreferenced refund. An unreferenced refund is a refund that isn’t linked to a bank transfer payment.
+    ///
+    /// **Note:** If you have the paymentId of the payment you want to refund, use our [Refund Payment](/api/schema/payments/bank-transfer-payments/refund) method. If you use our Refund Payment method, our gateway sends the refund amount to the customer’s original payment method and links the refund to the payment.
+    ///
+    /// In the request, you must provide the customer’s payment method and information about the order including the refund amount.
+    ///
+    /// In the response, our gateway returns information about the refund and a refundId, which you need for the following methods:
+    ///
+    /// -	[Retrieve refund](/api/schema/payments/bank-transfer-refunds/get) – View the details of the refund.
+    /// -	[Reverse refund](/api/schema/payments/bank-transfer-refunds/reverse) – Cancel the refund if it’s in an open batch.
     /// </summary>
     /// <example><code>
     /// await client.Payments.BankTransferRefunds.CreateAsync(
@@ -286,7 +305,18 @@ public partial class BankTransferRefundsClient
     }
 
     /// <summary>
-    /// Return a specific refund transaction.
+    /// Use this method to retrieve information about a refund.
+    ///
+    /// To retrieve a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/bank-transfer-payments/refund) method or the [Create Refund](/api/schema/payments/bank-transfer-refunds/create) method.
+    ///
+    /// **Note:** If you don’t have the refundId, use our [List Refunds](/api/schema/payments/bank-transfer-refunds/list) method to search for the refund.
+    ///
+    /// Our gateway returns the following information about the refund:
+    ///
+    /// - Order details, including the refund amount and when it was processed.
+    /// - Bank account details, including the customer’s name and account number.
+    ///
+    /// If the refund is a referenced refund, our gateway also returns details about the payment that the refund is linked to.
     /// </summary>
     /// <example><code>
     /// await client.Payments.BankTransferRefunds.GetAsync(
@@ -377,7 +407,13 @@ public partial class BankTransferRefundsClient
     }
 
     /// <summary>
-    /// Void a refund transaction.
+    /// Use this method to cancel a bank transfer refund in an open batch.
+    ///
+    /// To cancel a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/bank-transfer-payments/refund) or [Create Refund](/api/schema/payments/bank-transfer-refunds/create) method.
+    ///
+    /// **Note:** If you don’t have the refundId, use our [List Refunds](/api/schema/payments/bank-transfer-refunds/list) method to search for the refund.
+    ///
+    /// If your request is successful, the gateway removes the refund from the merchant’s open batch, and no funds are returned to the cardholder’s account.
     /// </summary>
     /// <example><code>
     /// await client.Payments.BankTransferRefunds.ReverseAsync(

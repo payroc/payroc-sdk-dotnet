@@ -23,7 +23,7 @@ public record CardInfo
     public required string CardNumber { get; set; }
 
     /// <summary>
-    /// Country of the issuing bank.
+    /// Country of the issuing bank. The value for the country follows the [ISO-3166-1](https://www.iso.org/iso-3166-country-codes.html) standard.
     /// </summary>
     [JsonPropertyName("country")]
     public string? Country { get; set; }

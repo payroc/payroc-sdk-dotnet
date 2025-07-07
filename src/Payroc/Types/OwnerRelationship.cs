@@ -11,25 +11,25 @@ namespace Payroc;
 public record OwnerRelationship
 {
     /// <summary>
-    /// Percentage of the business that the owner holds.
+    /// Percentage equity stake that the owner holds in the business.
     /// </summary>
     [JsonPropertyName("equityPercentage")]
     public float? EquityPercentage { get; set; }
 
     /// <summary>
-    /// Owner's job title within the business.
+    /// Owner's job title.
     /// </summary>
     [JsonPropertyName("title")]
     public string? Title { get; set; }
 
     /// <summary>
-    /// Indicates if the owner is a control prong within the business. Only one control prong should be identified.
+    /// Indicates if the owner is a control prong. You can identify only one control prong for a business.
     /// </summary>
     [JsonPropertyName("isControlProng")]
     public required bool IsControlProng { get; set; }
 
     /// <summary>
-    /// Indicates if the owner is an authorized signatory within the business.
+    /// Indicates if the owner is an authorized signatory.
     /// </summary>
     [JsonPropertyName("isAuthorizedSignatory")]
     public bool? IsAuthorizedSignatory { get; set; }

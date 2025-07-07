@@ -535,6 +535,7 @@ public partial class PaymentLinksClient
 
     /// <summary>
     /// Use this method to deactivate a payment link. If the merchant deactivates a payment link, they can't reactivate it. To take payment, the merchant must create a new payment link.
+    ///
     /// **Note:** After the merchant deactivates a payment link, a customer can't use the link to make a payment.
     /// </summary>
     /// <example><code>

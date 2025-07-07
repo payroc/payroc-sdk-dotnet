@@ -51,7 +51,8 @@ public record SecureToken
     public required string Token { get; set; }
 
     /// <summary>
-    /// Status of the customer's bank account. The processor performs a security check on the customer's bank account and returns the status of the account.
+    /// Outcome of a security check on the status of the customer's payment card or bank account.
+    ///
     /// **Note:** Depending on the merchant's account settings, this feature may be unavailable.
     /// </summary>
     [JsonPropertyName("status")]

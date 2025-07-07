@@ -8,7 +8,7 @@ namespace Payroc;
 public record ContactMethodMobile
 {
     /// <summary>
-    /// Mobile Number.
+    /// Mobile number.
     /// </summary>
     [JsonPropertyName("value")]
     public required string Value { get; set; }

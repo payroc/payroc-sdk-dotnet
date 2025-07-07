@@ -31,6 +31,9 @@ public record SubscriptionPaymentRequest
     [JsonPropertyName("operator")]
     public string? Operator { get; set; }
 
+    /// <summary>
+    /// Object that contains information about the payment.
+    /// </summary>
     [JsonPropertyName("order")]
     public required SubscriptionPaymentOrder Order { get; set; }
 

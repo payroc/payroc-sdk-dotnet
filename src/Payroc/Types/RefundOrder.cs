@@ -17,7 +17,7 @@ public record RefundOrder
     public string? OrderId { get; set; }
 
     /// <summary>
-    /// Date and time that the processor processed the transaction. Our gateway returns this value in the ISO 8601 format.
+    /// Date and time that our gateway processed the refund. The value follows the [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) standard.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("dateTime")]
@@ -30,7 +30,7 @@ public record RefundOrder
     public string? Description { get; set; }
 
     /// <summary>
-    /// Total amount of the transaction. The value is in the currency’s lowest denomination, for example, cents.
+    /// Amount of the refund. The value is in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("amount")]
     public long? Amount { get; set; }

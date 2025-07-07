@@ -70,7 +70,7 @@ public record ProcessingAccount
     public required ProcessingAccountBusinessType BusinessType { get; set; }
 
     /// <summary>
-    /// Category code for the type of business.
+    /// Merchant Category Code (MCC) for the type of business.
     /// </summary>
     [JsonPropertyName("categoryCode")]
     public required int CategoryCode { get; set; }
@@ -122,7 +122,7 @@ public record ProcessingAccount
     public required Signature Signature { get; set; }
 
     /// <summary>
-    /// Object that you can send to include custom data in the request.
+    /// Object that you can send to include custom data in the request. For more information about how to use metadata, go to [Metadata](/api/metadata).
     /// </summary>
     [JsonPropertyName("metadata")]
     public Dictionary<string, string>? Metadata { get; set; }

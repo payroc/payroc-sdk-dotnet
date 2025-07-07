@@ -60,7 +60,7 @@ public record TransactionResult
     public required TransactionResultResponseCode ResponseCode { get; set; }
 
     /// <summary>
-    /// Description of the response from the processor.
+    /// Response description from the processor.
     /// </summary>
     [JsonPropertyName("responseMessage")]
     public required string ResponseMessage { get; set; }

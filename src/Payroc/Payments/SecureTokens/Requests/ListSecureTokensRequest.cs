@@ -13,7 +13,7 @@ public record ListSecureTokensRequest
     public required string ProcessingTerminalId { get; set; }
 
     /// <summary>
-    /// Filter by the unique secure token.
+    /// Unique identifier that the merchant assigned to the secure token.
     /// </summary>
     [JsonIgnore]
     public string? SecureTokenId { get; set; }

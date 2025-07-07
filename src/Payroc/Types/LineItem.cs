@@ -50,7 +50,7 @@ public record LineItem
     public double? DiscountRate { get; set; }
 
     /// <summary>
-    /// List of taxes to be applied to the item.
+    /// Array of objects that contain information about each tax that applies to the item.
     /// </summary>
     [JsonPropertyName("taxes")]
     public IEnumerable<Tax>? Taxes { get; set; }

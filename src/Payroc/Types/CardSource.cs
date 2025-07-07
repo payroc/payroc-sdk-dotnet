@@ -29,7 +29,7 @@ public record CardSource
     public string? ExpiryDate { get; set; }
 
     /// <summary>
-    /// The card type.
+    /// Card brand of the payment card, for example, Visa.
     /// </summary>
     [JsonPropertyName("cardType")]
     public string? CardType { get; set; }

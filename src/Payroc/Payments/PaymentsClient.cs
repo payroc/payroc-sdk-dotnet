@@ -68,7 +68,20 @@ public partial class PaymentsClient
     public BankAccountsClient BankAccounts { get; }
 
     /// <summary>
-    /// Return a list of payments.
+    /// Use this method to return a [paginated](/api/pagination) list of payments.
+    ///
+    /// **Note:** If you want to view a specific payment and you have its paymentId, use our [Retrieve Payment](/api/schema/payments/get) method.
+    ///
+    /// Use query parameters to filter the list of results that we return, for example, to search for payments for a customer, a tip mode, or a date range.
+    ///
+    /// Our gateway returns the following information about each payment in the list:
+    ///
+    /// - Order details, including the transaction amount and when it was processed.
+    /// - Payment card details, including the masked card number, expiry date, and payment method.
+    /// - Cardholder details, including their contact information and shipping address.
+    /// - Payment details, including the payment type, status, and response.
+    ///
+    /// For each transaction, we also return the paymentId and an optional secureTokenId, which you can use to perform follow-on actions.
     /// </summary>
     /// <example><code>
     /// await client.Payments.ListAsync(
@@ -234,10 +247,35 @@ public partial class PaymentsClient
     }
 
     /// <summary>
-    /// Run a sale or pre-authorization. You can also:
-    /// - Save the customer's payment details.
-    /// - Set up recurring billing.
-    /// - Process the transaction offline.
+    /// Use this method to run a sale or a pre-authorization with a customer's payment card.
+    ///
+    /// In the response, our gateway returns information about the card payment and a paymentId, which you need for the following methods:
+    ///
+    /// -	[Retrieve payment](/api/schema/payments/get) - View the details of the card payment.
+    /// -	[Adjust payment](/api/schema/payments/adjust) - Update the details of the card payment.
+    /// -	[Capture payment](/api/schema/payments/capture)  - Capture the pre-authorization.
+    /// -	[Reverse payment](/api/schema/payments/reverse)  - Cancel the card payment if it's in an open batch.
+    /// -	[Refund payment](/api/schema/payments/refund)  - Run a referenced refund to return funds to the payment card.
+    ///
+    /// **Payment methods**
+    ///
+    /// - **Cards** - Credit, debit, and EBT
+    /// - **Digital wallets** - [Apple Pay®](/guides/integrate/apple-pay) and [Google Pay®](/guides/integrate/google-pay)
+    /// - **Tokens** - Secure tokens and single-use tokens
+    ///
+    /// **Features**
+    ///
+    /// Our Create Payment method also supports the following features:
+    ///
+    /// - [Repeat payments](/guides/integrate/repeat-payments/use-your-own-software) - Run multiple payments as part of a payment schedule that you manage with your own software.
+    /// - **Offline sales** - Run a sale or a pre-authorization if the terminal loses its connection to our gateway.
+    /// - [Tokenization](h/guides/integrate/save-payment-details) - Save card details to use in future transactions.
+    /// - [3-D Secure](/guides/integrate/3-d-secure) - Verify the identity of the cardholder.
+    /// - [Custom fields](/guides/integrate/add-custom-fields) - Add your own data to a payment.
+    /// - **Tips** - Add tips to the card payment.
+    /// - **Taxes** - Add local taxes to the card payment.
+    /// - **Surcharging** - Add a surcharge to the card payment.
+    /// - **Dual pricing** - Offer different prices based on payment method, for example, if you use our RewardPay Choice pricing program.
     /// </summary>
     /// <example><code>
     /// await client.Payments.CreateAsync(
@@ -405,7 +443,20 @@ public partial class PaymentsClient
     }
 
     /// <summary>
-    /// Retrieve an existing payment.
+    /// Use this method to retrieve information about a card payment.
+    ///
+    /// To retrieve a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+    ///
+    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+    ///
+    /// Our gateway returns the following information about the payment:
+    ///
+    /// - Order details, including the transaction amount and when it was processed.
+    /// - Payment card details, including the masked card number, expiry date, and payment method.
+    /// - Cardholder details, including their contact information and shipping address.
+    /// - Payment details, including the payment type, status, and response.
+    ///
+    /// If the merchant saved the customer's card details, our gateway returns a secureTokenID, which you can use to perform follow-on actions.
     /// </summary>
     /// <example><code>
     /// await client.Payments.GetAsync(new GetPaymentsRequest { PaymentId = "M2MJOG6O2Y" });
@@ -494,7 +545,19 @@ public partial class PaymentsClient
     }
 
     /// <summary>
-    /// Adjust a transaction.
+    /// Use this method to adjust a payment in an open batch.
+    ///
+    /// To adjust a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+    ///
+    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+    ///
+    /// You can adjust the following details of the payment:
+    /// - Sale amount and tip amount
+    /// - Payment status
+    /// - Cardholder shipping address and contact information
+    /// - Cardholder signature data
+    ///
+    /// Our gateway returns information about the adjusted payment, including information about the payment card and the cardholder.
     /// </summary>
     /// <example><code>
     /// await client.Payments.AdjustAsync(
@@ -615,7 +678,20 @@ public partial class PaymentsClient
     }
 
     /// <summary>
-    /// Capture an existing payment.
+    /// Use this method to capture a pre-authorization.
+    ///
+    /// To capture a pre-authorization, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+    ///
+    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+    ///
+    /// Depending on the amount you want to capture, complete the following:
+    /// -	**Capture the full amount of the pre-authorization** - Don't send a value for the amount parameter in your request.
+    /// -	**Capture less than the amount of the pre-authorization** - Send a value for the amount parameter in your request.
+    /// -	**Capture more than the amount of the pre-authorization** - Adjust the pre-authorization before you capture it. For more information about adjusting a pre-authorization, go to [Adjust Payment](/api/schema/payments/adjust).
+    ///
+    /// If your request is successful, our gateway takes the amount from the payment card.
+    ///
+    /// **Note:** For more information about pre-authorizations and captures, go to [Run a pre-authorization](/guides/integrate/run-a-pre-authorization).
     /// </summary>
     /// <example><code>
     /// await client.Payments.CaptureAsync(
@@ -740,7 +816,13 @@ public partial class PaymentsClient
     }
 
     /// <summary>
-    /// Reverse a payment.
+    /// Use this method to cancel or to partially cancel a payment in an open batch. This is also known as voiding a payment.
+    ///
+    /// To cancel a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+    ///
+    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+    ///
+    /// If your request is successful, our gateway removes the payment from the merchant's open batch and no funds are taken from the cardholder's account.
     /// </summary>
     /// <example><code>
     /// await client.Payments.ReverseAsync(
@@ -853,7 +935,18 @@ public partial class PaymentsClient
     }
 
     /// <summary>
-    /// Refund a payment.
+    /// Use this method to refund a payment that is in a closed batch.
+    ///
+    /// To refund a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+    ///
+    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+    ///
+    /// If your refund is successful, our gateway returns the payment amount to the cardholder's account.
+    ///
+    /// **Things to consider**
+    ///
+    /// - If the merchant refunds a payment that is in an open batch, our gateway reverses the payment.
+    /// - Some merchants can run unreferenced refunds, which means that they don't need a paymentId to return an amount to a customer. For more information about how to run an unreferenced refund, go to [Create Refund](/api/schema/payments/refunds/create).
     /// </summary>
     /// <example><code>
     /// await client.Payments.RefundAsync(

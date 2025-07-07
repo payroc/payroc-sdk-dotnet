@@ -5,13 +5,15 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains the exchange rates offer for a foreign card.
+/// Object that contains information about the dynamic currency conversion (DCC) offer.
+///
+/// For more information about DCC, go to [Dynamic currency conversion](/knowledge/card-payments/dynamic-currency-conversion).
 /// </summary>
 [Serializable]
 public record DccOffer
 {
     /// <summary>
-    /// Indicates if the cardholder accepted the dynamic currency conversion (DCC) offer.
+    /// Indicates if the cardholder accepted DCC offer.
     /// </summary>
     [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("accepted")]

@@ -21,7 +21,7 @@ public record IccCardDetails
     public required EncryptionCapableDevice Device { get; set; }
 
     /// <summary>
-    /// EMV tags in Tag-Length-Value (TLV) format.
+    /// Cardholder data from the ICC. The data consists of EMV tags in Tag-Length-Value (TLV) format.
     /// </summary>
     [JsonPropertyName("iccData")]
     public required string IccData { get; set; }
@@ -33,7 +33,7 @@ public record IccCardDetails
     public string? FirstDigitOfPan { get; set; }
 
     /// <summary>
-    /// Cardholder’s signature. For more information about the format of the signature, see Special Fields and Parameters.
+    /// Cardholder's signature. For more information about how to format the signature, go to [How to send a signature to our gateway](/knowledge/basic-concepts/signature-capture).
     /// </summary>
     [JsonPropertyName("cardholderSignature")]
     public string? CardholderSignature { get; set; }

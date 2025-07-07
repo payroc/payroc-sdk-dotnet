@@ -18,7 +18,9 @@ public record DigitalWalletPayload
     public DigitalWalletPayloadAccountType? AccountType { get; set; }
 
     /// <summary>
-    /// Provider of the digital wallet.
+    /// Provider of the digital wallet. Send one of the following values:
+    /// - `apple` - For more information about how to integrate with Apple Pay, go to [Apple Pay®](/guides/integrate/apple-pay).
+    /// - `google` - For more information about how to integrate with google Pay, go to [Google Pay®](/guides/integrate/google-pay).
     /// </summary>
     [JsonPropertyName("serviceProvider")]
     public required DigitalWalletPayloadServiceProvider ServiceProvider { get; set; }

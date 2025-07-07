@@ -19,8 +19,9 @@ public record EbtDetails
     public required EbtDetailsBenefitCategory BenefitCategory { get; set; }
 
     /// <summary>
-    /// Indicates a request to withdraw cash.
-    /// **Note:** Cash withdrawal is available only for EBT Cash benefit accounts.
+    /// Indicates whether the customer wants to withdraw cash.
+    ///
+    /// **Note:** Cash withdrawals are available only from EBT Cash accounts.
     /// </summary>
     [JsonPropertyName("withdrawal")]
     public bool? Withdrawal { get; set; }

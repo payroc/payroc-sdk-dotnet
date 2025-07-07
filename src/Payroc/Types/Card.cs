@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains information about the card.
+/// Object that contains the details of the payment card.
 /// </summary>
 [Serializable]
 public record Card
@@ -41,7 +41,7 @@ public record Card
     public required string CardNumber { get; set; }
 
     /// <summary>
-    /// Expiration date of the card. The format of this value is **MMYY**.
+    /// Expiry date of the customer's card. The format is in **MMYY**.
     /// </summary>
     [JsonPropertyName("expiryDate")]
     public required string ExpiryDate { get; set; }
@@ -59,9 +59,7 @@ public record Card
     public IEnumerable<EmvTag>? EmvTags { get; set; }
 
     /// <summary>
-    /// Array of cardBalance objects.
-    /// Our gateway returns this array only when the customer uses an Electronic Benefit Transfer (EBT) card.
-    /// **Note:** This field reflects the remaining balance on the card after deducting the amount of this transaction.
+    /// Array of cardBalance objects. Our gateway returns this array only when the customer uses an Electronic Benefit Transfer (EBT) card.
     /// </summary>
     [JsonPropertyName("balances")]
     public IEnumerable<CardBalance>? Balances { get; set; }

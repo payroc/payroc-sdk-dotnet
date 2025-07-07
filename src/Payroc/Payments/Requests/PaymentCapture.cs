@@ -20,7 +20,7 @@ public record PaymentCapture
     public required string IdempotencyKey { get; set; }
 
     /// <summary>
-    /// Unique identifier that we assigned to the terminal.
+    /// Unique identifier that our gateway assigned to the terminal.
     /// </summary>
     [JsonPropertyName("processingTerminalId")]
     public string? ProcessingTerminalId { get; set; }
@@ -32,7 +32,7 @@ public record PaymentCapture
     public string? Operator { get; set; }
 
     /// <summary>
-    /// Amount of the payment that the merchant wants to capture. The value is in the currency’s lowest denomination, for example, cents.
+    /// Amount that the merchant wants to capture. The value is in the currency's lowest denomination, for example, cents.
     /// **Note:** If the merchant does not send an amount, we capture the total amount of the transaction.
     /// </summary>
     [JsonPropertyName("amount")]

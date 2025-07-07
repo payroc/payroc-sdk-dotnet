@@ -37,7 +37,7 @@ public record SingleUseToken
     public string? Token { get; set; }
 
     /// <summary>
-    /// Date and time that the token expires. We return this value in the ISO 8601 format.
+    /// Date and time that the token expires. We return this value in the [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("expiresAt")]

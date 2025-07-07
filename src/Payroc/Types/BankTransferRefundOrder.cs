@@ -24,7 +24,7 @@ public record BankTransferRefundOrder
     public DateTime? DateTime { get; set; }
 
     /// <summary>
-    /// Description of the transaction.
+    /// Description of the refund.
     /// </summary>
     [JsonPropertyName("description")]
     public string? Description { get; set; }

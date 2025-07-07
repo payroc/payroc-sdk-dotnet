@@ -7,69 +7,69 @@ namespace Payroc.Payments.BankTransferPayments;
 public record ListBankTransferPaymentsRequest
 {
     /// <summary>
-    /// Filter payments by the unique identifier that our gateway assigned to the terminal.
+    /// Filter results by the unique identifier that we assigned to the terminal.
     /// </summary>
     [JsonIgnore]
     public required string ProcessingTerminalId { get; set; }
 
     /// <summary>
-    /// Filter payments by the order ID.
+    /// Filter results by the order ID of the payment.
     /// </summary>
     [JsonIgnore]
     public string? OrderId { get; set; }
 
     /// <summary>
-    /// Filter payments by the account holder's name.
+    /// Filter results by the account holder's name.
     /// </summary>
     [JsonIgnore]
     public string? NameOnAccount { get; set; }
 
     /// <summary>
-    /// Filter payments by the last four digits of the account number.
+    /// Filter results by the last four digits of the account number.
     /// </summary>
     [JsonIgnore]
     public string? Last4 { get; set; }
 
     /// <summary>
-    /// Filter payments by transaction type.
+    /// Filter results by transaction type.
     /// </summary>
     [JsonIgnore]
     public IEnumerable<ListBankTransferPaymentsRequestTypeItem> Type { get; set; } =
         new List<ListBankTransferPaymentsRequestTypeItem>();
 
     /// <summary>
-    /// Filter by the status of the payment.
+    /// Filter results by the status of the payment.
     /// </summary>
     [JsonIgnore]
     public IEnumerable<ListBankTransferPaymentsRequestStatusItem> Status { get; set; } =
         new List<ListBankTransferPaymentsRequestStatusItem>();
 
     /// <summary>
-    /// Filter by payments that the merchant ran after a specific date. The date follows the ISO 8601 standard.
+    /// Filter results by payments that the merchant ran after a specific date. The value follows the [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) standard.
     /// </summary>
     [JsonIgnore]
     public DateTime? DateFrom { get; set; }
 
     /// <summary>
-    /// Filter by payments that the merchant ran before a specific date. The date follows the ISO 8601 standard.
+    /// Filter results by payments that the merchant ran before a specific date. The value follows the [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) standard.
     /// </summary>
     [JsonIgnore]
     public DateTime? DateTo { get; set; }
 
     /// <summary>
-    /// Filter by the settlement status of the payment.
+    /// Filter results by the settlement status.
     /// </summary>
     [JsonIgnore]
     public ListBankTransferPaymentsRequestSettlementState? SettlementState { get; set; }
 
     /// <summary>
-    /// Filter by payments settled on a specific date. The format is in **YYYY-MM-DD**.
+    /// Filter results by the settlement date. Send a value in **YYYY-MM-DD** format.
     /// </summary>
     [JsonIgnore]
     public DateOnly? SettlementDate { get; set; }
 
     /// <summary>
-    /// Unique identifier that our gateway assigned to the payment link.
+    /// Filter results by the paymentLinkId.
     /// </summary>
     [JsonIgnore]
     public string? PaymentLinkId { get; set; }

@@ -16,7 +16,20 @@ public partial class BankTransferPaymentsClient
     }
 
     /// <summary>
-    /// Retrieve a list of payments.
+    /// Use this method to return a [paginated](/api/pagination) list of payments.
+    ///
+    /// **Note:** If you want to view a specific payment and you have its paymentId, use our [Retrieve Payment](/api/schema/payments/bank-transfer-payments/get) method.
+    ///
+    /// Use query parameters to filter the list of results that we return, for example, to search for payments for a customer, a date range, or a settlement state.
+    ///
+    /// Our gateway returns the following information about each payment in the list:
+    ///
+    /// - Order details, including the transaction amount and when it was processed.
+    /// - Bank account details, including the customer’s name and account number.
+    /// - Customer's details, including the customer’s phone number.
+    /// - Transaction details, including any refunds or re-presentments.
+    ///
+    /// For each transaction, we also return the paymentId and an optional secureTokenId, which you can use to perform follow-on actions.
     /// </summary>
     /// <example><code>
     /// await client.Payments.BankTransferPayments.ListAsync(
@@ -312,7 +325,20 @@ public partial class BankTransferPaymentsClient
     }
 
     /// <summary>
-    /// Retrieve a specific payment.
+    /// Use this method to retrieve information about a bank transfer payment.
+    ///
+    /// To retrieve a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/bank-transfer-payments/create) method.
+    ///
+    /// Note: If you don’t have the paymentId, use our [List Payments](/api/schema/payments/bank-transfer-payments/list) method to search for the payment.
+    ///
+    /// Our gateway returns the following information about the payment:
+    ///
+    /// -	Order details, including the transaction amount and when it was processed.
+    /// -	Bank account details, including the customer’s name and account number.
+    /// -	Customer’s details, including the customer’s phone number.
+    /// -	Transaction details, including any refunds or re-presentments.
+    ///
+    /// If the merchant saved the customer’s bank account details, our gateway returns a secureTokenID, which you can use to perform follow-on actions.
     /// </summary>
     /// <example><code>
     /// await client.Payments.BankTransferPayments.GetAsync(
@@ -403,7 +429,13 @@ public partial class BankTransferPaymentsClient
     }
 
     /// <summary>
-    /// Cancel a payment in an open batch.
+    /// Use this method to cancel a bank transfer payment in an open batch. This is also known as voiding a payment.
+    ///
+    /// To cancel a bank transfer payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/bank-transfer-payments/create) method.
+    ///
+    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/bank-transfer-payments/list) method to search for the bank transfer payment.
+    ///
+    /// If your request is successful, our gateway removes the bank transfer payment from the merchant’s open batch and no funds are taken from the customer's bank account.
     /// </summary>
     /// <example><code>
     /// await client.Payments.BankTransferPayments.ReverseAsync(
@@ -513,7 +545,17 @@ public partial class BankTransferPaymentsClient
     }
 
     /// <summary>
-    /// Refund a payment.
+    /// Use this method to refund a bank transfer payment that is in a closed batch.
+    ///
+    /// To refund a bank transfer payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/bank-transfer-payments/create) method.
+    ///
+    /// **Note:** If you don’t have the paymentId, use our [List Payments](/api/schema/payments/bank-transfer-payments/list) method to search for the bank transfer payment.
+    ///
+    /// If your refund is successful, our gateway returns the payment amount to the customer's account.
+    ///
+    /// **Things to consider**
+    /// - If the merchant refunds a bank transfer payment that is in an open batch, our gateway reverses the bank transfer payment.
+    /// - Some merchants can run unreferenced refunds, which means that they don’t need a paymentId to return an amount to a customer. For more information about how to run an unreferenced refund, go to [Create Refund](/api/schema/payments/bank-transfer-refunds/create).
     /// </summary>
     /// <example><code>
     /// await client.Payments.BankTransferPayments.RefundAsync(
@@ -627,7 +669,16 @@ public partial class BankTransferPaymentsClient
     }
 
     /// <summary>
-    /// Re-present a customer's bank account details if the first payment was declined.
+    /// Use this method to re-present an ACH payment.
+    ///
+    /// To re-present a payment, you need the paymentId of the return. To get the paymentId of the return, complete the following steps:
+    ///
+    /// 1.	Use our [Retrieve Payment](/api/schema/payments/bank-transfer-payments/get) method  to view the details of the original payment.
+    /// 2.	From the [returns object](/api/schema/payments/bank-transfer-payments/get#response.body.returns) in the response, get the paymentId of the return.
+    ///
+    /// Our gateway uses the bank account details from the original payment. If you want to update the customer's bank account details, send the new bank account details in the request.
+    ///
+    /// If your request is successful, our gateway re-presents the payment.
     /// </summary>
     /// <example><code>
     /// await client.Payments.BankTransferPayments.RepresentAsync(

@@ -18,7 +18,8 @@ public record AchPayload
     public AchPayloadAccountType? AccountType { get; set; }
 
     /// <summary>
-    /// Indicates the type of authorization for the transaction.
+    /// Indicates how the customer authorized the ACH transaction. Send one of the following values:
+    ///
     /// - `web` – Online transaction.
     /// - `tel` – Telephone transaction.
     /// - `ccd` – Corporate credit card or debit card transaction.

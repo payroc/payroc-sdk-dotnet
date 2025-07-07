@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Customer contact and address details.
+/// Object that contains the customer's contact details and address information.
 /// </summary>
 [Serializable]
 public record Customer
@@ -36,6 +36,9 @@ public record Customer
     [JsonPropertyName("referenceNumber")]
     public string? ReferenceNumber { get; set; }
 
+    /// <summary>
+    /// Object that contains information about the address that the card is registered to.
+    /// </summary>
     [JsonPropertyName("billingAddress")]
     public Address? BillingAddress { get; set; }
 
@@ -49,9 +52,7 @@ public record Customer
     public IEnumerable<ContactMethod>? ContactMethods { get; set; }
 
     /// <summary>
-    /// Language that the customer uses for notifications.
-    ///
-    /// This code follows the ISO 639-1 alpha-2 standard.
+    /// Language that the customer uses for notifications. This code follows the [ISO 639-1](https://www.iso.org/iso-639-language-code) alpha-2 standard.
     /// </summary>
     [JsonPropertyName("notificationLanguage")]
     public CustomerNotificationLanguage? NotificationLanguage { get; set; }

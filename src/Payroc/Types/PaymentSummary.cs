@@ -50,7 +50,7 @@ public record PaymentSummary
     public required PaymentSummaryResponseCode ResponseCode { get; set; }
 
     /// <summary>
-    /// Description of the response from the processor.
+    /// Response description from the processor.
     /// </summary>
     [JsonPropertyName("responseMessage")]
     public required string ResponseMessage { get; set; }

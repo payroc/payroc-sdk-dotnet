@@ -24,7 +24,8 @@ public record SecureTokenPayload
     public required string Token { get; set; }
 
     /// <summary>
-    /// Indicates the type of authorization for the transaction. The field is mandatory for ACH secure token.
+    /// Indicates how the customer authorized the ACH transaction. Send one of the following values:
+    ///
     /// - `web` – Online transaction.
     /// - `tel` – Telephone transaction.
     /// - `ccd` – Corporate credit card or debit card transaction.

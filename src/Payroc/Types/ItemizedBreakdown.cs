@@ -11,8 +11,7 @@ namespace Payroc;
 public record ItemizedBreakdown
 {
     /// <summary>
-    /// Value of duties or fees for the transaction in the currency's
-    /// lowest denomination, for example, cents.
+    /// Amount of duties or fees that apply to the order. The value is in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("dutyAmount")]
     public long? DutyAmount { get; set; }
@@ -26,6 +25,9 @@ public record ItemizedBreakdown
     [JsonPropertyName("convenienceFee")]
     public ConvenienceFee? ConvenienceFee { get; set; }
 
+    /// <summary>
+    /// Array of objects that contain information about each item that the customer purchased.
+    /// </summary>
     [JsonPropertyName("items")]
     public IEnumerable<LineItem>? Items { get; set; }
 

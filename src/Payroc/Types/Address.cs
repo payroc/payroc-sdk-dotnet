@@ -11,19 +11,19 @@ namespace Payroc;
 public record Address
 {
     /// <summary>
-    /// Address Line.
+    /// Address line 1.
     /// </summary>
     [JsonPropertyName("address1")]
     public required string Address1 { get; set; }
 
     /// <summary>
-    /// Address Line.
+    /// Address line 2.
     /// </summary>
     [JsonPropertyName("address2")]
     public string? Address2 { get; set; }
 
     /// <summary>
-    /// Address Line.
+    /// Address line 3.
     /// </summary>
     [JsonPropertyName("address3")]
     public string? Address3 { get; set; }
@@ -35,19 +35,19 @@ public record Address
     public required string City { get; set; }
 
     /// <summary>
-    /// Name or postal abbreviation of the state.
+    /// Name of the state or state abbreviation.
     /// </summary>
     [JsonPropertyName("state")]
     public required string State { get; set; }
 
     /// <summary>
-    /// Two letter ISO 3166-1 country code.
+    /// Two-digit country code for the country that the business operates in. The format follows the [ISO-3166-1](https://www.iso.org/iso-3166-country-codes.html) standard.
     /// </summary>
     [JsonPropertyName("country")]
     public required string Country { get; set; }
 
     /// <summary>
-    /// Zip Code or Postcode.
+    /// Zip code or postal code.
     /// </summary>
     [JsonPropertyName("postalCode")]
     public required string PostalCode { get; set; }

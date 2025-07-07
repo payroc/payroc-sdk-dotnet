@@ -35,7 +35,7 @@ public record PaginatedPricingIntent
     public bool? HasMore { get; set; }
 
     /// <summary>
-    /// Reference links to navigate to the previous page of results, or to the next page of results.
+    /// Reference links to navigate to the previous page of results or to the next page of results.
     /// </summary>
     [JsonPropertyName("links")]
     public IEnumerable<Link>? Links { get; set; }

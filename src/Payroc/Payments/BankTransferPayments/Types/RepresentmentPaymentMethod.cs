@@ -32,6 +32,15 @@ public record RepresentmentPaymentMethod
     }
 
     /// <summary>
+    /// Create an instance of RepresentmentPaymentMethod with <see cref="RepresentmentPaymentMethod.SecureToken"/>.
+    /// </summary>
+    public RepresentmentPaymentMethod(RepresentmentPaymentMethod.SecureToken value)
+    {
+        Type = "secureToken";
+        Value = value.Value;
+    }
+
+    /// <summary>
     /// Discriminant value
     /// </summary>
     [JsonPropertyName("type")]
@@ -48,6 +57,11 @@ public record RepresentmentPaymentMethod
     public bool IsAch => Type == "ach";
 
     /// <summary>
+    /// Returns true if <see cref="Type"/> is "secureToken"
+    /// </summary>
+    public bool IsSecureToken => Type == "secureToken";
+
+    /// <summary>
     /// Returns the value as a <see cref="Payroc.AchPayload"/> if <see cref="Type"/> is 'ach', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'ach'.</exception>
@@ -56,21 +70,42 @@ public record RepresentmentPaymentMethod
             ? (Payroc.AchPayload)Value!
             : throw new Exception("RepresentmentPaymentMethod.Type is not 'ach'");
 
-    public T Match<T>(Func<Payroc.AchPayload, T> onAch, Func<string, object?, T> onUnknown_)
+    /// <summary>
+    /// Returns the value as a <see cref="Payroc.SecureTokenPayload"/> if <see cref="Type"/> is 'secureToken', otherwise throws an exception.
+    /// </summary>
+    /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'secureToken'.</exception>
+    public Payroc.SecureTokenPayload AsSecureToken() =>
+        IsSecureToken
+            ? (Payroc.SecureTokenPayload)Value!
+            : throw new Exception("RepresentmentPaymentMethod.Type is not 'secureToken'");
+
+    public T Match<T>(
+        Func<Payroc.AchPayload, T> onAch,
+        Func<Payroc.SecureTokenPayload, T> onSecureToken,
+        Func<string, object?, T> onUnknown_
+    )
     {
         return Type switch
         {
             "ach" => onAch(AsAch()),
+            "secureToken" => onSecureToken(AsSecureToken()),
             _ => onUnknown_(Type, Value),
         };
     }
 
-    public void Visit(Action<Payroc.AchPayload> onAch, Action<string, object?> onUnknown_)
+    public void Visit(
+        Action<Payroc.AchPayload> onAch,
+        Action<Payroc.SecureTokenPayload> onSecureToken,
+        Action<string, object?> onUnknown_
+    )
     {
         switch (Type)
         {
             case "ach":
                 onAch(AsAch());
+                break;
+            case "secureToken":
+                onSecureToken(AsSecureToken());
                 break;
             default:
                 onUnknown_(Type, Value);
@@ -92,10 +127,28 @@ public record RepresentmentPaymentMethod
         return false;
     }
 
+    /// <summary>
+    /// Attempts to cast the value to a <see cref="Payroc.SecureTokenPayload"/> and returns true if successful.
+    /// </summary>
+    public bool TryAsSecureToken(out Payroc.SecureTokenPayload? value)
+    {
+        if (Type == "secureToken")
+        {
+            value = (Payroc.SecureTokenPayload)Value!;
+            return true;
+        }
+        value = null;
+        return false;
+    }
+
     public override string ToString() => JsonUtils.Serialize(this);
 
     public static implicit operator RepresentmentPaymentMethod(
         RepresentmentPaymentMethod.Ach value
+    ) => new(value);
+
+    public static implicit operator RepresentmentPaymentMethod(
+        RepresentmentPaymentMethod.SecureToken value
     ) => new(value);
 
     [Serializable]
@@ -135,6 +188,8 @@ public record RepresentmentPaymentMethod
             {
                 "ach" => json.Deserialize<Payroc.AchPayload>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.AchPayload"),
+                "secureToken" => json.Deserialize<Payroc.SecureTokenPayload>(options)
+                    ?? throw new JsonException("Failed to deserialize Payroc.SecureTokenPayload"),
                 _ => json.Deserialize<object?>(options),
             };
             return new RepresentmentPaymentMethod(discriminator, value);
@@ -150,6 +205,7 @@ public record RepresentmentPaymentMethod
                 value.Type switch
                 {
                     "ach" => JsonSerializer.SerializeToNode(value.Value, options),
+                    "secureToken" => JsonSerializer.SerializeToNode(value.Value, options),
                     _ => JsonSerializer.SerializeToNode(value.Value, options),
                 } ?? new JsonObject();
             json["type"] = value.Type;
@@ -173,5 +229,23 @@ public record RepresentmentPaymentMethod
         public override string ToString() => Value.ToString();
 
         public static implicit operator Ach(Payroc.AchPayload value) => new(value);
+    }
+
+    /// <summary>
+    /// Discriminated union type for secureToken
+    /// </summary>
+    [Serializable]
+    public struct SecureToken
+    {
+        public SecureToken(Payroc.SecureTokenPayload value)
+        {
+            Value = value;
+        }
+
+        internal Payroc.SecureTokenPayload Value { get; set; }
+
+        public override string ToString() => Value.ToString();
+
+        public static implicit operator SecureToken(Payroc.SecureTokenPayload value) => new(value);
     }
 }

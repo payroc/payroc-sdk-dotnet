@@ -17,7 +17,11 @@ public partial class OwnersClient
     }
 
     /// <summary>
-    /// Retrieve a specific owner.
+    /// If you have the ownerId, you can use this method to retrieve the details of the owner. The response includes the owner's contact details and information about the owner's relationship to the business.
+    ///
+    /// If you don't have the ownerId, you can use the following methods to retrieve the owner's information:
+    ///   - **Owners of processing accounts** - Use the HATEOAS links that we send you when you [Retrieve a processing account](/api/schema/boarding/processing-accounts/get) or [List merchant platform's processing accounts](/api/schema/boarding/merchant-platforms/list-processing-accounts).
+    ///   - **Owners of funding recipients** - Use the [List funding recipient owners](/api/schema/funding/funding-recipients/list-owners) method.
     /// </summary>
     /// <example><code>
     /// await client.Boarding.Owners.GetAsync(new GetOwnersRequest { OwnerId = 1 });
@@ -102,7 +106,11 @@ public partial class OwnersClient
     }
 
     /// <summary>
-    /// Update a specific owner.
+    /// &gt; **Important:** You cannot update the owner of a processing account.
+    ///
+    /// Use this method to update the details of a funding recipient owner such as their contact details and their relationship to the business.
+    ///
+    /// Include the ownerId in the path parameter of your request. If you don’t know the ownerId, you can [Retrieve the funding recipient](/api/schema/funding/funding-recipients/get), [List funding recipients](/api/schema/funding/funding-recipients/list), or [List funding recipient owners](/api/schema/funding/funding-recipients/list-owners) to locate the ownerId.
     /// </summary>
     /// <example><code>
     /// await client.Boarding.Owners.UpdateAsync(
@@ -225,7 +233,11 @@ public partial class OwnersClient
     }
 
     /// <summary>
-    /// Delete a owner.
+    /// &gt; **Important:** You cannot delete the owner of a processing account.
+    ///
+    /// Use this method to delete an owner from a funding recipient. You can delete an owner only if the funding recipient has more than one owner.
+    ///
+    /// Include the ownerId in the path parameter of your request. If you don’t know the ownerId, you can [Retrieve the funding recipient](/api/schema/funding/funding-recipients/get), [List funding recipients](/api/schema/funding/funding-recipients/list), or [List funding recipient owners](/api/schema/funding/funding-recipients/list-owners) to locate the ownerId.
     /// </summary>
     /// <example><code>
     /// await client.Boarding.Owners.DeleteAsync(new DeleteOwnersRequest { OwnerId = 1 });

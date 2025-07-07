@@ -16,8 +16,21 @@ public partial class SubscriptionsClient
     }
 
     /// <summary>
-    /// List subscriptions linked to a terminal.
-    /// To filter your results, use the query parameters.
+    /// Use this method to return a [paginated](/api/pagination) list of subscriptions.
+    ///
+    /// Note: If you want to view a specific subscription and you have its subscriptionId, use our [Retrieve subscription](/api/schema/payments/subscriptions/get) method.
+    ///
+    /// Use query parameters to filter the list of results that we return, for example, to search for subscriptions for a customer, a payment plan, or frequency.
+    ///
+    /// Our gateway returns information about the following for each subscription in the list:
+    ///
+    /// -	Payment plan the subscription is linked to.
+    /// -	Secure token that represents cardholder’s payment details.
+    /// -	Current state of the subscription, including its status, next due date, and invoices.
+    /// -	Fees for setup and the cost of the recurring order.
+    /// -	Subscription length, end date, and frequency.
+    ///
+    /// For each subscription, we also return the subscriptionId, the paymentPlanId, and the secureTokenId, which you can use to perform follow-actions.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Subscriptions.ListAsync(
@@ -167,7 +180,24 @@ public partial class SubscriptionsClient
     }
 
     /// <summary>
-    /// Create a new subscription.
+    /// Use this method to assign a customer to a payment plan.
+    ///
+    /// **Note:** This method is part of our Repeat Payments feature. To help you understand how this method works with our Payment plans endpoints, go to [Repeat Payments](/guides/integrate/repeat-payments).
+    ///
+    /// When you create a subscription you need to provide a unique subscriptionId that you use to run follow-on actions:
+    ///
+    /// - [Retrieve Subscription](/api/schema/payments/subscriptions/get) - View the details of the subscription.
+    /// - [Update Subscription](/api/schema/payments/subscriptions/patch) - Update the details of the subscription.
+    /// - [Deactivate Subscription](/api/schema/payments/subscriptions/deactivate) - Stop taking payments for the subscription.
+    /// - [Re-activate Subscription](/api/schema/payments/subscriptions/reactivate) - Start taking payments again for the subscription.
+    /// - [Pay Manual Subscription](/api/schema/payments/subscriptions/pay) - Manually collect a payment for the subscription.
+    ///
+    /// The request includes the following settings:
+    /// - **paymentPlanId** - Unique identifier of the payment plan that the merchant wants to use.
+    /// - **paymentMethod** - Object that contains information about the secure token, which represents the customer's card details or bank account details.
+    /// - **startDate** - Date that you want to start to take payments.
+    ///
+    /// You can also update the settings that the subscription inherited from the payment plan, for example, you can change the amount for each payment. If you change the settings for the subscription, it doesn't change the settings in the payment plan that it's linked to.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Subscriptions.CreateAsync(
@@ -319,7 +349,21 @@ public partial class SubscriptionsClient
     }
 
     /// <summary>
-    /// Retrieve a specific subscription.
+    /// Use this method to retrieve information about a subscription.
+    ///
+    /// To retrieve a subscription, you need its subscriptionId. You sent the subscriptionId in the request of the [Create subscription](/api/schema/payments/subscriptions/create) method.
+    ///
+    /// **Note:** If you don't have the subscriptionId, use our [List subscriptions](/api/schema/payments/subscriptions/list) method to search for the subscription.
+    ///
+    /// Our gateway returns information about the following for the subscription:
+    ///
+    /// -	Payment plan the subscription is linked to.
+    /// -	Secure token that represents cardholder’s payment details.
+    /// -	Current state of the subscription, including its status, next due date, and invoices.
+    /// -	Fees for setup and the cost of the recurring order.
+    /// -	Subscription length, end date, and frequency.
+    ///
+    /// We also return the paymentPlanId and the secureTokenId, which you can use to perform follow-on actions.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Subscriptions.GetAsync(
@@ -411,9 +455,24 @@ public partial class SubscriptionsClient
     }
 
     /// <summary>
-    /// Make changes to a subscription.
+    /// Use this method to partially update a subscription. Structure your request to follow the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
     ///
-    /// Structure your request to follow the RFC 6902 standard.
+    /// To update a subscription, you need its subscriptionId, which you sent in the request of the [Create subscription](/api/schema/payments/subscriptions/create) method.
+    ///
+    /// **Note:** If you don't have the subscriptionId, use our [List subscriptions](/api/schema/payments/subscriptions/list) method to search for the payment.
+    ///
+    /// You can update all of the properties of the subscription except for the following:
+    ///
+    /// **Can't delete**
+    /// - recurringOrder
+    /// - description
+    /// - name
+    ///
+    /// **Can't perform any PATCH operation**
+    /// - currentState
+    /// - type
+    /// - frequency
+    /// - paymentPlan
     /// </summary>
     /// <example><code>
     /// await client.Payments.Subscriptions.UpdateAsync(
@@ -533,7 +592,15 @@ public partial class SubscriptionsClient
     }
 
     /// <summary>
-    /// Deactivate a subscription.
+    /// Use this method to deactivate a subscription.
+    ///
+    /// To deactivate a subscription, you need its subscriptionId, which you sent in the request of the [Create Subscription](/api/schema/payments/subscriptions/create) method.
+    ///
+    /// **Note:** If you don't have the subscriptionId, use our [List Subscriptions](/api/schema/payments/subscriptions/list) method to search for the subscription.
+    ///
+    /// If your request is successful, our gateway stops taking payments from the customer.
+    ///
+    /// To reactivate the subscription, use our [Reactivate Subscription](/api/schema/payments/subscriptions/reactivate) method.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Subscriptions.DeactivateAsync(
@@ -637,7 +704,15 @@ public partial class SubscriptionsClient
     }
 
     /// <summary>
-    /// Re-activate an existing subscription.
+    /// Use this method to reactivate a subscription.
+    ///
+    /// To reactivate a subscription, you need its subscriptionId, which you sent in the request of the [Create Subscription](/api/schema/payments/subscriptions/create) method.
+    ///
+    /// **Note:** If you don't have the subscriptionId, use our [List Subscriptions](/api/schema/payments/subscriptions/list) method to search for the subscription.
+    ///
+    /// If your request is successful, our gateway restarts taking payments from the customer.
+    ///
+    /// To deactivate the subscription, use our [Deactivate Subscription](/api/schema/payments/subscriptions/deactivate) method.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Subscriptions.ReactivateAsync(
@@ -741,7 +816,15 @@ public partial class SubscriptionsClient
     }
 
     /// <summary>
-    /// Process payment for a manual subscription.
+    /// Use this method to manually collect a payment linked to a subscription. You can manually collect a payment only if the merchant chose not to let our gateway automatically collect each payment.
+    ///
+    /// To manually collect a payment, you need the subscriptionId of the subscription that's linked to the payment. You sent the subscriptionId in the request of the [Create Subscription](/api/schema/payments/subscriptions/create) method.
+    ///
+    /// **Note:** If you don't have the subscriptionId, use our [List Subscriptions](/api/schema/payments/subscriptions/list) method to search for the subscription.
+    ///
+    /// The request includes an order object that contains information about the amount that you want to collect.
+    ///
+    /// In the response, our gateway returns information about the payment and a paymentId. You can use the paymentId in follow-on actions with the [Payments](/api/schema/payments) endpoints or [Bank Transfer Payments](/api/schema/payments/bank-transfer-payments) endpoints.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Subscriptions.PayAsync(

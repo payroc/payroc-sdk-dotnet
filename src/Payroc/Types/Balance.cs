@@ -35,7 +35,7 @@ public record Balance
     public BalanceResponseCode? ResponseCode { get; set; }
 
     /// <summary>
-    /// Response description from the payment processor. For example, "Refer to Card Issuer".
+    /// Response description from the payment processor, for example, Refer to Card Issuer.
     /// </summary>
     [JsonPropertyName("responseMessage")]
     public string? ResponseMessage { get; set; }

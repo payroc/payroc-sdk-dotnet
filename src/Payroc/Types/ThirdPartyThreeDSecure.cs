@@ -11,7 +11,7 @@ namespace Payroc;
 public record ThirdPartyThreeDSecure
 {
     /// <summary>
-    /// E-commerce indicator (ECI) is the result of the authentication check on the payment by the 3-D Secure service.
+    /// E-commerce indicator (ECI) result of a the 3-D Secure check.
     /// </summary>
     [JsonPropertyName("eci")]
     public required ThirdPartyThreeDSecureEci Eci { get; set; }
@@ -23,13 +23,13 @@ public record ThirdPartyThreeDSecure
     public string? Xid { get; set; }
 
     /// <summary>
-    /// Cardholder Authentication Value is a cryptographic value that the card issuer sends to prove an online transaction was authorized.
+    /// Cardholder Authentication Verification Value (CAVV) that the card issuer provided to prove that they authorized the online payment.
     /// </summary>
     [JsonPropertyName("cavv")]
     public string? Cavv { get; set; }
 
     /// <summary>
-    /// Directory Server Transaction ID is a unique identifier that the processor assigned to the request.
+    /// Directory Server Transaction ID that the processor assigned to the request.
     /// </summary>
     [JsonPropertyName("dsTransactionId")]
     public string? DsTransactionId { get; set; }

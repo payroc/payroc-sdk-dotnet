@@ -11,11 +11,14 @@ namespace Payroc;
 public record AchBankAccount
 {
     /// <summary>
-    /// SEC code for the transaction.
-    /// - `web` - Online transaction.
-    /// - `tel` - Telephone transaction.
-    /// - `ccd` - Corporate credit or debit transaction.
-    /// - `ppd` - Pre-arranged transaction.
+    /// Indicates the type of authorization for the transaction.
+    ///
+    /// **Note:** The field is mandatory for ACH secure token.
+    ///
+    /// - `web` – Online transaction.
+    /// - `tel` – Telephone transaction.
+    /// - `ccd` – Corporate credit card or debit card transaction.
+    /// - `ppd` – Pre-arranged transaction.
     /// </summary>
     [JsonPropertyName("secCode")]
     public AchBankAccountSecCode? SecCode { get; set; }
@@ -34,6 +37,8 @@ public record AchBankAccount
 
     /// <summary>
     /// Routing number of the customer’s account.
+    ///
+    /// **Note:** In responses, our gateway shows only the last four digits of the account's routing number, for example, *****4162.
     /// </summary>
     [JsonPropertyName("routingNumber")]
     public required string RoutingNumber { get; set; }

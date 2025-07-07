@@ -17,6 +17,9 @@ public record CardPayload
     [JsonPropertyName("accountType")]
     public CardPayloadAccountType? AccountType { get; set; }
 
+    /// <summary>
+    /// Object that contains the details of the payment card.
+    /// </summary>
     [JsonPropertyName("cardDetails")]
     public required CardPayloadCardDetails CardDetails { get; set; }
 

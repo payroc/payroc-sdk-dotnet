@@ -41,7 +41,7 @@ public record CreateProcessingAccount
     public required CreateProcessingAccountBusinessType BusinessType { get; set; }
 
     /// <summary>
-    /// Category code for the type of business.
+    /// Merchant Category Code (MCC) for the type of business.
     /// </summary>
     [JsonPropertyName("categoryCode")]
     public required int CategoryCode { get; set; }
@@ -79,13 +79,8 @@ public record CreateProcessingAccount
     [JsonPropertyName("pricing")]
     public required Pricing Pricing { get; set; }
 
-    /// <summary>
-    /// Method used to capture the owner's signature.
-    ///
-    /// **Note:** If you request the owner’s signature by email and they don’t respond, use our Reminders endpoint to create a reminder and to send another email.
-    /// </summary>
     [JsonPropertyName("signature")]
-    public required SignatureWrapper Signature { get; set; }
+    public required Signature Signature { get; set; }
 
     /// <summary>
     /// Array of contact objects.
@@ -94,7 +89,7 @@ public record CreateProcessingAccount
     public IEnumerable<Contact>? Contacts { get; set; }
 
     /// <summary>
-    /// Object that you can send to include custom data in the request.
+    /// Object that you can send to include custom data in the request. For more information about how to use metadata, go to [Metadata](/api/metadata).
     /// </summary>
     [JsonPropertyName("metadata")]
     public Dictionary<string, string>? Metadata { get; set; }

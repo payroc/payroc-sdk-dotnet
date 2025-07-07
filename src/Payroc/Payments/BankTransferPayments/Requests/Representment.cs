@@ -22,7 +22,7 @@ public record Representment
     /// Object that contains information about the customer's payment details.
     /// </summary>
     [JsonPropertyName("paymentMethod")]
-    public required RepresentmentPaymentMethod PaymentMethod { get; set; }
+    public RepresentmentPaymentMethod? PaymentMethod { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

@@ -121,6 +121,7 @@ public partial class FundingRecipientsClient
     ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
     ///         RecipientType = CreateFundingRecipientRecipientType.PrivateCorporation,
     ///         TaxId = "12-3456789",
+    ///         DoingBusinessAs = "doingBusinessAs",
     ///         Address = new Address
     ///         {
     ///             Address1 = "1 Example Ave.",
@@ -369,7 +370,7 @@ public partial class FundingRecipientsClient
     ///         {
     ///             RecipientType = FundingRecipientRecipientType.PrivateCorporation,
     ///             TaxId = "12-3456789",
-    ///             DoingBusinessAs  = "doingBusinessAs",
+    ///             DoingBusinessAs = "doingBusinessAs",
     ///             Address = new Address
     ///             {
     ///                 Address1 = "1 Example Ave.",

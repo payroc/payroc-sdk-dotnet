@@ -27,7 +27,7 @@ public record RawCardDetails
     public required string RawData { get; set; }
 
     /// <summary>
-    /// Cardholder's signature in the format described in the [Special Fields and Parameters](https://worldnet.payroc.com/selfcare:api_specification:special_fields_and_parameters#the_signature_field_format) section.
+    /// Cardholder's signature. For more information about how to format the signature, go to [How to send a signature to our gateway](/knowledge/basic-concepts/signature-capture).
     /// </summary>
     [JsonPropertyName("cardholderSignature")]
     public string? CardholderSignature { get; set; }

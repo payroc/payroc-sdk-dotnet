@@ -18,7 +18,7 @@ public record Surcharging
 
     /// <summary>
     /// Surcharge amount to add to the transaction.
-    /// **Note:** Our gateway returns **amount** only if the request contained an example transaction amount.
+    /// **Note:** Our gateway returns the surcharge amount only if you include a transaction amount in the request.
     /// </summary>
     [JsonPropertyName("amount")]
     public long? Amount { get; set; }
@@ -30,7 +30,7 @@ public record Surcharging
     public double? Percentage { get; set; }
 
     /// <summary>
-    /// Statement used to disclose the surcharge fee to the customer.
+    /// Statement that informs the customer about the surcharge fee.
     /// </summary>
     [JsonPropertyName("disclosure")]
     public string? Disclosure { get; set; }

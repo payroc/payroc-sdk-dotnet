@@ -11,12 +11,6 @@ namespace Payroc;
 public record PricingIntent50
 {
     /// <summary>
-    /// Version of the pricing intent.
-    /// </summary>
-    [JsonPropertyName("version")]
-    public string Version { get; set; } = "5.0";
-
-    /// <summary>
     /// Unique identifier of the pricing intent.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
@@ -64,6 +58,12 @@ public record PricingIntent50
     /// </summary>
     [JsonPropertyName("country")]
     public string Country { get; set; } = "US";
+
+    /// <summary>
+    /// Version of the MPA.
+    /// </summary>
+    [JsonPropertyName("version")]
+    public string Version { get; set; } = "5.0";
 
     [JsonPropertyName("base")]
     public required BaseUs Base { get; set; }

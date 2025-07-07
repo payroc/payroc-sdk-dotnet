@@ -29,19 +29,19 @@ public record Business
     public required BusinessOrganizationType OrganizationType { get; set; }
 
     /// <summary>
-    /// Two-digit country code for the country that the business operates in. The format follows the ISO-3166 standard.
+    /// Two-digit country code for the country that the business operates in. The format follows the [ISO-3166](https://www.iso.org/iso-3166-country-codes.html) standard.
     /// </summary>
     [JsonPropertyName("countryOfOperation")]
     public string? CountryOfOperation { get; set; }
 
     /// <summary>
-    /// Array of address objects.
+    /// Type of address.
     /// </summary>
     [JsonPropertyName("addresses")]
     public IEnumerable<LegalAddress> Addresses { get; set; } = new List<LegalAddress>();
 
     /// <summary>
-    /// An array of contactMethod objects. Email should always be provided.
+    /// Array of contactMethod objects. One contact method must be an email address.
     /// </summary>
     [JsonPropertyName("contactMethods")]
     public IEnumerable<ContactMethod> ContactMethods { get; set; } = new List<ContactMethod>();

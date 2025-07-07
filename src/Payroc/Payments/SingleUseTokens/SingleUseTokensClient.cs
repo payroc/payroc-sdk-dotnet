@@ -16,7 +16,13 @@ public partial class SingleUseTokensClient
     }
 
     /// <summary>
-    /// Create a single-use token. The token expires after 30 minutes.
+    /// Use this method to create a single-use token that represents a customer’s payment details.
+    ///
+    /// A single-use token expires after 30 minutes and merchants can use them only once.
+    ///
+    /// **Note:** To create a reusable permanent token, go to [Create Secure Token](https://docs.payroc.com/api/schema/payments/secure-tokens/create).
+    ///
+    /// In the request, send the customer’s payment details. If the request is successful, our gateway returns a token that you can use in a follow-on action, for example, [run a sale](https://docs.payroc.com/api/schema/payments/create).
     /// </summary>
     /// <example><code>
     /// await client.Payments.SingleUseTokens.CreateAsync(

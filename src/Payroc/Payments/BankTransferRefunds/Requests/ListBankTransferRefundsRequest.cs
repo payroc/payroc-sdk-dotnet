@@ -7,63 +7,63 @@ namespace Payroc.Payments.BankTransferRefunds;
 public record ListBankTransferRefundsRequest
 {
     /// <summary>
-    /// Filter by the unique identifier that our gateway assigned to the terminal.
+    /// Filter results by the unique identifier that we assigned to the terminal.
     /// </summary>
     [JsonIgnore]
     public required string ProcessingTerminalId { get; set; }
 
     /// <summary>
-    /// Filter by the order ID.
+    /// Filter results by the order ID of the refund.
     /// </summary>
     [JsonIgnore]
     public string? OrderId { get; set; }
 
     /// <summary>
-    /// Filter by the account holder's name.
+    /// Filter results by the accountholder's name.
     /// </summary>
     [JsonIgnore]
     public string? NameOnAccount { get; set; }
 
     /// <summary>
-    /// Filter by the last four digits of the account number.
+    /// Filter results by the last four digits of the account number.
     /// </summary>
     [JsonIgnore]
     public string? Last4 { get; set; }
 
     /// <summary>
-    /// Filter refunds by transaction type.
+    /// Filter results by transaction type.
     /// </summary>
     [JsonIgnore]
     public IEnumerable<ListBankTransferRefundsRequestTypeItem> Type { get; set; } =
         new List<ListBankTransferRefundsRequestTypeItem>();
 
     /// <summary>
-    /// Filter by the status of the refund.
+    /// Filter results by the status of the refund.
     /// </summary>
     [JsonIgnore]
     public IEnumerable<ListBankTransferRefundsRequestStatusItem> Status { get; set; } =
         new List<ListBankTransferRefundsRequestStatusItem>();
 
     /// <summary>
-    /// Filter by refunds that the merchant ran after a specific date. The date format follows the ISO-8601 standard.
+    /// Filter results by refunds that the merchant ran after a specific date. The value follows the [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) standard.
     /// </summary>
     [JsonIgnore]
     public DateTime? DateFrom { get; set; }
 
     /// <summary>
-    /// Filter by the refunds that the merchant ran before a specific date. The date format follows the ISO-8601 standard.
+    /// Filter results by refunds that the merchant ran before a specific date. The value follows the [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) standard.
     /// </summary>
     [JsonIgnore]
     public DateTime? DateTo { get; set; }
 
     /// <summary>
-    /// Filter by the settlement status of the refund.
+    /// Filter results by the settlement status.
     /// </summary>
     [JsonIgnore]
     public ListBankTransferRefundsRequestSettlementState? SettlementState { get; set; }
 
     /// <summary>
-    /// Filter by refund transactions settled on a specific date. The date format is **YYYY-MM-DD**.
+    /// Filter results by the settlement date. Send a value in **YYYY-MM-DD** format.
     /// </summary>
     [JsonIgnore]
     public DateOnly? SettlementDate { get; set; }

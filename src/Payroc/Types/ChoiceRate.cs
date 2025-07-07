@@ -5,8 +5,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// The choice rate.
-/// **Note:** This field is required if dual pricing was offered.
+/// Object that contains information about the choice rate. We return this only if the value for offered was `true`.
 /// </summary>
 [Serializable]
 public record ChoiceRate

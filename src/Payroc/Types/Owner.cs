@@ -42,7 +42,7 @@ public record Owner
     public required Address Address { get; set; }
 
     /// <summary>
-    /// Array of identifier objects.
+    /// Array of IDs.
     /// </summary>
     [JsonPropertyName("identifiers")]
     public IEnumerable<Identifier> Identifiers { get; set; } = new List<Identifier>();

@@ -147,7 +147,9 @@ public partial class CardsClient
     }
 
     /// <summary>
-    /// Request the balance of an Electronic Benefit Transfer (EBT) card.
+    /// Use this method to view the balance of an Electronic Benefit Transfer (EBT) card.
+    ///
+    /// If the request is successful, our gateway returns the current balance of an EBT card.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Cards.BalanceAsync(
@@ -271,7 +273,13 @@ public partial class CardsClient
     }
 
     /// <summary>
-    /// Perform a BIN (Bank Identification Number) lookup to retrieve information about a card.
+    /// Use this method to retrieve information about a debit card, a credit card, or an EBT card. If you apply surcharges to transactions, you can also check if the card supports surcharging.
+    ///
+    /// In the response, our gateway returns the following information about the card:
+    ///
+    /// - **Card details** - Information about the card, for example, the issuing bank and the masked card number.
+    ///
+    /// - **Surcharging information** - If you apply a surcharge to transactions, our gateway checks that the card supports surcharging and returns information about the surcharge. For more information about surcharging, go to [Credit card surcharging](/knowledge/card-payments/credit-card-surcharging).
     /// </summary>
     /// <example><code>
     /// await client.Payments.Cards.BinLookupAsync(

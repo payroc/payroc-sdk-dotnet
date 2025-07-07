@@ -42,7 +42,8 @@ public record PaymentPlan
     public PaymentPlanRecurringOrder? RecurringOrder { get; set; }
 
     /// <summary>
-    /// Object that contains information about the cost of each payment.
+    /// Number of payments for the payment plan.
+    ///
     /// To indicate that the payment plan should run indefinitely, send a value of `0`.
     /// </summary>
     [JsonPropertyName("length")]

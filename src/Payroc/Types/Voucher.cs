@@ -6,7 +6,8 @@ namespace Payroc;
 
 /// <summary>
 /// Object that contains information about the EBT voucher.
-/// **Note:** Voucher is available only for EBT Cash benefit accounts.
+///
+/// **Note:** Vouchers are available only for EBT SNAP payments.
 /// </summary>
 [Serializable]
 public record Voucher

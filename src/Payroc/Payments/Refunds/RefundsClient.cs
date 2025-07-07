@@ -16,8 +16,17 @@ public partial class RefundsClient
     }
 
     /// <summary>
-    /// Return a list of refunds.
-    /// To filter your results, use query parameters.
+    /// Use this method to return a [paginated](/api/pagination) list of refunds.
+    ///
+    /// **Note:** If you want to view a specific refund and you have its refundId, use our [Retrieve Refund](/api/schema/payments/refunds/get) method.
+    ///
+    /// Use query parameters to filter the list of results that we return, for example, to search for refunds for a customer, a tender type, or a date range.
+    /// Our gateway returns the following information about each refund in the list:
+    /// - Order details, including the refund amount and when we processed the refund.
+    /// - Payment card details, including the masked card number, expiry date, and payment method.
+    /// - Cardholder details, including their contact information and shipping address.
+    ///
+    /// For referenced refunds, our gateway also returns details about the payment that the refund is linked to.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Refunds.ListAsync(
@@ -176,7 +185,17 @@ public partial class RefundsClient
     }
 
     /// <summary>
-    /// Create an unreferenced refund.
+    /// Use this method to create an unreferenced refund. An unreferenced refund is a refund that isn't linked to a payment.
+    ///
+    /// **Note:** If you have the paymentId of the payment you want to refund, use our [Refund Payment](https://docs.payroc.com/api/schema/payments/refund) method. If you use our Refund Payment method, our gateway sends the refund amount to the customer's original payment method and links the refund to the payment.
+    ///
+    /// In the request, you must provide the customer's payment details and the refund amount.
+    ///
+    /// In the response, our gateway returns information about the refund and a refundId, which you need for the following methods:
+    ///
+    /// - [Retrieve refund](/api/schema/payments/refunds/get) - View the details of the refund.
+    /// - [Adjust refund](/api/schema/payments/refunds/adjust) - Update the details of the refund.
+    /// - [Reverse refund](/api/schema/payments/refunds/reverse) - Cancel the refund if it's in an open batch.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Refunds.CreateAsync(
@@ -314,7 +333,18 @@ public partial class RefundsClient
     }
 
     /// <summary>
-    /// Retrieve a specific refund.
+    /// Use this method to retrieve information about a refund.
+    ///
+    /// To retrieve a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/refund) method or the [Create Refund](/api/schema/payments/refunds/create) method.
+    ///
+    /// **Note:** If you don't have the refundId, use our [List Refunds](/api/schema/payments/refunds/list) method to search for the refund.
+    ///
+    /// Our gateway returns the following information about the refund:
+    /// - Order details, including the refund amount and when we processed the refund.
+    /// - Payment card details, including the masked card number, expiry date, and payment method.
+    /// - Cardholder details, including their contact information and shipping address.
+    ///
+    /// If the refund is a referenced refund, our gateway also returns details about the payment that the refund is linked to.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Refunds.GetAsync(new GetRefundsRequest { RefundId = "CD3HN88U9F" });
@@ -403,7 +433,22 @@ public partial class RefundsClient
     }
 
     /// <summary>
-    /// Adjust an existing refund.
+    /// Use this method to adjust a refund in an open batch.
+    ///
+    /// To adjust a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/refund) method or the [Create Refund](/api/schema/payments/refunds/create) method.
+    ///
+    /// **Note:** If you don’t have the refundId, use our [List Refunds](/api/schema/payments/refunds/list) method to search for the refund.
+    ///
+    /// You can adjust the following details of the refund:
+    /// - Customer details, including shipping address and contact information.
+    /// - Status of the refund.
+    ///
+    /// Our gateway returns information about the adjusted refund, including:
+    /// - Order details, including the refund amount and when we processed the refund.
+    /// - Payment card details, including the masked card number, expiry date, and payment method.
+    /// - Cardholder details, including their contact information and shipping address.
+    ///
+    /// If the refund is a referenced refund, our gateway also returns details about the payment that the refund is linked to.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Refunds.AdjustAsync(
@@ -522,7 +567,13 @@ public partial class RefundsClient
     }
 
     /// <summary>
-    /// Void an existing refund.
+    /// Use this method to cancel a refund in an open batch.
+    ///
+    /// To cancel a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/refund) or [Create Refund](/api/schema/payments/refunds/create) method.
+    ///
+    /// **Note:** If you don’t have the refundId, use our [List Refunds](/api/schema/payments/refunds/list) method to search for the refund.
+    ///
+    /// If your request is successful, the gateway removes the refund from the merchant’s open batch and no funds are returned to the cardholder’s account.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Refunds.ReverseAsync(

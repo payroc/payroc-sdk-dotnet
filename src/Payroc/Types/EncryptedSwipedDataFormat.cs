@@ -26,13 +26,13 @@ public record EncryptedSwipedDataFormat
     public string? FirstDigitOfPan { get; set; }
 
     /// <summary>
-    /// Indicates a technical issue with the ICC transaction that resulted in the terminal falling back to a magnetic stripe transaction.
+    /// Indicates that this is a fallback transaction. For example, if there was a technical issue with the chip on the customer's card and the merchant then swiped the card.
     /// </summary>
     [JsonPropertyName("fallback")]
     public bool? Fallback { get; set; }
 
     /// <summary>
-    /// Explains the reason for the fallback.
+    /// Reason for the fallback.
     /// </summary>
     [JsonPropertyName("fallbackReason")]
     public EncryptedSwipedDataFormatFallbackReason? FallbackReason { get; set; }

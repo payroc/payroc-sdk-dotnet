@@ -5,17 +5,26 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains information about a HATEOAS link. If we can't match a dispute to a transaction, we don't return a 'link' object.
+/// Object that contains HATEOAS links for the resource.
 /// </summary>
 [Serializable]
 public record Link
 {
+    /// <summary>
+    /// Indicates the relationship between the current resource and the target resource.
+    /// </summary>
     [JsonPropertyName("rel")]
     public required string Rel { get; set; }
 
+    /// <summary>
+    /// HTTP method that you need to use with the target resource.
+    /// </summary>
     [JsonPropertyName("method")]
     public required string Method { get; set; }
 
+    /// <summary>
+    /// URL of the target resource.
+    /// </summary>
     [JsonPropertyName("href")]
     public required string Href { get; set; }
 

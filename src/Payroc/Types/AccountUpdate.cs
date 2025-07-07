@@ -9,7 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains information about the token.
+/// Object that contains the single-use token.
 /// </summary>
 [JsonConverter(typeof(AccountUpdate.JsonConverter))]
 [Serializable]

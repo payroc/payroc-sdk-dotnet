@@ -8,6 +8,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains the details of the payment card.
+/// </summary>
 [JsonConverter(typeof(CardPayloadCardDetails.JsonConverter))]
 [Serializable]
 public record CardPayloadCardDetails

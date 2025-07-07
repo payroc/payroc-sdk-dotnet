@@ -8,7 +8,7 @@ namespace Payroc;
 public record ContactMethodFax
 {
     /// <summary>
-    /// Fax Number.
+    /// Fax number.
     /// </summary>
     [JsonPropertyName("value")]
     public required string Value { get; set; }
