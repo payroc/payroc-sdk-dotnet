@@ -314,12 +314,12 @@ public partial class PaymentLinksClient
     /// You need the paymentLinkId that we sent to you when you created the payment link.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.PaymentLinks.GetAsync(
-    ///     new GetPaymentLinksRequest { PaymentLinkId = "JZURRJBUPS" }
+    /// await client.Payments.PaymentLinks.RetrieveAsync(
+    ///     new RetrievePaymentLinksRequest { PaymentLinkId = "JZURRJBUPS" }
     /// );
     /// </code></example>
-    public async Task<GetPaymentLinksResponse> GetAsync(
-        GetPaymentLinksRequest request,
+    public async Task<RetrievePaymentLinksResponse> RetrieveAsync(
+        RetrievePaymentLinksRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -347,7 +347,7 @@ public partial class PaymentLinksClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<GetPaymentLinksResponse>(responseBody)!;
+                        return JsonUtils.Deserialize<RetrievePaymentLinksResponse>(responseBody)!;
                     }
                     catch (JsonException e)
                     {

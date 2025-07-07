@@ -319,12 +319,12 @@ public partial class BankTransferRefundsClient
     /// If the refund is a referenced refund, our gateway also returns details about the payment that the refund is linked to.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.BankTransferRefunds.GetAsync(
-    ///     new GetBankTransferRefundsRequest { RefundId = "CD3HN88U9F" }
+    /// await client.Payments.BankTransferRefunds.RetrieveAsync(
+    ///     new RetrieveBankTransferRefundsRequest { RefundId = "CD3HN88U9F" }
     /// );
     /// </code></example>
-    public async Task<BankTransferRefund> GetAsync(
-        GetBankTransferRefundsRequest request,
+    public async Task<BankTransferRefund> RetrieveAsync(
+        RetrieveBankTransferRefundsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

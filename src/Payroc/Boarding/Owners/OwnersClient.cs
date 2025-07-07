@@ -24,10 +24,10 @@ public partial class OwnersClient
     ///   - **Owners of funding recipients** - Use the [List funding recipient owners](/api/schema/funding/funding-recipients/list-owners) method.
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.Owners.GetAsync(new GetOwnersRequest { OwnerId = 1 });
+    /// await client.Boarding.Owners.RetrieveAsync(new RetrieveOwnersRequest { OwnerId = 1 });
     /// </code></example>
-    public async Task<Owner> GetAsync(
-        GetOwnersRequest request,
+    public async Task<Owner> RetrieveAsync(
+        RetrieveOwnersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

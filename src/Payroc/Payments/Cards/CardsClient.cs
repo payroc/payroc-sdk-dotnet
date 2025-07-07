@@ -152,7 +152,7 @@ public partial class CardsClient
     /// If the request is successful, our gateway returns the current balance of an EBT card.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.Cards.BalanceAsync(
+    /// await client.Payments.Cards.ViewBalanceAsync(
     ///     new BalanceInquiry
     ///     {
     ///         ProcessingTerminalId = "1234001",
@@ -182,7 +182,7 @@ public partial class CardsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<Balance> BalanceAsync(
+    public async Task<Balance> ViewBalanceAsync(
         BalanceInquiry request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -282,7 +282,7 @@ public partial class CardsClient
     /// - **Surcharging information** - If you apply a surcharge to transactions, our gateway checks that the card supports surcharging and returns information about the surcharge. For more information about surcharging, go to [Credit card surcharging](/knowledge/card-payments/credit-card-surcharging).
     /// </summary>
     /// <example><code>
-    /// await client.Payments.Cards.BinLookupAsync(
+    /// await client.Payments.Cards.LookupBinAsync(
     ///     new BinLookup
     ///     {
     ///         ProcessingTerminalId = "1234001",
@@ -310,7 +310,7 @@ public partial class CardsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<CardInfo> BinLookupAsync(
+    public async Task<CardInfo> LookupBinAsync(
         BinLookup request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

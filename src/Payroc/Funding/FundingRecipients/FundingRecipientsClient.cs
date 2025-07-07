@@ -275,12 +275,12 @@ public partial class FundingRecipientsClient
     /// Retrieve a specific funding recipient.
     /// </summary>
     /// <example><code>
-    /// await client.Funding.FundingRecipients.GetAsync(
-    ///     new GetFundingRecipientsRequest { RecipientId = 1 }
+    /// await client.Funding.FundingRecipients.RetrieveAsync(
+    ///     new RetrieveFundingRecipientsRequest { RecipientId = 1 }
     /// );
     /// </code></example>
-    public async Task<FundingRecipient> GetAsync(
-        GetFundingRecipientsRequest request,
+    public async Task<FundingRecipient> RetrieveAsync(
+        RetrieveFundingRecipientsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

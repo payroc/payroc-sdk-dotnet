@@ -266,12 +266,12 @@ public partial class PricingIntentsClient
     /// Retrieve a specific pricing intent.
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.PricingIntents.GetAsync(
-    ///     new GetPricingIntentsRequest { PricingIntentId = "5" }
+    /// await client.Boarding.PricingIntents.RetrieveAsync(
+    ///     new RetrievePricingIntentsRequest { PricingIntentId = "5" }
     /// );
     /// </code></example>
-    public async Task<PricingIntent50> GetAsync(
-        GetPricingIntentsRequest request,
+    public async Task<PricingIntent50> RetrieveAsync(
+        RetrievePricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

@@ -459,12 +459,12 @@ public partial class MerchantPlatformsClient
     /// Include the merchantPlatformId that we sent you when you created the merchant platform.
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.MerchantPlatforms.GetAsync(
-    ///     new GetMerchantPlatformsRequest { MerchantPlatformId = "12345" }
+    /// await client.Boarding.MerchantPlatforms.RetrieveAsync(
+    ///     new RetrieveMerchantPlatformsRequest { MerchantPlatformId = "12345" }
     /// );
     /// </code></example>
-    public async Task<MerchantPlatform> GetAsync(
-        GetMerchantPlatformsRequest request,
+    public async Task<MerchantPlatform> RetrieveAsync(
+        RetrieveMerchantPlatformsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

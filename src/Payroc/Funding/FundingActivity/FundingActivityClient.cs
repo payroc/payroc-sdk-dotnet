@@ -19,8 +19,8 @@ public partial class FundingActivityClient
     /// Retrieve the balance of funds that are available for each merchant.
     /// </summary>
     /// <example><code>
-    /// await client.Funding.FundingActivity.GetBalanceAsync(
-    ///     new GetBalanceFundingActivityRequest
+    /// await client.Funding.FundingActivity.RetrieveBalanceAsync(
+    ///     new RetrieveBalanceFundingActivityRequest
     ///     {
     ///         Before = "2571",
     ///         After = "8516",
@@ -28,8 +28,8 @@ public partial class FundingActivityClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<GetBalanceFundingActivityResponse> GetBalanceAsync(
-        GetBalanceFundingActivityRequest request,
+    public async Task<RetrieveBalanceFundingActivityResponse> RetrieveBalanceAsync(
+        RetrieveBalanceFundingActivityRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -72,7 +72,7 @@ public partial class FundingActivityClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<GetBalanceFundingActivityResponse>(
+                        return JsonUtils.Deserialize<RetrieveBalanceFundingActivityResponse>(
                             responseBody
                         )!;
                     }
@@ -128,8 +128,8 @@ public partial class FundingActivityClient
     /// Retrieve funding activity for a specific date range.
     /// </summary>
     /// <example><code>
-    /// await client.Funding.FundingActivity.GetAsync(
-    ///     new GetFundingActivityRequest
+    /// await client.Funding.FundingActivity.RetrieveAsync(
+    ///     new RetrieveFundingActivityRequest
     ///     {
     ///         Before = "2571",
     ///         After = "8516",
@@ -139,8 +139,8 @@ public partial class FundingActivityClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<GetFundingActivityResponse> GetAsync(
-        GetFundingActivityRequest request,
+    public async Task<RetrieveFundingActivityResponse> RetrieveAsync(
+        RetrieveFundingActivityRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -185,7 +185,9 @@ public partial class FundingActivityClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<GetFundingActivityResponse>(responseBody)!;
+                        return JsonUtils.Deserialize<RetrieveFundingActivityResponse>(
+                            responseBody
+                        )!;
                     }
                     catch (JsonException e)
                     {

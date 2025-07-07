@@ -347,10 +347,10 @@ public partial class RefundsClient
     /// If the refund is a referenced refund, our gateway also returns details about the payment that the refund is linked to.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.Refunds.GetAsync(new GetRefundsRequest { RefundId = "CD3HN88U9F" });
+    /// await client.Payments.Refunds.RetrieveAsync(new RetrieveRefundsRequest { RefundId = "CD3HN88U9F" });
     /// </code></example>
-    public async Task<Refund> GetAsync(
-        GetRefundsRequest request,
+    public async Task<Refund> RetrieveAsync(
+        RetrieveRefundsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

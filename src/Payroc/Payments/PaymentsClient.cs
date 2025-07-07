@@ -459,10 +459,10 @@ public partial class PaymentsClient
     /// If the merchant saved the customer's card details, our gateway returns a secureTokenID, which you can use to perform follow-on actions.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.GetAsync(new GetPaymentsRequest { PaymentId = "M2MJOG6O2Y" });
+    /// await client.Payments.RetrieveAsync(new RetrievePaymentsRequest { PaymentId = "M2MJOG6O2Y" });
     /// </code></example>
-    public async Task<Payment> GetAsync(
-        GetPaymentsRequest request,
+    public async Task<Payment> RetrieveAsync(
+        RetrievePaymentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

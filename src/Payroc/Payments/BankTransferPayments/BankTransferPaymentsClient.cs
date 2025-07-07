@@ -341,12 +341,12 @@ public partial class BankTransferPaymentsClient
     /// If the merchant saved the customer’s bank account details, our gateway returns a secureTokenID, which you can use to perform follow-on actions.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.BankTransferPayments.GetAsync(
-    ///     new GetBankTransferPaymentsRequest { PaymentId = "M2MJOG6O2Y" }
+    /// await client.Payments.BankTransferPayments.RetrieveAsync(
+    ///     new RetrieveBankTransferPaymentsRequest { PaymentId = "M2MJOG6O2Y" }
     /// );
     /// </code></example>
-    public async Task<BankTransferPayment> GetAsync(
-        GetBankTransferPaymentsRequest request,
+    public async Task<BankTransferPayment> RetrieveAsync(
+        RetrieveBankTransferPaymentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

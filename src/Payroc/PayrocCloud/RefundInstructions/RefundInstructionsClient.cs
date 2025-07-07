@@ -144,12 +144,15 @@ public partial class RefundInstructionsClient
     /// Retrieve the current status of a specific refund instruction.
     /// </summary>
     /// <example><code>
-    /// await client.PayrocCloud.RefundInstructions.GetAsync(
-    ///     new GetRefundInstructionsRequest { RefundInstructionId = "a37439165d134678a9100ebba3b29597" }
+    /// await client.PayrocCloud.RefundInstructions.RetrieveAsync(
+    ///     new RetrieveRefundInstructionsRequest
+    ///     {
+    ///         RefundInstructionId = "a37439165d134678a9100ebba3b29597",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<RefundInstruction> GetAsync(
-        GetRefundInstructionsRequest request,
+    public async Task<RefundInstruction> RetrieveAsync(
+        RetrieveRefundInstructionsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

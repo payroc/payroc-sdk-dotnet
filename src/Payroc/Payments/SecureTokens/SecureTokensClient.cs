@@ -370,16 +370,16 @@ public partial class SecureTokensClient
     ///   -	Secure token that you can use to carry out transactions.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.SecureTokens.GetAsync(
-    ///     new GetSecureTokensRequest
+    /// await client.Payments.SecureTokens.RetrieveAsync(
+    ///     new RetrieveSecureTokensRequest
     ///     {
     ///         ProcessingTerminalId = "1234001",
     ///         SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
     ///     }
     /// );
     /// </code></example>
-    public async Task<SecureToken> GetAsync(
-        GetSecureTokensRequest request,
+    public async Task<SecureToken> RetrieveAsync(
+        RetrieveSecureTokensRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -701,8 +701,8 @@ public partial class SecureTokensClient
     /// **Note:** If you don't have a single-use token, you can update saved payment details with our [Update Secure Token](/api/resources#updateSecureToken) method. For more information about our two options to update a secure token, go to [Update saved payment details](/guides/integrate/update-saved-payment-details).
     /// </summary>
     /// <example><code>
-    /// await client.Payments.SecureTokens.AccountUpdateAsync(
-    ///     new AccountUpdateSecureTokensRequest
+    /// await client.Payments.SecureTokens.UpdateAccountAsync(
+    ///     new UpdateAccountSecureTokensRequest
     ///     {
     ///         ProcessingTerminalId = "1234001",
     ///         SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
@@ -719,8 +719,8 @@ public partial class SecureTokensClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<SecureToken> AccountUpdateAsync(
-        AccountUpdateSecureTokensRequest request,
+    public async Task<SecureToken> UpdateAccountAsync(
+        UpdateAccountSecureTokensRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

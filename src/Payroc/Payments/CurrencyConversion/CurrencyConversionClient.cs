@@ -21,7 +21,7 @@ public partial class CurrencyConversionClient
     /// **Note:** We offer this through the DCC service, which gives customers a choice to pay in the local currency or their own currency.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.CurrencyConversion.GetFxRatesAsync(
+    /// await client.Payments.CurrencyConversion.RetrieveFxRatesAsync(
     ///     new FxRateInquiry
     ///     {
     ///         Channel = FxRateInquiryChannel.Web,
@@ -53,7 +53,7 @@ public partial class CurrencyConversionClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<FxRate> GetFxRatesAsync(
+    public async Task<FxRate> RetrieveFxRatesAsync(
         FxRateInquiry request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

@@ -119,12 +119,12 @@ public partial class FundingAccountsClient
     /// Retrieve a specific funding account.
     /// </summary>
     /// <example><code>
-    /// await client.Funding.FundingAccounts.GetAsync(
-    ///     new GetFundingAccountsRequest { FundingAccountId = 1 }
+    /// await client.Funding.FundingAccounts.RetrieveAsync(
+    ///     new RetrieveFundingAccountsRequest { FundingAccountId = 1 }
     /// );
     /// </code></example>
-    public async Task<FundingAccount> GetAsync(
-        GetFundingAccountsRequest request,
+    public async Task<FundingAccount> RetrieveAsync(
+        RetrieveFundingAccountsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

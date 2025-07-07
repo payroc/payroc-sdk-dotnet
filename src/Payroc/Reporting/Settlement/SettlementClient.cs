@@ -129,10 +129,12 @@ public partial class SettlementClient
     /// Retrieve a specific batch.
     /// </summary>
     /// <example><code>
-    /// await client.Reporting.Settlement.GetBatchAsync(new GetBatchSettlementRequest { BatchId = 1 });
+    /// await client.Reporting.Settlement.RetrieveBatchAsync(
+    ///     new RetrieveBatchSettlementRequest { BatchId = 1 }
+    /// );
     /// </code></example>
-    public async Task<Batch> GetBatchAsync(
-        GetBatchSettlementRequest request,
+    public async Task<Batch> RetrieveBatchAsync(
+        RetrieveBatchSettlementRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -334,12 +336,12 @@ public partial class SettlementClient
     /// Retrieve a specific transaction.
     /// </summary>
     /// <example><code>
-    /// await client.Reporting.Settlement.GetTransactionAsync(
-    ///     new GetTransactionSettlementRequest { TransactionId = 1 }
+    /// await client.Reporting.Settlement.RetrieveTransactionAsync(
+    ///     new RetrieveTransactionSettlementRequest { TransactionId = 1 }
     /// );
     /// </code></example>
-    public async Task<Transaction> GetTransactionAsync(
-        GetTransactionSettlementRequest request,
+    public async Task<Transaction> RetrieveTransactionAsync(
+        RetrieveTransactionSettlementRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -537,12 +539,12 @@ public partial class SettlementClient
     /// Retrieve a specific authorization.
     /// </summary>
     /// <example><code>
-    /// await client.Reporting.Settlement.GetAuthorizationAsync(
-    ///     new GetAuthorizationSettlementRequest { AuthorizationId = 1 }
+    /// await client.Reporting.Settlement.RetrieveAuthorizationAsync(
+    ///     new RetrieveAuthorizationSettlementRequest { AuthorizationId = 1 }
     /// );
     /// </code></example>
-    public async Task<Authorization> GetAuthorizationAsync(
-        GetAuthorizationSettlementRequest request,
+    public async Task<Authorization> RetrieveAuthorizationAsync(
+        RetrieveAuthorizationSettlementRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -738,12 +740,12 @@ public partial class SettlementClient
     /// Retrieve the status history for a specific dispute.
     /// </summary>
     /// <example><code>
-    /// await client.Reporting.Settlement.GetDisputesStatusesAsync(
-    ///     new GetDisputesStatusesSettlementRequest { DisputeId = 1 }
+    /// await client.Reporting.Settlement.RetrieveDisputesStatusesAsync(
+    ///     new RetrieveDisputesStatusesSettlementRequest { DisputeId = 1 }
     /// );
     /// </code></example>
-    public async Task<IEnumerable<DisputeStatus>> GetDisputesStatusesAsync(
-        GetDisputesStatusesSettlementRequest request,
+    public async Task<IEnumerable<DisputeStatus>> RetrieveDisputesStatusesAsync(
+        RetrieveDisputesStatusesSettlementRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -939,12 +941,12 @@ public partial class SettlementClient
     /// Retrieve a specific ACH deposit.
     /// </summary>
     /// <example><code>
-    /// await client.Reporting.Settlement.GetAchDepositAsync(
-    ///     new GetAchDepositSettlementRequest { AchDepositId = 99 }
+    /// await client.Reporting.Settlement.RetrieveAchDepositAsync(
+    ///     new RetrieveAchDepositSettlementRequest { AchDepositId = 99 }
     /// );
     /// </code></example>
-    public async Task<AchDeposit> GetAchDepositAsync(
-        GetAchDepositSettlementRequest request,
+    public async Task<AchDeposit> RetrieveAchDepositAsync(
+        RetrieveAchDepositSettlementRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

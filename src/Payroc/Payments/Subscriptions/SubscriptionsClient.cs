@@ -366,12 +366,16 @@ public partial class SubscriptionsClient
     /// We also return the paymentPlanId and the secureTokenId, which you can use to perform follow-on actions.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.Subscriptions.GetAsync(
-    ///     new GetSubscriptionsRequest { ProcessingTerminalId = "1234001", SubscriptionId = "SubRef7654" }
+    /// await client.Payments.Subscriptions.RetrieveAsync(
+    ///     new RetrieveSubscriptionsRequest
+    ///     {
+    ///         ProcessingTerminalId = "1234001",
+    ///         SubscriptionId = "SubRef7654",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<Subscription> GetAsync(
-        GetSubscriptionsRequest request,
+    public async Task<Subscription> RetrieveAsync(
+        RetrieveSubscriptionsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

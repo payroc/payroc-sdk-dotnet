@@ -20,10 +20,10 @@ public partial class ContactsClient
     /// Retrieve a specific contact.
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.Contacts.GetAsync(new GetContactsRequest { ContactId = 1 });
+    /// await client.Boarding.Contacts.RetrieveAsync(new RetrieveContactsRequest { ContactId = 1 });
     /// </code></example>
-    public async Task<Contact> GetAsync(
-        GetContactsRequest request,
+    public async Task<Contact> RetrieveAsync(
+        RetrieveContactsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

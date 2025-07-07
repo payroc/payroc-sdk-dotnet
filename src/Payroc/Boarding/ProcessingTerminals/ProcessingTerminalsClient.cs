@@ -21,12 +21,12 @@ public partial class ProcessingTerminalsClient
     /// &gt; **Note**: If you want to retrieve the processor configuration for the processing terminal, go to [Retrieve Host Configuration](#getProcessingTerminalHostConfiguration).
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.ProcessingTerminals.GetAsync(
-    ///     new GetProcessingTerminalsRequest { ProcessingTerminalId = "1234001" }
+    /// await client.Boarding.ProcessingTerminals.RetrieveAsync(
+    ///     new RetrieveProcessingTerminalsRequest { ProcessingTerminalId = "1234001" }
     /// );
     /// </code></example>
-    public async Task<ProcessingTerminal> GetAsync(
-        GetProcessingTerminalsRequest request,
+    public async Task<ProcessingTerminal> RetrieveAsync(
+        RetrieveProcessingTerminalsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -113,12 +113,12 @@ public partial class ProcessingTerminalsClient
     /// &gt; **Note**: If you need information about a merchant or a list of processing accounts associated with a merchant's account, go to [Retrieve Merchant Platform](#getMerchantAcccounts).
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.ProcessingTerminals.GetHostConfigurationAsync(
-    ///     new GetHostConfigurationProcessingTerminalsRequest { ProcessingTerminalId = "1234001" }
+    /// await client.Boarding.ProcessingTerminals.RetrieveHostConfigurationAsync(
+    ///     new RetrieveHostConfigurationProcessingTerminalsRequest { ProcessingTerminalId = "1234001" }
     /// );
     /// </code></example>
-    public async Task<HostConfiguration> GetHostConfigurationAsync(
-        GetHostConfigurationProcessingTerminalsRequest request,
+    public async Task<HostConfiguration> RetrieveHostConfigurationAsync(
+        RetrieveHostConfigurationProcessingTerminalsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

@@ -232,12 +232,12 @@ public partial class FundingInstructionsClient
     /// Retrieve a specific funding instruction.
     /// </summary>
     /// <example><code>
-    /// await client.Funding.FundingInstructions.GetAsync(
-    ///     new GetFundingInstructionsRequest { InstructionId = 1 }
+    /// await client.Funding.FundingInstructions.RetrieveAsync(
+    ///     new RetrieveFundingInstructionsRequest { InstructionId = 1 }
     /// );
     /// </code></example>
-    public async Task<Instruction> GetAsync(
-        GetFundingInstructionsRequest request,
+    public async Task<Instruction> RetrieveAsync(
+        RetrieveFundingInstructionsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

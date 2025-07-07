@@ -20,12 +20,12 @@ public partial class ProcessingAccountsClient
     /// Retrieve a specific processing account.
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.ProcessingAccounts.GetAsync(
-    ///     new GetProcessingAccountsRequest { ProcessingAccountId = "38765" }
+    /// await client.Boarding.ProcessingAccounts.RetrieveAsync(
+    ///     new RetrieveProcessingAccountsRequest { ProcessingAccountId = "38765" }
     /// );
     /// </code></example>
-    public async Task<ProcessingAccount> GetAsync(
-        GetProcessingAccountsRequest request,
+    public async Task<ProcessingAccount> RetrieveAsync(
+        RetrieveProcessingAccountsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -111,11 +111,11 @@ public partial class ProcessingAccountsClient
     /// Retrieve a list of funding accounts associated with a processing account.
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.ProcessingAccounts.ListFundingAccountsAsync(
+    /// await client.Boarding.ProcessingAccounts.ListProcessingAccountFundingAccountsAsync(
     ///     new ListProcessingAccountFundingAccountsRequest { ProcessingAccountId = "38765" }
     /// );
     /// </code></example>
-    public async Task<IEnumerable<FundingAccount>> ListFundingAccountsAsync(
+    public async Task<IEnumerable<FundingAccount>> ListProcessingAccountFundingAccountsAsync(
         ListProcessingAccountFundingAccountsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -202,8 +202,8 @@ public partial class ProcessingAccountsClient
     /// Retrieve a list of contacts associated with a processing account.
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.ProcessingAccounts.ContactsAsync(
-    ///     new ContactsProcessingAccountsRequest
+    /// await client.Boarding.ProcessingAccounts.ListContactsAsync(
+    ///     new ListContactsProcessingAccountsRequest
     ///     {
     ///         ProcessingAccountId = "38765",
     ///         Before = "2571",
@@ -211,8 +211,8 @@ public partial class ProcessingAccountsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<PaginatedContacts> ContactsAsync(
-        ContactsProcessingAccountsRequest request,
+    public async Task<PaginatedContacts> ListContactsAsync(
+        ListContactsProcessingAccountsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -308,12 +308,17 @@ public partial class ProcessingAccountsClient
     /// Retrieve a pricing agreement for a processing account.
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.ProcessingAccounts.PricingAsync(
-    ///     new PricingProcessingAccountsRequest { ProcessingAccountId = "38765" }
+    /// await client.Boarding.ProcessingAccounts.GetProcessingAccountPricingAgreementAsync(
+    ///     new GetProcessingAccountPricingAgreementProcessingAccountsRequest
+    ///     {
+    ///         ProcessingAccountId = "38765",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<OneOf<PricingAgreementUs40, PricingAgreementUs50>> PricingAsync(
-        PricingProcessingAccountsRequest request,
+    public async Task<
+        OneOf<PricingAgreementUs40, PricingAgreementUs50>
+    > GetProcessingAccountPricingAgreementAsync(
+        GetProcessingAccountPricingAgreementProcessingAccountsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

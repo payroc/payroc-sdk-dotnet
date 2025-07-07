@@ -20,12 +20,12 @@ public partial class TerminalOrdersClient
     /// Include the terminalOrderId that we sent you when you created the terminal order.
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.TerminalOrders.GetAsync(
-    ///     new GetTerminalOrdersRequest { TerminalOrderId = "12345" }
+    /// await client.Boarding.TerminalOrders.RetrieveAsync(
+    ///     new RetrieveTerminalOrdersRequest { TerminalOrderId = "12345" }
     /// );
     /// </code></example>
-    public async Task<TerminalOrder> GetAsync(
-        GetTerminalOrdersRequest request,
+    public async Task<TerminalOrder> RetrieveAsync(
+        RetrieveTerminalOrdersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

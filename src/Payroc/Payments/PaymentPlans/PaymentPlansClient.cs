@@ -312,12 +312,16 @@ public partial class PaymentPlansClient
     ///   -	What happens if the merchant updates or deletes the plan
     /// </summary>
     /// <example><code>
-    /// await client.Payments.PaymentPlans.GetAsync(
-    ///     new GetPaymentPlansRequest { ProcessingTerminalId = "1234001", PaymentPlanId = "PlanRef8765" }
+    /// await client.Payments.PaymentPlans.RetrieveAsync(
+    ///     new RetrievePaymentPlansRequest
+    ///     {
+    ///         ProcessingTerminalId = "1234001",
+    ///         PaymentPlanId = "PlanRef8765",
+    ///     }
     /// );
     /// </code></example>
-    public async Task<PaymentPlan> GetAsync(
-        GetPaymentPlansRequest request,
+    public async Task<PaymentPlan> RetrieveAsync(
+        RetrievePaymentPlansRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
