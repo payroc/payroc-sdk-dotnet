@@ -30,7 +30,9 @@ public partial class OAuthTokenProvider
                 )
                 .ConfigureAwait(false);
             _accessToken = tokenResponse.AccessToken;
-            _expiresAt = DateTime.UtcNow.AddSeconds(tokenResponse.ExpiresIn);
+            _expiresAt = DateTime
+                .UtcNow.AddSeconds(tokenResponse.ExpiresIn)
+                .AddMinutes(-BufferInMinutes);
         }
         return $"Bearer {_accessToken}";
     }
