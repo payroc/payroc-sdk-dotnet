@@ -2,10 +2,10 @@ using System.Text.Json.Serialization;
 using Payroc;
 using Payroc.Core;
 
-namespace Payroc.EventSubscriptions;
+namespace Payroc.Notifications.EventSubscriptions;
 
 [Serializable]
-public record UpdateEventSubscriptionRequest
+public record PartiallyUpdateEventSubscriptionsRequest
 {
     /// <summary>
     /// Unique identifier that we assigned to the event subscription.
@@ -14,7 +14,7 @@ public record UpdateEventSubscriptionRequest
     public required int SubscriptionId { get; set; }
 
     [JsonIgnore]
-    public required EventSubscription Body { get; set; }
+    public IEnumerable<PatchDocument> Body { get; set; } = new List<PatchDocument>();
 
     /// <inheritdoc />
     public override string ToString()

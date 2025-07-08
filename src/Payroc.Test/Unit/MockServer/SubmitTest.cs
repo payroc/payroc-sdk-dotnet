@@ -7,7 +7,7 @@ using Payroc.PayrocCloud.RefundInstructions;
 namespace Payroc.Test.Unit.MockServer;
 
 [TestFixture]
-public class SendTest : BaseMockServerTest
+public class SubmitTest : BaseMockServerTest
 {
     [Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
@@ -58,7 +58,7 @@ public class SendTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.PayrocCloud.RefundInstructions.SendAsync(
+        var response = await Client.PayrocCloud.RefundInstructions.SubmitAsync(
             new RefundInstructionRequest
             {
                 SerialNumber = "1850010868",

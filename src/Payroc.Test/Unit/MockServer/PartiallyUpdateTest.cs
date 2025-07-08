@@ -2,12 +2,12 @@ using global::System.Threading.Tasks;
 using NUnit.Framework;
 using Payroc;
 using Payroc.Core;
-using Payroc.EventSubscriptions;
+using Payroc.Notifications.EventSubscriptions;
 
 namespace Payroc.Test.Unit.MockServer;
 
 [TestFixture]
-public class PatchEventSubscriptionTest : BaseMockServerTest
+public class PartiallyUpdateTest : BaseMockServerTest
 {
     [Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
@@ -59,8 +59,8 @@ public class PatchEventSubscriptionTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.EventSubscriptions.PatchEventSubscriptionAsync(
-            new PatchEventSubscriptionRequest
+        var response = await Client.Notifications.EventSubscriptions.PartiallyUpdateAsync(
+            new PartiallyUpdateEventSubscriptionsRequest
             {
                 SubscriptionId = 1,
                 Body = new List<PatchDocument>()

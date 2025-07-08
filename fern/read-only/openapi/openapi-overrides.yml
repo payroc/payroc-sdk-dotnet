@@ -494,7 +494,7 @@ paths:
       x-fern-sdk-group-name:
         - payments
         - paymentLinks
-      x-fern-sdk-method-name: update
+      x-fern-sdk-method-name: partiallyUpdate
   /payment-links/{paymentLinkId}/deactivate:
     post:
       x-fern-sdk-group-name:
@@ -552,7 +552,7 @@ paths:
       x-fern-sdk-group-name:
         - payments
         - paymentPlans
-      x-fern-sdk-method-name: update
+      x-fern-sdk-method-name: partiallyUpdate
 
 # payments - payments
   /payments:
@@ -651,7 +651,7 @@ paths:
       x-fern-sdk-group-name:
         - payments
         - secureTokens
-      x-fern-sdk-method-name: update
+      x-fern-sdk-method-name: partiallyUpdate
   /processing-terminals/{processingTerminalId}/secure-tokens/{secureTokenId}/update-account:
     post:
       x-fern-sdk-group-name:
@@ -690,7 +690,7 @@ paths:
       x-fern-sdk-group-name:
         - payments
         - subscriptions
-      x-fern-sdk-method-name: update
+      x-fern-sdk-method-name: partiallyUpdate
   /processing-terminals/{processingTerminalId}/subscriptions/{subscriptionId}/deactivate:
     post:
       x-fern-sdk-group-name:

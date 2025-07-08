@@ -1,10 +1,10 @@
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
-namespace Payroc.EventSubscriptions;
+namespace Payroc.Notifications.EventSubscriptions;
 
 [Serializable]
-public record GetEventSubscriptionRequest
+public record RetrieveEventSubscriptionsRequest
 {
     /// <summary>
     /// Unique identifier that we assigned to the event subscription.

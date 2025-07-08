@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc.Boarding.PricingIntents;
 
 [Serializable]
-public record PatchPricingIntentsRequest
+public record PartiallyUpdatePricingIntentsRequest
 {
     /// <summary>
     /// Unique identifier of the pricing intent.

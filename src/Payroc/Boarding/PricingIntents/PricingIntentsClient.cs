@@ -592,8 +592,8 @@ public partial class PricingIntentsClient
     /// Structure your request to follow the RFC 6902 standard.
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.PricingIntents.PatchAsync(
-    ///     new PatchPricingIntentsRequest
+    /// await client.Boarding.PricingIntents.PartiallyUpdateAsync(
+    ///     new PartiallyUpdatePricingIntentsRequest
     ///     {
     ///         PricingIntentId = "5",
     ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
@@ -606,8 +606,8 @@ public partial class PricingIntentsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<PricingIntent50> PatchAsync(
-        PatchPricingIntentsRequest request,
+    public async Task<PricingIntent50> PartiallyUpdateAsync(
+        PartiallyUpdatePricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

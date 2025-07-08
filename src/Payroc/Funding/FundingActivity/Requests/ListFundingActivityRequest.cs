@@ -4,7 +4,7 @@ using Payroc.Core;
 namespace Payroc.Funding.FundingActivity;
 
 [Serializable]
-public record RetrieveFundingActivityRequest
+public record ListFundingActivityRequest
 {
     /// <summary>
     /// Points to the resource identifier that you want to receive your results before. Typically, this is the first resource on the previous page.

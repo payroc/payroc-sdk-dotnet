@@ -19,7 +19,7 @@ public partial class PaymentInstructionsClient
     /// Submit an instruction request to initiate a sale on a payment device.
     /// </summary>
     /// <example><code>
-    /// await client.PayrocCloud.PaymentInstructions.SendAsync(
+    /// await client.PayrocCloud.PaymentInstructions.SubmitAsync(
     ///     new PaymentInstructionRequest
     ///     {
     ///         SerialNumber = "1850010868",
@@ -40,7 +40,7 @@ public partial class PaymentInstructionsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<PaymentInstruction> SendAsync(
+    public async Task<PaymentInstruction> SubmitAsync(
         PaymentInstructionRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

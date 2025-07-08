@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
-namespace Payroc.EventSubscriptions;
+namespace Payroc.Notifications.EventSubscriptions;
 
 [JsonConverter(typeof(StringEnumSerializer<ListEventSubscriptionsRequestStatus>))]
 [Serializable]

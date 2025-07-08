@@ -2,10 +2,10 @@ using System.Text.Json.Serialization;
 using Payroc;
 using Payroc.Core;
 
-namespace Payroc.EventSubscriptions;
+namespace Payroc.Notifications.EventSubscriptions;
 
 [Serializable]
-public record CreateEventSubscriptionRequest
+public record CreateEventSubscriptionsRequest
 {
     /// <summary>
     /// Unique identifier that you generate for each request. You must use the UUID v4 format for the identifier. For more information about the idempotency key, go to [Idempotency](https://docs.payroc.com/api/idempotency).

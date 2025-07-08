@@ -740,12 +740,12 @@ public partial class SettlementClient
     /// Retrieve the status history for a specific dispute.
     /// </summary>
     /// <example><code>
-    /// await client.Reporting.Settlement.RetrieveDisputesStatusesAsync(
-    ///     new RetrieveDisputesStatusesSettlementRequest { DisputeId = 1 }
+    /// await client.Reporting.Settlement.ListDisputesStatusesAsync(
+    ///     new ListDisputesStatusesSettlementRequest { DisputeId = 1 }
     /// );
     /// </code></example>
-    public async Task<IEnumerable<DisputeStatus>> RetrieveDisputesStatusesAsync(
-        RetrieveDisputesStatusesSettlementRequest request,
+    public async Task<IEnumerable<DisputeStatus>> ListDisputesStatusesAsync(
+        ListDisputesStatusesSettlementRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

@@ -4,7 +4,7 @@ using Payroc.Core;
 namespace Payroc.Reporting.Settlement;
 
 [Serializable]
-public record RetrieveDisputesStatusesSettlementRequest
+public record ListDisputesStatusesSettlementRequest
 {
     /// <summary>
     /// Unique identifier of the dispute.

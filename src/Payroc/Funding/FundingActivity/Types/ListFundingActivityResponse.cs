@@ -6,7 +6,7 @@ using Payroc.Core;
 namespace Payroc.Funding.FundingActivity;
 
 [Serializable]
-public record RetrieveFundingActivityResponse
+public record ListFundingActivityResponse
 {
     /// <summary>
     /// Array of activityRecord objects.

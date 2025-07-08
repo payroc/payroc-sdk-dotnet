@@ -5,7 +5,7 @@ using global::System.Threading.Tasks;
 using Payroc;
 using Payroc.Core;
 
-namespace Payroc.EventSubscriptions;
+namespace Payroc.Notifications.EventSubscriptions;
 
 public partial class EventSubscriptionsClient
 {
@@ -20,11 +20,11 @@ public partial class EventSubscriptionsClient
     /// Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of event subscriptions that are linked to the ISV's account.
     /// </summary>
     /// <example><code>
-    /// await client.EventSubscriptions.ListEventSubscriptionsAsync(
+    /// await client.Notifications.EventSubscriptions.ListAsync(
     ///     new ListEventSubscriptionsRequest { Event = "processingAccount.status.changed" }
     /// );
     /// </code></example>
-    public async Task<PaginatedEventSubscriptions> ListEventSubscriptionsAsync(
+    public async Task<PayrocPager<EventSubscription>> ListAsync(
         ListEventSubscriptionsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -42,66 +42,67 @@ public partial class EventSubscriptionsClient
                 {
                     _query["event"] = request.Event;
                 }
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.Environment.Api,
-                            Method = HttpMethod.Get,
-                            Path = "event-subscriptions",
-                            Query = _query,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
+                var httpRequest = _client.CreateHttpRequest(
+                    new JsonRequest
+                    {
+                        BaseUrl = _client.Options.Environment.Api,
+                        Method = HttpMethod.Get,
+                        Path = "event-subscriptions",
+                        Query = _query,
+                        Options = options,
+                    }
+                );
+                var sendRequest = async (
+                    HttpRequestMessage httpRequest,
+                    CancellationToken cancellationToken
+                ) =>
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
+                    var response = await _client
+                        .SendRequestAsync(httpRequest, options, cancellationToken)
+                        .ConfigureAwait(false);
+                    if (response.StatusCode is >= 200 and < 400)
                     {
-                        return JsonUtils.Deserialize<PaginatedEventSubscriptions>(responseBody)!;
+                        return response.Raw;
                     }
-                    catch (JsonException e)
-                    {
-                        throw new PayrocException("Failed to deserialize response", e);
-                    }
-                }
 
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
                     {
-                        switch (response.StatusCode)
+                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        try
                         {
-                            case 400:
-                                throw new BadRequestError(
-                                    JsonUtils.Deserialize<FourHundred>(responseBody)
-                                );
-                            case 401:
-                                throw new UnauthorizedError(
-                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
-                                );
-                            case 404:
-                                throw new NotFoundError(
-                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
-                                );
-                            case 500:
-                                throw new InternalServerError(
-                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
-                                );
+                            switch (response.StatusCode)
+                            {
+                                case 400:
+                                    throw new BadRequestError(
+                                        JsonUtils.Deserialize<FourHundred>(responseBody)
+                                    );
+                                case 401:
+                                    throw new UnauthorizedError(
+                                        JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                    );
+                                case 404:
+                                    throw new NotFoundError(
+                                        JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                    );
+                                case 500:
+                                    throw new InternalServerError(
+                                        JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                    );
+                            }
                         }
+                        catch (JsonException)
+                        {
+                            // unable to map error response, throwing generic error
+                        }
+                        throw new PayrocApiException(
+                            $"Error with status code {response.StatusCode}",
+                            response.StatusCode,
+                            responseBody
+                        );
                     }
-                    catch (JsonException)
-                    {
-                        // unable to map error response, throwing generic error
-                    }
-                    throw new PayrocApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
+                };
+                return await PayrocPagerFactory
+                    .CreateAsync<EventSubscription>(sendRequest, httpRequest, cancellationToken)
+                    .ConfigureAwait(false);
             })
             .ConfigureAwait(false);
     }
@@ -117,8 +118,8 @@ public partial class EventSubscriptionsClient
     /// - [Delete event subscription](#deleteEventSubscription)
     /// </summary>
     /// <example><code>
-    /// await client.EventSubscriptions.CreateEventSubscriptionAsync(
-    ///     new CreateEventSubscriptionRequest
+    /// await client.Notifications.EventSubscriptions.CreateAsync(
+    ///     new CreateEventSubscriptionsRequest
     ///     {
     ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
     ///         Body = new EventSubscription
@@ -143,8 +144,8 @@ public partial class EventSubscriptionsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<EventSubscription> CreateEventSubscriptionAsync(
-        CreateEventSubscriptionRequest request,
+    public async Task<EventSubscription> CreateAsync(
+        CreateEventSubscriptionsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -236,12 +237,12 @@ public partial class EventSubscriptionsClient
     /// **Note:** If you don't know the subscriptionId of the event subscription, go to [List event subscriptions](#listEventSubscriptions).
     /// </summary>
     /// <example><code>
-    /// await client.EventSubscriptions.GetEventSubscriptionAsync(
-    ///     new GetEventSubscriptionRequest { SubscriptionId = 1 }
+    /// await client.Notifications.EventSubscriptions.RetrieveAsync(
+    ///     new RetrieveEventSubscriptionsRequest { SubscriptionId = 1 }
     /// );
     /// </code></example>
-    public async Task<EventSubscription> GetEventSubscriptionAsync(
-        GetEventSubscriptionRequest request,
+    public async Task<EventSubscription> RetrieveAsync(
+        RetrieveEventSubscriptionsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -326,8 +327,8 @@ public partial class EventSubscriptionsClient
     /// **Note:** If you don't know the subscriptionId, go to [List event subscriptions](#listEventSubscriptions)
     /// </summary>
     /// <example><code>
-    /// await client.EventSubscriptions.UpdateEventSubscriptionAsync(
-    ///     new UpdateEventSubscriptionRequest
+    /// await client.Notifications.EventSubscriptions.UpdateAsync(
+    ///     new UpdateEventSubscriptionsRequest
     ///     {
     ///         SubscriptionId = 1,
     ///         Body = new EventSubscription
@@ -352,8 +353,8 @@ public partial class EventSubscriptionsClient
     ///     }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task UpdateEventSubscriptionAsync(
-        UpdateEventSubscriptionRequest request,
+    public async global::System.Threading.Tasks.Task UpdateAsync(
+        UpdateEventSubscriptionsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -428,12 +429,12 @@ public partial class EventSubscriptionsClient
     /// Use this method to delete an event subscription.
     /// </summary>
     /// <example><code>
-    /// await client.EventSubscriptions.DeleteEventSubscriptionAsync(
-    ///     new DeleteEventSubscriptionRequest { SubscriptionId = 1 }
+    /// await client.Notifications.EventSubscriptions.DeleteAsync(
+    ///     new DeleteEventSubscriptionsRequest { SubscriptionId = 1 }
     /// );
     /// </code></example>
-    public async global::System.Threading.Tasks.Task DeleteEventSubscriptionAsync(
-        DeleteEventSubscriptionRequest request,
+    public async global::System.Threading.Tasks.Task DeleteAsync(
+        DeleteEventSubscriptionsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -509,8 +510,8 @@ public partial class EventSubscriptionsClient
     /// **Note:** You need the subscriptionId that we sent you when you created the event subscription. If you don't know the subscriptionId, go to [List event subscriptions](#listEventSubscriptions).
     /// </summary>
     /// <example><code>
-    /// await client.EventSubscriptions.PatchEventSubscriptionAsync(
-    ///     new PatchEventSubscriptionRequest
+    /// await client.Notifications.EventSubscriptions.PartiallyUpdateAsync(
+    ///     new PartiallyUpdateEventSubscriptionsRequest
     ///     {
     ///         SubscriptionId = 1,
     ///         Body = new List&lt;PatchDocument&gt;()
@@ -520,8 +521,8 @@ public partial class EventSubscriptionsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<EventSubscription> PatchEventSubscriptionAsync(
-        PatchEventSubscriptionRequest request,
+    public async Task<EventSubscription> PartiallyUpdateAsync(
+        PartiallyUpdateEventSubscriptionsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

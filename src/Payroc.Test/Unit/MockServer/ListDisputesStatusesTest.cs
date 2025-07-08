@@ -7,7 +7,7 @@ using Payroc.Reporting.Settlement;
 namespace Payroc.Test.Unit.MockServer;
 
 [TestFixture]
-public class RetrieveDisputesStatusesTest : BaseMockServerTest
+public class ListDisputesStatusesTest : BaseMockServerTest
 {
     [Test]
     public async global::System.Threading.Tasks.Task MockServerTest()
@@ -36,8 +36,8 @@ public class RetrieveDisputesStatusesTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Reporting.Settlement.RetrieveDisputesStatusesAsync(
-            new RetrieveDisputesStatusesSettlementRequest { DisputeId = 1 }
+        var response = await Client.Reporting.Settlement.ListDisputesStatusesAsync(
+            new ListDisputesStatusesSettlementRequest { DisputeId = 1 }
         );
         Assert.That(
             response,
