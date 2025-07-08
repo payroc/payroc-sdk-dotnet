@@ -107,7 +107,7 @@ paths:
       x-fern-sdk-group-name:
         - boarding
         - pricingIntents
-      x-fern-sdk-method-name: patch
+      x-fern-sdk-method-name: partiallyUpdate
 
 # boarding - processing accounts
   /processing-accounts/{processingAccountId}:
@@ -233,7 +233,8 @@ paths:
       x-fern-sdk-group-name:
         - funding
         - fundingActivity
-      x-fern-sdk-method-name: retrieve
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
   /funding-balance:
     get:
       x-fern-sdk-group-name:
@@ -426,6 +427,41 @@ paths:
         - payments
         - currencyConversion
       x-fern-sdk-method-name: retrieveFxRates
+
+# notifications - event subscriptions
+  /event-subscriptions:
+    get:
+      x-fern-sdk-group-name:
+        - notifications
+        - eventSubscriptions
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
+    post:
+      x-fern-sdk-group-name:
+        - notifications
+        - eventSubscriptions
+      x-fern-sdk-method-name: create
+  /event-subscriptions/{subscriptionId}:      
+    get:
+      x-fern-sdk-group-name:
+        - notifications
+        - eventSubscriptions
+      x-fern-sdk-method-name: retrieve
+    put:
+      x-fern-sdk-group-name:
+        - notifications
+        - eventSubscriptions
+      x-fern-sdk-method-name: update
+    delete:
+      x-fern-sdk-group-name:
+        - notifications
+        - eventSubscriptions
+      x-fern-sdk-method-name: delete
+    patch:
+      x-fern-sdk-group-name:
+        - notifications
+        - eventSubscriptions
+      x-fern-sdk-method-name: partiallyUpdate
 
 # payments - hosted fields
   /processing-terminals/{processingTerminalId}/hosted-fields-sessions:
@@ -681,7 +717,7 @@ paths:
       x-fern-sdk-group-name:
         - payroc cloud
         - paymentInstructions
-      x-fern-sdk-method-name: send
+      x-fern-sdk-method-name: submit
   /payment-instructions/{paymentInstructionId}:
     get:
       x-fern-sdk-group-name:
@@ -695,7 +731,7 @@ paths:
       x-fern-sdk-group-name:
         - payroc cloud
         - refundInstructions
-      x-fern-sdk-method-name: send
+      x-fern-sdk-method-name: submit
   /refund-instructions/{refundInstructionId}:
     get:
       x-fern-sdk-group-name:
@@ -759,7 +795,7 @@ paths:
       x-fern-sdk-group-name:
         - reporting
         - settlement
-      x-fern-sdk-method-name: retrieveDisputesStatuses
+      x-fern-sdk-method-name: listDisputesStatuses
   /ach-deposits:
     get:
       x-fern-sdk-group-name:
