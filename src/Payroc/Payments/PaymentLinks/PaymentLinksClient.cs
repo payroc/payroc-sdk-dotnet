@@ -421,8 +421,8 @@ public partial class PaymentLinksClient
     /// **Note:** When a merchant updates a single-use link, we update the payment URL and HTML code in the assets object. The customer can't use the original link to make a payment.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.PaymentLinks.UpdateAsync(
-    ///     new UpdatePaymentLinksRequest
+    /// await client.Payments.PaymentLinks.PartiallyUpdateAsync(
+    ///     new PartiallyUpdatePaymentLinksRequest
     ///     {
     ///         PaymentLinkId = "JZURRJBUPS",
     ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
@@ -433,8 +433,8 @@ public partial class PaymentLinksClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<UpdatePaymentLinksResponse> UpdateAsync(
-        UpdatePaymentLinksRequest request,
+    public async Task<PartiallyUpdatePaymentLinksResponse> PartiallyUpdateAsync(
+        PartiallyUpdatePaymentLinksRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -471,7 +471,9 @@ public partial class PaymentLinksClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<UpdatePaymentLinksResponse>(responseBody)!;
+                        return JsonUtils.Deserialize<PartiallyUpdatePaymentLinksResponse>(
+                            responseBody
+                        )!;
                     }
                     catch (JsonException e)
                     {

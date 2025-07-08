@@ -512,8 +512,8 @@ public partial class PaymentPlansClient
     /// - `continue` - Our  gateway doesn't update the subscriptions associated with the payment plan.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.PaymentPlans.UpdateAsync(
-    ///     new UpdatePaymentPlansRequest
+    /// await client.Payments.PaymentPlans.PartiallyUpdateAsync(
+    ///     new PartiallyUpdatePaymentPlansRequest
     ///     {
     ///         ProcessingTerminalId = "1234001",
     ///         PaymentPlanId = "PlanRef8765",
@@ -527,8 +527,8 @@ public partial class PaymentPlansClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<PaymentPlan> UpdateAsync(
-        UpdatePaymentPlansRequest request,
+    public async Task<PaymentPlan> PartiallyUpdateAsync(
+        PartiallyUpdatePaymentPlansRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

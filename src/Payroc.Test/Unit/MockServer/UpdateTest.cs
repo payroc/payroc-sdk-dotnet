@@ -1,8 +1,6 @@
-using global::System.Threading.Tasks;
 using NUnit.Framework;
 using Payroc;
-using Payroc.Core;
-using Payroc.Payments.SecureTokens;
+using Payroc.Notifications.EventSubscriptions;
 
 namespace Payroc.Test.Unit.MockServer;
 
@@ -10,87 +8,25 @@ namespace Payroc.Test.Unit.MockServer;
 public class UpdateTest : BaseMockServerTest
 {
     [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_1()
+    public void MockServerTest()
     {
         const string requestJson = """
-            [
-              {
-                "path": "path",
-                "op": "remove"
-              },
-              {
-                "path": "path",
-                "op": "remove"
-              },
-              {
-                "path": "path",
-                "op": "remove"
-              }
-            ]
-            """;
-
-        const string mockResponse = """
             {
-              "secureTokenId": "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
-              "processingTerminalId": "1234001",
-              "mitAgreement": "unscheduled",
-              "customer": {
-                "firstName": "Sarah",
-                "lastName": "Hopper",
-                "dateOfBirth": "1990-07-15",
-                "referenceNumber": "Customer-12",
-                "billingAddress": {
-                  "address1": "1 Example Ave.",
-                  "address2": "Example Address Line 2",
-                  "address3": "Example Address Line 3",
-                  "city": "Chicago",
-                  "state": "Illinois",
-                  "country": "US",
-                  "postalCode": "60056"
-                },
-                "shippingAddress": {
-                  "recipientName": "Sarah Hopper",
-                  "address": {
-                    "address1": "1 Example Ave.",
-                    "address2": "Example Address Line 2",
-                    "address3": "Example Address Line 3",
-                    "city": "Chicago",
-                    "state": "Illinois",
-                    "country": "US",
-                    "postalCode": "60056"
-                  }
-                },
-                "contactMethods": [
-                  {
-                    "value": "jane.doe@example.com",
-                    "type": "email"
-                  }
-                ],
-                "notificationLanguage": "en"
-              },
-              "source": {
-                "cardholderName": "Sarah Hazel Hopper",
-                "cardNumber": "4539858876047062",
-                "expiryDate": "1225",
-                "cardType": "cardType",
-                "currency": "AED",
-                "debit": true,
-                "surcharging": {
-                  "allowed": true,
-                  "amount": 87,
-                  "percentage": 3,
-                  "disclosure": "A 3% surcharge is applied to cover processing fees."
-                },
-                "type": "card"
-              },
-              "token": "296753123456",
-              "status": "notValidated",
-              "customFields": [
+              "enabled": true,
+              "eventTypes": [
+                "processingAccount.status.changed"
+              ],
+              "notifications": [
                 {
-                  "name": "yourCustomField",
-                  "value": "abc123"
+                  "uri": "https://my-server/notification/endpoint",
+                  "secret": "aBcD1234eFgH5678iJkL9012mNoP3456",
+                  "supportEmailAddress": "supportEmailAddress",
+                  "type": "webhook"
                 }
-              ]
+              ],
+              "metadata": {
+                "yourCustomField": "abc123"
+              }
             }
             """;
 
@@ -98,183 +34,42 @@ public class UpdateTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath(
-                        "/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
-                    )
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/event-subscriptions/1")
                     .WithHeader("Content-Type", "application/json")
-                    .UsingPatch()
+                    .UsingPut()
                     .WithBodyAsJson(requestJson)
             )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
+            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        var response = await Client.Payments.SecureTokens.UpdateAsync(
-            new UpdateSecureTokensRequest
-            {
-                ProcessingTerminalId = "1234001",
-                SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-                Body = new List<PatchDocument>()
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.Notifications.EventSubscriptions.UpdateAsync(
+                new UpdateEventSubscriptionsRequest
                 {
-                    new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
-                    new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
-                    new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
-                },
-            }
-        );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SecureToken>(mockResponse)).UsingDefaults()
-        );
-    }
-
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_2()
-    {
-        const string requestJson = """
-            [
-              {
-                "path": "path",
-                "op": "remove"
-              },
-              {
-                "path": "path",
-                "op": "remove"
-              },
-              {
-                "path": "path",
-                "op": "remove"
-              },
-              {
-                "from": "from",
-                "path": "path",
-                "op": "move"
-              },
-              {
-                "from": "from",
-                "path": "path",
-                "op": "copy"
-              },
-              {
-                "path": "path",
-                "op": "remove"
-              }
-            ]
-            """;
-
-        const string mockResponse = """
-            {
-              "secureTokenId": "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
-              "processingTerminalId": "1234001",
-              "mitAgreement": "unscheduled",
-              "customer": {
-                "firstName": "Sarah",
-                "lastName": "Hopper",
-                "dateOfBirth": "1990-07-15",
-                "referenceNumber": "Customer-12",
-                "billingAddress": {
-                  "address1": "1 Example Ave.",
-                  "address2": "Example Address Line 2",
-                  "address3": "Example Address Line 3",
-                  "city": "Chicago",
-                  "state": "Illinois",
-                  "country": "US",
-                  "postalCode": "60056"
-                },
-                "shippingAddress": {
-                  "recipientName": "Sarah Hopper",
-                  "address": {
-                    "address1": "1 Example Ave.",
-                    "address2": "Example Address Line 2",
-                    "address3": "Example Address Line 3",
-                    "city": "Chicago",
-                    "state": "Illinois",
-                    "country": "US",
-                    "postalCode": "60056"
-                  }
-                },
-                "contactMethods": [
-                  {
-                    "value": "jane.doe@example.com",
-                    "type": "email"
-                  }
-                ],
-                "notificationLanguage": "en"
-              },
-              "source": {
-                "cardholderName": "Sarah Hazel Hopper",
-                "cardNumber": "4539858876047062",
-                "expiryDate": "1225",
-                "cardType": "cardType",
-                "currency": "AED",
-                "debit": true,
-                "surcharging": {
-                  "allowed": true,
-                  "amount": 87,
-                  "percentage": 3,
-                  "disclosure": "A 3% surcharge is applied to cover processing fees."
-                },
-                "type": "card"
-              },
-              "token": "296753123456",
-              "status": "notValidated",
-              "customFields": [
-                {
-                  "name": "yourCustomField",
-                  "value": "abc123"
+                    SubscriptionId = 1,
+                    Body = new EventSubscription
+                    {
+                        Enabled = true,
+                        EventTypes = new List<string>() { "processingAccount.status.changed" },
+                        Notifications = new List<Notification>()
+                        {
+                            new Notification(
+                                new Notification.Webhook(
+                                    new Webhook
+                                    {
+                                        Uri = "https://my-server/notification/endpoint",
+                                        Secret = "aBcD1234eFgH5678iJkL9012mNoP3456",
+                                        SupportEmailAddress = "supportEmailAddress",
+                                    }
+                                )
+                            ),
+                        },
+                        Metadata = new Dictionary<string, object>()
+                        {
+                            { "yourCustomField", "abc123" },
+                        },
+                    },
                 }
-              ]
-            }
-            """;
-
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath(
-                        "/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
-                    )
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
-                    .WithHeader("Content-Type", "application/json")
-                    .UsingPatch()
-                    .WithBodyAsJson(requestJson)
             )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.Payments.SecureTokens.UpdateAsync(
-            new UpdateSecureTokensRequest
-            {
-                ProcessingTerminalId = "1234001",
-                SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-                Body = new List<PatchDocument>()
-                {
-                    new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
-                    new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
-                    new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
-                    new PatchDocument(
-                        new PatchDocument.Move(new PatchMove { From = "from", Path = "path" })
-                    ),
-                    new PatchDocument(
-                        new PatchDocument.Copy(new PatchCopy { From = "from", Path = "path" })
-                    ),
-                    new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
-                },
-            }
-        );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SecureToken>(mockResponse)).UsingDefaults()
         );
     }
 }

@@ -9,29 +9,29 @@ using Payroc.Core;
 
 namespace Payroc.Payments.PaymentLinks;
 
-[JsonConverter(typeof(UpdatePaymentLinksResponse.JsonConverter))]
+[JsonConverter(typeof(PartiallyUpdatePaymentLinksResponse.JsonConverter))]
 [Serializable]
-public record UpdatePaymentLinksResponse
+public record PartiallyUpdatePaymentLinksResponse
 {
-    internal UpdatePaymentLinksResponse(string type, object? value)
+    internal PartiallyUpdatePaymentLinksResponse(string type, object? value)
     {
         Type = type;
         Value = value;
     }
 
     /// <summary>
-    /// Create an instance of UpdatePaymentLinksResponse with <see cref="UpdatePaymentLinksResponse.MultiUse"/>.
+    /// Create an instance of PartiallyUpdatePaymentLinksResponse with <see cref="PartiallyUpdatePaymentLinksResponse.MultiUse"/>.
     /// </summary>
-    public UpdatePaymentLinksResponse(UpdatePaymentLinksResponse.MultiUse value)
+    public PartiallyUpdatePaymentLinksResponse(PartiallyUpdatePaymentLinksResponse.MultiUse value)
     {
         Type = "multiUse";
         Value = value.Value;
     }
 
     /// <summary>
-    /// Create an instance of UpdatePaymentLinksResponse with <see cref="UpdatePaymentLinksResponse.SingleUse"/>.
+    /// Create an instance of PartiallyUpdatePaymentLinksResponse with <see cref="PartiallyUpdatePaymentLinksResponse.SingleUse"/>.
     /// </summary>
-    public UpdatePaymentLinksResponse(UpdatePaymentLinksResponse.SingleUse value)
+    public PartiallyUpdatePaymentLinksResponse(PartiallyUpdatePaymentLinksResponse.SingleUse value)
     {
         Type = "singleUse";
         Value = value.Value;
@@ -65,7 +65,7 @@ public record UpdatePaymentLinksResponse
     public Payroc.MultiUsePaymentLink AsMultiUse() =>
         IsMultiUse
             ? (Payroc.MultiUsePaymentLink)Value!
-            : throw new Exception("UpdatePaymentLinksResponse.Type is not 'multiUse'");
+            : throw new Exception("PartiallyUpdatePaymentLinksResponse.Type is not 'multiUse'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.SingleUsePaymentLink"/> if <see cref="Type"/> is 'singleUse', otherwise throws an exception.
@@ -74,7 +74,7 @@ public record UpdatePaymentLinksResponse
     public Payroc.SingleUsePaymentLink AsSingleUse() =>
         IsSingleUse
             ? (Payroc.SingleUsePaymentLink)Value!
-            : throw new Exception("UpdatePaymentLinksResponse.Type is not 'singleUse'");
+            : throw new Exception("PartiallyUpdatePaymentLinksResponse.Type is not 'singleUse'");
 
     public T Match<T>(
         Func<Payroc.MultiUsePaymentLink, T> onMultiUse,
@@ -140,21 +140,21 @@ public record UpdatePaymentLinksResponse
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    public static implicit operator UpdatePaymentLinksResponse(
-        UpdatePaymentLinksResponse.MultiUse value
+    public static implicit operator PartiallyUpdatePaymentLinksResponse(
+        PartiallyUpdatePaymentLinksResponse.MultiUse value
     ) => new(value);
 
-    public static implicit operator UpdatePaymentLinksResponse(
-        UpdatePaymentLinksResponse.SingleUse value
+    public static implicit operator PartiallyUpdatePaymentLinksResponse(
+        PartiallyUpdatePaymentLinksResponse.SingleUse value
     ) => new(value);
 
     [Serializable]
-    internal sealed class JsonConverter : JsonConverter<UpdatePaymentLinksResponse>
+    internal sealed class JsonConverter : JsonConverter<PartiallyUpdatePaymentLinksResponse>
     {
         public override bool CanConvert(global::System.Type typeToConvert) =>
-            typeof(UpdatePaymentLinksResponse).IsAssignableFrom(typeToConvert);
+            typeof(PartiallyUpdatePaymentLinksResponse).IsAssignableFrom(typeToConvert);
 
-        public override UpdatePaymentLinksResponse Read(
+        public override PartiallyUpdatePaymentLinksResponse Read(
             ref Utf8JsonReader reader,
             global::System.Type typeToConvert,
             JsonSerializerOptions options
@@ -189,12 +189,12 @@ public record UpdatePaymentLinksResponse
                     ?? throw new JsonException("Failed to deserialize Payroc.SingleUsePaymentLink"),
                 _ => json.Deserialize<object?>(options),
             };
-            return new UpdatePaymentLinksResponse(discriminator, value);
+            return new PartiallyUpdatePaymentLinksResponse(discriminator, value);
         }
 
         public override void Write(
             Utf8JsonWriter writer,
-            UpdatePaymentLinksResponse value,
+            PartiallyUpdatePaymentLinksResponse value,
             JsonSerializerOptions options
         )
         {

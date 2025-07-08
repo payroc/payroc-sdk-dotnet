@@ -479,8 +479,8 @@ public partial class SubscriptionsClient
     /// - paymentPlan
     /// </summary>
     /// <example><code>
-    /// await client.Payments.Subscriptions.UpdateAsync(
-    ///     new UpdateSubscriptionsRequest
+    /// await client.Payments.Subscriptions.PartiallyUpdateAsync(
+    ///     new PartiallyUpdateSubscriptionsRequest
     ///     {
     ///         ProcessingTerminalId = "1234001",
     ///         SubscriptionId = "SubRef7654",
@@ -494,8 +494,8 @@ public partial class SubscriptionsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<Subscription> UpdateAsync(
-        UpdateSubscriptionsRequest request,
+    public async Task<Subscription> PartiallyUpdateAsync(
+        PartiallyUpdateSubscriptionsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

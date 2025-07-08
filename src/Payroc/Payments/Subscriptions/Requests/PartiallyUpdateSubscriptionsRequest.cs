@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc.Payments.Subscriptions;
 
 [Serializable]
-public record UpdateSubscriptionsRequest
+public record PartiallyUpdateSubscriptionsRequest
 {
     /// <summary>
     /// Unique identifier that we assigned to the terminal.
