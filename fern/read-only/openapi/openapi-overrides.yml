@@ -166,11 +166,10 @@ paths:
         - boarding
         - processingAccounts
       x-fern-sdk-method-name: listTerminalOrders
-      # x-fern-pagination: true # Doesn't work as field is called `orderItems` rather than `data`
-      #Add once Fern bug is fixed, and CLI can be updated
-      #x-fern-pagination:
-      #  type: custom
-      #  results: $response.orderItems      
+      # x-fern-pagination: true # Doesn't work as field is called `$response.orderItems` rather than `data`
+      # It is not a proper paginated result - no Next() etc.
+      # Therefore leave this as x-fern-pagination: false
+      # As user can iterate theTask< IEnumerable<T>> as necessary
   /processing-accounts/{processingAccountId}/processing-terminals:
     get:
       x-fern-sdk-group-name:
