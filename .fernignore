@@ -17,7 +17,10 @@ src/Payroc/BasePayrocClient.cs
 src/Payroc.sln
 src/Payroc.Test/Unit/MockServer/CreateProcessingAccountTest.cs
 src/Payroc.Test/Utils/JsonDataPropertyReader.cs
-src/Payroc.TestHarness/Payroc.TestHarness.csproj
+src/Payroc.TestHarness
+.github/CODEOWNERS
+preview-sdk.ps1
+fern
 # Workarounds:
 # src/Payroc/Types/CreateProcessingAccount.cs
 # src/Payroc/Types/SignatureWrapper.cs
