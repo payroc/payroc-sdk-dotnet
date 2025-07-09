@@ -544,7 +544,7 @@ public class CreateProcessingAccountTest : BaseMockServerTest
                     Pricing = new Pricing(
                         new Pricing.Intent(new PricingTemplate { PricingIntentId = 6123 })
                     ),
-                    Signature = new() { Type = CreateProcessingAccountSignature.RequestedViaDirectLink },
+                    Signature = new Signature(new Payroc.SignatureByDirectLink()),
                     Contacts = new List<Contact>()
                     {
                         new Contact

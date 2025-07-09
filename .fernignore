@@ -11,11 +11,13 @@ src/Payroc/Auth/Requests/GetTokenAuthRequest.cs
 src/Payroc.Test/Unit/Custom
 src/Payroc.Test/Unit/MockServer/BaseMockServerTest.cs
 src/Payroc.Test/Unit/MockServer/GetTokenTest.cs
+src/Payroc.Test/Unit/MockServer/Auth/RetrieveTokenTest.cs
+src/Payroc.Test/Unit/MockServer/CreateProcessingAccountTest.cs
 src/Payroc/BasePayrocClient.cs
 src/Payroc.sln
-src/Payroc.Test/Unit/MockServer/GetTokenTest.cs
 src/Payroc.Test/Unit/MockServer/CreateProcessingAccountTest.cs
 src/Payroc.Test/Utils/JsonDataPropertyReader.cs
+src/Payroc.TestHarness/Payroc.TestHarness.csproj
 # Workarounds:
 # src/Payroc/Types/CreateProcessingAccount.cs
 # src/Payroc/Types/SignatureWrapper.cs
