@@ -8,8 +8,12 @@ namespace Payroc;
 /// Object that contains details about the funds.
 /// </summary>
 [Serializable]
-public record InstructionMerchantsItemRecipientsItemAmount
+public record InstructionMerchantsItemRecipientsItemAmount : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Value of funds in the currency's lowest denomination, for example, cents.
     /// </summary>
@@ -22,15 +26,11 @@ public record InstructionMerchantsItemRecipientsItemAmount
     [JsonPropertyName("currency")]
     public string? Currency { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

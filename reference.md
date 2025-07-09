@@ -1,8 +1,6 @@
 # Reference
-
 ## Payments
-
-<details><summary><code>client.Payments.<a href="/src/Payroc/Payments/PaymentsClient.cs">ListAsync</a>(ListPaymentsRequest { ... }) -> PayrocPager<Payment></code></summary>
+<details><summary><code>client.Payments.<a href="/src/Payroc/Payments/PaymentsClient.cs">ListAsync</a>(Payments.ListPaymentsRequest { ... }) -> Core.PayrocPager<Payment></code></summary>
 <dl>
 <dd>
 
@@ -14,8 +12,20 @@
 <dl>
 <dd>
 
-Return a list of payments.
+Use this method to return a [paginated](/api/pagination) list of payments. 
 
+**Note:** If you want to view a specific payment and you have its paymentId, use our [Retrieve Payment](/api/schema/payments/get) method.  
+
+Use query parameters to filter the list of results that we return, for example, to search for payments for a customer, a tip mode, or a date range.  
+
+Our gateway returns the following information about each payment in the list:  
+
+- Order details, including the transaction amount and when it was processed.  
+- Payment card details, including the masked card number, expiry date, and payment method. 
+- Cardholder details, including their contact information and shipping address. 
+- Payment details, including the payment type, status, and response. 
+ 
+For each transaction, we also return the paymentId and an optional secureTokenId, which you can use to perform follow-on actions. 
 </dd>
 </dl>
 </dd>
@@ -41,13 +51,13 @@ await client.Payments.ListAsync(
         Last4 = "7062",
         DateFrom = new DateTime(2024, 07, 01, 15, 30, 00, 000),
         DateTo = new DateTime(2024, 07, 03, 15, 30, 00, 000),
-        SettlementDate = "2024-07-02",
+        SettlementDate = new DateOnly(2024, 7, 2),
+        PaymentLinkId = "JZURRJBUPS",
         Before = "2571",
         After = "8516",
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -61,18 +71,19 @@ await client.Payments.ListAsync(
 <dl>
 <dd>
 
-**request:** `ListPaymentsRequest`
+**request:** `Payments.ListPaymentsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.<a href="/src/Payroc/Payments/PaymentsClient.cs">CreateAsync</a>(PaymentRequest { ... }) -> Payment</code></summary>
+<details><summary><code>client.Payments.<a href="/src/Payroc/Payments/PaymentsClient.cs">CreateAsync</a>(Payments.PaymentRequest { ... }) -> Payment</code></summary>
 <dl>
 <dd>
 
@@ -84,11 +95,35 @@ await client.Payments.ListAsync(
 <dl>
 <dd>
 
-Run a sale or pre-authorization. You can also:
+Use this method to run a sale or a pre-authorization with a customer's payment card. 
 
-- Save the customer's payment details.
-- Set up recurring billing.
-- Process the transaction offline.
+In the response, our gateway returns information about the card payment and a paymentId, which you need for the following methods:
+
+-	[Retrieve payment](/api/schema/payments/get) - View the details of the card payment.
+-	[Adjust payment](/api/schema/payments/adjust) - Update the details of the card payment.
+-	[Capture payment](/api/schema/payments/capture)  - Capture the pre-authorization.
+-	[Reverse payment](/api/schema/payments/reverse)  - Cancel the card payment if it's in an open batch.
+-	[Refund payment](/api/schema/payments/refund)  - Run a referenced refund to return funds to the payment card.
+
+**Payment methods** 
+
+- **Cards** - Credit, debit, and EBT
+- **Digital wallets** - [Apple Pay®](/guides/integrate/apple-pay) and [Google Pay®](/guides/integrate/google-pay) 
+- **Tokens** - Secure tokens and single-use tokens
+
+**Features** 
+
+Our Create Payment method also supports the following features: 
+
+- [Repeat payments](/guides/integrate/repeat-payments/use-your-own-software) - Run multiple payments as part of a payment schedule that you manage with your own software. 
+- **Offline sales** - Run a sale or a pre-authorization if the terminal loses its connection to our gateway. 
+- [Tokenization](h/guides/integrate/save-payment-details) - Save card details to use in future transactions. 
+- [3-D Secure](/guides/integrate/3-d-secure) - Verify the identity of the cardholder. 
+- [Custom fields](/guides/integrate/add-custom-fields) - Add your own data to a payment. 
+- **Tips** - Add tips to the card payment.  
+- **Taxes** - Add local taxes to the card payment. 
+- **Surcharging** - Add a surcharge to the card payment. 
+- **Dual pricing** - Offer different prices based on payment method, for example, if you use our RewardPay Choice pricing program. 
 </dd>
 </dl>
 </dd>
@@ -109,7 +144,7 @@ await client.Payments.CreateAsync(
         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
         Channel = PaymentRequestChannel.Web,
         ProcessingTerminalId = "1234001",
-        Operator = "Postman",
+        Operator = "Jane",
         Order = new PaymentOrder
         {
             OrderId = "OrderRef6543",
@@ -157,7 +192,7 @@ await client.Payments.CreateAsync(
                                 Device = new Device
                                 {
                                     Model = DeviceModel.BbposChp,
-                                    SerialNumber = "PAX123456789",
+                                    SerialNumber = "1850010868",
                                 },
                                 RawData =
                                     "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
@@ -174,7 +209,6 @@ await client.Payments.CreateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -188,18 +222,19 @@ await client.Payments.CreateAsync(
 <dl>
 <dd>
 
-**request:** `PaymentRequest`
+**request:** `Payments.PaymentRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.<a href="/src/Payroc/Payments/PaymentsClient.cs">GetAsync</a>(GetPaymentsRequest { ... }) -> Payment</code></summary>
+<details><summary><code>client.Payments.<a href="/src/Payroc/Payments/PaymentsClient.cs">RetrieveAsync</a>(Payments.RetrievePaymentsRequest { ... }) -> Payment</code></summary>
 <dl>
 <dd>
 
@@ -211,8 +246,20 @@ await client.Payments.CreateAsync(
 <dl>
 <dd>
 
-Retrieve an existing payment.
+Use this method to retrieve information about a card payment.  
 
+To retrieve a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.  
+
+**Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.  
+
+Our gateway returns the following information about the payment:  
+
+- Order details, including the transaction amount and when it was processed.  
+- Payment card details, including the masked card number, expiry date, and payment method.  
+- Cardholder details, including their contact information and shipping address.  
+- Payment details, including the payment type, status, and response.  
+
+If the merchant saved the customer's card details, our gateway returns a secureTokenID, which you can use to perform follow-on actions.  
 </dd>
 </dl>
 </dd>
@@ -227,9 +274,8 @@ Retrieve an existing payment.
 <dd>
 
 ```csharp
-await client.Payments.GetAsync(new GetPaymentsRequest { PaymentId = "M2MJOG6O2Y" });
+await client.Payments.RetrieveAsync(new RetrievePaymentsRequest { PaymentId = "M2MJOG6O2Y" });
 ```
-
 </dd>
 </dl>
 </dd>
@@ -243,18 +289,19 @@ await client.Payments.GetAsync(new GetPaymentsRequest { PaymentId = "M2MJOG6O2Y"
 <dl>
 <dd>
 
-**request:** `GetPaymentsRequest`
+**request:** `Payments.RetrievePaymentsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.<a href="/src/Payroc/Payments/PaymentsClient.cs">AdjustAsync</a>(PaymentAdjustment { ... }) -> Payment</code></summary>
+<details><summary><code>client.Payments.<a href="/src/Payroc/Payments/PaymentsClient.cs">AdjustAsync</a>(Payments.PaymentAdjustment { ... }) -> Payment</code></summary>
 <dl>
 <dd>
 
@@ -266,8 +313,19 @@ await client.Payments.GetAsync(new GetPaymentsRequest { PaymentId = "M2MJOG6O2Y"
 <dl>
 <dd>
 
-Adjust a transaction.
+Use this method to adjust a payment in an open batch. 
 
+To adjust a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+
+**Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment. 
+
+You can adjust the following details of the payment:
+- Sale amount and tip amount
+- Payment status
+- Cardholder shipping address and contact information
+- Cardholder signature data
+
+Our gateway returns information about the adjusted payment, including information about the payment card and the cardholder.
 </dd>
 </dl>
 </dd>
@@ -299,7 +357,6 @@ await client.Payments.AdjustAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -313,18 +370,19 @@ await client.Payments.AdjustAsync(
 <dl>
 <dd>
 
-**request:** `PaymentAdjustment`
+**request:** `Payments.PaymentAdjustment` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.<a href="/src/Payroc/Payments/PaymentsClient.cs">CaptureAsync</a>(PaymentCapture { ... }) -> Payment</code></summary>
+<details><summary><code>client.Payments.<a href="/src/Payroc/Payments/PaymentsClient.cs">CaptureAsync</a>(Payments.PaymentCapture { ... }) -> Payment</code></summary>
 <dl>
 <dd>
 
@@ -336,8 +394,20 @@ await client.Payments.AdjustAsync(
 <dl>
 <dd>
 
-Capture an existing payment.
+Use this method to capture a pre-authorization. 
 
+To capture a pre-authorization, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+
+**Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+
+Depending on the amount you want to capture, complete the following:
+-	**Capture the full amount of the pre-authorization** - Don't send a value for the amount parameter in your request.
+-	**Capture less than the amount of the pre-authorization** - Send a value for the amount parameter in your request. 
+-	**Capture more than the amount of the pre-authorization** - Adjust the pre-authorization before you capture it. For more information about adjusting a pre-authorization, go to [Adjust Payment](/api/schema/payments/adjust).
+
+If your request is successful, our gateway takes the amount from the payment card. 
+
+**Note:** For more information about pre-authorizations and captures, go to [Run a pre-authorization](/guides/integrate/run-a-pre-authorization).
 </dd>
 </dl>
 </dd>
@@ -357,10 +427,22 @@ await client.Payments.CaptureAsync(
     {
         PaymentId = "M2MJOG6O2Y",
         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+        ProcessingTerminalId = "1234001",
+        Operator = "Jane",
+        Amount = 4999,
+        Breakdown = new ItemizedBreakdown
+        {
+            Subtotal = 4999,
+            DutyAmount = 499,
+            FreightAmount = 500,
+            Items = new List<LineItem>()
+            {
+                new LineItem { UnitPrice = 4000, Quantity = 1 },
+            },
+        },
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -374,18 +456,19 @@ await client.Payments.CaptureAsync(
 <dl>
 <dd>
 
-**request:** `PaymentCapture`
+**request:** `Payments.PaymentCapture` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.<a href="/src/Payroc/Payments/PaymentsClient.cs">ReverseAsync</a>(PaymentReversal { ... }) -> Payment</code></summary>
+<details><summary><code>client.Payments.<a href="/src/Payroc/Payments/PaymentsClient.cs">ReverseAsync</a>(Payments.PaymentReversal { ... }) -> Payment</code></summary>
 <dl>
 <dd>
 
@@ -397,8 +480,13 @@ await client.Payments.CaptureAsync(
 <dl>
 <dd>
 
-Reverse a payment.
+Use this method to cancel or to partially cancel a payment in an open batch. This is also known as voiding a payment.  
 
+To cancel a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.  
+
+**Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.  
+
+If your request is successful, our gateway removes the payment from the merchant's open batch and no funds are taken from the cardholder's account. 
 </dd>
 </dl>
 </dd>
@@ -422,7 +510,6 @@ await client.Payments.ReverseAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -436,18 +523,19 @@ await client.Payments.ReverseAsync(
 <dl>
 <dd>
 
-**request:** `PaymentReversal`
+**request:** `Payments.PaymentReversal` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.<a href="/src/Payroc/Payments/PaymentsClient.cs">RefundAsync</a>(ReferencedRefund { ... }) -> Payment</code></summary>
+<details><summary><code>client.Payments.<a href="/src/Payroc/Payments/PaymentsClient.cs">RefundAsync</a>(Payments.ReferencedRefund { ... }) -> Payment</code></summary>
 <dl>
 <dd>
 
@@ -459,8 +547,18 @@ await client.Payments.ReverseAsync(
 <dl>
 <dd>
 
-Refund a payment.
+Use this method to refund a payment that is in a closed batch.  
 
+To refund a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.  
+
+**Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.  
+
+If your refund is successful, our gateway returns the payment amount to the cardholder's account.  
+
+**Things to consider**  
+
+- If the merchant refunds a payment that is in an open batch, our gateway reverses the payment.
+- Some merchants can run unreferenced refunds, which means that they don't need a paymentId to return an amount to a customer. For more information about how to run an unreferenced refund, go to [Create Refund](/api/schema/payments/refunds/create).
 </dd>
 </dl>
 </dd>
@@ -485,7 +583,6 @@ await client.Payments.RefundAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -499,20 +596,433 @@ await client.Payments.RefundAsync(
 <dl>
 <dd>
 
-**request:** `ReferencedRefund`
+**request:** `Payments.ReferencedRefund` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
+</details>
+
+## Event Subscriptions
+<details><summary><code>client.EventSubscriptions.<a href="/src/Payroc/EventSubscriptions/EventSubscriptionsClient.cs">ListEventSubscriptionsAsync</a>(EventSubscriptions.ListEventSubscriptionsRequest { ... }) -> PaginatedEventSubscriptions</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of event subscriptions that are linked to the ISV's account. 
 </dd>
 </dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.EventSubscriptions.ListEventSubscriptionsAsync(
+    new ListEventSubscriptionsRequest { Event = "processingAccount.status.changed" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EventSubscriptions.ListEventSubscriptionsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.EventSubscriptions.<a href="/src/Payroc/EventSubscriptions/EventSubscriptionsClient.cs">CreateEventSubscriptionAsync</a>(EventSubscriptions.CreateEventSubscriptionRequest { ... }) -> EventSubscription</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to subscribe to events that you want us to notify you about, for example, when we change the status of a processing account. You can subscribe to more than one event in the request. For a complete list of events you can subscribe to, go to [Events](https://docs.payroc.com/knowledge/basic-concepts/events).  
+<br/>
+In the response we return the ID of the event subscription, which you need for the following methods:  
+- [Update event subscription](#updateEventSubscription)  
+- [Partially update an event subscription](#patchEventSubscription)  
+- [Retrieve an event subscription](#getEventSubscription)  
+- [List event subscriptions](#listEventSubscriptions)  
+- [Delete event subscription](#deleteEventSubscription)  
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.EventSubscriptions.CreateEventSubscriptionAsync(
+    new CreateEventSubscriptionRequest
+    {
+        IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+        Body = new EventSubscription
+        {
+            Enabled = true,
+            EventTypes = new List<string>() { "processingAccount.status.changed" },
+            Notifications = new List<Notification>()
+            {
+                new Notification(
+                    new Notification.Webhook(
+                        new Webhook
+                        {
+                            Uri = "https://my-server/notification/endpoint",
+                            Secret = "aBcD1234eFgH5678iJkL9012mNoP3456",
+                            SupportEmailAddress = "supportEmailAddress",
+                        }
+                    )
+                ),
+            },
+            Metadata = new Dictionary<string, object>() { { "yourCustomField", "abc123" } },
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EventSubscriptions.CreateEventSubscriptionRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.EventSubscriptions.<a href="/src/Payroc/EventSubscriptions/EventSubscriptionsClient.cs">GetEventSubscriptionAsync</a>(EventSubscriptions.GetEventSubscriptionRequest { ... }) -> EventSubscription</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to retrieve the details of an event subscription.  
+
+In your request, include the subscriptionId that we sent to you when we created the event subscription.  
+  
+**Note:** If you don't know the subscriptionId of the event subscription, go to [List event subscriptions](#listEventSubscriptions).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.EventSubscriptions.GetEventSubscriptionAsync(
+    new GetEventSubscriptionRequest { SubscriptionId = 1 }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EventSubscriptions.GetEventSubscriptionRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.EventSubscriptions.<a href="/src/Payroc/EventSubscriptions/EventSubscriptionsClient.cs">UpdateEventSubscriptionAsync</a>(EventSubscriptions.UpdateEventSubscriptionRequest { ... })</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to update an event subscription.  
+You can make the following updates to the event subscription:  
+  - **Event types** - Add or remove events that you have subscribed to.  
+  - **Notification methods** - Update information about your endpoint and who we email if we can't contact your endpoint.  
+    <br/>  
+Include the subscriptionId that we sent you when you created the event subscription. We returned this in the id field.  
+  
+**Note:** If you don't know the subscriptionId, go to [List event subscriptions](#listEventSubscriptions)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.EventSubscriptions.UpdateEventSubscriptionAsync(
+    new UpdateEventSubscriptionRequest
+    {
+        SubscriptionId = 1,
+        Body = new EventSubscription
+        {
+            Enabled = true,
+            EventTypes = new List<string>() { "processingAccount.status.changed" },
+            Notifications = new List<Notification>()
+            {
+                new Notification(
+                    new Notification.Webhook(
+                        new Webhook
+                        {
+                            Uri = "https://my-server/notification/endpoint",
+                            Secret = "aBcD1234eFgH5678iJkL9012mNoP3456",
+                            SupportEmailAddress = "supportEmailAddress",
+                        }
+                    )
+                ),
+            },
+            Metadata = new Dictionary<string, object>() { { "yourCustomField", "abc123" } },
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EventSubscriptions.UpdateEventSubscriptionRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.EventSubscriptions.<a href="/src/Payroc/EventSubscriptions/EventSubscriptionsClient.cs">DeleteEventSubscriptionAsync</a>(EventSubscriptions.DeleteEventSubscriptionRequest { ... })</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to delete an event subscription.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.EventSubscriptions.DeleteEventSubscriptionAsync(
+    new DeleteEventSubscriptionRequest { SubscriptionId = 1 }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EventSubscriptions.DeleteEventSubscriptionRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.EventSubscriptions.<a href="/src/Payroc/EventSubscriptions/EventSubscriptionsClient.cs">PatchEventSubscriptionAsync</a>(EventSubscriptions.PatchEventSubscriptionRequest { ... }) -> EventSubscription</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to partially update an event subscription. You can make the following updates to the event subscription:  
+  - Add or remove events that you have subscribed to.  
+  - Update information about your endpoint and who we email if we can't contact your endpoint.  
+  - Turn on or turn off notifications for the event.  
+    <br/>  
+Structure your request to follow the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902/) standard.  
+  
+**Note:** You need the subscriptionId that we sent you when you created the event subscription. If you don't know the subscriptionId, go to [List event subscriptions](#listEventSubscriptions).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.EventSubscriptions.PatchEventSubscriptionAsync(
+    new PatchEventSubscriptionRequest
+    {
+        SubscriptionId = 1,
+        Body = new List<PatchDocument>()
+        {
+            new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `EventSubscriptions.PatchEventSubscriptionRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
 ## Auth
-
-<details><summary><code>client.Auth.<a href="/src/Payroc/Auth/AuthClient.cs">GetTokenAsync</a>(GetTokenAuthRequest { ... }) -> GetTokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/Payroc/Auth/AuthClient.cs">RetrieveTokenAsync</a>(Auth.RetrieveTokenAuthRequest { ... }) -> Auth.GetTokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -524,8 +1034,7 @@ await client.Payments.RefundAsync(
 <dl>
 <dd>
 
-Obtain an OAuth2 access token using client credentials
-
+Obtain an access token using client credentials
 </dd>
 </dl>
 </dd>
@@ -540,11 +1049,15 @@ Obtain an OAuth2 access token using client credentials
 <dd>
 
 ```csharp
-await client.Auth.GetTokenAsync(
-    new GetTokenAuthRequest { ClientId = "client_id", ClientSecret = "client_secret" }
+await client.Auth.RetrieveTokenAsync(
+    new RetrieveTokenAuthRequest
+    {
+        ApiKey = "x-api-key",
+        ClientId = "client_id",
+        ClientSecret = "client_secret",
+    }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -558,20 +1071,20 @@ await client.Auth.GetTokenAsync(
 <dl>
 <dd>
 
-**request:** `GetTokenAuthRequest`
+**request:** `Auth.RetrieveTokenAuthRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Boarding Owners
-
-<details><summary><code>client.Boarding.Owners.<a href="/src/Payroc/Boarding/Owners/OwnersClient.cs">GetAsync</a>(GetOwnersRequest { ... }) -> Owner</code></summary>
+<details><summary><code>client.Boarding.Owners.<a href="/src/Payroc/Boarding/Owners/OwnersClient.cs">RetrieveAsync</a>(Boarding.Owners.RetrieveOwnersRequest { ... }) -> Owner</code></summary>
 <dl>
 <dd>
 
@@ -583,8 +1096,11 @@ await client.Auth.GetTokenAsync(
 <dl>
 <dd>
 
-Retrieve a specific owner.
+If you have the ownerId, you can use this method to retrieve the details of the owner. The response includes the owner's contact details and information about the owner's relationship to the business.  
 
+If you don't have the ownerId, you can use the following methods to retrieve the owner's information:
+  - **Owners of processing accounts** - Use the HATEOAS links that we send you when you [Retrieve a processing account](/api/schema/boarding/processing-accounts/get) or [List merchant platform's processing accounts](/api/schema/boarding/merchant-platforms/list-processing-accounts).
+  - **Owners of funding recipients** - Use the [List funding recipient owners](/api/schema/funding/funding-recipients/list-owners) method. 
 </dd>
 </dl>
 </dd>
@@ -599,9 +1115,8 @@ Retrieve a specific owner.
 <dd>
 
 ```csharp
-await client.Boarding.Owners.GetAsync(new GetOwnersRequest { OwnerId = 1 });
+await client.Boarding.Owners.RetrieveAsync(new RetrieveOwnersRequest { OwnerId = 1 });
 ```
-
 </dd>
 </dl>
 </dd>
@@ -615,18 +1130,19 @@ await client.Boarding.Owners.GetAsync(new GetOwnersRequest { OwnerId = 1 });
 <dl>
 <dd>
 
-**request:** `GetOwnersRequest`
+**request:** `Boarding.Owners.RetrieveOwnersRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.Owners.<a href="/src/Payroc/Boarding/Owners/OwnersClient.cs">UpdateAsync</a>(UpdateOwnersRequest { ... })</code></summary>
+<details><summary><code>client.Boarding.Owners.<a href="/src/Payroc/Boarding/Owners/OwnersClient.cs">UpdateAsync</a>(Boarding.Owners.UpdateOwnersRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -638,8 +1154,11 @@ await client.Boarding.Owners.GetAsync(new GetOwnersRequest { OwnerId = 1 });
 <dl>
 <dd>
 
-Update a specific owner.
+> **Important:** You cannot update the owner of a processing account. 
 
+Use this method to update the details of a funding recipient owner such as their contact details and their relationship to the business.  
+
+Include the ownerId in the path parameter of your request. If you don’t know the ownerId, you can [Retrieve the funding recipient](/api/schema/funding/funding-recipients/get), [List funding recipients](/api/schema/funding/funding-recipients/list), or [List funding recipient owners](/api/schema/funding/funding-recipients/list-owners) to locate the ownerId. 
 </dd>
 </dl>
 </dd>
@@ -663,7 +1182,7 @@ await client.Boarding.Owners.UpdateAsync(
             FirstName = "Jane",
             MiddleName = "Helen",
             LastName = "Doe",
-            DateOfBirth = "1964-03-22",
+            DateOfBirth = new DateOnly(1964, 3, 22),
             Address = new Address
             {
                 Address1 = "1 Example Ave.",
@@ -697,7 +1216,6 @@ await client.Boarding.Owners.UpdateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -711,18 +1229,19 @@ await client.Boarding.Owners.UpdateAsync(
 <dl>
 <dd>
 
-**request:** `UpdateOwnersRequest`
+**request:** `Boarding.Owners.UpdateOwnersRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.Owners.<a href="/src/Payroc/Boarding/Owners/OwnersClient.cs">DeleteAsync</a>(DeleteOwnersRequest { ... })</code></summary>
+<details><summary><code>client.Boarding.Owners.<a href="/src/Payroc/Boarding/Owners/OwnersClient.cs">DeleteAsync</a>(Boarding.Owners.DeleteOwnersRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -734,8 +1253,11 @@ await client.Boarding.Owners.UpdateAsync(
 <dl>
 <dd>
 
-Delete a owner.
+> **Important:** You cannot delete the owner of a processing account. 
 
+Use this method to delete an owner from a funding recipient. You can delete an owner only if the funding recipient has more than one owner.  
+
+Include the ownerId in the path parameter of your request. If you don’t know the ownerId, you can [Retrieve the funding recipient](/api/schema/funding/funding-recipients/get), [List funding recipients](/api/schema/funding/funding-recipients/list), or [List funding recipient owners](/api/schema/funding/funding-recipients/list-owners) to locate the ownerId.
 </dd>
 </dl>
 </dd>
@@ -752,7 +1274,6 @@ Delete a owner.
 ```csharp
 await client.Boarding.Owners.DeleteAsync(new DeleteOwnersRequest { OwnerId = 1 });
 ```
-
 </dd>
 </dl>
 </dd>
@@ -766,20 +1287,20 @@ await client.Boarding.Owners.DeleteAsync(new DeleteOwnersRequest { OwnerId = 1 }
 <dl>
 <dd>
 
-**request:** `DeleteOwnersRequest`
+**request:** `Boarding.Owners.DeleteOwnersRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Boarding PricingIntents
-
-<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">ListAsync</a>(ListPricingIntentsRequest { ... }) -> PayrocPager<PricingIntent50></code></summary>
+<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">ListAsync</a>(Boarding.PricingIntents.ListPricingIntentsRequest { ... }) -> Core.PayrocPager<PricingIntent50></code></summary>
 <dl>
 <dd>
 
@@ -792,7 +1313,6 @@ await client.Boarding.Owners.DeleteAsync(new DeleteOwnersRequest { OwnerId = 1 }
 <dd>
 
 Retrieve a list of pricing intents.
-
 </dd>
 </dl>
 </dd>
@@ -811,7 +1331,6 @@ await client.Boarding.PricingIntents.ListAsync(
     new ListPricingIntentsRequest { Before = "2571", After = "8516" }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -825,18 +1344,19 @@ await client.Boarding.PricingIntents.ListAsync(
 <dl>
 <dd>
 
-**request:** `ListPricingIntentsRequest`
+**request:** `Boarding.PricingIntents.ListPricingIntentsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">CreateAsync</a>(CreatePricingIntentsRequest { ... }) -> PricingIntent50</code></summary>
+<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">CreateAsync</a>(Boarding.PricingIntents.CreatePricingIntentsRequest { ... }) -> PricingIntent50</code></summary>
 <dl>
 <dd>
 
@@ -849,7 +1369,6 @@ await client.Boarding.PricingIntents.ListAsync(
 <dd>
 
 Create a pricing intent.
-
 </dd>
 </dl>
 </dd>
@@ -871,6 +1390,7 @@ await client.Boarding.PricingIntents.CreateAsync(
         Body = new PricingIntent50
         {
             Country = "US",
+            Version = "5.0",
             Base = new BaseUs
             {
                 AddressVerification = 5,
@@ -921,7 +1441,6 @@ await client.Boarding.PricingIntents.CreateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -935,18 +1454,19 @@ await client.Boarding.PricingIntents.CreateAsync(
 <dl>
 <dd>
 
-**request:** `CreatePricingIntentsRequest`
+**request:** `Boarding.PricingIntents.CreatePricingIntentsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">GetAsync</a>(GetPricingIntentsRequest { ... }) -> PricingIntent50</code></summary>
+<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">RetrieveAsync</a>(Boarding.PricingIntents.RetrievePricingIntentsRequest { ... }) -> PricingIntent50</code></summary>
 <dl>
 <dd>
 
@@ -959,7 +1479,6 @@ await client.Boarding.PricingIntents.CreateAsync(
 <dd>
 
 Retrieve a specific pricing intent.
-
 </dd>
 </dl>
 </dd>
@@ -974,11 +1493,10 @@ Retrieve a specific pricing intent.
 <dd>
 
 ```csharp
-await client.Boarding.PricingIntents.GetAsync(
-    new GetPricingIntentsRequest { PricingIntentId = "5" }
+await client.Boarding.PricingIntents.RetrieveAsync(
+    new RetrievePricingIntentsRequest { PricingIntentId = "5" }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -992,18 +1510,19 @@ await client.Boarding.PricingIntents.GetAsync(
 <dl>
 <dd>
 
-**request:** `GetPricingIntentsRequest`
+**request:** `Boarding.PricingIntents.RetrievePricingIntentsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">UpdateAsync</a>(UpdatePricingIntentsRequest { ... })</code></summary>
+<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">UpdateAsync</a>(Boarding.PricingIntents.UpdatePricingIntentsRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -1016,7 +1535,6 @@ await client.Boarding.PricingIntents.GetAsync(
 <dd>
 
 Update a pricing intent.
-
 </dd>
 </dl>
 </dd>
@@ -1038,6 +1556,7 @@ await client.Boarding.PricingIntents.UpdateAsync(
         Body = new PricingIntent50
         {
             Country = "US",
+            Version = "5.0",
             Base = new BaseUs
             {
                 AddressVerification = 5,
@@ -1113,7 +1632,6 @@ await client.Boarding.PricingIntents.UpdateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -1127,18 +1645,19 @@ await client.Boarding.PricingIntents.UpdateAsync(
 <dl>
 <dd>
 
-**request:** `UpdatePricingIntentsRequest`
+**request:** `Boarding.PricingIntents.UpdatePricingIntentsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">DeleteAsync</a>(DeletePricingIntentsRequest { ... })</code></summary>
+<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">DeleteAsync</a>(Boarding.PricingIntents.DeletePricingIntentsRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -1151,7 +1670,6 @@ await client.Boarding.PricingIntents.UpdateAsync(
 <dd>
 
 Delete a pricing intent.
-
 </dd>
 </dl>
 </dd>
@@ -1170,7 +1688,6 @@ await client.Boarding.PricingIntents.DeleteAsync(
     new DeletePricingIntentsRequest { PricingIntentId = "5" }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -1184,18 +1701,19 @@ await client.Boarding.PricingIntents.DeleteAsync(
 <dl>
 <dd>
 
-**request:** `DeletePricingIntentsRequest`
+**request:** `Boarding.PricingIntents.DeletePricingIntentsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">PatchAsync</a>(PatchPricingIntentsRequest { ... }) -> PricingIntent50</code></summary>
+<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">PatchAsync</a>(Boarding.PricingIntents.PatchPricingIntentsRequest { ... }) -> PricingIntent50</code></summary>
 <dl>
 <dd>
 
@@ -1207,10 +1725,9 @@ await client.Boarding.PricingIntents.DeleteAsync(
 <dl>
 <dd>
 
-Partially update an existing pricing intent.
+Partially update an existing pricing intent.  
 
 Structure your request to follow the RFC 6902 standard.
-
 </dd>
 </dl>
 </dd>
@@ -1239,7 +1756,6 @@ await client.Boarding.PricingIntents.PatchAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -1253,20 +1769,20 @@ await client.Boarding.PricingIntents.PatchAsync(
 <dl>
 <dd>
 
-**request:** `PatchPricingIntentsRequest`
+**request:** `Boarding.PricingIntents.PatchPricingIntentsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Boarding MerchantPlatforms
-
-<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">ListAsync</a>(ListMerchantPlatformsRequest { ... }) -> PayrocPager<MerchantPlatform></code></summary>
+<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">ListAsync</a>(Boarding.MerchantPlatforms.ListMerchantPlatformsRequest { ... }) -> Core.PayrocPager<MerchantPlatform></code></summary>
 <dl>
 <dd>
 
@@ -1279,7 +1795,6 @@ await client.Boarding.PricingIntents.PatchAsync(
 <dd>
 
 Use this method to retrieve a [paginated](/api/pagination) list of the merchant platforms that are linked to the ISV's account.
-
 </dd>
 </dl>
 </dd>
@@ -1298,7 +1813,6 @@ await client.Boarding.MerchantPlatforms.ListAsync(
     new ListMerchantPlatformsRequest { Before = "2571", After = "8516" }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -1312,18 +1826,19 @@ await client.Boarding.MerchantPlatforms.ListAsync(
 <dl>
 <dd>
 
-**request:** `ListMerchantPlatformsRequest`
+**request:** `Boarding.MerchantPlatforms.ListMerchantPlatformsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">CreateAsync</a>(CreateMerchantAccount { ... }) -> MerchantPlatform</code></summary>
+<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">CreateAsync</a>(Boarding.MerchantPlatforms.CreateMerchantAccount { ... }) -> MerchantPlatform</code></summary>
 <dl>
 <dd>
 
@@ -1335,15 +1850,15 @@ await client.Boarding.MerchantPlatforms.ListAsync(
 <dl>
 <dd>
 
-Use this method to create the entity that represents a business, including its legal information and all its processing accounts.
+Use this method to create the entity that represents a business, including its legal information and all its processing accounts.  
 
-> **Note**: To add a processing account to an existing merchant platform, go to [Create a processing account](#createProcessingAccount).
-
-The response contains some fields that we require for other methods:
-
-- **merchantPlatformId** - Unique identifier that we assign to the merchant platform. Use the merchantPlatformId to retrieve and update information about the merchant platform.
+> **Note:** To add a processing account to an existing merchant platform, go to [Create a processing account](/api/schema/boarding/merchant-platforms/create-processing-account).  
+  
+The response contains some fields that we require for other methods:  
+- **merchantPlatformId** - Unique identifier that we assign to the merchant platform. Use the merchantPlatformId to retrieve and update information about the merchant platform.  
+  
 - **processingAccountId**- Unique identifier that we assign to each processing account. Use the processingAccountId to retrieve and update information about the processing account.  
- <br/>
+  <br/>
 For more information about how to create a merchant platform, go to [Create a merchant platform.](/guides/integrate/boarding/merchant-platform)
 </dd>
 </dl>
@@ -1404,7 +1919,7 @@ await client.Boarding.MerchantPlatforms.CreateAsync(
                         FirstName = "Jane",
                         MiddleName = "Helen",
                         LastName = "Doe",
-                        DateOfBirth = "1964-03-22",
+                        DateOfBirth = new DateOnly(1964, 3, 22),
                         Address = new Address
                         {
                             Address1 = "1 Example Ave.",
@@ -1440,8 +1955,8 @@ await client.Boarding.MerchantPlatforms.CreateAsync(
                 BusinessType = CreateProcessingAccountBusinessType.Restaurant,
                 CategoryCode = 5999,
                 MerchandiseOrServiceSold = "Pizza",
-                BusinessStartDate = "2020-01-01",
-                Timezone = CreateProcessingAccountTimezone.AmericaChicago,
+                BusinessStartDate = new DateOnly(2020, 1, 1),
+                Timezone = Timezone.AmericaChicago,
                 Address = new Address
                 {
                     Address1 = "1 Example Ave.",
@@ -1568,7 +2083,9 @@ await client.Boarding.MerchantPlatforms.CreateAsync(
                 Pricing = new Pricing(
                     new Pricing.Intent(new PricingTemplate { PricingIntentId = 6123 })
                 ),
-                Signature = CreateProcessingAccountSignature.RequestedViaDirectLink,
+                Signature = new Signature(
+                    new Signature.RequestedViaDirectLink(new SignatureByDirectLink())
+                ),
                 Contacts = new List<Contact>()
                 {
                     new Contact
@@ -1598,7 +2115,6 @@ await client.Boarding.MerchantPlatforms.CreateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -1612,18 +2128,19 @@ await client.Boarding.MerchantPlatforms.CreateAsync(
 <dl>
 <dd>
 
-**request:** `CreateMerchantAccount`
+**request:** `Boarding.MerchantPlatforms.CreateMerchantAccount` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">GetAsync</a>(GetMerchantPlatformsRequest { ... }) -> MerchantPlatform</code></summary>
+<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">RetrieveAsync</a>(Boarding.MerchantPlatforms.RetrieveMerchantPlatformsRequest { ... }) -> MerchantPlatform</code></summary>
 <dl>
 <dd>
 
@@ -1635,10 +2152,9 @@ await client.Boarding.MerchantPlatforms.CreateAsync(
 <dl>
 <dd>
 
-Use this method to retrieve information about a merchant platform, including its legal information and processing accounts.
-
-Include the merchantPlatformId that we sent you when you created the merchant platform.
-
+Use this method to retrieve information about a merchant platform, including its legal information and processing accounts.  
+  
+Include the merchantPlatformId that we sent you when you created the merchant platform.  
 </dd>
 </dl>
 </dd>
@@ -1653,11 +2169,10 @@ Include the merchantPlatformId that we sent you when you created the merchant pl
 <dd>
 
 ```csharp
-await client.Boarding.MerchantPlatforms.GetAsync(
-    new GetMerchantPlatformsRequest { MerchantPlatformId = "12345" }
+await client.Boarding.MerchantPlatforms.RetrieveAsync(
+    new RetrieveMerchantPlatformsRequest { MerchantPlatformId = "12345" }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -1671,18 +2186,19 @@ await client.Boarding.MerchantPlatforms.GetAsync(
 <dl>
 <dd>
 
-**request:** `GetMerchantPlatformsRequest`
+**request:** `Boarding.MerchantPlatforms.RetrieveMerchantPlatformsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">ListProcessingAccountsAsync</a>(ListBoardingMerchantPlatformProcessingAccountsRequest { ... }) -> PayrocPager<ProcessingAccount></code></summary>
+<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">ListProcessingAccountsAsync</a>(Boarding.MerchantPlatforms.ListBoardingMerchantPlatformProcessingAccountsRequest { ... }) -> Core.PayrocPager<ProcessingAccount></code></summary>
 <dl>
 <dd>
 
@@ -1694,12 +2210,11 @@ await client.Boarding.MerchantPlatforms.GetAsync(
 <dl>
 <dd>
 
-Use this method to retrieve a paginated list of processing accounts associated with a merchant platform.
-
-When you created the merchant platform, we sent you its merchantPlatformId in the response. Send this merchantPlatformId as a path parameter in your endpoint.
-
-> **Note**: By default, we return only open processing accounts. To include closed processing accounts, send a value of `true` for the includeClosed query parameter.
-
+Use this method to retrieve a paginated list of processing accounts associated with a merchant platform.  
+  
+When you created the merchant platform, we sent you its merchantPlatformId in the response. Send this merchantPlatformId as a path parameter in your endpoint.  
+  
+> **Note:** By default, we return only open processing accounts. To include closed processing accounts, send a value of `true` for the includeClosed query parameter.  
 </dd>
 </dl>
 </dd>
@@ -1723,7 +2238,6 @@ await client.Boarding.MerchantPlatforms.ListProcessingAccountsAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -1737,18 +2251,19 @@ await client.Boarding.MerchantPlatforms.ListProcessingAccountsAsync(
 <dl>
 <dd>
 
-**request:** `ListBoardingMerchantPlatformProcessingAccountsRequest`
+**request:** `Boarding.MerchantPlatforms.ListBoardingMerchantPlatformProcessingAccountsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">CreateProcessingAccountAsync</a>(CreateProcessingAccountMerchantPlatformsRequest { ... }) -> ProcessingAccount</code></summary>
+<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">CreateProcessingAccountAsync</a>(Boarding.MerchantPlatforms.CreateProcessingAccountMerchantPlatformsRequest { ... }) -> ProcessingAccount</code></summary>
 <dl>
 <dd>
 
@@ -1761,16 +2276,15 @@ await client.Boarding.MerchantPlatforms.ListProcessingAccountsAsync(
 <dd>
 
 Use this method to create a processing account and add it to a merchant platform.  
- > **Note**: You can create and add a processing account only to an existing merchant platform. If you have not already created a merchant platform, go to [Create a merchant platform.](#createMerchant)
-
-In the response we return a processingAccountId for the processing account, which you need for the following methods.
-
-- [Retrieve processing account](#getProcessingAcccounts)
-- [List processing account's funding accounts](#listProcessingAccountsFundingAccounts)
-- [List contacts](#listProcessingAccountContacts)
-- [Get a processing account pricing agreement](#retrieveProcessingAccountPricing)
-- [List owners](#listMerchantOwners)
-- [Create reminder for processing account](#createReminder)
+    > **Note:** You can create and add a processing account only to an existing merchant platform. If you have not already created a merchant platform, go to [Create a merchant platform.](/api/schema/boarding/merchant-platforms/create)  
+  
+In the response we return a processingAccountId for the processing account, which you need for the following methods.  
+- [Retrieve processing account](/api/schema/boarding/processing-accounts/get)  
+- [List processing account's funding accounts](/api/schema/boarding/processing-accounts/list-funding-accounts)  
+- [List contacts](/api/schema/boarding/processing-accounts/contacts)  
+- [Get a processing account pricing agreement](/api/schema/boarding/processing-accounts/pricing)  
+- [List owners](/api/schema/boarding/processing-accounts/list-owners)  
+- [Create reminder for processing account](/api/schema/boarding/processing-accounts/create-reminder)  
 </dd>
 </dl>
 </dd>
@@ -1800,7 +2314,7 @@ await client.Boarding.MerchantPlatforms.CreateProcessingAccountAsync(
                     FirstName = "Jane",
                     MiddleName = "Helen",
                     LastName = "Doe",
-                    DateOfBirth = "1964-03-22",
+                    DateOfBirth = new DateOnly(1964, 3, 22),
                     Address = new Address
                     {
                         Address1 = "1 Example Ave.",
@@ -1836,8 +2350,8 @@ await client.Boarding.MerchantPlatforms.CreateProcessingAccountAsync(
             BusinessType = CreateProcessingAccountBusinessType.Restaurant,
             CategoryCode = 5999,
             MerchandiseOrServiceSold = "Pizza",
-            BusinessStartDate = "2020-01-01",
-            Timezone = CreateProcessingAccountTimezone.AmericaChicago,
+            BusinessStartDate = new DateOnly(2020, 1, 1),
+            Timezone = Timezone.AmericaChicago,
             Address = new Address
             {
                 Address1 = "1 Example Ave.",
@@ -1960,7 +2474,9 @@ await client.Boarding.MerchantPlatforms.CreateProcessingAccountAsync(
             Pricing = new Pricing(
                 new Pricing.Intent(new PricingTemplate { PricingIntentId = 6123 })
             ),
-            Signature = CreateProcessingAccountSignature.RequestedViaDirectLink,
+            Signature = new Signature(
+                new Signature.RequestedViaDirectLink(new SignatureByDirectLink())
+            ),
             Contacts = new List<Contact>()
             {
                 new Contact
@@ -1988,7 +2504,6 @@ await client.Boarding.MerchantPlatforms.CreateProcessingAccountAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -2002,20 +2517,20 @@ await client.Boarding.MerchantPlatforms.CreateProcessingAccountAsync(
 <dl>
 <dd>
 
-**request:** `CreateProcessingAccountMerchantPlatformsRequest`
+**request:** `Boarding.MerchantPlatforms.CreateProcessingAccountMerchantPlatformsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Boarding ProcessingAccounts
-
-<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">GetAsync</a>(GetProcessingAccountsRequest { ... }) -> ProcessingAccount</code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">RetrieveAsync</a>(Boarding.ProcessingAccounts.RetrieveProcessingAccountsRequest { ... }) -> ProcessingAccount</code></summary>
 <dl>
 <dd>
 
@@ -2028,7 +2543,6 @@ await client.Boarding.MerchantPlatforms.CreateProcessingAccountAsync(
 <dd>
 
 Retrieve a specific processing account.
-
 </dd>
 </dl>
 </dd>
@@ -2043,11 +2557,10 @@ Retrieve a specific processing account.
 <dd>
 
 ```csharp
-await client.Boarding.ProcessingAccounts.GetAsync(
-    new GetProcessingAccountsRequest { ProcessingAccountId = "38765" }
+await client.Boarding.ProcessingAccounts.RetrieveAsync(
+    new RetrieveProcessingAccountsRequest { ProcessingAccountId = "38765" }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -2061,18 +2574,19 @@ await client.Boarding.ProcessingAccounts.GetAsync(
 <dl>
 <dd>
 
-**request:** `GetProcessingAccountsRequest`
+**request:** `Boarding.ProcessingAccounts.RetrieveProcessingAccountsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListFundingAccountsAsync</a>(ListProcessingAccountFundingAccountsRequest { ... }) -> IEnumerable<FundingAccount></code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListProcessingAccountFundingAccountsAsync</a>(Boarding.ProcessingAccounts.ListProcessingAccountFundingAccountsRequest { ... }) -> IEnumerable<FundingAccount></code></summary>
 <dl>
 <dd>
 
@@ -2085,7 +2599,6 @@ await client.Boarding.ProcessingAccounts.GetAsync(
 <dd>
 
 Retrieve a list of funding accounts associated with a processing account.
-
 </dd>
 </dl>
 </dd>
@@ -2100,11 +2613,10 @@ Retrieve a list of funding accounts associated with a processing account.
 <dd>
 
 ```csharp
-await client.Boarding.ProcessingAccounts.ListFundingAccountsAsync(
+await client.Boarding.ProcessingAccounts.ListProcessingAccountFundingAccountsAsync(
     new ListProcessingAccountFundingAccountsRequest { ProcessingAccountId = "38765" }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -2118,18 +2630,19 @@ await client.Boarding.ProcessingAccounts.ListFundingAccountsAsync(
 <dl>
 <dd>
 
-**request:** `ListProcessingAccountFundingAccountsRequest`
+**request:** `Boarding.ProcessingAccounts.ListProcessingAccountFundingAccountsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ContactsAsync</a>(ContactsProcessingAccountsRequest { ... }) -> PaginatedContacts</code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListContactsAsync</a>(Boarding.ProcessingAccounts.ListContactsProcessingAccountsRequest { ... }) -> PaginatedContacts</code></summary>
 <dl>
 <dd>
 
@@ -2142,7 +2655,6 @@ await client.Boarding.ProcessingAccounts.ListFundingAccountsAsync(
 <dd>
 
 Retrieve a list of contacts associated with a processing account.
-
 </dd>
 </dl>
 </dd>
@@ -2157,8 +2669,8 @@ Retrieve a list of contacts associated with a processing account.
 <dd>
 
 ```csharp
-await client.Boarding.ProcessingAccounts.ContactsAsync(
-    new ContactsProcessingAccountsRequest
+await client.Boarding.ProcessingAccounts.ListContactsAsync(
+    new ListContactsProcessingAccountsRequest
     {
         ProcessingAccountId = "38765",
         Before = "2571",
@@ -2166,7 +2678,6 @@ await client.Boarding.ProcessingAccounts.ContactsAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -2180,18 +2691,19 @@ await client.Boarding.ProcessingAccounts.ContactsAsync(
 <dl>
 <dd>
 
-**request:** `ContactsProcessingAccountsRequest`
+**request:** `Boarding.ProcessingAccounts.ListContactsProcessingAccountsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">PricingAsync</a>(PricingProcessingAccountsRequest { ... }) -> PricingProcessingAccountsResponse</code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">GetProcessingAccountPricingAgreementAsync</a>(Boarding.ProcessingAccounts.GetProcessingAccountPricingAgreementProcessingAccountsRequest { ... }) -> OneOf<PricingAgreementUs40, PricingAgreementUs50></code></summary>
 <dl>
 <dd>
 
@@ -2204,7 +2716,6 @@ await client.Boarding.ProcessingAccounts.ContactsAsync(
 <dd>
 
 Retrieve a pricing agreement for a processing account.
-
 </dd>
 </dl>
 </dd>
@@ -2219,11 +2730,13 @@ Retrieve a pricing agreement for a processing account.
 <dd>
 
 ```csharp
-await client.Boarding.ProcessingAccounts.PricingAsync(
-    new PricingProcessingAccountsRequest { ProcessingAccountId = "38765" }
+await client.Boarding.ProcessingAccounts.GetProcessingAccountPricingAgreementAsync(
+    new GetProcessingAccountPricingAgreementProcessingAccountsRequest
+    {
+        ProcessingAccountId = "38765",
+    }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -2237,18 +2750,19 @@ await client.Boarding.ProcessingAccounts.PricingAsync(
 <dl>
 <dd>
 
-**request:** `PricingProcessingAccountsRequest`
+**request:** `Boarding.ProcessingAccounts.GetProcessingAccountPricingAgreementProcessingAccountsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListOwnersAsync</a>(ListProcessingAccountOwnersRequest { ... }) -> PayrocPager<Owner></code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListOwnersAsync</a>(Boarding.ProcessingAccounts.ListProcessingAccountOwnersRequest { ... }) -> Core.PayrocPager<Owner></code></summary>
 <dl>
 <dd>
 
@@ -2261,7 +2775,6 @@ await client.Boarding.ProcessingAccounts.PricingAsync(
 <dd>
 
 Retrieve owners associated with a processing account.
-
 </dd>
 </dl>
 </dd>
@@ -2285,7 +2798,6 @@ await client.Boarding.ProcessingAccounts.ListOwnersAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -2299,18 +2811,19 @@ await client.Boarding.ProcessingAccounts.ListOwnersAsync(
 <dl>
 <dd>
 
-**request:** `ListProcessingAccountOwnersRequest`
+**request:** `Boarding.ProcessingAccounts.ListProcessingAccountOwnersRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">CreateReminderAsync</a>(CreateReminderProcessingAccountsRequest { ... }) -> CreateReminderProcessingAccountsResponse</code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">CreateReminderAsync</a>(Boarding.ProcessingAccounts.CreateReminderProcessingAccountsRequest { ... }) -> Boarding.ProcessingAccounts.CreateReminderProcessingAccountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2324,8 +2837,7 @@ await client.Boarding.ProcessingAccounts.ListOwnersAsync(
 
 When you create a processing account, we send a copy of the pricing agreement to the merchant to sign. You can choose to send them a copy of the pricing agreement by email, or you can generate a link to the pricing agreement.<br/>  
 If you requested the merchant's signature by email and they don't respond, use our Reminders endpoint to create a reminder and to send another email.<br/>  
-**Note:** You can use the Reminders endpoint only if you request the merchant's signature by email. If you generate a link to the pricing agreement, you can't use the Reminders endpoint.
-
+**Note:** You can use the Reminders endpoint only if you request the merchant's signature by email. If you generate a link to the pricing agreement, you can't use the Reminders endpoint.  
 </dd>
 </dl>
 </dd>
@@ -2352,7 +2864,6 @@ await client.Boarding.ProcessingAccounts.CreateReminderAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -2366,20 +2877,19 @@ await client.Boarding.ProcessingAccounts.CreateReminderAsync(
 <dl>
 <dd>
 
-**request:** `CreateReminderProcessingAccountsRequest`
+**request:** `Boarding.ProcessingAccounts.CreateReminderProcessingAccountsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-## Boarding Contacts
-
-<details><summary><code>client.Boarding.Contacts.<a href="/src/Payroc/Boarding/Contacts/ContactsClient.cs">GetAsync</a>(GetContactsRequest { ... }) -> Contact</code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListTerminalOrdersAsync</a>(Boarding.ProcessingAccounts.ListTerminalOrdersProcessingAccountsRequest { ... }) -> IEnumerable<TerminalOrder></code></summary>
 <dl>
 <dd>
 
@@ -2391,8 +2901,9 @@ await client.Boarding.ProcessingAccounts.CreateReminderAsync(
 <dl>
 <dd>
 
-Retrieve a specific contact.
-
+Use this method to retrieve a list of terminal orders associated with a processing account.  
+Send the processingAccountId in the path parameter of your request.
+> **Note**: If you don't know the processingAccountId, go to [List merchant platform's processing accounts](#listMerchantLocations).
 </dd>
 </dl>
 </dd>
@@ -2407,9 +2918,15 @@ Retrieve a specific contact.
 <dd>
 
 ```csharp
-await client.Boarding.Contacts.GetAsync(new GetContactsRequest { ContactId = 1 });
+await client.Boarding.ProcessingAccounts.ListTerminalOrdersAsync(
+    new ListTerminalOrdersProcessingAccountsRequest
+    {
+        ProcessingAccountId = "38765",
+        FromDateTime = new DateTime(2024, 09, 08, 12, 00, 00, 000),
+        ToDateTime = new DateTime(2024, 12, 08, 11, 00, 00, 000),
+    }
+);
 ```
-
 </dd>
 </dl>
 </dd>
@@ -2423,18 +2940,391 @@ await client.Boarding.Contacts.GetAsync(new GetContactsRequest { ContactId = 1 }
 <dl>
 <dd>
 
-**request:** `GetContactsRequest`
+**request:** `Boarding.ProcessingAccounts.ListTerminalOrdersProcessingAccountsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.Contacts.<a href="/src/Payroc/Boarding/Contacts/ContactsClient.cs">UpdateAsync</a>(UpdateContactsRequest { ... })</code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">CreateTerminalOrderAsync</a>(Boarding.ProcessingAccounts.CreateTerminalOrder { ... }) -> TerminalOrder</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to order and configure terminals for a processing account. When you create an order, you specify the gateway settings, device settings, and application settings for the terminals. 
+**Note**: You need the ID of the merchant's processing account before you can create an order. If you don't know the processingAccountId, go to [Retrieve a Merchant Platform.](#getMerchantAcccounts)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Boarding.ProcessingAccounts.CreateTerminalOrderAsync(
+    new CreateTerminalOrder
+    {
+        ProcessingAccountId = "38765",
+        IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+        TrainingProvider = TrainingProvider.Payroc,
+        Shipping = new CreateTerminalOrderShipping
+        {
+            Preferences = new CreateTerminalOrderShippingPreferences
+            {
+                Method = CreateTerminalOrderShippingPreferencesMethod.NextDay,
+                SaturdayDelivery = true,
+            },
+            Address = new CreateTerminalOrderShippingAddress
+            {
+                RecipientName = "Recipient Name",
+                BusinessName = "Company Ltd",
+                AddressLine1 = "1 Example Ave.",
+                AddressLine2 = "Example Address Line 2",
+                City = "Chicago",
+                State = "Illinois",
+                PostalCode = "60056",
+                Email = "example@mail.com",
+                Phone = "2025550164",
+            },
+        },
+        OrderItems = new List<OrderItem>()
+        {
+            new OrderItem
+            {
+                Type = "solution",
+                SolutionTemplateId = "Roc Services_DX8000",
+                SolutionQuantity = 1f,
+                DeviceCondition = OrderItemDeviceCondition.New,
+                SolutionSetup = new OrderItemSolutionSetup
+                {
+                    Timezone = SchemasTimezone.AmericaChicago,
+                    IndustryTemplateId = "Retail",
+                    GatewaySettings = new OrderItemSolutionSetupGatewaySettings
+                    {
+                        MerchantPortfolioId = "Company Ltd",
+                        MerchantTemplateId = "Company Ltd Merchant Template",
+                        UserTemplateId = "Company Ltd User Template",
+                        TerminalTemplateId = "Company Ltd Terminal Template",
+                    },
+                    ApplicationSettings = new OrderItemSolutionSetupApplicationSettings
+                    {
+                        ClerkPrompt = false,
+                        Security = new OrderItemSolutionSetupApplicationSettingsSecurity
+                        {
+                            RefundPassword = true,
+                            KeyedSalePassword = false,
+                            ReversalPassword = true,
+                        },
+                    },
+                    DeviceSettings = new OrderItemSolutionSetupDeviceSettings
+                    {
+                        NumberOfMobileUsers = 2f,
+                        CommunicationType =
+                            OrderItemSolutionSetupDeviceSettingsCommunicationType.Wifi,
+                    },
+                    BatchClosure = new OrderItemSolutionSetupBatchClosure(
+                        new OrderItemSolutionSetupBatchClosure.Automatic(new AutomaticBatchClose())
+                    ),
+                    ReceiptNotifications = new OrderItemSolutionSetupReceiptNotifications
+                    {
+                        EmailReceipt = true,
+                        SmsReceipt = false,
+                    },
+                    Taxes = new List<OrderItemSolutionSetupTaxesItem>()
+                    {
+                        new OrderItemSolutionSetupTaxesItem
+                        {
+                            TaxRate = 6f,
+                            TaxLabel = "Sales Tax",
+                        },
+                    },
+                    Tips = new OrderItemSolutionSetupTips { Enabled = false },
+                    Tokenization = true,
+                },
+            },
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Boarding.ProcessingAccounts.CreateTerminalOrder` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListProcessingTerminalsAsync</a>(Boarding.ProcessingAccounts.ListProcessingTerminalsProcessingAccountsRequest { ... }) -> Core.PayrocPager<ProcessingTerminal></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to retrieve a [paginated](/api/pagination) list of processing terminals associated with a processing account.  
+Send the processingAccountId in the path parameter of your request.  
+> **Note**: If you don't know the processingAccountId, go to [List merchant platform's processing accounts](#listMerchantLocations).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Boarding.ProcessingAccounts.ListProcessingTerminalsAsync(
+    new ListProcessingTerminalsProcessingAccountsRequest
+    {
+        ProcessingAccountId = "38765",
+        Before = "2571",
+        After = "8516",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Boarding.ProcessingAccounts.ListProcessingTerminalsProcessingAccountsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Boarding ProcessingTerminals
+<details><summary><code>client.Boarding.ProcessingTerminals.<a href="/src/Payroc/Boarding/ProcessingTerminals/ProcessingTerminalsClient.cs">RetrieveAsync</a>(Boarding.ProcessingTerminals.RetrieveProcessingTerminalsRequest { ... }) -> ProcessingTerminal</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to retrieve the configuration for a processing terminal. The configuration includes the terminal's settings and details about how our gateway should handle transactions.
+To get a processingTerminalId, go to [Retrieve Terminal Order](#getTerminalOrder) or [List Processing Terminals](#listProcessingAccountsProcessingTerminals).
+> **Note**: If you want to retrieve the processor configuration for the processing terminal, go to [Retrieve Host Configuration](#getProcessingTerminalHostConfiguration). 
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Boarding.ProcessingTerminals.RetrieveAsync(
+    new RetrieveProcessingTerminalsRequest { ProcessingTerminalId = "1234001" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Boarding.ProcessingTerminals.RetrieveProcessingTerminalsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Boarding.ProcessingTerminals.<a href="/src/Payroc/Boarding/ProcessingTerminals/ProcessingTerminalsClient.cs">RetrieveHostConfigurationAsync</a>(Boarding.ProcessingTerminals.RetrieveHostConfigurationProcessingTerminalsRequest { ... }) -> HostConfiguration</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to retrieve the host configuration of a processing terminal. You need this information to connect a third-party gateway to a merchant account.
+> **Note**: If you need information about a merchant or a list of processing accounts associated with a merchant's account, go to [Retrieve Merchant Platform](#getMerchantAcccounts).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Boarding.ProcessingTerminals.RetrieveHostConfigurationAsync(
+    new RetrieveHostConfigurationProcessingTerminalsRequest { ProcessingTerminalId = "1234001" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Boarding.ProcessingTerminals.RetrieveHostConfigurationProcessingTerminalsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Boarding Contacts
+<details><summary><code>client.Boarding.Contacts.<a href="/src/Payroc/Boarding/Contacts/ContactsClient.cs">RetrieveAsync</a>(Boarding.Contacts.RetrieveContactsRequest { ... }) -> Contact</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a specific contact.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Boarding.Contacts.RetrieveAsync(new RetrieveContactsRequest { ContactId = 1 });
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Boarding.Contacts.RetrieveContactsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Boarding.Contacts.<a href="/src/Payroc/Boarding/Contacts/ContactsClient.cs">UpdateAsync</a>(Boarding.Contacts.UpdateContactsRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -2447,7 +3337,6 @@ await client.Boarding.Contacts.GetAsync(new GetContactsRequest { ContactId = 1 }
 <dd>
 
 Update a specific contact.
-
 </dd>
 </dl>
 </dd>
@@ -2488,7 +3377,6 @@ await client.Boarding.Contacts.UpdateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -2502,18 +3390,19 @@ await client.Boarding.Contacts.UpdateAsync(
 <dl>
 <dd>
 
-**request:** `UpdateContactsRequest`
+**request:** `Boarding.Contacts.UpdateContactsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.Contacts.<a href="/src/Payroc/Boarding/Contacts/ContactsClient.cs">DeleteAsync</a>(DeleteContactsRequest { ... })</code></summary>
+<details><summary><code>client.Boarding.Contacts.<a href="/src/Payroc/Boarding/Contacts/ContactsClient.cs">DeleteAsync</a>(Boarding.Contacts.DeleteContactsRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -2526,7 +3415,6 @@ await client.Boarding.Contacts.UpdateAsync(
 <dd>
 
 Delete a contact.
-
 </dd>
 </dl>
 </dd>
@@ -2543,7 +3431,6 @@ Delete a contact.
 ```csharp
 await client.Boarding.Contacts.DeleteAsync(new DeleteContactsRequest { ContactId = 1 });
 ```
-
 </dd>
 </dl>
 </dd>
@@ -2557,20 +3444,78 @@ await client.Boarding.Contacts.DeleteAsync(new DeleteContactsRequest { ContactId
 <dl>
 <dd>
 
-**request:** `DeleteContactsRequest`
+**request:** `Boarding.Contacts.DeleteContactsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
+</details>
+
+## Boarding TerminalOrders
+<details><summary><code>client.Boarding.TerminalOrders.<a href="/src/Payroc/Boarding/TerminalOrders/TerminalOrdersClient.cs">RetrieveAsync</a>(Boarding.TerminalOrders.RetrieveTerminalOrdersRequest { ... }) -> TerminalOrder</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to retrieve information about a terminal order, including the status of the order and the settings for the items in the order.
+Include the terminalOrderId that we sent you when you created the terminal order.
 </dd>
 </dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Boarding.TerminalOrders.RetrieveAsync(
+    new RetrieveTerminalOrdersRequest { TerminalOrderId = "12345" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Boarding.TerminalOrders.RetrieveTerminalOrdersRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
 ## Funding FundingRecipients
-
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">ListAsync</a>(ListFundingRecipientsRequest { ... }) -> PayrocPager<FundingRecipient></code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">ListAsync</a>(Funding.FundingRecipients.ListFundingRecipientsRequest { ... }) -> Core.PayrocPager<FundingRecipient></code></summary>
 <dl>
 <dd>
 
@@ -2583,7 +3528,6 @@ await client.Boarding.Contacts.DeleteAsync(new DeleteContactsRequest { ContactId
 <dd>
 
 Retrieve a list of all funding recipients associated with the ISV.
-
 </dd>
 </dl>
 </dd>
@@ -2602,7 +3546,6 @@ await client.Funding.FundingRecipients.ListAsync(
     new ListFundingRecipientsRequest { Before = "2571", After = "8516" }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -2616,18 +3559,19 @@ await client.Funding.FundingRecipients.ListAsync(
 <dl>
 <dd>
 
-**request:** `ListFundingRecipientsRequest`
+**request:** `Funding.FundingRecipients.ListFundingRecipientsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">CreateAsync</a>(CreateFundingRecipient { ... }) -> FundingRecipient</code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">CreateAsync</a>(Funding.FundingRecipients.CreateFundingRecipient { ... }) -> FundingRecipient</code></summary>
 <dl>
 <dd>
 
@@ -2640,7 +3584,6 @@ await client.Funding.FundingRecipients.ListAsync(
 <dd>
 
 Create a funding recipient.
-
 </dd>
 </dl>
 </dd>
@@ -2661,6 +3604,7 @@ await client.Funding.FundingRecipients.CreateAsync(
         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
         RecipientType = CreateFundingRecipientRecipientType.PrivateCorporation,
         TaxId = "12-3456789",
+        DoingBusinessAs = "doingBusinessAs",
         Address = new Address
         {
             Address1 = "1 Example Ave.",
@@ -2681,7 +3625,7 @@ await client.Funding.FundingRecipients.CreateAsync(
             {
                 FirstName = "Jane",
                 LastName = "Doe",
-                DateOfBirth = "1964-03-22",
+                DateOfBirth = new DateOnly(1964, 3, 22),
                 Address = new Address
                 {
                     Address1 = "1 Example Ave.",
@@ -2721,7 +3665,6 @@ await client.Funding.FundingRecipients.CreateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -2735,18 +3678,19 @@ await client.Funding.FundingRecipients.CreateAsync(
 <dl>
 <dd>
 
-**request:** `CreateFundingRecipient`
+**request:** `Funding.FundingRecipients.CreateFundingRecipient` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">GetAsync</a>(GetFundingRecipientsRequest { ... }) -> FundingRecipient</code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">RetrieveAsync</a>(Funding.FundingRecipients.RetrieveFundingRecipientsRequest { ... }) -> FundingRecipient</code></summary>
 <dl>
 <dd>
 
@@ -2759,7 +3703,6 @@ await client.Funding.FundingRecipients.CreateAsync(
 <dd>
 
 Retrieve a specific funding recipient.
-
 </dd>
 </dl>
 </dd>
@@ -2774,11 +3717,10 @@ Retrieve a specific funding recipient.
 <dd>
 
 ```csharp
-await client.Funding.FundingRecipients.GetAsync(
-    new GetFundingRecipientsRequest { RecipientId = 1 }
+await client.Funding.FundingRecipients.RetrieveAsync(
+    new RetrieveFundingRecipientsRequest { RecipientId = 1 }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -2792,18 +3734,19 @@ await client.Funding.FundingRecipients.GetAsync(
 <dl>
 <dd>
 
-**request:** `GetFundingRecipientsRequest`
+**request:** `Funding.FundingRecipients.RetrieveFundingRecipientsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">UpdateAsync</a>(UpdateFundingRecipientsRequest { ... })</code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">UpdateAsync</a>(Funding.FundingRecipients.UpdateFundingRecipientsRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -2816,7 +3759,6 @@ await client.Funding.FundingRecipients.GetAsync(
 <dd>
 
 Update a funding recipient. If you make significant changes, we may need to approve the funding recipient again.
-
 </dd>
 </dl>
 </dd>
@@ -2839,7 +3781,7 @@ await client.Funding.FundingRecipients.UpdateAsync(
         {
             RecipientType = FundingRecipientRecipientType.PrivateCorporation,
             TaxId = "12-3456789",
-            DoingBusinessAs  = "doingBusinessAs",
+            DoingBusinessAs = "doingBusinessAs",
             Address = new Address
             {
                 Address1 = "1 Example Ave.",
@@ -2856,37 +3798,10 @@ await client.Funding.FundingRecipients.UpdateAsync(
                     )
                 ),
             },
-            Owners = new List<FundingRecipientOwnersItem>() { new FundingRecipientOwnersItem() },
-            FundingAccounts = new List<FundingRecipientFundingAccountsItem>()
-            {
-                new FundingRecipientFundingAccountsItem
-                {
-                    FundingAccountId = 123,
-                    Status = FundingRecipientFundingAccountsItemStatus.Approved,
-                    Link = new FundingRecipientFundingAccountsItemLink
-                    {
-                        Rel = "fundingAccount",
-                        Href = "https://api.payroc.com/v1/funding-accounts/123",
-                        Method = "get",
-                    },
-                },
-                new FundingRecipientFundingAccountsItem
-                {
-                    FundingAccountId = 124,
-                    Status = FundingRecipientFundingAccountsItemStatus.Rejected,
-                    Link = new FundingRecipientFundingAccountsItemLink
-                    {
-                        Rel = "fundingAccount",
-                        Href = "https://api.payroc.com/v1/funding-accounts/124",
-                        Method = "get",
-                    },
-                },
-            },
         },
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -2900,18 +3815,19 @@ await client.Funding.FundingRecipients.UpdateAsync(
 <dl>
 <dd>
 
-**request:** `UpdateFundingRecipientsRequest`
+**request:** `Funding.FundingRecipients.UpdateFundingRecipientsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">DeleteAsync</a>(DeleteFundingRecipientsRequest { ... })</code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">DeleteAsync</a>(Funding.FundingRecipients.DeleteFundingRecipientsRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -2924,7 +3840,6 @@ await client.Funding.FundingRecipients.UpdateAsync(
 <dd>
 
 Delete a funding recipient. This includes funding accounts and owners linked to the funding recipient.
-
 </dd>
 </dl>
 </dd>
@@ -2943,7 +3858,6 @@ await client.Funding.FundingRecipients.DeleteAsync(
     new DeleteFundingRecipientsRequest { RecipientId = 1 }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -2957,18 +3871,19 @@ await client.Funding.FundingRecipients.DeleteAsync(
 <dl>
 <dd>
 
-**request:** `DeleteFundingRecipientsRequest`
+**request:** `Funding.FundingRecipients.DeleteFundingRecipientsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">ListAccountsAsync</a>(ListFundingRecipientFundingAccountsRequest { ... }) -> IEnumerable<FundingAccount></code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">ListAccountsAsync</a>(Funding.FundingRecipients.ListFundingRecipientFundingAccountsRequest { ... }) -> IEnumerable<FundingAccount></code></summary>
 <dl>
 <dd>
 
@@ -2981,7 +3896,6 @@ await client.Funding.FundingRecipients.DeleteAsync(
 <dd>
 
 Retrieve all funding accounts associated with the funding recipient.
-
 </dd>
 </dl>
 </dd>
@@ -3000,7 +3914,6 @@ await client.Funding.FundingRecipients.ListAccountsAsync(
     new ListFundingRecipientFundingAccountsRequest { RecipientId = 1 }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3014,18 +3927,19 @@ await client.Funding.FundingRecipients.ListAccountsAsync(
 <dl>
 <dd>
 
-**request:** `ListFundingRecipientFundingAccountsRequest`
+**request:** `Funding.FundingRecipients.ListFundingRecipientFundingAccountsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">CreateAccountAsync</a>(CreateAccountFundingRecipientsRequest { ... }) -> FundingAccount</code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">CreateAccountAsync</a>(Funding.FundingRecipients.CreateAccountFundingRecipientsRequest { ... }) -> FundingAccount</code></summary>
 <dl>
 <dd>
 
@@ -3038,7 +3952,6 @@ await client.Funding.FundingRecipients.ListAccountsAsync(
 <dd>
 
 Create a new funding account, and add it to the funding recipient.
-
 </dd>
 </dl>
 </dd>
@@ -3071,7 +3984,6 @@ await client.Funding.FundingRecipients.CreateAccountAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3085,18 +3997,19 @@ await client.Funding.FundingRecipients.CreateAccountAsync(
 <dl>
 <dd>
 
-**request:** `CreateAccountFundingRecipientsRequest`
+**request:** `Funding.FundingRecipients.CreateAccountFundingRecipientsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">ListOwnersAsync</a>(ListFundingRecipientOwnersRequest { ... }) -> IEnumerable<Owner></code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">ListOwnersAsync</a>(Funding.FundingRecipients.ListFundingRecipientOwnersRequest { ... }) -> IEnumerable<Owner></code></summary>
 <dl>
 <dd>
 
@@ -3109,7 +4022,6 @@ await client.Funding.FundingRecipients.CreateAccountAsync(
 <dd>
 
 Retrieve all owners associated with the funding recipient.
-
 </dd>
 </dl>
 </dd>
@@ -3128,7 +4040,6 @@ await client.Funding.FundingRecipients.ListOwnersAsync(
     new ListFundingRecipientOwnersRequest { RecipientId = 1 }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3142,18 +4053,19 @@ await client.Funding.FundingRecipients.ListOwnersAsync(
 <dl>
 <dd>
 
-**request:** `ListFundingRecipientOwnersRequest`
+**request:** `Funding.FundingRecipients.ListFundingRecipientOwnersRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">CreateOwnerAsync</a>(CreateOwnerFundingRecipientsRequest { ... }) -> Owner</code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">CreateOwnerAsync</a>(Funding.FundingRecipients.CreateOwnerFundingRecipientsRequest { ... }) -> Owner</code></summary>
 <dl>
 <dd>
 
@@ -3166,7 +4078,6 @@ await client.Funding.FundingRecipients.ListOwnersAsync(
 <dd>
 
 Create a new owner, and add it to the funding recipient.
-
 </dd>
 </dl>
 </dd>
@@ -3190,7 +4101,7 @@ await client.Funding.FundingRecipients.CreateOwnerAsync(
         {
             FirstName = "Jane",
             LastName = "Doe",
-            DateOfBirth = "1964-03-22",
+            DateOfBirth = new DateOnly(1964, 3, 22),
             Address = new Address
             {
                 Address1 = "1 Example Ave.",
@@ -3216,7 +4127,6 @@ await client.Funding.FundingRecipients.CreateOwnerAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3230,20 +4140,20 @@ await client.Funding.FundingRecipients.CreateOwnerAsync(
 <dl>
 <dd>
 
-**request:** `CreateOwnerFundingRecipientsRequest`
+**request:** `Funding.FundingRecipients.CreateOwnerFundingRecipientsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Funding FundingAccounts
-
-<details><summary><code>client.Funding.FundingAccounts.<a href="/src/Payroc/Funding/FundingAccounts/FundingAccountsClient.cs">ListAsync</a>(ListFundingAccountsRequest { ... }) -> PayrocPager<FundingAccount></code></summary>
+<details><summary><code>client.Funding.FundingAccounts.<a href="/src/Payroc/Funding/FundingAccounts/FundingAccountsClient.cs">ListAsync</a>(Funding.FundingAccounts.ListFundingAccountsRequest { ... }) -> Core.PayrocPager<FundingAccount></code></summary>
 <dl>
 <dd>
 
@@ -3256,7 +4166,6 @@ await client.Funding.FundingRecipients.CreateOwnerAsync(
 <dd>
 
 Retrieve a list of all funding accounts associated with the ISV.
-
 </dd>
 </dl>
 </dd>
@@ -3275,7 +4184,6 @@ await client.Funding.FundingAccounts.ListAsync(
     new ListFundingAccountsRequest { Before = "2571", After = "8516" }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3289,18 +4197,19 @@ await client.Funding.FundingAccounts.ListAsync(
 <dl>
 <dd>
 
-**request:** `ListFundingAccountsRequest`
+**request:** `Funding.FundingAccounts.ListFundingAccountsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingAccounts.<a href="/src/Payroc/Funding/FundingAccounts/FundingAccountsClient.cs">GetAsync</a>(GetFundingAccountsRequest { ... }) -> FundingAccount</code></summary>
+<details><summary><code>client.Funding.FundingAccounts.<a href="/src/Payroc/Funding/FundingAccounts/FundingAccountsClient.cs">RetrieveAsync</a>(Funding.FundingAccounts.RetrieveFundingAccountsRequest { ... }) -> FundingAccount</code></summary>
 <dl>
 <dd>
 
@@ -3313,7 +4222,6 @@ await client.Funding.FundingAccounts.ListAsync(
 <dd>
 
 Retrieve a specific funding account.
-
 </dd>
 </dl>
 </dd>
@@ -3328,11 +4236,10 @@ Retrieve a specific funding account.
 <dd>
 
 ```csharp
-await client.Funding.FundingAccounts.GetAsync(
-    new GetFundingAccountsRequest { FundingAccountId = 1 }
+await client.Funding.FundingAccounts.RetrieveAsync(
+    new RetrieveFundingAccountsRequest { FundingAccountId = 1 }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3346,18 +4253,19 @@ await client.Funding.FundingAccounts.GetAsync(
 <dl>
 <dd>
 
-**request:** `GetFundingAccountsRequest`
+**request:** `Funding.FundingAccounts.RetrieveFundingAccountsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingAccounts.<a href="/src/Payroc/Funding/FundingAccounts/FundingAccountsClient.cs">UpdateAsync</a>(UpdateFundingAccountsRequest { ... })</code></summary>
+<details><summary><code>client.Funding.FundingAccounts.<a href="/src/Payroc/Funding/FundingAccounts/FundingAccountsClient.cs">UpdateAsync</a>(Funding.FundingAccounts.UpdateFundingAccountsRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -3370,7 +4278,6 @@ await client.Funding.FundingAccounts.GetAsync(
 <dd>
 
 Update a funding account.
-
 </dd>
 </dl>
 </dd>
@@ -3402,7 +4309,6 @@ await client.Funding.FundingAccounts.UpdateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3416,18 +4322,19 @@ await client.Funding.FundingAccounts.UpdateAsync(
 <dl>
 <dd>
 
-**request:** `UpdateFundingAccountsRequest`
+**request:** `Funding.FundingAccounts.UpdateFundingAccountsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingAccounts.<a href="/src/Payroc/Funding/FundingAccounts/FundingAccountsClient.cs">DeleteAsync</a>(DeleteFundingAccountsRequest { ... })</code></summary>
+<details><summary><code>client.Funding.FundingAccounts.<a href="/src/Payroc/Funding/FundingAccounts/FundingAccountsClient.cs">DeleteAsync</a>(Funding.FundingAccounts.DeleteFundingAccountsRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -3440,7 +4347,6 @@ await client.Funding.FundingAccounts.UpdateAsync(
 <dd>
 
 Delete a funding account.
-
 </dd>
 </dl>
 </dd>
@@ -3459,7 +4365,6 @@ await client.Funding.FundingAccounts.DeleteAsync(
     new DeleteFundingAccountsRequest { FundingAccountId = 1 }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3473,20 +4378,20 @@ await client.Funding.FundingAccounts.DeleteAsync(
 <dl>
 <dd>
 
-**request:** `DeleteFundingAccountsRequest`
+**request:** `Funding.FundingAccounts.DeleteFundingAccountsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Funding FundingInstructions
-
-<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">ListAsync</a>(ListFundingInstructionsRequest { ... }) -> PayrocPager<ListFundingInstructionsResponseDataItem></code></summary>
+<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">ListAsync</a>(Funding.FundingInstructions.ListFundingInstructionsRequest { ... }) -> Core.PayrocPager<Funding.FundingInstructions.ListFundingInstructionsResponseDataItem></code></summary>
 <dl>
 <dd>
 
@@ -3499,7 +4404,6 @@ await client.Funding.FundingAccounts.DeleteAsync(
 <dd>
 
 Retrieve a list of funding instructions for a specific date range.
-
 </dd>
 </dl>
 </dd>
@@ -3519,12 +4423,11 @@ await client.Funding.FundingInstructions.ListAsync(
     {
         Before = "2571",
         After = "8516",
-        DateFrom = "2024-07-01",
-        DateTo = "2024-07-03",
+        DateFrom = new DateOnly(2024, 7, 1),
+        DateTo = new DateOnly(2024, 7, 3),
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3538,18 +4441,19 @@ await client.Funding.FundingInstructions.ListAsync(
 <dl>
 <dd>
 
-**request:** `ListFundingInstructionsRequest`
+**request:** `Funding.FundingInstructions.ListFundingInstructionsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">CreateAsync</a>(CreateFundingInstructionsRequest { ... }) -> Instruction</code></summary>
+<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">CreateAsync</a>(Funding.FundingInstructions.CreateFundingInstructionsRequest { ... }) -> Instruction</code></summary>
 <dl>
 <dd>
 
@@ -3562,7 +4466,6 @@ await client.Funding.FundingInstructions.ListAsync(
 <dd>
 
 Create funding instructions to tell us how to divide funds between your funding recipients.
-
 </dd>
 </dl>
 </dd>
@@ -3585,7 +4488,6 @@ await client.Funding.FundingInstructions.CreateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3599,18 +4501,19 @@ await client.Funding.FundingInstructions.CreateAsync(
 <dl>
 <dd>
 
-**request:** `CreateFundingInstructionsRequest`
+**request:** `Funding.FundingInstructions.CreateFundingInstructionsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">GetAsync</a>(GetFundingInstructionsRequest { ... }) -> Instruction</code></summary>
+<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">RetrieveAsync</a>(Funding.FundingInstructions.RetrieveFundingInstructionsRequest { ... }) -> Instruction</code></summary>
 <dl>
 <dd>
 
@@ -3623,7 +4526,6 @@ await client.Funding.FundingInstructions.CreateAsync(
 <dd>
 
 Retrieve a specific funding instruction.
-
 </dd>
 </dl>
 </dd>
@@ -3638,11 +4540,10 @@ Retrieve a specific funding instruction.
 <dd>
 
 ```csharp
-await client.Funding.FundingInstructions.GetAsync(
-    new GetFundingInstructionsRequest { InstructionId = 1 }
+await client.Funding.FundingInstructions.RetrieveAsync(
+    new RetrieveFundingInstructionsRequest { InstructionId = 1 }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3656,18 +4557,19 @@ await client.Funding.FundingInstructions.GetAsync(
 <dl>
 <dd>
 
-**request:** `GetFundingInstructionsRequest`
+**request:** `Funding.FundingInstructions.RetrieveFundingInstructionsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">UpdateAsync</a>(UpdateFundingInstructionsRequest { ... })</code></summary>
+<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">UpdateAsync</a>(Funding.FundingInstructions.UpdateFundingInstructionsRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -3680,7 +4582,6 @@ await client.Funding.FundingInstructions.GetAsync(
 <dd>
 
 Update an existing funding instruction.
-
 </dd>
 </dl>
 </dd>
@@ -3699,7 +4600,6 @@ await client.Funding.FundingInstructions.UpdateAsync(
     new UpdateFundingInstructionsRequest { InstructionId = 1, Body = new Instruction() }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3713,18 +4613,19 @@ await client.Funding.FundingInstructions.UpdateAsync(
 <dl>
 <dd>
 
-**request:** `UpdateFundingInstructionsRequest`
+**request:** `Funding.FundingInstructions.UpdateFundingInstructionsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">DeleteAsync</a>(DeleteFundingInstructionsRequest { ... })</code></summary>
+<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">DeleteAsync</a>(Funding.FundingInstructions.DeleteFundingInstructionsRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -3737,7 +4638,6 @@ await client.Funding.FundingInstructions.UpdateAsync(
 <dd>
 
 Delete an existing funding instruction.
-
 </dd>
 </dl>
 </dd>
@@ -3756,7 +4656,6 @@ await client.Funding.FundingInstructions.DeleteAsync(
     new DeleteFundingInstructionsRequest { InstructionId = 1 }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3770,20 +4669,20 @@ await client.Funding.FundingInstructions.DeleteAsync(
 <dl>
 <dd>
 
-**request:** `DeleteFundingInstructionsRequest`
+**request:** `Funding.FundingInstructions.DeleteFundingInstructionsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Funding FundingActivity
-
-<details><summary><code>client.Funding.FundingActivity.<a href="/src/Payroc/Funding/FundingActivity/FundingActivityClient.cs">GetBalanceAsync</a>(GetBalanceFundingActivityRequest { ... }) -> GetBalanceFundingActivityResponse</code></summary>
+<details><summary><code>client.Funding.FundingActivity.<a href="/src/Payroc/Funding/FundingActivity/FundingActivityClient.cs">RetrieveBalanceAsync</a>(Funding.FundingActivity.RetrieveBalanceFundingActivityRequest { ... }) -> Funding.FundingActivity.RetrieveBalanceFundingActivityResponse</code></summary>
 <dl>
 <dd>
 
@@ -3796,7 +4695,6 @@ await client.Funding.FundingInstructions.DeleteAsync(
 <dd>
 
 Retrieve the balance of funds that are available for each merchant.
-
 </dd>
 </dl>
 </dd>
@@ -3811,8 +4709,8 @@ Retrieve the balance of funds that are available for each merchant.
 <dd>
 
 ```csharp
-await client.Funding.FundingActivity.GetBalanceAsync(
-    new GetBalanceFundingActivityRequest
+await client.Funding.FundingActivity.RetrieveBalanceAsync(
+    new RetrieveBalanceFundingActivityRequest
     {
         Before = "2571",
         After = "8516",
@@ -3820,7 +4718,6 @@ await client.Funding.FundingActivity.GetBalanceAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3834,18 +4731,19 @@ await client.Funding.FundingActivity.GetBalanceAsync(
 <dl>
 <dd>
 
-**request:** `GetBalanceFundingActivityRequest`
+**request:** `Funding.FundingActivity.RetrieveBalanceFundingActivityRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingActivity.<a href="/src/Payroc/Funding/FundingActivity/FundingActivityClient.cs">GetAsync</a>(GetFundingActivityRequest { ... }) -> GetFundingActivityResponse</code></summary>
+<details><summary><code>client.Funding.FundingActivity.<a href="/src/Payroc/Funding/FundingActivity/FundingActivityClient.cs">RetrieveAsync</a>(Funding.FundingActivity.RetrieveFundingActivityRequest { ... }) -> Funding.FundingActivity.RetrieveFundingActivityResponse</code></summary>
 <dl>
 <dd>
 
@@ -3858,7 +4756,6 @@ await client.Funding.FundingActivity.GetBalanceAsync(
 <dd>
 
 Retrieve funding activity for a specific date range.
-
 </dd>
 </dl>
 </dd>
@@ -3873,18 +4770,17 @@ Retrieve funding activity for a specific date range.
 <dd>
 
 ```csharp
-await client.Funding.FundingActivity.GetAsync(
-    new GetFundingActivityRequest
+await client.Funding.FundingActivity.RetrieveAsync(
+    new RetrieveFundingActivityRequest
     {
         Before = "2571",
         After = "8516",
-        DateFrom = "2024-07-02",
-        DateTo = "2024-07-03",
+        DateFrom = new DateOnly(2024, 7, 2),
+        DateTo = new DateOnly(2024, 7, 3),
         MerchantId = "4525644354",
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3898,20 +4794,20 @@ await client.Funding.FundingActivity.GetAsync(
 <dl>
 <dd>
 
-**request:** `GetFundingActivityRequest`
+**request:** `Funding.FundingActivity.RetrieveFundingActivityRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-## Payments PaymentPlans
-
-<details><summary><code>client.Payments.PaymentPlans.<a href="/src/Payroc/Payments/PaymentPlans/PaymentPlansClient.cs">ListAsync</a>(ListPaymentPlansRequest { ... }) -> PayrocPager<PaymentPlan></code></summary>
+## Payments PaymentLinks
+<details><summary><code>client.Payments.PaymentLinks.<a href="/src/Payroc/Payments/PaymentLinks/PaymentLinksClient.cs">ListAsync</a>(Payments.PaymentLinks.ListPaymentLinksRequest { ... }) -> Core.PayrocPager<PaymentLinkPaginatedListDataItem></code></summary>
 <dl>
 <dd>
 
@@ -3923,8 +4819,366 @@ await client.Funding.FundingActivity.GetAsync(
 <dl>
 <dd>
 
-Retrieve a list of payment plans.
+Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of payment links for a processing terminal.
+</dd>
+</dl>
+</dd>
+</dl>
 
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Payments.PaymentLinks.ListAsync(
+    new ListPaymentLinksRequest
+    {
+        ProcessingTerminalId = "1234001",
+        MerchantReference = "LinkRef6543",
+        RecipientName = "Sarah Hazel Hopper",
+        RecipientEmail = "sarah.hopper@example.com",
+        CreatedOn = new DateOnly(2024, 7, 2),
+        ExpiresOn = new DateOnly(2024, 8, 2),
+        Before = "2571",
+        After = "8516",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Payments.PaymentLinks.ListPaymentLinksRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Payments.PaymentLinks.<a href="/src/Payroc/Payments/PaymentLinks/PaymentLinksClient.cs">CreateAsync</a>(Payments.PaymentLinks.CreatePaymentLinksRequest { ... }) -> Payments.PaymentLinks.CreatePaymentLinksResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to create a payment link that a customer can use to make a payment for goods or services. The request contains the following settings for the payment link:
+- **type** - Indicates whether the link can be used only once or if it can be used multiple times.
+- **authType** - Indicates whether the transaction is a sale or a pre-authorization.
+- **paymentMethod** - Indicates the payment methods that the merchant accepts.
+- **charge** - Indicates whether the merchant or the customer enters the amount for the transaction.
+The response contains a paymentLinkId that you can use to [share the payment link](#sharePaymentLink) or to [retrieve information about the link](#retrievePaymentLink).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Payments.PaymentLinks.CreateAsync(
+    new CreatePaymentLinksRequest
+    {
+        ProcessingTerminalId = "1234001",
+        IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+        Body = new CreatePaymentLinksRequestBody(
+            new CreatePaymentLinksRequestBody.MultiUse(
+                new MultiUsePaymentLink
+                {
+                    MerchantReference = "LinkRef6543",
+                    Order = new MultiUsePaymentLinkOrder
+                    {
+                        Charge = new MultiUsePaymentLinkOrderCharge(
+                            new MultiUsePaymentLinkOrderCharge.Prompt(
+                                new PromptPaymentLinkCharge { Currency = Currency.Aed }
+                            )
+                        ),
+                    },
+                    AuthType = MultiUsePaymentLinkAuthType.Sale,
+                    PaymentMethods = new List<MultiUsePaymentLinkPaymentMethodsItem>()
+                    {
+                        MultiUsePaymentLinkPaymentMethodsItem.Card,
+                    },
+                }
+            )
+        ),
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Payments.PaymentLinks.CreatePaymentLinksRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Payments.PaymentLinks.<a href="/src/Payroc/Payments/PaymentLinks/PaymentLinksClient.cs">RetrieveAsync</a>(Payments.PaymentLinks.RetrievePaymentLinksRequest { ... }) -> Payments.PaymentLinks.RetrievePaymentLinksResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to retrieve information about a payment link.
+You need the paymentLinkId that we sent to you when you created the payment link.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Payments.PaymentLinks.RetrieveAsync(
+    new RetrievePaymentLinksRequest { PaymentLinkId = "JZURRJBUPS" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Payments.PaymentLinks.RetrievePaymentLinksRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Payments.PaymentLinks.<a href="/src/Payroc/Payments/PaymentLinks/PaymentLinksClient.cs">UpdateAsync</a>(Payments.PaymentLinks.UpdatePaymentLinksRequest { ... }) -> Payments.PaymentLinks.UpdatePaymentLinksResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to partially update a payment link. Structure your request to follow the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
+
+You can update the following properties of a multi-use link:
+- **expiresOn parameter** - Expiration date of the link.
+- **customLabels object** - Label for the payment button.
+- **credentialOnFile object** - Settings for saving the customer's payment details.
+
+You can update the following properties of a single-use link:
+- **expiresOn parameter** - Expiration date of the link.
+- **authType parameter** - Transaction type of the payment link.
+- **amount parameter** - Total amount of the transaction.
+- **currency parameter** - Currency of the transaction.
+- **description parameter** - Brief description of the transaction.
+- **customLabels object** - Label for the payment button.
+- **credentialOnFile object** - Settings for saving the customer's payment details.
+
+**Note:** When a merchant updates a single-use link, we update the payment URL and HTML code in the assets object. The customer can't use the original link to make a payment.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Payments.PaymentLinks.UpdateAsync(
+    new UpdatePaymentLinksRequest
+    {
+        PaymentLinkId = "JZURRJBUPS",
+        IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+        Body = new List<PatchDocument>()
+        {
+            new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Payments.PaymentLinks.UpdatePaymentLinksRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Payments.PaymentLinks.<a href="/src/Payroc/Payments/PaymentLinks/PaymentLinksClient.cs">DeactivateAsync</a>(Payments.PaymentLinks.DeactivatePaymentLinksRequest { ... }) -> Payments.PaymentLinks.DeactivatePaymentLinksResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to deactivate a payment link. If the merchant deactivates a payment link, they can't reactivate it. To take payment, the merchant must create a new payment link.  
+
+**Note:** After the merchant deactivates a payment link, a customer can't use the link to make a payment. 
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Payments.PaymentLinks.DeactivateAsync(
+    new DeactivatePaymentLinksRequest { PaymentLinkId = "JZURRJBUPS" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Payments.PaymentLinks.DeactivatePaymentLinksRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Payments PaymentPlans
+<details><summary><code>client.Payments.PaymentPlans.<a href="/src/Payroc/Payments/PaymentPlans/PaymentPlansClient.cs">ListAsync</a>(Payments.PaymentPlans.ListPaymentPlansRequest { ... }) -> Core.PayrocPager<PaymentPlan></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to retrieve a [paginated](/api/pagination) list of payment plans for a processing terminal.  
+
+**Note:** If you want to view a specific payment plan and you have its paymentPlanId, use our [Retrieve Payment Plan](/api/schema/payments/payment-plans/get) method.  
+
+Our gateway returns the following information about each payment plan in the list:  
+
+  -	Name, length, and currency of the plan  
+  -	How often our gateway collects each payment  
+  -	How much our gateway collects for each payment  
+  -	What happens if the merchant updates or deletes the plan  
+
+For each payment plan, we return the paymentPlanId, which you can use to perform follow-on actions.
 </dd>
 </dl>
 </dd>
@@ -3948,7 +5202,6 @@ await client.Payments.PaymentPlans.ListAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -3962,18 +5215,19 @@ await client.Payments.PaymentPlans.ListAsync(
 <dl>
 <dd>
 
-**request:** `ListPaymentPlansRequest`
+**request:** `Payments.PaymentPlans.ListPaymentPlansRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.PaymentPlans.<a href="/src/Payroc/Payments/PaymentPlans/PaymentPlansClient.cs">CreateAsync</a>(CreatePaymentPlansRequest { ... }) -> PaymentPlan</code></summary>
+<details><summary><code>client.Payments.PaymentPlans.<a href="/src/Payroc/Payments/PaymentPlans/PaymentPlansClient.cs">CreateAsync</a>(Payments.PaymentPlans.CreatePaymentPlansRequest { ... }) -> PaymentPlan</code></summary>
 <dl>
 <dd>
 
@@ -3985,8 +5239,23 @@ await client.Payments.PaymentPlans.ListAsync(
 <dl>
 <dd>
 
-Create a new payment plan.
+Use this method to create a payment schedule that you can assign customers to.  
 
+**Note:** This method is part of our Repeat Payments feature. To help you understand how this method works with our Subscriptions endpoints, go to [Repeat Payments](/guides/integrate/repeat-payments).  
+
+When you create a payment plan you need to provide a unique paymentPlanId that you use to run follow-on actions:  
+
+-	[Retrieve Payment Plan](/api/schema/payments/payment-plans/get)  - View the details of the payment plan.  
+-	[Update Payment Plan](/api/schema/payments/payment-plans/update)  - Update the details of the payment plan.  
+-	[Delete Payment Plan](/api/schema/payments/payment-plans/delete)  - Delete the payment plan.  
+-	[Create Subscription](/api/schema/payments/subscriptions/create)  - Subscribe a customer to the payment plan.  
+
+The request includes the following settings:  
+
+-	**type** - Indicates if our gateway or the merchant collects payments. If the merchant manually collects payments, integrate with the [Pay Manual Subscription](/api/schema/payments/subscriptions/pay) method.  
+-	**recurringOrder** - Amount of each payment if the gateway automatically collect payments.  
+-	**setupOrder** - Setup fee that our gateway immediately collects from the customer's payment method.  
+-	**onUpdate and onDelete** - Indicates what happens to associated subscriptions if the merchant updates or deletes the payment plan.  
 </dd>
 </dl>
 </dd>
@@ -4048,7 +5317,6 @@ await client.Payments.PaymentPlans.CreateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -4062,18 +5330,19 @@ await client.Payments.PaymentPlans.CreateAsync(
 <dl>
 <dd>
 
-**request:** `CreatePaymentPlansRequest`
+**request:** `Payments.PaymentPlans.CreatePaymentPlansRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.PaymentPlans.<a href="/src/Payroc/Payments/PaymentPlans/PaymentPlansClient.cs">GetAsync</a>(GetPaymentPlansRequest { ... }) -> PaymentPlan</code></summary>
+<details><summary><code>client.Payments.PaymentPlans.<a href="/src/Payroc/Payments/PaymentPlans/PaymentPlansClient.cs">RetrieveAsync</a>(Payments.PaymentPlans.RetrievePaymentPlansRequest { ... }) -> PaymentPlan</code></summary>
 <dl>
 <dd>
 
@@ -4085,8 +5354,18 @@ await client.Payments.PaymentPlans.CreateAsync(
 <dl>
 <dd>
 
-Retrieve a specific payment plan.
+Use this method to retrieve information about a payment plan.  
 
+To retrieve a payment plan, you need its paymentPlanId. Our gateway returned the paymentPlanId in the response of the [Create Payment Plan](/api/schema/payments/payment-plans/create) method.  
+
+**Note:** If you don't have the paymentPlanId, use our [List Payment Plans](/api/schema/payments/payment-plans/list) method to search for the payment plan.  
+
+Our gateway returns the following information about the payment plan:  
+
+  -	Name, length, and currency of the plan  
+  -	How often our gateway collects each payment  
+  -	How much our gateway collects for each payment  
+  -	What happens if the merchant updates or deletes the plan  
 </dd>
 </dl>
 </dd>
@@ -4101,11 +5380,14 @@ Retrieve a specific payment plan.
 <dd>
 
 ```csharp
-await client.Payments.PaymentPlans.GetAsync(
-    new GetPaymentPlansRequest { ProcessingTerminalId = "1234001", PaymentPlanId = "PlanRef8765" }
+await client.Payments.PaymentPlans.RetrieveAsync(
+    new RetrievePaymentPlansRequest
+    {
+        ProcessingTerminalId = "1234001",
+        PaymentPlanId = "PlanRef8765",
+    }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -4119,18 +5401,19 @@ await client.Payments.PaymentPlans.GetAsync(
 <dl>
 <dd>
 
-**request:** `GetPaymentPlansRequest`
+**request:** `Payments.PaymentPlans.RetrievePaymentPlansRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.PaymentPlans.<a href="/src/Payroc/Payments/PaymentPlans/PaymentPlansClient.cs">DeleteAsync</a>(DeletePaymentPlansRequest { ... })</code></summary>
+<details><summary><code>client.Payments.PaymentPlans.<a href="/src/Payroc/Payments/PaymentPlans/PaymentPlansClient.cs">DeleteAsync</a>(Payments.PaymentPlans.DeletePaymentPlansRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -4142,9 +5425,18 @@ await client.Payments.PaymentPlans.GetAsync(
 <dl>
 <dd>
 
-Delete an existing payment plan.  
-**Note:** After you delete a payment plan, you can't reuse the paymentPlanId.
+Use this method to delete a payment plan.  
 
+> **Important:** When you delete a payment plan, you can’t recover it. You also won’t be able to add subscriptions to the payment plan.  
+
+To delete a payment plan, you need its paymentPlanId, which you sent in the request of the [Create Payment Plan](/api/schema/payments/payment-plans/create) method.  
+
+**Note:** If you don't have the paymentPlanId, use our [List Payment Plans](/api/schema/payments/payment-plans/list) method to search for the payment plan.  
+
+The value you sent for the onDelete parameter when you created the payment plan indicates what happens to associated subscriptions when you delete the plan:  
+
+  -	`complete` - Our gateway stops taking payments for the subscriptions associated with the payment plan.  
+  -	`continue` - Our gateway continues to take payments for the subscriptions associated with the payment plan. To stop a subscription for a cancelled payment plan, go to the [Deactivate Subscription](/api/schema/payments/subscriptions/deactivate) method.  
 </dd>
 </dl>
 </dd>
@@ -4167,7 +5459,6 @@ await client.Payments.PaymentPlans.DeleteAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -4181,18 +5472,19 @@ await client.Payments.PaymentPlans.DeleteAsync(
 <dl>
 <dd>
 
-**request:** `DeletePaymentPlansRequest`
+**request:** `Payments.PaymentPlans.DeletePaymentPlansRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.PaymentPlans.<a href="/src/Payroc/Payments/PaymentPlans/PaymentPlansClient.cs">UpdateAsync</a>(UpdatePaymentPlansRequest { ... }) -> PaymentPlan</code></summary>
+<details><summary><code>client.Payments.PaymentPlans.<a href="/src/Payroc/Payments/PaymentPlans/PaymentPlansClient.cs">UpdateAsync</a>(Payments.PaymentPlans.UpdatePaymentPlansRequest { ... }) -> PaymentPlan</code></summary>
 <dl>
 <dd>
 
@@ -4204,10 +5496,17 @@ await client.Payments.PaymentPlans.DeleteAsync(
 <dl>
 <dd>
 
-Make changes to an existing payment plan.
+Use this method to partially update a payment plan. Structure your request to follow the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.  
 
-Structure your request to follow the RFC 6902 standard.
+To update a payment plan, you need its paymentPlanId, which you sent in the request of the [Create Payment Plan](/api/schema/payments/payment-plans/create) method.  
 
+**Note:** If you don't have the paymentPlanId, use our [List Payment Plans](/api/schema/payments/payment-plans/list) method to search for the payment plan.  
+
+You can update all of the properties of the payment plan except for the paymentPlanId.  
+
+The value you sent for the onUpdate parameter when you created the payment plan indicates what happens to the associated subscriptions when you update the plan:  
+- `update` - Our gateway updates the subscriptions associated with the payment plan.
+- `continue` - Our  gateway doesn't update the subscriptions associated with the payment plan.
 </dd>
 </dl>
 </dd>
@@ -4237,7 +5536,6 @@ await client.Payments.PaymentPlans.UpdateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -4251,20 +5549,20 @@ await client.Payments.PaymentPlans.UpdateAsync(
 <dl>
 <dd>
 
-**request:** `UpdatePaymentPlansRequest`
+**request:** `Payments.PaymentPlans.UpdatePaymentPlansRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Payments Subscriptions
-
-<details><summary><code>client.Payments.Subscriptions.<a href="/src/Payroc/Payments/Subscriptions/SubscriptionsClient.cs">ListAsync</a>(ListSubscriptionsRequest { ... }) -> PayrocPager<Subscription></code></summary>
+<details><summary><code>client.Payments.Subscriptions.<a href="/src/Payroc/Payments/Subscriptions/SubscriptionsClient.cs">ListAsync</a>(Payments.Subscriptions.ListSubscriptionsRequest { ... }) -> Core.PayrocPager<Subscription></code></summary>
 <dl>
 <dd>
 
@@ -4276,9 +5574,21 @@ await client.Payments.PaymentPlans.UpdateAsync(
 <dl>
 <dd>
 
-List subscriptions linked to a terminal.  
-To filter your results, use the query parameters.
+Use this method to return a [paginated](/api/pagination) list of subscriptions.  
 
+Note: If you want to view a specific subscription and you have its subscriptionId, use our [Retrieve subscription](/api/schema/payments/subscriptions/get) method.  
+
+Use query parameters to filter the list of results that we return, for example, to search for subscriptions for a customer, a payment plan, or frequency.  
+
+Our gateway returns information about the following for each subscription in the list:  
+
+-	Payment plan the subscription is linked to.  
+-	Secure token that represents cardholder’s payment details.  
+-	Current state of the subscription, including its status, next due date, and invoices.  
+-	Fees for setup and the cost of the recurring order.  
+-	Subscription length, end date, and frequency.  
+
+For each subscription, we also return the subscriptionId, the paymentPlanId, and the secureTokenId, which you can use to perform follow-actions. 
 </dd>
 </dl>
 </dd>
@@ -4300,15 +5610,14 @@ await client.Payments.Subscriptions.ListAsync(
         CustomerName = "Sarah%20Hazel%20Hopper",
         Last4 = "7062",
         PaymentPlan = "Premium%20Club",
-        EndDate = "2025-07-01T00:00:00Z",
-        NextDueDate = "2024-08-01T00:00:00Z",
+        EndDate = new DateOnly(2025, 7, 1),
+        NextDueDate = new DateOnly(2024, 8, 1),
         Before = "2571",
         After = "8516",
         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -4322,18 +5631,19 @@ await client.Payments.Subscriptions.ListAsync(
 <dl>
 <dd>
 
-**request:** `ListSubscriptionsRequest`
+**request:** `Payments.Subscriptions.ListSubscriptionsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.Subscriptions.<a href="/src/Payroc/Payments/Subscriptions/SubscriptionsClient.cs">CreateAsync</a>(SubscriptionRequest { ... }) -> Subscription</code></summary>
+<details><summary><code>client.Payments.Subscriptions.<a href="/src/Payroc/Payments/Subscriptions/SubscriptionsClient.cs">CreateAsync</a>(Payments.Subscriptions.SubscriptionRequest { ... }) -> Subscription</code></summary>
 <dl>
 <dd>
 
@@ -4345,8 +5655,24 @@ await client.Payments.Subscriptions.ListAsync(
 <dl>
 <dd>
 
-Create a new subscription.
+Use this method to assign a customer to a payment plan.  
 
+**Note:** This method is part of our Repeat Payments feature. To help you understand how this method works with our Payment plans endpoints, go to [Repeat Payments](/guides/integrate/repeat-payments).  
+
+When you create a subscription you need to provide a unique subscriptionId that you use to run follow-on actions:  
+
+- [Retrieve Subscription](/api/schema/payments/subscriptions/get) - View the details of the subscription.
+- [Update Subscription](/api/schema/payments/subscriptions/patch) - Update the details of the subscription.
+- [Deactivate Subscription](/api/schema/payments/subscriptions/deactivate) - Stop taking payments for the subscription.
+- [Re-activate Subscription](/api/schema/payments/subscriptions/reactivate) - Start taking payments again for the subscription.
+- [Pay Manual Subscription](/api/schema/payments/subscriptions/pay) - Manually collect a payment for the subscription.
+
+The request includes the following settings:
+- **paymentPlanId** - Unique identifier of the payment plan that the merchant wants to use.
+- **paymentMethod** - Object that contains information about the secure token, which represents the customer's card details or bank account details.
+- **startDate** - Date that you want to start to take payments.
+
+You can also update the settings that the subscription inherited from the payment plan, for example, you can change the amount for each payment. If you change the settings for the subscription, it doesn't change the settings in the payment plan that it's linked to. 
 </dd>
 </dl>
 </dd>
@@ -4402,8 +5728,8 @@ await client.Payments.Subscriptions.CreateAsync(
                 },
             },
         },
-        StartDate = "2024-07-02",
-        EndDate = "2025-07-01",
+        StartDate = new DateOnly(2024, 7, 2),
+        EndDate = new DateOnly(2025, 7, 1),
         Length = 12,
         PauseCollectionFor = 0,
         CustomFields = new List<CustomField>()
@@ -4413,7 +5739,6 @@ await client.Payments.Subscriptions.CreateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -4427,18 +5752,19 @@ await client.Payments.Subscriptions.CreateAsync(
 <dl>
 <dd>
 
-**request:** `SubscriptionRequest`
+**request:** `Payments.Subscriptions.SubscriptionRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.Subscriptions.<a href="/src/Payroc/Payments/Subscriptions/SubscriptionsClient.cs">GetAsync</a>(GetSubscriptionsRequest { ... }) -> Subscription</code></summary>
+<details><summary><code>client.Payments.Subscriptions.<a href="/src/Payroc/Payments/Subscriptions/SubscriptionsClient.cs">RetrieveAsync</a>(Payments.Subscriptions.RetrieveSubscriptionsRequest { ... }) -> Subscription</code></summary>
 <dl>
 <dd>
 
@@ -4450,8 +5776,21 @@ await client.Payments.Subscriptions.CreateAsync(
 <dl>
 <dd>
 
-Retrieve a specific subscription.
+Use this method to retrieve information about a subscription.  
 
+To retrieve a subscription, you need its subscriptionId. You sent the subscriptionId in the request of the [Create subscription](/api/schema/payments/subscriptions/create) method.  
+
+**Note:** If you don't have the subscriptionId, use our [List subscriptions](/api/schema/payments/subscriptions/list) method to search for the subscription.  
+
+Our gateway returns information about the following for the subscription:  
+
+-	Payment plan the subscription is linked to.  
+-	Secure token that represents cardholder’s payment details.  
+-	Current state of the subscription, including its status, next due date, and invoices.  
+-	Fees for setup and the cost of the recurring order.  
+-	Subscription length, end date, and frequency.  
+
+We also return the paymentPlanId and the secureTokenId, which you can use to perform follow-on actions.  
 </dd>
 </dl>
 </dd>
@@ -4466,11 +5805,14 @@ Retrieve a specific subscription.
 <dd>
 
 ```csharp
-await client.Payments.Subscriptions.GetAsync(
-    new GetSubscriptionsRequest { ProcessingTerminalId = "1234001", SubscriptionId = "SubRef7654" }
+await client.Payments.Subscriptions.RetrieveAsync(
+    new RetrieveSubscriptionsRequest
+    {
+        ProcessingTerminalId = "1234001",
+        SubscriptionId = "SubRef7654",
+    }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -4484,18 +5826,19 @@ await client.Payments.Subscriptions.GetAsync(
 <dl>
 <dd>
 
-**request:** `GetSubscriptionsRequest`
+**request:** `Payments.Subscriptions.RetrieveSubscriptionsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.Subscriptions.<a href="/src/Payroc/Payments/Subscriptions/SubscriptionsClient.cs">UpdateAsync</a>(UpdateSubscriptionsRequest { ... }) -> Subscription</code></summary>
+<details><summary><code>client.Payments.Subscriptions.<a href="/src/Payroc/Payments/Subscriptions/SubscriptionsClient.cs">UpdateAsync</a>(Payments.Subscriptions.UpdateSubscriptionsRequest { ... }) -> Subscription</code></summary>
 <dl>
 <dd>
 
@@ -4507,10 +5850,24 @@ await client.Payments.Subscriptions.GetAsync(
 <dl>
 <dd>
 
-Make changes to a subscription.
+Use this method to partially update a subscription. Structure your request to follow the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.  
 
-Structure your request to follow the RFC 6902 standard.
+To update a subscription, you need its subscriptionId, which you sent in the request of the [Create subscription](/api/schema/payments/subscriptions/create) method.  
 
+**Note:** If you don't have the subscriptionId, use our [List subscriptions](/api/schema/payments/subscriptions/list) method to search for the payment.  
+
+You can update all of the properties of the subscription except for the following:  
+
+**Can't delete**  
+- recurringOrder
+- description
+- name
+
+**Can't perform any PATCH operation**  
+- currentState
+- type
+- frequency
+- paymentPlan
 </dd>
 </dl>
 </dd>
@@ -4540,7 +5897,6 @@ await client.Payments.Subscriptions.UpdateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -4554,18 +5910,19 @@ await client.Payments.Subscriptions.UpdateAsync(
 <dl>
 <dd>
 
-**request:** `UpdateSubscriptionsRequest`
+**request:** `Payments.Subscriptions.UpdateSubscriptionsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.Subscriptions.<a href="/src/Payroc/Payments/Subscriptions/SubscriptionsClient.cs">DeactivateAsync</a>(DeactivateSubscriptionsRequest { ... }) -> Subscription</code></summary>
+<details><summary><code>client.Payments.Subscriptions.<a href="/src/Payroc/Payments/Subscriptions/SubscriptionsClient.cs">DeactivateAsync</a>(Payments.Subscriptions.DeactivateSubscriptionsRequest { ... }) -> Subscription</code></summary>
 <dl>
 <dd>
 
@@ -4577,8 +5934,15 @@ await client.Payments.Subscriptions.UpdateAsync(
 <dl>
 <dd>
 
-Deactivate a subscription.
+Use this method to deactivate a subscription.  
 
+To deactivate a subscription, you need its subscriptionId, which you sent in the request of the [Create Subscription](/api/schema/payments/subscriptions/create) method.  
+
+**Note:** If you don't have the subscriptionId, use our [List Subscriptions](/api/schema/payments/subscriptions/list) method to search for the subscription.  
+
+If your request is successful, our gateway stops taking payments from the customer.  
+
+To reactivate the subscription, use our [Reactivate Subscription](/api/schema/payments/subscriptions/reactivate) method.
 </dd>
 </dl>
 </dd>
@@ -4601,7 +5965,6 @@ await client.Payments.Subscriptions.DeactivateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -4615,18 +5978,19 @@ await client.Payments.Subscriptions.DeactivateAsync(
 <dl>
 <dd>
 
-**request:** `DeactivateSubscriptionsRequest`
+**request:** `Payments.Subscriptions.DeactivateSubscriptionsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.Subscriptions.<a href="/src/Payroc/Payments/Subscriptions/SubscriptionsClient.cs">ReactivateAsync</a>(ReactivateSubscriptionsRequest { ... }) -> Subscription</code></summary>
+<details><summary><code>client.Payments.Subscriptions.<a href="/src/Payroc/Payments/Subscriptions/SubscriptionsClient.cs">ReactivateAsync</a>(Payments.Subscriptions.ReactivateSubscriptionsRequest { ... }) -> Subscription</code></summary>
 <dl>
 <dd>
 
@@ -4638,8 +6002,15 @@ await client.Payments.Subscriptions.DeactivateAsync(
 <dl>
 <dd>
 
-Re-activate an existing subscription.
+Use this method to reactivate a subscription.  
 
+To reactivate a subscription, you need its subscriptionId, which you sent in the request of the [Create Subscription](/api/schema/payments/subscriptions/create) method.  
+
+**Note:** If you don't have the subscriptionId, use our [List Subscriptions](/api/schema/payments/subscriptions/list) method to search for the subscription.  
+
+If your request is successful, our gateway restarts taking payments from the customer.  
+
+To deactivate the subscription, use our [Deactivate Subscription](/api/schema/payments/subscriptions/deactivate) method.
 </dd>
 </dl>
 </dd>
@@ -4662,7 +6033,6 @@ await client.Payments.Subscriptions.ReactivateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -4676,18 +6046,19 @@ await client.Payments.Subscriptions.ReactivateAsync(
 <dl>
 <dd>
 
-**request:** `ReactivateSubscriptionsRequest`
+**request:** `Payments.Subscriptions.ReactivateSubscriptionsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.Subscriptions.<a href="/src/Payroc/Payments/Subscriptions/SubscriptionsClient.cs">PayAsync</a>(SubscriptionPaymentRequest { ... }) -> SubscriptionPayment</code></summary>
+<details><summary><code>client.Payments.Subscriptions.<a href="/src/Payroc/Payments/Subscriptions/SubscriptionsClient.cs">PayAsync</a>(Payments.Subscriptions.SubscriptionPaymentRequest { ... }) -> SubscriptionPayment</code></summary>
 <dl>
 <dd>
 
@@ -4699,8 +6070,15 @@ await client.Payments.Subscriptions.ReactivateAsync(
 <dl>
 <dd>
 
-Process payment for a manual subscription.
+Use this method to manually collect a payment linked to a subscription. You can manually collect a payment only if the merchant chose not to let our gateway automatically collect each payment.  
 
+To manually collect a payment, you need the subscriptionId of the subscription that's linked to the payment. You sent the subscriptionId in the request of the [Create Subscription](/api/schema/payments/subscriptions/create) method.  
+
+**Note:** If you don't have the subscriptionId, use our [List Subscriptions](/api/schema/payments/subscriptions/list) method to search for the subscription.  
+
+The request includes an order object that contains information about the amount that you want to collect.  
+
+In the response, our gateway returns information about the payment and a paymentId. You can use the paymentId in follow-on actions with the [Payments](/api/schema/payments) endpoints or [Bank Transfer Payments](/api/schema/payments/bank-transfer-payments) endpoints.  
 </dd>
 </dl>
 </dd>
@@ -4743,7 +6121,6 @@ await client.Payments.Subscriptions.PayAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -4757,20 +6134,20 @@ await client.Payments.Subscriptions.PayAsync(
 <dl>
 <dd>
 
-**request:** `SubscriptionPaymentRequest`
+**request:** `Payments.Subscriptions.SubscriptionPaymentRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Payments SecureTokens
-
-<details><summary><code>client.Payments.SecureTokens.<a href="/src/Payroc/Payments/SecureTokens/SecureTokensClient.cs">ListAsync</a>(ListSecureTokensRequest { ... }) -> PayrocPager<SecureToken></code></summary>
+<details><summary><code>client.Payments.SecureTokens.<a href="/src/Payroc/Payments/SecureTokens/SecureTokensClient.cs">ListAsync</a>(Payments.SecureTokens.ListSecureTokensRequest { ... }) -> Core.PayrocPager<SecureToken></code></summary>
 <dl>
 <dd>
 
@@ -4782,8 +6159,19 @@ await client.Payments.Subscriptions.PayAsync(
 <dl>
 <dd>
 
-Return a list of secure tokens that are currently saved on the terminal.
+Use this method to return a [paginated](/api/pagination) list of secure tokens.  
 
+**Note:** If you want to view a specific seure token and you have its secureTokenId, use our [Retrieve Secure Token](/api/schema/payments/secure-tokens/get) method.  
+
+Use query parameters to filter the list of results that we return, for example, to search for secure tokens by customer or by the first four digits of a card number.  
+
+Our gateway returns information about the following for each secure token in the list:  
+
+  -	Payment details that the secure token represents.  
+  -	Customer details, including shipping and billing addresses.  
+  -	Secure token that you can use to carry out transactions.  
+
+  For each secure token, we also return the secureTokenId, which you can use to perform follow-on actions.
 </dd>
 </dl>
 </dd>
@@ -4814,7 +6202,6 @@ await client.Payments.SecureTokens.ListAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -4828,18 +6215,19 @@ await client.Payments.SecureTokens.ListAsync(
 <dl>
 <dd>
 
-**request:** `ListSecureTokensRequest`
+**request:** `Payments.SecureTokens.ListSecureTokensRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.SecureTokens.<a href="/src/Payroc/Payments/SecureTokens/SecureTokensClient.cs">CreateAsync</a>(TokenizationRequest { ... }) -> SecureToken</code></summary>
+<details><summary><code>client.Payments.SecureTokens.<a href="/src/Payroc/Payments/SecureTokens/SecureTokensClient.cs">CreateAsync</a>(Payments.SecureTokens.TokenizationRequest { ... }) -> SecureToken</code></summary>
 <dl>
 <dd>
 
@@ -4851,8 +6239,17 @@ await client.Payments.SecureTokens.ListAsync(
 <dl>
 <dd>
 
-Save the customer's payment details to use in future transactions.
+Use this method to create a secure token that represents a customer's payment details.  
 
+When you create a secure token, you need to generate and provide a secureTokenId that you use to run follow-on actions:  
+- [Retrieve Secure Token](/api/schema/payments/secure-tokens/get) – View the details of the secure token.  
+- [Delete Secure Token](/api/schema/payments/secure-tokens/delete) – Delete the secure token.  
+- [Update Secure Token](/api/schema/payments/secure-tokens/update) – Update the details of the secure token.  
+- [Update Account Details](/api/schema/payments/secure-tokens/account-update) – Update the secure token with the details from a single-use token.  
+
+**Note:** If you don't generate a secureTokenId to identify the token, our gateway generates a unique identifier and returns it in the response.  
+
+If the request is successful, our gateway returns a token that the merchant can use in transactions instead of the customer's sensitive payment details, for example, when they [run a sale](/api/schema/payments/create).
 </dd>
 </dl>
 </dd>
@@ -4878,7 +6275,7 @@ await client.Payments.SecureTokens.CreateAsync(
         {
             FirstName = "Sarah",
             LastName = "Hopper",
-            DateOfBirth = "1990-07-15",
+            DateOfBirth = new DateOnly(1990, 7, 15),
             ReferenceNumber = "Customer-12",
             BillingAddress = new Address
             {
@@ -4926,7 +6323,7 @@ await client.Payments.SecureTokens.CreateAsync(
                                 Device = new Device
                                 {
                                     Model = DeviceModel.BbposChp,
-                                    SerialNumber = "PAX123456789",
+                                    SerialNumber = "1850010868",
                                 },
                                 RawData =
                                     "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
@@ -4943,7 +6340,6 @@ await client.Payments.SecureTokens.CreateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -4957,18 +6353,19 @@ await client.Payments.SecureTokens.CreateAsync(
 <dl>
 <dd>
 
-**request:** `TokenizationRequest`
+**request:** `Payments.SecureTokens.TokenizationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.SecureTokens.<a href="/src/Payroc/Payments/SecureTokens/SecureTokensClient.cs">GetAsync</a>(GetSecureTokensRequest { ... }) -> SecureToken</code></summary>
+<details><summary><code>client.Payments.SecureTokens.<a href="/src/Payroc/Payments/SecureTokens/SecureTokensClient.cs">RetrieveAsync</a>(Payments.SecureTokens.RetrieveSecureTokensRequest { ... }) -> SecureToken</code></summary>
 <dl>
 <dd>
 
@@ -4980,8 +6377,17 @@ await client.Payments.SecureTokens.CreateAsync(
 <dl>
 <dd>
 
-Return a secure token and its related payment details.
+Use this method to retrieve information about a secure token.  
 
+To retrieve a secure token, you need its secureTokenID, which you sent in the request of the [Create Secure Token](/api/schema/payments/secure-tokens/create) method.  
+
+**Note:** If you don't have the secureTokenId, use our [List Secure Tokens](/api/schema/payments/secure-tokens/list) method to search for the secure token.  
+
+Our gateway returns information about the following for each secure token in the list:  
+
+  -	Payment details that the secure token represents.  
+  -	Customer details, including shipping and billing addresses.  
+  -	Secure token that you can use to carry out transactions.  
 </dd>
 </dl>
 </dd>
@@ -4996,15 +6402,14 @@ Return a secure token and its related payment details.
 <dd>
 
 ```csharp
-await client.Payments.SecureTokens.GetAsync(
-    new GetSecureTokensRequest
+await client.Payments.SecureTokens.RetrieveAsync(
+    new RetrieveSecureTokensRequest
     {
         ProcessingTerminalId = "1234001",
         SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -5018,18 +6423,19 @@ await client.Payments.SecureTokens.GetAsync(
 <dl>
 <dd>
 
-**request:** `GetSecureTokensRequest`
+**request:** `Payments.SecureTokens.RetrieveSecureTokensRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.SecureTokens.<a href="/src/Payroc/Payments/SecureTokens/SecureTokensClient.cs">DeleteAsync</a>(DeleteSecureTokensRequest { ... })</code></summary>
+<details><summary><code>client.Payments.SecureTokens.<a href="/src/Payroc/Payments/SecureTokens/SecureTokensClient.cs">DeleteAsync</a>(Payments.SecureTokens.DeleteSecureTokensRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -5041,9 +6447,13 @@ await client.Payments.SecureTokens.GetAsync(
 <dl>
 <dd>
 
-Delete a secure token and its represented payment details.  
-**Note**: If you delete a token, you can't reuse its identifier.
+Use this method to delete a secure token and its related payment details from our vault.  
 
+To delete a secure token, you need its secureTokenId, which you sent in the request of the [Create Secure Token](/api/schema/payments/secure-tokens/create) method.  
+
+**Note:** If you don’t have the secureTokenId, use our [List Secure Tokens](/api/schema/payments/secure-tokens/list) method to search for the secure token.  
+
+When you delete a secure token, you can’t recover it, and you can’t reuse its identifier for a new token.  
 </dd>
 </dl>
 </dd>
@@ -5066,7 +6476,6 @@ await client.Payments.SecureTokens.DeleteAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -5080,18 +6489,19 @@ await client.Payments.SecureTokens.DeleteAsync(
 <dl>
 <dd>
 
-**request:** `DeleteSecureTokensRequest`
+**request:** `Payments.SecureTokens.DeleteSecureTokensRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.SecureTokens.<a href="/src/Payroc/Payments/SecureTokens/SecureTokensClient.cs">UpdateAsync</a>(UpdateSecureTokensRequest { ... }) -> SecureToken</code></summary>
+<details><summary><code>client.Payments.SecureTokens.<a href="/src/Payroc/Payments/SecureTokens/SecureTokensClient.cs">UpdateAsync</a>(Payments.SecureTokens.UpdateSecureTokensRequest { ... }) -> SecureToken</code></summary>
 <dl>
 <dd>
 
@@ -5103,10 +6513,31 @@ await client.Payments.SecureTokens.DeleteAsync(
 <dl>
 <dd>
 
-Update the customer's payment details that are represented by the secure token.
+Use this method to partially update a secure token. Structure your request to follow the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.  
 
-Structure your request to follow the RFC 6902 standard.
+To update a secure token, you need its secureTokenId, which you sent in the request of the [Create Secure Token](https://docs.payroc.com/api/schema/payments/secure-tokens/create) method.  
 
+**Note:** If you don't have the secureTokenId, use our [List Secure Tokens](https://docs.payroc.com/api/schema/payments/secure-tokens/list) method to search  for the payment.  
+
+You can update all of the properties of the secure token, except the following:  
+- processingTerminalId  
+- type  
+- token  
+- status  
+- source/Card  
+  - type  
+  - cardNumber  
+  - cardType  
+  - currency  
+  - debit  
+  - surcharging  
+- source/ACH account  
+  - accountNumber  
+  - routingNumber  
+- source/PAD account  
+  - type  
+  - accountNumber  
+  - transitNumber  
 </dd>
 </dl>
 </dd>
@@ -5136,7 +6567,6 @@ await client.Payments.SecureTokens.UpdateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -5150,18 +6580,19 @@ await client.Payments.SecureTokens.UpdateAsync(
 <dl>
 <dd>
 
-**request:** `UpdateSecureTokensRequest`
+**request:** `Payments.SecureTokens.UpdateSecureTokensRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.SecureTokens.<a href="/src/Payroc/Payments/SecureTokens/SecureTokensClient.cs">AccountUpdateAsync</a>(AccountUpdateSecureTokensRequest { ... }) -> SecureToken</code></summary>
+<details><summary><code>client.Payments.SecureTokens.<a href="/src/Payroc/Payments/SecureTokens/SecureTokensClient.cs">UpdateAccountAsync</a>(Payments.SecureTokens.UpdateAccountSecureTokensRequest { ... }) -> SecureToken</code></summary>
 <dl>
 <dd>
 
@@ -5173,13 +6604,9 @@ await client.Payments.SecureTokens.UpdateAsync(
 <dl>
 <dd>
 
-If you have a single-use token, use this method to update payment details that are represented by a secure token.
+Use this method to update a secure token if you have a single-use token from Hosted Fields.  
 
-If you don’t have a single-use token, and you want to update payment details represented by a secure token, go to
-[updateSecureToken](https://docs.payroc.com/api/resources#updateSecureToken).
-
-**Note**: For more information about tokenization, go to [tokenization](https://docs.payroc.com/knowledge/basic-concepts/tokenization).
-
+**Note:** If you don't have a single-use token, you can update saved payment details with our [Update Secure Token](/api/resources#updateSecureToken) method. For more information about our two options to update a secure token, go to [Update saved payment details](/guides/integrate/update-saved-payment-details).  
 </dd>
 </dl>
 </dd>
@@ -5194,11 +6621,11 @@ If you don’t have a single-use token, and you want to update payment details r
 <dd>
 
 ```csharp
-await client.Payments.SecureTokens.AccountUpdateAsync(
-    new AccountUpdateSecureTokensRequest
+await client.Payments.SecureTokens.UpdateAccountAsync(
+    new UpdateAccountSecureTokensRequest
     {
-        SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
         ProcessingTerminalId = "1234001",
+        SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
         Body = new AccountUpdate(
             new AccountUpdate.SingleUseToken(
@@ -5212,7 +6639,6 @@ await client.Payments.SecureTokens.AccountUpdateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -5226,20 +6652,20 @@ await client.Payments.SecureTokens.AccountUpdateAsync(
 <dl>
 <dd>
 
-**request:** `AccountUpdateSecureTokensRequest`
+**request:** `Payments.SecureTokens.UpdateAccountSecureTokensRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Payments SingleUseTokens
-
-<details><summary><code>client.Payments.SingleUseTokens.<a href="/src/Payroc/Payments/SingleUseTokens/SingleUseTokensClient.cs">CreateAsync</a>(SingleUseTokenRequest { ... }) -> SingleUseToken</code></summary>
+<details><summary><code>client.Payments.SingleUseTokens.<a href="/src/Payroc/Payments/SingleUseTokens/SingleUseTokensClient.cs">CreateAsync</a>(Payments.SingleUseTokens.SingleUseTokenRequest { ... }) -> SingleUseToken</code></summary>
 <dl>
 <dd>
 
@@ -5251,8 +6677,13 @@ await client.Payments.SecureTokens.AccountUpdateAsync(
 <dl>
 <dd>
 
-Create a single-use token. The token expires after 30 minutes.
+Use this method to create a single-use token that represents a customer’s payment details.  
 
+A single-use token expires after 30 minutes and merchants can use them only once.  
+
+**Note:** To create a reusable permanent token, go to [Create Secure Token](https://docs.payroc.com/api/schema/payments/secure-tokens/create).  
+
+In the request, send the customer’s payment details. If the request is successful, our gateway returns a token that you can use in a follow-on action, for example, [run a sale](https://docs.payroc.com/api/schema/payments/create).
 </dd>
 </dl>
 </dd>
@@ -5285,7 +6716,7 @@ await client.Payments.SingleUseTokens.CreateAsync(
                                 Device = new Device
                                 {
                                     Model = DeviceModel.BbposChp,
-                                    SerialNumber = "PAX123456789",
+                                    SerialNumber = "1850010868",
                                 },
                                 RawData =
                                     "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
@@ -5298,7 +6729,6 @@ await client.Payments.SingleUseTokens.CreateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -5312,20 +6742,20 @@ await client.Payments.SingleUseTokens.CreateAsync(
 <dl>
 <dd>
 
-**request:** `SingleUseTokenRequest`
+**request:** `Payments.SingleUseTokens.SingleUseTokenRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Payments HostedFields
-
-<details><summary><code>client.Payments.HostedFields.<a href="/src/Payroc/Payments/HostedFields/HostedFieldsClient.cs">CreateAsync</a>(HostedFieldsCreateSessionRequest { ... }) -> HostedFieldsCreateSessionResponse</code></summary>
+<details><summary><code>client.Payments.HostedFields.<a href="/src/Payroc/Payments/HostedFields/HostedFieldsClient.cs">CreateAsync</a>(Payments.HostedFields.HostedFieldsCreateSessionRequest { ... }) -> HostedFieldsCreateSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -5337,12 +6767,11 @@ await client.Payments.SingleUseTokens.CreateAsync(
 <dl>
 <dd>
 
-Use this method to create a session token that you use to authenticate a Hosted Fields session. When you create an instance of Hosted Fields on a webpage, include the session token in the config object.
+Use this method to create a session token that you use to authenticate a Hosted Fields session. When you create an instance of Hosted Fields on a webpage, include the session token in the config object.  
 
-For more information about how to set up Hosted Fields, see [Set up Hosted Fields](https://docs.payroc.com/guides/integrate/hosted-fields/set-up-hosted-fields).
+For more information about how to set up Hosted Fields, see [Set up Hosted Fields](https://docs.payroc.com/guides/integrate/hosted-fields/set-up-hosted-fields).  
 
 **Note:** You need to generate a new session token each time you load Hosted Fields on a webpage.
-
 </dd>
 </dl>
 </dd>
@@ -5367,7 +6796,6 @@ await client.Payments.HostedFields.CreateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -5381,20 +6809,20 @@ await client.Payments.HostedFields.CreateAsync(
 <dl>
 <dd>
 
-**request:** `HostedFieldsCreateSessionRequest`
+**request:** `Payments.HostedFields.HostedFieldsCreateSessionRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-## Payments Refunds
-
-<details><summary><code>client.Payments.Refunds.<a href="/src/Payroc/Payments/Refunds/RefundsClient.cs">ListAsync</a>(ListRefundsRequest { ... }) -> PayrocPager<Refund></code></summary>
+## Payments ApplePaySessions
+<details><summary><code>client.Payments.ApplePaySessions.<a href="/src/Payroc/Payments/ApplePaySessions/ApplePaySessionsClient.cs">CreateAsync</a>(Payments.ApplePaySessions.ApplePaySessions { ... }) -> ApplePayResponseSession</code></summary>
 <dl>
 <dd>
 
@@ -5406,9 +6834,79 @@ await client.Payments.HostedFields.CreateAsync(
 <dl>
 <dd>
 
-Return a list of refunds.  
-To filter your results, use query parameters.
+Use this method to start an Apple Pay session for your merchant. In the response, we return the startSessionObject that you send to Apple when you retrieve the cardholder's encrypted payment details.
+</dd>
+</dl>
+</dd>
+</dl>
 
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Payments.ApplePaySessions.CreateAsync(
+    new ApplePaySessions
+    {
+        ProcessingTerminalId = "1234001",
+        AppleDomainId = "DUHDZJHGYY",
+        AppleValidationUrl = "https://apple-pay-gateway.apple.com/paymentservices/startSession",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Payments.ApplePaySessions.ApplePaySessions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Payments Refunds
+<details><summary><code>client.Payments.Refunds.<a href="/src/Payroc/Payments/Refunds/RefundsClient.cs">ListAsync</a>(Payments.Refunds.ListRefundsRequest { ... }) -> Core.PayrocPager<Refund></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to return a [paginated](/api/pagination) list of refunds.  
+
+**Note:** If you want to view a specific refund and you have its refundId, use our [Retrieve Refund](/api/schema/payments/refunds/get) method.  
+
+Use query parameters to filter the list of results that we return, for example, to search for refunds for a customer, a tender type, or a date range.
+Our gateway returns the following information about each refund in the list:  
+- Order details, including the refund amount and when we processed the refund.
+- Payment card details, including the masked card number, expiry date, and payment method.
+- Cardholder details, including their contact information and shipping address.  
+
+For referenced refunds, our gateway also returns details about the payment that the refund is linked to.
 </dd>
 </dl>
 </dd>
@@ -5434,13 +6932,12 @@ await client.Payments.Refunds.ListAsync(
         Last4 = "7062",
         DateFrom = new DateTime(2024, 07, 01, 15, 30, 00, 000),
         DateTo = new DateTime(2024, 07, 03, 15, 30, 00, 000),
-        SettlementDate = "2024-07-02",
+        SettlementDate = new DateOnly(2024, 7, 2),
         Before = "2571",
         After = "8516",
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -5454,18 +6951,19 @@ await client.Payments.Refunds.ListAsync(
 <dl>
 <dd>
 
-**request:** `ListRefundsRequest`
+**request:** `Payments.Refunds.ListRefundsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.Refunds.<a href="/src/Payroc/Payments/Refunds/RefundsClient.cs">CreateAsync</a>(UnreferencedRefund { ... }) -> Refund</code></summary>
+<details><summary><code>client.Payments.Refunds.<a href="/src/Payroc/Payments/Refunds/RefundsClient.cs">CreateAsync</a>(Payments.Refunds.UnreferencedRefund { ... }) -> Refund</code></summary>
 <dl>
 <dd>
 
@@ -5477,8 +6975,17 @@ await client.Payments.Refunds.ListAsync(
 <dl>
 <dd>
 
-Create an unreferenced refund.
+Use this method to create an unreferenced refund. An unreferenced refund is a refund that isn't linked to a payment.  
 
+**Note:** If you have the paymentId of the payment you want to refund, use our [Refund Payment](https://docs.payroc.com/api/schema/payments/refund) method. If you use our Refund Payment method, our gateway sends the refund amount to the customer's original payment method and links the refund to the payment.  
+
+In the request, you must provide the customer's payment details and the refund amount.  
+
+In the response, our gateway returns information about the refund and a refundId, which you need for the following methods:  
+
+- [Retrieve refund](/api/schema/payments/refunds/get) - View the details of the refund.  
+- [Adjust refund](/api/schema/payments/refunds/adjust) - Update the details of the refund.  
+- [Reverse refund](/api/schema/payments/refunds/reverse) - Cancel the refund if it's in an open batch.  
 </dd>
 </dl>
 </dd>
@@ -5517,7 +7024,7 @@ await client.Payments.Refunds.CreateAsync(
                                 Device = new Device
                                 {
                                     Model = DeviceModel.BbposChp,
-                                    SerialNumber = "PAX123456789",
+                                    SerialNumber = "1850010868",
                                 },
                                 RawData =
                                     "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
@@ -5534,7 +7041,6 @@ await client.Payments.Refunds.CreateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -5548,18 +7054,19 @@ await client.Payments.Refunds.CreateAsync(
 <dl>
 <dd>
 
-**request:** `UnreferencedRefund`
+**request:** `Payments.Refunds.UnreferencedRefund` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.Refunds.<a href="/src/Payroc/Payments/Refunds/RefundsClient.cs">GetAsync</a>(GetRefundsRequest { ... }) -> Refund</code></summary>
+<details><summary><code>client.Payments.Refunds.<a href="/src/Payroc/Payments/Refunds/RefundsClient.cs">RetrieveAsync</a>(Payments.Refunds.RetrieveRefundsRequest { ... }) -> Refund</code></summary>
 <dl>
 <dd>
 
@@ -5571,8 +7078,18 @@ await client.Payments.Refunds.CreateAsync(
 <dl>
 <dd>
 
-Retrieve a specific refund.
+Use this method to retrieve information about a refund.  
 
+To retrieve a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/refund) method or the [Create Refund](/api/schema/payments/refunds/create) method.  
+
+**Note:** If you don't have the refundId, use our [List Refunds](/api/schema/payments/refunds/list) method to search for the refund.  
+
+Our gateway returns the following information about the refund:  
+- Order details, including the refund amount and when we processed the refund.
+- Payment card details, including the masked card number, expiry date, and payment method.
+- Cardholder details, including their contact information and shipping address.  
+
+If the refund is a referenced refund, our gateway also returns details about the payment that the refund is linked to.
 </dd>
 </dl>
 </dd>
@@ -5587,9 +7104,8 @@ Retrieve a specific refund.
 <dd>
 
 ```csharp
-await client.Payments.Refunds.GetAsync(new GetRefundsRequest { RefundId = "CD3HN88U9F" });
+await client.Payments.Refunds.RetrieveAsync(new RetrieveRefundsRequest { RefundId = "CD3HN88U9F" });
 ```
-
 </dd>
 </dl>
 </dd>
@@ -5603,18 +7119,19 @@ await client.Payments.Refunds.GetAsync(new GetRefundsRequest { RefundId = "CD3HN
 <dl>
 <dd>
 
-**request:** `GetRefundsRequest`
+**request:** `Payments.Refunds.RetrieveRefundsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.Refunds.<a href="/src/Payroc/Payments/Refunds/RefundsClient.cs">AdjustAsync</a>(RefundAdjustment { ... }) -> Refund</code></summary>
+<details><summary><code>client.Payments.Refunds.<a href="/src/Payroc/Payments/Refunds/RefundsClient.cs">AdjustAsync</a>(Payments.Refunds.RefundAdjustment { ... }) -> Refund</code></summary>
 <dl>
 <dd>
 
@@ -5626,8 +7143,22 @@ await client.Payments.Refunds.GetAsync(new GetRefundsRequest { RefundId = "CD3HN
 <dl>
 <dd>
 
-Adjust an existing refund.
+Use this method to adjust a refund in an open batch.  
 
+To adjust a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/refund) method or the [Create Refund](/api/schema/payments/refunds/create) method.  
+
+**Note:** If you don’t have the refundId, use our [List Refunds](/api/schema/payments/refunds/list) method to search for the refund.  
+
+You can adjust the following details of the refund:
+- Customer details, including shipping address and contact information.
+- Status of the refund.  
+
+Our gateway returns information about the adjusted refund, including:
+- Order details, including the refund amount and when we processed the refund.
+- Payment card details, including the masked card number, expiry date, and payment method.
+- Cardholder details, including their contact information and shipping address.  
+
+If the refund is a referenced refund, our gateway also returns details about the payment that the refund is linked to.
 </dd>
 </dl>
 </dd>
@@ -5657,7 +7188,6 @@ await client.Payments.Refunds.AdjustAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -5671,18 +7201,19 @@ await client.Payments.Refunds.AdjustAsync(
 <dl>
 <dd>
 
-**request:** `RefundAdjustment`
+**request:** `Payments.Refunds.RefundAdjustment` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.Refunds.<a href="/src/Payroc/Payments/Refunds/RefundsClient.cs">ReverseAsync</a>(ReverseRefundsRequest { ... }) -> Refund</code></summary>
+<details><summary><code>client.Payments.Refunds.<a href="/src/Payroc/Payments/Refunds/RefundsClient.cs">ReverseAsync</a>(Payments.Refunds.ReverseRefundsRequest { ... }) -> Refund</code></summary>
 <dl>
 <dd>
 
@@ -5694,8 +7225,13 @@ await client.Payments.Refunds.AdjustAsync(
 <dl>
 <dd>
 
-Void an existing refund.
+Use this method to cancel a refund in an open batch.  
 
+To cancel a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/refund) or [Create Refund](/api/schema/payments/refunds/create) method.  
+
+**Note:** If you don’t have the refundId, use our [List Refunds](/api/schema/payments/refunds/list) method to search for the refund.  
+
+If your request is successful, the gateway removes the refund from the merchant’s open batch and no funds are returned to the cardholder’s account.
 </dd>
 </dl>
 </dd>
@@ -5718,7 +7254,6 @@ await client.Payments.Refunds.ReverseAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -5732,20 +7267,20 @@ await client.Payments.Refunds.ReverseAsync(
 <dl>
 <dd>
 
-**request:** `ReverseRefundsRequest`
+**request:** `Payments.Refunds.ReverseRefundsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Payments Cards
-
-<details><summary><code>client.Payments.Cards.<a href="/src/Payroc/Payments/Cards/CardsClient.cs">VerifyAsync</a>(CardVerificationRequest { ... }) -> CardVerificationResult</code></summary>
+<details><summary><code>client.Payments.Cards.<a href="/src/Payroc/Payments/Cards/CardsClient.cs">VerifyAsync</a>(Payments.Cards.CardVerificationRequest { ... }) -> CardVerificationResult</code></summary>
 <dl>
 <dd>
 
@@ -5758,7 +7293,6 @@ await client.Payments.Refunds.ReverseAsync(
 <dd>
 
 Verify that a card is valid. For banks that do not support verification, we charge a micro deposit that we void immediately.
-
 </dd>
 </dl>
 </dd>
@@ -5790,7 +7324,7 @@ await client.Payments.Cards.VerifyAsync(
                                 Device = new Device
                                 {
                                     Model = DeviceModel.BbposChp,
-                                    SerialNumber = "PAX123456789",
+                                    SerialNumber = "1850010868",
                                 },
                                 RawData =
                                     "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
@@ -5803,7 +7337,6 @@ await client.Payments.Cards.VerifyAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -5817,18 +7350,19 @@ await client.Payments.Cards.VerifyAsync(
 <dl>
 <dd>
 
-**request:** `CardVerificationRequest`
+**request:** `Payments.Cards.CardVerificationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.Cards.<a href="/src/Payroc/Payments/Cards/CardsClient.cs">BalanceAsync</a>(BalanceInquiry { ... }) -> Balance</code></summary>
+<details><summary><code>client.Payments.Cards.<a href="/src/Payroc/Payments/Cards/CardsClient.cs">ViewBalanceAsync</a>(Payments.Cards.BalanceInquiry { ... }) -> Balance</code></summary>
 <dl>
 <dd>
 
@@ -5840,8 +7374,9 @@ await client.Payments.Cards.VerifyAsync(
 <dl>
 <dd>
 
-Request the balance of an Electronic Benefit Transfer (EBT) card.
+Use this method to view the balance of an Electronic Benefit Transfer (EBT) card.  
 
+If the request is successful, our gateway returns the current balance of an EBT card. 
 </dd>
 </dl>
 </dd>
@@ -5856,7 +7391,7 @@ Request the balance of an Electronic Benefit Transfer (EBT) card.
 <dd>
 
 ```csharp
-await client.Payments.Cards.BalanceAsync(
+await client.Payments.Cards.ViewBalanceAsync(
     new BalanceInquiry
     {
         ProcessingTerminalId = "1234001",
@@ -5873,7 +7408,7 @@ await client.Payments.Cards.BalanceAsync(
                                 Device = new Device
                                 {
                                     Model = DeviceModel.BbposChp,
-                                    SerialNumber = "PAX123456789",
+                                    SerialNumber = "1850010868",
                                 },
                                 RawData =
                                     "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
@@ -5886,7 +7421,6 @@ await client.Payments.Cards.BalanceAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -5900,18 +7434,19 @@ await client.Payments.Cards.BalanceAsync(
 <dl>
 <dd>
 
-**request:** `BalanceInquiry`
+**request:** `Payments.Cards.BalanceInquiry` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.Cards.<a href="/src/Payroc/Payments/Cards/CardsClient.cs">BinLookupAsync</a>(BinLookup { ... }) -> CardInfo</code></summary>
+<details><summary><code>client.Payments.Cards.<a href="/src/Payroc/Payments/Cards/CardsClient.cs">LookupBinAsync</a>(Payments.Cards.BinLookup { ... }) -> CardInfo</code></summary>
 <dl>
 <dd>
 
@@ -5923,8 +7458,13 @@ await client.Payments.Cards.BalanceAsync(
 <dl>
 <dd>
 
-Perform a BIN (Bank Identification Number) lookup to retrieve information about a card.
+Use this method to retrieve information about a debit card, a credit card, or an EBT card. If you apply surcharges to transactions, you can also check if the card supports surcharging.  
 
+In the response, our gateway returns the following information about the card:  
+
+- **Card details** - Information about the card, for example, the issuing bank and the masked card number.  
+
+- **Surcharging information** - If you apply a surcharge to transactions, our gateway checks that the card supports surcharging and returns information about the surcharge. For more information about surcharging, go to [Credit card surcharging](/knowledge/card-payments/credit-card-surcharging). 
 </dd>
 </dl>
 </dd>
@@ -5939,7 +7479,7 @@ Perform a BIN (Bank Identification Number) lookup to retrieve information about 
 <dd>
 
 ```csharp
-await client.Payments.Cards.BinLookupAsync(
+await client.Payments.Cards.LookupBinAsync(
     new BinLookup
     {
         ProcessingTerminalId = "1234001",
@@ -5954,7 +7494,7 @@ await client.Payments.Cards.BinLookupAsync(
                                 Device = new Device
                                 {
                                     Model = DeviceModel.BbposChp,
-                                    SerialNumber = "PAX123456789",
+                                    SerialNumber = "1850010868",
                                 },
                                 RawData =
                                     "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
@@ -5967,7 +7507,6 @@ await client.Payments.Cards.BinLookupAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -5981,20 +7520,20 @@ await client.Payments.Cards.BinLookupAsync(
 <dl>
 <dd>
 
-**request:** `BinLookup`
+**request:** `Payments.Cards.BinLookup` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Payments CurrencyConversion
-
-<details><summary><code>client.Payments.CurrencyConversion.<a href="/src/Payroc/Payments/CurrencyConversion/CurrencyConversionClient.cs">GetFxRatesAsync</a>(FxRateInquiry { ... }) -> FxRate</code></summary>
+<details><summary><code>client.Payments.CurrencyConversion.<a href="/src/Payroc/Payments/CurrencyConversion/CurrencyConversionClient.cs">RetrieveFxRatesAsync</a>(Payments.CurrencyConversion.FxRateInquiry { ... }) -> FxRate</code></summary>
 <dl>
 <dd>
 
@@ -6009,7 +7548,6 @@ await client.Payments.Cards.BinLookupAsync(
 Check if a customer’s card is eligible for Dynamic Currency Conversion (DCC).
 If the card is eligible for DCC, offer currency conversion to the customer during a transaction.  
 **Note:** We offer this through the DCC service, which gives customers a choice to pay in the local currency or their own currency.
-
 </dd>
 </dl>
 </dd>
@@ -6024,7 +7562,7 @@ If the card is eligible for DCC, offer currency conversion to the customer durin
 <dd>
 
 ```csharp
-await client.Payments.CurrencyConversion.GetFxRatesAsync(
+await client.Payments.CurrencyConversion.RetrieveFxRatesAsync(
     new FxRateInquiry
     {
         Channel = FxRateInquiryChannel.Web,
@@ -6043,7 +7581,7 @@ await client.Payments.CurrencyConversion.GetFxRatesAsync(
                                 Device = new Device
                                 {
                                     Model = DeviceModel.BbposChp,
-                                    SerialNumber = "PAX123456789",
+                                    SerialNumber = "1850010868",
                                 },
                                 RawData =
                                     "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
@@ -6056,7 +7594,6 @@ await client.Payments.CurrencyConversion.GetFxRatesAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -6070,20 +7607,20 @@ await client.Payments.CurrencyConversion.GetFxRatesAsync(
 <dl>
 <dd>
 
-**request:** `FxRateInquiry`
+**request:** `Payments.CurrencyConversion.FxRateInquiry` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Payments BankTransferPayments
-
-<details><summary><code>client.Payments.BankTransferPayments.<a href="/src/Payroc/Payments/BankTransferPayments/BankTransferPaymentsClient.cs">ListAsync</a>(ListBankTransferPaymentsRequest { ... }) -> PayrocPager<BankTransferPayment></code></summary>
+<details><summary><code>client.Payments.BankTransferPayments.<a href="/src/Payroc/Payments/BankTransferPayments/BankTransferPaymentsClient.cs">ListAsync</a>(Payments.BankTransferPayments.ListBankTransferPaymentsRequest { ... }) -> Core.PayrocPager<BankTransferPayment></code></summary>
 <dl>
 <dd>
 
@@ -6095,8 +7632,20 @@ await client.Payments.CurrencyConversion.GetFxRatesAsync(
 <dl>
 <dd>
 
-Retrieve a list of payments.
+Use this method to return a [paginated](/api/pagination) list of payments.  
 
+**Note:** If you want to view a specific payment and you have its paymentId, use our [Retrieve Payment](/api/schema/payments/bank-transfer-payments/get) method.  
+
+Use query parameters to filter the list of results that we return, for example, to search for payments for a customer, a date range, or a settlement state.  
+
+Our gateway returns the following information about each payment in the list:  
+
+- Order details, including the transaction amount and when it was processed.  
+- Bank account details, including the customer’s name and account number.  
+- Customer's details, including the customer’s phone number.  
+- Transaction details, including any refunds or re-presentments.  
+
+For each transaction, we also return the paymentId and an optional secureTokenId, which you can use to perform follow-on actions.  
 </dd>
 </dl>
 </dd>
@@ -6120,13 +7669,13 @@ await client.Payments.BankTransferPayments.ListAsync(
         Last4 = "7890",
         DateFrom = new DateTime(2024, 07, 01, 00, 00, 00, 000),
         DateTo = new DateTime(2024, 07, 31, 23, 59, 59, 000),
-        SettlementDate = "2024-07-15",
+        SettlementDate = new DateOnly(2024, 7, 15),
+        PaymentLinkId = "JZURRJBUPS",
         Before = "2571",
         After = "8516",
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -6140,18 +7689,19 @@ await client.Payments.BankTransferPayments.ListAsync(
 <dl>
 <dd>
 
-**request:** `ListBankTransferPaymentsRequest`
+**request:** `Payments.BankTransferPayments.ListBankTransferPaymentsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.BankTransferPayments.<a href="/src/Payroc/Payments/BankTransferPayments/BankTransferPaymentsClient.cs">CreateAsync</a>(BankTransferPaymentRequest { ... }) -> BankTransferPayment</code></summary>
+<details><summary><code>client.Payments.BankTransferPayments.<a href="/src/Payroc/Payments/BankTransferPayments/BankTransferPaymentsClient.cs">CreateAsync</a>(Payments.BankTransferPayments.BankTransferPaymentRequest { ... }) -> BankTransferPayment</code></summary>
 <dl>
 <dd>
 
@@ -6164,7 +7714,6 @@ await client.Payments.BankTransferPayments.ListAsync(
 <dd>
 
 Run a sale with a customer's bank account details.
-
 </dd>
 </dl>
 </dd>
@@ -6212,7 +7761,7 @@ await client.Payments.BankTransferPayments.CreateAsync(
                 ),
             },
         },
-        CredentialOnFile = new CredentialOnFile { Tokenize = true },
+        CredentialOnFile = new SchemasCredentialOnFile { Tokenize = true },
         PaymentMethod = new BankTransferPaymentRequestPaymentMethod(
             new BankTransferPaymentRequestPaymentMethod.Ach(
                 new AchPayload
@@ -6230,7 +7779,6 @@ await client.Payments.BankTransferPayments.CreateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -6244,18 +7792,19 @@ await client.Payments.BankTransferPayments.CreateAsync(
 <dl>
 <dd>
 
-**request:** `BankTransferPaymentRequest`
+**request:** `Payments.BankTransferPayments.BankTransferPaymentRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.BankTransferPayments.<a href="/src/Payroc/Payments/BankTransferPayments/BankTransferPaymentsClient.cs">GetAsync</a>(GetBankTransferPaymentsRequest { ... }) -> BankTransferPayment</code></summary>
+<details><summary><code>client.Payments.BankTransferPayments.<a href="/src/Payroc/Payments/BankTransferPayments/BankTransferPaymentsClient.cs">RetrieveAsync</a>(Payments.BankTransferPayments.RetrieveBankTransferPaymentsRequest { ... }) -> BankTransferPayment</code></summary>
 <dl>
 <dd>
 
@@ -6267,8 +7816,20 @@ await client.Payments.BankTransferPayments.CreateAsync(
 <dl>
 <dd>
 
-Retrieve a specific payment.
+Use this method to retrieve information about a bank transfer payment.  
 
+To retrieve a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/bank-transfer-payments/create) method.  
+
+Note: If you don’t have the paymentId, use our [List Payments](/api/schema/payments/bank-transfer-payments/list) method to search for the payment.  
+
+Our gateway returns the following information about the payment:  
+
+-	Order details, including the transaction amount and when it was processed.  
+-	Bank account details, including the customer’s name and account number.  
+-	Customer’s details, including the customer’s phone number.  
+-	Transaction details, including any refunds or re-presentments.  
+
+If the merchant saved the customer’s bank account details, our gateway returns a secureTokenID, which you can use to perform follow-on actions.
 </dd>
 </dl>
 </dd>
@@ -6283,11 +7844,10 @@ Retrieve a specific payment.
 <dd>
 
 ```csharp
-await client.Payments.BankTransferPayments.GetAsync(
-    new GetBankTransferPaymentsRequest { PaymentId = "M2MJOG6O2Y" }
+await client.Payments.BankTransferPayments.RetrieveAsync(
+    new RetrieveBankTransferPaymentsRequest { PaymentId = "M2MJOG6O2Y" }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -6301,18 +7861,19 @@ await client.Payments.BankTransferPayments.GetAsync(
 <dl>
 <dd>
 
-**request:** `GetBankTransferPaymentsRequest`
+**request:** `Payments.BankTransferPayments.RetrieveBankTransferPaymentsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.BankTransferPayments.<a href="/src/Payroc/Payments/BankTransferPayments/BankTransferPaymentsClient.cs">ReverseAsync</a>(ReverseBankTransferPaymentsRequest { ... }) -> BankTransferPayment</code></summary>
+<details><summary><code>client.Payments.BankTransferPayments.<a href="/src/Payroc/Payments/BankTransferPayments/BankTransferPaymentsClient.cs">ReverseAsync</a>(Payments.BankTransferPayments.ReverseBankTransferPaymentsRequest { ... }) -> BankTransferPayment</code></summary>
 <dl>
 <dd>
 
@@ -6324,8 +7885,13 @@ await client.Payments.BankTransferPayments.GetAsync(
 <dl>
 <dd>
 
-Cancel a payment in an open batch.
+Use this method to cancel a bank transfer payment in an open batch. This is also known as voiding a payment.  
 
+To cancel a bank transfer payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/bank-transfer-payments/create) method.  
+
+**Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/bank-transfer-payments/list) method to search for the bank transfer payment.  
+
+If your request is successful, our gateway removes the bank transfer payment from the merchant’s open batch and no funds are taken from the customer's bank account.  
 </dd>
 </dl>
 </dd>
@@ -6348,7 +7914,6 @@ await client.Payments.BankTransferPayments.ReverseAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -6362,18 +7927,19 @@ await client.Payments.BankTransferPayments.ReverseAsync(
 <dl>
 <dd>
 
-**request:** `ReverseBankTransferPaymentsRequest`
+**request:** `Payments.BankTransferPayments.ReverseBankTransferPaymentsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.BankTransferPayments.<a href="/src/Payroc/Payments/BankTransferPayments/BankTransferPaymentsClient.cs">RefundAsync</a>(BankTransferReferencedRefund { ... }) -> BankTransferPayment</code></summary>
+<details><summary><code>client.Payments.BankTransferPayments.<a href="/src/Payroc/Payments/BankTransferPayments/BankTransferPaymentsClient.cs">RefundAsync</a>(Payments.BankTransferPayments.BankTransferReferencedRefund { ... }) -> BankTransferPayment</code></summary>
 <dl>
 <dd>
 
@@ -6385,8 +7951,17 @@ await client.Payments.BankTransferPayments.ReverseAsync(
 <dl>
 <dd>
 
-Refund a payment.
+Use this method to refund a bank transfer payment that is in a closed batch.  
 
+To refund a bank transfer payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/bank-transfer-payments/create) method.  
+
+**Note:** If you don’t have the paymentId, use our [List Payments](/api/schema/payments/bank-transfer-payments/list) method to search for the bank transfer payment.  
+
+If your refund is successful, our gateway returns the payment amount to the customer's account.  
+
+**Things to consider**  
+- If the merchant refunds a bank transfer payment that is in an open batch, our gateway reverses the bank transfer payment.  
+- Some merchants can run unreferenced refunds, which means that they don’t need a paymentId to return an amount to a customer. For more information about how to run an unreferenced refund, go to [Create Refund](/api/schema/payments/bank-transfer-refunds/create).  
 </dd>
 </dl>
 </dd>
@@ -6411,7 +7986,6 @@ await client.Payments.BankTransferPayments.RefundAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -6425,18 +7999,19 @@ await client.Payments.BankTransferPayments.RefundAsync(
 <dl>
 <dd>
 
-**request:** `BankTransferReferencedRefund`
+**request:** `Payments.BankTransferPayments.BankTransferReferencedRefund` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.BankTransferPayments.<a href="/src/Payroc/Payments/BankTransferPayments/BankTransferPaymentsClient.cs">RepresentAsync</a>(Representment { ... }) -> BankTransferPayment</code></summary>
+<details><summary><code>client.Payments.BankTransferPayments.<a href="/src/Payroc/Payments/BankTransferPayments/BankTransferPaymentsClient.cs">RepresentAsync</a>(Payments.BankTransferPayments.Representment { ... }) -> BankTransferPayment</code></summary>
 <dl>
 <dd>
 
@@ -6448,8 +8023,16 @@ await client.Payments.BankTransferPayments.RefundAsync(
 <dl>
 <dd>
 
-Re-present a customer's bank account details if the first payment was declined.
+Use this method to re-present an ACH payment.  
 
+To re-present a payment, you need the paymentId of the return. To get the paymentId of the return, complete the following steps:  
+
+1.	Use our [Retrieve Payment](/api/schema/payments/bank-transfer-payments/get) method  to view the details of the original payment.  
+2.	From the [returns object](/api/schema/payments/bank-transfer-payments/get#response.body.returns) in the response, get the paymentId of the return.  
+
+Our gateway uses the bank account details from the original payment. If you want to update the customer's bank account details, send the new bank account details in the request.  
+
+If your request is successful, our gateway re-presents the payment.
 </dd>
 </dl>
 </dd>
@@ -6482,7 +8065,6 @@ await client.Payments.BankTransferPayments.RepresentAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -6496,20 +8078,20 @@ await client.Payments.BankTransferPayments.RepresentAsync(
 <dl>
 <dd>
 
-**request:** `Representment`
+**request:** `Payments.BankTransferPayments.Representment` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Payments BankTransferRefunds
-
-<details><summary><code>client.Payments.BankTransferRefunds.<a href="/src/Payroc/Payments/BankTransferRefunds/BankTransferRefundsClient.cs">ListAsync</a>(ListBankTransferRefundsRequest { ... }) -> PayrocPager<BankTransferRefund></code></summary>
+<details><summary><code>client.Payments.BankTransferRefunds.<a href="/src/Payroc/Payments/BankTransferRefunds/BankTransferRefundsClient.cs">ListAsync</a>(Payments.BankTransferRefunds.ListBankTransferRefundsRequest { ... }) -> Core.PayrocPager<BankTransferRefund></code></summary>
 <dl>
 <dd>
 
@@ -6521,8 +8103,18 @@ await client.Payments.BankTransferPayments.RepresentAsync(
 <dl>
 <dd>
 
-Return a list of refund transactions.
+Use this method to return a [paginated](/api/pagination) list of bank transfer refunds.  
 
+**Note:** If you want to view a specific refund and you have its refundId, use our Retrieve Refund method.  
+
+Use query parameters to filter the list of results that we return, for example, to search for refunds for a customer, an orderId, or a date range.  
+
+Our gateway returns the following information about each refund in the list:  
+
+-	Order details, including the refund amount and when it was processed.  
+-	Bank account details, including the customer’s name and account number.  
+
+For referenced refunds, our gateway also returns details about the payment that the refund is linked to.
 </dd>
 </dl>
 </dd>
@@ -6546,13 +8138,12 @@ await client.Payments.BankTransferRefunds.ListAsync(
         Last4 = "7062",
         DateFrom = new DateTime(2024, 07, 01, 00, 00, 00, 000),
         DateTo = new DateTime(2024, 07, 31, 23, 59, 59, 000),
-        SettlementDate = "2024-07-15",
+        SettlementDate = new DateOnly(2024, 7, 15),
         Before = "2571",
         After = "8516",
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -6566,18 +8157,19 @@ await client.Payments.BankTransferRefunds.ListAsync(
 <dl>
 <dd>
 
-**request:** `ListBankTransferRefundsRequest`
+**request:** `Payments.BankTransferRefunds.ListBankTransferRefundsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.BankTransferRefunds.<a href="/src/Payroc/Payments/BankTransferRefunds/BankTransferRefundsClient.cs">CreateAsync</a>(BankTransferUnreferencedRefund { ... }) -> BankTransferRefund</code></summary>
+<details><summary><code>client.Payments.BankTransferRefunds.<a href="/src/Payroc/Payments/BankTransferRefunds/BankTransferRefundsClient.cs">CreateAsync</a>(Payments.BankTransferRefunds.BankTransferUnreferencedRefund { ... }) -> BankTransferRefund</code></summary>
 <dl>
 <dd>
 
@@ -6589,9 +8181,16 @@ await client.Payments.BankTransferRefunds.ListAsync(
 <dl>
 <dd>
 
-Send a refund to a customer's bank account. The refund transaction is not linked to the previous transaction.  
-\*Note\*\*: This function is available to only certain merchant accounts.
+Use this method to create an unreferenced refund. An unreferenced refund is a refund that isn’t linked to a bank transfer payment.  
 
+**Note:** If you have the paymentId of the payment you want to refund, use our [Refund Payment](/api/schema/payments/bank-transfer-payments/refund) method. If you use our Refund Payment method, our gateway sends the refund amount to the customer’s original payment method and links the refund to the payment.  
+
+In the request, you must provide the customer’s payment method and information about the order including the refund amount.  
+
+In the response, our gateway returns information about the refund and a refundId, which you need for the following methods:  
+
+-	[Retrieve refund](/api/schema/payments/bank-transfer-refunds/get) – View the details of the refund.  
+-	[Reverse refund](/api/schema/payments/bank-transfer-refunds/reverse) – Cancel the refund if it’s in an open batch.  
 </dd>
 </dl>
 </dd>
@@ -6635,7 +8234,6 @@ await client.Payments.BankTransferRefunds.CreateAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -6649,18 +8247,19 @@ await client.Payments.BankTransferRefunds.CreateAsync(
 <dl>
 <dd>
 
-**request:** `BankTransferUnreferencedRefund`
+**request:** `Payments.BankTransferRefunds.BankTransferUnreferencedRefund` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.BankTransferRefunds.<a href="/src/Payroc/Payments/BankTransferRefunds/BankTransferRefundsClient.cs">GetAsync</a>(GetBankTransferRefundsRequest { ... }) -> BankTransferRefund</code></summary>
+<details><summary><code>client.Payments.BankTransferRefunds.<a href="/src/Payroc/Payments/BankTransferRefunds/BankTransferRefundsClient.cs">RetrieveAsync</a>(Payments.BankTransferRefunds.RetrieveBankTransferRefundsRequest { ... }) -> BankTransferRefund</code></summary>
 <dl>
 <dd>
 
@@ -6672,8 +8271,18 @@ await client.Payments.BankTransferRefunds.CreateAsync(
 <dl>
 <dd>
 
-Return a specific refund transaction.
+Use this method to retrieve information about a refund.  
 
+To retrieve a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/bank-transfer-payments/refund) method or the [Create Refund](/api/schema/payments/bank-transfer-refunds/create) method.  
+
+**Note:** If you don’t have the refundId, use our [List Refunds](/api/schema/payments/bank-transfer-refunds/list) method to search for the refund.  
+
+Our gateway returns the following information about the refund:  
+
+- Order details, including the refund amount and when it was processed.  
+- Bank account details, including the customer’s name and account number.  
+
+If the refund is a referenced refund, our gateway also returns details about the payment that the refund is linked to.
 </dd>
 </dl>
 </dd>
@@ -6688,11 +8297,10 @@ Return a specific refund transaction.
 <dd>
 
 ```csharp
-await client.Payments.BankTransferRefunds.GetAsync(
-    new GetBankTransferRefundsRequest { RefundId = "CD3HN88U9F" }
+await client.Payments.BankTransferRefunds.RetrieveAsync(
+    new RetrieveBankTransferRefundsRequest { RefundId = "CD3HN88U9F" }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -6706,18 +8314,19 @@ await client.Payments.BankTransferRefunds.GetAsync(
 <dl>
 <dd>
 
-**request:** `GetBankTransferRefundsRequest`
+**request:** `Payments.BankTransferRefunds.RetrieveBankTransferRefundsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Payments.BankTransferRefunds.<a href="/src/Payroc/Payments/BankTransferRefunds/BankTransferRefundsClient.cs">ReverseAsync</a>(ReverseBankTransferRefundsRequest { ... }) -> BankTransferRefund</code></summary>
+<details><summary><code>client.Payments.BankTransferRefunds.<a href="/src/Payroc/Payments/BankTransferRefunds/BankTransferRefundsClient.cs">ReverseAsync</a>(Payments.BankTransferRefunds.ReverseBankTransferRefundsRequest { ... }) -> BankTransferRefund</code></summary>
 <dl>
 <dd>
 
@@ -6729,8 +8338,13 @@ await client.Payments.BankTransferRefunds.GetAsync(
 <dl>
 <dd>
 
-Void a refund transaction.
+Use this method to cancel a bank transfer refund in an open batch.  
 
+To cancel a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/bank-transfer-payments/refund) or [Create Refund](/api/schema/payments/bank-transfer-refunds/create) method.  
+
+**Note:** If you don’t have the refundId, use our [List Refunds](/api/schema/payments/bank-transfer-refunds/list) method to search for the refund.  
+
+If your request is successful, the gateway removes the refund from the merchant’s open batch, and no funds are returned to the cardholder’s account.  
 </dd>
 </dl>
 </dd>
@@ -6753,7 +8367,6 @@ await client.Payments.BankTransferRefunds.ReverseAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -6767,20 +8380,20 @@ await client.Payments.BankTransferRefunds.ReverseAsync(
 <dl>
 <dd>
 
-**request:** `ReverseBankTransferRefundsRequest`
+**request:** `Payments.BankTransferRefunds.ReverseBankTransferRefundsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Payments BankAccounts
-
-<details><summary><code>client.Payments.BankAccounts.<a href="/src/Payroc/Payments/BankAccounts/BankAccountsClient.cs">VerifyAsync</a>(BankAccountVerificationRequest { ... }) -> BankAccountVerificationResult</code></summary>
+<details><summary><code>client.Payments.BankAccounts.<a href="/src/Payroc/Payments/BankAccounts/BankAccountsClient.cs">VerifyAsync</a>(Payments.BankAccounts.BankAccountVerificationRequest { ... }) -> BankAccountVerificationResult</code></summary>
 <dl>
 <dd>
 
@@ -6793,7 +8406,6 @@ await client.Payments.BankTransferRefunds.ReverseAsync(
 <dd>
 
 Verify the customer's bank account details.
-
 </dd>
 </dl>
 </dd>
@@ -6827,7 +8439,6 @@ await client.Payments.BankAccounts.VerifyAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -6841,20 +8452,160 @@ await client.Payments.BankAccounts.VerifyAsync(
 <dl>
 <dd>
 
-**request:** `BankAccountVerificationRequest`
+**request:** `Payments.BankAccounts.BankAccountVerificationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
+</details>
+
+## Payments PaymentLinks SharingEvents
+<details><summary><code>client.Payments.PaymentLinks.SharingEvents.<a href="/src/Payroc/Payments/PaymentLinks/SharingEvents/SharingEventsClient.cs">ListAsync</a>(Payments.PaymentLinks.SharingEvents.ListSharingEventsRequest { ... }) -> Core.PayrocPager<PaymentLinkEmailShareEvent></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of sharing events for a payment link. A sharing event occurs when a merchant shares a payment link with a customer.
 </dd>
 </dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Payments.PaymentLinks.SharingEvents.ListAsync(
+    new ListSharingEventsRequest
+    {
+        PaymentLinkId = "JZURRJBUPS",
+        RecipientName = "Sarah Hazel Hopper",
+        RecipientEmail = "sarah.hopper@example.com",
+        Before = "2571",
+        After = "8516",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Payments.PaymentLinks.SharingEvents.ListSharingEventsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Payments.PaymentLinks.SharingEvents.<a href="/src/Payroc/Payments/PaymentLinks/SharingEvents/SharingEventsClient.cs">ShareAsync</a>(Payments.PaymentLinks.SharingEvents.ShareSharingEventsRequest { ... }) -> PaymentLinkEmailShareEvent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to email a payment link that the merchant has already created.
+**Note:** To create a payment link, go to [Create payment link](#createPaymentLink).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Payments.PaymentLinks.SharingEvents.ShareAsync(
+    new ShareSharingEventsRequest
+    {
+        PaymentLinkId = "JZURRJBUPS",
+        IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+        Body = new PaymentLinkEmailShareEvent
+        {
+            SharingMethod = "email",
+            MerchantCopy = true,
+            Message =
+                "Dear Sarah,\n\nYour insurance is expiring this month.\nPlease, pay the renewal fee by the end of the month to renew it.\n",
+            Recipients = new List<PaymentLinkEmailRecipient>()
+            {
+                new PaymentLinkEmailRecipient
+                {
+                    Name = "Sarah Hazel Hopper",
+                    Email = "sarah.hopper@example.com",
+                },
+            },
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Payments.PaymentLinks.SharingEvents.ShareSharingEventsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
 ## PayrocCloud PaymentInstructions
-
-<details><summary><code>client.PayrocCloud.PaymentInstructions.<a href="/src/Payroc/PayrocCloud/PaymentInstructions/PaymentInstructionsClient.cs">SendAsync</a>(PaymentInstructionRequest { ... }) -> PaymentInstruction</code></summary>
+<details><summary><code>client.PayrocCloud.PaymentInstructions.<a href="/src/Payroc/PayrocCloud/PaymentInstructions/PaymentInstructionsClient.cs">SendAsync</a>(PayrocCloud.PaymentInstructions.PaymentInstructionRequest { ... }) -> PaymentInstruction</code></summary>
 <dl>
 <dd>
 
@@ -6867,7 +8618,6 @@ await client.Payments.BankAccounts.VerifyAsync(
 <dd>
 
 Submit an instruction request to initiate a sale on a payment device.
-
 </dd>
 </dl>
 </dd>
@@ -6903,7 +8653,6 @@ await client.PayrocCloud.PaymentInstructions.SendAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -6917,18 +8666,19 @@ await client.PayrocCloud.PaymentInstructions.SendAsync(
 <dl>
 <dd>
 
-**request:** `PaymentInstructionRequest`
+**request:** `PayrocCloud.PaymentInstructions.PaymentInstructionRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.PayrocCloud.PaymentInstructions.<a href="/src/Payroc/PayrocCloud/PaymentInstructions/PaymentInstructionsClient.cs">GetAsync</a>(GetPaymentInstructionsRequest { ... }) -> PaymentInstruction</code></summary>
+<details><summary><code>client.PayrocCloud.PaymentInstructions.<a href="/src/Payroc/PayrocCloud/PaymentInstructions/PaymentInstructionsClient.cs">RetrieveAsync</a>(PayrocCloud.PaymentInstructions.RetrievePaymentInstructionsRequest { ... }) -> PaymentInstruction</code></summary>
 <dl>
 <dd>
 
@@ -6941,7 +8691,6 @@ await client.PayrocCloud.PaymentInstructions.SendAsync(
 <dd>
 
 Retrieve the current status of a specific payment instruction.
-
 </dd>
 </dl>
 </dd>
@@ -6956,11 +8705,13 @@ Retrieve the current status of a specific payment instruction.
 <dd>
 
 ```csharp
-await client.PayrocCloud.PaymentInstructions.GetAsync(
-    new GetPaymentInstructionsRequest { PaymentInstructionId = "e743a9165d134678a9100ebba3b29597" }
+await client.PayrocCloud.PaymentInstructions.RetrieveAsync(
+    new RetrievePaymentInstructionsRequest
+    {
+        PaymentInstructionId = "e743a9165d134678a9100ebba3b29597",
+    }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -6974,20 +8725,20 @@ await client.PayrocCloud.PaymentInstructions.GetAsync(
 <dl>
 <dd>
 
-**request:** `GetPaymentInstructionsRequest`
+**request:** `PayrocCloud.PaymentInstructions.RetrievePaymentInstructionsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## PayrocCloud RefundInstructions
-
-<details><summary><code>client.PayrocCloud.RefundInstructions.<a href="/src/Payroc/PayrocCloud/RefundInstructions/RefundInstructionsClient.cs">SendAsync</a>(RefundInstructionRequest { ... }) -> RefundInstruction</code></summary>
+<details><summary><code>client.PayrocCloud.RefundInstructions.<a href="/src/Payroc/PayrocCloud/RefundInstructions/RefundInstructionsClient.cs">SendAsync</a>(PayrocCloud.RefundInstructions.RefundInstructionRequest { ... }) -> RefundInstruction</code></summary>
 <dl>
 <dd>
 
@@ -7000,7 +8751,6 @@ await client.PayrocCloud.PaymentInstructions.GetAsync(
 <dd>
 
 Submit an instruction request to initiate a refund on a payment device.
-
 </dd>
 </dl>
 </dd>
@@ -7036,7 +8786,6 @@ await client.PayrocCloud.RefundInstructions.SendAsync(
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -7050,18 +8799,19 @@ await client.PayrocCloud.RefundInstructions.SendAsync(
 <dl>
 <dd>
 
-**request:** `RefundInstructionRequest`
+**request:** `PayrocCloud.RefundInstructions.RefundInstructionRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.PayrocCloud.RefundInstructions.<a href="/src/Payroc/PayrocCloud/RefundInstructions/RefundInstructionsClient.cs">GetAsync</a>(GetRefundInstructionsRequest { ... }) -> RefundInstruction</code></summary>
+<details><summary><code>client.PayrocCloud.RefundInstructions.<a href="/src/Payroc/PayrocCloud/RefundInstructions/RefundInstructionsClient.cs">RetrieveAsync</a>(PayrocCloud.RefundInstructions.RetrieveRefundInstructionsRequest { ... }) -> RefundInstruction</code></summary>
 <dl>
 <dd>
 
@@ -7074,7 +8824,6 @@ await client.PayrocCloud.RefundInstructions.SendAsync(
 <dd>
 
 Retrieve the current status of a specific refund instruction.
-
 </dd>
 </dl>
 </dd>
@@ -7089,11 +8838,13 @@ Retrieve the current status of a specific refund instruction.
 <dd>
 
 ```csharp
-await client.PayrocCloud.RefundInstructions.GetAsync(
-    new GetRefundInstructionsRequest { RefundInstructionId = "a37439165d134678a9100ebba3b29597" }
+await client.PayrocCloud.RefundInstructions.RetrieveAsync(
+    new RetrieveRefundInstructionsRequest
+    {
+        RefundInstructionId = "a37439165d134678a9100ebba3b29597",
+    }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -7107,20 +8858,20 @@ await client.PayrocCloud.RefundInstructions.GetAsync(
 <dl>
 <dd>
 
-**request:** `GetRefundInstructionsRequest`
+**request:** `PayrocCloud.RefundInstructions.RetrieveRefundInstructionsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
 ## Reporting Settlement
-
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListBatchesAsync</a>(ListReportingSettlementBatchesRequest { ... }) -> PayrocPager<Batch></code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListBatchesAsync</a>(Reporting.Settlement.ListReportingSettlementBatchesRequest { ... }) -> Core.PayrocPager<Batch></code></summary>
 <dl>
 <dd>
 
@@ -7133,7 +8884,6 @@ await client.PayrocCloud.RefundInstructions.GetAsync(
 <dd>
 
 Retrieve batch data for a specific date.
-
 </dd>
 </dl>
 </dd>
@@ -7153,12 +8903,11 @@ await client.Reporting.Settlement.ListBatchesAsync(
     {
         Before = "2571",
         After = "8516",
-        Date = "2027-07-02",
+        Date = new DateOnly(2027, 7, 2),
         MerchantId = "4525644354",
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -7172,18 +8921,19 @@ await client.Reporting.Settlement.ListBatchesAsync(
 <dl>
 <dd>
 
-**request:** `ListReportingSettlementBatchesRequest`
+**request:** `Reporting.Settlement.ListReportingSettlementBatchesRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">GetBatchAsync</a>(GetBatchSettlementRequest { ... }) -> Batch</code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">RetrieveBatchAsync</a>(Reporting.Settlement.RetrieveBatchSettlementRequest { ... }) -> Batch</code></summary>
 <dl>
 <dd>
 
@@ -7196,7 +8946,6 @@ await client.Reporting.Settlement.ListBatchesAsync(
 <dd>
 
 Retrieve a specific batch.
-
 </dd>
 </dl>
 </dd>
@@ -7211,9 +8960,10 @@ Retrieve a specific batch.
 <dd>
 
 ```csharp
-await client.Reporting.Settlement.GetBatchAsync(new GetBatchSettlementRequest { BatchId = 1 });
+await client.Reporting.Settlement.RetrieveBatchAsync(
+    new RetrieveBatchSettlementRequest { BatchId = 1 }
+);
 ```
-
 </dd>
 </dl>
 </dd>
@@ -7227,18 +8977,19 @@ await client.Reporting.Settlement.GetBatchAsync(new GetBatchSettlementRequest { 
 <dl>
 <dd>
 
-**request:** `GetBatchSettlementRequest`
+**request:** `Reporting.Settlement.RetrieveBatchSettlementRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListTransactionsAsync</a>(ListReportingSettlementTransactionsRequest { ... }) -> PayrocPager<Transaction></code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListTransactionsAsync</a>(Reporting.Settlement.ListReportingSettlementTransactionsRequest { ... }) -> Core.PayrocPager<Transaction></code></summary>
 <dl>
 <dd>
 
@@ -7251,7 +9002,6 @@ await client.Reporting.Settlement.GetBatchAsync(new GetBatchSettlementRequest { 
 <dd>
 
 Retrieve a list of transactions.
-
 </dd>
 </dl>
 </dd>
@@ -7271,13 +9021,12 @@ await client.Reporting.Settlement.ListTransactionsAsync(
     {
         Before = "2571",
         After = "8516",
-        Date = "2024-07-01",
+        Date = new DateOnly(2024, 7, 1),
         BatchId = 1,
         MerchantId = "4525644354",
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -7291,18 +9040,19 @@ await client.Reporting.Settlement.ListTransactionsAsync(
 <dl>
 <dd>
 
-**request:** `ListReportingSettlementTransactionsRequest`
+**request:** `Reporting.Settlement.ListReportingSettlementTransactionsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">GetTransactionAsync</a>(GetTransactionSettlementRequest { ... }) -> Transaction</code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">RetrieveTransactionAsync</a>(Reporting.Settlement.RetrieveTransactionSettlementRequest { ... }) -> Transaction</code></summary>
 <dl>
 <dd>
 
@@ -7315,7 +9065,6 @@ await client.Reporting.Settlement.ListTransactionsAsync(
 <dd>
 
 Retrieve a specific transaction.
-
 </dd>
 </dl>
 </dd>
@@ -7330,11 +9079,10 @@ Retrieve a specific transaction.
 <dd>
 
 ```csharp
-await client.Reporting.Settlement.GetTransactionAsync(
-    new GetTransactionSettlementRequest { TransactionId = 1 }
+await client.Reporting.Settlement.RetrieveTransactionAsync(
+    new RetrieveTransactionSettlementRequest { TransactionId = 1 }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -7348,18 +9096,19 @@ await client.Reporting.Settlement.GetTransactionAsync(
 <dl>
 <dd>
 
-**request:** `GetTransactionSettlementRequest`
+**request:** `Reporting.Settlement.RetrieveTransactionSettlementRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListAuthorizationsAsync</a>(ListReportingSettlementAuthorizationsRequest { ... }) -> PayrocPager<Authorization></code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListAuthorizationsAsync</a>(Reporting.Settlement.ListReportingSettlementAuthorizationsRequest { ... }) -> Core.PayrocPager<Authorization></code></summary>
 <dl>
 <dd>
 
@@ -7372,7 +9121,6 @@ await client.Reporting.Settlement.GetTransactionAsync(
 <dd>
 
 Retrieve a list of authorizations.
-
 </dd>
 </dl>
 </dd>
@@ -7392,13 +9140,12 @@ await client.Reporting.Settlement.ListAuthorizationsAsync(
     {
         Before = "2571",
         After = "8516",
-        Date = "2024-07-01",
+        Date = new DateOnly(2024, 7, 1),
         BatchId = 1,
         MerchantId = "4525644354",
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -7412,18 +9159,19 @@ await client.Reporting.Settlement.ListAuthorizationsAsync(
 <dl>
 <dd>
 
-**request:** `ListReportingSettlementAuthorizationsRequest`
+**request:** `Reporting.Settlement.ListReportingSettlementAuthorizationsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">GetAuthorizationAsync</a>(GetAuthorizationSettlementRequest { ... }) -> Authorization</code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">RetrieveAuthorizationAsync</a>(Reporting.Settlement.RetrieveAuthorizationSettlementRequest { ... }) -> Authorization</code></summary>
 <dl>
 <dd>
 
@@ -7436,7 +9184,6 @@ await client.Reporting.Settlement.ListAuthorizationsAsync(
 <dd>
 
 Retrieve a specific authorization.
-
 </dd>
 </dl>
 </dd>
@@ -7451,11 +9198,10 @@ Retrieve a specific authorization.
 <dd>
 
 ```csharp
-await client.Reporting.Settlement.GetAuthorizationAsync(
-    new GetAuthorizationSettlementRequest { AuthorizationId = 1 }
+await client.Reporting.Settlement.RetrieveAuthorizationAsync(
+    new RetrieveAuthorizationSettlementRequest { AuthorizationId = 1 }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -7469,18 +9215,19 @@ await client.Reporting.Settlement.GetAuthorizationAsync(
 <dl>
 <dd>
 
-**request:** `GetAuthorizationSettlementRequest`
+**request:** `Reporting.Settlement.RetrieveAuthorizationSettlementRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListDisputesAsync</a>(ListReportingSettlementDisputesRequest { ... }) -> PayrocPager<Dispute></code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListDisputesAsync</a>(Reporting.Settlement.ListReportingSettlementDisputesRequest { ... }) -> Core.PayrocPager<Dispute></code></summary>
 <dl>
 <dd>
 
@@ -7493,7 +9240,6 @@ await client.Reporting.Settlement.GetAuthorizationAsync(
 <dd>
 
 Retrieve a list of disputes.
-
 </dd>
 </dl>
 </dd>
@@ -7513,12 +9259,11 @@ await client.Reporting.Settlement.ListDisputesAsync(
     {
         Before = "2571",
         After = "8516",
-        Date = "2024-07-02",
+        Date = new DateOnly(2024, 7, 2),
         MerchantId = "4525644354",
     }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -7532,18 +9277,19 @@ await client.Reporting.Settlement.ListDisputesAsync(
 <dl>
 <dd>
 
-**request:** `ListReportingSettlementDisputesRequest`
+**request:** `Reporting.Settlement.ListReportingSettlementDisputesRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">GetDisputesStatusesAsync</a>(GetDisputesStatusesSettlementRequest { ... }) -> IEnumerable<DisputeStatus></code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">RetrieveDisputesStatusesAsync</a>(Reporting.Settlement.RetrieveDisputesStatusesSettlementRequest { ... }) -> IEnumerable<DisputeStatus></code></summary>
 <dl>
 <dd>
 
@@ -7556,7 +9302,6 @@ await client.Reporting.Settlement.ListDisputesAsync(
 <dd>
 
 Retrieve the status history for a specific dispute.
-
 </dd>
 </dl>
 </dd>
@@ -7571,11 +9316,10 @@ Retrieve the status history for a specific dispute.
 <dd>
 
 ```csharp
-await client.Reporting.Settlement.GetDisputesStatusesAsync(
-    new GetDisputesStatusesSettlementRequest { DisputeId = 1 }
+await client.Reporting.Settlement.RetrieveDisputesStatusesAsync(
+    new RetrieveDisputesStatusesSettlementRequest { DisputeId = 1 }
 );
 ```
-
 </dd>
 </dl>
 </dd>
@@ -7589,12 +9333,194 @@ await client.Reporting.Settlement.GetDisputesStatusesAsync(
 <dl>
 <dd>
 
-**request:** `GetDisputesStatusesSettlementRequest`
+**request:** `Reporting.Settlement.RetrieveDisputesStatusesSettlementRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
+</details>
+
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListAchDepositsAsync</a>(Reporting.Settlement.ListReportingSettlementAchDepositsRequest { ... }) -> Core.PayrocPager<AchDeposit></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a list of ACH deposits.
 </dd>
 </dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Reporting.Settlement.ListAchDepositsAsync(
+    new ListReportingSettlementAchDepositsRequest
+    {
+        Before = "2571",
+        After = "8516",
+        Date = new DateOnly(2024, 7, 2),
+        MerchantId = "4525644354",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Reporting.Settlement.ListReportingSettlementAchDepositsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">RetrieveAchDepositAsync</a>(Reporting.Settlement.RetrieveAchDepositSettlementRequest { ... }) -> AchDeposit</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a specific ACH deposit.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Reporting.Settlement.RetrieveAchDepositAsync(
+    new RetrieveAchDepositSettlementRequest { AchDepositId = 99 }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Reporting.Settlement.RetrieveAchDepositSettlementRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListAchDepositFeesAsync</a>(Reporting.Settlement.ListReportingSettlementAchDepositFeesRequest { ... }) -> Core.PayrocPager<AchDepositFee></code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a list of ACH deposit fees.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Reporting.Settlement.ListAchDepositFeesAsync(
+    new ListReportingSettlementAchDepositFeesRequest
+    {
+        Before = "2571",
+        After = "8516",
+        Date = new DateOnly(2024, 7, 2),
+        AchDepositId = 99,
+        MerchantId = "4525644354",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Reporting.Settlement.ListReportingSettlementAchDepositFeesRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>

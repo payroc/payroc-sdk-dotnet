@@ -164,7 +164,16 @@ public partial class SecureTokensClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<SecureToken>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<SecureToken>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);
@@ -579,8 +588,8 @@ public partial class SecureTokensClient
     ///   - transitNumber
     /// </summary>
     /// <example><code>
-    /// await client.Payments.SecureTokens.PartiallyUpdateAsync(
-    ///     new PartiallyUpdateSecureTokensRequest
+    /// await client.Payments.SecureTokens.UpdateAsync(
+    ///     new UpdateSecureTokensRequest
     ///     {
     ///         ProcessingTerminalId = "1234001",
     ///         SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
@@ -594,8 +603,8 @@ public partial class SecureTokensClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<SecureToken> PartiallyUpdateAsync(
-        PartiallyUpdateSecureTokensRequest request,
+    public async Task<SecureToken> UpdateAsync(
+        UpdateSecureTokensRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

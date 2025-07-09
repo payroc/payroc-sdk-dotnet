@@ -118,8 +118,13 @@ public partial class FundingInstructionsClient
                 };
                 return await PayrocPagerFactory
                     .CreateAsync<ListFundingInstructionsResponseDataItem>(
-                        sendRequest,
-                        httpRequest,
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
                         cancellationToken
                     )
                     .ConfigureAwait(false);

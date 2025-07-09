@@ -8,8 +8,12 @@ namespace Payroc;
 /// Object that contains information about the surcharge.
 /// </summary>
 [Serializable]
-public record Surcharge
+public record Surcharge : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Indicates if the merchant wants to remove the surcharge fee from the transaction.
     /// `true` - The gateway removes the surcharge fee from the transaction.
@@ -33,15 +37,11 @@ public record Surcharge
     [JsonPropertyName("percentage")]
     public double? Percentage { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

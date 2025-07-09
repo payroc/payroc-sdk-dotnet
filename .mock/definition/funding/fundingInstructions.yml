@@ -1,0 +1,390 @@
+imports:
+  root: ../__package__.yml
+types:
+  ListFundingInstructionsResponseDataItem:
+    properties:
+      link: optional<root.Link>
+    extends:
+      - root.Instruction
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+    inline: true
+  ListFundingInstructionsResponse:
+    properties:
+      data:
+        docs: Array of fundingInstruction objects.
+        type: list<ListFundingInstructionsResponseDataItem>
+    extends:
+      - root.PaginatedList
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /funding-instructions
+      method: GET
+      auth: true
+      docs: Retrieve a list of funding instructions for a specific date range.
+      pagination:
+        type: custom
+        results: $response.data
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: List funding instructions
+      request:
+        name: ListFundingInstructionsRequest
+        query-parameters:
+          before:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results before. Typically, this is the first resource on the
+              previous page.
+          after:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results after. Typically, this is the last resource on the
+              previous page.
+          limit:
+            type: optional<integer>
+            default: 10
+            docs: States the total amount of results the response is limited to.
+            validation:
+              max: 100
+          dateFrom:
+            type: date
+            docs: >-
+              Retrieve activity that occured since `dateFrom`. We can return
+              activity from only the last two years.
+          dateTo:
+            type: date
+            docs: Retrieve activity that occured before `dateTo`.
+      response:
+        docs: Successful request. Returns a list of funding instructions.
+        type: ListFundingInstructionsResponse
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Paginated instructions list
+          query-parameters:
+            before: '2571'
+            after: '8516'
+            dateFrom: '2024-07-01'
+            dateTo: '2024-07-03'
+          response:
+            body:
+              limit: 2
+              count: 2
+              hasMore: true
+              links:
+                - rel: previous
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/funding-instructions?before=64643131&limit=2&datefrom=2024-07-01&dateto=2024-07-03
+                - rel: next
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/funding-instructions?after=64643132&limit=2&datefrom=2024-07-01&dateto=2024-07-03
+              data:
+                - instructionId: 64643131
+                  createdDate: '2024-07-02T15:30:00Z'
+                  lastModifiedDate: '2024-07-02T15:30:00Z'
+                  status: completed
+                  merchants:
+                    - merchantId: '4525644354'
+                      recipients:
+                        - fundingAccountId: 123
+                          paymentMethod: ACH
+                          amount:
+                            value: 120000
+                            currency: USD
+                          status: funded
+                          metadata:
+                            yourCustomField: abc123
+                          link:
+                            rel: fundingAccount
+                            method: get
+                            href: https://api.payroc.com/v1/funding-accounts/123
+                        - fundingAccountId: 124
+                          paymentMethod: ACH
+                          amount:
+                            value: 50050
+                            currency: USD
+                          status: rejected
+                          metadata:
+                            yourCustomField: abc123
+                          link:
+                            rel: fundingAccount
+                            method: get
+                            href: https://api.payroc.com/v1/funding-accounts/124
+                      link:
+                        rel: merchant
+                        method: get
+                        href: https://api.payroc.com/v1/merchants/4525644354
+                  metadata:
+                    yourCustomField: abc123
+                  link:
+                    rel: fundingInstruction
+                    method: get
+                    href: https://api.payroc.com/v1/funding-instructions/64643131
+                - instructionId: 64643132
+                  createdDate: '2024-07-02T15:30:00Z'
+                  lastModifiedDate: '2024-07-02T15:30:00Z'
+                  status: accepted
+                  merchants:
+                    - merchantId: '4525644354'
+                      recipients:
+                        - fundingAccountId: 123
+                          paymentMethod: ACH
+                          amount:
+                            value: 5000
+                            currency: USD
+                          status: accepted
+                          metadata:
+                            yourCustomField: abc123
+                          link:
+                            rel: fundingAccount
+                            method: get
+                            href: https://api.payroc.com/v1/funding-accounts/123
+                      link:
+                        rel: merchant
+                        method: get
+                        href: https://api.payroc.com/v1/merchants/4525644354
+                    - merchantId: '4525644354'
+                      recipients:
+                        - fundingAccountId: 124
+                          paymentMethod: ACH
+                          amount:
+                            value: 1000
+                            currency: USD
+                          status: accepted
+                          metadata:
+                            yourCustomField: abc123
+                          link:
+                            rel: fundingAccount
+                            method: get
+                            href: https://api.payroc.com/v1/funding-accounts/124
+                      link:
+                        rel: merchant
+                        method: get
+                        href: https://api.payroc.com/v1/merchants/4525644354
+                  metadata:
+                    yourCustomField: abc123
+                  link:
+                    rel: fundingInstruction
+                    method: get
+                    href: https://api.payroc.com/v1/funding-instructions/64643132
+        - name: No records found
+          query-parameters:
+            before: '2571'
+            after: '8516'
+            dateFrom: '2024-07-01'
+            dateTo: '2024-07-03'
+          response:
+            body:
+              limit: 10
+              count: 0
+              hasMore: false
+              links:
+                - rel: previous
+                  method: get
+                  href: <uri>
+                - rel: next
+                  method: get
+                  href: <uri>
+              data:
+                - instructionId: 64643131
+                  createdDate: '2024-07-02T15:30:00Z'
+                  lastModifiedDate: '2024-07-02T15:30:00Z'
+                  status: accepted
+                  merchants:
+                    - merchantId: '4525644354'
+                      recipients:
+                        - fundingAccountId: 123
+                          paymentMethod: ACH
+                          amount:
+                            value: 120000
+                          metadata:
+                            yourCustomField: abc123
+                  metadata:
+                    yourCustomField: abc123
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+    create:
+      path: /funding-instructions
+      method: POST
+      auth: true
+      docs: >-
+        Create funding instructions to tell us how to divide funds between your
+        funding recipients.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Create funding instruction
+      request:
+        body:
+          type: root.Instruction
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+        name: CreateFundingInstructionsRequest
+        content-type: application/json
+      response:
+        docs: Successful request. We accepted the instructions.
+        type: root.Instruction
+        status-code: 201
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.InternalServerError
+      examples:
+        - name: New instruction accepted.
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request: {}
+          response:
+            body:
+              instructionId: 64643131
+              createdDate: '2024-07-02T15:30:00Z'
+              lastModifiedDate: '2024-07-02T15:30:00Z'
+              status: accepted
+              merchants:
+                - merchantId: '4525644354'
+                  recipients:
+                    - fundingAccountId: 123
+                      paymentMethod: ACH
+                      amount:
+                        value: 120000
+                        currency: USD
+                      status: accepted
+                      metadata:
+                        yourCustomField: abc123
+                      link:
+                        rel: fundingAccount
+                        method: get
+                        href: https://api.payroc.com/v1/funding-accounts/123
+                  link:
+                    rel: merchant
+                    method: get
+                    href: https://api.payroc.com/v1/merchants/4525644354
+              metadata:
+                instructionRef: abc123
+    retrieve:
+      path: /funding-instructions/{instructionId}
+      method: GET
+      auth: true
+      docs: Retrieve a specific funding instruction.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Retrieve funding instruction
+      request:
+        name: RetrieveFundingInstructionsRequest
+        path-parameters:
+          instructionId:
+            type: integer
+            docs: Unique identifier of the funding instruction.
+      response:
+        docs: Successful request. Returns the requested funding instruction.
+        type: root.Instruction
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            instructionId: 1
+          response:
+            body:
+              instructionId: 64643131
+              createdDate: '2024-07-02T15:30:00Z'
+              lastModifiedDate: '2024-07-02T15:30:00Z'
+              status: accepted
+              merchants:
+                - merchantId: '4525644354'
+                  recipients:
+                    - fundingAccountId: 123
+                      paymentMethod: ACH
+                      amount:
+                        value: 120000
+                      metadata:
+                        yourCustomField: abc123
+                  link:
+                    rel: merchant
+                    method: get
+                    href: https://api.payroc.com/v1/merchants/4525644354
+              metadata:
+                yourCustomField: abc123
+    update:
+      path: /funding-instructions/{instructionId}
+      method: PUT
+      auth: true
+      docs: Update an existing funding instruction.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Update funding instruction
+      request:
+        body:
+          type: root.Instruction
+        path-parameters:
+          instructionId:
+            type: integer
+            docs: Unique identifier of the funding instruction.
+        name: UpdateFundingInstructionsRequest
+        content-type: application/json
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            instructionId: 1
+          request: {}
+    delete:
+      path: /funding-instructions/{instructionId}
+      method: DELETE
+      auth: true
+      docs: Delete an existing funding instruction.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Delete funding instruction
+      request:
+        name: DeleteFundingInstructionsRequest
+        path-parameters:
+          instructionId:
+            type: integer
+            docs: Unique identifier of the funding instruction.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            instructionId: 1
+  source:
+    openapi: read-only/openapi/external/universal-api-v1.yaml

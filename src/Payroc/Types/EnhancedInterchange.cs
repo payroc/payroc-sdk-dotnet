@@ -5,8 +5,12 @@ using Payroc.Core;
 namespace Payroc;
 
 [Serializable]
-public record EnhancedInterchange
+public record EnhancedInterchange : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Enrollment fee for the enhanced interchange services. The value is in the currency's lowest denomination, for example, cents.
     /// </summary>
@@ -19,15 +23,11 @@ public record EnhancedInterchange
     [JsonPropertyName("creditToMerchant")]
     public required double CreditToMerchant { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

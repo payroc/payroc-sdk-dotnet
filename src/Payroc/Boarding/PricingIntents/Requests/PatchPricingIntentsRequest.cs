@@ -1,0 +1,30 @@
+using System.Text.Json.Serialization;
+using Payroc;
+using Payroc.Core;
+
+namespace Payroc.Boarding.PricingIntents;
+
+[Serializable]
+public record PatchPricingIntentsRequest
+{
+    /// <summary>
+    /// Unique identifier of the pricing intent.
+    /// </summary>
+    [JsonIgnore]
+    public required string PricingIntentId { get; set; }
+
+    /// <summary>
+    /// Unique identifier that you generate for each request. You must use the UUID v4 format for the identifier. For more information about the idempotency key, go to [Idempotency](https://docs.payroc.com/api/idempotency).
+    /// </summary>
+    [JsonIgnore]
+    public required string IdempotencyKey { get; set; }
+
+    [JsonIgnore]
+    public IEnumerable<PatchDocument> Body { get; set; } = new List<PatchDocument>();
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

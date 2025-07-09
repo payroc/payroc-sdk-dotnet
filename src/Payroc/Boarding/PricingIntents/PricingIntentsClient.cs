@@ -105,7 +105,16 @@ public partial class PricingIntentsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<PricingIntent50>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<PricingIntent50>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);
@@ -592,8 +601,8 @@ public partial class PricingIntentsClient
     /// Structure your request to follow the RFC 6902 standard.
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.PricingIntents.PartiallyUpdateAsync(
-    ///     new PartiallyUpdatePricingIntentsRequest
+    /// await client.Boarding.PricingIntents.PatchAsync(
+    ///     new PatchPricingIntentsRequest
     ///     {
     ///         PricingIntentId = "5",
     ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
@@ -606,8 +615,8 @@ public partial class PricingIntentsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<PricingIntent50> PartiallyUpdateAsync(
-        PartiallyUpdatePricingIntentsRequest request,
+    public async Task<PricingIntent50> PatchAsync(
+        PatchPricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

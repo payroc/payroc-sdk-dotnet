@@ -1,0 +1,551 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /processing-terminals/{processingTerminalId}/payment-plans
+      method: GET
+      auth: true
+      docs: "Use this method to retrieve a [paginated](/api/pagination) list of payment plans for a processing terminal.  \n\n**Note:** If you want to view a specific payment plan and you have its paymentPlanId, use our [Retrieve Payment Plan](/api/schema/payments/payment-plans/get) method.  \n\nOur gateway returns the following information about each payment plan in the list:  \n\n  -\tName, length, and currency of the plan  \n  -\tHow often our gateway collects each payment  \n  -\tHow much our gateway collects for each payment  \n  -\tWhat happens if the merchant updates or deletes the plan  \n\nFor each payment plan, we return the paymentPlanId, which you can use to perform follow-on actions.\n"
+      pagination:
+        type: custom
+        results: $response.data
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: List payment plans
+      request:
+        name: ListPaymentPlansRequest
+        path-parameters:
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that we assigned to the terminal.
+        query-parameters:
+          before:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results before. Typically, this is the first resource on the
+              previous page.
+          after:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results after. Typically, this is the last resource on the
+              previous page.
+          limit:
+            type: optional<integer>
+            default: 10
+            docs: States the total amount of results the response is limited to.
+            validation:
+              max: 100
+      response:
+        docs: Successful request. Returns a paginated list of payment plans.
+        type: root.PaymentPlanPaginatedList
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Payment Plan
+          path-parameters:
+            processingTerminalId: '1234001'
+          query-parameters:
+            before: '2571'
+            after: '8516'
+          response:
+            body:
+              limit: 2
+              count: 2
+              hasMore: true
+              links:
+                - rel: next
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/processing-terminals/1001/payment-plans?limit=2&after=PlanRef8766
+                - rel: previous
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/processing-terminals/1001/payment-plans?limit=2&before=PlanRef8765
+              data:
+                - paymentPlanId: PlanRef8765
+                  processingTerminalId: '1234001'
+                  name: Premium Club
+                  description: Monthly Premium Club subscription
+                  currency: USD
+                  setupOrder:
+                    amount: 4999
+                    description: Initial setup fee for Premium Club subscription
+                    breakdown:
+                      subtotal: 4999
+                      taxes:
+                        - name: Sales Tax
+                          rate: 7
+                          amount: 190
+                  recurringOrder:
+                    amount: 4999
+                    description: Monthly Premium Club subscription
+                    breakdown:
+                      subtotal: 4999
+                      taxes:
+                        - name: Sales Tax
+                          rate: 7
+                          amount: 190
+                  length: 12
+                  type: automatic
+                  frequency: monthly
+                  onUpdate: continue
+                  onDelete: complete
+                  customFieldNames:
+                    - yourCustomField
+                - paymentPlanId: PlanRef8766
+                  processingTerminalId: '1234001'
+                  name: Pie It Forward
+                  description: Pie It Forward charitable trust donation
+                  currency: USD
+                  setupOrder:
+                    amount: 4999
+                    description: Initial setup fee for Premium Club subscription
+                    breakdown:
+                      subtotal: 4999
+                      taxes:
+                        - name: Sales Tax
+                          rate: 7
+                          amount: 190
+                  recurringOrder:
+                    amount: 4999
+                    description: Monthly Premium Club subscription
+                    breakdown:
+                      subtotal: 4999
+                      taxes:
+                        - name: Sales Tax
+                          rate: 7
+                          amount: 190
+                  length: 0
+                  type: automatic
+                  frequency: yearly
+                  onUpdate: continue
+                  onDelete: complete
+                  customFieldNames:
+                    - yourCustomField
+        - name: No records found
+          path-parameters:
+            processingTerminalId: '1234001'
+          query-parameters:
+            before: '2571'
+            after: '8516'
+          response:
+            body:
+              limit: 10
+              count: 0
+              hasMore: false
+              links:
+                - rel: previous
+                  method: get
+                  href: <uri>
+                - rel: next
+                  method: get
+                  href: <uri>
+              data:
+                - paymentPlanId: PlanRef8765
+                  processingTerminalId: '1234001'
+                  name: Premium Club
+                  description: Monthly Premium Club subscription
+                  currency: AED
+                  setupOrder:
+                    amount: 4999
+                    description: Initial setup fee for Premium Club subscription
+                    breakdown:
+                      subtotal: 4999
+                      taxes:
+                        - name: Sales Tax
+                          rate: 7
+                          amount: 190
+                  recurringOrder:
+                    amount: 4999
+                    description: Monthly Premium Club subscription
+                    breakdown:
+                      subtotal: 4999
+                      taxes:
+                        - name: Sales Tax
+                          rate: 7
+                          amount: 190
+                  length: 12
+                  type: manual
+                  frequency: weekly
+                  onUpdate: update
+                  onDelete: complete
+                  customFieldNames:
+                    - yourCustomField
+    create:
+      path: /processing-terminals/{processingTerminalId}/payment-plans
+      method: POST
+      auth: true
+      docs: "Use this method to create a payment schedule that you can assign customers to.  \n\n**Note:** This method is part of our Repeat Payments feature. To help you understand how this method works with our Subscriptions endpoints, go to [Repeat Payments](/guides/integrate/repeat-payments).  \n\nWhen you create a payment plan you need to provide a unique paymentPlanId that you use to run follow-on actions:  \n\n-\t[Retrieve Payment Plan](/api/schema/payments/payment-plans/get)  - View the details of the payment plan.  \n-\t[Update Payment Plan](/api/schema/payments/payment-plans/update)  - Update the details of the payment plan.  \n-\t[Delete Payment Plan](/api/schema/payments/payment-plans/delete)  - Delete the payment plan.  \n-\t[Create Subscription](/api/schema/payments/subscriptions/create)  - Subscribe a customer to the payment plan.  \n\nThe request includes the following settings:  \n\n-\t**type** - Indicates if our gateway or the merchant collects payments. If the merchant manually collects payments, integrate with the [Pay Manual Subscription](/api/schema/payments/subscriptions/pay) method.  \n-\t**recurringOrder** - Amount of each payment if the gateway automatically collect payments.  \n-\t**setupOrder** - Setup fee that our gateway immediately collects from the customer's payment method.  \n-\t**onUpdate and onDelete** - Indicates what happens to associated subscriptions if the merchant updates or deletes the payment plan.  \n"
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Create payment plan
+      request:
+        body: root.PaymentPlan
+        path-parameters:
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that we assigned to the terminal.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+        name: CreatePaymentPlansRequest
+        content-type: application/json
+      response:
+        docs: Successful request. We created the payment plan.
+        type: root.PaymentPlan
+        status-code: 201
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Payment Plan
+          path-parameters:
+            processingTerminalId: '1234001'
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            paymentPlanId: PlanRef8765
+            name: Premium Club
+            description: Monthly Premium Club subscription
+            currency: USD
+            setupOrder:
+              amount: 4999
+              description: Initial setup fee for Premium Club subscription
+              breakdown:
+                subtotal: 4347
+                taxes:
+                  - name: Sales Tax
+                    rate: 5
+            recurringOrder:
+              amount: 4999
+              description: Monthly Premium Club subscription
+              breakdown:
+                subtotal: 4347
+                taxes:
+                  - name: Sales Tax
+                    rate: 5
+            length: 12
+            type: automatic
+            frequency: monthly
+            onUpdate: continue
+            onDelete: complete
+            customFieldNames:
+              - yourCustomField
+          response:
+            body:
+              paymentPlanId: PlanRef8765
+              processingTerminalId: '1234001'
+              name: Premium Club
+              description: Monthly Premium Club subscription
+              currency: USD
+              setupOrder:
+                amount: 4999
+                description: Initial setup fee for Premium Club subscription
+                breakdown:
+                  subtotal: 4347
+                  taxes:
+                    - name: Sales Tax
+                      rate: 5
+                      amount: 190
+              recurringOrder:
+                amount: 4999
+                description: Monthly Premium Club subscription
+                breakdown:
+                  subtotal: 4347
+                  taxes:
+                    - name: Sales Tax
+                      rate: 5
+                      amount: 190
+              length: 12
+              type: automatic
+              frequency: monthly
+              onUpdate: continue
+              onDelete: complete
+              customFieldNames:
+                - yourCustomField
+    retrieve:
+      path: >-
+        /processing-terminals/{processingTerminalId}/payment-plans/{paymentPlanId}
+      method: GET
+      auth: true
+      docs: "Use this method to retrieve information about a payment plan.  \n\nTo retrieve a payment plan, you need its paymentPlanId. Our gateway returned the paymentPlanId in the response of the [Create Payment Plan](/api/schema/payments/payment-plans/create) method.  \n\n**Note:** If you don't have the paymentPlanId, use our [List Payment Plans](/api/schema/payments/payment-plans/list) method to search for the payment plan.  \n\nOur gateway returns the following information about the payment plan:  \n\n  -\tName, length, and currency of the plan  \n  -\tHow often our gateway collects each payment  \n  -\tHow much our gateway collects for each payment  \n  -\tWhat happens if the merchant updates or deletes the plan  \n"
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Retrieve payment plan
+      request:
+        name: RetrievePaymentPlansRequest
+        path-parameters:
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that we assigned to the terminal.
+          paymentPlanId:
+            type: string
+            docs: Unique identifier that the merchant assigned to the payment plan.
+      response:
+        docs: Successful request. Returns the requested payment plan.
+        type: root.PaymentPlan
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Payment Plan
+          path-parameters:
+            processingTerminalId: '1234001'
+            paymentPlanId: PlanRef8765
+          response:
+            body:
+              paymentPlanId: PlanRef8765
+              processingTerminalId: '1234001'
+              name: Premium Club
+              description: Monthly Premium Club subscription
+              currency: USD
+              setupOrder:
+                amount: 4999
+                description: Initial setup fee for Premium Club subscription
+                breakdown:
+                  subtotal: 4347
+                  taxes:
+                    - name: Sales Tax
+                      rate: 5
+                      amount: 190
+              recurringOrder:
+                amount: 4999
+                description: Monthly Premium Club subscription
+                breakdown:
+                  subtotal: 4347
+                  taxes:
+                    - name: Sales Tax
+                      rate: 5
+                      amount: 190
+              length: 12
+              type: automatic
+              frequency: monthly
+              onUpdate: continue
+              onDelete: complete
+              customFieldNames:
+                - yourCustomField
+    delete:
+      path: >-
+        /processing-terminals/{processingTerminalId}/payment-plans/{paymentPlanId}
+      method: DELETE
+      auth: true
+      docs: "Use this method to delete a payment plan.  \n\n> **Important:** When you delete a payment plan, you can’t recover it. You also won’t be able to add subscriptions to the payment plan.  \n\nTo delete a payment plan, you need its paymentPlanId, which you sent in the request of the [Create Payment Plan](/api/schema/payments/payment-plans/create) method.  \n\n**Note:** If you don't have the paymentPlanId, use our [List Payment Plans](/api/schema/payments/payment-plans/list) method to search for the payment plan.  \n\nThe value you sent for the onDelete parameter when you created the payment plan indicates what happens to associated subscriptions when you delete the plan:  \n\n  -\t`complete` - Our gateway stops taking payments for the subscriptions associated with the payment plan.  \n  -\t`continue` - Our gateway continues to take payments for the subscriptions associated with the payment plan. To stop a subscription for a cancelled payment plan, go to the [Deactivate Subscription](/api/schema/payments/subscriptions/deactivate) method.  \n"
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Delete payment plan
+      request:
+        name: DeletePaymentPlansRequest
+        path-parameters:
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that we assigned to the terminal.
+          paymentPlanId:
+            type: string
+            docs: Unique identifier that the merchant assigned to the payment plan.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            processingTerminalId: '1234001'
+            paymentPlanId: PlanRef8765
+    update:
+      path: >-
+        /processing-terminals/{processingTerminalId}/payment-plans/{paymentPlanId}
+      method: PATCH
+      auth: true
+      docs: >
+        Use this method to partially update a payment plan. Structure your
+        request to follow the [RFC
+        6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.  
+
+
+        To update a payment plan, you need its paymentPlanId, which you sent in
+        the request of the [Create Payment
+        Plan](/api/schema/payments/payment-plans/create) method.  
+
+
+        **Note:** If you don't have the paymentPlanId, use our [List Payment
+        Plans](/api/schema/payments/payment-plans/list) method to search for the
+        payment plan.  
+
+
+        You can update all of the properties of the payment plan except for the
+        paymentPlanId.  
+
+
+        The value you sent for the onUpdate parameter when you created the
+        payment plan indicates what happens to the associated subscriptions when
+        you update the plan:  
+
+        - `update` - Our gateway updates the subscriptions associated with the
+        payment plan.
+
+        - `continue` - Our  gateway doesn't update the subscriptions associated
+        with the payment plan.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Update payment plan
+      request:
+        body: root.PatchRequest
+        path-parameters:
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that we assigned to the terminal.
+          paymentPlanId:
+            type: string
+            docs: Unique identifier that the merchant assigned to the payment plan.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+        name: UpdatePaymentPlansRequest
+        content-type: application/json
+      response:
+        docs: Successful request. We updated the payment plan.
+        type: root.PaymentPlan
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Update payment plan
+          path-parameters:
+            processingTerminalId: '1234001'
+            paymentPlanId: PlanRef8765
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            - path: path
+              op: remove
+            - path: path
+              op: remove
+            - path: path
+              op: remove
+          response:
+            body:
+              paymentPlanId: PlanRef8765
+              processingTerminalId: '1234001'
+              name: Premium Club
+              description: Monthly Premium Club subscription
+              currency: USD
+              setupOrder:
+                amount: 4999
+                description: Initial setup fee for Premium Club subscription
+                breakdown:
+                  subtotal: 4347
+                  taxes:
+                    - name: Sales Tax
+                      rate: 5
+                      amount: 190
+              recurringOrder:
+                amount: 4999
+                description: Monthly Premium Club subscription
+                breakdown:
+                  subtotal: 4347
+                  taxes:
+                    - name: Sales Tax
+                      rate: 5
+                      amount: 190
+              length: 12
+              type: automatic
+              frequency: monthly
+              onUpdate: continue
+              onDelete: complete
+              customFieldNames:
+                - yourCustomField
+        - name: Example patch operations that apply the RFC 6902 standard
+          path-parameters:
+            processingTerminalId: '1234001'
+            paymentPlanId: PlanRef8765
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            - path: path
+              op: remove
+            - path: path
+              op: remove
+            - path: path
+              op: remove
+            - from: from
+              path: path
+              op: move
+            - from: from
+              path: path
+              op: copy
+            - path: path
+              op: remove
+          response:
+            body:
+              paymentPlanId: PlanRef8765
+              processingTerminalId: '1234001'
+              name: Premium Club
+              description: Monthly Premium Club subscription
+              currency: USD
+              setupOrder:
+                amount: 4999
+                description: Initial setup fee for Premium Club subscription
+                breakdown:
+                  subtotal: 4347
+                  taxes:
+                    - name: Sales Tax
+                      rate: 5
+                      amount: 190
+              recurringOrder:
+                amount: 4999
+                description: Monthly Premium Club subscription
+                breakdown:
+                  subtotal: 4347
+                  taxes:
+                    - name: Sales Tax
+                      rate: 5
+                      amount: 190
+              length: 12
+              type: automatic
+              frequency: monthly
+              onUpdate: continue
+              onDelete: complete
+              customFieldNames:
+                - yourCustomField
+  source:
+    openapi: read-only/openapi/external/universal-api-v1.yaml

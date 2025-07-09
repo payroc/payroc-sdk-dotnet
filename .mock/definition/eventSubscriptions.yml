@@ -1,0 +1,378 @@
+types:
+  ListEventSubscriptionsRequestStatus:
+    enum:
+      - registered
+      - suspended
+      - failed
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listEventSubscriptions:
+      path: /event-subscriptions
+      method: GET
+      auth: true
+      docs: >
+        Use this method to retrieve a
+        [paginated](https://docs.payroc.com/api/pagination) list of event
+        subscriptions that are linked to the ISV's account. 
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: List event subscriptions
+      request:
+        name: ListEventSubscriptionsRequest
+        query-parameters:
+          status:
+            type: optional<ListEventSubscriptionsRequestStatus>
+            docs: Filter event subscriptions by subscription status.
+          event:
+            type: optional<string>
+            docs: >-
+              Filter event subscriptions by event type. For a complete list of
+              events, go to
+              [Events](#https://docs.payroc.com/knowledge/basic-concepts/events).
+      response:
+        docs: Successful request. Returns a list of event subscriptions.
+        type: root.PaginatedEventSubscriptions
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: Paginated list of Event subscriptions
+          query-parameters:
+            event: processingAccount.status.changed
+          response:
+            body:
+              limit: 10
+              count: 2
+              hasMore: false
+              links:
+                - rel: next
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/event-subscriptions?after=10&limit=10
+              data:
+                - id: 2565435189324
+                  enabled: true
+                  status: registered
+                  eventTypes:
+                    - processingAccount.status.changed
+                  notifications:
+                    - uri: https://my-server/notification/endpoint
+                      secret: aBcD1234eFgH5678iJkL9012mNoP3456
+                      supportEmailAddress: supportEmailAddress
+                      type: webhook
+                  metadata:
+                    yourCustomField: abc123
+                - id: 2565435189325
+                  enabled: true
+                  status: registered
+                  eventTypes:
+                    - processingAccount.riskStatus.changed
+                  notifications:
+                    - uri: https://my-server/notification/endpoint
+                      secret: aBcD1234eFgH5678iJkL9012mNoP3456
+                      supportEmailAddress: supportEmailAddress
+                      type: webhook
+                  metadata:
+                    yourCustomField: abc123
+    createEventSubscription:
+      path: /event-subscriptions
+      method: POST
+      auth: true
+      docs: >
+        Use this method to subscribe to events that you want us to notify you
+        about, for example, when we change the status of a processing account.
+        You can subscribe to more than one event in the request. For a complete
+        list of events you can subscribe to, go to
+        [Events](https://docs.payroc.com/knowledge/basic-concepts/events).  
+
+        <br/>
+
+        In the response we return the ID of the event subscription, which you
+        need for the following methods:  
+
+        - [Update event subscription](#updateEventSubscription)  
+
+        - [Partially update an event subscription](#patchEventSubscription)  
+
+        - [Retrieve an event subscription](#getEventSubscription)  
+
+        - [List event subscriptions](#listEventSubscriptions)  
+
+        - [Delete event subscription](#deleteEventSubscription)  
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Create event subscription
+      request:
+        body:
+          type: root.EventSubscription
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+        name: CreateEventSubscriptionRequest
+        content-type: application/json
+      response:
+        docs: Successful request. We created the event subscription.
+        type: root.EventSubscription
+        status-code: 201
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Event subscription created
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            enabled: true
+            eventTypes:
+              - processingAccount.status.changed
+            notifications:
+              - uri: https://my-server/notification/endpoint
+                secret: aBcD1234eFgH5678iJkL9012mNoP3456
+                supportEmailAddress: supportEmailAddress
+                type: webhook
+            metadata:
+              yourCustomField: abc123
+          response:
+            body:
+              id: 2565435189324
+              enabled: true
+              status: registered
+              eventTypes:
+                - processingAccount.status.changed
+              notifications:
+                - uri: https://my-server/notification/endpoint
+                  secret: aBcD1234eFgH5678iJkL9012mNoP3456
+                  supportEmailAddress: supportEmailAddress
+                  type: webhook
+              metadata:
+                yourCustomField: abc123
+    getEventSubscription:
+      path: /event-subscriptions/{subscriptionId}
+      method: GET
+      auth: true
+      docs: >
+        Use this method to retrieve the details of an event subscription.  
+
+
+        In your request, include the subscriptionId that we sent to you when we
+        created the event subscription.  
+          
+        **Note:** If you don't know the subscriptionId of the event
+        subscription, go to [List event subscriptions](#listEventSubscriptions).
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Retrieve event subscription
+      request:
+        name: GetEventSubscriptionRequest
+        path-parameters:
+          subscriptionId:
+            type: integer
+            docs: Unique identifier that we assigned to the event subscription.
+      response:
+        docs: Returns the event subscription object.
+        type: root.EventSubscription
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: Event subscription
+          path-parameters:
+            subscriptionId: 1
+          response:
+            body:
+              id: 2565435189324
+              enabled: true
+              status: registered
+              eventTypes:
+                - processingAccount.status.changed
+              notifications:
+                - uri: https://my-server/notification/endpoint
+                  secret: aBcD1234eFgH5678iJkL9012mNoP3456
+                  supportEmailAddress: supportEmailAddress
+                  type: webhook
+              metadata:
+                yourCustomField: abc123
+    updateEventSubscription:
+      path: /event-subscriptions/{subscriptionId}
+      method: PUT
+      auth: true
+      docs: >
+        Use this method to update an event subscription.  
+
+        You can make the following updates to the event subscription:  
+          - **Event types** - Add or remove events that you have subscribed to.  
+          - **Notification methods** - Update information about your endpoint and who we email if we can't contact your endpoint.  
+            <br/>  
+        Include the subscriptionId that we sent you when you created the event
+        subscription. We returned this in the id field.  
+          
+        **Note:** If you don't know the subscriptionId, go to [List event
+        subscriptions](#listEventSubscriptions)
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Update event subscription
+      request:
+        body:
+          type: root.EventSubscription
+        path-parameters:
+          subscriptionId:
+            type: integer
+            docs: Unique identifier that we assigned to the event subscription.
+        name: UpdateEventSubscriptionRequest
+        content-type: application/json
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Update event subscription
+          path-parameters:
+            subscriptionId: 1
+          request:
+            enabled: true
+            eventTypes:
+              - processingAccount.status.changed
+            notifications:
+              - uri: https://my-server/notification/endpoint
+                secret: aBcD1234eFgH5678iJkL9012mNoP3456
+                supportEmailAddress: supportEmailAddress
+                type: webhook
+            metadata:
+              yourCustomField: abc123
+    deleteEventSubscription:
+      path: /event-subscriptions/{subscriptionId}
+      method: DELETE
+      auth: true
+      docs: Use this method to delete an event subscription.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Delete event subscription
+      request:
+        name: DeleteEventSubscriptionRequest
+        path-parameters:
+          subscriptionId:
+            type: integer
+            docs: Unique identifier that we assigned to the event subscription.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            subscriptionId: 1
+    patchEventSubscription:
+      path: /event-subscriptions/{subscriptionId}
+      method: PATCH
+      auth: true
+      docs: >
+        Use this method to partially update an event subscription. You can make
+        the following updates to the event subscription:  
+          - Add or remove events that you have subscribed to.  
+          - Update information about your endpoint and who we email if we can't contact your endpoint.  
+          - Turn on or turn off notifications for the event.  
+            <br/>  
+        Structure your request to follow the [RFC
+        6902](https://datatracker.ietf.org/doc/html/rfc6902/) standard.  
+          
+        **Note:** You need the subscriptionId that we sent you when you created
+        the event subscription. If you don't know the subscriptionId, go to
+        [List event subscriptions](#listEventSubscriptions).
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Partially update event subscription
+      request:
+        body: root.PatchRequest
+        path-parameters:
+          subscriptionId:
+            type: integer
+            docs: Unique identifier that we assigned to the event subscription.
+        name: PatchEventSubscriptionRequest
+        content-type: application/json
+      response:
+        docs: Successful request. We updated the event subscription.
+        type: root.EventSubscription
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Patched event subscription
+          path-parameters:
+            subscriptionId: 1
+          request:
+            - path: path
+              op: remove
+          response:
+            body:
+              id: 2565435189324
+              enabled: false
+              status: registered
+              eventTypes:
+                - processingAccount.status.changed
+              notifications:
+                - uri: https://my-server/notification/endpoint
+                  secret: aBcD1234eFgH5678iJkL9012mNoP3456
+                  supportEmailAddress: supportEmailAddress
+                  type: webhook
+              metadata:
+                yourCustomField: abc123
+  source:
+    openapi: read-only/openapi/external/universal-api-v1.yaml
+  display-name: Event Subscriptions
+docs: >
+  Create an event subscription so that we notify you when certain events occur,
+  for example, when we change the status of a processing account.  
+
+  When you subscribe to an event, provide the following information:  
+    - **Event type** - The events that we should notify you about. You can subscribe to more than one event within the same request. For a list of events that you can subscribe to, go to [Events](https://docs.payroc.com/knowledge/basic-concepts/events).  
+    - **Notification method** - The endpoint that we send a notification to if an event occurs. We send notifications by webhook request.  
+    - **Event status** - The status of the event subscription.  
+    - **Support email address** - Email address that we contact if we can't deliver notifications.  
+  <br/>  
+
+  Use our event subscriptions endpoint to do the following:  
+
+  - [**Create event subscription**](#createEventSubscription) - Subscribe to
+  receive notifications when events occur.  
+
+  - [**Update event subscription**](#updateEventSubscription) - Change the
+  details of an event subscription, for example, to receive notifications for an
+  additional event.  
+
+  - [**Partially update an event subscription**](#patchEventSubscription) -
+  Change values of an existing event subscription.  
+
+  - [**Retrieve an event subscription**](#getEventSubscription) - Retrieve all
+  the information that we stored in an event subscription. 
+
+  - [**List event subscriptions**](#listEventSubscriptions) - Retrieve a list of
+  all event subscriptions associated with the ISV's account.  
+
+  - [**Delete event subscription**](#deleteEventSubscription)

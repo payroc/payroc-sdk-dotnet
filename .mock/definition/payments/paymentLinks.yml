@@ -1,0 +1,801 @@
+types:
+  ListPaymentLinksRequestLinkType:
+    enum:
+      - multiUse
+      - singleUse
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  ListPaymentLinksRequestChargeType:
+    enum:
+      - preset
+      - prompt
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  ListPaymentLinksRequestStatus:
+    enum:
+      - active
+      - completed
+      - deactivated
+      - expired
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  CreatePaymentLinksRequestBody:
+    discriminant: type
+    base-properties: {}
+    union:
+      multiUse:
+        type: root.MultiUsePaymentLink
+      singleUse:
+        type: root.SingleUsePaymentLink
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  CreatePaymentLinksResponse:
+    discriminant: type
+    base-properties: {}
+    union:
+      multiUse:
+        type: root.MultiUsePaymentLink
+      singleUse:
+        type: root.SingleUsePaymentLink
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  RetrievePaymentLinksResponse:
+    discriminant: type
+    base-properties: {}
+    union:
+      multiUse:
+        type: root.MultiUsePaymentLink
+      singleUse:
+        type: root.SingleUsePaymentLink
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  UpdatePaymentLinksResponse:
+    discriminant: type
+    base-properties: {}
+    union:
+      multiUse:
+        type: root.MultiUsePaymentLink
+      singleUse:
+        type: root.SingleUsePaymentLink
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  DeactivatePaymentLinksResponse:
+    discriminant: type
+    base-properties: {}
+    union:
+      multiUse:
+        type: root.MultiUsePaymentLink
+      singleUse:
+        type: root.SingleUsePaymentLink
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /processing-terminals/{processingTerminalId}/payment-links
+      method: GET
+      auth: true
+      docs: >-
+        Use this method to retrieve a
+        [paginated](https://docs.payroc.com/api/pagination) list of payment
+        links for a processing terminal.
+      pagination:
+        type: custom
+        results: $response.data
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: List payment links
+      request:
+        name: ListPaymentLinksRequest
+        path-parameters:
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that we assigned to the terminal.
+        query-parameters:
+          merchantReference:
+            type: optional<string>
+            docs: >-
+              Filter results by the unique identifier that the merchant assigned
+              to the payment link.
+            validation:
+              minLength: 1
+              maxLength: 48
+          linkType:
+            type: optional<ListPaymentLinksRequestLinkType>
+            docs: >-
+              Filter results by the type of link. Send a value of
+              <code>singleUse</code> or <code>multiUse</code>.
+          chargeType:
+            type: optional<ListPaymentLinksRequestChargeType>
+            docs: >
+              Filter results by the user that entered the amount. Send one of
+              the following values:
+
+              - <code>prompt</code> - Customer entered the amount.
+
+              - <code>preset</code> - Merchant entered the amount.
+          status:
+            type: optional<ListPaymentLinksRequestStatus>
+            docs: >-
+              Filter results by the status of the payment link. Send a value of
+              <code>active</code>,
+              <code>completed</code>,<code>deactived</code>, or
+              <code>expired</code>.
+          recipientName:
+            type: optional<string>
+            docs: Filter results by the customer's name.
+            validation:
+              minLength: 1
+              maxLength: 48
+          recipientEmail:
+            type: optional<string>
+            docs: Filter results by the customer's email address.
+            validation:
+              minLength: 6
+              maxLength: 128
+          createdOn:
+            type: optional<date>
+            docs: >-
+              Filter results by the link's created date. Send a value in
+              **YYYY-MM-DD** format.
+          expiresOn:
+            type: optional<date>
+            docs: >-
+              Filter results by the link's expiry date. Send a value in
+              **YYYY-MM-DD** format.
+          before:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results before. Typically, this is the first resource on the
+              previous page.
+          after:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results after. Typically, this is the last resource on the
+              previous page.
+          limit:
+            type: optional<integer>
+            default: 10
+            docs: States the total amount of results the response is limited to.
+            validation:
+              max: 100
+      response:
+        docs: >-
+          Successful request. Returns a
+          [paginated](https://docs.payroc.com/api/pagination) list of payment
+          links.
+        type: root.PaymentLinkPaginatedList
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Payment links
+          path-parameters:
+            processingTerminalId: '1234001'
+          query-parameters:
+            merchantReference: LinkRef6543
+            recipientName: Sarah Hazel Hopper
+            recipientEmail: sarah.hopper@example.com
+            createdOn: '2024-07-02'
+            expiresOn: '2024-08-02'
+            before: '2571'
+            after: '8516'
+          response:
+            body:
+              limit: 2
+              count: 2
+              hasMore: true
+              links:
+                - rel: next
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/processing-terminals/1001/payment-links?limit=2&after=CKHP6VVWYT
+                - rel: previous
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/processing-terminals/1001/payment-links?limit=2&before=JZURRJBUPS
+              data:
+                - paymentLinkId: JZURRJBUPS
+                  merchantReference: LinkRef6543
+                  order:
+                    description: Pie It Forward charitable trust donation
+                    charge:
+                      currency: AED
+                      type: prompt
+                  authType: sale
+                  paymentMethods:
+                    - card
+                  customLabels:
+                    - label: SUPPORT US
+                  assets:
+                    paymentUrl: >-
+                      https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206
+                    paymentButton: >
+                      <a
+                      href="https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206" 
+
+                      target="_blank" style="color: #ffffff; background-color:
+                      #6C7A89; font-size: 18px; font-family: Helvetica, Arial,
+                      sans-serif; 
+
+                      text-decoration: none; border-radius: 30px; padding: 14px
+                      28px; display: inline-block;">Pay Now</a>
+                  status: active
+                  createdOn: '2024-07-02'
+                  expiresOn: '2024-08-02'
+                  credentialOnFile:
+                    tokenize: true
+                  type: multiUse
+                - paymentLinkId: CKHP6VVWYT
+                  merchantReference: LinkRef7654
+                  order:
+                    orderId: OrderRef7654
+                    description: Large Pepperoni Pizza
+                    charge:
+                      currency: AED
+                      type: prompt
+                  authType: sale
+                  paymentMethods:
+                    - card
+                  customLabels:
+                    - label: SUPPORT US
+                  assets:
+                    paymentUrl: >-
+                      https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206
+                    paymentButton: >
+                      <a
+                      href="https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206" 
+
+                      target="_blank" style="color: #ffffff; background-color:
+                      #6C7A89; font-size: 18px; font-family: Helvetica, Arial,
+                      sans-serif; 
+
+                      text-decoration: none; border-radius: 30px; padding: 14px
+                      28px; display: inline-block;">Pay Now</a>
+                  status: active
+                  createdOn: '2024-07-02'
+                  expiresOn: '2024-08-02'
+                  credentialOnFile:
+                    tokenize: true
+                  type: singleUse
+        - name: No records found
+          path-parameters:
+            processingTerminalId: '1234001'
+          query-parameters:
+            merchantReference: LinkRef6543
+            recipientName: Sarah Hazel Hopper
+            recipientEmail: sarah.hopper@example.com
+            createdOn: '2024-07-02'
+            expiresOn: '2024-08-02'
+            before: '2571'
+            after: '8516'
+          response:
+            body:
+              limit: 10
+              count: 0
+              hasMore: false
+              links:
+                - rel: previous
+                  method: get
+                  href: <uri>
+                - rel: next
+                  method: get
+                  href: <uri>
+              data:
+                - paymentLinkId: JZURRJBUPS
+                  merchantReference: LinkRef6543
+                  order:
+                    description: Pie It Forward charitable trust donation
+                    charge:
+                      currency: AED
+                      type: prompt
+                  authType: sale
+                  paymentMethods:
+                    - card
+                  customLabels:
+                    - label: SUPPORT US
+                  assets:
+                    paymentUrl: >-
+                      https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206
+                    paymentButton: >
+                      <a
+                      href="https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206" 
+
+                      target="_blank" style="color: #ffffff; background-color:
+                      #6C7A89; font-size: 18px; font-family: Helvetica, Arial,
+                      sans-serif; 
+
+                      text-decoration: none; border-radius: 30px; padding: 14px
+                      28px; display: inline-block;">Pay Now</a>
+                  status: active
+                  createdOn: '2024-07-02'
+                  expiresOn: '2024-08-02'
+                  credentialOnFile:
+                    tokenize: true
+                  type: multiUse
+    create:
+      path: /processing-terminals/{processingTerminalId}/payment-links
+      method: POST
+      auth: true
+      docs: >
+        Use this method to create a payment link that a customer can use to make
+        a payment for goods or services. The request contains the following
+        settings for the payment link:
+
+        - **type** - Indicates whether the link can be used only once or if it
+        can be used multiple times.
+
+        - **authType** - Indicates whether the transaction is a sale or a
+        pre-authorization.
+
+        - **paymentMethod** - Indicates the payment methods that the merchant
+        accepts.
+
+        - **charge** - Indicates whether the merchant or the customer enters the
+        amount for the transaction.
+
+        The response contains a paymentLinkId that you can use to [share the
+        payment link](#sharePaymentLink) or to [retrieve information about the
+        link](#retrievePaymentLink).
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Create payment link
+      request:
+        body: CreatePaymentLinksRequestBody
+        path-parameters:
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that we assigned to the terminal.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+        name: CreatePaymentLinksRequest
+        content-type: application/json
+      response:
+        docs: Successful request. We created the payment link.
+        type: CreatePaymentLinksResponse
+        status-code: 201
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Multi-use payment link.
+          path-parameters:
+            processingTerminalId: '1234001'
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            merchantReference: LinkRef6543
+            order:
+              charge:
+                currency: AED
+                type: prompt
+            authType: sale
+            paymentMethods:
+              - card
+            type: multiUse
+          response:
+            body:
+              paymentLinkId: JZURRJBUPS
+              merchantReference: LinkRef6543
+              order:
+                description: Pie It Forward charitable trust donation
+                charge:
+                  currency: AED
+                  type: prompt
+              authType: sale
+              paymentMethods:
+                - card
+              customLabels:
+                - element: paymentButton
+                  label: SUPPORT US
+              assets:
+                paymentUrl: >-
+                  https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206
+                paymentButton: >
+                  <a
+                  href="https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206" 
+
+                  target="_blank" style="color: #ffffff; background-color:
+                  #6C7A89; font-size: 18px; font-family: Helvetica, Arial,
+                  sans-serif; 
+
+                  text-decoration: none; border-radius: 30px; padding: 14px
+                  28px; display: inline-block;">Pay Now</a>
+              status: active
+              createdOn: '2024-07-02'
+              expiresOn: '2024-08-02'
+              credentialOnFile:
+                tokenize: true
+                mitAgreement: unscheduled
+              type: multiUse
+        - name: Single-use payment link.
+          path-parameters:
+            processingTerminalId: '1234001'
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            merchantReference: LinkRef7654
+            order:
+              orderId: OrderRef7654
+              charge:
+                currency: AED
+                type: prompt
+            authType: sale
+            paymentMethods:
+              - card
+            expiresOn: '2024-08-02'
+            type: singleUse
+          response:
+            body:
+              paymentLinkId: JZURRJBUPS
+              merchantReference: LinkRef6543
+              order:
+                description: Pie It Forward charitable trust donation
+                charge:
+                  currency: AED
+                  type: prompt
+              authType: sale
+              paymentMethods:
+                - card
+              customLabels:
+                - element: paymentButton
+                  label: SUPPORT US
+              assets:
+                paymentUrl: >-
+                  https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206
+                paymentButton: >
+                  <a
+                  href="https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206" 
+
+                  target="_blank" style="color: #ffffff; background-color:
+                  #6C7A89; font-size: 18px; font-family: Helvetica, Arial,
+                  sans-serif; 
+
+                  text-decoration: none; border-radius: 30px; padding: 14px
+                  28px; display: inline-block;">Pay Now</a>
+              status: active
+              createdOn: '2024-07-02'
+              expiresOn: '2024-08-02'
+              credentialOnFile:
+                tokenize: true
+                mitAgreement: unscheduled
+              type: multiUse
+    retrieve:
+      path: /payment-links/{paymentLinkId}
+      method: GET
+      auth: true
+      docs: >
+        Use this method to retrieve information about a payment link.
+
+        You need the paymentLinkId that we sent to you when you created the
+        payment link.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Retrieve payment link
+      request:
+        name: RetrievePaymentLinksRequest
+        path-parameters:
+          paymentLinkId:
+            type: string
+            docs: Unique identifier that we assigned to the payment link.
+      response:
+        docs: Successful request. Returns the payment link.
+        type: RetrievePaymentLinksResponse
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Payment Link
+          path-parameters:
+            paymentLinkId: JZURRJBUPS
+          response:
+            body:
+              paymentLinkId: JZURRJBUPS
+              merchantReference: LinkRef6543
+              order:
+                description: Pie It Forward charitable trust donation
+                charge:
+                  currency: AED
+                  type: prompt
+              authType: sale
+              paymentMethods:
+                - card
+              customLabels:
+                - element: paymentButton
+                  label: SUPPORT US
+              assets:
+                paymentUrl: >-
+                  https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206
+                paymentButton: >
+                  <a
+                  href="https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206" 
+
+                  target="_blank" style="color: #ffffff; background-color:
+                  #6C7A89; font-size: 18px; font-family: Helvetica, Arial,
+                  sans-serif; 
+
+                  text-decoration: none; border-radius: 30px; padding: 14px
+                  28px; display: inline-block;">Pay Now</a>
+              status: active
+              createdOn: '2024-07-02'
+              expiresOn: '2024-08-02'
+              credentialOnFile:
+                tokenize: true
+                mitAgreement: unscheduled
+              type: multiUse
+    update:
+      path: /payment-links/{paymentLinkId}
+      method: PATCH
+      auth: true
+      docs: >
+        Use this method to partially update a payment link. Structure your
+        request to follow the [RFC
+        6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
+
+
+        You can update the following properties of a multi-use link:
+
+        - **expiresOn parameter** - Expiration date of the link.
+
+        - **customLabels object** - Label for the payment button.
+
+        - **credentialOnFile object** - Settings for saving the customer's
+        payment details.
+
+
+        You can update the following properties of a single-use link:
+
+        - **expiresOn parameter** - Expiration date of the link.
+
+        - **authType parameter** - Transaction type of the payment link.
+
+        - **amount parameter** - Total amount of the transaction.
+
+        - **currency parameter** - Currency of the transaction.
+
+        - **description parameter** - Brief description of the transaction.
+
+        - **customLabels object** - Label for the payment button.
+
+        - **credentialOnFile object** - Settings for saving the customer's
+        payment details.
+
+
+        **Note:** When a merchant updates a single-use link, we update the
+        payment URL and HTML code in the assets object. The customer can't use
+        the original link to make a payment.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Update payment link
+      request:
+        body: root.PatchRequest
+        path-parameters:
+          paymentLinkId:
+            type: string
+            docs: Unique identifier that we assigned to the payment link.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+        name: UpdatePaymentLinksRequest
+        content-type: application/json
+      response:
+        docs: Successful request. We updated the payment link.
+        type: UpdatePaymentLinksResponse
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Partially update payment link
+          path-parameters:
+            paymentLinkId: JZURRJBUPS
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            - path: path
+              op: remove
+          response:
+            body:
+              paymentLinkId: JZURRJBUPS
+              merchantReference: LinkRef6543
+              order:
+                description: Pie It Forward charitable trust donation
+                charge:
+                  currency: AED
+                  type: prompt
+              authType: sale
+              paymentMethods:
+                - card
+              customLabels:
+                - element: paymentButton
+                  label: SUPPORT US
+              assets:
+                paymentUrl: >-
+                  https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206
+                paymentButton: >
+                  <a
+                  href="https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206" 
+
+                  target="_blank" style="color: #ffffff; background-color:
+                  #6C7A89; font-size: 18px; font-family: Helvetica, Arial,
+                  sans-serif; 
+
+                  text-decoration: none; border-radius: 30px; padding: 14px
+                  28px; display: inline-block;">Pay Now</a>
+              status: active
+              createdOn: '2024-07-02'
+              expiresOn: '2024-08-02'
+              credentialOnFile:
+                tokenize: true
+                mitAgreement: unscheduled
+              type: multiUse
+        - name: Example patch operations that apply the RFC 6902 standard
+          path-parameters:
+            paymentLinkId: JZURRJBUPS
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            - path: path
+              op: remove
+            - path: path
+              op: remove
+            - path: path
+              op: remove
+            - from: from
+              path: path
+              op: move
+            - from: from
+              path: path
+              op: copy
+            - path: path
+              op: remove
+          response:
+            body:
+              paymentLinkId: JZURRJBUPS
+              merchantReference: LinkRef6543
+              order:
+                description: Pie It Forward charitable trust donation
+                charge:
+                  currency: AED
+                  type: prompt
+              authType: sale
+              paymentMethods:
+                - card
+              customLabels:
+                - element: paymentButton
+                  label: SUPPORT US
+              assets:
+                paymentUrl: >-
+                  https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206
+                paymentButton: >
+                  <a
+                  href="https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206" 
+
+                  target="_blank" style="color: #ffffff; background-color:
+                  #6C7A89; font-size: 18px; font-family: Helvetica, Arial,
+                  sans-serif; 
+
+                  text-decoration: none; border-radius: 30px; padding: 14px
+                  28px; display: inline-block;">Pay Now</a>
+              status: active
+              createdOn: '2024-07-02'
+              expiresOn: '2024-08-02'
+              credentialOnFile:
+                tokenize: true
+                mitAgreement: unscheduled
+              type: multiUse
+    deactivate:
+      path: /payment-links/{paymentLinkId}/deactivate
+      method: POST
+      auth: true
+      docs: >
+        Use this method to deactivate a payment link. If the merchant
+        deactivates a payment link, they can't reactivate it. To take payment,
+        the merchant must create a new payment link.  
+
+
+        **Note:** After the merchant deactivates a payment link, a customer
+        can't use the link to make a payment. 
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Deactivate payment link
+      request:
+        name: DeactivatePaymentLinksRequest
+        path-parameters:
+          paymentLinkId:
+            type: string
+            docs: Unique identifier that we assigned to the payment link.
+      response:
+        docs: Successful request. We deactivated the payment link.
+        type: DeactivatePaymentLinksResponse
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.InternalServerError
+      examples:
+        - name: Payment link
+          path-parameters:
+            paymentLinkId: JZURRJBUPS
+          response:
+            body:
+              paymentLinkId: JZURRJBUPS
+              merchantReference: LinkRef6543
+              order:
+                description: Pie It Forward charitable trust donation
+                charge:
+                  currency: AED
+                  type: prompt
+              authType: sale
+              paymentMethods:
+                - card
+              customLabels:
+                - element: paymentButton
+                  label: SUPPORT US
+              assets:
+                paymentUrl: >-
+                  https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206
+                paymentButton: >
+                  <a
+                  href="https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206" 
+
+                  target="_blank" style="color: #ffffff; background-color:
+                  #6C7A89; font-size: 18px; font-family: Helvetica, Arial,
+                  sans-serif; 
+
+                  text-decoration: none; border-radius: 30px; padding: 14px
+                  28px; display: inline-block;">Pay Now</a>
+              status: active
+              createdOn: '2024-07-02'
+              expiresOn: '2024-08-02'
+              credentialOnFile:
+                tokenize: true
+                mitAgreement: unscheduled
+              type: multiUse
+  source:
+    openapi: read-only/openapi/external/universal-api-v1.yaml

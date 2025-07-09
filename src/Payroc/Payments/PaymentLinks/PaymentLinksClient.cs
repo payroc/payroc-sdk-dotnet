@@ -162,8 +162,13 @@ public partial class PaymentLinksClient
                 };
                 return await PayrocPagerFactory
                     .CreateAsync<PaymentLinkPaginatedListDataItem>(
-                        sendRequest,
-                        httpRequest,
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
                         cancellationToken
                     )
                     .ConfigureAwait(false);
@@ -421,8 +426,8 @@ public partial class PaymentLinksClient
     /// **Note:** When a merchant updates a single-use link, we update the payment URL and HTML code in the assets object. The customer can't use the original link to make a payment.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.PaymentLinks.PartiallyUpdateAsync(
-    ///     new PartiallyUpdatePaymentLinksRequest
+    /// await client.Payments.PaymentLinks.UpdateAsync(
+    ///     new UpdatePaymentLinksRequest
     ///     {
     ///         PaymentLinkId = "JZURRJBUPS",
     ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
@@ -433,8 +438,8 @@ public partial class PaymentLinksClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<PartiallyUpdatePaymentLinksResponse> PartiallyUpdateAsync(
-        PartiallyUpdatePaymentLinksRequest request,
+    public async Task<UpdatePaymentLinksResponse> UpdateAsync(
+        UpdatePaymentLinksRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -471,9 +476,7 @@ public partial class PaymentLinksClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<PartiallyUpdatePaymentLinksResponse>(
-                            responseBody
-                        )!;
+                        return JsonUtils.Deserialize<UpdatePaymentLinksResponse>(responseBody)!;
                     }
                     catch (JsonException e)
                     {

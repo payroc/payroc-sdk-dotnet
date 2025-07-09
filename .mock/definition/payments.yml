@@ -1,0 +1,2338 @@
+types:
+  ListPaymentsRequestTender:
+    enum:
+      - ebt
+      - creditDebit
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  ListPaymentsRequestTipModeItem:
+    enum:
+      - noTip
+      - prompted
+      - adjusted
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  ListPaymentsRequestTypeItem:
+    enum:
+      - sale
+      - preAuthorization
+      - preAuthorizationCompletion
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  ListPaymentsRequestStatusItem:
+    enum:
+      - ready
+      - pending
+      - declined
+      - complete
+      - referral
+      - pickup
+      - reversal
+      - admin
+      - expired
+      - accepted
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  ListPaymentsRequestSettlementState:
+    enum:
+      - settled
+      - unsettled
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  PaymentRequestChannel:
+    enum:
+      - pos
+      - web
+      - moto
+    docs: Channel that the merchant used to receive the payment details.
+    inline: true
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  PaymentRequestPaymentMethod:
+    discriminant: type
+    base-properties: {}
+    docs: Object that contains information about the customer's payment details.
+    union:
+      card:
+        type: root.CardPayload
+      secureToken:
+        type: root.SecureTokenPayload
+      digitalWallet:
+        type: root.DigitalWalletPayload
+      singleUseToken:
+        type: root.SingleUseTokenPayload
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  PaymentRequestThreeDSecure:
+    discriminant: serviceProvider
+    base-properties: {}
+    docs: >-
+      Object that contains information for an authentication check on the
+      customer's payment details using the 3-D Secure protocol.
+    union:
+      gateway:
+        type: root.GatewayThreeDSecure
+      thirdParty:
+        type: root.ThirdPartyThreeDSecure
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  PaymentAdjustmentAdjustmentsItem:
+    discriminant: type
+    base-properties: {}
+    union:
+      order:
+        type: root.OrderAdjustment
+      status:
+        type: root.StatusAdjustment
+      customer:
+        type: root.CustomerAdjustment
+      signature:
+        type: root.SignatureAdjustment
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /payments
+      method: GET
+      auth: true
+      docs: >
+        Use this method to return a [paginated](/api/pagination) list of
+        payments. 
+
+
+        **Note:** If you want to view a specific payment and you have its
+        paymentId, use our [Retrieve Payment](/api/schema/payments/get)
+        method.  
+
+
+        Use query parameters to filter the list of results that we return, for
+        example, to search for payments for a customer, a tip mode, or a date
+        range.  
+
+
+        Our gateway returns the following information about each payment in the
+        list:  
+
+
+        - Order details, including the transaction amount and when it was
+        processed.  
+
+        - Payment card details, including the masked card number, expiry date,
+        and payment method. 
+
+        - Cardholder details, including their contact information and shipping
+        address. 
+
+        - Payment details, including the payment type, status, and response. 
+         
+        For each transaction, we also return the paymentId and an optional
+        secureTokenId, which you can use to perform follow-on actions. 
+      pagination:
+        type: custom
+        results: $response.data
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: List payments
+      request:
+        name: ListPaymentsRequest
+        query-parameters:
+          processingTerminalId:
+            type: optional<string>
+            docs: Filter by terminal ID.
+            validation:
+              minLength: 4
+              maxLength: 50
+          orderId:
+            type: optional<string>
+            docs: Filter payments by order ID.
+            validation:
+              minLength: 1
+              maxLength: 24
+          operator:
+            type: optional<string>
+            docs: Filter payments by operator.
+            validation:
+              minLength: 1
+              maxLength: 50
+          cardholderName:
+            type: optional<string>
+            docs: Filter payments by the cardholder’s name.
+            validation:
+              minLength: 1
+              maxLength: 50
+          first6:
+            type: optional<string>
+            docs: >-
+              Filter payments by the first six digits of the card number that
+              the customer used in the transaction.
+            validation:
+              pattern: '[0-9]{6}'
+          last4:
+            type: optional<string>
+            docs: >-
+              Filter payments by the last four digits of the card number that
+              the customer used in the transaction.
+            validation:
+              pattern: '[0-9]{4}'
+          tender:
+            type: optional<ListPaymentsRequestTender>
+            docs: Filter by tender type.
+          tipMode:
+            type: optional<ListPaymentsRequestTipModeItem>
+            allow-multiple: true
+            docs: Filter payments by tip.
+          type:
+            type: optional<ListPaymentsRequestTypeItem>
+            allow-multiple: true
+            docs: Filter payments by transaction type.
+          status:
+            type: optional<ListPaymentsRequestStatusItem>
+            allow-multiple: true
+            docs: Filter payments by the status of the transaction.
+          dateFrom:
+            type: optional<datetime>
+            docs: >-
+              Filter by payments that the processor processed after a specific
+              date. The date format follows the ISO 8601 standard.
+          dateTo:
+            type: optional<datetime>
+            docs: >-
+              Filter by payments that the processer processed before a specific
+              date. The date format follows the ISO 8601 standard.
+          settlementState:
+            type: optional<ListPaymentsRequestSettlementState>
+            docs: Filter payments by the settlement status of the transaction.
+          settlementDate:
+            type: optional<date>
+            docs: >-
+              Filter by payments that the processor settled on a specific date
+              in the format **YYYY-MM-DD**.
+          paymentLinkId:
+            type: optional<string>
+            docs: Unique identifier that our gateway assigned to the payment link.
+            validation:
+              minLength: 10
+              maxLength: 10
+          before:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results before. Typically, this is the first resource on the
+              previous page.
+          after:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results after. Typically, this is the last resource on the
+              previous page.
+          limit:
+            type: optional<integer>
+            default: 10
+            docs: States the total amount of results the response is limited to.
+            validation:
+              max: 100
+      response:
+        docs: Successful request. Returns a list of payments.
+        type: root.PaymentPaginatedList
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Payment
+          query-parameters:
+            processingTerminalId: '1234001'
+            orderId: OrderRef6543
+            operator: Jane
+            cardholderName: Sarah%20Hazel%20Hopper
+            first6: '453985'
+            last4: '7062'
+            dateFrom: '2024-07-01T15:30:00Z'
+            dateTo: '2024-07-03T15:30:00Z'
+            settlementDate: '2024-07-02'
+            paymentLinkId: JZURRJBUPS
+            before: '2571'
+            after: '8516'
+          response:
+            body:
+              limit: 2
+              count: 2
+              hasMore: true
+              links:
+                - rel: next
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/payments?processingTerminalId=1234001&limit=2&after=E29U8OU8Q4
+                - rel: previous
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/payments?processingTerminalId=1234001&limit=2&before=M2MJOG6O2Y
+              data:
+                - paymentId: M2MJOG6O2Y
+                  processingTerminalId: '1234001'
+                  operator: Automatic Payment
+                  order:
+                    orderId: OrderRef6543
+                    dateTime: '2024-07-02T15:30:00Z'
+                    description: Monthly Premium Club subscription
+                    amount: 4999
+                    currency: USD
+                    dccOffer:
+                      accepted: true
+                      offerReference: DCC123456789
+                      fxAmount: 3955
+                      fxCurrency: AED
+                      fxCurrencyCode: CAD
+                      fxCurrencyExponent: 2
+                      fxRate: 1.37
+                      markup: 3.5
+                      markupText: 3.5% mark-up applied.
+                      provider: DCC Provider Inc.
+                      source: European Central Bank
+                  customer:
+                    firstName: Sarah
+                    lastName: Hopper
+                    dateOfBirth: '1990-07-15'
+                    referenceNumber: CustomerCode234567
+                    billingAddress:
+                      address1: 1 Example Ave.
+                      address2: Example Address Line 2
+                      address3: Example Address Line 3
+                      city: Chicago
+                      state: Illinois
+                      country: US
+                      postalCode: '60056'
+                    contactMethods:
+                      - value: jane.doe@example.com
+                        type: email
+                  card:
+                    type: Visa Credit
+                    entryMethod: icc
+                    cardholderName: Sarah Hopper
+                    cardholderSignature: >-
+                      a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                    cardNumber: 453985******7062
+                    expiryDate: '1225'
+                    secureToken:
+                      secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                      customerName: Sarah Hopper
+                      token: '296753123456'
+                      status: notValidated
+                      link:
+                        rel: self
+                        method: GET
+                        href: >-
+                          https://api.payroc.com/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                    securityChecks:
+                      cvvResult: M
+                      avsResult: X
+                    emvTags:
+                      - hex: 9F36
+                        value: '001234'
+                      - hex: 5F2A
+                        value: '0840'
+                    balances:
+                      - benefitCategory: cash
+                        amount: 50000
+                        currency: USD
+                      - benefitCategory: foodStamp
+                        amount: 10000
+                        currency: USD
+                  refunds:
+                    - refundId: CD3HN88U9F
+                      dateTime: '2024-07-14T12:25:00Z'
+                      currency: AED
+                      amount: 4999
+                      status: ready
+                      responseCode: A
+                      responseMessage: Transaction refunded
+                      link:
+                        rel: previous
+                        method: get
+                        href: <uri>
+                  supportedOperations:
+                    - fullyReverse
+                    - setAsPending
+                  transactionResult:
+                    type: sale
+                    status: ready
+                    approvalCode: OK3
+                    authorizedAmount: 4999
+                    currency: USD
+                    responseCode: A
+                    responseMessage: APPROVAL
+                  customFields:
+                    - name: yourCustomField
+                      value: abc123
+                - paymentId: E29U8OU8Q4
+                  processingTerminalId: '1234001'
+                  operator: Automatic Payment
+                  order:
+                    orderId: OrderRef7654
+                    dateTime: '2024-07-02T15:30:00Z'
+                    description: Monthly Premium Club subscription
+                    amount: 4999
+                    currency: USD
+                    dccOffer:
+                      accepted: true
+                      offerReference: DCC123456789
+                      fxAmount: 3955
+                      fxCurrency: AED
+                      fxCurrencyCode: CAD
+                      fxCurrencyExponent: 2
+                      fxRate: 1.37
+                      markup: 3.5
+                      markupText: 3.5% mark-up applied.
+                      provider: DCC Provider Inc.
+                      source: European Central Bank
+                  customer:
+                    firstName: Sarah
+                    lastName: Hopper
+                    dateOfBirth: '1990-07-15'
+                    referenceNumber: CustomerCode234567
+                    billingAddress:
+                      address1: 1 Example Ave.
+                      address2: Example Address Line 2
+                      address3: Example Address Line 3
+                      city: Chicago
+                      state: Illinois
+                      country: US
+                      postalCode: '60056'
+                    contactMethods:
+                      - value: jane.doe@example.com
+                        type: email
+                  card:
+                    type: Visa Debit
+                    entryMethod: icc
+                    cardholderName: Sarah Hopper
+                    cardholderSignature: >-
+                      a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                    cardNumber: 453985******7062
+                    expiryDate: '1225'
+                    secureToken:
+                      secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                      customerName: Sarah Hopper
+                      token: '296753123456'
+                      status: notValidated
+                      link:
+                        rel: self
+                        method: GET
+                        href: >-
+                          https://api.payroc.com/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                    securityChecks:
+                      cvvResult: M
+                      avsResult: X
+                    emvTags:
+                      - hex: 9F36
+                        value: '001234'
+                      - hex: 5F2A
+                        value: '0840'
+                    balances:
+                      - benefitCategory: cash
+                        amount: 50000
+                        currency: USD
+                      - benefitCategory: foodStamp
+                        amount: 10000
+                        currency: USD
+                  refunds:
+                    - refundId: CD3HN88U9F
+                      dateTime: '2024-07-14T12:25:00Z'
+                      currency: AED
+                      amount: 4999
+                      status: ready
+                      responseCode: A
+                      responseMessage: Transaction refunded
+                      link:
+                        rel: previous
+                        method: get
+                        href: <uri>
+                  supportedOperations:
+                    - fullyReverse
+                    - setAsPending
+                  transactionResult:
+                    type: sale
+                    status: ready
+                    approvalCode: '475318'
+                    authorizedAmount: 1000
+                    currency: EUR
+                    responseCode: A
+                    responseMessage: APPROVAL
+                  customFields:
+                    - name: yourCustomField
+                      value: abc123
+        - name: No records found
+          query-parameters:
+            processingTerminalId: '1234001'
+            orderId: OrderRef6543
+            operator: Jane
+            cardholderName: Sarah%20Hazel%20Hopper
+            first6: '453985'
+            last4: '7062'
+            dateFrom: '2024-07-01T15:30:00Z'
+            dateTo: '2024-07-03T15:30:00Z'
+            settlementDate: '2024-07-02'
+            paymentLinkId: JZURRJBUPS
+            before: '2571'
+            after: '8516'
+          response:
+            body:
+              limit: 10
+              count: 0
+              hasMore: false
+              links:
+                - rel: previous
+                  method: get
+                  href: <uri>
+                - rel: next
+                  method: get
+                  href: <uri>
+    create:
+      path: /payments
+      method: POST
+      auth: true
+      docs: "Use this method to run a sale or a pre-authorization with a customer's payment card. \n\nIn the response, our gateway returns information about the card payment and a paymentId, which you need for the following methods:\n\n-\t[Retrieve payment](/api/schema/payments/get) - View the details of the card payment.\n-\t[Adjust payment](/api/schema/payments/adjust) - Update the details of the card payment.\n-\t[Capture payment](/api/schema/payments/capture)  - Capture the pre-authorization.\n-\t[Reverse payment](/api/schema/payments/reverse)  - Cancel the card payment if it's in an open batch.\n-\t[Refund payment](/api/schema/payments/refund)  - Run a referenced refund to return funds to the payment card.\n\n**Payment methods** \n\n- **Cards** - Credit, debit, and EBT\n- **Digital wallets** - [Apple Pay®](/guides/integrate/apple-pay) and [Google Pay®](/guides/integrate/google-pay) \n- **Tokens** - Secure tokens and single-use tokens\n\n**Features** \n\nOur Create Payment method also supports the following features: \n\n- [Repeat payments](/guides/integrate/repeat-payments/use-your-own-software) - Run multiple payments as part of a payment schedule that you manage with your own software. \n- **Offline sales** - Run a sale or a pre-authorization if the terminal loses its connection to our gateway. \n- [Tokenization](h/guides/integrate/save-payment-details) - Save card details to use in future transactions. \n- [3-D Secure](/guides/integrate/3-d-secure) - Verify the identity of the cardholder. \n- [Custom fields](/guides/integrate/add-custom-fields) - Add your own data to a payment. \n- **Tips** - Add tips to the card payment.  \n- **Taxes** - Add local taxes to the card payment. \n- **Surcharging** - Add a surcharge to the card payment. \n- **Dual pricing** - Offer different prices based on payment method, for example, if you use our RewardPay Choice pricing program. \n"
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Create payment
+      request:
+        name: PaymentRequest
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+        body:
+          properties:
+            channel:
+              type: PaymentRequestChannel
+              docs: Channel that the merchant used to receive the payment details.
+            processingTerminalId:
+              type: string
+              docs: Unique identifier that we assigned to the terminal.
+              validation:
+                minLength: 4
+                maxLength: 50
+            operator:
+              type: optional<string>
+              docs: Operator who ran the transaction.
+              validation:
+                minLength: 0
+                maxLength: 50
+            order: root.PaymentOrder
+            customer: optional<root.Customer>
+            ipAddress: optional<root.IpAddress>
+            paymentMethod:
+              type: PaymentRequestPaymentMethod
+              docs: >-
+                Object that contains information about the customer's payment
+                details.
+            threeDSecure:
+              type: optional<PaymentRequestThreeDSecure>
+              docs: >-
+                Object that contains information for an authentication check on
+                the customer's payment details using the 3-D Secure protocol.
+            credentialOnFile: optional<root.SchemasCredentialOnFile>
+            offlineProcessing: optional<root.OfflineProcessing>
+            autoCapture:
+              type: optional<boolean>
+              docs: >
+                Indicates if we should automatically capture the payment
+                amount.  
+
+
+                - `true` - Run a sale and automatically capture the transaction.
+
+                - `false`- Run a pre-authorization and capture the transaction
+                later.  
+                  
+                **Note:** If you send `false` and the terminal doesn't support
+                pre-authorization, we set the transaction's status to pending.
+                The merchant must capture the transaction to take payment from
+                the customer.
+              default: true
+            processAsSale:
+              type: optional<boolean>
+              docs: >
+                Indicates if we should immediately settle the sale transaction.
+                The merchant cannot adjust the transaction if we immediately
+                settle it.  
+
+                **Note:** If the value for **processAsSale** is `true`, the
+                gateway ignores the value in **autoCapture**.
+              default: false
+            customFields:
+              type: optional<list<root.CustomField>>
+              docs: |
+                Array of customField objects.
+        content-type: application/json
+      response:
+        docs: Successful request. We processed the transaction.
+        type: root.Payment
+        status-code: 201
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Card Payment
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            channel: web
+            processingTerminalId: '1234001'
+            operator: Jane
+            order:
+              orderId: OrderRef6543
+              description: Large Pepperoni Pizza
+              amount: 4999
+              currency: USD
+            customer:
+              firstName: Sarah
+              lastName: Hopper
+              billingAddress:
+                address1: 1 Example Ave.
+                address2: Example Address Line 2
+                address3: Example Address Line 3
+                city: Chicago
+                state: Illinois
+                country: US
+                postalCode: '60056'
+              shippingAddress:
+                recipientName: Sarah Hopper
+                address:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+            paymentMethod:
+              cardDetails:
+                device:
+                  model: bbposChp
+                  serialNumber: '1850010868'
+                rawData: >-
+                  A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+                entryMethod: raw
+              type: card
+            customFields:
+              - name: yourCustomField
+                value: abc123
+          response:
+            body:
+              paymentId: M2MJOG6O2Y
+              processingTerminalId: '1234001'
+              operator: Jane
+              order:
+                orderId: OrderRef6543
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Large Pepperoni Pizza
+                amount: 4999
+                currency: USD
+                breakdown:
+                  subtotal: 2899
+                  cashbackAmount: 0
+                  tip:
+                    type: percentage
+                  taxes:
+                    - name: Sales Tax
+                      rate: 7
+                      amount: 190
+                  surcharge:
+                    bypass: false
+                    amount: 50
+                    percentage: 2
+                  dualPricing:
+                    offered: false
+                    choiceRate:
+                      applied: true
+                      rate: 2.5
+                      amount: 75
+                  dutyAmount: 0
+                  freightAmount: 0
+                  convenienceFee:
+                    amount: 25
+                  items:
+                    - commodityCode: 5812-0111
+                      productCode: PZA-001-LG
+                      description: Large Pepperoni Pizza
+                      unitPrice: 2709
+                      quantity: 1
+                      discountRate: 5
+                      taxes:
+                        - name: Sales Tax
+                          rate: 7
+                          amount: 190
+                dccOffer:
+                  accepted: true
+                  offerReference: DCC123456789
+                  fxAmount: 3955
+                  fxCurrency: AED
+                  fxCurrencyCode: CAD
+                  fxCurrencyExponent: 2
+                  fxRate: 1.37
+                  markup: 3.5
+                  markupText: 3.5% mark-up applied.
+                  provider: DCC Provider Inc.
+                  source: European Central Bank
+                standingInstructions:
+                  sequence: first
+                  processingModel: unscheduled
+                  referenceDataOfFirstTxn:
+                    paymentId: M2MJOG6O2Y
+                    cardSchemeReferenceId: ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
+              customer:
+                firstName: Sarah
+                lastName: Hopper
+                dateOfBirth: '1990-07-15'
+                referenceNumber: CustomerCode234567
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+                shippingAddress:
+                  recipientName: Sarah Hopper
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                contactMethods:
+                  - value: jane.doe@example.com
+                    type: email
+                notificationLanguage: en
+              card:
+                type: MasterCard
+                entryMethod: keyed
+                cardholderName: Sarah Hazel Hopper
+                cardholderSignature: >-
+                  a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                cardNumber: 453985******7062
+                expiryDate: '1225'
+                secureToken:
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  customerName: Sarah Hazel Hopper
+                  token: '296753123456'
+                  status: notValidated
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+                securityChecks:
+                  cvvResult: M
+                  avsResult: 'Y'
+                emvTags:
+                  - hex: 9F36
+                    value: '001234'
+                  - hex: 5F2A
+                    value: '0840'
+                balances:
+                  - benefitCategory: cash
+                    amount: 50000
+                    currency: USD
+                  - benefitCategory: foodStamp
+                    amount: 10000
+                    currency: USD
+              refunds:
+                - refundId: CD3HN88U9F
+                  dateTime: '2024-07-14T12:25:00Z'
+                  currency: AED
+                  amount: 4999
+                  status: ready
+                  responseCode: A
+                  responseMessage: Transaction refunded
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+              supportedOperations:
+                - capture
+                - fullyReverse
+                - partiallyReverse
+                - incrementAuthorization
+                - adjustTip
+                - setAsPending
+              transactionResult:
+                type: sale
+                ebtType: cashPurchase
+                status: ready
+                approvalCode: OK3
+                authorizedAmount: 4999
+                currency: USD
+                responseCode: A
+                responseMessage: OK3
+                processorResponseCode: processorResponseCode
+                cardSchemeReferenceId: cardSchemeReferenceId
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+        - name: Apple Pay Payment
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            channel: web
+            processingTerminalId: '1234001'
+            operator: Jane
+            order:
+              orderId: 1234567890W
+              description: Card Transaction (APPLE)
+              amount: 4999
+              currency: USD
+            paymentMethod:
+              serviceProvider: apple
+              encryptedData: encryptedData
+              type: digitalWallet
+          response:
+            body:
+              paymentId: J9VULKIKFP
+              processingTerminalId: '1234001'
+              operator: Jane
+              order:
+                orderId: 1234567890W
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Card Transaction (APPLE)
+                amount: 4999
+                currency: USD
+                breakdown:
+                  subtotal: 2899
+                  cashbackAmount: 0
+                  tip:
+                    type: percentage
+                  taxes:
+                    - name: Sales Tax
+                      rate: 7
+                      amount: 190
+                  surcharge:
+                    bypass: false
+                    amount: 50
+                    percentage: 2
+                  dualPricing:
+                    offered: false
+                    choiceRate:
+                      applied: true
+                      rate: 2.5
+                      amount: 75
+                  dutyAmount: 0
+                  freightAmount: 0
+                  convenienceFee:
+                    amount: 25
+                  items:
+                    - commodityCode: 5812-0111
+                      productCode: PZA-001-LG
+                      description: Large Pepperoni Pizza
+                      unitPrice: 2709
+                      quantity: 1
+                      discountRate: 5
+                      taxes:
+                        - name: Sales Tax
+                          rate: 7
+                          amount: 190
+                dccOffer:
+                  accepted: true
+                  offerReference: DCC123456789
+                  fxAmount: 3955
+                  fxCurrency: AED
+                  fxCurrencyCode: CAD
+                  fxCurrencyExponent: 2
+                  fxRate: 1.37
+                  markup: 3.5
+                  markupText: 3.5% mark-up applied.
+                  provider: DCC Provider Inc.
+                  source: European Central Bank
+                standingInstructions:
+                  sequence: first
+                  processingModel: unscheduled
+                  referenceDataOfFirstTxn:
+                    paymentId: M2MJOG6O2Y
+                    cardSchemeReferenceId: ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
+              customer:
+                firstName: Sarah
+                lastName: Hopper
+                dateOfBirth: '1990-07-15'
+                referenceNumber: CustomerCode234567
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+                shippingAddress:
+                  recipientName: Sarah Hopper
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                contactMethods:
+                  - value: jane.doe@example.com
+                    type: email
+                notificationLanguage: en
+              card:
+                type: MasterCard
+                entryMethod: keyed
+                cardholderName: Sarah Hazel Hopper
+                cardholderSignature: >-
+                  a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                cardNumber: 500165******0000
+                expiryDate: '0328'
+                secureToken:
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  customerName: Sarah Hazel Hopper
+                  token: '296753123456'
+                  status: notValidated
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+                securityChecks:
+                  cvvResult: M
+                  avsResult: U
+                emvTags:
+                  - hex: 9F36
+                    value: '001234'
+                  - hex: 5F2A
+                    value: '0840'
+                balances:
+                  - benefitCategory: cash
+                    amount: 50000
+                    currency: USD
+                  - benefitCategory: foodStamp
+                    amount: 10000
+                    currency: USD
+              refunds:
+                - refundId: CD3HN88U9F
+                  dateTime: '2024-07-14T12:25:00Z'
+                  currency: AED
+                  amount: 4999
+                  status: ready
+                  responseCode: A
+                  responseMessage: Transaction refunded
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+              supportedOperations:
+                - capture
+                - fullyReverse
+                - partiallyReverse
+                - incrementAuthorization
+                - adjustTip
+                - setAsPending
+              transactionResult:
+                type: sale
+                ebtType: cashPurchase
+                status: ready
+                approvalCode: OK3
+                authorizedAmount: 4999
+                currency: USD
+                responseCode: A
+                responseMessage: APPROVAL
+                processorResponseCode: '00'
+                cardSchemeReferenceId: cardSchemeReferenceId
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+        - name: Payment
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            channel: web
+            processingTerminalId: '1234001'
+            operator: Jane
+            order:
+              orderId: OrderRef6543
+              description: Large Pepperoni Pizza
+              amount: 4999
+              currency: USD
+            customer:
+              firstName: Sarah
+              lastName: Hopper
+              billingAddress:
+                address1: 1 Example Ave.
+                address2: Example Address Line 2
+                address3: Example Address Line 3
+                city: Chicago
+                state: Illinois
+                country: US
+                postalCode: '60056'
+              shippingAddress:
+                recipientName: Sarah Hopper
+                address:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+            paymentMethod:
+              cardDetails:
+                device:
+                  model: bbposChp
+                  serialNumber: '1850010868'
+                rawData: >-
+                  A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+                entryMethod: raw
+              type: card
+            customFields:
+              - name: yourCustomField
+                value: abc123
+          response:
+            body:
+              paymentId: M2MJOG6O2Y
+              processingTerminalId: '1234001'
+              operator: Jane
+              order:
+                orderId: OrderRef6543
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Large Pepperoni Pizza
+                amount: 4999
+                currency: USD
+                breakdown:
+                  subtotal: 2899
+                  cashbackAmount: 0
+                  tip:
+                    type: percentage
+                  taxes:
+                    - name: Sales Tax
+                      rate: 7
+                      amount: 190
+                  surcharge:
+                    bypass: false
+                    amount: 50
+                    percentage: 2
+                  dualPricing:
+                    offered: false
+                    choiceRate:
+                      applied: true
+                      rate: 2.5
+                      amount: 75
+                  dutyAmount: 0
+                  freightAmount: 0
+                  convenienceFee:
+                    amount: 25
+                  items:
+                    - commodityCode: 5812-0111
+                      productCode: PZA-001-LG
+                      description: Large Pepperoni Pizza
+                      unitPrice: 2709
+                      quantity: 1
+                      discountRate: 5
+                      taxes:
+                        - name: Sales Tax
+                          rate: 7
+                          amount: 190
+                dccOffer:
+                  accepted: true
+                  offerReference: DCC123456789
+                  fxAmount: 3955
+                  fxCurrency: AED
+                  fxCurrencyCode: CAD
+                  fxCurrencyExponent: 2
+                  fxRate: 1.37
+                  markup: 3.5
+                  markupText: 3.5% mark-up applied.
+                  provider: DCC Provider Inc.
+                  source: European Central Bank
+                standingInstructions:
+                  sequence: first
+                  processingModel: unscheduled
+                  referenceDataOfFirstTxn:
+                    paymentId: M2MJOG6O2Y
+                    cardSchemeReferenceId: ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
+              customer:
+                firstName: Sarah
+                lastName: Hopper
+                dateOfBirth: '1990-07-15'
+                referenceNumber: CustomerCode234567
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+                shippingAddress:
+                  recipientName: Sarah Hopper
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                contactMethods:
+                  - value: jane.doe@example.com
+                    type: email
+                notificationLanguage: en
+              card:
+                type: MasterCard
+                entryMethod: keyed
+                cardholderName: Sarah Hazel Hopper
+                cardholderSignature: >-
+                  a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                cardNumber: 453985******7062
+                expiryDate: '1225'
+                secureToken:
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  customerName: Sarah Hazel Hopper
+                  token: '296753123456'
+                  status: notValidated
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+                securityChecks:
+                  cvvResult: M
+                  avsResult: 'Y'
+                emvTags:
+                  - hex: 9F36
+                    value: '001234'
+                  - hex: 5F2A
+                    value: '0840'
+                balances:
+                  - benefitCategory: cash
+                    amount: 50000
+                    currency: USD
+                  - benefitCategory: foodStamp
+                    amount: 10000
+                    currency: USD
+              refunds:
+                - refundId: CD3HN88U9F
+                  dateTime: '2024-07-14T12:25:00Z'
+                  currency: AED
+                  amount: 4999
+                  status: ready
+                  responseCode: A
+                  responseMessage: Transaction refunded
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+              supportedOperations:
+                - capture
+                - fullyReverse
+                - partiallyReverse
+                - incrementAuthorization
+                - adjustTip
+                - setAsPending
+              transactionResult:
+                type: sale
+                ebtType: cashPurchase
+                status: ready
+                approvalCode: OK3
+                authorizedAmount: 4999
+                currency: USD
+                responseCode: A
+                responseMessage: OK3
+                processorResponseCode: processorResponseCode
+                cardSchemeReferenceId: cardSchemeReferenceId
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+    retrieve:
+      path: /payments/{paymentId}
+      method: GET
+      auth: true
+      docs: >
+        Use this method to retrieve information about a card payment.  
+
+
+        To retrieve a payment, you need its paymentId. Our gateway returned the
+        paymentId in the response of the [Create
+        Payment](/api/schema/payments/create) method.  
+
+
+        **Note:** If you don't have the paymentId, use our [List
+        Payments](/api/schema/payments/list) method to search for the payment.  
+
+
+        Our gateway returns the following information about the payment:  
+
+
+        - Order details, including the transaction amount and when it was
+        processed.  
+
+        - Payment card details, including the masked card number, expiry date,
+        and payment method.  
+
+        - Cardholder details, including their contact information and shipping
+        address.  
+
+        - Payment details, including the payment type, status, and response.  
+
+
+        If the merchant saved the customer's card details, our gateway returns a
+        secureTokenID, which you can use to perform follow-on actions.  
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Retrieve payment
+      request:
+        name: RetrievePaymentsRequest
+        path-parameters:
+          paymentId:
+            type: string
+            docs: >-
+              Unique identifier of the payment that the merchant wants to
+              retrieve.
+      response:
+        docs: Successful request. Returns the payment.
+        type: root.Payment
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Payment
+          path-parameters:
+            paymentId: M2MJOG6O2Y
+          response:
+            body:
+              paymentId: M2MJOG6O2Y
+              processingTerminalId: '1234001'
+              operator: Jane
+              order:
+                orderId: OrderRef6543
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Large Pepperoni Pizza
+                amount: 4999
+                currency: USD
+                breakdown:
+                  subtotal: 2899
+                  cashbackAmount: 0
+                  tip:
+                    type: percentage
+                  taxes:
+                    - name: Sales Tax
+                      rate: 7
+                      amount: 190
+                  surcharge:
+                    bypass: false
+                    amount: 50
+                    percentage: 2
+                  dualPricing:
+                    offered: false
+                    choiceRate:
+                      applied: true
+                      rate: 2.5
+                      amount: 75
+                  dutyAmount: 0
+                  freightAmount: 0
+                  convenienceFee:
+                    amount: 25
+                  items:
+                    - commodityCode: 5812-0111
+                      productCode: PZA-001-LG
+                      description: Large Pepperoni Pizza
+                      unitPrice: 2709
+                      quantity: 1
+                      discountRate: 5
+                      taxes:
+                        - name: Sales Tax
+                          rate: 7
+                          amount: 190
+                dccOffer:
+                  accepted: true
+                  offerReference: DCC123456789
+                  fxAmount: 3955
+                  fxCurrency: AED
+                  fxCurrencyCode: CAD
+                  fxCurrencyExponent: 2
+                  fxRate: 1.37
+                  markup: 3.5
+                  markupText: 3.5% mark-up applied.
+                  provider: DCC Provider Inc.
+                  source: European Central Bank
+                standingInstructions:
+                  sequence: first
+                  processingModel: unscheduled
+                  referenceDataOfFirstTxn:
+                    paymentId: M2MJOG6O2Y
+                    cardSchemeReferenceId: ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
+              customer:
+                firstName: Sarah
+                lastName: Hopper
+                dateOfBirth: '1990-07-15'
+                referenceNumber: CustomerCode234567
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+                shippingAddress:
+                  recipientName: Sarah Hopper
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                contactMethods:
+                  - value: jane.doe@example.com
+                    type: email
+                notificationLanguage: en
+              card:
+                type: MasterCard
+                entryMethod: keyed
+                cardholderName: Sarah Hazel Hopper
+                cardholderSignature: >-
+                  a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                cardNumber: 453985******7062
+                expiryDate: '1225'
+                secureToken:
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  customerName: Sarah Hazel Hopper
+                  token: '296753123456'
+                  status: notValidated
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+                securityChecks:
+                  cvvResult: M
+                  avsResult: 'Y'
+                emvTags:
+                  - hex: 9F36
+                    value: '001234'
+                  - hex: 5F2A
+                    value: '0840'
+                balances:
+                  - benefitCategory: cash
+                    amount: 50000
+                    currency: USD
+                  - benefitCategory: foodStamp
+                    amount: 10000
+                    currency: USD
+              refunds:
+                - refundId: CD3HN88U9F
+                  dateTime: '2024-07-14T12:25:00Z'
+                  currency: AED
+                  amount: 4999
+                  status: ready
+                  responseCode: A
+                  responseMessage: Transaction refunded
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+              supportedOperations:
+                - capture
+                - fullyReverse
+                - partiallyReverse
+                - incrementAuthorization
+                - adjustTip
+                - setAsPending
+              transactionResult:
+                type: sale
+                ebtType: cashPurchase
+                status: ready
+                approvalCode: OK3
+                authorizedAmount: 4999
+                currency: USD
+                responseCode: A
+                responseMessage: OK3
+                processorResponseCode: processorResponseCode
+                cardSchemeReferenceId: cardSchemeReferenceId
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+    adjust:
+      path: /payments/{paymentId}/adjust
+      method: POST
+      auth: true
+      docs: >
+        Use this method to adjust a payment in an open batch. 
+
+
+        To adjust a payment, you need its paymentId. Our gateway returned the
+        paymentId in the response of the [Create
+        Payment](/api/schema/payments/create) method.
+
+
+        **Note:** If you don't have the paymentId, use our [List
+        Payments](/api/schema/payments/list) method to search for the payment. 
+
+
+        You can adjust the following details of the payment:
+
+        - Sale amount and tip amount
+
+        - Payment status
+
+        - Cardholder shipping address and contact information
+
+        - Cardholder signature data
+
+
+        Our gateway returns information about the adjusted payment, including
+        information about the payment card and the cardholder.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Adjust payment
+      request:
+        name: PaymentAdjustment
+        path-parameters:
+          paymentId:
+            type: string
+            docs: >-
+              Unique identifier of the payment that the merchant wants to
+              retrieve.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+        body:
+          properties:
+            operator:
+              type: optional<string>
+              docs: Operator who adjusted the payment.
+              validation:
+                minLength: 0
+                maxLength: 50
+            adjustments:
+              docs: >-
+                Array of objects that contain information about the adjustments
+                to the payment.
+              type: list<PaymentAdjustmentAdjustmentsItem>
+        content-type: application/json
+      response:
+        docs: Successful request. We adjusted the transaction.
+        type: root.Payment
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Adjust Payment
+          path-parameters:
+            paymentId: M2MJOG6O2Y
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            adjustments:
+              - type: customer
+              - amount: 1000000
+                type: order
+          response:
+            body:
+              paymentId: M2MJOG6O2Y
+              processingTerminalId: '1234001'
+              operator: Jane
+              order:
+                orderId: OrderRef6543
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Example payment
+                amount: 4999
+                currency: USD
+                breakdown:
+                  subtotal: 2899
+                  cashbackAmount: 0
+                  tip:
+                    type: percentage
+                  taxes:
+                    - name: Sales Tax
+                      rate: 7
+                      amount: 190
+                  surcharge:
+                    bypass: false
+                    amount: 50
+                    percentage: 2
+                  dualPricing:
+                    offered: false
+                    choiceRate:
+                      applied: true
+                      rate: 2.5
+                      amount: 75
+                  dutyAmount: 0
+                  freightAmount: 0
+                  convenienceFee:
+                    amount: 25
+                  items:
+                    - commodityCode: 5812-0111
+                      productCode: PZA-001-LG
+                      description: Large Pepperoni Pizza
+                      unitPrice: 2709
+                      quantity: 1
+                      discountRate: 5
+                      taxes:
+                        - name: Sales Tax
+                          rate: 7
+                          amount: 190
+                dccOffer:
+                  accepted: true
+                  offerReference: DCC123456789
+                  fxAmount: 3955
+                  fxCurrency: AED
+                  fxCurrencyCode: CAD
+                  fxCurrencyExponent: 2
+                  fxRate: 1.37
+                  markup: 3.5
+                  markupText: 3.5% mark-up applied.
+                  provider: DCC Provider Inc.
+                  source: European Central Bank
+                standingInstructions:
+                  sequence: first
+                  processingModel: unscheduled
+                  referenceDataOfFirstTxn:
+                    paymentId: M2MJOG6O2Y
+                    cardSchemeReferenceId: ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
+              customer:
+                firstName: Sarah
+                lastName: Hopper
+                dateOfBirth: '1990-07-15'
+                referenceNumber: CustomerCode234567
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+                shippingAddress:
+                  recipientName: Sarah Hopper
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                contactMethods:
+                  - value: jane.doe@example.com
+                    type: email
+                notificationLanguage: en
+              card:
+                type: MasterCard
+                entryMethod: keyed
+                cardholderName: Sarah Hazel Hopper
+                cardholderSignature: >-
+                  a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                cardNumber: 453985******7062
+                expiryDate: '1225'
+                secureToken:
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  customerName: Sarah Hazel Hopper
+                  token: '296753123456'
+                  status: notValidated
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+                securityChecks:
+                  cvvResult: M
+                  avsResult: 'Y'
+                emvTags:
+                  - hex: 9F36
+                    value: '001234'
+                  - hex: 5F2A
+                    value: '0840'
+                balances:
+                  - benefitCategory: cash
+                    amount: 50000
+                    currency: USD
+                  - benefitCategory: foodStamp
+                    amount: 10000
+                    currency: USD
+              refunds:
+                - refundId: CD3HN88U9F
+                  dateTime: '2024-07-14T12:25:00Z'
+                  currency: AED
+                  amount: 4999
+                  status: ready
+                  responseCode: A
+                  responseMessage: Transaction refunded
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+              supportedOperations:
+                - capture
+                - fullyReverse
+                - partiallyReverse
+                - incrementAuthorization
+                - adjustTip
+                - setAsPending
+              transactionResult:
+                type: sale
+                ebtType: cashPurchase
+                status: ready
+                approvalCode: OK6
+                authorizedAmount: 4999
+                currency: USD
+                responseCode: A
+                responseMessage: OK6
+                processorResponseCode: processorResponseCode
+                cardSchemeReferenceId: cardSchemeReferenceId
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+    capture:
+      path: /payments/{paymentId}/capture
+      method: POST
+      auth: true
+      docs: "Use this method to capture a pre-authorization. \n\nTo capture a pre-authorization, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.\n\n**Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.\n\nDepending on the amount you want to capture, complete the following:\n-\t**Capture the full amount of the pre-authorization** - Don't send a value for the amount parameter in your request.\n-\t**Capture less than the amount of the pre-authorization** - Send a value for the amount parameter in your request. \n-\t**Capture more than the amount of the pre-authorization** - Adjust the pre-authorization before you capture it. For more information about adjusting a pre-authorization, go to [Adjust Payment](/api/schema/payments/adjust).\n\nIf your request is successful, our gateway takes the amount from the payment card. \n\n**Note:** For more information about pre-authorizations and captures, go to [Run a pre-authorization](/guides/integrate/run-a-pre-authorization).\n"
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Capture payment
+      request:
+        name: PaymentCapture
+        path-parameters:
+          paymentId:
+            type: string
+            docs: >-
+              Unique identifier of the payment that the merchant wants to
+              retrieve.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+        body:
+          properties:
+            processingTerminalId:
+              type: optional<string>
+              docs: Unique identifier that our gateway assigned to the terminal.
+              validation:
+                minLength: 4
+                maxLength: 50
+            operator:
+              type: optional<string>
+              docs: Operator who captured the payment.
+              validation:
+                minLength: 0
+                maxLength: 50
+            amount:
+              type: optional<long>
+              docs: >
+                Amount that the merchant wants to capture. The value is in the
+                currency's lowest denomination, for example, cents.  
+
+                **Note:** If the merchant does not send an amount, we capture
+                the total amount of the transaction.
+            breakdown: optional<root.ItemizedBreakdown>
+        content-type: application/json
+      response:
+        docs: Successful request. We captured the payment.
+        type: root.Payment
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Payment
+          path-parameters:
+            paymentId: M2MJOG6O2Y
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            processingTerminalId: '1234001'
+            operator: Jane
+            amount: 4999
+            breakdown:
+              subtotal: 4999
+              dutyAmount: 499
+              freightAmount: 500
+              items:
+                - unitPrice: 4000
+                  quantity: 1
+          response:
+            body:
+              paymentId: M2MJOG6O2Y
+              processingTerminalId: '1234001'
+              operator: Jane
+              order:
+                orderId: OrderRef6543
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Large Pepperoni Pizza
+                amount: 4999
+                currency: USD
+                breakdown:
+                  subtotal: 2899
+                  cashbackAmount: 0
+                  tip:
+                    type: percentage
+                  taxes:
+                    - name: Sales Tax
+                      rate: 7
+                      amount: 190
+                  surcharge:
+                    bypass: false
+                    amount: 50
+                    percentage: 2
+                  dualPricing:
+                    offered: false
+                    choiceRate:
+                      applied: true
+                      rate: 2.5
+                      amount: 75
+                  dutyAmount: 0
+                  freightAmount: 0
+                  convenienceFee:
+                    amount: 25
+                  items:
+                    - commodityCode: 5812-0111
+                      productCode: PZA-001-LG
+                      description: Large Pepperoni Pizza
+                      unitPrice: 2709
+                      quantity: 1
+                      discountRate: 5
+                      taxes:
+                        - name: Sales Tax
+                          rate: 7
+                          amount: 190
+                dccOffer:
+                  accepted: true
+                  offerReference: DCC123456789
+                  fxAmount: 3955
+                  fxCurrency: AED
+                  fxCurrencyCode: CAD
+                  fxCurrencyExponent: 2
+                  fxRate: 1.37
+                  markup: 3.5
+                  markupText: 3.5% mark-up applied.
+                  provider: DCC Provider Inc.
+                  source: European Central Bank
+                standingInstructions:
+                  sequence: first
+                  processingModel: unscheduled
+                  referenceDataOfFirstTxn:
+                    paymentId: M2MJOG6O2Y
+                    cardSchemeReferenceId: ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
+              customer:
+                firstName: Sarah
+                lastName: Hopper
+                dateOfBirth: '1990-07-15'
+                referenceNumber: CustomerCode234567
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+                shippingAddress:
+                  recipientName: Sarah Hopper
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                contactMethods:
+                  - value: jane.doe@example.com
+                    type: email
+                notificationLanguage: en
+              card:
+                type: MasterCard
+                entryMethod: keyed
+                cardholderName: Sarah Hazel Hopper
+                cardholderSignature: >-
+                  a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                cardNumber: 453985******7062
+                expiryDate: '1225'
+                secureToken:
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  customerName: Sarah Hazel Hopper
+                  token: '296753123456'
+                  status: notValidated
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+                securityChecks:
+                  cvvResult: M
+                  avsResult: 'Y'
+                emvTags:
+                  - hex: 9F36
+                    value: '001234'
+                  - hex: 5F2A
+                    value: '0840'
+                balances:
+                  - benefitCategory: cash
+                    amount: 50000
+                    currency: USD
+                  - benefitCategory: foodStamp
+                    amount: 10000
+                    currency: USD
+              refunds:
+                - refundId: CD3HN88U9F
+                  dateTime: '2024-07-14T12:25:00Z'
+                  currency: AED
+                  amount: 4999
+                  status: ready
+                  responseCode: A
+                  responseMessage: Transaction refunded
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+              supportedOperations:
+                - capture
+                - fullyReverse
+                - partiallyReverse
+                - incrementAuthorization
+                - adjustTip
+                - setAsPending
+              transactionResult:
+                type: sale
+                ebtType: cashPurchase
+                status: ready
+                approvalCode: OK3
+                authorizedAmount: 4999
+                currency: USD
+                responseCode: A
+                responseMessage: OK3
+                processorResponseCode: processorResponseCode
+                cardSchemeReferenceId: cardSchemeReferenceId
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+    reverse:
+      path: /payments/{paymentId}/reverse
+      method: POST
+      auth: true
+      docs: >
+        Use this method to cancel or to partially cancel a payment in an open
+        batch. This is also known as voiding a payment.  
+
+
+        To cancel a payment, you need its paymentId. Our gateway returned the
+        paymentId in the response of the [Create
+        Payment](/api/schema/payments/create) method.  
+
+
+        **Note:** If you don't have the paymentId, use our [List
+        Payments](/api/schema/payments/list) method to search for the payment.  
+
+
+        If your request is successful, our gateway removes the payment from the
+        merchant's open batch and no funds are taken from the cardholder's
+        account. 
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Reverse payment
+      request:
+        name: PaymentReversal
+        path-parameters:
+          paymentId:
+            type: string
+            docs: >-
+              Unique identifier of the payment that the merchant wants to
+              retrieve.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+        body:
+          properties:
+            operator:
+              type: optional<string>
+              docs: Operator who reversed the payment.
+              validation:
+                minLength: 0
+                maxLength: 50
+            amount:
+              type: optional<long>
+              docs: >
+                Amount of the payment that the merchant wants to reverse. The
+                value is in the currency’s lowest denomination, for example,
+                cents.  
+
+                **Note:** If the merchant doesn’t send an amount, we reverse the
+                total amount of the transaction.
+        content-type: application/json
+      response:
+        docs: Successful request. We reversed the payment.
+        type: root.Payment
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Reversal Payment
+          path-parameters:
+            paymentId: M2MJOG6O2Y
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            amount: 4999
+          response:
+            body:
+              paymentId: M2MJOG6O2Y
+              processingTerminalId: '1234001'
+              operator: Jane
+              order:
+                orderId: OrderRef6543
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Large Pepperoni Pizza
+                amount: 4999
+                currency: USD
+                breakdown:
+                  subtotal: 2899
+                  cashbackAmount: 0
+                  tip:
+                    type: percentage
+                  taxes:
+                    - name: Sales Tax
+                      rate: 7
+                      amount: 190
+                  surcharge:
+                    bypass: false
+                    amount: 50
+                    percentage: 2
+                  dualPricing:
+                    offered: false
+                    choiceRate:
+                      applied: true
+                      rate: 2.5
+                      amount: 75
+                  dutyAmount: 0
+                  freightAmount: 0
+                  convenienceFee:
+                    amount: 25
+                  items:
+                    - commodityCode: 5812-0111
+                      productCode: PZA-001-LG
+                      description: Large Pepperoni Pizza
+                      unitPrice: 2709
+                      quantity: 1
+                      discountRate: 5
+                      taxes:
+                        - name: Sales Tax
+                          rate: 7
+                          amount: 190
+                dccOffer:
+                  accepted: true
+                  offerReference: DCC123456789
+                  fxAmount: 3955
+                  fxCurrency: AED
+                  fxCurrencyCode: CAD
+                  fxCurrencyExponent: 2
+                  fxRate: 1.37
+                  markup: 3.5
+                  markupText: 3.5% mark-up applied.
+                  provider: DCC Provider Inc.
+                  source: European Central Bank
+                standingInstructions:
+                  sequence: first
+                  processingModel: unscheduled
+                  referenceDataOfFirstTxn:
+                    paymentId: M2MJOG6O2Y
+                    cardSchemeReferenceId: ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
+              customer:
+                firstName: Sarah
+                lastName: Hopper
+                dateOfBirth: '1990-07-15'
+                referenceNumber: CustomerCode234567
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: USA
+                  postalCode: '60056'
+                shippingAddress:
+                  recipientName: Sarah Hopper
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: IT
+                    postalCode: '60056'
+                contactMethods:
+                  - value: jane.doe@example.com
+                    type: email
+                notificationLanguage: en
+              card:
+                type: MasterCard
+                entryMethod: keyed
+                cardholderName: Sarah Hazel Hopper
+                cardholderSignature: >-
+                  a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                cardNumber: 453985******7062
+                expiryDate: '1225'
+                secureToken:
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  customerName: Sarah Hazel Hopper
+                  token: '296753123456'
+                  status: notValidated
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+                securityChecks:
+                  cvvResult: M
+                  avsResult: 'Y'
+                emvTags:
+                  - hex: 9F36
+                    value: '001234'
+                  - hex: 5F2A
+                    value: '0840'
+                balances:
+                  - benefitCategory: cash
+                    amount: 50000
+                    currency: USD
+                  - benefitCategory: foodStamp
+                    amount: 10000
+                    currency: USD
+              refunds:
+                - refundId: CD3HN88U9F
+                  dateTime: '2024-07-14T12:25:00Z'
+                  currency: AED
+                  amount: 4999
+                  status: ready
+                  responseCode: A
+                  responseMessage: Transaction refunded
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+              supportedOperations:
+                - capture
+                - fullyReverse
+                - partiallyReverse
+                - incrementAuthorization
+                - adjustTip
+                - setAsPending
+              transactionResult:
+                type: sale
+                ebtType: cashPurchase
+                status: reversal
+                approvalCode: OK2
+                authorizedAmount: 100
+                currency: USD
+                responseCode: A
+                responseMessage: OK2
+                processorResponseCode: processorResponseCode
+                cardSchemeReferenceId: cardSchemeReferenceId
+              customFields:
+                - name: yourCustomField
+                  value: abc123
+    refund:
+      path: /payments/{paymentId}/refund
+      method: POST
+      auth: true
+      docs: >
+        Use this method to refund a payment that is in a closed batch.  
+
+
+        To refund a payment, you need its paymentId. Our gateway returned the
+        paymentId in the response of the [Create
+        Payment](/api/schema/payments/create) method.  
+
+
+        **Note:** If you don't have the paymentId, use our [List
+        Payments](/api/schema/payments/list) method to search for the payment.  
+
+
+        If your refund is successful, our gateway returns the payment amount to
+        the cardholder's account.  
+
+
+        **Things to consider**  
+
+
+        - If the merchant refunds a payment that is in an open batch, our
+        gateway reverses the payment.
+
+        - Some merchants can run unreferenced refunds, which means that they
+        don't need a paymentId to return an amount to a customer. For more
+        information about how to run an unreferenced refund, go to [Create
+        Refund](/api/schema/payments/refunds/create).
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Refund payment
+      request:
+        name: ReferencedRefund
+        path-parameters:
+          paymentId:
+            type: string
+            docs: >-
+              Unique identifier of the payment that the merchant wants to
+              retrieve.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the UUID v4 format for the identifier. For more information about
+              the idempotency key, go to
+              [Idempotency](https://docs.payroc.com/api/idempotency).
+        body:
+          properties:
+            operator:
+              type: optional<string>
+              docs: Operator who refunded the payment.
+              validation:
+                minLength: 0
+                maxLength: 50
+            amount:
+              type: long
+              docs: >-
+                Amount of the payment that the merchant wants to refund. The
+                value is in the currency’s lowest denomination, for example,
+                cents.
+            description:
+              type: string
+              docs: Reason for the refund.
+              validation:
+                minLength: 1
+                maxLength: 100
+        content-type: application/json
+      response:
+        docs: Successful request. We refunded the payment.
+        type: root.Payment
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Refund Payment
+          path-parameters:
+            paymentId: M2MJOG6O2Y
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            amount: 4999
+            description: Refund for order OrderRef6543
+          response:
+            body:
+              paymentId: M2MJOG6O2Y
+              processingTerminalId: '1234001'
+              operator: Jane
+              order:
+                orderId: OrderRef6543
+                dateTime: '2024-07-02T15:30:00Z'
+                description: Large Pepperoni Pizza
+                amount: 4999
+                currency: USD
+                breakdown:
+                  subtotal: 2899
+                  cashbackAmount: 0
+                  tip:
+                    type: percentage
+                  taxes:
+                    - name: Sales Tax
+                      rate: 7
+                      amount: 190
+                  surcharge:
+                    bypass: false
+                    amount: 50
+                    percentage: 2
+                  dualPricing:
+                    offered: false
+                    choiceRate:
+                      applied: true
+                      rate: 2.5
+                      amount: 75
+                  dutyAmount: 0
+                  freightAmount: 0
+                  convenienceFee:
+                    amount: 25
+                  items:
+                    - commodityCode: 5812-0111
+                      productCode: PZA-001-LG
+                      description: Large Pepperoni Pizza
+                      unitPrice: 2709
+                      quantity: 1
+                      discountRate: 5
+                      taxes:
+                        - name: Sales Tax
+                          rate: 7
+                          amount: 190
+                dccOffer:
+                  accepted: true
+                  offerReference: DCC123456789
+                  fxAmount: 3955
+                  fxCurrency: AED
+                  fxCurrencyCode: CAD
+                  fxCurrencyExponent: 2
+                  fxRate: 1.37
+                  markup: 3.5
+                  markupText: 3.5% mark-up applied.
+                  provider: DCC Provider Inc.
+                  source: European Central Bank
+                standingInstructions:
+                  sequence: first
+                  processingModel: unscheduled
+                  referenceDataOfFirstTxn:
+                    paymentId: M2MJOG6O2Y
+                    cardSchemeReferenceId: ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
+              customer:
+                firstName: Sarah
+                lastName: Hopper
+                dateOfBirth: '1990-07-15'
+                referenceNumber: CustomerCode234567
+                billingAddress:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+                shippingAddress:
+                  recipientName: Sarah Hopper
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                contactMethods:
+                  - value: jane.doe@example.com
+                    type: email
+                notificationLanguage: en
+              card:
+                type: MasterCard
+                entryMethod: keyed
+                cardholderName: Sarah Hazel Hopper
+                cardholderSignature: >-
+                  a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                cardNumber: 453985******7062
+                expiryDate: '1225'
+                secureToken:
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  customerName: Sarah Hazel Hopper
+                  token: '296753123456'
+                  status: notValidated
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+                securityChecks:
+                  cvvResult: M
+                  avsResult: 'Y'
+                emvTags:
+                  - hex: 9F36
+                    value: '001234'
+                  - hex: 5F2A
+                    value: '0840'
+                balances:
+                  - benefitCategory: cash
+                    amount: 50000
+                    currency: USD
+                  - benefitCategory: foodStamp
+                    amount: 10000
+                    currency: USD
+              refunds:
+                - refundId: CD3HN88U9F
+                  dateTime: '2024-07-02T15:30:00Z'
+                  currency: USD
+                  amount: -4999
+                  status: ready
+                  responseCode: A
+                  responseMessage: Transaction refunded
+                  link:
+                    rel: self
+                    method: GET
+                    href: https://api.payroc.com/v1/refunds/BI77XQFQ05
+              supportedOperations:
+                - refund
+              transactionResult:
+                type: sale
+                ebtType: cashPurchase
+                status: complete
+                approvalCode: OK3
+                authorizedAmount: 4999
+                currency: USD
+                responseCode: A
+                responseMessage: OK13
+                processorResponseCode: processorResponseCode
+                cardSchemeReferenceId: cardSchemeReferenceId
+              customFields:
+                - name: yourCustomField
+                  value: acb123
+  source:
+    openapi: read-only/openapi/external/universal-api-v1.yaml
+  display-name: Payments
+docs: Take card payments.

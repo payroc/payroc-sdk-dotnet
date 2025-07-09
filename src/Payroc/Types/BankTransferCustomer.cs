@@ -8,8 +8,12 @@ namespace Payroc;
 /// Object that contains information about the customer.
 /// </summary>
 [Serializable]
-public record BankTransferCustomer
+public record BankTransferCustomer : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Customer's preferred notification language. This code follows the ISO 639-1 standard.
     /// </summary>
@@ -22,15 +26,11 @@ public record BankTransferCustomer
     [JsonPropertyName("contactMethods")]
     public IEnumerable<ContactMethod>? ContactMethods { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

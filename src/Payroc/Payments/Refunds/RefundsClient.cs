@@ -178,7 +178,16 @@ public partial class RefundsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<Refund>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<Refund>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);

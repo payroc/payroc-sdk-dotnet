@@ -19,7 +19,7 @@ public partial class RefundInstructionsClient
     /// Submit an instruction request to initiate a refund on a payment device.
     /// </summary>
     /// <example><code>
-    /// await client.PayrocCloud.RefundInstructions.SubmitAsync(
+    /// await client.PayrocCloud.RefundInstructions.SendAsync(
     ///     new RefundInstructionRequest
     ///     {
     ///         SerialNumber = "1850010868",
@@ -40,7 +40,7 @@ public partial class RefundInstructionsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<RefundInstruction> SubmitAsync(
+    public async Task<RefundInstruction> SendAsync(
         RefundInstructionRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

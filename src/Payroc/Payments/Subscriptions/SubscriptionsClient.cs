@@ -173,7 +173,16 @@ public partial class SubscriptionsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<Subscription>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<Subscription>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);
@@ -479,8 +488,8 @@ public partial class SubscriptionsClient
     /// - paymentPlan
     /// </summary>
     /// <example><code>
-    /// await client.Payments.Subscriptions.PartiallyUpdateAsync(
-    ///     new PartiallyUpdateSubscriptionsRequest
+    /// await client.Payments.Subscriptions.UpdateAsync(
+    ///     new UpdateSubscriptionsRequest
     ///     {
     ///         ProcessingTerminalId = "1234001",
     ///         SubscriptionId = "SubRef7654",
@@ -494,8 +503,8 @@ public partial class SubscriptionsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<Subscription> PartiallyUpdateAsync(
-        PartiallyUpdateSubscriptionsRequest request,
+    public async Task<Subscription> UpdateAsync(
+        UpdateSubscriptionsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

@@ -128,7 +128,16 @@ public partial class PaymentPlansClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<PaymentPlan>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<PaymentPlan>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);
@@ -512,8 +521,8 @@ public partial class PaymentPlansClient
     /// - `continue` - Our  gateway doesn't update the subscriptions associated with the payment plan.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.PaymentPlans.PartiallyUpdateAsync(
-    ///     new PartiallyUpdatePaymentPlansRequest
+    /// await client.Payments.PaymentPlans.UpdateAsync(
+    ///     new UpdatePaymentPlansRequest
     ///     {
     ///         ProcessingTerminalId = "1234001",
     ///         PaymentPlanId = "PlanRef8765",
@@ -527,8 +536,8 @@ public partial class PaymentPlansClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<PaymentPlan> PartiallyUpdateAsync(
-        PartiallyUpdatePaymentPlansRequest request,
+    public async Task<PaymentPlan> UpdateAsync(
+        UpdatePaymentPlansRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

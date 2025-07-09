@@ -8,8 +8,12 @@ namespace Payroc;
 /// Object that contains information about U.S. pricing intents for Merchant Processing Agreement (MPA) 5.0.
 /// </summary>
 [Serializable]
-public record PricingAgreementUs50
+public record PricingAgreementUs50 : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Indicates the country that the pricing intent applies to.
     /// </summary>
@@ -37,15 +41,11 @@ public record PricingAgreementUs50
     [JsonPropertyName("services")]
     public IEnumerable<ServiceUs50>? Services { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

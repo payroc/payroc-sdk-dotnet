@@ -1,0 +1,174 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    retrieve:
+      path: /owners/{ownerId}
+      method: GET
+      auth: true
+      docs: >
+        If you have the ownerId, you can use this method to retrieve the details
+        of the owner. The response includes the owner's contact details and
+        information about the owner's relationship to the business.  
+
+
+        If you don't have the ownerId, you can use the following methods to
+        retrieve the owner's information:
+          - **Owners of processing accounts** - Use the HATEOAS links that we send you when you [Retrieve a processing account](/api/schema/boarding/processing-accounts/get) or [List merchant platform's processing accounts](/api/schema/boarding/merchant-platforms/list-processing-accounts).
+          - **Owners of funding recipients** - Use the [List funding recipient owners](/api/schema/funding/funding-recipients/list-owners) method. 
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Retrieve an owner
+      request:
+        name: RetrieveOwnersRequest
+        path-parameters:
+          ownerId:
+            type: integer
+            docs: Unique identifier for the owner.
+      response:
+        docs: Successful request. Returns the requested owner.
+        type: root.Owner
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: Retrieve owner
+          path-parameters:
+            ownerId: 1
+          response:
+            body:
+              ownerId: 4564
+              firstName: Jane
+              middleName: Helen
+              lastName: Doe
+              dateOfBirth: '1964-03-22'
+              address:
+                address1: 1 Example Ave.
+                address2: Example Address Line 2
+                address3: Example Address Line 3
+                city: Chicago
+                state: Illinois
+                country: US
+                postalCode: '60056'
+              identifiers:
+                - type: nationalId
+                  value: xxxxx4320
+              contactMethods:
+                - value: jane.doe@example.com
+                  type: email
+              relationship:
+                equityPercentage: 48.5
+                title: CFO
+                isControlProng: true
+                isAuthorizedSignatory: false
+    update:
+      path: /owners/{ownerId}
+      method: PUT
+      auth: true
+      docs: >
+        > **Important:** You cannot update the owner of a processing account. 
+
+
+        Use this method to update the details of a funding recipient owner such
+        as their contact details and their relationship to the business.  
+
+
+        Include the ownerId in the path parameter of your request. If you don’t
+        know the ownerId, you can [Retrieve the funding
+        recipient](/api/schema/funding/funding-recipients/get), [List funding
+        recipients](/api/schema/funding/funding-recipients/list), or [List
+        funding recipient
+        owners](/api/schema/funding/funding-recipients/list-owners) to locate
+        the ownerId. 
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Update an owner
+      request:
+        body:
+          type: root.Owner
+        path-parameters:
+          ownerId:
+            type: integer
+            docs: Unique identifier for the owner.
+        name: UpdateOwnersRequest
+        content-type: application/json
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Update owner
+          path-parameters:
+            ownerId: 1
+          request:
+            firstName: Jane
+            middleName: Helen
+            lastName: Doe
+            dateOfBirth: '1964-03-22'
+            address:
+              address1: 1 Example Ave.
+              address2: Example Address Line 2
+              address3: Example Address Line 3
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+            identifiers:
+              - type: nationalId
+                value: 000-00-4320
+            contactMethods:
+              - value: jane.doe@example.com
+                type: email
+            relationship:
+              equityPercentage: 48.5
+              title: CFO
+              isControlProng: true
+              isAuthorizedSignatory: false
+    delete:
+      path: /owners/{ownerId}
+      method: DELETE
+      auth: true
+      docs: >
+        > **Important:** You cannot delete the owner of a processing account. 
+
+
+        Use this method to delete an owner from a funding recipient. You can
+        delete an owner only if the funding recipient has more than one owner.  
+
+
+        Include the ownerId in the path parameter of your request. If you don’t
+        know the ownerId, you can [Retrieve the funding
+        recipient](/api/schema/funding/funding-recipients/get), [List funding
+        recipients](/api/schema/funding/funding-recipients/list), or [List
+        funding recipient
+        owners](/api/schema/funding/funding-recipients/list-owners) to locate
+        the ownerId.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Delete an owner
+      request:
+        name: DeleteOwnersRequest
+        path-parameters:
+          ownerId:
+            type: integer
+            docs: Unique identifier for the owner.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            ownerId: 1
+  source:
+    openapi: read-only/openapi/external/universal-api-v1.yaml

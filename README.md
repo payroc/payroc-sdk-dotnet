@@ -1,8 +1,9 @@
-# Payroc API .Net SDK
+# Payroc C# Library
 
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fpayroc%2Fpayroc-sdk-dotnet)
 [![nuget shield](https://img.shields.io/nuget/v/Payroc)](https://nuget.org/packages/Payroc)
 
-The Payroc API .Net SDK provides convenient access to the Payroc API from .Net.
+The Payroc C# library provides convenient access to the Payroc API from C#.
 
 ## Installation
 
@@ -25,7 +26,7 @@ await client.Payments.CreateAsync(
         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
         Channel = PaymentRequestChannel.Web,
         ProcessingTerminalId = "1234001",
-        Operator = "Postman",
+        Operator = "Jane",
         Order = new PaymentOrder
         {
             OrderId = "OrderRef6543",
@@ -73,7 +74,7 @@ await client.Payments.CreateAsync(
                                 Device = new Device
                                 {
                                     Model = DeviceModel.BbposChp,
-                                    SerialNumber = "PAX123456789",
+                                    SerialNumber = "1850010868",
                                 },
                                 RawData =
                                     "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
@@ -93,17 +94,15 @@ await client.Payments.CreateAsync(
 
 ## Exception Handling
 
-When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error will be thrown.
+When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
+will be thrown.
 
 ```csharp
 using Payroc;
 
-try
-{
+try {
     var response = await client.Payments.CreateAsync(...);
-}
-catch (PayrocApiException e)
-{
+} catch (PayrocApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -129,7 +128,8 @@ var pager = await client.Payments.ListAsync(
         Last4 = "7062",
         DateFrom = new DateTime(2024, 07, 01, 15, 30, 00, 000),
         DateTo = new DateTime(2024, 07, 03, 15, 30, 00, 000),
-        SettlementDate = "2024-07-02",
+        SettlementDate = new DateOnly(2024, 7, 2),
+        PaymentLinkId = "JZURRJBUPS",
         Before = "2571",
         After = "8516",
     }
@@ -143,6 +143,29 @@ await foreach (var item in pager)
 
 ## Advanced
 
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retryable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `MaxRetries` request option to configure this behavior.
+
+```csharp
+var response = await client.Payments.CreateAsync(
+    ...,
+    new RequestOptions {
+        MaxRetries: 0 // Override MaxRetries at the request level
+    }
+);
+```
+
 ### Timeouts
 
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
@@ -150,8 +173,7 @@ The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure t
 ```csharp
 var response = await client.Payments.CreateAsync(
     ...,
-    new RequestOptions
-    {
+    new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
     }
 );
@@ -162,3 +184,17 @@ var response = await client.Payments.CreateAsync(
 The Payroc API SDK is generated via [Fern](https://www.buildwithfern.com/).
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fpayroc%2Fpayroc-sdk-dotnet)
+
+## Requirements
+
+This SDK requires:
+
+## Contributing
+
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!

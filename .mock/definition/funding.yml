@@ -1,0 +1,16 @@
+imports:
+  root: __package__.yml
+types:
+  Funding:
+    docs: >-
+      Object that contains funding information for the processing account,
+      including funding schedules, funding fees, and details of funding
+      accounts.
+    properties:
+      fundingAccounts:
+        type: optional<list<root.FundingAccountSummary>>
+        access: read-only
+    extends:
+      - root.CommonFunding
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml

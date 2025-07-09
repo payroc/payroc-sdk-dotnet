@@ -8,8 +8,12 @@ namespace Payroc;
 /// Object that contains information about U.S. base fees.
 /// </summary>
 [Serializable]
-public record BaseUs
+public record BaseUs : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Fee for each address verification request. The value is in the currency's lowest denomination, for example, cents.
     /// </summary>
@@ -88,15 +92,11 @@ public record BaseUs
     [JsonPropertyName("earlyTermination")]
     public int? EarlyTermination { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()
