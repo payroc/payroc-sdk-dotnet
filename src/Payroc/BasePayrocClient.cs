@@ -1,8 +1,8 @@
 using Payroc.Auth;
 using Payroc.Boarding;
 using Payroc.Core;
-using Payroc.EventSubscriptions;
 using Payroc.Funding;
+using Payroc.Notifications;
 using Payroc.Payments;
 using Payroc.PayrocCloud;
 using Payroc.Reporting;
@@ -44,7 +44,7 @@ public partial class BasePayrocClient
         );
         _client = new RawClient(clientOptions);
         Payments = new PaymentsClient(_client);
-        EventSubscriptions = new EventSubscriptionsClient(_client);
+        Notifications = new NotificationsClient(_client);
         Auth = new AuthClient(_client);
         Funding = new FundingClient(_client);
         Boarding = new BoardingClient(_client);
@@ -54,7 +54,7 @@ public partial class BasePayrocClient
 
     public PaymentsClient Payments { get; }
 
-    public EventSubscriptionsClient EventSubscriptions { get; }
+    public NotificationsClient Notifications { get; }
 
     public AuthClient Auth { get; }
 

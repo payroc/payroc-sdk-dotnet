@@ -240,7 +240,16 @@ public partial class PaymentsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<Payment>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<Payment>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);

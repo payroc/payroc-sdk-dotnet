@@ -8,8 +8,12 @@ namespace Payroc;
 /// Object that contains the configuration settings for the merchant.
 /// </summary>
 [Serializable]
-public record TsysMerchant
+public record TsysMerchant : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Unique identifier that the host processor assigned to the merchant.
     /// </summary>
@@ -58,15 +62,11 @@ public record TsysMerchant
     [JsonPropertyName("locationNumber")]
     public string? LocationNumber { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

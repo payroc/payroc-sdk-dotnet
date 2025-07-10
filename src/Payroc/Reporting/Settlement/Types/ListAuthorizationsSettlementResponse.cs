@@ -6,8 +6,12 @@ using Payroc.Core;
 namespace Payroc.Reporting.Settlement;
 
 [Serializable]
-public record ListAuthorizationsSettlementResponse
+public record ListAuthorizationsSettlementResponse : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Array of authorization objects.
     /// </summary>
@@ -38,15 +42,11 @@ public record ListAuthorizationsSettlementResponse
     [JsonPropertyName("links")]
     public IEnumerable<Link>? Links { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

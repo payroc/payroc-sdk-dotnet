@@ -173,7 +173,16 @@ public partial class SubscriptionsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<Subscription>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<Subscription>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);

@@ -8,8 +8,12 @@ namespace Payroc;
 /// Object that contains information about the sale and the customer's bank details.
 /// </summary>
 [Serializable]
-public record BankTransferPayment
+public record BankTransferPayment : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Unique identifier that we assigned to the payment.
     /// </summary>
@@ -58,15 +62,11 @@ public record BankTransferPayment
     [JsonPropertyName("customFields")]
     public IEnumerable<CustomField>? CustomFields { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

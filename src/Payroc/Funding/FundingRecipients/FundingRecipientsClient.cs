@@ -105,7 +105,16 @@ public partial class FundingRecipientsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<FundingRecipient>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<FundingRecipient>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);

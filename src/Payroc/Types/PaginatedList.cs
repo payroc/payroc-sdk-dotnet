@@ -8,8 +8,12 @@ namespace Payroc;
 /// Contains the pagination properties that you use to navigate through a list of results.
 /// </summary>
 [Serializable]
-public record PaginatedList
+public record PaginatedList : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Maximum number of results that we return for each page.
     /// </summary>
@@ -34,15 +38,11 @@ public record PaginatedList
     [JsonPropertyName("links")]
     public IEnumerable<Link>? Links { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

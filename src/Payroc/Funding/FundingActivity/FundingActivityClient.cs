@@ -230,7 +230,16 @@ public partial class FundingActivityClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<ActivityRecord>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<ActivityRecord>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);

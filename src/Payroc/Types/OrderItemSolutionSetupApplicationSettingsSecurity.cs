@@ -8,8 +8,12 @@ namespace Payroc;
 /// Object that contains the password settings when running specific transaction types.
 /// </summary>
 [Serializable]
-public record OrderItemSolutionSetupApplicationSettingsSecurity
+public record OrderItemSolutionSetupApplicationSettingsSecurity : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Indicates if the terminal should prompt the clerk for a password when running a refund.
     /// </summary>
@@ -28,15 +32,11 @@ public record OrderItemSolutionSetupApplicationSettingsSecurity
     [JsonPropertyName("reversalPassword")]
     public bool? ReversalPassword { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

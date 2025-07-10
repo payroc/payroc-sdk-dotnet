@@ -1,30 +1,25 @@
 using System.Runtime.CompilerServices;
 using global::System.Net.Http;
-using global::System.Net.Http.Json;
 using global::System.Text.Json;
 
 namespace Payroc.Core;
 
 internal static class PayrocPagerFactory
 {
-    public static async Task<PayrocPager<TItem>> CreateAsync<TItem>(
-        Func<HttpRequestMessage, CancellationToken,
-            Task<HttpResponseMessage>> sendRequest,
-        HttpRequestMessage initialRequest,
+    internal static async Task<PayrocPager<TItem>> CreateAsync<TItem>(
+        PayrocPagerContext context,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await sendRequest(initialRequest, cancellationToken).ConfigureAwait(false);
-        var (
-            nextPageRequest,
-            hasNextPage,
-            previousPageRequest,
-            hasPreviousPage,
-            page
-            ) = await PayrocPager<TItem>.ParseHttpCallAsync(initialRequest, response, cancellationToken)
+        var response = await context
+            .SendRequest(context.InitialHttpRequest, cancellationToken)
             .ConfigureAwait(false);
+        var (nextPageRequest, hasNextPage, previousPageRequest, hasPreviousPage, page) =
+            await PayrocPager<TItem>
+                .ParseHttpCallAsync(context.InitialHttpRequest, response, cancellationToken)
+                .ConfigureAwait(false);
         return new PayrocPager<TItem>(
-            sendRequest,
+            context,
             nextPageRequest,
             hasNextPage,
             previousPageRequest,
@@ -34,17 +29,22 @@ internal static class PayrocPagerFactory
     }
 }
 
-public class PayrocPager<TItem> : BiPager<TItem>
+public class PayrocPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem>
 {
     private const string NextRel = "next";
     private const string PreviousRel = "previous";
     private HttpRequestMessage? _nextPageRequest;
     private HttpRequestMessage? _previousPageRequest;
 
-    private readonly Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> _sendRequest;
+    private readonly PayrocPagerContext _context;
+    private readonly Func<string>? _authHeaderFn;
 
-    public PayrocPager(
-        Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> sendRequest,
+    public bool HasNextPage { get; private set; }
+    public bool HasPreviousPage { get; private set; }
+    public Page<TItem> CurrentPage { get; private set; }
+
+    internal PayrocPager(
+        PayrocPagerContext context,
         HttpRequestMessage? nextPageRequest,
         bool hasNextPage,
         HttpRequestMessage? previousPageRequest,
@@ -52,17 +52,21 @@ public class PayrocPager<TItem> : BiPager<TItem>
         Page<TItem> page
     )
     {
-        _sendRequest = sendRequest;
+        _context = context;
         _nextPageRequest = nextPageRequest;
         HasNextPage = hasNextPage;
         _previousPageRequest = previousPageRequest;
         HasPreviousPage = hasPreviousPage;
         CurrentPage = page;
-    }
 
-    public bool HasNextPage { get; private set; }
-    public bool HasPreviousPage { get; private set; }
-    public Page<TItem> CurrentPage { get; private set; }
+        if (context.ClientOptions.Headers.TryGetValue("Authorization", out var header))
+        {
+            if (header.IsT1)
+            {
+                _authHeaderFn = header.AsT1;
+            }
+        }
+    }
 
     public async Task<Page<TItem>> GetNextPageAsync(CancellationToken cancellationToken = default)
     {
@@ -70,32 +74,40 @@ public class PayrocPager<TItem> : BiPager<TItem>
         {
             return Page<TItem>.Empty;
         }
+
         return await SendRequestAndHandleResponse(_nextPageRequest, cancellationToken)
             .ConfigureAwait(false);
     }
 
-    public async Task<Page<TItem>> GetPreviousPageAsync(CancellationToken cancellationToken = default)
+    public async Task<Page<TItem>> GetPreviousPageAsync(
+        CancellationToken cancellationToken = default
+    )
     {
         if (_previousPageRequest == null)
         {
             return Page<TItem>.Empty;
         }
+
         return await SendRequestAndHandleResponse(_previousPageRequest, cancellationToken)
             .ConfigureAwait(false);
     }
 
     private async Task<Page<TItem>> SendRequestAndHandleResponse(
         HttpRequestMessage request,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default
+    )
     {
-        var response = await _sendRequest(request, cancellationToken).ConfigureAwait(false);
-        var (
-            nextPageRequest,
-            hasNextPage,
-            previousPageRequest,
-            hasPreviousPage,
-            page
-            ) = await ParseHttpCallAsync(request, response, cancellationToken).ConfigureAwait(false);
+        if (_authHeaderFn is not null)
+        {
+            if(request.Headers.Contains("Authorization"))
+            {
+                request.Headers.Remove("Authorization");
+            }
+            request.Headers.Add("Authorization", _authHeaderFn());
+        }
+        var response = await _context.SendRequest(request, cancellationToken).ConfigureAwait(false);
+        var (nextPageRequest, hasNextPage, previousPageRequest, hasPreviousPage, page) =
+            await ParseHttpCallAsync(request, response, cancellationToken).ConfigureAwait(false);
         _nextPageRequest = nextPageRequest;
         HasNextPage = hasNextPage;
         _previousPageRequest = previousPageRequest;
@@ -103,6 +115,7 @@ public class PayrocPager<TItem> : BiPager<TItem>
         CurrentPage = page;
         return page;
     }
+
     internal static async Task<(
         HttpRequestMessage? nextPageRequest,
         bool hasNextPage,
@@ -115,9 +128,10 @@ public class PayrocPager<TItem> : BiPager<TItem>
         CancellationToken cancellationToken = default
     )
     {
-        var json = await response.Content
-            .ReadFromJsonAsync<JsonElement>(JsonOptions.JsonSerializerOptions, cancellationToken)
+        var jsonString = await response.Content
+            .ReadAsStringAsync()
             .ConfigureAwait(false);
+        var json = JsonUtils.Deserialize<JsonElement>(jsonString);
 
         var prevUri = GetLinkUri(json, PreviousRel);
         var hasPreviousPage = prevUri != null;
@@ -155,9 +169,6 @@ public class PayrocPager<TItem> : BiPager<TItem>
         return null;
     }
 
-    /// <summary>
-    /// Creates a clone of the request, preserving headers and content
-    /// </summary>
     private static HttpRequestMessage CloneRequestWithNewUri(HttpRequestMessage request, Uri newUri)
     {
         var clonedRequest = new HttpRequestMessage(request.Method, request.RequestUri);
@@ -183,12 +194,15 @@ public class PayrocPager<TItem> : BiPager<TItem>
         return clonedRequest;
     }
 
-    public async IAsyncEnumerator<TItem> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+    public async IAsyncEnumerator<TItem> GetAsyncEnumerator(
+        CancellationToken cancellationToken = default
+    )
     {
         foreach (var item in CurrentPage)
         {
             yield return item;
         }
+
         await foreach (var page in GetNextPagesAsync(cancellationToken))
         {
             foreach (var item in page)
@@ -199,7 +213,8 @@ public class PayrocPager<TItem> : BiPager<TItem>
     }
 
     public async IAsyncEnumerable<Page<TItem>> GetNextPagesAsync(
-        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
     {
         while (HasNextPage)
         {
@@ -208,7 +223,8 @@ public class PayrocPager<TItem> : BiPager<TItem>
     }
 
     public async IAsyncEnumerable<Page<TItem>> GetPreviousPagesAsync(
-        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
     {
         while (HasPreviousPage)
         {

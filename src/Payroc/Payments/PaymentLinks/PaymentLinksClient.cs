@@ -162,8 +162,13 @@ public partial class PaymentLinksClient
                 };
                 return await PayrocPagerFactory
                     .CreateAsync<PaymentLinkPaginatedListDataItem>(
-                        sendRequest,
-                        httpRequest,
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
                         cancellationToken
                     )
                     .ConfigureAwait(false);

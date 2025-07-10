@@ -104,7 +104,16 @@ public partial class MerchantPlatformsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<MerchantPlatform>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<MerchantPlatform>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);
@@ -655,7 +664,16 @@ public partial class MerchantPlatformsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<ProcessingAccount>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<ProcessingAccount>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);

@@ -163,7 +163,16 @@ public partial class BankTransferRefundsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<BankTransferRefund>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<BankTransferRefund>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);

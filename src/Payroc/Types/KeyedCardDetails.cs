@@ -8,8 +8,12 @@ namespace Payroc;
 /// Object that contains information about the keyed card details.
 /// </summary>
 [Serializable]
-public record KeyedCardDetails
+public record KeyedCardDetails : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("keyedData")]
     public required KeyedCardDetailsKeyedData KeyedData { get; set; }
 
@@ -31,15 +35,11 @@ public record KeyedCardDetails
     [JsonPropertyName("ebtDetails")]
     public EbtDetailsWithVoucher? EbtDetails { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

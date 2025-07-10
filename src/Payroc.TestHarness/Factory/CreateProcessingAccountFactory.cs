@@ -119,7 +119,7 @@ public class CreateProcessingAccountFactory
                 DailyDiscount = true,
             },
             Pricing = new(new Pricing.Intent(new() { PricingIntentId = pricingIntentId })) { },//1602//6123//3164
-            Signature = new() { Type = CreateProcessingAccountSignature.RequestedViaEmail },
+            Signature = new Signature(new Signature.RequestedViaEmail()),
             Contacts =
             [
                 new()

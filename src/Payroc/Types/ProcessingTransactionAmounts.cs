@@ -8,8 +8,12 @@ namespace Payroc;
 /// Object that contains information about transaction amounts for the processing account.
 /// </summary>
 [Serializable]
-public record ProcessingTransactionAmounts
+public record ProcessingTransactionAmounts : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Estimated average transaction amount. The value is in the currency's lowest denomination, for example, cents. You must provide an amount that is greater than zero.
     /// </summary>
@@ -22,15 +26,11 @@ public record ProcessingTransactionAmounts
     [JsonPropertyName("highest")]
     public required int Highest { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

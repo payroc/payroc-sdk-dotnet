@@ -8,8 +8,12 @@ namespace Payroc;
 /// HATEOAS link for pricing information.
 /// </summary>
 [Serializable]
-public record ProcessingAccountPricingLink
+public record ProcessingAccountPricingLink : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Relationship to the parent resource.
     /// </summary>
@@ -28,15 +32,11 @@ public record ProcessingAccountPricingLink
     [JsonPropertyName("method")]
     public string? Method { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()
