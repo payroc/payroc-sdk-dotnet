@@ -119,7 +119,16 @@ public partial class SettlementClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<Batch>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<Batch>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);
@@ -326,7 +335,16 @@ public partial class SettlementClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<Transaction>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<Transaction>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);
@@ -529,7 +547,16 @@ public partial class SettlementClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<Authorization>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<Authorization>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);
@@ -730,7 +757,16 @@ public partial class SettlementClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<Dispute>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<Dispute>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);
@@ -931,7 +967,16 @@ public partial class SettlementClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<AchDeposit>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<AchDeposit>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);
@@ -1134,7 +1179,16 @@ public partial class SettlementClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<AchDepositFee>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<AchDepositFee>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);

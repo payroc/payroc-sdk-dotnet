@@ -105,7 +105,16 @@ public partial class PricingIntentsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<PricingIntent50>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<PricingIntent50>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);

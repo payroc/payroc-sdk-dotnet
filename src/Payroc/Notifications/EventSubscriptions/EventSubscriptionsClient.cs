@@ -101,7 +101,16 @@ public partial class EventSubscriptionsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<EventSubscription>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<EventSubscription>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);

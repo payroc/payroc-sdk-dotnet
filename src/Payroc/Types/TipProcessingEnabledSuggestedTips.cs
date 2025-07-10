@@ -8,8 +8,12 @@ namespace Payroc;
 /// Object that contains up to three tip amounts that the terminal displays during a sale.
 /// </summary>
 [Serializable]
-public record TipProcessingEnabledSuggestedTips
+public record TipProcessingEnabledSuggestedTips : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Indicates if the terminal displays tip amounts during a sale.
     /// </summary>
@@ -22,15 +26,11 @@ public record TipProcessingEnabledSuggestedTips
     [JsonPropertyName("tipPercentages")]
     public IEnumerable<string>? TipPercentages { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

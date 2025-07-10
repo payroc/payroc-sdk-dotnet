@@ -20,7 +20,7 @@ public partial class ApplePaySessionsClient
     /// </summary>
     /// <example><code>
     /// await client.Payments.ApplePaySessions.CreateAsync(
-    ///     new Payroc.Payments.ApplePaySessions.ApplePaySessions
+    ///     new ApplePaySessions
     ///     {
     ///         ProcessingTerminalId = "1234001",
     ///         AppleDomainId = "DUHDZJHGYY",
@@ -29,7 +29,7 @@ public partial class ApplePaySessionsClient
     /// );
     /// </code></example>
     public async Task<ApplePayResponseSession> CreateAsync(
-        Payroc.Payments.ApplePaySessions.ApplePaySessions request,
+        ApplePaySessions request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

@@ -503,7 +503,16 @@ public partial class ProcessingAccountsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<Owner>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<Owner>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);
@@ -1007,7 +1016,16 @@ public partial class ProcessingAccountsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<ProcessingTerminal>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<ProcessingTerminal>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);

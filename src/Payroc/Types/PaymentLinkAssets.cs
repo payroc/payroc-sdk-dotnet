@@ -8,8 +8,12 @@ namespace Payroc;
 /// Object that contains shareable assets for the payment link.
 /// </summary>
 [Serializable]
-public record PaymentLinkAssets
+public record PaymentLinkAssets : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// URL of the payment link.
     /// </summary>
@@ -22,15 +26,11 @@ public record PaymentLinkAssets
     [JsonPropertyName("paymentButton")]
     public required string PaymentButton { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

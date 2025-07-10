@@ -8,8 +8,12 @@ namespace Payroc;
 /// Object that contains information about the fees.
 /// </summary>
 [Serializable]
-public record RewardPayFees
+public record RewardPayFees : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Fee for the monthly subscription. The value is in the currency's lowest denomination, for example, cents.
     /// </summary>
@@ -46,15 +50,11 @@ public record RewardPayFees
     [JsonPropertyName("specialityCards")]
     public SpecialityCards? SpecialityCards { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

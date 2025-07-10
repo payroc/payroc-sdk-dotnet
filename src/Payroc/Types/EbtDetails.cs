@@ -8,8 +8,12 @@ namespace Payroc;
 /// Object that contains information about the Electronic Benefit Transfer (EBT) transaction.
 /// </summary>
 [Serializable]
-public record EbtDetails
+public record EbtDetails : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Indicates if the balance relates to an EBT Cash account or an EBT SNAP account.
     ///  - `cash` – EBT Cash
@@ -26,15 +30,11 @@ public record EbtDetails
     [JsonPropertyName("withdrawal")]
     public bool? Withdrawal { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()

@@ -131,8 +131,13 @@ public partial class SharingEventsClient
                 };
                 return await PayrocPagerFactory
                     .CreateAsync<PaymentLinkEmailShareEvent>(
-                        sendRequest,
-                        httpRequest,
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
                         cancellationToken
                     )
                     .ConfigureAwait(false);

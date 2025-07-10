@@ -164,7 +164,16 @@ public partial class SecureTokensClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<SecureToken>(sendRequest, httpRequest, cancellationToken)
+                    .CreateAsync<SecureToken>(
+                        new PayrocPagerContext()
+                        {
+                            SendRequest = sendRequest,
+                            InitialHttpRequest = httpRequest,
+                            ClientOptions = _client.Options,
+                            RequestOptions = options,
+                        },
+                        cancellationToken
+                    )
                     .ConfigureAwait(false);
             })
             .ConfigureAwait(false);

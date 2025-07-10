@@ -8,8 +8,12 @@ namespace Payroc;
 /// Object that contains information about the Integrated Circuit Card (ICC).
 /// </summary>
 [Serializable]
-public record IccCardDetails
+public record IccCardDetails : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// If an offline transaction is not approved using the initial entry method, reprocess the transaction using a downgraded entry method.
     /// For example, an Integrated Circuit Card (ICC) transaction can be downgraded to a swiped transaction or a keyed transaction.
@@ -38,15 +42,11 @@ public record IccCardDetails
     [JsonPropertyName("cardholderSignature")]
     public string? CardholderSignature { get; set; }
 
-    /// <summary>
-    /// Additional properties received from the response, if any.
-    /// </summary>
-    /// <remarks>
-    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
-    /// </remarks>
-    [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
-        new Dictionary<string, JsonElement>();
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
 
     /// <inheritdoc />
     public override string ToString()
