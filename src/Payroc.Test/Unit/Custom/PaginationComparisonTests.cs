@@ -211,7 +211,9 @@ public class PaginationComparisonTests : BaseMockServerTest
 
             if (idInt == 10 || idInt == 20 || idInt == 30)
             {
+                // For debugging convenience
                 int paginationBreaksWhenAccessingSecondPage = 1;
+                var _ = paginationBreaksWhenAccessingSecondPage;
             }
 
             ids.Add(idInt);
