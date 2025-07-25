@@ -20,7 +20,7 @@ paths:
     post:
       tags:
         - Currency conversion
-      summary: Fx rates inquiry
+      summary: Verify DCC eligibility
       description: |
         > **Important:** There are restrictions on which merchants can use this method. For more information, go to [Dynamic Currency Conversion](https://docs.payroc.com/knowledge/card-payments/dynamic-currency-conversion).  
 
