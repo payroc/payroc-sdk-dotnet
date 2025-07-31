@@ -722,7 +722,7 @@ paths:
       x-fern-sdk-group-name:
         - payroc cloud
         - paymentInstructions
-      x-fern-sdk-method-name: get
+      x-fern-sdk-method-name: retrieve
     delete:
       x-fern-sdk-group-name:
         - payroc cloud
@@ -741,7 +741,7 @@ paths:
       x-fern-sdk-group-name:
         - payroc cloud
         - refundInstructions
-      x-fern-sdk-method-name: get
+      x-fern-sdk-method-name: retrieve
     delete:
       x-fern-sdk-group-name:
         - payroc cloud
