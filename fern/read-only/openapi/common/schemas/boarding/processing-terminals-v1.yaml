@@ -283,7 +283,7 @@ components:
         - processingTerminalId
         - status
         - timezone
-        - application
+        - applicationSettings
         - batchClosure
         - features
 

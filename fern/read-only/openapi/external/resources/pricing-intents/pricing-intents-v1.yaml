@@ -191,7 +191,7 @@ paths:
 
         To update a pricing intent, you need its pricingIntentId. Our gateway returned the pricingIntentId in the response of the [Create Pricing Intent](https://docs.payroc.com/api/schema/boarding/pricing-intents/create) method.  
 
-        **Note:** If you don't have the pricingIntentId, use our [List Pricing Intents](https://docs.payroc.com/api/schema/boarding/pricing-intents/list) to search for the pricing intent.  
+        **Note:** If you don't have the pricingIntentId, use our [List Pricing Intents](https://docs.payroc.com/api/schema/boarding/pricing-intents/list) method to search for the pricing intent.  
 
         You can update the following details about a pricing intent:  
 
@@ -227,9 +227,19 @@ paths:
     patch:
       summary: Partially update pricing intent
       description: | 
-        Partially update an existing pricing intent.  
+        Use this method to partially update a pricing intent. Structure your request to follow the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.  
 
-        Structure your request to follow the RFC 6902 standard.
+        If you update a pricing intent, it won't affect merchants you've previously onboarded.  
+
+        To update a pricing intent, you need its pricingIntentId. Our gateway returned the pricingIntentId in the response of the [Create Pricing Intent](https://docs.payroc.com/api/schema/boarding/pricing-intents/create) method.  
+
+        **Note:** If you don't have the pricingIntentId, use our [List Pricing Intents](https://docs.payroc.com/api/schema/boarding/pricing-intents/list) method to search for the pricing intent.  
+
+        You can update the following details about a pricing intent:  
+
+        - Fees, including the base fees, processor fees, and gateway fees.  
+        - Custom name for the pricing intent.  
+        - Additional services that merchants can sign up for.  
       operationId: patchPricingIntent
       tags: [ Pricing intents ]
       parameters:
