@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.1.0
 
 paths: {}
 
@@ -283,7 +283,7 @@ components:
         - processingTerminalId
         - status
         - timezone
-        - application
+        - applicationSettings
         - batchClosure
         - features
 
