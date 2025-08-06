@@ -172,8 +172,8 @@ public class CreateTerminalOrderTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-accounts/38765/terminal-orders")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/processing-accounts/processingAccountId/terminal-orders")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -188,8 +188,8 @@ public class CreateTerminalOrderTest : BaseMockServerTest
         var response = await Client.Boarding.ProcessingAccounts.CreateTerminalOrderAsync(
             new CreateTerminalOrder
             {
-                ProcessingAccountId = "38765",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                ProcessingAccountId = "processingAccountId",
+                IdempotencyKey = "Idempotency-Key",
                 TrainingProvider = TrainingProvider.Payroc,
                 Shipping = new CreateTerminalOrderShipping
                 {

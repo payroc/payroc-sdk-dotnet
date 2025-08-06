@@ -1,8 +1,8 @@
 using NUnit.Framework;
-using Payroc.Boarding.PricingIntents;
+using Payroc.PayrocCloud.RefundInstructions;
 using Payroc.Test.Unit.MockServer;
 
-namespace Payroc.Test.Unit.MockServer.Boarding.PricingIntents;
+namespace Payroc.Test.Unit.MockServer.PayrocCloud.RefundInstructions;
 
 [TestFixture]
 public class DeleteTest : BaseMockServerTest
@@ -14,14 +14,14 @@ public class DeleteTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/pricing-intents/pricingIntentId")
+                    .WithPath("/refund-instructions/refundInstructionId")
                     .UsingDelete()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(async () =>
-            await Client.Boarding.PricingIntents.DeleteAsync(
-                new DeletePricingIntentsRequest { PricingIntentId = "pricingIntentId" }
+            await Client.PayrocCloud.RefundInstructions.DeleteAsync(
+                new DeleteRefundInstructionsRequest { RefundInstructionId = "refundInstructionId" }
             )
         );
     }

@@ -17,11 +17,16 @@ public partial class OwnersClient
     }
 
     /// <summary>
-    /// If you have the ownerId, you can use this method to retrieve the details of the owner. The response includes the owner's contact details and information about the owner's relationship to the business.
+    /// Use this method to retrieve details about an owner of a processing account or an owner associated with a funding recipient.
     ///
-    /// If you don't have the ownerId, you can use the following methods to retrieve the owner's information:
-    ///   - **Owners of processing accounts** - Use the HATEOAS links that we send you when you [Retrieve a processing account](/api/schema/boarding/processing-accounts/get) or [List merchant platform's processing accounts](/api/schema/boarding/merchant-platforms/list-processing-accounts).
-    ///   - **Owners of funding recipients** - Use the [List funding recipient owners](/api/schema/funding/funding-recipients/list-owners) method.
+    /// To retrieve an owner, you need their ownerId. Our gateway returned the ownerId in the response of the [Create Processing Account](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create-processing-account) method or the [Create Funding Recipient Owner](https://docs.payroc.com/api/schema/funding/funding-recipients/create-owner) method.
+    ///
+    /// **Note:** If you don't have the ownerId, use the [Retrieve Processing Account](https://docs.payroc.com/api/schema/boarding/processing-accounts/retrieve) method if you are searching for a processing account owner, or use the [List Funding Recipient Owners](https://docs.payroc.com/api/schema/funding/funding-recipients/list-owners) method if you are searching for a funding recipient owner.
+    ///
+    /// Our gateway returns the following information about an owner:
+    /// - Name, date of birth, and address.
+    /// - Contact details, including their email address.
+    /// - Relationship to the business, including whether they are a control prong.
     /// </summary>
     /// <example><code>
     /// await client.Boarding.Owners.RetrieveAsync(new RetrieveOwnersRequest { OwnerId = 1 });
@@ -106,11 +111,20 @@ public partial class OwnersClient
     }
 
     /// <summary>
-    /// &gt; **Important:** You cannot update the owner of a processing account.
+    /// &gt; **Important:** You can't update the details of an owner of a processing account.
     ///
-    /// Use this method to update the details of a funding recipient owner such as their contact details and their relationship to the business.
+    /// Use this method to update the details of an owner associated with a funding recipient.
     ///
-    /// Include the ownerId in the path parameter of your request. If you don’t know the ownerId, you can [Retrieve the funding recipient](/api/schema/funding/funding-recipients/get), [List funding recipients](/api/schema/funding/funding-recipients/list), or [List funding recipient owners](/api/schema/funding/funding-recipients/list-owners) to locate the ownerId.
+    /// To update an owner, you need their ownerId. Our gateway returned the ownerId in the response of the [Create Funding Recipient](https://docs.payroc.com/api/schema/funding/funding-recipients/create) method and the [Create Funding Recipient Owner](https://docs.payroc.com/api/schema/funding/funding-recipients/create-owner) method.
+    ///
+    /// **Note:** If you don't have the ownerId, use the [List Funding Recipient Owners](https://docs.payroc.com/api/schema/funding/funding-recipients/list-owners) method, the [Retrieve Funding Recipient](https://docs.payroc.com/api/schema/funding/funding-recipients/retrieve) method, or the [List Funding Recipients](https://docs.payroc.com/api/schema/funding/funding-recipients/list) method to search for the funding recipient owner.
+    ///
+    /// You can update the following details about an owner:
+    ///
+    /// - Personal details, including their name, date of birth, and address.
+    /// - Identification details, including their identification type and number.
+    /// - Contact details, including their email address.
+    /// - Relationship to the business, including whether they are a control prong.
     /// </summary>
     /// <example><code>
     /// await client.Boarding.Owners.UpdateAsync(
@@ -233,11 +247,13 @@ public partial class OwnersClient
     }
 
     /// <summary>
-    /// &gt; **Important:** You cannot delete the owner of a processing account.
+    /// &gt; **Important:** You can't delete an owner of a processing account.
     ///
-    /// Use this method to delete an owner from a funding recipient. You can delete an owner only if the funding recipient has more than one owner.
+    /// Use this method to delete an owner associated with a funding recipient. You can delete an owner only if the funding recipient has more than one owner.
     ///
-    /// Include the ownerId in the path parameter of your request. If you don’t know the ownerId, you can [Retrieve the funding recipient](/api/schema/funding/funding-recipients/get), [List funding recipients](/api/schema/funding/funding-recipients/list), or [List funding recipient owners](/api/schema/funding/funding-recipients/list-owners) to locate the ownerId.
+    /// To delete an owner, you need their ownerId. Our gateway returned the ownerId in the response of the [Create Funding Recipient](https://docs.payroc.com/api/schema/funding/funding-recipients/create) method and the [Create Funding Recipient Owner](https://docs.payroc.com/api/schema/funding/funding-recipients/create-owner) method.
+    ///
+    /// **Note:** If you don't have the ownerId, use the [List Funding Recipient Owners](https://docs.payroc.com/api/schema/funding/funding-recipients/list-owners) method, the [Retrieve Funding Recipient](https://docs.payroc.com/api/schema/funding/funding-recipients/retrieve) method, or the [List Funding Recipients](https://docs.payroc.com/api/schema/funding/funding-recipients/list) method to search for the funding recipient owner.
     /// </summary>
     /// <example><code>
     /// await client.Boarding.Owners.DeleteAsync(new DeleteOwnersRequest { OwnerId = 1 });

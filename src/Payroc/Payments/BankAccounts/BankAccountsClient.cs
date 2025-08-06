@@ -16,13 +16,13 @@ public partial class BankAccountsClient
     }
 
     /// <summary>
-    /// Verify the customer's bank account details.
+    /// Use this method to verify a customer's bank account details.
     /// </summary>
     /// <example><code>
     /// await client.Payments.BankAccounts.VerifyAsync(
     ///     new BankAccountVerificationRequest
     ///     {
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         ProcessingTerminalId = "1234001",
     ///         BankAccount = new BankAccountVerificationRequestBankAccount(
     ///             new BankAccountVerificationRequestBankAccount.Pad(

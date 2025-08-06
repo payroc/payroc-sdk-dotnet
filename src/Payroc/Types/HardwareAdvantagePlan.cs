@@ -4,6 +4,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains information about the Hardware Advantage Plan.
+/// </summary>
 [Serializable]
 public record HardwareAdvantagePlan : IJsonOnDeserialized
 {
@@ -12,7 +15,7 @@ public record HardwareAdvantagePlan : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Indicates if the pricing agreement includes the hardware advantage plan.
+    /// Indicates if the merchant has signed up for the Hardware Advantage Plan.
     /// </summary>
     [JsonPropertyName("enabled")]
     public required bool Enabled { get; set; }

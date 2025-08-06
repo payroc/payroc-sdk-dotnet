@@ -4,6 +4,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains the fees for speciality cards.
+/// </summary>
 [Serializable]
 public record SpecialityCards : IJsonOnDeserialized
 {

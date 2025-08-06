@@ -28,7 +28,8 @@ public record HostedFieldsCreateSessionRequest
 
     /// <summary>
     /// Indicates if a merchant wants to take a payment or tokenize a customer's payment details:
-    /// - `payment` - The merchant wants to take a payment immediately.
+    ///
+    /// - `payment` - The merchant wants to run a sale or run a sale and tokenize in the same transaction.
     /// - `tokenization` - The merchant wants to save the customer's payment details to take a payment later or to update a customer's payment details that they've already saved.
     /// </summary>
     [JsonPropertyName("scenario")]

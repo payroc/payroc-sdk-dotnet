@@ -27,6 +27,7 @@ public class ReverseTest : BaseMockServerTest
                   "subtotal": 4347,
                   "tip": {
                     "type": "percentage",
+                    "amount": 500,
                     "percentage": 10
                   },
                   "taxes": [
@@ -131,8 +132,8 @@ public class ReverseTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/bank-transfer-payments/M2MJOG6O2Y/reverse")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/bank-transfer-payments/paymentId/reverse")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .UsingPost()
             )
             .RespondWith(
@@ -145,8 +146,8 @@ public class ReverseTest : BaseMockServerTest
         var response = await Client.Payments.BankTransferPayments.ReverseAsync(
             new ReverseBankTransferPaymentsRequest
             {
-                PaymentId = "M2MJOG6O2Y",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                PaymentId = "paymentId",
+                IdempotencyKey = "Idempotency-Key",
             }
         );
         Assert.That(

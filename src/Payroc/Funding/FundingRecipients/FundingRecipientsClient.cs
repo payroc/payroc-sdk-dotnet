@@ -20,9 +20,7 @@ public partial class FundingRecipientsClient
     /// Retrieve a list of all funding recipients associated with the ISV.
     /// </summary>
     /// <example><code>
-    /// await client.Funding.FundingRecipients.ListAsync(
-    ///     new ListFundingRecipientsRequest { Before = "2571", After = "8516" }
-    /// );
+    /// await client.Funding.FundingRecipients.ListAsync(new ListFundingRecipientsRequest());
     /// </code></example>
     public async Task<PayrocPager<FundingRecipient>> ListAsync(
         ListFundingRecipientsRequest request,
@@ -127,7 +125,7 @@ public partial class FundingRecipientsClient
     /// await client.Funding.FundingRecipients.CreateAsync(
     ///     new CreateFundingRecipient
     ///     {
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         RecipientType = CreateFundingRecipientRecipientType.PrivateCorporation,
     ///         TaxId = "12-3456789",
     ///         DoingBusinessAs = "doingBusinessAs",
@@ -649,7 +647,7 @@ public partial class FundingRecipientsClient
     ///     new CreateAccountFundingRecipientsRequest
     ///     {
     ///         RecipientId = 1,
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new FundingAccount
     ///         {
     ///             Type = FundingAccountType.Checking,
@@ -854,7 +852,7 @@ public partial class FundingRecipientsClient
     ///     new CreateOwnerFundingRecipientsRequest
     ///     {
     ///         RecipientId = 1,
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new Owner
     ///         {
     ///             FirstName = "Jane",

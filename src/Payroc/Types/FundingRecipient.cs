@@ -76,7 +76,7 @@ public record FundingRecipient : IJsonOnDeserialized
     public IEnumerable<ContactMethod> ContactMethods { get; set; } = new List<ContactMethod>();
 
     /// <summary>
-    /// [Metadata](/api/metadata) object you can use to include custom data with your request.
+    /// [Metadata](https://docs.payroc.com/api/metadata) object you can use to include custom data with your request.
     /// </summary>
     [JsonPropertyName("metadata")]
     public Dictionary<string, string>? Metadata { get; set; }

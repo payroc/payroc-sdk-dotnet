@@ -166,7 +166,7 @@ public class RetrieveTest : BaseMockServerTest
 
         Server
             .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("/refunds/CD3HN88U9F").UsingGet()
+                WireMock.RequestBuilders.Request.Create().WithPath("/refunds/refundId").UsingGet()
             )
             .RespondWith(
                 WireMock
@@ -176,7 +176,7 @@ public class RetrieveTest : BaseMockServerTest
             );
 
         var response = await Client.Payments.Refunds.RetrieveAsync(
-            new RetrieveRefundsRequest { RefundId = "CD3HN88U9F" }
+            new RetrieveRefundsRequest { RefundId = "refundId" }
         );
         Assert.That(
             response,

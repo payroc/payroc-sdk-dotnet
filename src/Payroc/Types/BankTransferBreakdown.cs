@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains information about the taxes and tip amount on the transaction.
+/// Object that contains information about the transaction.
 /// </summary>
 [Serializable]
 public record BankTransferBreakdown : IJsonOnDeserialized

@@ -28,7 +28,9 @@ public class RetrieveTest : BaseMockServerTest
                   "subtotal": 2899,
                   "cashbackAmount": 0,
                   "tip": {
-                    "type": "percentage"
+                    "type": "percentage",
+                    "amount": 500,
+                    "percentage": 10
                   },
                   "taxes": [
                     {
@@ -221,10 +223,7 @@ public class RetrieveTest : BaseMockServerTest
 
         Server
             .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/payments/M2MJOG6O2Y")
-                    .UsingGet()
+                WireMock.RequestBuilders.Request.Create().WithPath("/payments/paymentId").UsingGet()
             )
             .RespondWith(
                 WireMock
@@ -234,7 +233,7 @@ public class RetrieveTest : BaseMockServerTest
             );
 
         var response = await Client.Payments.RetrieveAsync(
-            new RetrievePaymentsRequest { PaymentId = "M2MJOG6O2Y" }
+            new RetrievePaymentsRequest { PaymentId = "paymentId" }
         );
         Assert.That(
             response,

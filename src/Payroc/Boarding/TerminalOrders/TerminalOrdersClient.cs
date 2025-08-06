@@ -21,7 +21,7 @@ public partial class TerminalOrdersClient
     /// </summary>
     /// <example><code>
     /// await client.Boarding.TerminalOrders.RetrieveAsync(
-    ///     new RetrieveTerminalOrdersRequest { TerminalOrderId = "12345" }
+    ///     new RetrieveTerminalOrdersRequest { TerminalOrderId = "terminalOrderId" }
     /// );
     /// </code></example>
     public async Task<TerminalOrder> RetrieveAsync(

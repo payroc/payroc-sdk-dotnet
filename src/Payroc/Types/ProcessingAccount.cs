@@ -126,7 +126,7 @@ public record ProcessingAccount : IJsonOnDeserialized
     public required Signature Signature { get; set; }
 
     /// <summary>
-    /// Object that you can send to include custom data in the request. For more information about how to use metadata, go to [Metadata](/api/metadata).
+    /// Object that you can send to include custom data in the request. For more information about how to use metadata, go to [Metadata](https://docs.payroc.com/api/metadata).
     /// </summary>
     [JsonPropertyName("metadata")]
     public Dictionary<string, string>? Metadata { get; set; }

@@ -7,7 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the dynamic currency conversion (DCC) offer.
 ///
-/// For more information about DCC, go to [Dynamic currency conversion](/knowledge/card-payments/dynamic-currency-conversion).
+/// For more information about DCC, go to [Dynamic Currency Conversion](/knowledge/card-payments/dynamic-currency-conversion).
 /// </summary>
 [Serializable]
 public record DccOffer : IJsonOnDeserialized
@@ -24,7 +24,7 @@ public record DccOffer : IJsonOnDeserialized
     public bool? Accepted { get; set; }
 
     /// <summary>
-    /// Identifier of the DCC offer.
+    /// Unique identifier of the DCC offer.
     /// </summary>
     [JsonPropertyName("offerReference")]
     public string? OfferReference { get; set; }
@@ -35,11 +35,14 @@ public record DccOffer : IJsonOnDeserialized
     [JsonPropertyName("fxAmount")]
     public required long FxAmount { get; set; }
 
+    /// <summary>
+    /// Currency of the transaction in the card’s currency. The value for the currency follows the [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) standard.
+    /// </summary>
     [JsonPropertyName("fxCurrency")]
     public required Currency FxCurrency { get; set; }
 
     /// <summary>
-    /// Three-digit currency code for the cardholder’s account. This code follows the ISO 4217 standard.
+    /// Three-digit currency code for the card. This code follows the [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) standard.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("fxCurrencyCode")]
@@ -56,19 +59,19 @@ public record DccOffer : IJsonOnDeserialized
     public int? FxCurrencyExponent { get; set; }
 
     /// <summary>
-    /// Foreign exchange rate for the currency.
+    /// Foreign exchange rate for the card's currency.
     /// </summary>
     [JsonPropertyName("fxRate")]
     public required double FxRate { get; set; }
 
     /// <summary>
-    /// Mark-up percentage rate that the DCC provider applies to the foreign exchange rate.
+    /// Markup percentage rate that the DCC provider applies to the foreign exchange rate.
     /// </summary>
     [JsonPropertyName("markup")]
     public required double Markup { get; set; }
 
     /// <summary>
-    /// Supporting text for the mark-up rate.
+    /// Supporting text for the markup rate.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("markupText")]
@@ -82,7 +85,7 @@ public record DccOffer : IJsonOnDeserialized
     public string? Provider { get; set; }
 
     /// <summary>
-    /// Source that the DCC provider uses to get the foreign exchange rates.
+    /// Source that the DCC provider used to get the foreign exchange rates.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("source")]

@@ -90,9 +90,9 @@ public class UpdateAccountTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath(
-                        "/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa/update-account"
+                        "/processing-terminals/processingTerminalId/secure-tokens/secureTokenId/update-account"
                     )
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -107,9 +107,9 @@ public class UpdateAccountTest : BaseMockServerTest
         var response = await Client.Payments.SecureTokens.UpdateAccountAsync(
             new UpdateAccountSecureTokensRequest
             {
-                ProcessingTerminalId = "1234001",
-                SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                ProcessingTerminalId = "processingTerminalId",
+                SecureTokenId = "secureTokenId",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new AccountUpdate(
                     new AccountUpdate.SingleUseToken(
                         new SingleUseTokenAccountUpdate

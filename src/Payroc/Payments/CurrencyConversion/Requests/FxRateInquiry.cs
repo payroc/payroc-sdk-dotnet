@@ -26,7 +26,7 @@ public record FxRateInquiry
     public string? Operator { get; set; }
 
     /// <summary>
-    /// Total amount of the transaction in the local currency. The value is in the currency’s lowest denomination, for example, cents.
+    /// Total amount of the transaction in the merchant’s currency. The value is in the currency’s lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("baseAmount")]
     public required long BaseAmount { get; set; }

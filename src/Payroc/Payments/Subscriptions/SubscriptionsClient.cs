@@ -16,9 +16,9 @@ public partial class SubscriptionsClient
     }
 
     /// <summary>
-    /// Use this method to return a [paginated](/api/pagination) list of subscriptions.
+    /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of subscriptions.
     ///
-    /// Note: If you want to view a specific subscription and you have its subscriptionId, use our [Retrieve subscription](/api/schema/payments/subscriptions/get) method.
+    /// Note: If you want to view a specific subscription and you have its subscriptionId, use our [Retrieve subscription](https://docs.payroc.com/api/schema/payments/subscriptions/retrieve) method.
     ///
     /// Use query parameters to filter the list of results that we return, for example, to search for subscriptions for a customer, a payment plan, or frequency.
     ///
@@ -36,15 +36,8 @@ public partial class SubscriptionsClient
     /// await client.Payments.Subscriptions.ListAsync(
     ///     new ListSubscriptionsRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         CustomerName = "Sarah%20Hazel%20Hopper",
-    ///         Last4 = "7062",
-    ///         PaymentPlan = "Premium%20Club",
-    ///         EndDate = new DateOnly(2025, 7, 1),
-    ///         NextDueDate = new DateOnly(2024, 8, 1),
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///     }
     /// );
     /// </code></example>
@@ -195,11 +188,11 @@ public partial class SubscriptionsClient
     ///
     /// When you create a subscription you need to provide a unique subscriptionId that you use to run follow-on actions:
     ///
-    /// - [Retrieve Subscription](/api/schema/payments/subscriptions/get) - View the details of the subscription.
-    /// - [Update Subscription](/api/schema/payments/subscriptions/patch) - Update the details of the subscription.
-    /// - [Deactivate Subscription](/api/schema/payments/subscriptions/deactivate) - Stop taking payments for the subscription.
-    /// - [Re-activate Subscription](/api/schema/payments/subscriptions/reactivate) - Start taking payments again for the subscription.
-    /// - [Pay Manual Subscription](/api/schema/payments/subscriptions/pay) - Manually collect a payment for the subscription.
+    /// - [Retrieve Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/retrieve) - View the details of the subscription.
+    /// - [Update Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/partially-update) - Update the details of the subscription.
+    /// - [Deactivate Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/deactivate) - Stop taking payments for the subscription.
+    /// - [Re-activate Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/reactivate) - Start taking payments again for the subscription.
+    /// - [Pay Manual Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/pay) - Manually collect a payment for the subscription.
     ///
     /// The request includes the following settings:
     /// - **paymentPlanId** - Unique identifier of the payment plan that the merchant wants to use.
@@ -212,8 +205,8 @@ public partial class SubscriptionsClient
     /// await client.Payments.Subscriptions.CreateAsync(
     ///     new SubscriptionRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         SubscriptionId = "SubRef7654",
     ///         PaymentPlanId = "PlanRef8765",
     ///         PaymentMethod = new SubscriptionRequestPaymentMethod(
@@ -360,9 +353,9 @@ public partial class SubscriptionsClient
     /// <summary>
     /// Use this method to retrieve information about a subscription.
     ///
-    /// To retrieve a subscription, you need its subscriptionId. You sent the subscriptionId in the request of the [Create subscription](/api/schema/payments/subscriptions/create) method.
+    /// To retrieve a subscription, you need its subscriptionId. You sent the subscriptionId in the request of the [Create subscription](https://docs.payroc.com/api/schema/payments/subscriptions/create) method.
     ///
-    /// **Note:** If you don't have the subscriptionId, use our [List subscriptions](/api/schema/payments/subscriptions/list) method to search for the subscription.
+    /// **Note:** If you don't have the subscriptionId, use our [List subscriptions](https://docs.payroc.com/api/schema/payments/subscriptions/list) method to search for the subscription.
     ///
     /// Our gateway returns information about the following for the subscription:
     ///
@@ -378,8 +371,8 @@ public partial class SubscriptionsClient
     /// await client.Payments.Subscriptions.RetrieveAsync(
     ///     new RetrieveSubscriptionsRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         SubscriptionId = "SubRef7654",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         SubscriptionId = "subscriptionId",
     ///     }
     /// );
     /// </code></example>
@@ -470,9 +463,9 @@ public partial class SubscriptionsClient
     /// <summary>
     /// Use this method to partially update a subscription. Structure your request to follow the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
     ///
-    /// To update a subscription, you need its subscriptionId, which you sent in the request of the [Create subscription](/api/schema/payments/subscriptions/create) method.
+    /// To update a subscription, you need its subscriptionId, which you sent in the request of the [Create subscription](https://docs.payroc.com/api/schema/payments/subscriptions/create) method.
     ///
-    /// **Note:** If you don't have the subscriptionId, use our [List subscriptions](/api/schema/payments/subscriptions/list) method to search for the payment.
+    /// **Note:** If you don't have the subscriptionId, use our [List subscriptions](https://docs.payroc.com/api/schema/payments/subscriptions/list) method to search for the payment.
     ///
     /// You can update all of the properties of the subscription except for the following:
     ///
@@ -491,9 +484,9 @@ public partial class SubscriptionsClient
     /// await client.Payments.Subscriptions.PartiallyUpdateAsync(
     ///     new PartiallyUpdateSubscriptionsRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         SubscriptionId = "SubRef7654",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         SubscriptionId = "subscriptionId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new List&lt;PatchDocument&gt;()
     ///         {
     ///             new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
@@ -607,20 +600,20 @@ public partial class SubscriptionsClient
     /// <summary>
     /// Use this method to deactivate a subscription.
     ///
-    /// To deactivate a subscription, you need its subscriptionId, which you sent in the request of the [Create Subscription](/api/schema/payments/subscriptions/create) method.
+    /// To deactivate a subscription, you need its subscriptionId, which you sent in the request of the [Create Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/create) method.
     ///
-    /// **Note:** If you don't have the subscriptionId, use our [List Subscriptions](/api/schema/payments/subscriptions/list) method to search for the subscription.
+    /// **Note:** If you don't have the subscriptionId, use our [List Subscriptions](https://docs.payroc.com/api/schema/payments/subscriptions/list) method to search for the subscription.
     ///
     /// If your request is successful, our gateway stops taking payments from the customer.
     ///
-    /// To reactivate the subscription, use our [Reactivate Subscription](/api/schema/payments/subscriptions/reactivate) method.
+    /// To reactivate the subscription, use our [Reactivate Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/reactivate) method.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Subscriptions.DeactivateAsync(
     ///     new DeactivateSubscriptionsRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         SubscriptionId = "SubRef7654",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         SubscriptionId = "subscriptionId",
     ///     }
     /// );
     /// </code></example>
@@ -719,20 +712,20 @@ public partial class SubscriptionsClient
     /// <summary>
     /// Use this method to reactivate a subscription.
     ///
-    /// To reactivate a subscription, you need its subscriptionId, which you sent in the request of the [Create Subscription](/api/schema/payments/subscriptions/create) method.
+    /// To reactivate a subscription, you need its subscriptionId, which you sent in the request of the [Create Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/create) method.
     ///
-    /// **Note:** If you don't have the subscriptionId, use our [List Subscriptions](/api/schema/payments/subscriptions/list) method to search for the subscription.
+    /// **Note:** If you don't have the subscriptionId, use our [List Subscriptions](https://docs.payroc.com/api/schema/payments/subscriptions/list) method to search for the subscription.
     ///
     /// If your request is successful, our gateway restarts taking payments from the customer.
     ///
-    /// To deactivate the subscription, use our [Deactivate Subscription](/api/schema/payments/subscriptions/deactivate) method.
+    /// To deactivate the subscription, use our [Deactivate Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/deactivate) method.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Subscriptions.ReactivateAsync(
     ///     new ReactivateSubscriptionsRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         SubscriptionId = "SubRef7654",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         SubscriptionId = "subscriptionId",
     ///     }
     /// );
     /// </code></example>
@@ -831,21 +824,21 @@ public partial class SubscriptionsClient
     /// <summary>
     /// Use this method to manually collect a payment linked to a subscription. You can manually collect a payment only if the merchant chose not to let our gateway automatically collect each payment.
     ///
-    /// To manually collect a payment, you need the subscriptionId of the subscription that's linked to the payment. You sent the subscriptionId in the request of the [Create Subscription](/api/schema/payments/subscriptions/create) method.
+    /// To manually collect a payment, you need the subscriptionId of the subscription that's linked to the payment. You sent the subscriptionId in the request of the [Create Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/create) method.
     ///
-    /// **Note:** If you don't have the subscriptionId, use our [List Subscriptions](/api/schema/payments/subscriptions/list) method to search for the subscription.
+    /// **Note:** If you don't have the subscriptionId, use our [List Subscriptions](https://docs.payroc.com/api/schema/payments/subscriptions/list) method to search for the subscription.
     ///
     /// The request includes an order object that contains information about the amount that you want to collect.
     ///
-    /// In the response, our gateway returns information about the payment and a paymentId. You can use the paymentId in follow-on actions with the [Payments](/api/schema/payments) endpoints or [Bank Transfer Payments](/api/schema/payments/bank-transfer-payments) endpoints.
+    /// In the response, our gateway returns information about the payment and a paymentId. You can use the paymentId in follow-on actions with the [Payments](https://docs.payroc.com/api/schema/payments) endpoints or [Bank Transfer Payments](https://docs.payroc.com/api/schema/payments/bank-transfer-payments) endpoints.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Subscriptions.PayAsync(
     ///     new SubscriptionPaymentRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         SubscriptionId = "SubRef7654",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         SubscriptionId = "subscriptionId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Operator = "Jane",
     ///         Order = new SubscriptionPaymentOrder
     ///         {

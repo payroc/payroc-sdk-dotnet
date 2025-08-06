@@ -8,7 +8,7 @@ namespace Payroc.Boarding.PricingIntents;
 public record PartiallyUpdatePricingIntentsRequest
 {
     /// <summary>
-    /// Unique identifier of the pricing intent.
+    /// Unique identifier that we assigned to the pricing intent.
     /// </summary>
     [JsonIgnore]
     public required string PricingIntentId { get; set; }

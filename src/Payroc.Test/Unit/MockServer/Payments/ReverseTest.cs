@@ -34,7 +34,9 @@ public class ReverseTest : BaseMockServerTest
                   "subtotal": 2899,
                   "cashbackAmount": 0,
                   "tip": {
-                    "type": "percentage"
+                    "type": "percentage",
+                    "amount": 500,
+                    "percentage": 10
                   },
                   "taxes": [
                     {
@@ -112,7 +114,7 @@ public class ReverseTest : BaseMockServerTest
                   "address3": "Example Address Line 3",
                   "city": "Chicago",
                   "state": "Illinois",
-                  "country": "USA",
+                  "country": "US",
                   "postalCode": "60056"
                 },
                 "shippingAddress": {
@@ -229,8 +231,8 @@ public class ReverseTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/payments/M2MJOG6O2Y/reverse")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/payments/paymentId/reverse")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -245,8 +247,8 @@ public class ReverseTest : BaseMockServerTest
         var response = await Client.Payments.ReverseAsync(
             new PaymentReversal
             {
-                PaymentId = "M2MJOG6O2Y",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                PaymentId = "paymentId",
+                IdempotencyKey = "Idempotency-Key",
                 Amount = 4999,
             }
         );

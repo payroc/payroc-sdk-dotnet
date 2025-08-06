@@ -57,6 +57,9 @@ public class DeactivateTest : BaseMockServerTest
                     "bypass": false,
                     "amount": 217,
                     "percentage": 5
+                  },
+                  "convenienceFee": {
+                    "amount": 25
                   }
                 }
               },
@@ -76,6 +79,9 @@ public class DeactivateTest : BaseMockServerTest
                     "bypass": false,
                     "amount": 217,
                     "percentage": 5
+                  },
+                  "convenienceFee": {
+                    "amount": 25
                   }
                 }
               },
@@ -104,7 +110,9 @@ public class DeactivateTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-terminals/1234001/subscriptions/SubRef7654/deactivate")
+                    .WithPath(
+                        "/processing-terminals/processingTerminalId/subscriptions/subscriptionId/deactivate"
+                    )
                     .UsingPost()
             )
             .RespondWith(
@@ -117,8 +125,8 @@ public class DeactivateTest : BaseMockServerTest
         var response = await Client.Payments.Subscriptions.DeactivateAsync(
             new DeactivateSubscriptionsRequest
             {
-                ProcessingTerminalId = "1234001",
-                SubscriptionId = "SubRef7654",
+                ProcessingTerminalId = "processingTerminalId",
+                SubscriptionId = "subscriptionId",
             }
         );
         Assert.That(

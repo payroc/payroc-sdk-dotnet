@@ -48,7 +48,7 @@ public class VerifyTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/cards/verify")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -63,7 +63,7 @@ public class VerifyTest : BaseMockServerTest
         var response = await Client.Payments.Cards.VerifyAsync(
             new CardVerificationRequest
             {
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                IdempotencyKey = "Idempotency-Key",
                 ProcessingTerminalId = "1234001",
                 Operator = "Jane",
                 Card = new CardVerificationRequestCard(

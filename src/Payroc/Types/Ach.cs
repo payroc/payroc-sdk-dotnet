@@ -4,6 +4,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains the fees for ACH transactions.
+/// </summary>
 [Serializable]
 public record Ach : IJsonOnDeserialized
 {

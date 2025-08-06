@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Type of address
+/// Type of address.
 /// </summary>
 [Serializable]
 public record AddressType : IJsonOnDeserialized
@@ -15,7 +15,7 @@ public record AddressType : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Type of address
+    /// Type of address.
     /// </summary>
     [JsonPropertyName("type")]
     public string Type { get; set; } = "legalAddress";

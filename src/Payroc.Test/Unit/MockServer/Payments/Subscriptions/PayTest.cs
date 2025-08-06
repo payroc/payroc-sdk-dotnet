@@ -87,8 +87,10 @@ public class PayTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-terminals/1234001/subscriptions/SubRef7654/pay")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath(
+                        "/processing-terminals/processingTerminalId/subscriptions/subscriptionId/pay"
+                    )
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -103,9 +105,9 @@ public class PayTest : BaseMockServerTest
         var response = await Client.Payments.Subscriptions.PayAsync(
             new SubscriptionPaymentRequest
             {
-                ProcessingTerminalId = "1234001",
-                SubscriptionId = "SubRef7654",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                ProcessingTerminalId = "processingTerminalId",
+                SubscriptionId = "subscriptionId",
+                IdempotencyKey = "Idempotency-Key",
                 Operator = "Jane",
                 Order = new SubscriptionPaymentOrder
                 {

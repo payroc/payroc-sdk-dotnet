@@ -43,6 +43,8 @@ public record OrderItem : IJsonOnDeserialized
     /// - `Ingenico - AXIUM Full Functional Base`
     /// - `Pax A920 Charging Base`
     /// - `Pax A920 Comms Base`
+    /// - `A920 Pro Ethernet`
+    /// - `Axium Bundle`
     /// </summary>
     [JsonPropertyName("solutionTemplateId")]
     public required string SolutionTemplateId { get; set; }

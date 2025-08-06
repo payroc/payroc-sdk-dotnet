@@ -29,7 +29,7 @@ public class CreateTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-terminals/1234001/apple-pay-sessions")
+                    .WithPath("/processing-terminals/processingTerminalId/apple-pay-sessions")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -44,7 +44,7 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.Payments.ApplePaySessions.CreateAsync(
             new Payroc.Payments.ApplePaySessions.ApplePaySessions
             {
-                ProcessingTerminalId = "1234001",
+                ProcessingTerminalId = "processingTerminalId",
                 AppleDomainId = "DUHDZJHGYY",
                 AppleValidationUrl =
                     "https://apple-pay-gateway.apple.com/paymentservices/startSession",

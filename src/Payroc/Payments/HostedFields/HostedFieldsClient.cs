@@ -16,18 +16,20 @@ public partial class HostedFieldsClient
     }
 
     /// <summary>
-    /// Use this method to create a session token that you use to authenticate a Hosted Fields session. When you create an instance of Hosted Fields on a webpage, include the session token in the config object.
+    /// Use this method to create a Hosted Fields session token. You need to generate a new session token each time you load Hosted Fields on a webpage.
     ///
-    /// For more information about how to set up Hosted Fields, see [Set up Hosted Fields](https://docs.payroc.com/guides/integrate/hosted-fields/set-up-hosted-fields).
+    /// In your request, you need to indicate whether the merchant is using Hosted Fields to run a sale, save payment details, or update saved payment details.
     ///
-    /// **Note:** You need to generate a new session token each time you load Hosted Fields on a webpage.
+    /// In the response, our gateway returns the session token and the time that it expires. You need the session token when you configure the JavaScript for Hosted Fields.
+    ///
+    /// For more information about adding Hosted Fields to a webpage, go to [Hosted Fields](https://docs.payroc.com/guides/integrate/hosted-fields).
     /// </summary>
     /// <example><code>
     /// await client.Payments.HostedFields.CreateAsync(
     ///     new HostedFieldsCreateSessionRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         LibVersion = "1.1.0.123456",
     ///         Scenario = HostedFieldsCreateSessionRequestScenario.Payment,
     ///     }

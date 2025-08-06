@@ -23,10 +23,8 @@ public partial class FundingInstructionsClient
     /// await client.Funding.FundingInstructions.ListAsync(
     ///     new ListFundingInstructionsRequest
     ///     {
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///         DateFrom = new DateOnly(2024, 7, 1),
-    ///         DateTo = new DateOnly(2024, 7, 3),
+    ///         DateFrom = new DateOnly(2023, 1, 15),
+    ///         DateTo = new DateOnly(2023, 1, 15),
     ///     }
     /// );
     /// </code></example>
@@ -139,7 +137,7 @@ public partial class FundingInstructionsClient
     /// await client.Funding.FundingInstructions.CreateAsync(
     ///     new CreateFundingInstructionsRequest
     ///     {
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new Instruction(),
     ///     }
     /// );

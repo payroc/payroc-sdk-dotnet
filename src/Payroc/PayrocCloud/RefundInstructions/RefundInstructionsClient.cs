@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using global::System.Threading.Tasks;
 using Payroc;
 using Payroc.Core;
 
@@ -17,13 +18,17 @@ public partial class RefundInstructionsClient
 
     /// <summary>
     /// Submit an instruction request to initiate a refund on a payment device.
+    ///
+    /// In the response, our gateway returns information about the refund instruction and a refundInstructionId, which you need for the following methods:
+    /// - [Retrieve refund instruction](https://docs.payroc.com/api/schema/payroc-cloud/refund-instructions/retrieve) - View the details of the refund instruction.
+    /// - [Cancel refund instruction](https://docs.payroc.com/api/schema/payroc-cloud/refund-instructions/delete) - Cancel the refund instruction.
     /// </summary>
     /// <example><code>
     /// await client.PayrocCloud.RefundInstructions.SubmitAsync(
     ///     new RefundInstructionRequest
     ///     {
-    ///         SerialNumber = "1850010868",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         SerialNumber = "serialNumber",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Operator = "Jane",
     ///         ProcessingTerminalId = "1234001",
     ///         Order = new RefundInstructionOrder
@@ -145,10 +150,7 @@ public partial class RefundInstructionsClient
     /// </summary>
     /// <example><code>
     /// await client.PayrocCloud.RefundInstructions.RetrieveAsync(
-    ///     new RetrieveRefundInstructionsRequest
-    ///     {
-    ///         RefundInstructionId = "a37439165d134678a9100ebba3b29597",
-    ///     }
+    ///     new RetrieveRefundInstructionsRequest { RefundInstructionId = "refundInstructionId" }
     /// );
     /// </code></example>
     public async Task<RefundInstruction> RetrieveAsync(
@@ -213,6 +215,94 @@ public partial class RefundInstructionsClient
                             case 406:
                                 throw new NotAcceptableError(
                                     JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 500:
+                                throw new InternalServerError(
+                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new PayrocApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Use this method to cancel a refund instruction.
+    ///
+    /// To cancel a refund instruction, you need its refundInstructionId. Our gateway returned the refundInstructionId in the response of the [Submit Refund Instruction](https://docs.payroc.com/api/schema/payroc-cloud/refund-instructions/submit) method.
+    /// </summary>
+    /// <example><code>
+    /// await client.PayrocCloud.RefundInstructions.DeleteAsync(
+    ///     new DeleteRefundInstructionsRequest { RefundInstructionId = "refundInstructionId" }
+    /// );
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task DeleteAsync(
+        DeleteRefundInstructionsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.Environment.Api,
+                            Method = HttpMethod.Delete,
+                            Path = string.Format(
+                                "refund-instructions/{0}",
+                                ValueConvert.ToPathParameterString(request.RefundInstructionId)
+                            ),
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    return;
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestError(
+                                    JsonUtils.Deserialize<FourHundred>(responseBody)
+                                );
+                            case 401:
+                                throw new UnauthorizedError(
+                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                );
+                            case 403:
+                                throw new ForbiddenError(
+                                    JsonUtils.Deserialize<object>(responseBody)
+                                );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 406:
+                                throw new NotAcceptableError(
+                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 409:
+                                throw new ConflictError(
+                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
                                 );
                             case 500:
                                 throw new InternalServerError(

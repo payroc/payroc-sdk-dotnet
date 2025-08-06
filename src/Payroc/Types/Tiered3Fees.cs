@@ -14,9 +14,15 @@ public record Tiered3Fees : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    /// <summary>
+    /// Object that contains the fees for Mastercard, Visa, and Discover transactions.
+    /// </summary>
     [JsonPropertyName("mastercardVisaDiscover")]
     public required QualRates MastercardVisaDiscover { get; set; }
 
+    /// <summary>
+    /// Object that contains the fees for American Express transactions.
+    /// </summary>
     [JsonPropertyName("amex")]
     public Tiered3FeesAmex? Amex { get; set; }
 

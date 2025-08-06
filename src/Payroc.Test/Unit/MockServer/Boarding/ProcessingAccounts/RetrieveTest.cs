@@ -155,9 +155,9 @@ public class RetrieveTest : BaseMockServerTest
               ],
               "signature": {
                 "link": {
-                  "rel": "agreement",
+                  "rel": "previous",
                   "method": "get",
-                  "href": "https://us.agreementexpress.net/mv2/viewer2.jsp?docId=00000000-0000-0000-0000-000000000000"
+                  "href": "<uri>"
                 },
                 "type": "requestedViaDirectLink"
               },
@@ -178,7 +178,7 @@ public class RetrieveTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-accounts/38765")
+                    .WithPath("/processing-accounts/processingAccountId")
                     .UsingGet()
             )
             .RespondWith(
@@ -189,7 +189,7 @@ public class RetrieveTest : BaseMockServerTest
             );
 
         var response = await Client.Boarding.ProcessingAccounts.RetrieveAsync(
-            new RetrieveProcessingAccountsRequest { ProcessingAccountId = "38765" }
+            new RetrieveProcessingAccountsRequest { ProcessingAccountId = "processingAccountId" }
         );
         Assert.That(
             response,

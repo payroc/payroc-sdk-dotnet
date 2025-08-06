@@ -179,8 +179,8 @@ public class AdjustTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/refunds/CD3HN88U9F/adjust")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/refunds/refundId/adjust")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -195,8 +195,8 @@ public class AdjustTest : BaseMockServerTest
         var response = await Client.Payments.Refunds.AdjustAsync(
             new RefundAdjustment
             {
-                RefundId = "CD3HN88U9F",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                RefundId = "refundId",
+                IdempotencyKey = "Idempotency-Key",
                 Operator = "Jane",
                 Adjustments = new List<RefundAdjustmentAdjustmentsItem>()
                 {

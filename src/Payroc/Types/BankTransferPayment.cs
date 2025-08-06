@@ -39,17 +39,20 @@ public record BankTransferPayment : IJsonOnDeserialized
     public required BankTransferPaymentBankAccount BankAccount { get; set; }
 
     /// <summary>
-    /// List of refunds issued against the payment
+    /// List of refunds issued against the payment.
     /// </summary>
     [JsonPropertyName("refunds")]
     public IEnumerable<RefundSummary>? Refunds { get; set; }
 
     /// <summary>
-    /// List of returns issued against the payment
+    /// List of returns issued against the payment.
     /// </summary>
     [JsonPropertyName("returns")]
     public IEnumerable<BankTransferReturnSummary>? Returns { get; set; }
 
+    /// <summary>
+    /// List of re-presented payments linked to the return.
+    /// </summary>
     [JsonPropertyName("representment")]
     public PaymentSummary? Representment { get; set; }
 

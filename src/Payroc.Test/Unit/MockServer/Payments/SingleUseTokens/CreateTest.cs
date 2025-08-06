@@ -77,8 +77,8 @@ public class CreateTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-terminals/1234001/single-use-tokens")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/processing-terminals/processingTerminalId/single-use-tokens")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -93,8 +93,8 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.Payments.SingleUseTokens.CreateAsync(
             new SingleUseTokenRequest
             {
-                ProcessingTerminalId = "1234001",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                ProcessingTerminalId = "processingTerminalId",
+                IdempotencyKey = "Idempotency-Key",
                 Channel = SingleUseTokenRequestChannel.Web,
                 Operator = "Jane",
                 Source = new SingleUseTokenRequestSource(

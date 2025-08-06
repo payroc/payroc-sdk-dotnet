@@ -21,7 +21,7 @@ public partial class ProcessingAccountsClient
     /// </summary>
     /// <example><code>
     /// await client.Boarding.ProcessingAccounts.RetrieveAsync(
-    ///     new RetrieveProcessingAccountsRequest { ProcessingAccountId = "38765" }
+    ///     new RetrieveProcessingAccountsRequest { ProcessingAccountId = "processingAccountId" }
     /// );
     /// </code></example>
     public async Task<ProcessingAccount> RetrieveAsync(
@@ -112,7 +112,7 @@ public partial class ProcessingAccountsClient
     /// </summary>
     /// <example><code>
     /// await client.Boarding.ProcessingAccounts.ListProcessingAccountFundingAccountsAsync(
-    ///     new ListProcessingAccountFundingAccountsRequest { ProcessingAccountId = "38765" }
+    ///     new ListProcessingAccountFundingAccountsRequest { ProcessingAccountId = "processingAccountId" }
     /// );
     /// </code></example>
     public async Task<IEnumerable<FundingAccount>> ListProcessingAccountFundingAccountsAsync(
@@ -203,12 +203,7 @@ public partial class ProcessingAccountsClient
     /// </summary>
     /// <example><code>
     /// await client.Boarding.ProcessingAccounts.ListContactsAsync(
-    ///     new ListContactsProcessingAccountsRequest
-    ///     {
-    ///         ProcessingAccountId = "38765",
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///     }
+    ///     new ListContactsProcessingAccountsRequest { ProcessingAccountId = "processingAccountId" }
     /// );
     /// </code></example>
     public async Task<PaginatedContacts> ListContactsAsync(
@@ -311,7 +306,7 @@ public partial class ProcessingAccountsClient
     /// await client.Boarding.ProcessingAccounts.GetProcessingAccountPricingAgreementAsync(
     ///     new GetProcessingAccountPricingAgreementProcessingAccountsRequest
     ///     {
-    ///         ProcessingAccountId = "38765",
+    ///         ProcessingAccountId = "processingAccountId",
     ///     }
     /// );
     /// </code></example>
@@ -407,12 +402,7 @@ public partial class ProcessingAccountsClient
     /// </summary>
     /// <example><code>
     /// await client.Boarding.ProcessingAccounts.ListOwnersAsync(
-    ///     new ListProcessingAccountOwnersRequest
-    ///     {
-    ///         ProcessingAccountId = "38765",
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///     }
+    ///     new ListProcessingAccountOwnersRequest { ProcessingAccountId = "processingAccountId" }
     /// );
     /// </code></example>
     public async Task<PayrocPager<Owner>> ListOwnersAsync(
@@ -527,7 +517,7 @@ public partial class ProcessingAccountsClient
     /// await client.Boarding.ProcessingAccounts.CreateReminderAsync(
     ///     new CreateReminderProcessingAccountsRequest
     ///     {
-    ///         ProcessingAccountId = "38765",
+    ///         ProcessingAccountId = "processingAccountId",
     ///         Body = new CreateReminderProcessingAccountsRequestBody(
     ///             new CreateReminderProcessingAccountsRequestBody.PricingAgreement(
     ///                 new PricingAgreementReminder()
@@ -624,7 +614,7 @@ public partial class ProcessingAccountsClient
     /// await client.Boarding.ProcessingAccounts.ListTerminalOrdersAsync(
     ///     new ListTerminalOrdersProcessingAccountsRequest
     ///     {
-    ///         ProcessingAccountId = "38765",
+    ///         ProcessingAccountId = "processingAccountId",
     ///         FromDateTime = new DateTime(2024, 09, 08, 12, 00, 00, 000),
     ///         ToDateTime = new DateTime(2024, 12, 08, 11, 00, 00, 000),
     ///     }
@@ -739,8 +729,8 @@ public partial class ProcessingAccountsClient
     /// await client.Boarding.ProcessingAccounts.CreateTerminalOrderAsync(
     ///     new CreateTerminalOrder
     ///     {
-    ///         ProcessingAccountId = "38765",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingAccountId = "processingAccountId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         TrainingProvider = TrainingProvider.Payroc,
     ///         Shipping = new CreateTerminalOrderShipping
     ///         {
@@ -910,7 +900,7 @@ public partial class ProcessingAccountsClient
     }
 
     /// <summary>
-    /// Use this method to retrieve a [paginated](/api/pagination) list of processing terminals associated with a processing account.
+    /// Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of processing terminals associated with a processing account.
     /// Send the processingAccountId in the path parameter of your request.
     /// &gt; **Note**: If you don't know the processingAccountId, go to [List merchant platform's processing accounts](#listMerchantLocations).
     /// </summary>
@@ -918,9 +908,7 @@ public partial class ProcessingAccountsClient
     /// await client.Boarding.ProcessingAccounts.ListProcessingTerminalsAsync(
     ///     new ListProcessingTerminalsProcessingAccountsRequest
     ///     {
-    ///         ProcessingAccountId = "38765",
-    ///         Before = "2571",
-    ///         After = "8516",
+    ///         ProcessingAccountId = "processingAccountId",
     ///     }
     /// );
     /// </code></example>

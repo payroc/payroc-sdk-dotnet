@@ -47,8 +47,8 @@ public class ShareTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/payment-links/JZURRJBUPS/sharing-events")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/payment-links/paymentLinkId/sharing-events")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -63,8 +63,8 @@ public class ShareTest : BaseMockServerTest
         var response = await Client.Payments.PaymentLinks.SharingEvents.ShareAsync(
             new ShareSharingEventsRequest
             {
-                PaymentLinkId = "JZURRJBUPS",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                PaymentLinkId = "paymentLinkId",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new PaymentLinkEmailShareEvent
                 {
                     SharingMethod = "email",

@@ -105,7 +105,7 @@ public class ListTerminalOrdersTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-accounts/38765/terminal-orders")
+                    .WithPath("/processing-accounts/processingAccountId/terminal-orders")
                     .WithParam("fromDateTime", "2024-09-08T12:00:00.000Z")
                     .WithParam("toDateTime", "2024-12-08T11:00:00.000Z")
                     .UsingGet()
@@ -120,7 +120,7 @@ public class ListTerminalOrdersTest : BaseMockServerTest
         var response = await Client.Boarding.ProcessingAccounts.ListTerminalOrdersAsync(
             new ListTerminalOrdersProcessingAccountsRequest
             {
-                ProcessingAccountId = "38765",
+                ProcessingAccountId = "processingAccountId",
                 FromDateTime = DateTime.Parse(
                     "2024-09-08T12:00:00.000Z",
                     null,

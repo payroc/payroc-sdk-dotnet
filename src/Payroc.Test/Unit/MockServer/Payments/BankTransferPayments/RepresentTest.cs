@@ -143,8 +143,8 @@ public class RepresentTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/bank-transfer-payments/M2MJOG6O2Y/represent")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/bank-transfer-payments/paymentId/represent")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -159,8 +159,8 @@ public class RepresentTest : BaseMockServerTest
         var response = await Client.Payments.BankTransferPayments.RepresentAsync(
             new Representment
             {
-                PaymentId = "M2MJOG6O2Y",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                PaymentId = "paymentId",
+                IdempotencyKey = "Idempotency-Key",
                 PaymentMethod = new RepresentmentPaymentMethod(
                     new RepresentmentPaymentMethod.Ach(
                         new AchPayload

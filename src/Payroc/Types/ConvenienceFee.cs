@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains convenience fee information for the transaction.
+/// Object that contains information about the convenience fee for the transaction.
 /// </summary>
 [Serializable]
 public record ConvenienceFee : IJsonOnDeserialized

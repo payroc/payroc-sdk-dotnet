@@ -17,9 +17,9 @@ public partial class SecureTokensClient
     }
 
     /// <summary>
-    /// Use this method to return a [paginated](/api/pagination) list of secure tokens.
+    /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of secure tokens.
     ///
-    /// **Note:** If you want to view a specific seure token and you have its secureTokenId, use our [Retrieve Secure Token](/api/schema/payments/secure-tokens/get) method.
+    /// **Note:** If you want to view a specific seure token and you have its secureTokenId, use our [Retrieve Secure Token](https://docs.payroc.com/api/schema/payments/secure-tokens/retrieve) method.
     ///
     /// Use query parameters to filter the list of results that we return, for example, to search for secure tokens by customer or by the first four digits of a card number.
     ///
@@ -33,19 +33,7 @@ public partial class SecureTokensClient
     /// </summary>
     /// <example><code>
     /// await client.Payments.SecureTokens.ListAsync(
-    ///     new ListSecureTokensRequest
-    ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
-    ///         CustomerName = "Sarah%20Hazel%20Hopper",
-    ///         Phone = "2025550165",
-    ///         Email = "sarah.hopper@example.com",
-    ///         Token = "296753123456",
-    ///         First6 = "453985",
-    ///         Last4 = "7062",
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///     }
+    ///     new ListSecureTokensRequest { ProcessingTerminalId = "processingTerminalId" }
     /// );
     /// </code></example>
     public async Task<PayrocPager<SecureToken>> ListAsync(
@@ -183,21 +171,21 @@ public partial class SecureTokensClient
     /// Use this method to create a secure token that represents a customer's payment details.
     ///
     /// When you create a secure token, you need to generate and provide a secureTokenId that you use to run follow-on actions:
-    /// - [Retrieve Secure Token](/api/schema/payments/secure-tokens/get) – View the details of the secure token.
-    /// - [Delete Secure Token](/api/schema/payments/secure-tokens/delete) – Delete the secure token.
-    /// - [Update Secure Token](/api/schema/payments/secure-tokens/update) – Update the details of the secure token.
-    /// - [Update Account Details](/api/schema/payments/secure-tokens/account-update) – Update the secure token with the details from a single-use token.
+    /// - [Retrieve Secure Token](https://docs.payroc.com/api/schema/payments/secure-tokens/retrieve) – View the details of the secure token.
+    /// - [Delete Secure Token](https://docs.payroc.com/api/schema/payments/secure-tokens/delete) – Delete the secure token.
+    /// - [Update Secure Token](https://docs.payroc.com/api/schema/payments/secure-tokens/partially-update) – Update the details of the secure token.
+    /// - [Update Account Details](https://docs.payroc.com/api/schema/payments/secure-tokens/update-account) – Update the secure token with the details from a single-use token.
     ///
     /// **Note:** If you don't generate a secureTokenId to identify the token, our gateway generates a unique identifier and returns it in the response.
     ///
-    /// If the request is successful, our gateway returns a token that the merchant can use in transactions instead of the customer's sensitive payment details, for example, when they [run a sale](/api/schema/payments/create).
+    /// If the request is successful, our gateway returns a token that the merchant can use in transactions instead of the customer's sensitive payment details, for example, when they [run a sale](https://docs.payroc.com/api/schema/payments/create).
     /// </summary>
     /// <example><code>
     /// await client.Payments.SecureTokens.CreateAsync(
     ///     new TokenizationRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Operator = "Jane",
     ///         MitAgreement = TokenizationRequestMitAgreement.Unscheduled,
     ///         Customer = new Customer
@@ -368,9 +356,9 @@ public partial class SecureTokensClient
     /// <summary>
     /// Use this method to retrieve information about a secure token.
     ///
-    /// To retrieve a secure token, you need its secureTokenID, which you sent in the request of the [Create Secure Token](/api/schema/payments/secure-tokens/create) method.
+    /// To retrieve a secure token, you need its secureTokenID, which you sent in the request of the [Create Secure Token](https://docs.payroc.com/api/schema/payments/secure-tokens/create) method.
     ///
-    /// **Note:** If you don't have the secureTokenId, use our [List Secure Tokens](/api/schema/payments/secure-tokens/list) method to search for the secure token.
+    /// **Note:** If you don't have the secureTokenId, use our [List Secure Tokens](https://docs.payroc.com/api/schema/payments/secure-tokens/list) method to search for the secure token.
     ///
     /// Our gateway returns information about the following for each secure token in the list:
     ///
@@ -382,8 +370,8 @@ public partial class SecureTokensClient
     /// await client.Payments.SecureTokens.RetrieveAsync(
     ///     new RetrieveSecureTokensRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         SecureTokenId = "secureTokenId",
     ///     }
     /// );
     /// </code></example>
@@ -474,9 +462,9 @@ public partial class SecureTokensClient
     /// <summary>
     /// Use this method to delete a secure token and its related payment details from our vault.
     ///
-    /// To delete a secure token, you need its secureTokenId, which you sent in the request of the [Create Secure Token](/api/schema/payments/secure-tokens/create) method.
+    /// To delete a secure token, you need its secureTokenId, which you sent in the request of the [Create Secure Token](https://docs.payroc.com/api/schema/payments/secure-tokens/create) method.
     ///
-    /// **Note:** If you don’t have the secureTokenId, use our [List Secure Tokens](/api/schema/payments/secure-tokens/list) method to search for the secure token.
+    /// **Note:** If you don’t have the secureTokenId, use our [List Secure Tokens](https://docs.payroc.com/api/schema/payments/secure-tokens/list) method to search for the secure token.
     ///
     /// When you delete a secure token, you can’t recover it, and you can’t reuse its identifier for a new token.
     /// </summary>
@@ -484,8 +472,8 @@ public partial class SecureTokensClient
     /// await client.Payments.SecureTokens.DeleteAsync(
     ///     new DeleteSecureTokensRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         SecureTokenId = "secureTokenId",
     ///     }
     /// );
     /// </code></example>
@@ -591,9 +579,9 @@ public partial class SecureTokensClient
     /// await client.Payments.SecureTokens.PartiallyUpdateAsync(
     ///     new PartiallyUpdateSecureTokensRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         SecureTokenId = "secureTokenId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new List&lt;PatchDocument&gt;()
     ///         {
     ///             new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
@@ -707,15 +695,15 @@ public partial class SecureTokensClient
     /// <summary>
     /// Use this method to update a secure token if you have a single-use token from Hosted Fields.
     ///
-    /// **Note:** If you don't have a single-use token, you can update saved payment details with our [Update Secure Token](/api/resources#updateSecureToken) method. For more information about our two options to update a secure token, go to [Update saved payment details](/guides/integrate/update-saved-payment-details).
+    /// **Note:** If you don't have a single-use token, you can update saved payment details with our [Update Secure Token](https://docs.payroc.com/api/resources#updateSecureToken) method. For more information about our two options to update a secure token, go to [Update saved payment details](/guides/integrate/update-saved-payment-details).
     /// </summary>
     /// <example><code>
     /// await client.Payments.SecureTokens.UpdateAccountAsync(
     ///     new UpdateAccountSecureTokensRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         SecureTokenId = "secureTokenId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new AccountUpdate(
     ///             new AccountUpdate.SingleUseToken(
     ///                 new SingleUseTokenAccountUpdate

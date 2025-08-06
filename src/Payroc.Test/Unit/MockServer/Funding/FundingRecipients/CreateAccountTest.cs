@@ -62,7 +62,7 @@ public class CreateAccountTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/funding-recipients/1/funding-accounts")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -78,7 +78,7 @@ public class CreateAccountTest : BaseMockServerTest
             new CreateAccountFundingRecipientsRequest
             {
                 RecipientId = 1,
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new FundingAccount
                 {
                     Type = FundingAccountType.Checking,

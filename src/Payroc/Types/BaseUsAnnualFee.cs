@@ -15,7 +15,7 @@ public record BaseUsAnnualFee : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Indicates the month in which we collect the annual fee.
+    /// Indicates whether we collect the annual fee in June or December.
     /// </summary>
     [JsonPropertyName("billInMonth")]
     public BaseUsAnnualFeeBillInMonth? BillInMonth { get; set; }

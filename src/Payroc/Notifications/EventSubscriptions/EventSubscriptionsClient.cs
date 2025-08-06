@@ -20,9 +20,7 @@ public partial class EventSubscriptionsClient
     /// Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of event subscriptions that are linked to the ISV's account.
     /// </summary>
     /// <example><code>
-    /// await client.Notifications.EventSubscriptions.ListAsync(
-    ///     new ListEventSubscriptionsRequest { Event = "processingAccount.status.changed" }
-    /// );
+    /// await client.Notifications.EventSubscriptions.ListAsync(new ListEventSubscriptionsRequest());
     /// </code></example>
     public async Task<PayrocPager<EventSubscription>> ListAsync(
         ListEventSubscriptionsRequest request,
@@ -130,7 +128,7 @@ public partial class EventSubscriptionsClient
     /// await client.Notifications.EventSubscriptions.CreateAsync(
     ///     new CreateEventSubscriptionsRequest
     ///     {
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new EventSubscription
     ///         {
     ///             Enabled = true,

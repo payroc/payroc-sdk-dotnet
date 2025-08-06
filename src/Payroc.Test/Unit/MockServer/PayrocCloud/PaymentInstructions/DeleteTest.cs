@@ -1,8 +1,8 @@
 using NUnit.Framework;
-using Payroc.Payments.PaymentPlans;
+using Payroc.PayrocCloud.PaymentInstructions;
 using Payroc.Test.Unit.MockServer;
 
-namespace Payroc.Test.Unit.MockServer.Payments.PaymentPlans;
+namespace Payroc.Test.Unit.MockServer.PayrocCloud.PaymentInstructions;
 
 [TestFixture]
 public class DeleteTest : BaseMockServerTest
@@ -14,19 +14,16 @@ public class DeleteTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath(
-                        "/processing-terminals/processingTerminalId/payment-plans/paymentPlanId"
-                    )
+                    .WithPath("/payment-instructions/paymentInstructionId")
                     .UsingDelete()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(async () =>
-            await Client.Payments.PaymentPlans.DeleteAsync(
-                new DeletePaymentPlansRequest
+            await Client.PayrocCloud.PaymentInstructions.DeleteAsync(
+                new DeletePaymentInstructionsRequest
                 {
-                    ProcessingTerminalId = "processingTerminalId",
-                    PaymentPlanId = "paymentPlanId",
+                    PaymentInstructionId = "paymentInstructionId",
                 }
             )
         );

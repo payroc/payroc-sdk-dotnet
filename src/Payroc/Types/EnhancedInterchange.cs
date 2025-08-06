@@ -4,6 +4,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains the fees for enhanced interchange services.
+/// </summary>
 [Serializable]
 public record EnhancedInterchange : IJsonOnDeserialized
 {

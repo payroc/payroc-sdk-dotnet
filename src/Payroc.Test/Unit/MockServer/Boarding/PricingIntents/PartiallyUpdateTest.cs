@@ -121,8 +121,8 @@ public class PartiallyUpdateTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/pricing-intents/5")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/pricing-intents/pricingIntentId")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPatch()
                     .WithBodyAsJson(requestJson)
@@ -137,8 +137,8 @@ public class PartiallyUpdateTest : BaseMockServerTest
         var response = await Client.Boarding.PricingIntents.PartiallyUpdateAsync(
             new PartiallyUpdatePricingIntentsRequest
             {
-                PricingIntentId = "5",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                PricingIntentId = "pricingIntentId",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new List<PatchDocument>()
                 {
                     new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
@@ -278,8 +278,8 @@ public class PartiallyUpdateTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/pricing-intents/5")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/pricing-intents/pricingIntentId")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPatch()
                     .WithBodyAsJson(requestJson)
@@ -294,8 +294,8 @@ public class PartiallyUpdateTest : BaseMockServerTest
         var response = await Client.Boarding.PricingIntents.PartiallyUpdateAsync(
             new PartiallyUpdatePricingIntentsRequest
             {
-                PricingIntentId = "5",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                PricingIntentId = "pricingIntentId",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new List<PatchDocument>()
                 {
                     new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),

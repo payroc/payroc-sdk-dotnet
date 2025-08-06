@@ -20,14 +20,7 @@ public partial class SharingEventsClient
     /// </summary>
     /// <example><code>
     /// await client.Payments.PaymentLinks.SharingEvents.ListAsync(
-    ///     new ListSharingEventsRequest
-    ///     {
-    ///         PaymentLinkId = "JZURRJBUPS",
-    ///         RecipientName = "Sarah Hazel Hopper",
-    ///         RecipientEmail = "sarah.hopper@example.com",
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///     }
+    ///     new ListSharingEventsRequest { PaymentLinkId = "paymentLinkId" }
     /// );
     /// </code></example>
     public async Task<PayrocPager<PaymentLinkEmailShareEvent>> ListAsync(
@@ -153,8 +146,8 @@ public partial class SharingEventsClient
     /// await client.Payments.PaymentLinks.SharingEvents.ShareAsync(
     ///     new ShareSharingEventsRequest
     ///     {
-    ///         PaymentLinkId = "JZURRJBUPS",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         PaymentLinkId = "paymentLinkId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new PaymentLinkEmailShareEvent
     ///         {
     ///             SharingMethod = "email",

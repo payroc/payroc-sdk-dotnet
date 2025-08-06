@@ -15,13 +15,13 @@ public record Order : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// A unique identifier assigned by the merchant.
+    /// Unique identifier that the merchant assigns to the transaction.
     /// </summary>
     [JsonPropertyName("orderId")]
     public required string OrderId { get; set; }
 
     /// <summary>
-    /// Date and time that the processor processed the transaction. Our gateway returns this value in the ISO 8601 format.
+    /// Date and time that the processor processed the transaction. Our gateway returns this value in the [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("dateTime")]

@@ -51,7 +51,7 @@ public record ProcessingTerminal : IJsonOnDeserialized
     /// Object that contains the application settings for the solution.
     /// </summary>
     [JsonPropertyName("applicationSettings")]
-    public ProcessingTerminalApplicationSettings? ApplicationSettings { get; set; }
+    public required ProcessingTerminalApplicationSettings ApplicationSettings { get; set; }
 
     /// <summary>
     /// Object that contains the feature settings for the terminal.

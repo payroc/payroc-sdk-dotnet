@@ -9,7 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object containing the method we used to capture the owner's signature.
+/// Object that includes information about how we captured the owner's signature.
 /// </summary>
 [JsonConverter(typeof(Signature.JsonConverter))]
 [Serializable]

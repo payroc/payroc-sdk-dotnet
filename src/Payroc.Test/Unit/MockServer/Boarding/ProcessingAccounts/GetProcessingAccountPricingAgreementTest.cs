@@ -97,7 +97,7 @@ public class GetProcessingAccountPricingAgreementTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-accounts/38765/pricing")
+                    .WithPath("/processing-accounts/processingAccountId/pricing")
                     .UsingGet()
             )
             .RespondWith(
@@ -111,7 +111,7 @@ public class GetProcessingAccountPricingAgreementTest : BaseMockServerTest
             await Client.Boarding.ProcessingAccounts.GetProcessingAccountPricingAgreementAsync(
                 new GetProcessingAccountPricingAgreementProcessingAccountsRequest
                 {
-                    ProcessingAccountId = "38765",
+                    ProcessingAccountId = "processingAccountId",
                 }
             );
         Assert.That(

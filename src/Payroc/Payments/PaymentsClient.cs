@@ -68,9 +68,9 @@ public partial class PaymentsClient
     public BankAccountsClient BankAccounts { get; }
 
     /// <summary>
-    /// Use this method to return a [paginated](/api/pagination) list of payments.
+    /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of payments.
     ///
-    /// **Note:** If you want to view a specific payment and you have its paymentId, use our [Retrieve Payment](/api/schema/payments/get) method.
+    /// **Note:** If you want to view a specific payment and you have its paymentId, use our [Retrieve Payment](https://docs.payroc.com/api/schema/payments/retrieve) method.
     ///
     /// Use query parameters to filter the list of results that we return, for example, to search for payments for a customer, a tip mode, or a date range.
     ///
@@ -84,23 +84,7 @@ public partial class PaymentsClient
     /// For each transaction, we also return the paymentId and an optional secureTokenId, which you can use to perform follow-on actions.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.ListAsync(
-    ///     new ListPaymentsRequest
-    ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         OrderId = "OrderRef6543",
-    ///         Operator = "Jane",
-    ///         CardholderName = "Sarah%20Hazel%20Hopper",
-    ///         First6 = "453985",
-    ///         Last4 = "7062",
-    ///         DateFrom = new DateTime(2024, 07, 01, 15, 30, 00, 000),
-    ///         DateTo = new DateTime(2024, 07, 03, 15, 30, 00, 000),
-    ///         SettlementDate = new DateOnly(2024, 7, 2),
-    ///         PaymentLinkId = "JZURRJBUPS",
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///     }
-    /// );
+    /// await client.Payments.ListAsync(new ListPaymentsRequest());
     /// </code></example>
     public async Task<PayrocPager<Payment>> ListAsync(
         ListPaymentsRequest request,
@@ -260,11 +244,11 @@ public partial class PaymentsClient
     ///
     /// In the response, our gateway returns information about the card payment and a paymentId, which you need for the following methods:
     ///
-    /// -	[Retrieve payment](/api/schema/payments/get) - View the details of the card payment.
-    /// -	[Adjust payment](/api/schema/payments/adjust) - Update the details of the card payment.
-    /// -	[Capture payment](/api/schema/payments/capture)  - Capture the pre-authorization.
-    /// -	[Reverse payment](/api/schema/payments/reverse)  - Cancel the card payment if it's in an open batch.
-    /// -	[Refund payment](/api/schema/payments/refund)  - Run a referenced refund to return funds to the payment card.
+    /// -	[Retrieve payment](https://docs.payroc.com/api/schema/payments/retrieve) - View the details of the card payment.
+    /// -	[Adjust payment](https://docs.payroc.com/api/schema/payments/adjust) - Update the details of the card payment.
+    /// -	[Capture payment](https://docs.payroc.com/api/schema/payments/capture)  - Capture the pre-authorization.
+    /// -	[Reverse payment](https://docs.payroc.com/api/schema/payments/reverse)  - Cancel the card payment if it's in an open batch.
+    /// -	[Refund payment](https://docs.payroc.com/api/schema/payments/refund)  - Run a referenced refund to return funds to the payment card.
     ///
     /// **Payment methods**
     ///
@@ -290,7 +274,7 @@ public partial class PaymentsClient
     /// await client.Payments.CreateAsync(
     ///     new PaymentRequest
     ///     {
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Channel = PaymentRequestChannel.Web,
     ///         ProcessingTerminalId = "1234001",
     ///         Operator = "Jane",
@@ -454,9 +438,9 @@ public partial class PaymentsClient
     /// <summary>
     /// Use this method to retrieve information about a card payment.
     ///
-    /// To retrieve a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+    /// To retrieve a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](https://docs.payroc.com/api/schema/payments/create) method.
     ///
-    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+    /// **Note:** If you don't have the paymentId, use our [List Payments](https://docs.payroc.com/api/schema/payments/list) method to search for the payment.
     ///
     /// Our gateway returns the following information about the payment:
     ///
@@ -468,7 +452,7 @@ public partial class PaymentsClient
     /// If the merchant saved the customer's card details, our gateway returns a secureTokenID, which you can use to perform follow-on actions.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.RetrieveAsync(new RetrievePaymentsRequest { PaymentId = "M2MJOG6O2Y" });
+    /// await client.Payments.RetrieveAsync(new RetrievePaymentsRequest { PaymentId = "paymentId" });
     /// </code></example>
     public async Task<Payment> RetrieveAsync(
         RetrievePaymentsRequest request,
@@ -556,9 +540,9 @@ public partial class PaymentsClient
     /// <summary>
     /// Use this method to adjust a payment in an open batch.
     ///
-    /// To adjust a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+    /// To adjust a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](https://docs.payroc.com/api/schema/payments/create) method.
     ///
-    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+    /// **Note:** If you don't have the paymentId, use our [List Payments](https://docs.payroc.com/api/schema/payments/list) method to search for the payment.
     ///
     /// You can adjust the following details of the payment:
     /// - Sale amount and tip amount
@@ -572,15 +556,15 @@ public partial class PaymentsClient
     /// await client.Payments.AdjustAsync(
     ///     new PaymentAdjustment
     ///     {
-    ///         PaymentId = "M2MJOG6O2Y",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         PaymentId = "paymentId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Adjustments = new List&lt;PaymentAdjustmentAdjustmentsItem&gt;()
     ///         {
     ///             new PaymentAdjustmentAdjustmentsItem(
     ///                 new PaymentAdjustmentAdjustmentsItem.Customer(new CustomerAdjustment())
     ///             ),
     ///             new PaymentAdjustmentAdjustmentsItem(
-    ///                 new PaymentAdjustmentAdjustmentsItem.Order(new OrderAdjustment { Amount = 1000000 })
+    ///                 new PaymentAdjustmentAdjustmentsItem.Order(new OrderAdjustment { Amount = 4999 })
     ///             ),
     ///         },
     ///     }
@@ -689,14 +673,14 @@ public partial class PaymentsClient
     /// <summary>
     /// Use this method to capture a pre-authorization.
     ///
-    /// To capture a pre-authorization, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+    /// To capture a pre-authorization, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](https://docs.payroc.com/api/schema/payments/create) method.
     ///
-    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+    /// **Note:** If you don't have the paymentId, use our [List Payments](https://docs.payroc.com/api/schema/payments/list) method to search for the payment.
     ///
     /// Depending on the amount you want to capture, complete the following:
     /// -	**Capture the full amount of the pre-authorization** - Don't send a value for the amount parameter in your request.
     /// -	**Capture less than the amount of the pre-authorization** - Send a value for the amount parameter in your request.
-    /// -	**Capture more than the amount of the pre-authorization** - Adjust the pre-authorization before you capture it. For more information about adjusting a pre-authorization, go to [Adjust Payment](/api/schema/payments/adjust).
+    /// -	**Capture more than the amount of the pre-authorization** - Adjust the pre-authorization before you capture it. For more information about adjusting a pre-authorization, go to [Adjust Payment](https://docs.payroc.com/api/schema/payments/adjust).
     ///
     /// If your request is successful, our gateway takes the amount from the payment card.
     ///
@@ -706,8 +690,8 @@ public partial class PaymentsClient
     /// await client.Payments.CaptureAsync(
     ///     new PaymentCapture
     ///     {
-    ///         PaymentId = "M2MJOG6O2Y",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         PaymentId = "paymentId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         ProcessingTerminalId = "1234001",
     ///         Operator = "Jane",
     ///         Amount = 4999,
@@ -827,9 +811,9 @@ public partial class PaymentsClient
     /// <summary>
     /// Use this method to cancel or to partially cancel a payment in an open batch. This is also known as voiding a payment.
     ///
-    /// To cancel a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+    /// To cancel a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](https://docs.payroc.com/api/schema/payments/create) method.
     ///
-    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+    /// **Note:** If you don't have the paymentId, use our [List Payments](https://docs.payroc.com/api/schema/payments/list) method to search for the payment.
     ///
     /// If your request is successful, our gateway removes the payment from the merchant's open batch and no funds are taken from the cardholder's account.
     /// </summary>
@@ -837,8 +821,8 @@ public partial class PaymentsClient
     /// await client.Payments.ReverseAsync(
     ///     new PaymentReversal
     ///     {
-    ///         PaymentId = "M2MJOG6O2Y",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         PaymentId = "paymentId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Amount = 4999,
     ///     }
     /// );
@@ -946,23 +930,23 @@ public partial class PaymentsClient
     /// <summary>
     /// Use this method to refund a payment that is in a closed batch.
     ///
-    /// To refund a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+    /// To refund a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](https://docs.payroc.com/api/schema/payments/create) method.
     ///
-    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+    /// **Note:** If you don't have the paymentId, use our [List Payments](https://docs.payroc.com/api/schema/payments/list) method to search for the payment.
     ///
     /// If your refund is successful, our gateway returns the payment amount to the cardholder's account.
     ///
     /// **Things to consider**
     ///
     /// - If the merchant refunds a payment that is in an open batch, our gateway reverses the payment.
-    /// - Some merchants can run unreferenced refunds, which means that they don't need a paymentId to return an amount to a customer. For more information about how to run an unreferenced refund, go to [Create Refund](/api/schema/payments/refunds/create).
+    /// - Some merchants can run unreferenced refunds, which means that they don't need a paymentId to return an amount to a customer. For more information about how to run an unreferenced refund, go to [Create Refund](https://docs.payroc.com/api/schema/payments/refunds/create).
     /// </summary>
     /// <example><code>
     /// await client.Payments.RefundAsync(
     ///     new ReferencedRefund
     ///     {
-    ///         PaymentId = "M2MJOG6O2Y",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         PaymentId = "paymentId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Amount = 4999,
     ///         Description = "Refund for order OrderRef6543",
     ///     }

@@ -63,7 +63,9 @@ public class RetrieveTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-terminals/1234001/payment-plans/PlanRef8765")
+                    .WithPath(
+                        "/processing-terminals/processingTerminalId/payment-plans/paymentPlanId"
+                    )
                     .UsingGet()
             )
             .RespondWith(
@@ -76,8 +78,8 @@ public class RetrieveTest : BaseMockServerTest
         var response = await Client.Payments.PaymentPlans.RetrieveAsync(
             new RetrievePaymentPlansRequest
             {
-                ProcessingTerminalId = "1234001",
-                PaymentPlanId = "PlanRef8765",
+                ProcessingTerminalId = "processingTerminalId",
+                PaymentPlanId = "paymentPlanId",
             }
         );
         Assert.That(

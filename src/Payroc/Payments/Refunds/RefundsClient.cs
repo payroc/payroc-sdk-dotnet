@@ -16,9 +16,9 @@ public partial class RefundsClient
     }
 
     /// <summary>
-    /// Use this method to return a [paginated](/api/pagination) list of refunds.
+    /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of refunds.
     ///
-    /// **Note:** If you want to view a specific refund and you have its refundId, use our [Retrieve Refund](/api/schema/payments/refunds/get) method.
+    /// **Note:** If you want to view a specific refund and you have its refundId, use our [Retrieve Refund](https://docs.payroc.com/api/schema/payments/refunds/retrieve) method.
     ///
     /// Use query parameters to filter the list of results that we return, for example, to search for refunds for a customer, a tender type, or a date range.
     /// Our gateway returns the following information about each refund in the list:
@@ -29,22 +29,7 @@ public partial class RefundsClient
     /// For referenced refunds, our gateway also returns details about the payment that the refund is linked to.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.Refunds.ListAsync(
-    ///     new ListRefundsRequest
-    ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         OrderId = "OrderRef6543",
-    ///         Operator = "Jane",
-    ///         CardholderName = "Sarah%20Hazel%20Hopper",
-    ///         First6 = "453985",
-    ///         Last4 = "7062",
-    ///         DateFrom = new DateTime(2024, 07, 01, 15, 30, 00, 000),
-    ///         DateTo = new DateTime(2024, 07, 03, 15, 30, 00, 000),
-    ///         SettlementDate = new DateOnly(2024, 7, 2),
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///     }
-    /// );
+    /// await client.Payments.Refunds.ListAsync(new ListRefundsRequest());
     /// </code></example>
     public async Task<PayrocPager<Refund>> ListAsync(
         ListRefundsRequest request,
@@ -202,15 +187,15 @@ public partial class RefundsClient
     ///
     /// In the response, our gateway returns information about the refund and a refundId, which you need for the following methods:
     ///
-    /// - [Retrieve refund](/api/schema/payments/refunds/get) - View the details of the refund.
-    /// - [Adjust refund](/api/schema/payments/refunds/adjust) - Update the details of the refund.
-    /// - [Reverse refund](/api/schema/payments/refunds/reverse) - Cancel the refund if it's in an open batch.
+    /// - [Retrieve refund](https://docs.payroc.com/api/schema/payments/refunds/retrieve) - View the details of the refund.
+    /// - [Adjust refund](https://docs.payroc.com/api/schema/payments/refunds/adjust) - Update the details of the refund.
+    /// - [Reverse refund](https://docs.payroc.com/api/schema/payments/refunds/reverse) - Cancel the refund if it's in an open batch.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Refunds.CreateAsync(
     ///     new UnreferencedRefund
     ///     {
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Channel = UnreferencedRefundChannel.Pos,
     ///         ProcessingTerminalId = "1234001",
     ///         Order = new RefundOrder
@@ -344,9 +329,9 @@ public partial class RefundsClient
     /// <summary>
     /// Use this method to retrieve information about a refund.
     ///
-    /// To retrieve a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/refund) method or the [Create Refund](/api/schema/payments/refunds/create) method.
+    /// To retrieve a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](https://docs.payroc.com/api/schema/payments/refund) method or the [Create Refund](https://docs.payroc.com/api/schema/payments/refunds/create) method.
     ///
-    /// **Note:** If you don't have the refundId, use our [List Refunds](/api/schema/payments/refunds/list) method to search for the refund.
+    /// **Note:** If you don't have the refundId, use our [List Refunds](https://docs.payroc.com/api/schema/payments/refunds/list) method to search for the refund.
     ///
     /// Our gateway returns the following information about the refund:
     /// - Order details, including the refund amount and when we processed the refund.
@@ -356,7 +341,7 @@ public partial class RefundsClient
     /// If the refund is a referenced refund, our gateway also returns details about the payment that the refund is linked to.
     /// </summary>
     /// <example><code>
-    /// await client.Payments.Refunds.RetrieveAsync(new RetrieveRefundsRequest { RefundId = "CD3HN88U9F" });
+    /// await client.Payments.Refunds.RetrieveAsync(new RetrieveRefundsRequest { RefundId = "refundId" });
     /// </code></example>
     public async Task<Refund> RetrieveAsync(
         RetrieveRefundsRequest request,
@@ -444,9 +429,9 @@ public partial class RefundsClient
     /// <summary>
     /// Use this method to adjust a refund in an open batch.
     ///
-    /// To adjust a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/refund) method or the [Create Refund](/api/schema/payments/refunds/create) method.
+    /// To adjust a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](https://docs.payroc.com/api/schema/payments/refund) method or the [Create Refund](https://docs.payroc.com/api/schema/payments/refunds/create) method.
     ///
-    /// **Note:** If you don’t have the refundId, use our [List Refunds](/api/schema/payments/refunds/list) method to search for the refund.
+    /// **Note:** If you don’t have the refundId, use our [List Refunds](https://docs.payroc.com/api/schema/payments/refunds/list) method to search for the refund.
     ///
     /// You can adjust the following details of the refund:
     /// - Customer details, including shipping address and contact information.
@@ -463,8 +448,8 @@ public partial class RefundsClient
     /// await client.Payments.Refunds.AdjustAsync(
     ///     new RefundAdjustment
     ///     {
-    ///         RefundId = "CD3HN88U9F",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         RefundId = "refundId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Operator = "Jane",
     ///         Adjustments = new List&lt;RefundAdjustmentAdjustmentsItem&gt;()
     ///         {
@@ -578,19 +563,15 @@ public partial class RefundsClient
     /// <summary>
     /// Use this method to cancel a refund in an open batch.
     ///
-    /// To cancel a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/refund) or [Create Refund](/api/schema/payments/refunds/create) method.
+    /// To cancel a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](https://docs.payroc.com/api/schema/payments/refund) or [Create Refund](https://docs.payroc.com/api/schema/payments/refunds/create) method.
     ///
-    /// **Note:** If you don’t have the refundId, use our [List Refunds](/api/schema/payments/refunds/list) method to search for the refund.
+    /// **Note:** If you don’t have the refundId, use our [List Refunds](https://docs.payroc.com/api/schema/payments/refunds/list) method to search for the refund.
     ///
     /// If your request is successful, the gateway removes the refund from the merchant’s open batch and no funds are returned to the cardholder’s account.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Refunds.ReverseAsync(
-    ///     new ReverseRefundsRequest
-    ///     {
-    ///         RefundId = "CD3HN88U9F",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-    ///     }
+    ///     new ReverseRefundsRequest { RefundId = "refundId", IdempotencyKey = "Idempotency-Key" }
     /// );
     /// </code></example>
     public async Task<Refund> ReverseAsync(

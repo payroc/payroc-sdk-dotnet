@@ -52,7 +52,7 @@ public class DeactivateTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/payment-links/JZURRJBUPS/deactivate")
+                    .WithPath("/payment-links/paymentLinkId/deactivate")
                     .UsingPost()
             )
             .RespondWith(
@@ -63,7 +63,7 @@ public class DeactivateTest : BaseMockServerTest
             );
 
         var response = await Client.Payments.PaymentLinks.DeactivateAsync(
-            new DeactivatePaymentLinksRequest { PaymentLinkId = "JZURRJBUPS" }
+            new DeactivatePaymentLinksRequest { PaymentLinkId = "paymentLinkId" }
         );
         Assert.That(
             response,
