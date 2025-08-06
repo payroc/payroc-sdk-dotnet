@@ -9,7 +9,7 @@ components:
     processingAccountId:
       name: processingAccountId
       in: path
-      description: Unique identifier of the processing account.
+      description: Unique identifier that we assigned to the processing account.
       required: true
       schema:
         type: string
