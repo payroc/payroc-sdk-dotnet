@@ -50,7 +50,7 @@ components:
         properties:
           data:
             type: array
-            description: An array of processing terminal objects.
+            description: Array of processing terminal objects.
             items:
               $ref: '#/components/schemas/processingTerminal'
 
@@ -59,7 +59,7 @@ components:
       properties:
         processingTerminalId:
           type: string
-          description: Unique identifier that our gateway assigned to the terminal.
+          description: Unique identifier that we assigned to the processing terminal.
           example: '011234001'
         status:
           type: string
@@ -120,6 +120,7 @@ components:
           description: Object that contains the feature settings for the terminal.
           properties:
             tips:
+              description: Object that contains the tip settings for the processing terminal.  
               discriminator:
                 propertyName: enabled
                 mapping:
@@ -255,6 +256,7 @@ components:
               description: Indicates if the terminal can send receipts by text message.
         devices:
           type: array
+          description: Array of device objects. Each object contains information about a device using the processing terminal's configuration.
           items:
             type: object
             description: Object that contains the details of the device.
