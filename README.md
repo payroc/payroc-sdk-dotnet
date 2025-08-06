@@ -18,7 +18,9 @@ Instantiate and use the client with the following:
 using Payroc.Payments;
 using Payroc;
 
-var client = new PayrocClient("CLIENT_ID", "CLIENT_SECRET");
+var apiKey = Environment.GetEnvironmentVariable("PAYROC_API_KEY")
+    ?? throw new Exception("Payroc API Key not found");
+var client = new PayrocClient(apiKey);
 await client.Payments.CreateAsync(
     new PaymentRequest
     {
@@ -117,7 +119,9 @@ List endpoints are paginated. The SDK provides an async enumerable so that you c
 using Payroc.Payments;
 using Payroc;
 
-var client = new PayrocClient("CLIENT_ID", "CLIENT_SECRET");
+var apiKey = Environment.GetEnvironmentVariable("PAYROC_API_KEY")
+    ?? throw new Exception("Payroc API Key not found");
+var client = new PayrocClient(apiKey);
 var pager = await client.Payments.ListAsync(
     new ListPaymentsRequest
     {
