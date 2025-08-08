@@ -198,8 +198,16 @@ paths:
     post:
       summary: Create terminal order
       description: |
-       Use this method to order and configure terminals for a processing account. When you create an order, you specify the gateway settings, device settings, and application settings for the terminals. 
-       **Note**: You need the ID of the merchant's processing account before you can create an order. If you don't know the processingAccountId, go to [Retrieve a Merchant Platform.](#getMerchantAcccounts)
+       Use this method to order and configure terminals for a processing account.  
+       
+       **Note**: You need the ID of the processing account before you can create an order. If you don't know the processingAccountId, go to the [Retrieve a Merchant Platform](https://docs.payroc.com/api/schema/boarding/merchant-platforms/retrieve) method.  
+
+       In the request, specify the gateway settings, device settings, and application settings for the terminal.  
+
+       In the response, our gateway returns information about the terminal order including its status and terminalOrderId that you can use to [retrieve the terminal order](https://docs.payroc.com/api/schema/boarding/terminal-orders/retrieve).  
+
+       **Note**: You can subscribe to the terminalOrder.status.changed event to get notifications when we update the status of a terminal order. For more information about how to subscribe to events, go to [Events Subscriptions](https://docs.payroc.com/guides/integrate/event-subscriptions).  
+       
       operationId: createTerminalOrder
       tags:
         - Processing accounts
