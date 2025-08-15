@@ -19,10 +19,11 @@ components:
   schemas:
     processingTerminalSummary:
       type: object
+      description: Object that contains information about the processing terminal.
       properties:
         processingTerminalId:
           type: string
-          description: Unique identifier of the processing terminal.
+          description: Unique identifier that we assigned to the processing terminal.
         link:
           required:
           - href
@@ -32,11 +33,14 @@ components:
           properties:
             href:
               type: string
+              description: URL of the target resource.
             rel:
               type: string
+              description: Indicates the relationship between the current resource and the target resource.
             method:
               type: string
-          description: Array of links related to your request. For more information about HATEOAS, go to [Hypermedia as the engine of application state.](https://docs.payroc.com/knowledge/basic-concepts/hypermedia-as-the-engine-of-application-state-hateoas).
+              description: HTTP method that you need to use with the target resource.
+          description: Array of links related to your request. For more information about HATEOAS, go to [Hypermedia as the engine of application state](https://docs.payroc.com/knowledge/basic-concepts/hypermedia-as-the-engine-of-application-state-hateoas).
       required:
         - processingTerminalId
         - link
@@ -316,9 +320,10 @@ components:
           example: '0123451001'
         processingAccountId:
           type: string
-          description: Unique identifier of the processing account.
+          description: Unique identifier that we assigned to the processing account. 
           example: '23451'
-        configuration:    
+        configuration: 
+          description: Object that contains the host processor configuration.    
           discriminator:
             propertyName: processor
             mapping:
