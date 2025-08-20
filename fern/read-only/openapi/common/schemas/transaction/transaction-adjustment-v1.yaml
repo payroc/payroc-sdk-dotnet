@@ -86,7 +86,6 @@ components:
           enum:
             - ready
             - pending
-            - declined
           example: ready
 
     customerAdjustment:

@@ -70,10 +70,11 @@ paths:
     get:
       tags:
       - Processing terminals
-      summary: Retrieve processing terminal's host processor configuration
+      summary: Retrieve host processor configuration
       description: |
-        Use this method to retrieve the host configuration of a processing terminal. You need this information to connect a third-party gateway to a merchant account.
-        > **Note**: If you need information about a merchant or a list of processing accounts associated with a merchant's account, go to [Retrieve Merchant Platform](#getMerchantAcccounts).
+        Use this method to retrieve the host processor configuration of a processing terminal. Integrate with this method only if you use your own gateway and want to validate the processor configuration.  
+        
+        Our gateway returns the configuration settings for the merchant and the payment terminal.
       operationId: getProcessingTerminalHostConfiguration
       parameters:
       - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
