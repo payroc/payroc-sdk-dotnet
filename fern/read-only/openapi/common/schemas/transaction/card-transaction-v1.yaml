@@ -47,10 +47,8 @@ components:
 
     transactionResult:
       required:
-        - type
         - status
         - responseCode
-        - responseMessage
       type: object
       properties:
         type:
