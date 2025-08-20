@@ -24,6 +24,7 @@ components:
           status: ready
           responseCode: A
           responseMessage: APPROVAL
+          processorResponseCode: '00'
 
     cardBalanceResponse:
       summary: Card Balance

@@ -1551,6 +1551,7 @@ components:
       description: Object that contains the fees for ACH transactions.
       properties:
         fees:
+          description: Object that contains processing fees for ACH transactions. 
           type: object
           properties:
             transaction: 
