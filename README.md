@@ -222,7 +222,7 @@ foreach (var contactMethod in owners.ContactMethods)
     }
 
     // How to use the `Match ()` function to handle different types:
-    var valueOnlyIfItIsPhoneOrMobile = contactMethod.Match(
+    var formattedValue = contactMethod.Match(
         onEmail: email => $"Email: {email.Value}",
         onPhone: phone => $"Phone: {phone.Value}",
         onMobile: mobile => $"Mobile: {mobile.Value}",
