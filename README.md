@@ -12,15 +12,26 @@ dotnet add package Payroc
 
 ## Usage
 
+### API Key
+
+You need to provide your API Key to the `PayrocClient` constructor. In this example we read it from an environment variable named `PAYROC_API_KEY`. In your own code you should consider security and compliance best practices, likely retrieving this value from a secure vault on demand.
+
+### PayrocClient
+
 Instantiate and use the client with the following:
 
 ```csharp
-using Payroc.Payments;
 using Payroc;
 
-var apiKey = Environment.GetEnvironmentVariable("PAYROC_API_KEY")
-    ?? throw new Exception("Payroc API Key not found");
+var apiKey = Environment.GetEnvironmentVariable("PAYROC_API_KEY") ?? throw new Exception("Payroc API Key not found");
 var client = new PayrocClient(apiKey);
+```
+
+Then you can access the various API endpoints through the `client` object. For example, to create a payment:
+
+```csharp
+using Payroc.Payments;
+
 await client.Payments.CreateAsync(
     new PaymentRequest
     {
@@ -111,6 +122,11 @@ catch (PayrocApiException e)
 }
 ```
 
+## Logging
+
+> [!WARNING]  
+> Be careful when configuring your logging not to log the headers of outbound HTTP requests, lest you leak an API key or access token.
+
 ## Pagination
 
 List endpoints are paginated. The SDK provides an async enumerable so that you can simply loop over the items:
@@ -143,6 +159,85 @@ await foreach (var item in pager)
 {
     // do something with item
 }
+```
+
+## Polymorphic Types
+
+Our API makes frequent use of polymorphic data structures. This is when a value might be one of multiple types, and the type is determined at runtime. For example, a contact method can be one of several methods, such as `Email` or `Fax`. The SDK provides a way to handle this using the `OneOf` library, as well as some helper methods.
+
+### Creating Polymorphic Data
+
+Normally, when something has a single type, we simply use the constructor. We can also use var to avoid specifying the receiving type. For example:
+
+```csharp
+var address = new Address()
+{
+    // ...
+};
+```
+
+Since C# 9 / .Net 5, we can use "target-typed expressions" to simplify it as just `new()`, omitting the name of the `Address` type, albeit specifying `Address` at the beginning to specify the type:
+
+```csharp
+Address address = new()
+{
+    // ...
+};
+```
+
+However, when dealing with polymorphic types, we need to specify which type we are using, so can no longer use "target-typed expressions". We provide a helper factory method on each polymorphic type to help achieve this cleanly.
+
+The `ContactMethod` type has a method for each possible polymorphic variant, such as `ContactMethod.Email()`, `ContactMethod.Fax()` etc.
+
+This can look as simple as:
+
+```csharp
+var a = new ContactMethod.Email(new() { Value = "jane.doe@example.com" });
+var b = new ContactMethod.Fax(new() { Value = "2025550110" });
+```
+
+Note the use of both `var` and the `new()` expression to create the inner object, which is a `ContactMethodEmail` in this case. This is a common pattern in the SDK to keep the code clean and readable.
+
+So to summarize, when you're looking to create a polymorpohic instance, you should start by locating the factory method for the type you're after, and then in that constructor, can use the "target-typed expression" to automatically select the correct inner variant type for you. This pattern will keep your code clean from unnecessary boilerplate / noise.
+
+### Handling Polymorphic Data
+
+Let's look at an example of how we can interact with polymorphic types in SDK responses:
+
+```csharp
+
+var owners = await client.Boarding.Owners.RetrieveAsync(new() { OwnerId = 4564 });
+
+foreach (var contactMethod in owners.ContactMethods)
+{
+    // How to read common properties regardless of type
+    Console.WriteLine($"Contact Method: {contactMethod.Type} - {contactMethod.Value}");
+
+    // How to check if the contact method is a particular type, and then extract the specific, inner type
+    if (contactMethod.IsEmail)
+    {
+        var email = contactMethod.AsEmail();
+
+        // If email had type-specific properties, you could access them on this instance, e.g. email.SomeTypeSpecificProperty
+    }
+
+    // How to use the `Match ()` function to handle different types:
+    var valueOnlyIfItIsPhoneOrMobile = contactMethod.Match(
+        onEmail: email => $"Email: {email.Value}",
+        onPhone: phone => $"Phone: {phone.Value}",
+        onMobile: mobile => $"Mobile: {mobile.Value}",
+        onFax: fax => $"Fax: {fax.Value}",
+        onUnknown_: (typeName, value) => "Unknown contact method type"
+    );
+
+    // How to use `Visit()` to apply different actions based on different types:
+    contactMethod.Visit(
+        onEmail: email => someService.SendWelcomeEmail(email.Value),
+        onPhone: phone => { },
+        onMobile: mobile => { },
+        onFax: fax => someService.SendWelcomeFax(fax.Value),
+        onUnknown_: (typeName, value) => { }
+    );
 ```
 
 ## Advanced
