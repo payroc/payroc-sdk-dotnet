@@ -35,7 +35,7 @@ paths:
         - [Pay Manual Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/pay) - Manually collect a payment for the subscription.
 
         The request includes the following settings:
-        - **paymentPlanId** - Unique identifier of the payment plan that the merchant wants to use.
+        - **paymentPlanId** - Unique identifier of the payment plan that the merchant wants to use. If you don't have the paymentPlanId, use our [List Payment Plans](https://docs.payroc.com/api/schema/payments/payment-plans/list) method to search for the payment plan.
         - **paymentMethod** - Object that contains information about the secure token, which represents the customer's card details or bank account details.
         - **startDate** - Date that you want to start to take payments.
 

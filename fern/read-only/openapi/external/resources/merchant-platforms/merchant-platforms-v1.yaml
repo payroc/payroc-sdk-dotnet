@@ -209,6 +209,8 @@ paths:
 
         Use the query parameters to filter the list of results that we return, for example, to search for only closed processing accounts.  
 
+        To list the processing accounts for a merchant platform, you need its merchantPlatformId. If you don't have the merchantPlatformId, use our [List Merchant Platforms](https://docs.payroc.com/api/schema/boarding/merchant-platforms/list) method to search for the merchant platform.
+
         Our gateway returns the following information about eahc processing account in the list:  
         - Business details, including its status, time zone, and address.  
         - Owners' details, including their contact details.  
