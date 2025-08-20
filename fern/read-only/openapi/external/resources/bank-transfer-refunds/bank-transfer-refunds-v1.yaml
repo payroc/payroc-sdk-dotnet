@@ -357,6 +357,8 @@ components:
           example: 52d9b7f7-3b39-4cd6-9acb-1050f8593ec6
         order:
           $ref: "#/components/schemas/bankTransferRefundOrder"
+        customer:
+          $ref: "../bank-transfer-payments/bank-transfer-payments-v1.yaml#/components/schemas/bankTransferCustomer"
         refundMethod:
           description: Object that contains information about how the merchant refunds the customer. 
           type: object
