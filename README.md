@@ -213,12 +213,14 @@ foreach (var contactMethod in owners.ContactMethods)
     // How to read common properties regardless of type
     Console.WriteLine($"Contact Method: {contactMethod.Type} - {contactMethod.Value}");
 
-    // How to check if the contact method is a particular type, and then extract the specific, inner type
+    // How to check if the contact method is a particular type,
+    // and then extract the specific, inner type
     if (contactMethod.IsEmail)
     {
         var email = contactMethod.AsEmail();
 
-        // If email had type-specific properties, you could access them on this instance, e.g. email.SomeTypeSpecificProperty
+        // If email had type-specific properties, you could access them on this instance,
+        // e.g. email.SomeTypeSpecificProperty
     }
 
     // How to use the `Match ()` function to handle different types:
