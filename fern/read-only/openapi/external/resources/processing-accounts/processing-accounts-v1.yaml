@@ -35,7 +35,7 @@ paths:
         -	Funding information, including funding schedules, funding fees, and details for the merchant’s funding accounts.  
         -	Pricing information, including [HATEOAS](https://docs.payroc.com/knowledge/basic-concepts/hypermedia-as-the-engine-of-application-state-hateoas) links to retrieve the pricing program for the processing account.  
 
-      operationId: getProcessingAcccounts
+      operationId: getProcessingAccounts
       parameters:
       - $ref: './parameters-v1.yaml#/components/parameters/processingAccountId'
       responses:
