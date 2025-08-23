@@ -20,12 +20,7 @@ public partial class FundingActivityClient
     /// </summary>
     /// <example><code>
     /// await client.Funding.FundingActivity.RetrieveBalanceAsync(
-    ///     new RetrieveBalanceFundingActivityRequest
-    ///     {
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///         MerchantId = "4525644354",
-    ///     }
+    ///     new RetrieveBalanceFundingActivityRequest()
     /// );
     /// </code></example>
     public async Task<RetrieveBalanceFundingActivityResponse> RetrieveBalanceAsync(
@@ -131,11 +126,8 @@ public partial class FundingActivityClient
     /// await client.Funding.FundingActivity.ListAsync(
     ///     new ListFundingActivityRequest
     ///     {
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///         DateFrom = new DateOnly(2024, 7, 2),
-    ///         DateTo = new DateOnly(2024, 7, 3),
-    ///         MerchantId = "4525644354",
+    ///         DateFrom = new DateOnly(2023, 1, 15),
+    ///         DateTo = new DateOnly(2023, 1, 15),
     ///     }
     /// );
     /// </code></example>

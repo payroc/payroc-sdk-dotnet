@@ -28,8 +28,8 @@ public partial class SingleUseTokensClient
     /// await client.Payments.SingleUseTokens.CreateAsync(
     ///     new SingleUseTokenRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Channel = SingleUseTokenRequestChannel.Web,
     ///         Operator = "Jane",
     ///         Source = new SingleUseTokenRequestSource(

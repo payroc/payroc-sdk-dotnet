@@ -132,7 +132,7 @@ public class RetrieveTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/bank-transfer-payments/M2MJOG6O2Y")
+                    .WithPath("/bank-transfer-payments/paymentId")
                     .UsingGet()
             )
             .RespondWith(
@@ -143,7 +143,7 @@ public class RetrieveTest : BaseMockServerTest
             );
 
         var response = await Client.Payments.BankTransferPayments.RetrieveAsync(
-            new RetrieveBankTransferPaymentsRequest { PaymentId = "M2MJOG6O2Y" }
+            new RetrieveBankTransferPaymentsRequest { PaymentId = "paymentId" }
         );
         Assert.That(
             response,

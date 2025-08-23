@@ -27,8 +27,8 @@ public partial class RefundInstructionsClient
     /// await client.PayrocCloud.RefundInstructions.SubmitAsync(
     ///     new RefundInstructionRequest
     ///     {
-    ///         SerialNumber = "1850010868",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         SerialNumber = "serialNumber",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Operator = "Jane",
     ///         ProcessingTerminalId = "1234001",
     ///         Order = new RefundInstructionOrder
@@ -150,10 +150,7 @@ public partial class RefundInstructionsClient
     /// </summary>
     /// <example><code>
     /// await client.PayrocCloud.RefundInstructions.RetrieveAsync(
-    ///     new RetrieveRefundInstructionsRequest
-    ///     {
-    ///         RefundInstructionId = "a37439165d134678a9100ebba3b29597",
-    ///     }
+    ///     new RetrieveRefundInstructionsRequest { RefundInstructionId = "refundInstructionId" }
     /// );
     /// </code></example>
     public async Task<RefundInstruction> RetrieveAsync(

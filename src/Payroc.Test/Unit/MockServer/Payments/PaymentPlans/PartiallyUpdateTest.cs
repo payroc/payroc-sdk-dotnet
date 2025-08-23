@@ -80,8 +80,10 @@ public class PartiallyUpdateTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-terminals/1234001/payment-plans/PlanRef8765")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath(
+                        "/processing-terminals/processingTerminalId/payment-plans/paymentPlanId"
+                    )
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPatch()
                     .WithBodyAsJson(requestJson)
@@ -96,9 +98,9 @@ public class PartiallyUpdateTest : BaseMockServerTest
         var response = await Client.Payments.PaymentPlans.PartiallyUpdateAsync(
             new PartiallyUpdatePaymentPlansRequest
             {
-                ProcessingTerminalId = "1234001",
-                PaymentPlanId = "PlanRef8765",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                ProcessingTerminalId = "processingTerminalId",
+                PaymentPlanId = "paymentPlanId",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new List<PatchDocument>()
                 {
                     new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
@@ -197,8 +199,10 @@ public class PartiallyUpdateTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-terminals/1234001/payment-plans/PlanRef8765")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath(
+                        "/processing-terminals/processingTerminalId/payment-plans/paymentPlanId"
+                    )
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPatch()
                     .WithBodyAsJson(requestJson)
@@ -213,9 +217,9 @@ public class PartiallyUpdateTest : BaseMockServerTest
         var response = await Client.Payments.PaymentPlans.PartiallyUpdateAsync(
             new PartiallyUpdatePaymentPlansRequest
             {
-                ProcessingTerminalId = "1234001",
-                PaymentPlanId = "PlanRef8765",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                ProcessingTerminalId = "processingTerminalId",
+                PaymentPlanId = "paymentPlanId",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new List<PatchDocument>()
                 {
                     new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),

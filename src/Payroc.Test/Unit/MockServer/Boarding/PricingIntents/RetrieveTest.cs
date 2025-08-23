@@ -102,7 +102,10 @@ public class RetrieveTest : BaseMockServerTest
 
         Server
             .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("/pricing-intents/5").UsingGet()
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/pricing-intents/pricingIntentId")
+                    .UsingGet()
             )
             .RespondWith(
                 WireMock
@@ -112,7 +115,7 @@ public class RetrieveTest : BaseMockServerTest
             );
 
         var response = await Client.Boarding.PricingIntents.RetrieveAsync(
-            new RetrievePricingIntentsRequest { PricingIntentId = "5" }
+            new RetrievePricingIntentsRequest { PricingIntentId = "pricingIntentId" }
         );
         Assert.That(
             response,

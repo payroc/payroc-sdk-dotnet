@@ -93,9 +93,7 @@ public class ListContactsTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-accounts/38765/contacts")
-                    .WithParam("before", "2571")
-                    .WithParam("after", "8516")
+                    .WithPath("/processing-accounts/processingAccountId/contacts")
                     .UsingGet()
             )
             .RespondWith(
@@ -108,9 +106,7 @@ public class ListContactsTest : BaseMockServerTest
         var response = await Client.Boarding.ProcessingAccounts.ListContactsAsync(
             new ListContactsProcessingAccountsRequest
             {
-                ProcessingAccountId = "38765",
-                Before = "2571",
-                After = "8516",
+                ProcessingAccountId = "processingAccountId",
             }
         );
         Assert.That(
@@ -167,9 +163,7 @@ public class ListContactsTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-accounts/38765/contacts")
-                    .WithParam("before", "2571")
-                    .WithParam("after", "8516")
+                    .WithPath("/processing-accounts/processingAccountId/contacts")
                     .UsingGet()
             )
             .RespondWith(
@@ -182,9 +176,7 @@ public class ListContactsTest : BaseMockServerTest
         var response = await Client.Boarding.ProcessingAccounts.ListContactsAsync(
             new ListContactsProcessingAccountsRequest
             {
-                ProcessingAccountId = "38765",
-                Before = "2571",
-                After = "8516",
+                ProcessingAccountId = "processingAccountId",
             }
         );
         Assert.That(

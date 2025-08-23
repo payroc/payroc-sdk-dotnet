@@ -20,13 +20,7 @@ public partial class SettlementClient
     /// </summary>
     /// <example><code>
     /// await client.Reporting.Settlement.ListBatchesAsync(
-    ///     new ListReportingSettlementBatchesRequest
-    ///     {
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///         Date = new DateOnly(2027, 7, 2),
-    ///         MerchantId = "4525644354",
-    ///     }
+    ///     new ListReportingSettlementBatchesRequest { Date = new DateOnly(2023, 1, 15) }
     /// );
     /// </code></example>
     public async Task<PayrocPager<Batch>> ListBatchesAsync(
@@ -230,14 +224,7 @@ public partial class SettlementClient
     /// </summary>
     /// <example><code>
     /// await client.Reporting.Settlement.ListTransactionsAsync(
-    ///     new ListReportingSettlementTransactionsRequest
-    ///     {
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///         Date = new DateOnly(2024, 7, 1),
-    ///         BatchId = 1,
-    ///         MerchantId = "4525644354",
-    ///     }
+    ///     new ListReportingSettlementTransactionsRequest { Date = new DateOnly(2023, 1, 15), BatchId = 1 }
     /// );
     /// </code></example>
     public async Task<PayrocPager<Transaction>> ListTransactionsAsync(
@@ -448,11 +435,8 @@ public partial class SettlementClient
     /// await client.Reporting.Settlement.ListAuthorizationsAsync(
     ///     new ListReportingSettlementAuthorizationsRequest
     ///     {
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///         Date = new DateOnly(2024, 7, 1),
+    ///         Date = new DateOnly(2023, 1, 15),
     ///         BatchId = 1,
-    ///         MerchantId = "4525644354",
     ///     }
     /// );
     /// </code></example>
@@ -658,13 +642,7 @@ public partial class SettlementClient
     /// </summary>
     /// <example><code>
     /// await client.Reporting.Settlement.ListDisputesAsync(
-    ///     new ListReportingSettlementDisputesRequest
-    ///     {
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///         Date = new DateOnly(2024, 7, 2),
-    ///         MerchantId = "4525644354",
-    ///     }
+    ///     new ListReportingSettlementDisputesRequest { Date = new DateOnly(2023, 1, 15) }
     /// );
     /// </code></example>
     public async Task<PayrocPager<Dispute>> ListDisputesAsync(
@@ -868,13 +846,7 @@ public partial class SettlementClient
     /// </summary>
     /// <example><code>
     /// await client.Reporting.Settlement.ListAchDepositsAsync(
-    ///     new ListReportingSettlementAchDepositsRequest
-    ///     {
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///         Date = new DateOnly(2024, 7, 2),
-    ///         MerchantId = "4525644354",
-    ///     }
+    ///     new ListReportingSettlementAchDepositsRequest { Date = new DateOnly(2024, 7, 2) }
     /// );
     /// </code></example>
     public async Task<PayrocPager<AchDeposit>> ListAchDepositsAsync(
@@ -987,7 +959,7 @@ public partial class SettlementClient
     /// </summary>
     /// <example><code>
     /// await client.Reporting.Settlement.RetrieveAchDepositAsync(
-    ///     new RetrieveAchDepositSettlementRequest { AchDepositId = 99 }
+    ///     new RetrieveAchDepositSettlementRequest { AchDepositId = 1 }
     /// );
     /// </code></example>
     public async Task<AchDeposit> RetrieveAchDepositAsync(
@@ -1080,11 +1052,8 @@ public partial class SettlementClient
     /// await client.Reporting.Settlement.ListAchDepositFeesAsync(
     ///     new ListReportingSettlementAchDepositFeesRequest
     ///     {
-    ///         Before = "2571",
-    ///         After = "8516",
     ///         Date = new DateOnly(2024, 7, 2),
-    ///         AchDepositId = 99,
-    ///         MerchantId = "4525644354",
+    ///         AchDepositId = 1,
     ///     }
     /// );
     /// </code></example>

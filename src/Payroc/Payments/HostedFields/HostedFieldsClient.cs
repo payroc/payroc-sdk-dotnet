@@ -28,8 +28,8 @@ public partial class HostedFieldsClient
     /// await client.Payments.HostedFields.CreateAsync(
     ///     new HostedFieldsCreateSessionRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         LibVersion = "1.1.0.123456",
     ///         Scenario = HostedFieldsCreateSessionRequestScenario.Payment,
     ///     }

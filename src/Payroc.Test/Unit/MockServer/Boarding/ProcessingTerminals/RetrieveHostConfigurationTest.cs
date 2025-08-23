@@ -46,7 +46,7 @@ public class RetrieveHostConfigurationTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-terminals/1234001/host-configurations")
+                    .WithPath("/processing-terminals/processingTerminalId/host-configurations")
                     .UsingGet()
             )
             .RespondWith(
@@ -59,7 +59,7 @@ public class RetrieveHostConfigurationTest : BaseMockServerTest
         var response = await Client.Boarding.ProcessingTerminals.RetrieveHostConfigurationAsync(
             new RetrieveHostConfigurationProcessingTerminalsRequest
             {
-                ProcessingTerminalId = "1234001",
+                ProcessingTerminalId = "processingTerminalId",
             }
         );
         Assert.That(

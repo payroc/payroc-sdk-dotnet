@@ -24,17 +24,7 @@ public partial class PaymentLinksClient
     /// </summary>
     /// <example><code>
     /// await client.Payments.PaymentLinks.ListAsync(
-    ///     new ListPaymentLinksRequest
-    ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         MerchantReference = "LinkRef6543",
-    ///         RecipientName = "Sarah Hazel Hopper",
-    ///         RecipientEmail = "sarah.hopper@example.com",
-    ///         CreatedOn = new DateOnly(2024, 7, 2),
-    ///         ExpiresOn = new DateOnly(2024, 8, 2),
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///     }
+    ///     new ListPaymentLinksRequest { ProcessingTerminalId = "processingTerminalId" }
     /// );
     /// </code></example>
     public async Task<PayrocPager<PaymentLinkPaginatedListDataItem>> ListAsync(
@@ -188,8 +178,8 @@ public partial class PaymentLinksClient
     /// await client.Payments.PaymentLinks.CreateAsync(
     ///     new CreatePaymentLinksRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new CreatePaymentLinksRequestBody(
     ///             new CreatePaymentLinksRequestBody.MultiUse(
     ///                 new MultiUsePaymentLink
@@ -320,7 +310,7 @@ public partial class PaymentLinksClient
     /// </summary>
     /// <example><code>
     /// await client.Payments.PaymentLinks.RetrieveAsync(
-    ///     new RetrievePaymentLinksRequest { PaymentLinkId = "JZURRJBUPS" }
+    ///     new RetrievePaymentLinksRequest { PaymentLinkId = "paymentLinkId" }
     /// );
     /// </code></example>
     public async Task<RetrievePaymentLinksResponse> RetrieveAsync(
@@ -429,8 +419,8 @@ public partial class PaymentLinksClient
     /// await client.Payments.PaymentLinks.PartiallyUpdateAsync(
     ///     new PartiallyUpdatePaymentLinksRequest
     ///     {
-    ///         PaymentLinkId = "JZURRJBUPS",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         PaymentLinkId = "paymentLinkId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new List&lt;PatchDocument&gt;()
     ///         {
     ///             new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
@@ -547,7 +537,7 @@ public partial class PaymentLinksClient
     /// </summary>
     /// <example><code>
     /// await client.Payments.PaymentLinks.DeactivateAsync(
-    ///     new DeactivatePaymentLinksRequest { PaymentLinkId = "JZURRJBUPS" }
+    ///     new DeactivatePaymentLinksRequest { PaymentLinkId = "paymentLinkId" }
     /// );
     /// </code></example>
     public async Task<DeactivatePaymentLinksResponse> DeactivateAsync(

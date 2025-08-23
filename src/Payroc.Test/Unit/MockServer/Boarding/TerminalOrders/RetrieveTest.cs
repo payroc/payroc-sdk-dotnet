@@ -102,7 +102,7 @@ public class RetrieveTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/terminal-orders/12345")
+                    .WithPath("/terminal-orders/terminalOrderId")
                     .UsingGet()
             )
             .RespondWith(
@@ -113,7 +113,7 @@ public class RetrieveTest : BaseMockServerTest
             );
 
         var response = await Client.Boarding.TerminalOrders.RetrieveAsync(
-            new RetrieveTerminalOrdersRequest { TerminalOrderId = "12345" }
+            new RetrieveTerminalOrdersRequest { TerminalOrderId = "terminalOrderId" }
         );
         Assert.That(
             response,

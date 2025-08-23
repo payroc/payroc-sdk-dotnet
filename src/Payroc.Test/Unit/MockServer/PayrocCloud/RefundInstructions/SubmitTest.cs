@@ -46,8 +46,8 @@ public class SubmitTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/devices/1850010868/refund-instructions")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/devices/serialNumber/refund-instructions")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -62,8 +62,8 @@ public class SubmitTest : BaseMockServerTest
         var response = await Client.PayrocCloud.RefundInstructions.SubmitAsync(
             new RefundInstructionRequest
             {
-                SerialNumber = "1850010868",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                SerialNumber = "serialNumber",
+                IdempotencyKey = "Idempotency-Key",
                 Operator = "Jane",
                 ProcessingTerminalId = "1234001",
                 Order = new RefundInstructionOrder

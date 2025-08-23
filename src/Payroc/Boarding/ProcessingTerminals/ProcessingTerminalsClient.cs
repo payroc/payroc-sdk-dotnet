@@ -33,7 +33,7 @@ public partial class ProcessingTerminalsClient
     /// </summary>
     /// <example><code>
     /// await client.Boarding.ProcessingTerminals.RetrieveAsync(
-    ///     new RetrieveProcessingTerminalsRequest { ProcessingTerminalId = "1234001" }
+    ///     new RetrieveProcessingTerminalsRequest { ProcessingTerminalId = "processingTerminalId" }
     /// );
     /// </code></example>
     public async Task<ProcessingTerminal> RetrieveAsync(
@@ -126,7 +126,10 @@ public partial class ProcessingTerminalsClient
     /// </summary>
     /// <example><code>
     /// await client.Boarding.ProcessingTerminals.RetrieveHostConfigurationAsync(
-    ///     new RetrieveHostConfigurationProcessingTerminalsRequest { ProcessingTerminalId = "1234001" }
+    ///     new RetrieveHostConfigurationProcessingTerminalsRequest
+    ///     {
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///     }
     /// );
     /// </code></example>
     public async Task<HostConfiguration> RetrieveHostConfigurationAsync(

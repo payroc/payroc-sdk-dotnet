@@ -150,7 +150,7 @@ public class CreateTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/pricing-intents")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -165,7 +165,7 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.Boarding.PricingIntents.CreateAsync(
             new CreatePricingIntentsRequest
             {
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new PricingIntent50
                 {
                     Country = "US",
@@ -382,7 +382,7 @@ public class CreateTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/pricing-intents")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -397,7 +397,7 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.Boarding.PricingIntents.CreateAsync(
             new CreatePricingIntentsRequest
             {
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new PricingIntent50
                 {
                     Country = "US",
@@ -642,7 +642,7 @@ public class CreateTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/pricing-intents")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -657,7 +657,7 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.Boarding.PricingIntents.CreateAsync(
             new CreatePricingIntentsRequest
             {
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new PricingIntent50
                 {
                     Country = "US",
@@ -913,7 +913,7 @@ public class CreateTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/pricing-intents")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -928,7 +928,7 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.Boarding.PricingIntents.CreateAsync(
             new CreatePricingIntentsRequest
             {
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new PricingIntent50
                 {
                     Country = "US",
@@ -1187,7 +1187,7 @@ public class CreateTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/pricing-intents")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -1202,7 +1202,7 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.Boarding.PricingIntents.CreateAsync(
             new CreatePricingIntentsRequest
             {
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new PricingIntent50
                 {
                     Country = "US",
@@ -1436,7 +1436,7 @@ public class CreateTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/pricing-intents")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -1451,7 +1451,7 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.Boarding.PricingIntents.CreateAsync(
             new CreatePricingIntentsRequest
             {
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new PricingIntent50
                 {
                     Country = "US",
@@ -1649,7 +1649,7 @@ public class CreateTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/pricing-intents")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -1664,7 +1664,7 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.Boarding.PricingIntents.CreateAsync(
             new CreatePricingIntentsRequest
             {
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new PricingIntent50
                 {
                     Country = "US",
@@ -1870,7 +1870,7 @@ public class CreateTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/pricing-intents")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -1885,7 +1885,7 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.Boarding.PricingIntents.CreateAsync(
             new CreatePricingIntentsRequest
             {
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new PricingIntent50
                 {
                     Country = "US",

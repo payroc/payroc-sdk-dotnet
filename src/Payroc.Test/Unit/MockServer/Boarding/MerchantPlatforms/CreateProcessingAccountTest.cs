@@ -330,9 +330,9 @@ public class CreateProcessingAccountTest : BaseMockServerTest
               ],
               "signature": {
                 "link": {
-                  "rel": "agreement",
+                  "rel": "previous",
                   "method": "get",
-                  "href": "https://us.agreementexpress.net/mv2/viewer2.jsp?docId=00000000-0000-0000-0000-000000000000"
+                  "href": "<uri>"
                 },
                 "type": "requestedViaDirectLink"
               },
@@ -353,8 +353,8 @@ public class CreateProcessingAccountTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/merchant-platforms/12345/processing-accounts")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/merchant-platforms/merchantPlatformId/processing-accounts")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -369,8 +369,8 @@ public class CreateProcessingAccountTest : BaseMockServerTest
         var response = await Client.Boarding.MerchantPlatforms.CreateProcessingAccountAsync(
             new CreateProcessingAccountMerchantPlatformsRequest
             {
-                MerchantPlatformId = "12345",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                MerchantPlatformId = "merchantPlatformId",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new CreateProcessingAccount
                 {
                     DoingBusinessAs = "Pizza Doe",

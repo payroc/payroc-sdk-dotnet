@@ -31,18 +31,7 @@ public partial class BankTransferRefundsClient
     /// </summary>
     /// <example><code>
     /// await client.Payments.BankTransferRefunds.ListAsync(
-    ///     new ListBankTransferRefundsRequest
-    ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         OrderId = "OrderRef6543",
-    ///         NameOnAccount = "Sarah%20Hazel%20Hopper",
-    ///         Last4 = "7062",
-    ///         DateFrom = new DateTime(2024, 07, 01, 00, 00, 00, 000),
-    ///         DateTo = new DateTime(2024, 07, 31, 23, 59, 59, 000),
-    ///         SettlementDate = new DateOnly(2024, 7, 15),
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///     }
+    ///     new ListBankTransferRefundsRequest { ProcessingTerminalId = "processingTerminalId" }
     /// );
     /// </code></example>
     public async Task<PayrocPager<BankTransferRefund>> ListAsync(
@@ -194,7 +183,7 @@ public partial class BankTransferRefundsClient
     /// await client.Payments.BankTransferRefunds.CreateAsync(
     ///     new BankTransferUnreferencedRefund
     ///     {
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         ProcessingTerminalId = "1234001",
     ///         Order = new BankTransferRefundOrder
     ///         {
@@ -341,7 +330,7 @@ public partial class BankTransferRefundsClient
     /// </summary>
     /// <example><code>
     /// await client.Payments.BankTransferRefunds.RetrieveAsync(
-    ///     new RetrieveBankTransferRefundsRequest { RefundId = "CD3HN88U9F" }
+    ///     new RetrieveBankTransferRefundsRequest { RefundId = "refundId" }
     /// );
     /// </code></example>
     public async Task<BankTransferRefund> RetrieveAsync(
@@ -440,8 +429,8 @@ public partial class BankTransferRefundsClient
     /// await client.Payments.BankTransferRefunds.ReverseAsync(
     ///     new ReverseBankTransferRefundsRequest
     ///     {
-    ///         RefundId = "CD3HN88U9F",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         RefundId = "refundId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///     }
     /// );
     /// </code></example>

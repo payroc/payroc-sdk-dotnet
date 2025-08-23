@@ -22,7 +22,7 @@ public partial class CardsClient
     /// await client.Payments.Cards.VerifyAsync(
     ///     new CardVerificationRequest
     ///     {
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         ProcessingTerminalId = "1234001",
     ///         Operator = "Jane",
     ///         Card = new CardVerificationRequestCard(

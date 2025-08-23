@@ -20,9 +20,7 @@ public partial class FundingAccountsClient
     /// Retrieve a list of all funding accounts associated with the ISV.
     /// </summary>
     /// <example><code>
-    /// await client.Funding.FundingAccounts.ListAsync(
-    ///     new ListFundingAccountsRequest { Before = "2571", After = "8516" }
-    /// );
+    /// await client.Funding.FundingAccounts.ListAsync(new ListFundingAccountsRequest());
     /// </code></example>
     public async Task<PayrocPager<FundingAccount>> ListAsync(
         ListFundingAccountsRequest request,

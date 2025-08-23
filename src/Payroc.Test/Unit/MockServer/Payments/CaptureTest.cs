@@ -47,7 +47,9 @@ public class CaptureTest : BaseMockServerTest
                   "subtotal": 2899,
                   "cashbackAmount": 0,
                   "tip": {
-                    "type": "percentage"
+                    "type": "percentage",
+                    "amount": 500,
+                    "percentage": 10
                   },
                   "taxes": [
                     {
@@ -242,8 +244,8 @@ public class CaptureTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/payments/M2MJOG6O2Y/capture")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/payments/paymentId/capture")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -258,8 +260,8 @@ public class CaptureTest : BaseMockServerTest
         var response = await Client.Payments.CaptureAsync(
             new PaymentCapture
             {
-                PaymentId = "M2MJOG6O2Y",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                PaymentId = "paymentId",
+                IdempotencyKey = "Idempotency-Key",
                 ProcessingTerminalId = "1234001",
                 Operator = "Jane",
                 Amount = 4999,

@@ -87,8 +87,8 @@ public class ReverseTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/bank-transfer-refunds/CD3HN88U9F/reverse")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/bank-transfer-refunds/refundId/reverse")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .UsingPost()
             )
             .RespondWith(
@@ -101,8 +101,8 @@ public class ReverseTest : BaseMockServerTest
         var response = await Client.Payments.BankTransferRefunds.ReverseAsync(
             new ReverseBankTransferRefundsRequest
             {
-                RefundId = "CD3HN88U9F",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                RefundId = "refundId",
+                IdempotencyKey = "Idempotency-Key",
             }
         );
         Assert.That(

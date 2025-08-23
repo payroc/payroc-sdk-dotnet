@@ -30,7 +30,7 @@ public class RetrieveTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/payment-instructions/e743a9165d134678a9100ebba3b29597")
+                    .WithPath("/payment-instructions/paymentInstructionId")
                     .UsingGet()
             )
             .RespondWith(
@@ -41,10 +41,7 @@ public class RetrieveTest : BaseMockServerTest
             );
 
         var response = await Client.PayrocCloud.PaymentInstructions.RetrieveAsync(
-            new RetrievePaymentInstructionsRequest
-            {
-                PaymentInstructionId = "e743a9165d134678a9100ebba3b29597",
-            }
+            new RetrievePaymentInstructionsRequest { PaymentInstructionId = "paymentInstructionId" }
         );
         Assert.That(
             response,

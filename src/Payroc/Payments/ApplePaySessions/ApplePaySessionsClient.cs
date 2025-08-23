@@ -26,7 +26,7 @@ public partial class ApplePaySessionsClient
     /// await client.Payments.ApplePaySessions.CreateAsync(
     ///     new ApplePaySessions
     ///     {
-    ///         ProcessingTerminalId = "1234001",
+    ///         ProcessingTerminalId = "processingTerminalId",
     ///         AppleDomainId = "DUHDZJHGYY",
     ///         AppleValidationUrl = "https://apple-pay-gateway.apple.com/paymentservices/startSession",
     ///     }

@@ -22,6 +22,15 @@ public class CreateTest : BaseMockServerTest
                 "amount": 4999,
                 "currency": "USD"
               },
+              "customer": {
+                "notificationLanguage": "en",
+                "contactMethods": [
+                  {
+                    "value": "jane.doe@example.com",
+                    "type": "email"
+                  }
+                ]
+              },
               "refundMethod": {
                 "nameOnAccount": "Shara Hazel Hopper",
                 "accountNumber": "1234567890",
@@ -112,7 +121,7 @@ public class CreateTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/bank-transfer-refunds")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -127,7 +136,7 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.Payments.BankTransferRefunds.CreateAsync(
             new BankTransferUnreferencedRefund
             {
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                IdempotencyKey = "Idempotency-Key",
                 ProcessingTerminalId = "1234001",
                 Order = new BankTransferRefundOrder
                 {
@@ -135,6 +144,18 @@ public class CreateTest : BaseMockServerTest
                     Description = "Refund for order OrderRef6543",
                     Amount = 4999,
                     Currency = Currency.Usd,
+                },
+                Customer = new BankTransferCustomer
+                {
+                    NotificationLanguage = BankTransferCustomerNotificationLanguage.En,
+                    ContactMethods = new List<ContactMethod>()
+                    {
+                        new ContactMethod(
+                            new ContactMethod.Email(
+                                new ContactMethodEmail { Value = "jane.doe@example.com" }
+                            )
+                        ),
+                    },
                 },
                 RefundMethod = new BankTransferUnreferencedRefundRefundMethod(
                     new BankTransferUnreferencedRefundRefundMethod.Ach(

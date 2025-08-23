@@ -15,7 +15,7 @@ public class DeleteTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath(
-                        "/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+                        "/processing-terminals/processingTerminalId/secure-tokens/secureTokenId"
                     )
                     .UsingDelete()
             )
@@ -25,8 +25,8 @@ public class DeleteTest : BaseMockServerTest
             await Client.Payments.SecureTokens.DeleteAsync(
                 new DeleteSecureTokensRequest
                 {
-                    ProcessingTerminalId = "1234001",
-                    SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
+                    ProcessingTerminalId = "processingTerminalId",
+                    SecureTokenId = "secureTokenId",
                 }
             )
         );

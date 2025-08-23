@@ -147,7 +147,7 @@ public partial class PricingIntentsClient
     /// await client.Boarding.PricingIntents.CreateAsync(
     ///     new CreatePricingIntentsRequest
     ///     {
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new PricingIntent50
     ///         {
     ///             Country = "US",
@@ -305,7 +305,7 @@ public partial class PricingIntentsClient
     /// </summary>
     /// <example><code>
     /// await client.Boarding.PricingIntents.RetrieveAsync(
-    ///     new RetrievePricingIntentsRequest { PricingIntentId = "5" }
+    ///     new RetrievePricingIntentsRequest { PricingIntentId = "pricingIntentId" }
     /// );
     /// </code></example>
     public async Task<PricingIntent50> RetrieveAsync(
@@ -404,7 +404,7 @@ public partial class PricingIntentsClient
     /// await client.Boarding.PricingIntents.UpdateAsync(
     ///     new UpdatePricingIntentsRequest
     ///     {
-    ///         PricingIntentId = "5",
+    ///         PricingIntentId = "pricingIntentId",
     ///         Body = new PricingIntent50
     ///         {
     ///             Country = "US",
@@ -571,7 +571,7 @@ public partial class PricingIntentsClient
     /// </summary>
     /// <example><code>
     /// await client.Boarding.PricingIntents.DeleteAsync(
-    ///     new DeletePricingIntentsRequest { PricingIntentId = "5" }
+    ///     new DeletePricingIntentsRequest { PricingIntentId = "pricingIntentId" }
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task DeleteAsync(
@@ -659,8 +659,8 @@ public partial class PricingIntentsClient
     /// await client.Boarding.PricingIntents.PartiallyUpdateAsync(
     ///     new PartiallyUpdatePricingIntentsRequest
     ///     {
-    ///         PricingIntentId = "5",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         PricingIntentId = "pricingIntentId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new List&lt;PatchDocument&gt;()
     ///         {
     ///             new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),

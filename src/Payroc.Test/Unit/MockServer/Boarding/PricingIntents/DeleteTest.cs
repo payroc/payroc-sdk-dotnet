@@ -14,14 +14,14 @@ public class DeleteTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/pricing-intents/5")
+                    .WithPath("/pricing-intents/pricingIntentId")
                     .UsingDelete()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(async () =>
             await Client.Boarding.PricingIntents.DeleteAsync(
-                new DeletePricingIntentsRequest { PricingIntentId = "5" }
+                new DeletePricingIntentsRequest { PricingIntentId = "pricingIntentId" }
             )
         );
     }

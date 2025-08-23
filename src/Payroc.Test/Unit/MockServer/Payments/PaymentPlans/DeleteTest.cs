@@ -14,7 +14,9 @@ public class DeleteTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-terminals/1234001/payment-plans/PlanRef8765")
+                    .WithPath(
+                        "/processing-terminals/processingTerminalId/payment-plans/paymentPlanId"
+                    )
                     .UsingDelete()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
@@ -23,8 +25,8 @@ public class DeleteTest : BaseMockServerTest
             await Client.Payments.PaymentPlans.DeleteAsync(
                 new DeletePaymentPlansRequest
                 {
-                    ProcessingTerminalId = "1234001",
-                    PaymentPlanId = "PlanRef8765",
+                    ProcessingTerminalId = "processingTerminalId",
+                    PaymentPlanId = "paymentPlanId",
                 }
             )
         );

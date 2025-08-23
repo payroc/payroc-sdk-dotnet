@@ -139,8 +139,8 @@ public class RefundTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/bank-transfer-payments/M2MJOG6O2Y/refund")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/bank-transfer-payments/paymentId/refund")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -155,8 +155,8 @@ public class RefundTest : BaseMockServerTest
         var response = await Client.Payments.BankTransferPayments.RefundAsync(
             new BankTransferReferencedRefund
             {
-                PaymentId = "M2MJOG6O2Y",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                PaymentId = "paymentId",
+                IdempotencyKey = "Idempotency-Key",
                 Amount = 4999,
                 Description = "amount to refund",
             }

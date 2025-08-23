@@ -50,13 +50,7 @@ public class RetrieveBalanceTest : BaseMockServerTest
 
         Server
             .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/funding-balance")
-                    .WithParam("before", "2571")
-                    .WithParam("after", "8516")
-                    .WithParam("merchantId", "4525644354")
-                    .UsingGet()
+                WireMock.RequestBuilders.Request.Create().WithPath("/funding-balance").UsingGet()
             )
             .RespondWith(
                 WireMock
@@ -66,12 +60,7 @@ public class RetrieveBalanceTest : BaseMockServerTest
             );
 
         var response = await Client.Funding.FundingActivity.RetrieveBalanceAsync(
-            new RetrieveBalanceFundingActivityRequest
-            {
-                Before = "2571",
-                After = "8516",
-                MerchantId = "4525644354",
-            }
+            new RetrieveBalanceFundingActivityRequest()
         );
         Assert.That(
             response,
@@ -114,13 +103,7 @@ public class RetrieveBalanceTest : BaseMockServerTest
 
         Server
             .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/funding-balance")
-                    .WithParam("before", "2571")
-                    .WithParam("after", "8516")
-                    .WithParam("merchantId", "4525644354")
-                    .UsingGet()
+                WireMock.RequestBuilders.Request.Create().WithPath("/funding-balance").UsingGet()
             )
             .RespondWith(
                 WireMock
@@ -130,12 +113,7 @@ public class RetrieveBalanceTest : BaseMockServerTest
             );
 
         var response = await Client.Funding.FundingActivity.RetrieveBalanceAsync(
-            new RetrieveBalanceFundingActivityRequest
-            {
-                Before = "2571",
-                After = "8516",
-                MerchantId = "4525644354",
-            }
+            new RetrieveBalanceFundingActivityRequest()
         );
         Assert.That(
             response,

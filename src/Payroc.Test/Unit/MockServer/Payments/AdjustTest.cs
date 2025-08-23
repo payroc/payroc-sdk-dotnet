@@ -20,7 +20,7 @@ public class AdjustTest : BaseMockServerTest
                   "type": "customer"
                 },
                 {
-                  "amount": 1000000,
+                  "amount": 4999,
                   "type": "order"
                 }
               ]
@@ -42,7 +42,9 @@ public class AdjustTest : BaseMockServerTest
                   "subtotal": 2899,
                   "cashbackAmount": 0,
                   "tip": {
-                    "type": "percentage"
+                    "type": "percentage",
+                    "amount": 500,
+                    "percentage": 10
                   },
                   "taxes": [
                     {
@@ -237,8 +239,8 @@ public class AdjustTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/payments/M2MJOG6O2Y/adjust")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/payments/paymentId/adjust")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -253,8 +255,8 @@ public class AdjustTest : BaseMockServerTest
         var response = await Client.Payments.AdjustAsync(
             new PaymentAdjustment
             {
-                PaymentId = "M2MJOG6O2Y",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                PaymentId = "paymentId",
+                IdempotencyKey = "Idempotency-Key",
                 Adjustments = new List<PaymentAdjustmentAdjustmentsItem>()
                 {
                     new PaymentAdjustmentAdjustmentsItem(
@@ -262,7 +264,7 @@ public class AdjustTest : BaseMockServerTest
                     ),
                     new PaymentAdjustmentAdjustmentsItem(
                         new PaymentAdjustmentAdjustmentsItem.Order(
-                            new OrderAdjustment { Amount = 1000000 }
+                            new OrderAdjustment { Amount = 4999 }
                         )
                     ),
                 },

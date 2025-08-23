@@ -27,8 +27,8 @@ public partial class PaymentInstructionsClient
     /// await client.PayrocCloud.PaymentInstructions.SubmitAsync(
     ///     new PaymentInstructionRequest
     ///     {
-    ///         SerialNumber = "1850010868",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         SerialNumber = "serialNumber",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Operator = "Jane",
     ///         ProcessingTerminalId = "1234001",
     ///         Order = new PaymentInstructionOrder
@@ -150,10 +150,7 @@ public partial class PaymentInstructionsClient
     /// </summary>
     /// <example><code>
     /// await client.PayrocCloud.PaymentInstructions.RetrieveAsync(
-    ///     new RetrievePaymentInstructionsRequest
-    ///     {
-    ///         PaymentInstructionId = "e743a9165d134678a9100ebba3b29597",
-    ///     }
+    ///     new RetrievePaymentInstructionsRequest { PaymentInstructionId = "paymentInstructionId" }
     /// );
     /// </code></example>
     public async Task<PaymentInstruction> RetrieveAsync(

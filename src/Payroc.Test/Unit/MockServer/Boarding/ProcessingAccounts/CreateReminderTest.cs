@@ -30,7 +30,7 @@ public class CreateReminderTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-accounts/38765/reminders")
+                    .WithPath("/processing-accounts/processingAccountId/reminders")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -45,7 +45,7 @@ public class CreateReminderTest : BaseMockServerTest
         var response = await Client.Boarding.ProcessingAccounts.CreateReminderAsync(
             new CreateReminderProcessingAccountsRequest
             {
-                ProcessingAccountId = "38765",
+                ProcessingAccountId = "processingAccountId",
                 Body = new CreateReminderProcessingAccountsRequestBody(
                     new CreateReminderProcessingAccountsRequestBody.PricingAgreement(
                         new PricingAgreementReminder()

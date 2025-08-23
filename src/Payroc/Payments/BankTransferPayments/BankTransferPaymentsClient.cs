@@ -33,19 +33,7 @@ public partial class BankTransferPaymentsClient
     /// </summary>
     /// <example><code>
     /// await client.Payments.BankTransferPayments.ListAsync(
-    ///     new ListBankTransferPaymentsRequest
-    ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         OrderId = "OrderRef6543",
-    ///         NameOnAccount = "Sarah%20Hazel%20Hopper",
-    ///         Last4 = "7890",
-    ///         DateFrom = new DateTime(2024, 07, 01, 00, 00, 00, 000),
-    ///         DateTo = new DateTime(2024, 07, 31, 23, 59, 59, 000),
-    ///         SettlementDate = new DateOnly(2024, 7, 15),
-    ///         PaymentLinkId = "JZURRJBUPS",
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///     }
+    ///     new ListBankTransferPaymentsRequest { ProcessingTerminalId = "processingTerminalId" }
     /// );
     /// </code></example>
     public async Task<PayrocPager<BankTransferPayment>> ListAsync(
@@ -205,7 +193,7 @@ public partial class BankTransferPaymentsClient
     /// await client.Payments.BankTransferPayments.CreateAsync(
     ///     new BankTransferPaymentRequest
     ///     {
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         ProcessingTerminalId = "1234001",
     ///         Order = new BankTransferPaymentOrder
     ///         {
@@ -364,7 +352,7 @@ public partial class BankTransferPaymentsClient
     /// </summary>
     /// <example><code>
     /// await client.Payments.BankTransferPayments.RetrieveAsync(
-    ///     new RetrieveBankTransferPaymentsRequest { PaymentId = "M2MJOG6O2Y" }
+    ///     new RetrieveBankTransferPaymentsRequest { PaymentId = "paymentId" }
     /// );
     /// </code></example>
     public async Task<BankTransferPayment> RetrieveAsync(
@@ -463,8 +451,8 @@ public partial class BankTransferPaymentsClient
     /// await client.Payments.BankTransferPayments.ReverseAsync(
     ///     new ReverseBankTransferPaymentsRequest
     ///     {
-    ///         PaymentId = "M2MJOG6O2Y",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         PaymentId = "paymentId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///     }
     /// );
     /// </code></example>
@@ -583,8 +571,8 @@ public partial class BankTransferPaymentsClient
     /// await client.Payments.BankTransferPayments.RefundAsync(
     ///     new BankTransferReferencedRefund
     ///     {
-    ///         PaymentId = "M2MJOG6O2Y",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         PaymentId = "paymentId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Amount = 4999,
     ///         Description = "amount to refund",
     ///     }
@@ -706,8 +694,8 @@ public partial class BankTransferPaymentsClient
     /// await client.Payments.BankTransferPayments.RepresentAsync(
     ///     new Representment
     ///     {
-    ///         PaymentId = "M2MJOG6O2Y",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         PaymentId = "paymentId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         PaymentMethod = new RepresentmentPaymentMethod(
     ///             new RepresentmentPaymentMethod.Ach(
     ///                 new AchPayload

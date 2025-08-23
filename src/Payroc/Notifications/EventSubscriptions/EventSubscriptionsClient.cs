@@ -137,7 +137,7 @@ public partial class EventSubscriptionsClient
     /// await client.Notifications.EventSubscriptions.CreateAsync(
     ///     new CreateEventSubscriptionsRequest
     ///     {
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new EventSubscription
     ///         {
     ///             Enabled = true,

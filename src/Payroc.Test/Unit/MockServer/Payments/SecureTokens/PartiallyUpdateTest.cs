@@ -100,9 +100,9 @@ public class PartiallyUpdateTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath(
-                        "/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+                        "/processing-terminals/processingTerminalId/secure-tokens/secureTokenId"
                     )
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPatch()
                     .WithBodyAsJson(requestJson)
@@ -117,9 +117,9 @@ public class PartiallyUpdateTest : BaseMockServerTest
         var response = await Client.Payments.SecureTokens.PartiallyUpdateAsync(
             new PartiallyUpdateSecureTokensRequest
             {
-                ProcessingTerminalId = "1234001",
-                SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                ProcessingTerminalId = "processingTerminalId",
+                SecureTokenId = "secureTokenId",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new List<PatchDocument>()
                 {
                     new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
@@ -238,9 +238,9 @@ public class PartiallyUpdateTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath(
-                        "/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
+                        "/processing-terminals/processingTerminalId/secure-tokens/secureTokenId"
                     )
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPatch()
                     .WithBodyAsJson(requestJson)
@@ -255,9 +255,9 @@ public class PartiallyUpdateTest : BaseMockServerTest
         var response = await Client.Payments.SecureTokens.PartiallyUpdateAsync(
             new PartiallyUpdateSecureTokensRequest
             {
-                ProcessingTerminalId = "1234001",
-                SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                ProcessingTerminalId = "processingTerminalId",
+                SecureTokenId = "secureTokenId",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new List<PatchDocument>()
                 {
                     new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),

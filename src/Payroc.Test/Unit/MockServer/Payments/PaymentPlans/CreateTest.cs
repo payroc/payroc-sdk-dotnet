@@ -106,8 +106,8 @@ public class CreateTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-terminals/1234001/payment-plans")
-                    .WithHeader("Idempotency-Key", "8e03978e-40d5-43e8-bc93-6894a57f9324")
+                    .WithPath("/processing-terminals/processingTerminalId/payment-plans")
+                    .WithHeader("Idempotency-Key", "Idempotency-Key")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -122,8 +122,8 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.Payments.PaymentPlans.CreateAsync(
             new CreatePaymentPlansRequest
             {
-                ProcessingTerminalId = "1234001",
-                IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+                ProcessingTerminalId = "processingTerminalId",
+                IdempotencyKey = "Idempotency-Key",
                 Body = new PaymentPlan
                 {
                     PaymentPlanId = "PlanRef8765",

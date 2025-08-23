@@ -146,7 +146,7 @@ public partial class MerchantPlatformsClient
     /// await client.Boarding.MerchantPlatforms.CreateAsync(
     ///     new CreateMerchantAccount
     ///     {
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Business = new Business
     ///         {
     ///             Name = "Example Corp",
@@ -487,7 +487,7 @@ public partial class MerchantPlatformsClient
     /// </summary>
     /// <example><code>
     /// await client.Boarding.MerchantPlatforms.RetrieveAsync(
-    ///     new RetrieveMerchantPlatformsRequest { MerchantPlatformId = "12345" }
+    ///     new RetrieveMerchantPlatformsRequest { MerchantPlatformId = "merchantPlatformId" }
     /// );
     /// </code></example>
     public async Task<MerchantPlatform> RetrieveAsync(
@@ -593,9 +593,7 @@ public partial class MerchantPlatformsClient
     /// await client.Boarding.MerchantPlatforms.ListProcessingAccountsAsync(
     ///     new ListBoardingMerchantPlatformProcessingAccountsRequest
     ///     {
-    ///         MerchantPlatformId = "12345",
-    ///         Before = "2571",
-    ///         After = "8516",
+    ///         MerchantPlatformId = "merchantPlatformId",
     ///     }
     /// );
     /// </code></example>
@@ -726,8 +724,8 @@ public partial class MerchantPlatformsClient
     /// await client.Boarding.MerchantPlatforms.CreateProcessingAccountAsync(
     ///     new CreateProcessingAccountMerchantPlatformsRequest
     ///     {
-    ///         MerchantPlatformId = "12345",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         MerchantPlatformId = "merchantPlatformId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new CreateProcessingAccount
     ///         {
     ///             DoingBusinessAs = "Pizza Doe",

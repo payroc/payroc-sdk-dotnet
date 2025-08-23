@@ -88,7 +88,7 @@ public class RetrieveTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/processing-terminals/1234001")
+                    .WithPath("/processing-terminals/processingTerminalId")
                     .UsingGet()
             )
             .RespondWith(
@@ -99,7 +99,7 @@ public class RetrieveTest : BaseMockServerTest
             );
 
         var response = await Client.Boarding.ProcessingTerminals.RetrieveAsync(
-            new RetrieveProcessingTerminalsRequest { ProcessingTerminalId = "1234001" }
+            new RetrieveProcessingTerminalsRequest { ProcessingTerminalId = "processingTerminalId" }
         );
         Assert.That(
             response,

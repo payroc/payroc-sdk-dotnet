@@ -81,7 +81,7 @@ public class UpdateTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/pricing-intents/5")
+                    .WithPath("/pricing-intents/pricingIntentId")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPut()
                     .WithBodyAsJson(requestJson)
@@ -92,7 +92,7 @@ public class UpdateTest : BaseMockServerTest
             await Client.Boarding.PricingIntents.UpdateAsync(
                 new UpdatePricingIntentsRequest
                 {
-                    PricingIntentId = "5",
+                    PricingIntentId = "pricingIntentId",
                     Body = new PricingIntent50
                     {
                         Country = "US",

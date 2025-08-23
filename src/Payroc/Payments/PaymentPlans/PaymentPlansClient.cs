@@ -32,12 +32,7 @@ public partial class PaymentPlansClient
     /// </summary>
     /// <example><code>
     /// await client.Payments.PaymentPlans.ListAsync(
-    ///     new ListPaymentPlansRequest
-    ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///     }
+    ///     new ListPaymentPlansRequest { ProcessingTerminalId = "processingTerminalId" }
     /// );
     /// </code></example>
     public async Task<PayrocPager<PaymentPlan>> ListAsync(
@@ -166,8 +161,8 @@ public partial class PaymentPlansClient
     /// await client.Payments.PaymentPlans.CreateAsync(
     ///     new CreatePaymentPlansRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new PaymentPlan
     ///         {
     ///             PaymentPlanId = "PlanRef8765",
@@ -324,8 +319,8 @@ public partial class PaymentPlansClient
     /// await client.Payments.PaymentPlans.RetrieveAsync(
     ///     new RetrievePaymentPlansRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         PaymentPlanId = "PlanRef8765",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         PaymentPlanId = "paymentPlanId",
     ///     }
     /// );
     /// </code></example>
@@ -418,9 +413,9 @@ public partial class PaymentPlansClient
     ///
     /// &gt; **Important:** When you delete a payment plan, you can’t recover it. You also won’t be able to add subscriptions to the payment plan.
     ///
-    /// To delete a payment plan, you need its paymentPlanId, which you sent in the request of the [Create Payment Plan](/api/schema/payments/payment-plans/create) method.
+    /// To delete a payment plan, you need its paymentPlanId, which you sent in the request of the [Create Payment Plan](https://docs.payroc.com/api/schema/payments/payment-plans/create) method.
     ///
-    /// **Note:** If you don't have the paymentPlanId, use our [List Payment Plans](/api/schema/payments/payment-plans/list) method to search for the payment plan.
+    /// **Note:** If you don't have the paymentPlanId, use our [List Payment Plans](https://docs.payroc.com/api/schema/payments/payment-plans/list) method to search for the payment plan.
     ///
     /// The value you sent for the onDelete parameter when you created the payment plan indicates what happens to associated subscriptions when you delete the plan:
     ///
@@ -431,8 +426,8 @@ public partial class PaymentPlansClient
     /// await client.Payments.PaymentPlans.DeleteAsync(
     ///     new DeletePaymentPlansRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         PaymentPlanId = "PlanRef8765",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         PaymentPlanId = "paymentPlanId",
     ///     }
     /// );
     /// </code></example>
@@ -524,9 +519,9 @@ public partial class PaymentPlansClient
     /// await client.Payments.PaymentPlans.PartiallyUpdateAsync(
     ///     new PartiallyUpdatePaymentPlansRequest
     ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         PaymentPlanId = "PlanRef8765",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "processingTerminalId",
+    ///         PaymentPlanId = "paymentPlanId",
+    ///         IdempotencyKey = "Idempotency-Key",
     ///         Body = new List&lt;PatchDocument&gt;()
     ///         {
     ///             new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
