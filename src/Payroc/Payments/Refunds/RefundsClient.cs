@@ -16,9 +16,9 @@ public partial class RefundsClient
     }
 
     /// <summary>
-    /// Use this method to return a [paginated](/api/pagination) list of refunds.
+    /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of refunds.
     ///
-    /// **Note:** If you want to view a specific refund and you have its refundId, use our [Retrieve Refund](/api/schema/payments/refunds/get) method.
+    /// **Note:** If you want to view a specific refund and you have its refundId, use our [Retrieve Refund](https://docs.payroc.com/api/schema/payments/refunds/retrieve) method.
     ///
     /// Use query parameters to filter the list of results that we return, for example, to search for refunds for a customer, a tender type, or a date range.
     /// Our gateway returns the following information about each refund in the list:
@@ -202,9 +202,9 @@ public partial class RefundsClient
     ///
     /// In the response, our gateway returns information about the refund and a refundId, which you need for the following methods:
     ///
-    /// - [Retrieve refund](/api/schema/payments/refunds/get) - View the details of the refund.
-    /// - [Adjust refund](/api/schema/payments/refunds/adjust) - Update the details of the refund.
-    /// - [Reverse refund](/api/schema/payments/refunds/reverse) - Cancel the refund if it's in an open batch.
+    /// - [Retrieve refund](https://docs.payroc.com/api/schema/payments/refunds/retrieve) - View the details of the refund.
+    /// - [Adjust refund](https://docs.payroc.com/api/schema/payments/refunds/adjust) - Update the details of the refund.
+    /// - [Reverse refund](https://docs.payroc.com/api/schema/payments/refunds/reverse) - Cancel the refund if it's in an open batch.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Refunds.CreateAsync(
@@ -344,9 +344,9 @@ public partial class RefundsClient
     /// <summary>
     /// Use this method to retrieve information about a refund.
     ///
-    /// To retrieve a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/refund) method or the [Create Refund](/api/schema/payments/refunds/create) method.
+    /// To retrieve a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](https://docs.payroc.com/api/schema/payments/refund) method or the [Create Refund](https://docs.payroc.com/api/schema/payments/refunds/create) method.
     ///
-    /// **Note:** If you don't have the refundId, use our [List Refunds](/api/schema/payments/refunds/list) method to search for the refund.
+    /// **Note:** If you don't have the refundId, use our [List Refunds](https://docs.payroc.com/api/schema/payments/refunds/list) method to search for the refund.
     ///
     /// Our gateway returns the following information about the refund:
     /// - Order details, including the refund amount and when we processed the refund.

@@ -368,9 +368,9 @@ public partial class SecureTokensClient
     /// <summary>
     /// Use this method to retrieve information about a secure token.
     ///
-    /// To retrieve a secure token, you need its secureTokenID, which you sent in the request of the [Create Secure Token](/api/schema/payments/secure-tokens/create) method.
+    /// To retrieve a secure token, you need its secureTokenID, which you sent in the request of the [Create Secure Token](https://docs.payroc.com/api/schema/payments/secure-tokens/create) method.
     ///
-    /// **Note:** If you don't have the secureTokenId, use our [List Secure Tokens](/api/schema/payments/secure-tokens/list) method to search for the secure token.
+    /// **Note:** If you don't have the secureTokenId, use our [List Secure Tokens](https://docs.payroc.com/api/schema/payments/secure-tokens/list) method to search for the secure token.
     ///
     /// Our gateway returns information about the following for each secure token in the list:
     ///
@@ -474,9 +474,9 @@ public partial class SecureTokensClient
     /// <summary>
     /// Use this method to delete a secure token and its related payment details from our vault.
     ///
-    /// To delete a secure token, you need its secureTokenId, which you sent in the request of the [Create Secure Token](/api/schema/payments/secure-tokens/create) method.
+    /// To delete a secure token, you need its secureTokenId, which you sent in the request of the [Create Secure Token](https://docs.payroc.com/api/schema/payments/secure-tokens/create) method.
     ///
-    /// **Note:** If you don’t have the secureTokenId, use our [List Secure Tokens](/api/schema/payments/secure-tokens/list) method to search for the secure token.
+    /// **Note:** If you don’t have the secureTokenId, use our [List Secure Tokens](https://docs.payroc.com/api/schema/payments/secure-tokens/list) method to search for the secure token.
     ///
     /// When you delete a secure token, you can’t recover it, and you can’t reuse its identifier for a new token.
     /// </summary>
@@ -707,7 +707,7 @@ public partial class SecureTokensClient
     /// <summary>
     /// Use this method to update a secure token if you have a single-use token from Hosted Fields.
     ///
-    /// **Note:** If you don't have a single-use token, you can update saved payment details with our [Update Secure Token](/api/resources#updateSecureToken) method. For more information about our two options to update a secure token, go to [Update saved payment details](/guides/integrate/update-saved-payment-details).
+    /// **Note:** If you don't have a single-use token, you can update saved payment details with our [Update Secure Token](https://docs.payroc.com/api/resources#updateSecureToken) method. For more information about our two options to update a secure token, go to [Update saved payment details](/guides/integrate/update-saved-payment-details).
     /// </summary>
     /// <example><code>
     /// await client.Payments.SecureTokens.UpdateAccountAsync(
