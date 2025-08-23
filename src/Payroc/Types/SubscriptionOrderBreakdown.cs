@@ -27,10 +27,13 @@ public record SubscriptionOrderBreakdown : IJsonOnDeserialized
     public IEnumerable<Tax>? Taxes { get; set; }
 
     /// <summary>
-    /// Object that contains information about the [surcharge](https://docs.payroc.com/knowledge/card-payments/surcharging) that we applied to the transaction.
+    /// Object that contains information about the [surcharge](https://docs.payroc.com/knowledge/card-payments/credit-card-surcharging) that we applied to the transaction.
     /// </summary>
     [JsonPropertyName("surcharge")]
     public Surcharge? Surcharge { get; set; }
+
+    [JsonPropertyName("convenienceFee")]
+    public ConvenienceFee? ConvenienceFee { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

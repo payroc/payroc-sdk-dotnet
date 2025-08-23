@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Owner's signature by email.
+/// Object that contains signature information if we captured the merchant’s signature by email.
 /// </summary>
 [Serializable]
 public record SignatureByEmail : IJsonOnDeserialized
