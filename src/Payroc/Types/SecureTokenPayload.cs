@@ -16,7 +16,8 @@ public record SecureTokenPayload : IJsonOnDeserialized
 
     /// <summary>
     /// Indicates the customer’s account type.
-    /// **Note:** Credit card transactions don't require **accountType**.
+    ///
+    /// **Note:** Send a value for accountType only if the secure token represents bank account details.
     /// </summary>
     [JsonPropertyName("accountType")]
     public SecureTokenPayloadAccountType? AccountType { get; set; }

@@ -8,6 +8,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains information about the Hardware Advantage Plan.
+/// </summary>
 [JsonConverter(typeof(ServiceUs50.JsonConverter))]
 [Serializable]
 public record ServiceUs50
