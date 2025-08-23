@@ -4,6 +4,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains the fees for ACH transactions.
+/// </summary>
 [Serializable]
 public record Ach : IJsonOnDeserialized
 {
@@ -11,6 +14,9 @@ public record Ach : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    /// <summary>
+    /// Object that contains processing fees for ACH transactions.
+    /// </summary>
     [JsonPropertyName("fees")]
     public AchFees? Fees { get; set; }
 

@@ -98,7 +98,7 @@ public record ProcessingAccount : IJsonOnDeserialized
     public required Address Address { get; set; }
 
     /// <summary>
-    /// Array of contactMethods objects for the processing account. Atleast one contactMethod must be an email address.
+    /// Array of contactMethods objects for the processing account. At least one contactMethod must be an email address.
     /// </summary>
     [JsonPropertyName("contactMethods")]
     public IEnumerable<ContactMethod> ContactMethods { get; set; } = new List<ContactMethod>();
@@ -110,7 +110,7 @@ public record ProcessingAccount : IJsonOnDeserialized
     public required Funding.Funding Funding { get; set; }
 
     /// <summary>
-    /// Object that contains pricing information.
+    /// Object that HATEOAS links to the pricing information that we apply to the processing account.
     /// </summary>
     [JsonPropertyName("pricing")]
     public required ProcessingAccountPricing Pricing { get; set; }
@@ -126,7 +126,7 @@ public record ProcessingAccount : IJsonOnDeserialized
     public required Signature Signature { get; set; }
 
     /// <summary>
-    /// Object that you can send to include custom data in the request. For more information about how to use metadata, go to [Metadata](/api/metadata).
+    /// Object that you can send to include custom data in the request. For more information about how to use metadata, go to [Metadata](https://docs.payroc.com/api/metadata).
     /// </summary>
     [JsonPropertyName("metadata")]
     public Dictionary<string, string>? Metadata { get; set; }

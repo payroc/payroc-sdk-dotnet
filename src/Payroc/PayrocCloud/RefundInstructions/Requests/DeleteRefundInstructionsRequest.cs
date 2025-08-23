@@ -1,20 +1,16 @@
 using System.Text.Json.Serialization;
-using Payroc;
 using Payroc.Core;
 
-namespace Payroc.Boarding.Owners;
+namespace Payroc.PayrocCloud.RefundInstructions;
 
 [Serializable]
-public record UpdateOwnersRequest
+public record DeleteRefundInstructionsRequest
 {
     /// <summary>
-    /// Unique identifier that we assigned to the owner.
+    /// Unique identifier of the refund instruction.
     /// </summary>
     [JsonIgnore]
-    public required int OwnerId { get; set; }
-
-    [JsonIgnore]
-    public required Owner Body { get; set; }
+    public required string RefundInstructionId { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

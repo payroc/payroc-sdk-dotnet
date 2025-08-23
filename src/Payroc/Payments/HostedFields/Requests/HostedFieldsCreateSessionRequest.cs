@@ -13,7 +13,7 @@ public record HostedFieldsCreateSessionRequest
     public required string ProcessingTerminalId { get; set; }
 
     /// <summary>
-    /// Unique identifier that you generate for each request. You must use the UUID v4 format for the identifier. For more information about the idempotency key, go to [Idempotency](https://docs.payroc.com/api/idempotency).
+    /// Unique identifier that you generate for each request. You must use the [UUID v4 format](https://www.rfc-editor.org/rfc/rfc4122) for the identifier. For more information about the idempotency key, go to [Idempotency](https://docs.payroc.com/api/idempotency).
     /// </summary>
     [JsonIgnore]
     public required string IdempotencyKey { get; set; }
@@ -28,7 +28,8 @@ public record HostedFieldsCreateSessionRequest
 
     /// <summary>
     /// Indicates if a merchant wants to take a payment or tokenize a customer's payment details:
-    /// - `payment` - The merchant wants to take a payment immediately.
+    ///
+    /// - `payment` - The merchant wants to run a sale or run a sale and tokenize in the same transaction.
     /// - `tokenization` - The merchant wants to save the customer's payment details to take a payment later or to update a customer's payment details that they've already saved.
     /// </summary>
     [JsonPropertyName("scenario")]

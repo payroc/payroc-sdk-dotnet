@@ -16,8 +16,8 @@ public record PropertiesShippingPreferences : IJsonOnDeserialized
 
     /// <summary>
     /// Shipping method for the terminal order. Send one of the following values:
-    ///   - 'nextDay'- We schedule the order to be delivered the next day.
-    ///   - 'ground' - We ship the order with ground shipping.
+    ///   - `nextDay` - We schedule the order to be delivered the next day.
+    ///   - `ground` - We ship the order with ground shipping.
     /// </summary>
     [JsonPropertyName("method")]
     public PropertiesShippingPreferencesMethod? Method { get; set; }

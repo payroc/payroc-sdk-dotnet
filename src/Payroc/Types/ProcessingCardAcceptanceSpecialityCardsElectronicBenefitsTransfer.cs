@@ -4,6 +4,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that indicates if the merchant accepts Electronic Benefits Transfer (EBT) cards and contains the merchant’s Food and Nutrition Services (FNS) number.
+/// </summary>
 [Serializable]
 public record ProcessingCardAcceptanceSpecialityCardsElectronicBenefitsTransfer
     : IJsonOnDeserialized

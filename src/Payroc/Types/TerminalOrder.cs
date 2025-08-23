@@ -12,13 +12,15 @@ public record TerminalOrder : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Unique identifier of the terminal order.
+    /// Unique identifier that we assigned to the terminal order.
     /// </summary>
     [JsonPropertyName("terminalOrderId")]
     public required string TerminalOrderId { get; set; }
 
     /// <summary>
     /// Status of the terminal order.
+    ///
+    /// **Note**: You can subscribe to our terminalOrder.status.changed event to get notifications when we update the status of a terminal order. For more information about how to subscribe to events, go to [Event Subscriptions](https://docs.payroc.com/guides/integrate/event-subscriptions).
     /// </summary>
     [JsonPropertyName("status")]
     public required TerminalOrderStatus Status { get; set; }
@@ -43,14 +45,14 @@ public record TerminalOrder : IJsonOnDeserialized
         new List<TerminalOrderOrderItemsItem>();
 
     /// <summary>
-    /// Date that we received the terminal order.
+    /// Date that we received the terminal order. We return this value in the [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("createdDate")]
     public DateTime? CreatedDate { get; set; }
 
     /// <summary>
-    /// Date that the terminal order was last changed.
+    /// Date that the terminal order was last changed.  We return this value in the [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("lastModifiedDate")]

@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// We return a link to the pricing agreement in the response.
+/// Object that contains signature information if we captured the merchant’s signature by direct link.
 /// </summary>
 [Serializable]
 public record SignatureByDirectLink : IJsonOnDeserialized
@@ -14,8 +14,11 @@ public record SignatureByDirectLink : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    /// <summary>
+    /// Object that contains links to the signed contract.
+    /// </summary>
     [JsonPropertyName("link")]
-    public SignatureByDirectLinkLink? Link { get; set; }
+    public Link? Link { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

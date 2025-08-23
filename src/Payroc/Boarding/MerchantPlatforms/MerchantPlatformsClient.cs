@@ -16,12 +16,19 @@ public partial class MerchantPlatformsClient
     }
 
     /// <summary>
-    /// Use this method to retrieve a [paginated](/api/pagination) list of the merchant platforms that are linked to the ISV's account.
+    /// Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of merchant platforms that are linked to your ISV account.
+    ///
+    /// **Note**: If you want to view the details of a specific merchant platform and you have its merchantPlatformId, use our [Retrieve Merchant Platform](https://docs.payroc.com/api/schema/boarding/merchant-platforms/retrieve) method.
+    ///
+    /// Our gateway returns the following information about each merchant platform in the list:
+    /// - Legal information, including its legal name and address.
+    /// - Contact information, including the email address for the business.
+    /// - Processing  account information, including the processingAccountId and status of each processing account that's linked to the merchant platform.
+    ///
+    /// For each merchant platform, we also return its merchantPlatformId and its linked processingAccountIds, which you can use to perform follow-on actions.
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.MerchantPlatforms.ListAsync(
-    ///     new ListMerchantPlatformsRequest { Before = "2571", After = "8516" }
-    /// );
+    /// await client.Boarding.MerchantPlatforms.ListAsync(new ListMerchantPlatformsRequest());
     /// </code></example>
     public async Task<PayrocPager<MerchantPlatform>> ListAsync(
         ListMerchantPlatformsRequest request,
@@ -120,16 +127,20 @@ public partial class MerchantPlatformsClient
     }
 
     /// <summary>
-    /// Use this method to create the entity that represents a business, including its legal information and all its processing accounts.
+    /// Use this method to board a merchant with Payroc.
     ///
-    /// &gt; **Note:** To add a processing account to an existing merchant platform, go to [Create a processing account](/api/schema/boarding/merchant-platforms/create-processing-account).
+    /// **Note**: This method is part of our Boarding solution. To help you understand how this method works with other Boarding methods, go to [Board a Merchant](https://docs.payroc.com/guides/integrate/boarding).
     ///
-    /// The response contains some fields that we require for other methods:
-    /// - **merchantPlatformId** - Unique identifier that we assign to the merchant platform. Use the merchantPlatformId to retrieve and update information about the merchant platform.
+    /// In the request, include the following information:
+    /// - Legal information, including its legal name and address.
+    /// - Contact information, including the email address for the business.
+    /// - Processing account information, including the pricing model, owners, and contacts for the processing account.
     ///
-    /// - **processingAccountId**- Unique identifier that we assign to each processing account. Use the processingAccountId to retrieve and update information about the processing account.
-    ///   &lt;br/&gt;
-    /// For more information about how to create a merchant platform, go to [Create a merchant platform.](/guides/integrate/boarding/merchant-platform)
+    /// When you send a successful request, we review the merchant's information. After we complete our review and approve the merchant, we assign:
+    /// - **merchantPlatformId** - Unique identifier for the merchant platform.
+    /// - **processingAccountId** - Unique identifier for each processing account linked to the merchant platform.
+    ///
+    /// You need to keep these to perform follow-on actions, for example, you need the processingAccountId to [order terminals](https://docs.payroc.com/api/schema/boarding/processing-accounts/create-terminal-order) for the processing account.
     /// </summary>
     /// <example><code>
     /// await client.Boarding.MerchantPlatforms.CreateAsync(
@@ -463,9 +474,16 @@ public partial class MerchantPlatformsClient
     }
 
     /// <summary>
-    /// Use this method to retrieve information about a merchant platform, including its legal information and processing accounts.
+    /// Use this method to retrieve information about a merchant platform.
     ///
-    /// Include the merchantPlatformId that we sent you when you created the merchant platform.
+    /// To retrieve a merchant platform, you need its merchantPlatformId. Our gateway returned the merchantPlatformId in the response of the [Create Merchant Platform](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create) method.
+    ///
+    /// **Note:** If you don't have the merchantPlatformId, use our [List Merchant Platforms](https://docs.payroc.com/api/schema/boarding/merchant-platforms/list) method to search for the merchant platform.
+    ///
+    /// Our gateway returns the following information about the merchant platform:
+    /// -	Legal information, including its legal name and address.
+    /// -	Contact information, including the email address for the business.
+    /// -	Processing account information, including the processingAccountId and status of each processing account that's linked to the merchant platform.
     /// </summary>
     /// <example><code>
     /// await client.Boarding.MerchantPlatforms.RetrieveAsync(
@@ -556,11 +574,20 @@ public partial class MerchantPlatformsClient
     }
 
     /// <summary>
-    /// Use this method to retrieve a paginated list of processing accounts associated with a merchant platform.
+    /// Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of processing accounts linked to a merchant platform.
     ///
-    /// When you created the merchant platform, we sent you its merchantPlatformId in the response. Send this merchantPlatformId as a path parameter in your endpoint.
+    /// **Note**: If you want to view the details of a specific processing account and you have its processingAccountId, use our [Retrieve Processing Account](https://docs.payroc.com/api/schema/boarding/processing-accounts/retrieve) method.
     ///
-    /// &gt; **Note:** By default, we return only open processing accounts. To include closed processing accounts, send a value of `true` for the includeClosed query parameter.
+    /// Use the query parameters to filter the list of results that we return, for example, to search for only closed processing accounts.
+    ///
+    /// To list the processing accounts for a merchant platform, you need its merchantPlatformId. If you don't have the merchantPlatformId, use our [List Merchant Platforms](https://docs.payroc.com/api/schema/boarding/merchant-platforms/list) method to search for the merchant platform.
+    ///
+    /// Our gateway returns the following information about eahc processing account in the list:
+    /// - Business details, including its status, time zone, and address.
+    /// - Owners' details, including their contact details.
+    /// - Funding, pricing, and processing information, including its pricing model and funding accounts.
+    ///
+    /// For each processing account, we also return its processingAccountId, which you can use to perform follow-on actions.
     /// </summary>
     /// <example><code>
     /// await client.Boarding.MerchantPlatforms.ListProcessingAccountsAsync(
@@ -680,16 +707,20 @@ public partial class MerchantPlatformsClient
     }
 
     /// <summary>
-    /// Use this method to create a processing account and add it to a merchant platform.
-    ///     &gt; **Note:** You can create and add a processing account only to an existing merchant platform. If you have not already created a merchant platform, go to [Create a merchant platform.](/api/schema/boarding/merchant-platforms/create)
+    /// Use this method to add an additional processing account to a merchant platform.
     ///
-    /// In the response we return a processingAccountId for the processing account, which you need for the following methods.
-    /// - [Retrieve processing account](/api/schema/boarding/processing-accounts/get)
-    /// - [List processing account's funding accounts](/api/schema/boarding/processing-accounts/list-funding-accounts)
-    /// - [List contacts](/api/schema/boarding/processing-accounts/contacts)
-    /// - [Get a processing account pricing agreement](/api/schema/boarding/processing-accounts/pricing)
-    /// - [List owners](/api/schema/boarding/processing-accounts/list-owners)
-    /// - [Create reminder for processing account](/api/schema/boarding/processing-accounts/create-reminder)
+    /// To add a processing account to a merchant platform, you need the merchantPlatformId. Our gateway returned the merchantPlatformId in the response of the [Create Merchant Platform](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create) method.
+    ///
+    /// **Note**: If you don't have the merchantPlatformId, use our [List Merchant Platforms](https://docs.payroc.com/api/schema/boarding/merchant-platforms/list) method to search for the merchant platform.
+    ///
+    /// In the request, include the following information:
+    /// - Business details, including its business type, time zone, and address.
+    /// - Owners' details, including their contact details.
+    /// - Funding, pricing, and processing information, including its pricing model and funding accounts.
+    ///
+    /// When you send a successful request, we review the information about the processing account. After we complete our review and approve the processing account, we assign a processingAccountId, which you need to perform follow-on actions.
+    ///
+    /// **Note**: You can subscribe to our processingAccount.status.changed event to get notifications when we update the status of a processing account. For more information about how to subscribe to events, go to [Events List](https://docs.payroc.com/knowledge/events/events-list).
     /// </summary>
     /// <example><code>
     /// await client.Boarding.MerchantPlatforms.CreateProcessingAccountAsync(

@@ -19,7 +19,7 @@ public record EventSubscription : IJsonOnDeserialized
     public double? Id { get; set; }
 
     /// <summary>
-    /// Indicates if we should notify you if the event occurs. The value is one of the following:
+    /// Indicates if we should notify you when the event occurs. The value is one of the following:
     /// - `true` - We notify you when the event occurs.
     /// - `false` - We don't notify you when the event occurs.
     /// </summary>
@@ -37,13 +37,13 @@ public record EventSubscription : IJsonOnDeserialized
     public EventSubscriptionStatus? Status { get; set; }
 
     /// <summary>
-    /// Array of eventTypes that you want to subscribe to. For a list of all events that you can subscribe to, go to [Events](https://docs.payroc.com/knowledge/basic-concepts/events).
+    /// Array of events that you want to subscribe to. For a list of events, go to [Events List](https://docs.payroc.com/knowledge/events/events-list).
     /// </summary>
     [JsonPropertyName("eventTypes")]
     public IEnumerable<string> EventTypes { get; set; } = new List<string>();
 
     /// <summary>
-    /// Array of notifications, which includes information about how we contact you when an event occurs.
+    /// Array of notifications objects. Each object contains information about how we contact you when an event occurs.
     /// </summary>
     [JsonPropertyName("notifications")]
     public IEnumerable<Notification> Notifications { get; set; } = new List<Notification>();

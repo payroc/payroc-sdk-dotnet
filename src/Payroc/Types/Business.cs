@@ -33,13 +33,13 @@ public record Business : IJsonOnDeserialized
     public required BusinessOrganizationType OrganizationType { get; set; }
 
     /// <summary>
-    /// Two-digit country code for the country that the business operates in. The format follows the [ISO-3166](https://www.iso.org/iso-3166-country-codes.html) standard.
+    /// Two-digit code for the country that the business operates in. The format follows the [ISO-3166](https://www.iso.org/iso-3166-country-codes.html) standard.
     /// </summary>
     [JsonPropertyName("countryOfOperation")]
     public string? CountryOfOperation { get; set; }
 
     /// <summary>
-    /// Type of address.
+    /// Object that contains the addresses for the business.
     /// </summary>
     [JsonPropertyName("addresses")]
     public IEnumerable<LegalAddress> Addresses { get; set; } = new List<LegalAddress>();

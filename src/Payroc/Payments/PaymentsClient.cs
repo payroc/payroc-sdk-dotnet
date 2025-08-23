@@ -68,9 +68,9 @@ public partial class PaymentsClient
     public BankAccountsClient BankAccounts { get; }
 
     /// <summary>
-    /// Use this method to return a [paginated](/api/pagination) list of payments.
+    /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of payments.
     ///
-    /// **Note:** If you want to view a specific payment and you have its paymentId, use our [Retrieve Payment](/api/schema/payments/get) method.
+    /// **Note:** If you want to view a specific payment and you have its paymentId, use our [Retrieve Payment](https://docs.payroc.com/api/schema/payments/retrieve) method.
     ///
     /// Use query parameters to filter the list of results that we return, for example, to search for payments for a customer, a tip mode, or a date range.
     ///
@@ -454,9 +454,9 @@ public partial class PaymentsClient
     /// <summary>
     /// Use this method to retrieve information about a card payment.
     ///
-    /// To retrieve a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+    /// To retrieve a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](https://docs.payroc.com/api/schema/payments/create) method.
     ///
-    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+    /// **Note:** If you don't have the paymentId, use our [List Payments](https://docs.payroc.com/api/schema/payments/list) method to search for the payment.
     ///
     /// Our gateway returns the following information about the payment:
     ///
@@ -696,7 +696,7 @@ public partial class PaymentsClient
     /// Depending on the amount you want to capture, complete the following:
     /// -	**Capture the full amount of the pre-authorization** - Don't send a value for the amount parameter in your request.
     /// -	**Capture less than the amount of the pre-authorization** - Send a value for the amount parameter in your request.
-    /// -	**Capture more than the amount of the pre-authorization** - Adjust the pre-authorization before you capture it. For more information about adjusting a pre-authorization, go to [Adjust Payment](/api/schema/payments/adjust).
+    /// -	**Capture more than the amount of the pre-authorization** - Adjust the pre-authorization before you capture it. For more information about adjusting a pre-authorization, go to [Adjust Payment](https://docs.payroc.com/api/schema/payments/adjust).
     ///
     /// If your request is successful, our gateway takes the amount from the payment card.
     ///
@@ -827,9 +827,9 @@ public partial class PaymentsClient
     /// <summary>
     /// Use this method to cancel or to partially cancel a payment in an open batch. This is also known as voiding a payment.
     ///
-    /// To cancel a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+    /// To cancel a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](https://docs.payroc.com/api/schema/payments/create) method.
     ///
-    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+    /// **Note:** If you don't have the paymentId, use our [List Payments](https://docs.payroc.com/api/schema/payments/list) method to search for the payment.
     ///
     /// If your request is successful, our gateway removes the payment from the merchant's open batch and no funds are taken from the cardholder's account.
     /// </summary>
@@ -946,16 +946,16 @@ public partial class PaymentsClient
     /// <summary>
     /// Use this method to refund a payment that is in a closed batch.
     ///
-    /// To refund a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+    /// To refund a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](https://docs.payroc.com/api/schema/payments/create) method.
     ///
-    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+    /// **Note:** If you don't have the paymentId, use our [List Payments](https://docs.payroc.com/api/schema/payments/list) method to search for the payment.
     ///
     /// If your refund is successful, our gateway returns the payment amount to the cardholder's account.
     ///
     /// **Things to consider**
     ///
     /// - If the merchant refunds a payment that is in an open batch, our gateway reverses the payment.
-    /// - Some merchants can run unreferenced refunds, which means that they don't need a paymentId to return an amount to a customer. For more information about how to run an unreferenced refund, go to [Create Refund](/api/schema/payments/refunds/create).
+    /// - Some merchants can run unreferenced refunds, which means that they don't need a paymentId to return an amount to a customer. For more information about how to run an unreferenced refund, go to [Create Refund](https://docs.payroc.com/api/schema/payments/refunds/create).
     /// </summary>
     /// <example><code>
     /// await client.Payments.RefundAsync(

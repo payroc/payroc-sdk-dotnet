@@ -16,7 +16,7 @@ public record PadPayload : IJsonOnDeserialized
 
     /// <summary>
     /// Indicates the customer’s account type.
-    /// **Note:** Credit card transactions don't require **accountType**.
+    /// **Note:** For bank account details, send a value for accountType.
     /// </summary>
     [JsonPropertyName("accountType")]
     public PadPayloadAccountType? AccountType { get; set; }
@@ -28,20 +28,20 @@ public record PadPayload : IJsonOnDeserialized
     public required string NameOnAccount { get; set; }
 
     /// <summary>
-    /// Customer’s account number.
-    /// **Note:** In responses, our gateway shows only the last four digits of the account number. For example, `*****5929`.
+    /// Customer's account number.
+    /// **Note:** In responses, our gateway shows only the last four digits of the account number, for example, `*****5929`.
     /// </summary>
     [JsonPropertyName("accountNumber")]
     public required string AccountNumber { get; set; }
 
     /// <summary>
-    /// Five-digit code that represents the customer’s bank branch.
+    /// Five-digit number that identifies the customer's bank branch.
     /// </summary>
     [JsonPropertyName("transitNumber")]
     public required string TransitNumber { get; set; }
 
     /// <summary>
-    /// Three-digit code that represents the customer’s bank.
+    /// Three-digit number that identifies the customer's bank.
     /// </summary>
     [JsonPropertyName("institutionNumber")]
     public required string InstitutionNumber { get; set; }

@@ -8,13 +8,13 @@ namespace Payroc.Boarding.ProcessingAccounts;
 public record CreateTerminalOrder
 {
     /// <summary>
-    /// Unique identifier of the processing account.
+    /// Unique identifier that we assigned to the processing account.
     /// </summary>
     [JsonIgnore]
     public required string ProcessingAccountId { get; set; }
 
     /// <summary>
-    /// Unique identifier that you generate for each request. You must use the UUID v4 format for the identifier. For more information about the idempotency key, go to [Idempotency](https://docs.payroc.com/api/idempotency).
+    /// Unique identifier that you generate for each request. You must use the [UUID v4 format](https://www.rfc-editor.org/rfc/rfc4122) for the identifier. For more information about the idempotency key, go to [Idempotency](https://docs.payroc.com/api/idempotency).
     /// </summary>
     [JsonIgnore]
     public required string IdempotencyKey { get; set; }
@@ -29,7 +29,7 @@ public record CreateTerminalOrder
     public CreateTerminalOrderShipping? Shipping { get; set; }
 
     /// <summary>
-    /// One or more items to be ordered
+    /// Array of order items. Provide a minimum of 1 order item and a maximum of 10 order items.
     /// </summary>
     [JsonPropertyName("orderItems")]
     public IEnumerable<OrderItem> OrderItems { get; set; } = new List<OrderItem>();

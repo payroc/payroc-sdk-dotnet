@@ -41,6 +41,12 @@ public record FourHundredNine : IJsonOnDeserialized
     [JsonPropertyName("instance")]
     public string? Instance { get; set; }
 
+    [JsonPropertyName("errors")]
+    public IEnumerable<FourHundredNineErrorsItem>? Errors { get; set; }
+
+    [JsonPropertyName("link")]
+    public Link? Link { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 

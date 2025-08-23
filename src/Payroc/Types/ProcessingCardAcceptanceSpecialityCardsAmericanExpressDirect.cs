@@ -4,6 +4,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that indicates if the merchant accepts American Express Direct cards and contains the merchant’s American Express merchant number.
+/// </summary>
 [Serializable]
 public record ProcessingCardAcceptanceSpecialityCardsAmericanExpressDirect : IJsonOnDeserialized
 {

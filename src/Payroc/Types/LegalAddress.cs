@@ -12,7 +12,7 @@ public record LegalAddress : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Type of address
+    /// Type of address.
     /// </summary>
     [JsonPropertyName("type")]
     public string Type { get; set; } = "legalAddress";

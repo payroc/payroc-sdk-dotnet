@@ -15,6 +15,9 @@ public record Funding : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    /// <summary>
+    /// Object that contains funding accounts associated with the processing account.
+    /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("fundingAccounts")]
     public IEnumerable<FundingAccountSummary>? FundingAccounts { get; set; }
@@ -45,7 +48,7 @@ public record Funding : IJsonOnDeserialized
     public int? AcceleratedFundingFee { get; set; }
 
     /// <summary>
-    /// Indicates if we should collect fees from the merchant's account each day.
+    /// Indicates if we collect fees from the merchant's account each day.
     /// </summary>
     [JsonPropertyName("dailyDiscount")]
     public bool? DailyDiscount { get; set; }

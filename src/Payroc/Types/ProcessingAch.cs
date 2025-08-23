@@ -4,6 +4,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains information about Automated Clearing House (ACH) transactions.
+/// </summary>
 [Serializable]
 public record ProcessingAch : IJsonOnDeserialized
 {
@@ -23,6 +26,9 @@ public record ProcessingAch : IJsonOnDeserialized
     [JsonPropertyName("previouslyTerminatedForAch")]
     public bool? PreviouslyTerminatedForAch { get; set; }
 
+    /// <summary>
+    /// Object that contains information about the ACH refund policy for the processing account.
+    /// </summary>
     [JsonPropertyName("refunds")]
     public required ProcessingAchRefunds Refunds { get; set; }
 
@@ -32,11 +38,14 @@ public record ProcessingAch : IJsonOnDeserialized
     [JsonPropertyName("estimatedMonthlyTransactions")]
     public required int EstimatedMonthlyTransactions { get; set; }
 
+    /// <summary>
+    /// Object that contains information about transaction limits for the processing account.
+    /// </summary>
     [JsonPropertyName("limits")]
     public required ProcessingAchLimits Limits { get; set; }
 
     /// <summary>
-    /// List of supported transaction types.
+    /// List of transaction types that the processing account supports.
     /// </summary>
     [JsonPropertyName("transactionTypes")]
     public IEnumerable<ProcessingAchTransactionTypesItem>? TransactionTypes { get; set; }

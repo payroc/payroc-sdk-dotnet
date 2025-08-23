@@ -15,7 +15,7 @@ public record PricingAgreementUs40Processor : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Object that contains information about card fees.
+    /// Object that contains the fees for card transactions.
     /// </summary>
     [JsonPropertyName("card")]
     public PricingAgreementUs40ProcessorCard? Card { get; set; }

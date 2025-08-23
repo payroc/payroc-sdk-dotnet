@@ -15,7 +15,7 @@ public record BankTransferCustomer : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Customer's preferred notification language. This code follows the ISO 639-1 standard.
+    /// Customer's preferred notification language. This code follows the [ISO 639-1](https://www.iso.org/iso-639-language-code) standard.
     /// </summary>
     [JsonPropertyName("notificationLanguage")]
     public BankTransferCustomerNotificationLanguage? NotificationLanguage { get; set; }

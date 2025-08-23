@@ -27,8 +27,6 @@ public readonly record struct SupportedOperationsItem : IStringEnum
 
     public static readonly SupportedOperationsItem SetAsPending = new(Values.SetAsPending);
 
-    public static readonly SupportedOperationsItem SetAsDeclined = new(Values.SetAsDeclined);
-
     public SupportedOperationsItem(string value)
     {
         Value = value;
@@ -93,7 +91,5 @@ public readonly record struct SupportedOperationsItem : IStringEnum
         public const string SetAsReady = "setAsReady";
 
         public const string SetAsPending = "setAsPending";
-
-        public const string SetAsDeclined = "setAsDeclined";
     }
 }

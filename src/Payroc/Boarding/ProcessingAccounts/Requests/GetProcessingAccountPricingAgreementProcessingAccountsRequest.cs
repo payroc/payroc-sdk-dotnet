@@ -7,7 +7,7 @@ namespace Payroc.Boarding.ProcessingAccounts;
 public record GetProcessingAccountPricingAgreementProcessingAccountsRequest
 {
     /// <summary>
-    /// Unique identifier of the processing account.
+    /// Unique identifier that we assigned to the processing account.
     /// </summary>
     [JsonIgnore]
     public required string ProcessingAccountId { get; set; }

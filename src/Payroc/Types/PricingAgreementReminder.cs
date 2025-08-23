@@ -4,6 +4,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains information about the pricing agreement reminder.
+/// </summary>
 [Serializable]
 public record PricingAgreementReminder : IJsonOnDeserialized
 {

@@ -14,6 +14,9 @@ public record RewardPayChoiceFeesDebit : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    /// <summary>
+    /// Indicates if debit transactions should be charged at interchange plus or flat rate pricing.
+    /// </summary>
     [JsonPropertyName("option")]
     public RewardPayChoiceFeesDebitOption? Option { get; set; }
 

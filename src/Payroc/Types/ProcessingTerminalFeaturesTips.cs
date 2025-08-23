@@ -8,6 +8,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains the tip settings for the processing terminal.
+/// </summary>
 [JsonConverter(typeof(ProcessingTerminalFeaturesTips.JsonConverter))]
 [Serializable]
 public record ProcessingTerminalFeaturesTips

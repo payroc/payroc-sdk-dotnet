@@ -16,7 +16,8 @@ public record DigitalWalletPayload : IJsonOnDeserialized
 
     /// <summary>
     /// Indicates the customer’s account type.
-    /// **Note:** Credit card transactions don't require **accountType**.
+    ///
+    /// **Note:** Send a value for accountType only for bank account details.
     /// </summary>
     [JsonPropertyName("accountType")]
     public DigitalWalletPayloadAccountType? AccountType { get; set; }

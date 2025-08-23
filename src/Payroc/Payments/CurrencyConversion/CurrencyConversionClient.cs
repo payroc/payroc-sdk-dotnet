@@ -16,9 +16,22 @@ public partial class CurrencyConversionClient
     }
 
     /// <summary>
-    /// Check if a customer’s card is eligible for Dynamic Currency Conversion (DCC).
-    /// If the card is eligible for DCC, offer currency conversion to the customer during a transaction.
-    /// **Note:** We offer this through the DCC service, which gives customers a choice to pay in the local currency or their own currency.
+    /// &gt; **Important:** There are restrictions on which merchants can use this method. For more information, go to [Dynamic Currency Conversion](https://docs.payroc.com/knowledge/card-payments/dynamic-currency-conversion).
+    ///
+    /// Use this method to check if a card is eligible for Dynamic Currency Conversion (DCC) and to retrieve the conversion rate for a transaction amount. DCC provides a customer with the option to use their card's currency instead of the merchant's currency, for example, in Ireland, an American customer can pay in US dollars instead of Euros.
+    ///
+    /// The request includes the following:
+    ///
+    /// - **Payment method** - Card information, a secure token, or digital wallet.
+    /// - **Transaction information** - Amount and currency of the transaction in the merchant's currency.
+    ///
+    /// If the card is eligible for DCC, our gateway returns the transaction amount in the card's currency and a dccOffer object that contains information about the conversion rate. The dccOffer object contains the following fields that you need when you [run a sale](https://docs.payroc.com/api/schema/payments/create) or [unreferenced refund](https://docs.payroc.com/api/schema/payments/refunds/create) with DCC:
+    /// - fxAmount
+    /// - fxCurrency
+    /// - fxRate
+    /// - markup
+    /// - accepted
+    /// - offerReference
     /// </summary>
     /// <example><code>
     /// await client.Payments.CurrencyConversion.RetrieveFxRatesAsync(

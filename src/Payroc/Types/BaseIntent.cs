@@ -22,14 +22,14 @@ public record BaseIntent : IJsonOnDeserialized
     public string? Id { get; set; }
 
     /// <summary>
-    /// Date and time that we received your request to create the pricing intent in our system.
+    /// Date and time that we received your request to create the pricing intent. We return this value in the [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("createdDate")]
     public DateTime? CreatedDate { get; set; }
 
     /// <summary>
-    /// Date and time that the pricing intent was last modified.
+    /// Date and time that the pricing intent was last modified. We return this value in the [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("lastUpdatedDate")]
@@ -46,13 +46,13 @@ public record BaseIntent : IJsonOnDeserialized
     public BaseIntentStatus? Status { get; set; }
 
     /// <summary>
-    /// Unique identifier that you use to connect a merchant to the pricing intent.
+    /// Unique identifier that you can assign to the pricing intent for your own records.
     /// </summary>
     [JsonPropertyName("key")]
     public required string Key { get; set; }
 
     /// <summary>
-    /// [Metadata](/api/metadata) object that contains your custom data.
+    /// [Metadata](https://docs.payroc.com/api/metadata) object that contains your custom data.
     /// </summary>
     [JsonPropertyName("metadata")]
     public Dictionary<string, string>? Metadata { get; set; }

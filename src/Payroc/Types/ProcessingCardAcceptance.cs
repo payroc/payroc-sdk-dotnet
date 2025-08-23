@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Information around the type of cards that will be accepted.
+/// Object that contains information about the types of cards that the processing account accepts.
 /// </summary>
 [Serializable]
 public record ProcessingCardAcceptance : IJsonOnDeserialized

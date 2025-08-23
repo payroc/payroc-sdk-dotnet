@@ -26,8 +26,9 @@ public record CreateProcessingAccount : IJsonOnDeserialized
 
     /// <summary>
     /// Collection of individuals that are responsible for a processing account. When you create a processing account, you must indicate at least one owner as either of the following:
-    /// - Control prong - An individual who has a significant equity stake in the business and can make decisions for the processing account. You can add only one control prong to a processing account.
-    /// - Authorized signatory - An individual who doesn't have an equity stake in the business but can make decisions for the processing account.
+    ///
+    /// - **Control prong** - An individual who has a significant equity stake in the business and can make decisions for the processing account. You can add only one control prong to a processing account.
+    /// - **Authorized signatory** - An individual who doesn't have an equity stake in the business but can make decisions for the processing account.
     /// </summary>
     [JsonPropertyName("owners")]
     public IEnumerable<Owner> Owners { get; set; } = new List<Owner>();
@@ -93,7 +94,7 @@ public record CreateProcessingAccount : IJsonOnDeserialized
     public IEnumerable<Contact>? Contacts { get; set; }
 
     /// <summary>
-    /// Object that you can send to include custom data in the request. For more information about how to use metadata, go to [Metadata](/api/metadata).
+    /// Object that you can send to include custom data in the request. For more information about how to use metadata, go to [Metadata](https://docs.payroc.com/api/metadata).
     /// </summary>
     [JsonPropertyName("metadata")]
     public Dictionary<string, string>? Metadata { get; set; }

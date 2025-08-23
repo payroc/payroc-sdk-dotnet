@@ -11,8 +11,6 @@ public readonly record struct StatusAdjustmentToStatus : IStringEnum
 
     public static readonly StatusAdjustmentToStatus Pending = new(Values.Pending);
 
-    public static readonly StatusAdjustmentToStatus Declined = new(Values.Declined);
-
     public StatusAdjustmentToStatus(string value)
     {
         Value = value;
@@ -63,7 +61,5 @@ public readonly record struct StatusAdjustmentToStatus : IStringEnum
         public const string Ready = "ready";
 
         public const string Pending = "pending";
-
-        public const string Declined = "declined";
     }
 }

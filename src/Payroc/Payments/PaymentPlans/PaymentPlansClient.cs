@@ -17,9 +17,9 @@ public partial class PaymentPlansClient
     }
 
     /// <summary>
-    /// Use this method to retrieve a [paginated](/api/pagination) list of payment plans for a processing terminal.
+    /// Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of payment plans for a processing terminal.
     ///
-    /// **Note:** If you want to view a specific payment plan and you have its paymentPlanId, use our [Retrieve Payment Plan](/api/schema/payments/payment-plans/get) method.
+    /// **Note:** If you want to view a specific payment plan and you have its paymentPlanId, use our [Retrieve Payment Plan](https://docs.payroc.com/api/schema/payments/payment-plans/retrieve) method.
     ///
     /// Our gateway returns the following information about each payment plan in the list:
     ///
@@ -150,14 +150,14 @@ public partial class PaymentPlansClient
     ///
     /// When you create a payment plan you need to provide a unique paymentPlanId that you use to run follow-on actions:
     ///
-    /// -	[Retrieve Payment Plan](/api/schema/payments/payment-plans/get)  - View the details of the payment plan.
-    /// -	[Update Payment Plan](/api/schema/payments/payment-plans/update)  - Update the details of the payment plan.
-    /// -	[Delete Payment Plan](/api/schema/payments/payment-plans/delete)  - Delete the payment plan.
-    /// -	[Create Subscription](/api/schema/payments/subscriptions/create)  - Subscribe a customer to the payment plan.
+    /// -	[Retrieve Payment Plan](https://docs.payroc.com/api/schema/payments/payment-plans/retrieve)  - View the details of the payment plan.
+    /// -	[Update Payment Plan](https://docs.payroc.com/api/schema/payments/payment-plans/partially-update)  - Update the details of the payment plan.
+    /// -	[Delete Payment Plan](https://docs.payroc.com/api/schema/payments/payment-plans/delete)  - Delete the payment plan.
+    /// -	[Create Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/create)  - Subscribe a customer to the payment plan.
     ///
     /// The request includes the following settings:
     ///
-    /// -	**type** - Indicates if our gateway or the merchant collects payments. If the merchant manually collects payments, integrate with the [Pay Manual Subscription](/api/schema/payments/subscriptions/pay) method.
+    /// -	**type** - Indicates if our gateway or the merchant collects payments. If the merchant manually collects payments, integrate with the [Pay Manual Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/pay) method.
     /// -	**recurringOrder** - Amount of each payment if the gateway automatically collect payments.
     /// -	**setupOrder** - Setup fee that our gateway immediately collects from the customer's payment method.
     /// -	**onUpdate and onDelete** - Indicates what happens to associated subscriptions if the merchant updates or deletes the payment plan.
@@ -309,9 +309,9 @@ public partial class PaymentPlansClient
     /// <summary>
     /// Use this method to retrieve information about a payment plan.
     ///
-    /// To retrieve a payment plan, you need its paymentPlanId. Our gateway returned the paymentPlanId in the response of the [Create Payment Plan](/api/schema/payments/payment-plans/create) method.
+    /// To retrieve a payment plan, you need its paymentPlanId. Our gateway returned the paymentPlanId in the response of the [Create Payment Plan](https://docs.payroc.com/api/schema/payments/payment-plans/create) method.
     ///
-    /// **Note:** If you don't have the paymentPlanId, use our [List Payment Plans](/api/schema/payments/payment-plans/list) method to search for the payment plan.
+    /// **Note:** If you don't have the paymentPlanId, use our [List Payment Plans](https://docs.payroc.com/api/schema/payments/payment-plans/list) method to search for the payment plan.
     ///
     /// Our gateway returns the following information about the payment plan:
     ///
@@ -425,7 +425,7 @@ public partial class PaymentPlansClient
     /// The value you sent for the onDelete parameter when you created the payment plan indicates what happens to associated subscriptions when you delete the plan:
     ///
     ///   -	`complete` - Our gateway stops taking payments for the subscriptions associated with the payment plan.
-    ///   -	`continue` - Our gateway continues to take payments for the subscriptions associated with the payment plan. To stop a subscription for a cancelled payment plan, go to the [Deactivate Subscription](/api/schema/payments/subscriptions/deactivate) method.
+    ///   -	`continue` - Our gateway continues to take payments for the subscriptions associated with the payment plan. To stop a subscription for a cancelled payment plan, go to the [Deactivate Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/deactivate) method.
     /// </summary>
     /// <example><code>
     /// await client.Payments.PaymentPlans.DeleteAsync(
@@ -510,9 +510,9 @@ public partial class PaymentPlansClient
     /// <summary>
     /// Use this method to partially update a payment plan. Structure your request to follow the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
     ///
-    /// To update a payment plan, you need its paymentPlanId, which you sent in the request of the [Create Payment Plan](/api/schema/payments/payment-plans/create) method.
+    /// To update a payment plan, you need its paymentPlanId, which you sent in the request of the [Create Payment Plan](https://docs.payroc.com/api/schema/payments/payment-plans/create) method.
     ///
-    /// **Note:** If you don't have the paymentPlanId, use our [List Payment Plans](/api/schema/payments/payment-plans/list) method to search for the payment plan.
+    /// **Note:** If you don't have the paymentPlanId, use our [List Payment Plans](https://docs.payroc.com/api/schema/payments/payment-plans/list) method to search for the payment plan.
     ///
     /// You can update all of the properties of the payment plan except for the paymentPlanId.
     ///

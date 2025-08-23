@@ -8,7 +8,7 @@ namespace Payroc.Funding.FundingRecipients;
 public record CreateFundingRecipient
 {
     /// <summary>
-    /// Unique identifier that you generate for each request. You must use the UUID v4 format for the identifier. For more information about the idempotency key, go to [Idempotency](https://docs.payroc.com/api/idempotency).
+    /// Unique identifier that you generate for each request. You must use the [UUID v4 format](https://www.rfc-editor.org/rfc/rfc4122) for the identifier. For more information about the idempotency key, go to [Idempotency](https://docs.payroc.com/api/idempotency).
     /// </summary>
     [JsonIgnore]
     public required string IdempotencyKey { get; set; }
@@ -50,7 +50,7 @@ public record CreateFundingRecipient
     public IEnumerable<ContactMethod> ContactMethods { get; set; } = new List<ContactMethod>();
 
     /// <summary>
-    /// [Metadata](/api/metadata) object you can use to include custom data with your request.
+    /// [Metadata](https://docs.payroc.com/api/metadata) object you can use to include custom data with your request.
     /// </summary>
     [JsonPropertyName("metadata")]
     public Dictionary<string, string>? Metadata { get; set; }

@@ -15,7 +15,7 @@ public record RewardPayFees : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Fee for the monthly subscription. The value is in the currency's lowest denomination, for example, cents.
+    /// Fee for the monthly subscription for the processing plan. The value is in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("monthlySubscription")]
     public required int MonthlySubscription { get; set; }

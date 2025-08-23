@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains pricing information.
+/// Object that HATEOAS links to the pricing information that we apply to the processing account.
 /// </summary>
 [Serializable]
 public record ProcessingAccountPricing : IJsonOnDeserialized
@@ -15,7 +15,7 @@ public record ProcessingAccountPricing : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// HATEOAS link for pricing information.
+    /// Object that contains HATEOAS links to the pricing information for the processing account.
     /// </summary>
     [JsonPropertyName("link")]
     public ProcessingAccountPricingLink? Link { get; set; }

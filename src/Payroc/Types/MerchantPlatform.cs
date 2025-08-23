@@ -12,21 +12,21 @@ public record MerchantPlatform : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Unique identifier of the merchant platform.
+    /// Unique identifier that we assigned to the merchant platform.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("merchantPlatformId")]
     public string? MerchantPlatformId { get; set; }
 
     /// <summary>
-    /// Date that the merchant platform was created.
+    /// Date that the merchant platform was created. We return this value in the [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("createdDate")]
     public DateTime? CreatedDate { get; set; }
 
     /// <summary>
-    /// Date that the merchant platform was last modified.
+    /// Date that the merchant platform was last modified. We return this value in the [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("lastModifiedDate")]
@@ -36,7 +36,7 @@ public record MerchantPlatform : IJsonOnDeserialized
     public required Business Business { get; set; }
 
     /// <summary>
-    /// Array of processingAccount objects
+    /// Array of processingAccount objects.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("processingAccounts")]
@@ -49,7 +49,7 @@ public record MerchantPlatform : IJsonOnDeserialized
     public Dictionary<string, string>? Metadata { get; set; }
 
     /// <summary>
-    /// Array of useful links related to your request
+    /// Array of useful links related to your request.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("links")]

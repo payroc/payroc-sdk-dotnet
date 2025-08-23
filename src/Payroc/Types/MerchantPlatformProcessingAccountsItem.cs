@@ -12,7 +12,7 @@ public record MerchantPlatformProcessingAccountsItem : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Unique identifier of the processing account.
+    /// Unique identifier that we assigned to the processing account.
     /// </summary>
     [JsonPropertyName("processingAccountId")]
     public string? ProcessingAccountId { get; set; }
@@ -35,6 +35,8 @@ public record MerchantPlatformProcessingAccountsItem : IJsonOnDeserialized
     /// - `terminated` - Processing account is closed.
     /// - `cancelled` - Merchant withdrew the application for the processing account.
     /// - `failed` - An error occurred while we were setting up the processing account.
+    ///
+    /// **Note**: You can subscribe to our processingAccount.status.changed event to get notifications when we update the status of a processing account. For more information about how to subscribe to events, go to [Events List](https://docs.payroc.com/knowledge/events/events-list).
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("status")]

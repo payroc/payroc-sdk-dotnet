@@ -9,7 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains information about card fees.
+/// Object that contains the fees for card transactions.
 /// </summary>
 [JsonConverter(typeof(PricingAgreementUs40ProcessorCard.JsonConverter))]
 [Serializable]

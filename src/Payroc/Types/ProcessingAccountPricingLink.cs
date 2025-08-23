@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// HATEOAS link for pricing information.
+/// Object that contains HATEOAS links to the pricing information for the processing account.
 /// </summary>
 [Serializable]
 public record ProcessingAccountPricingLink : IJsonOnDeserialized
@@ -15,19 +15,19 @@ public record ProcessingAccountPricingLink : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Relationship to the parent resource.
+    /// Indicates the relationship between the current resource and the target resource.
     /// </summary>
     [JsonPropertyName("rel")]
     public string? Rel { get; set; }
 
     /// <summary>
-    /// Link to the resource.
+    /// URL of the target resource.
     /// </summary>
     [JsonPropertyName("href")]
     public string? Href { get; set; }
 
     /// <summary>
-    /// HTTP method you can use to retrieve the resource.
+    /// HTTP method that you need to use with the target resource.
     /// </summary>
     [JsonPropertyName("method")]
     public string? Method { get; set; }
