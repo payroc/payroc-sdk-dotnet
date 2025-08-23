@@ -14,9 +14,15 @@ public record FlatRateFees : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    /// <summary>
+    /// Object that contains the fees for standard card transactions.
+    /// </summary>
     [JsonPropertyName("standardCards")]
     public required ProcessorFee StandardCards { get; set; }
 
+    /// <summary>
+    /// Object that contains the fees for American Express transactions.
+    /// </summary>
     [JsonPropertyName("amex")]
     public FlatRateFeesAmex? Amex { get; set; }
 

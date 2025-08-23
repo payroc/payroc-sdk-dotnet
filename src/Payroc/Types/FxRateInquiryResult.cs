@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains information about the currency conversion rate.
+/// Object that indicates if the customer's card is eligible for Dynamic Currency Conversion (DCC).
 /// </summary>
 [Serializable]
 public record FxRateInquiryResult : IJsonOnDeserialized
@@ -15,7 +15,7 @@ public record FxRateInquiryResult : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Indicates if the card is eligible for DCC.
+    /// Indicates if the card is eligible for Dynamic Currency Conversion (DCC).
     /// </summary>
     [JsonPropertyName("dccOffered")]
     public required bool DccOffered { get; set; }

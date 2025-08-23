@@ -8,6 +8,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains the fees for American Express transactions.
+/// </summary>
 [JsonConverter(typeof(InterchangePlusFeesAmex.JsonConverter))]
 [Serializable]
 public record InterchangePlusFeesAmex

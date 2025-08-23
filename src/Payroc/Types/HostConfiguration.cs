@@ -21,11 +21,14 @@ public record HostConfiguration : IJsonOnDeserialized
     public required string ProcessingTerminalId { get; set; }
 
     /// <summary>
-    /// Unique identifier of the processing account.
+    /// Unique identifier that we assigned to the processing account.
     /// </summary>
     [JsonPropertyName("processingAccountId")]
     public string? ProcessingAccountId { get; set; }
 
+    /// <summary>
+    /// Object that contains the host processor configuration.
+    /// </summary>
     [JsonPropertyName("configuration")]
     public required HostConfigurationConfiguration Configuration { get; set; }
 
