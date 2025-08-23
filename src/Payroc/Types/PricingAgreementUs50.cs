@@ -15,7 +15,7 @@ public record PricingAgreementUs50 : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Indicates the country that the pricing intent applies to.
+    /// Two-digit code for the country that the pricing intent applies to. The format follows the [ISO-3166-1](https://www.iso.org/iso-3166-country-codes.html) standard.
     /// </summary>
     [JsonPropertyName("country")]
     public string Country { get; set; } = "US";

@@ -15,6 +15,9 @@ public record ProcessingTerminalFeatures : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    /// <summary>
+    /// Object that contains the tip settings for the processing terminal.
+    /// </summary>
     [JsonPropertyName("tips")]
     public ProcessingTerminalFeaturesTips? Tips { get; set; }
 

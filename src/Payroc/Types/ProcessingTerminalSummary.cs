@@ -4,6 +4,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains information about the processing terminal.
+/// </summary>
 [Serializable]
 public record ProcessingTerminalSummary : IJsonOnDeserialized
 {
@@ -12,13 +15,13 @@ public record ProcessingTerminalSummary : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Unique identifier of the processing terminal.
+    /// Unique identifier that we assigned to the processing terminal.
     /// </summary>
     [JsonPropertyName("processingTerminalId")]
     public required string ProcessingTerminalId { get; set; }
 
     /// <summary>
-    /// Array of links related to your request. For more information about HATEOAS, go to [Hypermedia as the engine of application state.](https://docs.payroc.com/knowledge/basic-concepts/HATEOAS).
+    /// Array of links related to your request. For more information about HATEOAS, go to [Hypermedia as the engine of application state](https://docs.payroc.com/knowledge/basic-concepts/hypermedia-as-the-engine-of-application-state-hateoas).
     /// </summary>
     [JsonPropertyName("link")]
     public required ProcessingTerminalSummaryLink Link { get; set; }

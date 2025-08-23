@@ -4,6 +4,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains the fees for PIN-debit transactions.
+/// </summary>
 [Serializable]
 public record PinDebit : IJsonOnDeserialized
 {

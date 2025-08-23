@@ -4,6 +4,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains information about the ACH refund policy for the processing account.
+/// </summary>
 [Serializable]
 public record ProcessingAchRefunds : IJsonOnDeserialized
 {

@@ -12,7 +12,7 @@ public record PaginatedProcessingTerminals : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// An array of processing terminal objects.
+    /// Array of processing terminal objects.
     /// </summary>
     [JsonPropertyName("data")]
     public IEnumerable<ProcessingTerminal>? Data { get; set; }

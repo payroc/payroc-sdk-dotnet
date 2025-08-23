@@ -12,7 +12,7 @@ public record ProcessingTerminal : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Unique identifier that our gateway assigned to the terminal.
+    /// Unique identifier that we assigned to the processing terminal.
     /// </summary>
     [JsonPropertyName("processingTerminalId")]
     public required string ProcessingTerminalId { get; set; }
@@ -77,6 +77,9 @@ public record ProcessingTerminal : IJsonOnDeserialized
     [JsonPropertyName("receiptNotifications")]
     public ProcessingTerminalReceiptNotifications? ReceiptNotifications { get; set; }
 
+    /// <summary>
+    /// Array of device objects. Each object contains information about a device using the processing terminal's configuration.
+    /// </summary>
     [JsonPropertyName("devices")]
     public IEnumerable<ProcessingTerminalDevicesItem>? Devices { get; set; }
 

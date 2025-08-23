@@ -4,6 +4,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains information about other speciality cards that the merchant accepts.
+/// </summary>
 [Serializable]
 public record ProcessingCardAcceptanceSpecialityCardsOther : IJsonOnDeserialized
 {

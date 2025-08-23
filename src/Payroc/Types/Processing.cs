@@ -4,6 +4,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Object that contains information about how we process transactions for the account.
+/// </summary>
 [Serializable]
 public record Processing : IJsonOnDeserialized
 {
@@ -48,11 +51,14 @@ public record Processing : IJsonOnDeserialized
     [JsonPropertyName("monthsOfOperation")]
     public IEnumerable<ProcessingMonthsOfOperationItem>? MonthsOfOperation { get; set; }
 
+    /// <summary>
+    /// Object that contains information about Automated Clearing House (ACH) transactions.
+    /// </summary>
     [JsonPropertyName("ach")]
     public ProcessingAch? Ach { get; set; }
 
     /// <summary>
-    /// Information around the type of cards that will be accepted.
+    /// Object that contains information about the types of cards that the processing account accepts.
     /// </summary>
     [JsonPropertyName("cardAcceptance")]
     public ProcessingCardAcceptance? CardAcceptance { get; set; }

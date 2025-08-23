@@ -9,7 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains pricing information.
+/// Object that contains HATEOAS links to the pricing information that we apply to the processing account.
 /// </summary>
 [JsonConverter(typeof(Pricing.JsonConverter))]
 [Serializable]
