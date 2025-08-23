@@ -18,7 +18,7 @@ public record TransactionResult : IJsonOnDeserialized
     /// Transaction type.
     /// </summary>
     [JsonPropertyName("type")]
-    public required TransactionResultType Type { get; set; }
+    public TransactionResultType? Type { get; set; }
 
     /// <summary>
     /// Sub-type for EBT transactions
@@ -67,7 +67,7 @@ public record TransactionResult : IJsonOnDeserialized
     /// Response description from the processor.
     /// </summary>
     [JsonPropertyName("responseMessage")]
-    public required string ResponseMessage { get; set; }
+    public string? ResponseMessage { get; set; }
 
     /// <summary>
     /// Original response code that the processor sent.
