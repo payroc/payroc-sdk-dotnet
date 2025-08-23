@@ -13,7 +13,7 @@ public record ListEventSubscriptionsRequest
     public ListEventSubscriptionsRequestStatus? Status { get; set; }
 
     /// <summary>
-    /// Filter event subscriptions by event type. For a complete list of events, go to [Events](#https://docs.payroc.com/knowledge/basic-concepts/events).
+    /// Filter event subscriptions by an event type. For a list of event types, go to [Events List](https://docs.payroc.com/knowledge/events/events-list).
     /// </summary>
     [JsonIgnore]
     public string? Event { get; set; }
