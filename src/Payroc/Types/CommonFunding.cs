@@ -40,7 +40,7 @@ public record CommonFunding : IJsonOnDeserialized
     public int? AcceleratedFundingFee { get; set; }
 
     /// <summary>
-    /// Indicates if we should collect fees from the merchant's account each day.
+    /// Indicates if we collect fees from the merchant's account each day.
     /// </summary>
     [JsonPropertyName("dailyDiscount")]
     public bool? DailyDiscount { get; set; }

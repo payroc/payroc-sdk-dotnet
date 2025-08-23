@@ -33,7 +33,7 @@ public record BaseUs : IJsonOnDeserialized
     public int? RegulatoryAssistanceProgram { get; set; }
 
     /// <summary>
-    /// Monthly fee for PCI noncompliance. The value is in the currency's lowest denomination, for example, cents.
+    /// Fee that we apply each month if you aren't compliant with PCI standards. The value is in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("pciNonCompliance")]
     public int? PciNonCompliance { get; set; }

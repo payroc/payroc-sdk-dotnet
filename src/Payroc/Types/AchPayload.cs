@@ -16,7 +16,8 @@ public record AchPayload : IJsonOnDeserialized
 
     /// <summary>
     /// Indicates the customer’s account type.
-    /// **Note:** Credit card transactions don't require **accountType**.
+    ///
+    /// **Note:** For bank account details, send a value for accountType.
     /// </summary>
     [JsonPropertyName("accountType")]
     public AchPayloadAccountType? AccountType { get; set; }
@@ -40,13 +41,13 @@ public record AchPayload : IJsonOnDeserialized
 
     /// <summary>
     /// Customer’s bank account number.
-    /// **Note:** In responses, our gateway shows only the last four digits of the account number. For example, `*****5929`.
+    /// **Note:** In responses, our gateway shows only the last four digits of the account number, for example, `*****5929`.
     /// </summary>
     [JsonPropertyName("accountNumber")]
     public required string AccountNumber { get; set; }
 
     /// <summary>
-    /// Routing number of the customer’s account.
+    /// Nine-digit number that identifies the customer's bank.
     /// </summary>
     [JsonPropertyName("routingNumber")]
     public required string RoutingNumber { get; set; }

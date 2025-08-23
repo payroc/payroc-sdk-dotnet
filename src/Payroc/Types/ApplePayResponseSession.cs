@@ -12,7 +12,9 @@ public record ApplePayResponseSession : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Object that Apple returns when they start the merchant's Apple Pay session. Use this object to retrieve the cardholder's encrypted payment details from Apple.
+    /// Object that Apple returns when they start the merchant's Apple Pay session.
+    ///
+    /// Send the content in this object to Apple to retrieve the cardholder's encrypted payment details.
     /// </summary>
     [JsonPropertyName("startSessionResponse")]
     public required string StartSessionResponse { get; set; }
