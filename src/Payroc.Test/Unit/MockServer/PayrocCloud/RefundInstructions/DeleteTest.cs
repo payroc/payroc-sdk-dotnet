@@ -1,0 +1,28 @@
+using NUnit.Framework;
+using Payroc.PayrocCloud.RefundInstructions;
+using Payroc.Test.Unit.MockServer;
+
+namespace Payroc.Test.Unit.MockServer.PayrocCloud.RefundInstructions;
+
+[TestFixture]
+public class DeleteTest : BaseMockServerTest
+{
+    [Test]
+    public void MockServerTest()
+    {
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/refund-instructions/refundInstructionId")
+                    .UsingDelete()
+            )
+            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
+
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.PayrocCloud.RefundInstructions.DeleteAsync(
+                new DeleteRefundInstructionsRequest { RefundInstructionId = "refundInstructionId" }
+            )
+        );
+    }
+}

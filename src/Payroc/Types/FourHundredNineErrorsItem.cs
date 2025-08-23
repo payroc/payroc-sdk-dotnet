@@ -5,29 +5,29 @@ using Payroc.Core;
 namespace Payroc;
 
 [Serializable]
-public record SignatureByDirectLinkLink : IJsonOnDeserialized
+public record FourHundredNineErrorsItem : IJsonOnDeserialized
 {
     [JsonExtensionData]
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Indicates the relationship between the current resource and the target resource.
+    /// The parameter or field causing the issues
     /// </summary>
-    [JsonPropertyName("rel")]
-    public required string Rel { get; set; }
+    [JsonPropertyName("parameter")]
+    public string? Parameter { get; set; }
 
     /// <summary>
-    /// HTTP method that you need to use with the target resource.
+    /// Short detail of the validation errors
     /// </summary>
-    [JsonPropertyName("method")]
-    public required string Method { get; set; }
+    [JsonPropertyName("detail")]
+    public string? Detail { get; set; }
 
     /// <summary>
-    /// URL of the target resource.
+    /// Error message
     /// </summary>
-    [JsonPropertyName("href")]
-    public required string Href { get; set; }
+    [JsonPropertyName("message")]
+    public string? Message { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
