@@ -32,6 +32,7 @@ public record ListBoardingMerchantPlatformProcessingAccountsRequest
 
     /// <summary>
     /// Indicates if you want to return closed processing accounts. This includes processing accounts that have a status of `terminated`, `cancelled`, or `rejected`.
+    /// **Note**: By default, we return only open processing accounts.
     /// </summary>
     [JsonIgnore]
     public bool? IncludeClosed { get; set; }

@@ -8,7 +8,7 @@ namespace Payroc.Boarding.Owners;
 public record UpdateOwnersRequest
 {
     /// <summary>
-    /// Unique identifier for the owner.
+    /// Unique identifier that we assigned to the owner.
     /// </summary>
     [JsonIgnore]
     public required int OwnerId { get; set; }
