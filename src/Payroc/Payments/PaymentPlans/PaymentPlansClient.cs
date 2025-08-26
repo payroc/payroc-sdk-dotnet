@@ -418,9 +418,9 @@ public partial class PaymentPlansClient
     ///
     /// &gt; **Important:** When you delete a payment plan, you can’t recover it. You also won’t be able to add subscriptions to the payment plan.
     ///
-    /// To delete a payment plan, you need its paymentPlanId, which you sent in the request of the [Create Payment Plan](/api/schema/payments/payment-plans/create) method.
+    /// To delete a payment plan, you need its paymentPlanId, which you sent in the request of the [Create Payment Plan](https://docs.payroc.com/api/schema/payments/payment-plans/create) method.
     ///
-    /// **Note:** If you don't have the paymentPlanId, use our [List Payment Plans](/api/schema/payments/payment-plans/list) method to search for the payment plan.
+    /// **Note:** If you don't have the paymentPlanId, use our [List Payment Plans](https://docs.payroc.com/api/schema/payments/payment-plans/list) method to search for the payment plan.
     ///
     /// The value you sent for the onDelete parameter when you created the payment plan indicates what happens to associated subscriptions when you delete the plan:
     ///

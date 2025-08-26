@@ -39,7 +39,7 @@ public class RetrieveFxRatesTest : BaseMockServerTest
               "processingTerminalId": "1234001",
               "operator": "Jane",
               "baseAmount": 10000,
-              "baseCurrency": "USD",
+              "baseCurrency": "EUR",
               "inquiryResult": {
                 "dccOffered": true,
                 "causeOfRejection": "Service unavailable"
@@ -47,11 +47,11 @@ public class RetrieveFxRatesTest : BaseMockServerTest
               "dccOffer": {
                 "accepted": true,
                 "offerReference": "DCC123456789",
-                "fxAmount": 13612,
+                "fxAmount": 16125,
                 "fxCurrency": "JPY",
                 "fxCurrencyCode": "392",
                 "fxCurrencyExponent": 0,
-                "fxRate": 136.1248,
+                "fxRate": 161.2542,
                 "markup": 3,
                 "markupText": "3.5% mark-up applied.",
                 "provider": "FEXCO",

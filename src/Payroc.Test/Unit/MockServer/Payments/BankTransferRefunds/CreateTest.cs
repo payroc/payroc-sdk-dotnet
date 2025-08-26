@@ -22,6 +22,15 @@ public class CreateTest : BaseMockServerTest
                 "amount": 4999,
                 "currency": "USD"
               },
+              "customer": {
+                "notificationLanguage": "en",
+                "contactMethods": [
+                  {
+                    "value": "jane.doe@example.com",
+                    "type": "email"
+                  }
+                ]
+              },
               "refundMethod": {
                 "nameOnAccount": "Shara Hazel Hopper",
                 "accountNumber": "1234567890",
@@ -135,6 +144,18 @@ public class CreateTest : BaseMockServerTest
                     Description = "Refund for order OrderRef6543",
                     Amount = 4999,
                     Currency = Currency.Usd,
+                },
+                Customer = new BankTransferCustomer
+                {
+                    NotificationLanguage = BankTransferCustomerNotificationLanguage.En,
+                    ContactMethods = new List<ContactMethod>()
+                    {
+                        new ContactMethod(
+                            new ContactMethod.Email(
+                                new ContactMethodEmail { Value = "jane.doe@example.com" }
+                            )
+                        ),
+                    },
                 },
                 RefundMethod = new BankTransferUnreferencedRefundRefundMethod(
                     new BankTransferUnreferencedRefundRefundMethod.Ach(

@@ -987,7 +987,7 @@ public partial class SettlementClient
     /// </summary>
     /// <example><code>
     /// await client.Reporting.Settlement.RetrieveAchDepositAsync(
-    ///     new RetrieveAchDepositSettlementRequest { AchDepositId = 99 }
+    ///     new RetrieveAchDepositSettlementRequest { AchDepositId = 1 }
     /// );
     /// </code></example>
     public async Task<AchDeposit> RetrieveAchDepositAsync(
@@ -1083,7 +1083,7 @@ public partial class SettlementClient
     ///         Before = "2571",
     ///         After = "8516",
     ///         Date = new DateOnly(2024, 7, 2),
-    ///         AchDepositId = 99,
+    ///         AchDepositId = 1,
     ///         MerchantId = "4525644354",
     ///     }
     /// );

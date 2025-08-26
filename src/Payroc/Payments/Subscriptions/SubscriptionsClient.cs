@@ -16,9 +16,9 @@ public partial class SubscriptionsClient
     }
 
     /// <summary>
-    /// Use this method to return a [paginated](/api/pagination) list of subscriptions.
+    /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of subscriptions.
     ///
-    /// Note: If you want to view a specific subscription and you have its subscriptionId, use our [Retrieve subscription](/api/schema/payments/subscriptions/get) method.
+    /// Note: If you want to view a specific subscription and you have its subscriptionId, use our [Retrieve subscription](https://docs.payroc.com/api/schema/payments/subscriptions/retrieve) method.
     ///
     /// Use query parameters to filter the list of results that we return, for example, to search for subscriptions for a customer, a payment plan, or frequency.
     ///
@@ -195,14 +195,14 @@ public partial class SubscriptionsClient
     ///
     /// When you create a subscription you need to provide a unique subscriptionId that you use to run follow-on actions:
     ///
-    /// - [Retrieve Subscription](/api/schema/payments/subscriptions/get) - View the details of the subscription.
-    /// - [Update Subscription](/api/schema/payments/subscriptions/patch) - Update the details of the subscription.
-    /// - [Deactivate Subscription](/api/schema/payments/subscriptions/deactivate) - Stop taking payments for the subscription.
-    /// - [Re-activate Subscription](/api/schema/payments/subscriptions/reactivate) - Start taking payments again for the subscription.
-    /// - [Pay Manual Subscription](/api/schema/payments/subscriptions/pay) - Manually collect a payment for the subscription.
+    /// - [Retrieve Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/retrieve) - View the details of the subscription.
+    /// - [Update Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/partially-update) - Update the details of the subscription.
+    /// - [Deactivate Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/deactivate) - Stop taking payments for the subscription.
+    /// - [Re-activate Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/reactivate) - Start taking payments again for the subscription.
+    /// - [Pay Manual Subscription](https://docs.payroc.com/api/schema/payments/subscriptions/pay) - Manually collect a payment for the subscription.
     ///
     /// The request includes the following settings:
-    /// - **paymentPlanId** - Unique identifier of the payment plan that the merchant wants to use.
+    /// - **paymentPlanId** - Unique identifier of the payment plan that the merchant wants to use. If you don't have the paymentPlanId, use our [List Payment Plans](https://docs.payroc.com/api/schema/payments/payment-plans/list) method to search for the payment plan.
     /// - **paymentMethod** - Object that contains information about the secure token, which represents the customer's card details or bank account details.
     /// - **startDate** - Date that you want to start to take payments.
     ///
@@ -360,9 +360,9 @@ public partial class SubscriptionsClient
     /// <summary>
     /// Use this method to retrieve information about a subscription.
     ///
-    /// To retrieve a subscription, you need its subscriptionId. You sent the subscriptionId in the request of the [Create subscription](/api/schema/payments/subscriptions/create) method.
+    /// To retrieve a subscription, you need its subscriptionId. You sent the subscriptionId in the request of the [Create subscription](https://docs.payroc.com/api/schema/payments/subscriptions/create) method.
     ///
-    /// **Note:** If you don't have the subscriptionId, use our [List subscriptions](/api/schema/payments/subscriptions/list) method to search for the subscription.
+    /// **Note:** If you don't have the subscriptionId, use our [List subscriptions](https://docs.payroc.com/api/schema/payments/subscriptions/list) method to search for the subscription.
     ///
     /// Our gateway returns information about the following for the subscription:
     ///

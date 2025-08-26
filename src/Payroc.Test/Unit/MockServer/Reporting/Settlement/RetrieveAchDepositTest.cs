@@ -49,9 +49,7 @@ public class RetrieveAchDepositTest : BaseMockServerTest
             """;
 
         Server
-            .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("/ach-deposits/99").UsingGet()
-            )
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/ach-deposits/1").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -60,7 +58,7 @@ public class RetrieveAchDepositTest : BaseMockServerTest
             );
 
         var response = await Client.Reporting.Settlement.RetrieveAchDepositAsync(
-            new RetrieveAchDepositSettlementRequest { AchDepositId = 99 }
+            new RetrieveAchDepositSettlementRequest { AchDepositId = 1 }
         );
         Assert.That(
             response,

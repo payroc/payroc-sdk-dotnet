@@ -246,7 +246,10 @@ public partial class PaymentInstructionsClient
     /// </summary>
     /// <example><code>
     /// await client.PayrocCloud.PaymentInstructions.DeleteAsync(
-    ///     new DeletePaymentInstructionsRequest { PaymentInstructionId = "paymentInstructionId" }
+    ///     new DeletePaymentInstructionsRequest
+    ///     {
+    ///         PaymentInstructionId = "e743a9165d134678a9100ebba3b29597",
+    ///     }
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task DeleteAsync(

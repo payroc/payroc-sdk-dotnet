@@ -47,7 +47,9 @@ public class CaptureTest : BaseMockServerTest
                   "subtotal": 2899,
                   "cashbackAmount": 0,
                   "tip": {
-                    "type": "percentage"
+                    "type": "percentage",
+                    "amount": 500,
+                    "percentage": 10
                   },
                   "taxes": [
                     {
