@@ -14,8 +14,7 @@ public partial class BasePayrocClient
     private readonly RawClient _client;
 
     public BasePayrocClient(
-        string? clientId = null,
-        string? clientSecret = null,
+        string? apiKey = null,
         ClientOptions? clientOptions = null
     )
     {
@@ -25,6 +24,7 @@ public partial class BasePayrocClient
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Payroc" },
                 { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Payroc/0.0.28" },
             }
         );
         clientOptions ??= new ClientOptions();
@@ -36,8 +36,7 @@ public partial class BasePayrocClient
             }
         }
         var tokenProvider = new OAuthTokenProvider(
-            clientId,
-            clientSecret,
+            apiKey,
             new AuthClient(new RawClient(clientOptions.Clone()))
         );
         clientOptions.Headers["Authorization"] = new Func<string>(() =>
