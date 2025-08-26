@@ -26,7 +26,7 @@ components:
           examples:
             notAuthorized:
               $ref: '#/components/examples/notAuthorized'
-    
+
   schemas:
     '401':
       type: object

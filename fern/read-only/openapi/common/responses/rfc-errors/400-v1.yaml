@@ -100,4 +100,4 @@ components:
       errors:
         - parameter: before
           detail: invalid value
-          message: Expected integer, got abc   
+          message: Expected integer, got abc
