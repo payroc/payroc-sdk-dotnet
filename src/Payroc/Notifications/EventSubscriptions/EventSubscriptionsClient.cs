@@ -129,7 +129,7 @@ public partial class EventSubscriptionsClient
     }
 
     /// <summary>
-    /// Use this method to creatre an event subscription that we use to notify you when an event occurs, for example, when we change the status of a processing account.
+    /// Use this method to create an event subscription that we use to notify you when an event occurs, for example, when we change the status of a processing account.
     ///
     /// In the request, include the events that you want to subscribe to and the public endpoint that we send event notifications to. For a complete list of events that you can subscribe to, go to [Events List](https://docs.payroc.com/knowledge/events/events-list).
     ///
@@ -527,14 +527,16 @@ public partial class EventSubscriptionsClient
     }
 
     /// <summary>
-    /// Use this method to partially update an event subscription. You can make the following updates to the event subscription:
-    ///   - Add or remove events that you have subscribed to.
-    ///   - Update information about your endpoint and who we email if we can't contact your endpoint.
-    ///   - Turn on or turn off notifications for the event.
-    ///     &lt;br/&gt;
-    /// Structure your request to follow the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902/) standard.
+    /// Use this method to partially update an event subscription. Structure your request to follow the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
     ///
-    /// **Note:** You need the subscriptionId that we sent you when you created the event subscription. If you don't know the subscriptionId, go to [List event subscriptions](#listEventSubscriptions).
+    /// To update an event subscription, you need its subscriptionId. Our gateway returned the subscriptionId in the id field in the response of the [Create Event Subscription](https://docs.payroc.com/api/schema/notifications/event-subscriptions/create) method.
+    ///
+    /// **Note:** If you don't have the subscriptionId, use our [List Event Subscriptions](https://docs.payroc.com/api/schema/notifications/event-subscriptions/list) method to search for the subscription.
+    ///
+    /// You can update the following properties of an event subscription:
+    /// - **eventTypes** - Subscribe to new events or remove events that you are subscribed to.
+    /// - **notifications** - Information about your endpoint and who we email if we can't contact your endpoint.
+    /// - **enabled** - Turn on or turn off notifications for the subscription.
     /// </summary>
     /// <example><code>
     /// await client.Notifications.EventSubscriptions.PartiallyUpdateAsync(
