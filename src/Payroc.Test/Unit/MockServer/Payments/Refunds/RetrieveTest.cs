@@ -140,8 +140,7 @@ public class RetrieveTest : BaseMockServerTest
                 "adjustTip",
                 "addSignature",
                 "setAsReady",
-                "setAsPending",
-                "setAsDeclined"
+                "setAsPending"
               ],
               "transactionResult": {
                 "type": "refund",

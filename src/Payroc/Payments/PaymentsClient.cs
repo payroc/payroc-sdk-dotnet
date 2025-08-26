@@ -260,11 +260,11 @@ public partial class PaymentsClient
     ///
     /// In the response, our gateway returns information about the card payment and a paymentId, which you need for the following methods:
     ///
-    /// -	[Retrieve payment](/api/schema/payments/get) - View the details of the card payment.
-    /// -	[Adjust payment](/api/schema/payments/adjust) - Update the details of the card payment.
-    /// -	[Capture payment](/api/schema/payments/capture)  - Capture the pre-authorization.
-    /// -	[Reverse payment](/api/schema/payments/reverse)  - Cancel the card payment if it's in an open batch.
-    /// -	[Refund payment](/api/schema/payments/refund)  - Run a referenced refund to return funds to the payment card.
+    /// -	[Retrieve payment](https://docs.payroc.com/api/schema/payments/retrieve) - View the details of the card payment.
+    /// -	[Adjust payment](https://docs.payroc.com/api/schema/payments/adjust) - Update the details of the card payment.
+    /// -	[Capture payment](https://docs.payroc.com/api/schema/payments/capture)  - Capture the pre-authorization.
+    /// -	[Reverse payment](https://docs.payroc.com/api/schema/payments/reverse)  - Cancel the card payment if it's in an open batch.
+    /// -	[Refund payment](https://docs.payroc.com/api/schema/payments/refund)  - Run a referenced refund to return funds to the payment card.
     ///
     /// **Payment methods**
     ///
@@ -556,9 +556,9 @@ public partial class PaymentsClient
     /// <summary>
     /// Use this method to adjust a payment in an open batch.
     ///
-    /// To adjust a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+    /// To adjust a payment, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](https://docs.payroc.com/api/schema/payments/create) method.
     ///
-    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+    /// **Note:** If you don't have the paymentId, use our [List Payments](https://docs.payroc.com/api/schema/payments/list) method to search for the payment.
     ///
     /// You can adjust the following details of the payment:
     /// - Sale amount and tip amount
@@ -580,7 +580,7 @@ public partial class PaymentsClient
     ///                 new PaymentAdjustmentAdjustmentsItem.Customer(new CustomerAdjustment())
     ///             ),
     ///             new PaymentAdjustmentAdjustmentsItem(
-    ///                 new PaymentAdjustmentAdjustmentsItem.Order(new OrderAdjustment { Amount = 1000000 })
+    ///                 new PaymentAdjustmentAdjustmentsItem.Order(new OrderAdjustment { Amount = 4999 })
     ///             ),
     ///         },
     ///     }
@@ -689,9 +689,9 @@ public partial class PaymentsClient
     /// <summary>
     /// Use this method to capture a pre-authorization.
     ///
-    /// To capture a pre-authorization, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](/api/schema/payments/create) method.
+    /// To capture a pre-authorization, you need its paymentId. Our gateway returned the paymentId in the response of the [Create Payment](https://docs.payroc.com/api/schema/payments/create) method.
     ///
-    /// **Note:** If you don't have the paymentId, use our [List Payments](/api/schema/payments/list) method to search for the payment.
+    /// **Note:** If you don't have the paymentId, use our [List Payments](https://docs.payroc.com/api/schema/payments/list) method to search for the payment.
     ///
     /// Depending on the amount you want to capture, complete the following:
     /// -	**Capture the full amount of the pre-authorization** - Don't send a value for the amount parameter in your request.

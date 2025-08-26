@@ -28,7 +28,9 @@ public partial class MerchantPlatformsClient
     /// For each merchant platform, we also return its merchantPlatformId and its linked processingAccountIds, which you can use to perform follow-on actions.
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.MerchantPlatforms.ListAsync(new ListMerchantPlatformsRequest());
+    /// await client.Boarding.MerchantPlatforms.ListAsync(
+    ///     new ListMerchantPlatformsRequest { Before = "2571", After = "8516" }
+    /// );
     /// </code></example>
     public async Task<PayrocPager<MerchantPlatform>> ListAsync(
         ListMerchantPlatformsRequest request,

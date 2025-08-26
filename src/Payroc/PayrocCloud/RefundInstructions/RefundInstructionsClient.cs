@@ -246,7 +246,7 @@ public partial class RefundInstructionsClient
     /// </summary>
     /// <example><code>
     /// await client.PayrocCloud.RefundInstructions.DeleteAsync(
-    ///     new DeleteRefundInstructionsRequest { RefundInstructionId = "refundInstructionId" }
+    ///     new DeleteRefundInstructionsRequest { RefundInstructionId = "a37439165d134678a9100ebba3b29597" }
     /// );
     /// </code></example>
     public async global::System.Threading.Tasks.Task DeleteAsync(

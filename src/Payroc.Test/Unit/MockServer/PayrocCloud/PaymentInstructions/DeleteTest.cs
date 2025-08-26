@@ -14,7 +14,7 @@ public class DeleteTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/payment-instructions/paymentInstructionId")
+                    .WithPath("/payment-instructions/e743a9165d134678a9100ebba3b29597")
                     .UsingDelete()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
@@ -23,7 +23,7 @@ public class DeleteTest : BaseMockServerTest
             await Client.PayrocCloud.PaymentInstructions.DeleteAsync(
                 new DeletePaymentInstructionsRequest
                 {
-                    PaymentInstructionId = "paymentInstructionId",
+                    PaymentInstructionId = "e743a9165d134678a9100ebba3b29597",
                 }
             )
         );

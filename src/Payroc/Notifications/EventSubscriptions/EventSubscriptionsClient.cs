@@ -32,7 +32,9 @@ public partial class EventSubscriptionsClient
     /// For each event subscription, we also return its id, which you can use to perform follow-on actions.
     /// </summary>
     /// <example><code>
-    /// await client.Notifications.EventSubscriptions.ListAsync(new ListEventSubscriptionsRequest());
+    /// await client.Notifications.EventSubscriptions.ListAsync(
+    ///     new ListEventSubscriptionsRequest { Event = "processingAccount.status.changed" }
+    /// );
     /// </code></example>
     public async Task<PayrocPager<EventSubscription>> ListAsync(
         ListEventSubscriptionsRequest request,

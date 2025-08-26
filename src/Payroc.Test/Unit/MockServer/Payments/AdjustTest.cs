@@ -20,7 +20,7 @@ public class AdjustTest : BaseMockServerTest
                   "type": "customer"
                 },
                 {
-                  "amount": 1000000,
+                  "amount": 4999,
                   "type": "order"
                 }
               ]
@@ -42,7 +42,9 @@ public class AdjustTest : BaseMockServerTest
                   "subtotal": 2899,
                   "cashbackAmount": 0,
                   "tip": {
-                    "type": "percentage"
+                    "type": "percentage",
+                    "amount": 500,
+                    "percentage": 10
                   },
                   "taxes": [
                     {
@@ -262,7 +264,7 @@ public class AdjustTest : BaseMockServerTest
                     ),
                     new PaymentAdjustmentAdjustmentsItem(
                         new PaymentAdjustmentAdjustmentsItem.Order(
-                            new OrderAdjustment { Amount = 1000000 }
+                            new OrderAdjustment { Amount = 4999 }
                         )
                     ),
                 },

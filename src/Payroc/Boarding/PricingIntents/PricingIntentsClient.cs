@@ -29,7 +29,9 @@ public partial class PricingIntentsClient
     /// For each pricing intent, we also return its pricingIntentId which you can use to perform follow-on actions.
     /// </summary>
     /// <example><code>
-    /// await client.Boarding.PricingIntents.ListAsync(new ListPricingIntentsRequest());
+    /// await client.Boarding.PricingIntents.ListAsync(
+    ///     new ListPricingIntentsRequest { Before = "2571", After = "8516" }
+    /// );
     /// </code></example>
     public async Task<PayrocPager<PricingIntent50>> ListAsync(
         ListPricingIntentsRequest request,

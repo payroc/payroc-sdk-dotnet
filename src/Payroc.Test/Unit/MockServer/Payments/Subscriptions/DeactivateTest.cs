@@ -57,6 +57,9 @@ public class DeactivateTest : BaseMockServerTest
                     "bypass": false,
                     "amount": 217,
                     "percentage": 5
+                  },
+                  "convenienceFee": {
+                    "amount": 25
                   }
                 }
               },
@@ -76,6 +79,9 @@ public class DeactivateTest : BaseMockServerTest
                     "bypass": false,
                     "amount": 217,
                     "percentage": 5
+                  },
+                  "convenienceFee": {
+                    "amount": 25
                   }
                 }
               },

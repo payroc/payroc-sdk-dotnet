@@ -330,9 +330,9 @@ public class CreateProcessingAccountTest : BaseMockServerTest
               ],
               "signature": {
                 "link": {
-                  "rel": "agreement",
+                  "rel": "previous",
                   "method": "get",
-                  "href": "https://us.agreementexpress.net/mv2/viewer2.jsp?docId=00000000-0000-0000-0000-000000000000"
+                  "href": "<uri>"
                 },
                 "type": "requestedViaDirectLink"
               },
