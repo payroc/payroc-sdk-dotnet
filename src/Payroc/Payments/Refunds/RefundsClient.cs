@@ -444,9 +444,9 @@ public partial class RefundsClient
     /// <summary>
     /// Use this method to adjust a refund in an open batch.
     ///
-    /// To adjust a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/refund) method or the [Create Refund](/api/schema/payments/refunds/create) method.
+    /// To adjust a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](https://docs.payroc.com/api/schema/payments/refund) method or the [Create Refund](https://docs.payroc.com/api/schema/payments/refunds/create) method.
     ///
-    /// **Note:** If you don’t have the refundId, use our [List Refunds](/api/schema/payments/refunds/list) method to search for the refund.
+    /// **Note:** If you don’t have the refundId, use our [List Refunds](https://docs.payroc.com/api/schema/payments/refunds/list) method to search for the refund.
     ///
     /// You can adjust the following details of the refund:
     /// - Customer details, including shipping address and contact information.
@@ -578,9 +578,9 @@ public partial class RefundsClient
     /// <summary>
     /// Use this method to cancel a refund in an open batch.
     ///
-    /// To cancel a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](/api/schema/payments/refund) or [Create Refund](/api/schema/payments/refunds/create) method.
+    /// To cancel a refund, you need its refundId. Our gateway returned the refundId in the response of the [Refund Payment](https://docs.payroc.com/api/schema/payments/refund) or [Create Refund](https://docs.payroc.com/api/schema/payments/refunds/create) method.
     ///
-    /// **Note:** If you don’t have the refundId, use our [List Refunds](/api/schema/payments/refunds/list) method to search for the refund.
+    /// **Note:** If you don’t have the refundId, use our [List Refunds](https://docs.payroc.com/api/schema/payments/refunds/list) method to search for the refund.
     ///
     /// If your request is successful, the gateway removes the refund from the merchant’s open batch and no funds are returned to the cardholder’s account.
     /// </summary>

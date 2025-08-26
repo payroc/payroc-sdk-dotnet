@@ -17,7 +17,7 @@ public class ListProcessingAccountFundingAccountsTest : BaseMockServerTest
             [
               {
                 "fundingAccountId": 123,
-                "createdDate": "2024-01-15T09:30:00.000Z",
+                "createdDate": "2024-07-02T12:00:00.000Z",
                 "lastModifiedDate": "2024-07-02T12:00:00.000Z",
                 "status": "approved",
                 "type": "checking",

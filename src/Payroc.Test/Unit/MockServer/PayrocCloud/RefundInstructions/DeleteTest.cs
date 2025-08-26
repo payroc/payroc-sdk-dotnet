@@ -14,14 +14,17 @@ public class DeleteTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/refund-instructions/refundInstructionId")
+                    .WithPath("/refund-instructions/a37439165d134678a9100ebba3b29597")
                     .UsingDelete()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(async () =>
             await Client.PayrocCloud.RefundInstructions.DeleteAsync(
-                new DeleteRefundInstructionsRequest { RefundInstructionId = "refundInstructionId" }
+                new DeleteRefundInstructionsRequest
+                {
+                    RefundInstructionId = "a37439165d134678a9100ebba3b29597",
+                }
             )
         );
     }

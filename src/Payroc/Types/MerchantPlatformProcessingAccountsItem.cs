@@ -21,7 +21,7 @@ public record MerchantPlatformProcessingAccountsItem : IJsonOnDeserialized
     /// Trading name of the business.
     /// </summary>
     [JsonPropertyName("doingBusinessAs")]
-    public string? DoingBusinessAs { get; set; }
+    public required string DoingBusinessAs { get; set; }
 
     /// <summary>
     /// Status of the processing account.

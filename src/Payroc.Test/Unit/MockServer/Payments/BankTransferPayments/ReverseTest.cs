@@ -27,6 +27,7 @@ public class ReverseTest : BaseMockServerTest
                   "subtotal": 4347,
                   "tip": {
                     "type": "percentage",
+                    "amount": 500,
                     "percentage": 10
                   },
                   "taxes": [

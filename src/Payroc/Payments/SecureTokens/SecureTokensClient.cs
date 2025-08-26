@@ -17,9 +17,9 @@ public partial class SecureTokensClient
     }
 
     /// <summary>
-    /// Use this method to return a [paginated](/api/pagination) list of secure tokens.
+    /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of secure tokens.
     ///
-    /// **Note:** If you want to view a specific seure token and you have its secureTokenId, use our [Retrieve Secure Token](/api/schema/payments/secure-tokens/get) method.
+    /// **Note:** If you want to view a specific seure token and you have its secureTokenId, use our [Retrieve Secure Token](https://docs.payroc.com/api/schema/payments/secure-tokens/retrieve) method.
     ///
     /// Use query parameters to filter the list of results that we return, for example, to search for secure tokens by customer or by the first four digits of a card number.
     ///
@@ -183,14 +183,14 @@ public partial class SecureTokensClient
     /// Use this method to create a secure token that represents a customer's payment details.
     ///
     /// When you create a secure token, you need to generate and provide a secureTokenId that you use to run follow-on actions:
-    /// - [Retrieve Secure Token](/api/schema/payments/secure-tokens/get) – View the details of the secure token.
-    /// - [Delete Secure Token](/api/schema/payments/secure-tokens/delete) – Delete the secure token.
-    /// - [Update Secure Token](/api/schema/payments/secure-tokens/update) – Update the details of the secure token.
-    /// - [Update Account Details](/api/schema/payments/secure-tokens/account-update) – Update the secure token with the details from a single-use token.
+    /// - [Retrieve Secure Token](https://docs.payroc.com/api/schema/payments/secure-tokens/retrieve) – View the details of the secure token.
+    /// - [Delete Secure Token](https://docs.payroc.com/api/schema/payments/secure-tokens/delete) – Delete the secure token.
+    /// - [Update Secure Token](https://docs.payroc.com/api/schema/payments/secure-tokens/partially-update) – Update the details of the secure token.
+    /// - [Update Account Details](https://docs.payroc.com/api/schema/payments/secure-tokens/update-account) – Update the secure token with the details from a single-use token.
     ///
     /// **Note:** If you don't generate a secureTokenId to identify the token, our gateway generates a unique identifier and returns it in the response.
     ///
-    /// If the request is successful, our gateway returns a token that the merchant can use in transactions instead of the customer's sensitive payment details, for example, when they [run a sale](/api/schema/payments/create).
+    /// If the request is successful, our gateway returns a token that the merchant can use in transactions instead of the customer's sensitive payment details, for example, when they [run a sale](https://docs.payroc.com/api/schema/payments/create).
     /// </summary>
     /// <example><code>
     /// await client.Payments.SecureTokens.CreateAsync(
