@@ -26,7 +26,7 @@ components:
             examples:
               apiError:
                 $ref : '#/components/examples/apiError'
-    
+
   schemas:
     '500':
       type: object
