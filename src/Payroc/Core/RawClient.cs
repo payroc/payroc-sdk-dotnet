@@ -19,16 +19,16 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<Payroc.Core.ApiResponse> MakeRequestAsync(
-        Payroc.Core.BaseRequest request,
+    internal Task<global::Payroc.Core.ApiResponse> MakeRequestAsync(
+        global::Payroc.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<Payroc.Core.ApiResponse> SendRequestAsync(
-        Payroc.Core.BaseRequest request,
+    internal async Task<global::Payroc.Core.ApiResponse> SendRequestAsync(
+        global::Payroc.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<Payroc.Core.ApiResponse> SendRequestAsync(
+    internal async Task<global::Payroc.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -109,7 +109,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<Payroc.Core.ApiResponse> SendWithRetriesAsync(
+    private async Task<global::Payroc.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -122,7 +122,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent)
         {
-            return new Payroc.Core.ApiResponse
+            return new global::Payroc.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
                 Raw = response,
@@ -144,7 +144,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 .ConfigureAwait(false);
         }
 
-        return new Payroc.Core.ApiResponse
+        return new global::Payroc.Core.ApiResponse
         {
             StatusCode = (int)response.StatusCode,
             Raw = response,
@@ -168,7 +168,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(Payroc.Core.BaseRequest request)
+    internal HttpRequestMessage CreateHttpRequest(global::Payroc.Core.BaseRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -184,7 +184,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(Payroc.Core.BaseRequest request)
+    private static string BuildUrl(global::Payroc.Core.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -208,7 +208,9 @@ internal partial class RawClient(ClientOptions clientOptions)
                 {
                     var items = collection
                         .Cast<object>()
-                        .Select(value => $"{queryItem.Key}={value}")
+                        .Select(value =>
+                            $"{Uri.EscapeDataString(queryItem.Key)}={Uri.EscapeDataString(value.ToString())}"
+                        )
                         .ToList();
                     if (items.Any())
                     {
@@ -217,7 +219,8 @@ internal partial class RawClient(ClientOptions clientOptions)
                 }
                 else
                 {
-                    current += $"{queryItem.Key}={queryItem.Value}&";
+                    current +=
+                        $"{Uri.EscapeDataString(queryItem.Key)}={Uri.EscapeDataString(queryItem.Value)}&";
                 }
 
                 return current;
@@ -228,7 +231,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     private static List<KeyValuePair<string, string>> GetQueryParameters(
-        Payroc.Core.BaseRequest request
+        global::Payroc.Core.BaseRequest request
     )
     {
         var result = TransformToKeyValuePairs(request.Query);
@@ -384,26 +387,26 @@ internal partial class RawClient(ClientOptions clientOptions)
     }
 
     /// <inheritdoc />
-    [Obsolete("Use Payroc.Core.ApiResponse instead.")]
-    internal record ApiResponse : Payroc.Core.ApiResponse;
+    [Obsolete("Use global::Payroc.Core.ApiResponse instead.")]
+    internal record ApiResponse : global::Payroc.Core.ApiResponse;
 
     /// <inheritdoc />
-    [Obsolete("Use Payroc.Core.BaseRequest instead.")]
-    internal abstract record BaseApiRequest : Payroc.Core.BaseRequest;
+    [Obsolete("Use global::Payroc.Core.BaseRequest instead.")]
+    internal abstract record BaseApiRequest : global::Payroc.Core.BaseRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use Payroc.Core.EmptyRequest instead.")]
-    internal abstract record EmptyApiRequest : Payroc.Core.EmptyRequest;
+    [Obsolete("Use global::Payroc.Core.EmptyRequest instead.")]
+    internal abstract record EmptyApiRequest : global::Payroc.Core.EmptyRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use Payroc.Core.JsonRequest instead.")]
-    internal abstract record JsonApiRequest : Payroc.Core.JsonRequest;
+    [Obsolete("Use global::Payroc.Core.JsonRequest instead.")]
+    internal abstract record JsonApiRequest : global::Payroc.Core.JsonRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use Payroc.Core.MultipartFormRequest instead.")]
-    internal abstract record MultipartFormRequest : Payroc.Core.MultipartFormRequest;
+    [Obsolete("Use global::Payroc.Core.MultipartFormRequest instead.")]
+    internal abstract record MultipartFormRequest : global::Payroc.Core.MultipartFormRequest;
 
     /// <inheritdoc />
-    [Obsolete("Use Payroc.Core.StreamRequest instead.")]
-    internal abstract record StreamApiRequest : Payroc.Core.StreamRequest;
+    [Obsolete("Use global::Payroc.Core.StreamRequest instead.")]
+    internal abstract record StreamApiRequest : global::Payroc.Core.StreamRequest;
 }

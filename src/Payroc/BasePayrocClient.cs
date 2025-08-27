@@ -24,7 +24,6 @@ public partial class BasePayrocClient
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Payroc" },
                 { "X-Fern-SDK-Version", Version.Current },
-                { "User-Agent", "Payroc/0.0.28" },
             }
         );
         clientOptions ??= new ClientOptions();
