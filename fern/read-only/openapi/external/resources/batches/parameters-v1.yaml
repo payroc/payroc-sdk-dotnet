@@ -10,7 +10,7 @@ components:
       name: date
       in: query
       required: true
-      description: Date that the merchant submitted the batch. The format of this value is **YYYY-MM-DD**.
+      description: Filter batches by the date that they were submitted. The format of this value is **YYYY-MM-DD**.
       schema:
         type: string
         format: date
