@@ -47,21 +47,6 @@ public class PaymentRequestFactory
                     }
                 }
             },
-            PaymentMethod = new(new PaymentRequestPaymentMethod.Card(new CardPayload
-            {
-                CardDetails = new CardPayloadCardDetails.Keyed(new KeyedCardDetails() 
-                {
-                    KeyedData = new KeyedCardDetailsKeyedData.PlainText( new PlainTextKeyedDataFormat()
-                    {
-                        Device = new()
-                        {
-                            Model = DeviceModel.PaxA80,
-                            SerialNumber = "WPC202833004712"
-                        },
-                        ExpiryDate = "1225",
-                        CardNumber = "4539858876047062"
-                    })
-                })
-            }))
+            PaymentMethod = new(new PaymentRequestPaymentMethod.Card(CardPayloadFactory.Create()))
         };
 }
