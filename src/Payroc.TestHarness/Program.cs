@@ -1,6 +1,4 @@
 ﻿using Payroc;
-using Payroc.Payments;
-using Payroc.TestHarness.Debugging;
 using Payroc.TestHarness.Factory;
 
 Console.WriteLine("Starting Payroc SDK test harness...");
@@ -47,6 +45,10 @@ var processingTerminalId = "5984001";
 // Payment Reversal
 //var reversalRequest = PaymentReversalFactory.Create(processingTerminalId, paymentId);
 //var reversal = await client.Payments.ReverseAsync(reversalRequest);
+
+// Card Verification
+var cardVerificationRequest = CardVerificationRequestFactory.Create(processingTerminalId);
+var cardVerification = await client.Payments.Cards.VerifyAsync(cardVerificationRequest);
 
 Console.WriteLine("Testing complete...");
 Console.ReadLine();
