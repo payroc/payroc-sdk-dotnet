@@ -12,11 +12,11 @@ public partial class OAuthTokenProvider
 
     private string _clientId;
 
-    private string _clientSecret;
+    private string? _clientSecret;
 
     private AuthClient _client;
 
-    public OAuthTokenProvider(string clientId, string clientSecret, AuthClient client)
+    public OAuthTokenProvider(string clientId, string? clientSecret, AuthClient client)
     {
         _clientId = clientId;
         _clientSecret = clientSecret;
