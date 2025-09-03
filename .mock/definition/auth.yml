@@ -1,0 +1,56 @@
+types:
+  GetTokenResponse:
+    properties:
+      access_token: string
+      token_type: string
+      expires_in: integer
+      scope: optional<string>
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    retrieveToken:
+      path: /authorize
+      method: POST
+      auth: true
+      docs: Obtain an access token using client credentials
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Request an access token
+      request:
+        name: RetrieveTokenAuthRequest
+        headers:
+          x-api-key:
+            type: string
+            name: apiKey
+            docs: The API key of the application
+        body:
+          properties:
+            client_id:
+              type: string
+              docs: The client ID of the application
+            client_secret:
+              type: string
+              docs: The client secret of the application
+        content-type: application/json
+      response:
+        docs: Successful response
+        type: GetTokenResponse
+        status-code: 200
+      url: identity
+      examples:
+        - headers:
+            x-api-key: x-api-key
+          request:
+            client_id: client_id
+            client_secret: client_secret
+          response:
+            body:
+              access_token: access_token
+              token_type: token_type
+              expires_in: 1
+              scope: scope
+  source:
+    openapi: read-only/openapi/external/universal-api-v1.yaml

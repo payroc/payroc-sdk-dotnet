@@ -1,0 +1,22 @@
+name: api
+error-discrimination:
+  strategy: status-code
+display-name: Payroc API
+environments:
+  Production:
+    urls:
+      api: https://api.payroc.com/v1
+      identity: https://identity.payroc.com
+  UAT:
+    urls:
+      api: https://api.uat.payroc.com/v1
+      identity: https://identity.uat.payroc.com
+default-environment: Production
+default-url: api
+auth-schemes:
+  OAuth:
+    scheme: oauth
+    type: client-credentials
+    get-token:
+      endpoint: POST /authorize
+auth: OAuth

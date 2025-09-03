@@ -1,0 +1,347 @@
+imports:
+  root: ../__package__.yml
+types:
+  CardVerificationRequestCard:
+    discriminant: type
+    base-properties: {}
+    docs: Object that contains information about the card.
+    union:
+      card:
+        type: root.CardPayload
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  BalanceInquiryCard:
+    discriminant: type
+    base-properties: {}
+    docs: Object that contains information about the card.
+    union:
+      card:
+        type: root.CardPayload
+      singleUseToken:
+        type: root.SingleUseTokenPayload
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  BinLookupCard:
+    discriminant: type
+    base-properties: {}
+    docs: Object that contains information about the card.
+    union:
+      card:
+        type: root.CardPayload
+      cardBin:
+        type: root.CardBinPayload
+      secureToken:
+        type: root.SecureTokenPayload
+      digitalWallet:
+        type: root.DigitalWalletPayload
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    verify:
+      path: /cards/verify
+      method: POST
+      auth: true
+      docs: >-
+        Verify that a card is valid. For banks that do not support verification,
+        we charge a micro deposit that we void immediately.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Verify a card
+      request:
+        name: CardVerificationRequest
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the [UUID v4 format](https://www.rfc-editor.org/rfc/rfc4122) for
+              the identifier. For more information about the idempotency key, go
+              to [Idempotency](https://docs.payroc.com/api/idempotency).
+        body:
+          properties:
+            processingTerminalId:
+              type: string
+              docs: Unique identifier that we assigned to the terminal.
+              validation:
+                minLength: 4
+                maxLength: 50
+            operator:
+              type: optional<string>
+              docs: Operator who requested to verify the card.
+              validation:
+                minLength: 0
+                maxLength: 50
+            customer: optional<root.Customer>
+            card:
+              type: CardVerificationRequestCard
+              docs: Object that contains information about the card.
+        content-type: application/json
+      response:
+        docs: >-
+          Successful request. Returns the verification status of the card
+          details.
+        type: root.CardVerificationResult
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Card Verification
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            processingTerminalId: '1234001'
+            operator: Jane
+            card:
+              cardDetails:
+                device:
+                  model: bbposChp
+                  serialNumber: '1850010868'
+                rawData: >-
+                  A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+                entryMethod: raw
+              type: card
+          response:
+            body:
+              operator: Jane
+              processingTerminalId: '1234001'
+              card:
+                type: Visa Credit
+                entryMethod: keyed
+                cardholderName: Sarah Hazel Hopper
+                cardholderSignature: >-
+                  a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                cardNumber: 453985******7062
+                expiryDate: '1225'
+                secureToken:
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  customerName: Sarah Hazel Hopper
+                  token: '296753123456'
+                  status: notValidated
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+                securityChecks:
+                  cvvResult: M
+                  avsResult: 'Y'
+                emvTags:
+                  - hex: 9F36
+                    value: '001234'
+                  - hex: 5F2A
+                    value: '0840'
+                balances:
+                  - benefitCategory: cash
+                    amount: 50000
+                    currency: USD
+                  - benefitCategory: foodStamp
+                    amount: 10000
+                    currency: USD
+              verified: true
+              transactionResult:
+                type: sale
+                ebtType: cashPurchase
+                status: ready
+                approvalCode: approvalCode
+                authorizedAmount: 1000000
+                currency: AED
+                responseCode: A
+                responseMessage: APPROVAL
+                processorResponseCode: '00'
+                cardSchemeReferenceId: cardSchemeReferenceId
+    viewBalance:
+      path: /cards/balance
+      method: POST
+      auth: true
+      docs: >
+        Use this method to view the balance of an Electronic Benefit Transfer
+        (EBT) card.  
+
+
+        If the request is successful, our gateway returns the current balance of
+        an EBT card. 
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: View EBT balance
+      request:
+        name: BalanceInquiry
+        body:
+          properties:
+            processingTerminalId:
+              type: string
+              docs: Unique identifier that we assigned to the terminal.
+              validation:
+                minLength: 4
+                maxLength: 50
+            operator:
+              type: optional<string>
+              docs: Operator who requested the balance inquiry.
+              validation:
+                minLength: 0
+                maxLength: 50
+            currency: root.Currency
+            customer: optional<root.Customer>
+            card:
+              type: BalanceInquiryCard
+              docs: Object that contains information about the card.
+        content-type: application/json
+      response:
+        docs: Successful request. Returns the current balance of the EBT card.
+        type: root.Balance
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Card Balance
+          request:
+            processingTerminalId: '1234001'
+            operator: Jane
+            currency: USD
+            card:
+              cardDetails:
+                device:
+                  model: bbposChp
+                  serialNumber: '1850010868'
+                rawData: >-
+                  A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+                entryMethod: raw
+              type: card
+          response:
+            body:
+              processingTerminalId: '1234001'
+              operator: Jane
+              card:
+                type: Common Benefit Identification Card
+                entryMethod: keyed
+                cardholderName: Sarah Hazel Hopper
+                cardholderSignature: >-
+                  a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+                cardNumber: 453985******7062
+                expiryDate: '1225'
+                secureToken:
+                  secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                  customerName: Sarah Hazel Hopper
+                  token: '296753123456'
+                  status: notValidated
+                  link:
+                    rel: previous
+                    method: get
+                    href: <uri>
+                securityChecks:
+                  cvvResult: M
+                  avsResult: 'Y'
+                emvTags:
+                  - hex: 9F36
+                    value: '001234'
+                  - hex: 5F2A
+                    value: '0840'
+                balances:
+                  - benefitCategory: cash
+                    amount: 10000
+                    currency: USD
+              responseCode: A
+              responseMessage: Approved
+    lookupBin:
+      path: /cards/bin-lookup
+      method: POST
+      auth: true
+      docs: >
+        Use this method to retrieve information about a debit card, a credit
+        card, or an EBT card. If you apply surcharges to transactions, you can
+        also check if the card supports surcharging.  
+
+
+        In the response, our gateway returns the following information about the
+        card:  
+
+
+        - **Card details** - Information about the card, for example, the
+        issuing bank and the masked card number.  
+
+
+        - **Surcharging information** - If you apply a surcharge to
+        transactions, our gateway checks that the card supports surcharging and
+        returns information about the surcharge. For more information about
+        surcharging, go to [Credit card
+        surcharging](/knowledge/card-payments/credit-card-surcharging). 
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Look up BIN information
+      request:
+        name: BinLookup
+        body:
+          properties:
+            processingTerminalId:
+              type: optional<string>
+              docs: Unique identifier that we assigned to the terminal.
+              validation:
+                minLength: 4
+                maxLength: 50
+            amount:
+              type: optional<long>
+              docs: >-
+                Transaction amount that you send to check the surcharge amount.
+                The value is in the currency's lowest denomination, for example,
+                cents.
+            currency: optional<root.Currency>
+            card:
+              type: BinLookupCard
+              docs: Object that contains information about the card.
+        content-type: application/json
+      response:
+        docs: Successful request. Returns the BIN information.
+        type: root.CardInfo
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: BIN lookup
+          request:
+            processingTerminalId: '1234001'
+            card:
+              cardDetails:
+                device:
+                  model: bbposChp
+                  serialNumber: '1850010868'
+                rawData: >-
+                  A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+                entryMethod: raw
+              type: card
+          response:
+            body:
+              type: MASTERCARD
+              cardNumber: 453985******7062
+              country: US
+              currency: USD
+              debit: false
+              surcharging:
+                allowed: true
+                amount: 87
+                percentage: 3
+                disclosure: A 3% surcharge is applied to cover processing fees.
+  source:
+    openapi: read-only/openapi/external/universal-api-v1.yaml

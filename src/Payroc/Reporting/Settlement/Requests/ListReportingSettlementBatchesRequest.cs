@@ -25,13 +25,13 @@ public record ListReportingSettlementBatchesRequest
     public int? Limit { get; set; }
 
     /// <summary>
-    /// Date that the merchant submitted the batch. The format of this value is **YYYY-MM-DD**.
+    /// Filter batches by the date that they were submitted. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonIgnore]
     public required DateOnly Date { get; set; }
 
     /// <summary>
-    /// Unique identifier of the merchant.
+    /// Filter batches by the unique identifier that the processor assigned to the merchant.
     /// </summary>
     [JsonIgnore]
     public string? MerchantId { get; set; }

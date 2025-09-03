@@ -16,7 +16,16 @@ public partial class SettlementClient
     }
 
     /// <summary>
-    /// Retrieve batch data for a specific date.
+    /// Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of your merchants’ batches that were submitted to the processor on a specific date.
+    ///
+    /// **Note:** If you want to view a specific batch and you have its batchId, use our [Retrieve Batch](https://docs.payroc.com/api/schema/reporting/settlement/retrieve-batch) method.
+    ///
+    /// In your request, include the date that the batch was submitted. You can also use a query parameter to view the batches of a specific merchant.
+    ///
+    /// Our gateway returns the following information about each batch in the list:
+    ///
+    /// -	Transaction information, including the number of transactions and total value of sales.
+    /// -	Merchant information, including the merchant ID (MID) and the processing account that the batch is associated with.
     /// </summary>
     /// <example><code>
     /// await client.Reporting.Settlement.ListBatchesAsync(

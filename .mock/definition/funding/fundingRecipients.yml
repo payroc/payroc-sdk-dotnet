@@ -1,0 +1,750 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /funding-recipients
+      method: GET
+      auth: true
+      docs: Retrieve a list of all funding recipients associated with the ISV.
+      pagination:
+        type: custom
+        results: $response.data
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: List funding recipients
+      request:
+        name: ListFundingRecipientsRequest
+        query-parameters:
+          before:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results before. Typically, this is the first resource on the
+              previous page.
+          after:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results after. Typically, this is the last resource on the
+              previous page.
+          limit:
+            type: optional<integer>
+            default: 10
+            docs: States the total amount of results the response is limited to.
+            validation:
+              max: 100
+      response:
+        docs: >-
+          Successful request. Returns a paginated list of all funding
+          recipients.
+        type: root.PaginatedFundRecipients
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.InternalServerError
+      examples:
+        - name: Paginated funding recipients.
+          query-parameters:
+            before: '2571'
+            after: '8516'
+          response:
+            body:
+              limit: 10
+              count: 1
+              hasMore: false
+              links:
+                - rel: previous
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/funding-recipients?before=234&limit=10
+              data:
+                - recipientId: 234
+                  status: approved
+                  createdDate: '2024-07-02T15:30:00Z'
+                  lastModifiedDate: '2024-07-02T15:30:00Z'
+                  recipientType: privateCorporation
+                  taxId: 12-3456789
+                  charityId: charityId
+                  doingBusinessAs: Pizza Doe
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                  contactMethods:
+                    - value: '2025550164'
+                      type: phone
+                  metadata:
+                    yourCustomField: abc123
+                  owners:
+                    - ownerId: 4564
+                      link:
+                        rel: owner
+                        href: https://api.payroc.com/v1/owners/4564
+                        method: get
+                  fundingAccounts:
+                    - fundingAccountId: 123
+                      status: approved
+                      link:
+                        rel: fundingAccount
+                        href: https://api.payroc.com/v1/funding-accounts/123
+                        method: get
+                    - fundingAccountId: 124
+                      status: hold
+                      link:
+                        rel: fundingAccount
+                        href: https://api.payroc.com/v1/funding-accounts/124
+                        method: get
+        - name: No records found
+          query-parameters:
+            before: '2571'
+            after: '8516'
+          response:
+            body:
+              limit: 10
+              count: 0
+              hasMore: false
+              links:
+                - rel: previous
+                  method: get
+                  href: <uri>
+                - rel: next
+                  method: get
+                  href: <uri>
+              data:
+                - recipientId: 234
+                  status: approved
+                  createdDate: '2024-07-02T15:30:00Z'
+                  lastModifiedDate: '2024-07-02T15:30:00Z'
+                  recipientType: privateCorporation
+                  taxId: 12-3456789
+                  charityId: charityId
+                  doingBusinessAs: doingBusinessAs
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                  contactMethods:
+                    - value: jane.doe@example.com
+                      type: email
+                  metadata:
+                    yourCustomField: abc123
+                  owners:
+                    - ownerId: 4564
+                  fundingAccounts:
+                    - fundingAccountId: 123
+                      status: approved
+                      link:
+                        rel: fundingAccount
+                        href: https://api.payroc.com/v1/funding-accounts/123
+                        method: get
+                    - fundingAccountId: 124
+                      status: rejected
+                      link:
+                        rel: fundingAccount
+                        href: https://api.payroc.com/v1/funding-accounts/124
+                        method: get
+    create:
+      path: /funding-recipients
+      method: POST
+      auth: true
+      docs: Create a funding recipient.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Create funding recipient
+      request:
+        name: CreateFundingRecipient
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the [UUID v4 format](https://www.rfc-editor.org/rfc/rfc4122) for
+              the identifier. For more information about the idempotency key, go
+              to [Idempotency](https://docs.payroc.com/api/idempotency).
+        body:
+          properties:
+            recipientType:
+              type: CreateFundingRecipientRecipientType
+              docs: Type or legal structure of the funding recipient.
+            taxId:
+              type: string
+              docs: >-
+                Employer identification number (EIN) or Social Security number
+                (SSN).
+            charityId:
+              type: optional<string>
+              docs: Government identifier of the charity.
+            doingBusinessAs:
+              type: string
+              docs: Legal name that the business operates under.
+            address:
+              type: root.Address
+              docs: Address of the funding recipient.
+            contactMethods:
+              docs: >-
+                Array of contactMethod objects that you can use to add contact
+                methods for the funding recipient. You must provide at least an
+                email address.
+              type: list<root.ContactMethod>
+            metadata:
+              type: optional<map<string, string>>
+              docs: >-
+                [Metadata](https://docs.payroc.com/api/metadata) object you can
+                use to include custom data with your request.
+            owners:
+              docs: >-
+                Array of owner objects that you can use to add owners to the
+                funding recipient.
+              type: list<root.Owner>
+            fundingAccounts:
+              docs: >-
+                Array of fundingAccount objects that you can use to add funding
+                accounts to the funding recipient.
+              type: list<root.FundingAccount>
+        content-type: application/json
+      response:
+        docs: Successful request. We created the funding recipient.
+        type: root.FundingRecipient
+        status-code: 201
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.InternalServerError
+      examples:
+        - headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            recipientType: privateCorporation
+            taxId: 12-3456789
+            doingBusinessAs: doingBusinessAs
+            address:
+              address1: 1 Example Ave.
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+            contactMethods:
+              - value: jane.doe@example.com
+                type: email
+            owners:
+              - firstName: Jane
+                lastName: Doe
+                dateOfBirth: '1964-03-22'
+                address:
+                  address1: 1 Example Ave.
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+                identifiers:
+                  - type: nationalId
+                    value: xxxxx4320
+                contactMethods:
+                  - value: jane.doe@example.com
+                    type: email
+                relationship:
+                  isControlProng: true
+            fundingAccounts:
+              - type: checking
+                use: credit
+                nameOnAccount: Jane Doe
+                paymentMethods:
+                  - type: ach
+          response:
+            body:
+              recipientId: 234
+              status: approved
+              createdDate: '2024-07-02T15:30:00Z'
+              lastModifiedDate: '2024-07-02T15:30:00Z'
+              recipientType: privateCorporation
+              taxId: 12-3456789
+              charityId: charityId
+              doingBusinessAs: doingBusinessAs
+              address:
+                address1: 1 Example Ave.
+                address2: Example Address Line 2
+                address3: Example Address Line 3
+                city: Chicago
+                state: Illinois
+                country: US
+                postalCode: '60056'
+              contactMethods:
+                - value: jane.doe@example.com
+                  type: email
+              metadata:
+                yourCustomField: abc123
+              owners:
+                - ownerId: 4564
+                  link:
+                    rel: owner
+                    href: https://api.payroc.com/v1/owners/4564
+                    method: get
+              fundingAccounts:
+                - fundingAccountId: 123
+                  status: approved
+                  link:
+                    rel: fundingAccount
+                    href: https://api.payroc.com/v1/funding-accounts/123
+                    method: get
+                - fundingAccountId: 124
+                  status: rejected
+                  link:
+                    rel: fundingAccount
+                    href: https://api.payroc.com/v1/funding-accounts/124
+                    method: get
+    retrieve:
+      path: /funding-recipients/{recipientId}
+      method: GET
+      auth: true
+      docs: Retrieve a specific funding recipient.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Retrieve a funding recipient
+      request:
+        name: RetrieveFundingRecipientsRequest
+        path-parameters:
+          recipientId:
+            type: integer
+            docs: Unique identifier of the funding recipient.
+      response:
+        docs: Successful request. Returns the requested funding recipient.
+        type: root.FundingRecipient
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: Funding recipient.
+          path-parameters:
+            recipientId: 1
+          response:
+            body:
+              recipientId: 234
+              status: approved
+              createdDate: '2024-07-02T15:30:00Z'
+              lastModifiedDate: '2024-07-02T15:30:00Z'
+              recipientType: privateCorporation
+              taxId: 12-3456789
+              charityId: charityId
+              doingBusinessAs: Pizza Doe
+              address:
+                address1: 1 Example Ave.
+                address2: Example Address Line 2
+                address3: Example Address Line 3
+                city: Chicago
+                state: Illinois
+                country: US
+                postalCode: '60056'
+              contactMethods:
+                - value: '2025550164'
+                  type: phone
+              metadata:
+                yourCustomField: abc123
+              owners:
+                - ownerId: 4564
+                  link:
+                    rel: owner
+                    href: https://api.payroc.com/v1/owners/4564
+                    method: get
+              fundingAccounts:
+                - fundingAccountId: 123
+                  status: approved
+                  link:
+                    rel: fundingAccount
+                    href: https://api.payroc.com/v1/funding-accounts/123
+                    method: get
+                - fundingAccountId: 124
+                  status: hold
+                  link:
+                    rel: fundingAccount
+                    href: https://api.payroc.com/v1/funding-accounts/124
+                    method: get
+    update:
+      path: /funding-recipients/{recipientId}
+      method: PUT
+      auth: true
+      docs: >-
+        Update a funding recipient. If you make significant changes, we may need
+        to approve the funding recipient again.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Update funding recipient
+      request:
+        body:
+          type: root.FundingRecipient
+        path-parameters:
+          recipientId:
+            type: integer
+            docs: Unique identifier of the funding recipient.
+        name: UpdateFundingRecipientsRequest
+        content-type: application/json
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            recipientId: 1
+          request:
+            recipientType: privateCorporation
+            taxId: 12-3456789
+            doingBusinessAs: doingBusinessAs
+            address:
+              address1: 1 Example Ave.
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+            contactMethods:
+              - value: jane.doe@example.com
+                type: email
+    delete:
+      path: /funding-recipients/{recipientId}
+      method: DELETE
+      auth: true
+      docs: >-
+        Delete a funding recipient. This includes funding accounts and owners
+        linked to the funding recipient.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Delete funding recipient
+      request:
+        name: DeleteFundingRecipientsRequest
+        path-parameters:
+          recipientId:
+            type: integer
+            docs: Unique identifier of the funding recipient.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            recipientId: 1
+    listAccounts:
+      path: /funding-recipients/{recipientId}/funding-accounts
+      method: GET
+      auth: true
+      docs: Retrieve all funding accounts associated with the funding recipient.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: List funding accounts
+      request:
+        name: ListFundingRecipientFundingAccountsRequest
+        path-parameters:
+          recipientId:
+            type: integer
+            docs: Unique identifier of the funding recipient.
+      response:
+        docs: >-
+          Successful request. Returns a list of all funding accounts associated
+          with the funding recipient.
+        type: list<root.FundingAccount>
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: List of funding accounts
+          path-parameters:
+            recipientId: 1
+          response:
+            body:
+              - fundingAccountId: 123
+                createdDate: '2024-07-02T15:30:00Z'
+                lastModifiedDate: '2024-07-02T15:30:00Z'
+                status: approved
+                type: checking
+                use: credit
+                nameOnAccount: Jane Doe
+                paymentMethods:
+                  - value:
+                      routingNumber: '123456789'
+                      accountNumber: '1234567890'
+                    type: ach
+                metadata:
+                  yourCustomField: abc123
+                links:
+                  - rel: parent
+                    method: get
+                    href: https://api.payroc.com/v1/funding-recipient/234
+              - fundingAccountId: 124
+                createdDate: '2024-07-02T15:30:00Z'
+                lastModifiedDate: '2024-07-02T15:30:00Z'
+                status: pending
+                type: checking
+                use: debit
+                nameOnAccount: Jane Doe
+                paymentMethods:
+                  - value:
+                      routingNumber: '123456789'
+                      accountNumber: '1234567890'
+                    type: ach
+                metadata:
+                  yourCustomField: abc123
+                links:
+                  - rel: parent
+                    method: get
+                    href: https://api.payroc.com/v1/funding-recipient/235
+    createAccount:
+      path: /funding-recipients/{recipientId}/funding-accounts
+      method: POST
+      auth: true
+      docs: Create a new funding account, and add it to the funding recipient.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Create funding account
+      request:
+        body:
+          type: root.FundingAccount
+        path-parameters:
+          recipientId:
+            type: integer
+            docs: Unique identifier of the funding recipient.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the [UUID v4 format](https://www.rfc-editor.org/rfc/rfc4122) for
+              the identifier. For more information about the idempotency key, go
+              to [Idempotency](https://docs.payroc.com/api/idempotency).
+        name: CreateAccountFundingRecipientsRequest
+        content-type: application/json
+      response:
+        docs: >-
+          Successful request. We created the funding account and added it to the
+          funding recipient.
+        type: root.FundingAccount
+        status-code: 201
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.InternalServerError
+      examples:
+        - name: Funding account
+          path-parameters:
+            recipientId: 1
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            type: checking
+            use: credit
+            nameOnAccount: Jane Doe
+            paymentMethods:
+              - type: ach
+          response:
+            body:
+              fundingAccountId: 123
+              createdDate: '2024-07-02T15:30:00Z'
+              lastModifiedDate: '2024-07-02T15:30:00Z'
+              status: approved
+              type: checking
+              use: credit
+              nameOnAccount: Jane Doe
+              paymentMethods:
+                - value:
+                    routingNumber: '123456789'
+                    accountNumber: '1234567890'
+                  type: ach
+              metadata:
+                yourCustomField: abc123
+              links:
+                - rel: parent
+                  method: get
+                  href: https://api.payroc.com/v1/funding-recipient/234
+    listOwners:
+      path: /funding-recipients/{recipientId}/owners
+      method: GET
+      auth: true
+      docs: Retrieve all owners associated with the funding recipient.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: List funding recipient owners
+      request:
+        name: ListFundingRecipientOwnersRequest
+        path-parameters:
+          recipientId:
+            type: integer
+            docs: Unique identifier of the funding recipient.
+      response:
+        docs: >-
+          Successful request. Returns a list of all owners associated with the
+          funding recipient.
+        type: list<root.Owner>
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            recipientId: 1
+          response:
+            body:
+              - ownerId: 4564
+                firstName: Jane
+                middleName: Helen
+                lastName: Doe
+                dateOfBirth: '1964-03-22'
+                address:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+                identifiers:
+                  - type: nationalId
+                    value: xxxxx4320
+                contactMethods:
+                  - value: jane.doe@example.com
+                    type: email
+                relationship:
+                  equityPercentage: 48.5
+                  title: CFO
+                  isControlProng: true
+                  isAuthorizedSignatory: false
+    createOwner:
+      path: /funding-recipients/{recipientId}/owners
+      method: POST
+      auth: true
+      docs: Create a new owner, and add it to the funding recipient.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Create funding recipient owner
+      request:
+        body:
+          type: root.Owner
+        path-parameters:
+          recipientId:
+            type: integer
+            docs: Unique identifier of the funding recipient.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the [UUID v4 format](https://www.rfc-editor.org/rfc/rfc4122) for
+              the identifier. For more information about the idempotency key, go
+              to [Idempotency](https://docs.payroc.com/api/idempotency).
+        name: CreateOwnerFundingRecipientsRequest
+        content-type: application/json
+      response:
+        docs: >-
+          Successful request. We created the owner and added it to the funding
+          recipient.
+        type: root.Owner
+        status-code: 201
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            recipientId: 1
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            firstName: Jane
+            lastName: Doe
+            dateOfBirth: '1964-03-22'
+            address:
+              address1: 1 Example Ave.
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+            identifiers:
+              - type: nationalId
+                value: xxxxx4320
+            contactMethods:
+              - value: jane.doe@example.com
+                type: email
+            relationship:
+              isControlProng: true
+          response:
+            body:
+              ownerId: 4564
+              firstName: Jane
+              middleName: Helen
+              lastName: Doe
+              dateOfBirth: '1964-03-22'
+              address:
+                address1: 1 Example Ave.
+                address2: Example Address Line 2
+                address3: Example Address Line 3
+                city: Chicago
+                state: Illinois
+                country: US
+                postalCode: '60056'
+              identifiers:
+                - type: nationalId
+                  value: xxxxx4320
+              contactMethods:
+                - value: jane.doe@example.com
+                  type: email
+              relationship:
+                equityPercentage: 48.5
+                title: CFO
+                isControlProng: true
+                isAuthorizedSignatory: false
+  source:
+    openapi: read-only/openapi/external/universal-api-v1.yaml
+types:
+  CreateFundingRecipientRecipientType:
+    enum:
+      - privateCorporation
+      - publicCorporation
+      - nonProfit
+      - government
+      - privateLlc
+      - publicLlc
+      - privatePartnership
+      - publicPartnership
+      - soleProprietor
+    docs: Type or legal structure of the funding recipient.
+    inline: true
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml

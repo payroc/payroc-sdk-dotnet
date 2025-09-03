@@ -1,0 +1,1334 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    retrieve:
+      path: /processing-accounts/{processingAccountId}
+      method: GET
+      auth: true
+      docs: "Use this method to retrieve information about a specific processing account.  \n\nTo retrieve a processing account, you need its processingAccountId. Our gateway returned the processingAccountId in the response of the [Create Merchant Platform](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create) method or the [Create Processing Account](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create-processing-account) method.  \n\n**Note:** If you don't have the processingAccountId, use our [List Merchant Platform's Processing Accounts](https://docs.payroc.com/api/schema/boarding/merchant-platforms/list-processing-accounts) method to search for the processing account.  \n\nOur gateway returns the following information about the processing account:  \n\n-\tBusiness information, including the Merchant Category Code (MCC), status of the processing account, and address of the business.  \n-\tProcessing information, including the merchant’s refund policies and card types that the merchant accepts.  \n-\tFunding information, including funding schedules, funding fees, and details for the merchant’s funding accounts.  \n-\tPricing information, including [HATEOAS](https://docs.payroc.com/knowledge/basic-concepts/hypermedia-as-the-engine-of-application-state-hateoas) links to retrieve the pricing program for the processing account.  \n"
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Retrieve processing account
+      request:
+        name: RetrieveProcessingAccountsRequest
+        path-parameters:
+          processingAccountId:
+            type: string
+            docs: Unique identifier that we assigned to the processing account.
+      response:
+        docs: Successful request. Returns the processing account.
+        type: root.ProcessingAccount
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Retrieve processing account
+          path-parameters:
+            processingAccountId: '38765'
+          response:
+            body:
+              processingAccountId: '38765'
+              createdDate: '2024-07-02T12:00:00Z'
+              lastModifiedDate: '2024-07-02T12:00:00Z'
+              status: approved
+              doingBusinessAs: Pizza Doe
+              owners:
+                - ownerId: 4564
+                  firstName: Jane
+                  lastName: Doe
+                  link:
+                    rel: owner
+                    href: https://api.payroc.com/v1/owners/1543
+                    method: get
+              website: www.example.com
+              businessType: restaurant
+              categoryCode: 5999
+              merchandiseOrServiceSold: Pizza
+              businessStartDate: '2020-01-01'
+              timezone: America/Chicago
+              address:
+                address1: 1 Example Ave.
+                address2: Example Address Line 2
+                address3: Example Address Line 3
+                city: Chicago
+                state: Illinois
+                country: US
+                postalCode: '60056'
+              contactMethods:
+                - value: jane.doe@example.com
+                  type: email
+              processing:
+                merchantId: '444412365478965'
+                transactionAmounts:
+                  average: 5000
+                  highest: 10000
+                monthlyAmounts:
+                  average: 50000
+                  highest: 100000
+                volumeBreakdown:
+                  cardPresentKeyed: 47
+                  cardPresentSwiped: 30
+                  mailOrTelephone: 3
+                  ecommerce: 20
+                isSeasonal: true
+                monthsOfOperation:
+                  - jan
+                  - feb
+                ach:
+                  naics: '5812'
+                  previouslyTerminatedForAch: false
+                  refunds:
+                    writtenRefundPolicy: true
+                    refundPolicyUrl: www.example.com/refund-poilcy-url
+                  estimatedMonthlyTransactions: 3000
+                  limits:
+                    singleTransaction: 10000
+                    dailyDeposit: 200000
+                    monthlyDeposit: 6000000
+                  transactionTypes:
+                    - prearrangedPayment
+                    - other
+                  transactionTypesOther: anotherTransactionType
+                cardAcceptance:
+                  debitOnly: false
+                  hsaFsa: false
+                  cardsAccepted:
+                    - visa
+                    - mastercard
+                  specialityCards:
+                    americanExpressDirect:
+                      enabled: true
+                      merchantNumber: abc1234567
+                    electronicBenefitsTransfer:
+                      enabled: true
+                      fnsNumber: '6789012'
+                    other:
+                      wexMerchantNumber: abc1234567
+                      voyagerMerchantId: abc1234567
+                      fleetMerchantId: abc1234567
+              funding:
+                status: enabled
+                fundingSchedule: nextday
+                acceleratedFundingFee: 1999
+                dailyDiscount: false
+                fundingAccounts:
+                  - fundingAccountId: 123
+                    status: pending
+                    link:
+                      rel: fundingAccount
+                      method: get
+                      href: https://api.payroc.com/v1/funding-accounts/123
+              pricing:
+                link:
+                  rel: pricing
+                  href: https://api.payroc.com/v1/processing-accounts/38765/pricing
+                  method: get
+              contacts:
+                - contactId: 1543
+                  firstName: Jane
+                  lastName: Doe
+                  link:
+                    rel: contact
+                    href: https://api.payroc.com/v1/contacts/1543
+                    method: get
+              signature:
+                link:
+                  rel: previous
+                  method: get
+                  href: <uri>
+                type: requestedViaDirectLink
+              metadata:
+                customerId: '2345'
+              links:
+                - rel: previous
+                  method: get
+                  href: <uri>
+    listProcessingAccountFundingAccounts:
+      path: /processing-accounts/{processingAccountId}/funding-accounts
+      method: GET
+      auth: true
+      docs: >-
+        Retrieve a list of funding accounts associated with a processing
+        account.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: List processing account's funding accounts
+      request:
+        name: ListProcessingAccountFundingAccountsRequest
+        path-parameters:
+          processingAccountId:
+            type: string
+            docs: Unique identifier that we assigned to the processing account.
+      response:
+        docs: >-
+          Successful request. Returns a list of funding accounts associated with
+          the processing account.
+        type: list<root.FundingAccount>
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: List of funding accounts
+          path-parameters:
+            processingAccountId: '38765'
+          response:
+            body:
+              - fundingAccountId: 123
+                createdDate: '2024-07-02T12:00:00Z'
+                lastModifiedDate: '2024-07-02T12:00:00Z'
+                status: approved
+                type: checking
+                use: creditAndDebit
+                nameOnAccount: Jane Doe
+                paymentMethods:
+                  - value:
+                      routingNumber: '123456789'
+                      accountNumber: '1234567890'
+                    type: ach
+                metadata:
+                  yourCustomField: abc123
+                links:
+                  - rel: parent
+                    method: get
+                    href: https://api.payroc.com/v1/processing-accounts/38765
+              - fundingAccountId: 124
+                createdDate: '2024-07-02T12:00:00Z'
+                lastModifiedDate: '2024-07-02T12:00:00Z'
+                status: pending
+                type: checking
+                use: creditAndDebit
+                nameOnAccount: Jane Doe
+                paymentMethods:
+                  - value:
+                      routingNumber: '123456789'
+                      accountNumber: '1234567890'
+                    type: ach
+                metadata:
+                  yourCustomField: abc123
+                links:
+                  - rel: parent
+                    method: get
+                    href: https://api.payroc.com/v1/processing-accounts/38765
+    listContacts:
+      path: /processing-accounts/{processingAccountId}/contacts
+      method: GET
+      auth: true
+      docs: >
+        Use this method to retrieve a list of contacts for a processing
+        account.    
+
+
+        **Note:** If you want to view a specific contact and you have their
+        contactId, go to our [Retrieve
+        Contact](https://docs.payroc.com/api/schema/boarding/contacts/retrieve)
+        method.  
+
+
+        To retrieve a list of contacts for a processing account, you need the
+        processingAccountId. Our gateway returned the processingAccountId in the
+        response of the [Create Merchant
+        Platform](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create)
+        method or the [Create Processing
+        Account](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create-processing-account)
+        method.  
+
+
+        Our gateway returns the following information about each contact:  
+
+
+        - Name and contact method, including their phone number or mobile
+        number.  
+
+        - Role within the business, for example, if they are a manager.  
+
+
+        For each contact, we also return a contactId, which you can use to
+        perform follow-on actions.  
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: List contacts
+      request:
+        name: ListContactsProcessingAccountsRequest
+        path-parameters:
+          processingAccountId:
+            type: string
+            docs: Unique identifier that we assigned to the processing account.
+        query-parameters:
+          before:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results before. Typically, this is the first resource on the
+              previous page.
+          after:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results after. Typically, this is the last resource on the
+              previous page.
+          limit:
+            type: optional<integer>
+            default: 10
+            docs: States the total amount of results the response is limited to.
+            validation:
+              max: 100
+      response:
+        docs: >-
+          Successful request. Returns a list of contacts associated with the
+          processing account.
+        type: root.PaginatedContacts
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Paginated list of processing account contacts
+          path-parameters:
+            processingAccountId: '38765'
+          query-parameters:
+            before: '2571'
+            after: '8516'
+          response:
+            body:
+              limit: 2
+              count: 2
+              hasMore: true
+              links:
+                - rel: previous
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/processing-accounts/38765/contacts?before=1543&limit=2
+                - rel: next
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/processing-accounts/38765/contacts?after=87926&limit=2
+              data:
+                - contactId: 1543
+                  type: manager
+                  firstName: Jane
+                  middleName: Helen
+                  lastName: Doe
+                  identifiers:
+                    - type: nationalId
+                      value: xxxxx4320
+                  contactMethods:
+                    - value: '2025550164'
+                      type: phone
+                    - value: '8445557624'
+                      type: mobile
+                    - value: jane.doe@example.com
+                      type: email
+                - contactId: 87926
+                  type: representative
+                  firstName: Fred
+                  middleName: Jim
+                  lastName: Nerk
+                  identifiers:
+                    - type: nationalId
+                      value: xxxxx9876
+                  contactMethods:
+                    - value: '2025550164'
+                      type: phone
+                    - value: '8445557624'
+                      type: mobile
+                    - value: jane.doe@example.com
+                      type: email
+        - name: No records found
+          path-parameters:
+            processingAccountId: '38765'
+          query-parameters:
+            before: '2571'
+            after: '8516'
+          response:
+            body:
+              limit: 10
+              count: 0
+              hasMore: false
+              links:
+                - rel: previous
+                  method: get
+                  href: <uri>
+                - rel: next
+                  method: get
+                  href: <uri>
+              data:
+                - contactId: 1543
+                  type: manager
+                  firstName: Jane
+                  middleName: Helen
+                  lastName: Doe
+                  identifiers:
+                    - type: nationalId
+                      value: 000-00-4320
+                  contactMethods:
+                    - value: jane.doe@example.com
+                      type: email
+    getProcessingAccountPricingAgreement:
+      path: /processing-accounts/{processingAccountId}/pricing
+      method: GET
+      auth: true
+      docs: >
+        Use this method to retrieve the pricing agreement that we apply to a
+        processing account.  
+
+
+        To retrieve the pricing agreement of a processing account, you need the
+        processingAccountId. Our gateway returned the processingAccountId in the
+        response to the [Create Merchant
+        Platform](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create)
+        method and [Create Processing
+        Account](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create-processing-account)
+        method.  
+
+
+        **Note:** If you don't have the processingAccountId, use our [List
+        Merchant Platform’s Processing
+        Accounts](https://docs.payroc.com/api/schema/boarding/merchant-platforms/list-processing-accounts)
+        method to search for the processing account.  
+
+
+        Our gateway returns the following information about the pricing
+        agreement that we apply to the processing account:  
+
+
+        - Base fees, including the annual fee and the fees for each chargeback
+        and retrieval.  
+
+        - Processor fees, including the fees that we apply for processing card
+        and ACH payments.  
+
+        - Gateway fees, including the setup fee and the fees for each
+        transaction.  
+
+        - Service fees, including the fee that we apply if the merchant has
+        signed up to a Hardware Advantage Plan.  
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Get processing account pricing agreement
+      request:
+        name: GetProcessingAccountPricingAgreementProcessingAccountsRequest
+        path-parameters:
+          processingAccountId:
+            type: string
+            docs: Unique identifier that we assigned to the processing account.
+      response:
+        docs: >-
+          Successful request. Returns the pricing agreement for the processing
+          account.
+        type: GetProcessingAccountPricingAgreementProcessingAccountsResponse
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Get processing account pricing agreement
+          path-parameters:
+            processingAccountId: '38765'
+          response:
+            body:
+              country: US
+              version: '5.0'
+              base:
+                addressVerification: 5
+                annualFee:
+                  billInMonth: december
+                  amount: 9900
+                regulatoryAssistanceProgram: 15
+                pciNonCompliance: 4995
+                merchantAdvantage: 10
+                platinumSecurity:
+                  amount: 1295
+                  billingFrequency: monthly
+                maintenance: 500
+                minimum: 100
+                voiceAuthorization: 95
+                chargeback: 2500
+                retrieval: 1500
+                batch: 5
+                earlyTermination: 57500
+              processor:
+                card:
+                  fees:
+                    mastercardVisaDiscover:
+                      volume: 1.25
+                    amex:
+                      volume: 1.25
+                      transaction: 1
+                      type: optBlue
+                    pinDebit:
+                      additionalDiscount: 1.25
+                      transaction: 1
+                      monthlyAccess: 1
+                    enhancedInterchange:
+                      enrollment: 1
+                      creditToMerchant: 1.25
+                  planType: interchangePlus
+                ach:
+                  fees:
+                    transaction: 50
+                    batch: 1000
+                    returns: 400
+                    unauthorizedReturn: 1999
+                    statement: 800
+                    monthlyMinimum: 20000
+                    accountVerification: 100
+                    discountRateUnder10000: 1.25
+                    discountRateAbove10000: 1.25
+              gateway:
+                fees:
+                  monthly: 0
+                  setup: 0
+                  perTransaction: 0
+                  perDeviceMonthly: 0
+              services:
+                - enabled: true
+                  name: hardwareAdvantagePlan
+    listOwners:
+      path: /processing-accounts/{processingAccountId}/owners
+      method: GET
+      auth: true
+      docs: Retrieve owners associated with a processing account.
+      pagination:
+        type: custom
+        results: $response.data
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: List owners
+      request:
+        name: ListProcessingAccountOwnersRequest
+        path-parameters:
+          processingAccountId:
+            type: string
+            docs: Unique identifier that we assigned to the processing account.
+        query-parameters:
+          before:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results before. Typically, this is the first resource on the
+              previous page.
+          after:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results after. Typically, this is the last resource on the
+              previous page.
+          limit:
+            type: optional<integer>
+            default: 10
+            docs: States the total amount of results the response is limited to.
+            validation:
+              max: 100
+      response:
+        docs: >-
+          Successful request. Returns a list of owners associated with the
+          processing account.
+        type: root.PaginatedOwners
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Paginated list of processing account owners
+          path-parameters:
+            processingAccountId: '38765'
+          query-parameters:
+            before: '2571'
+            after: '8516'
+          response:
+            body:
+              limit: 2
+              count: 2
+              hasMore: true
+              links:
+                - rel: previous
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/processing-accounts/38765/owners?before=4564&limit=2
+                - rel: next
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/processing-accounts/38765/owners?after=12346&limit=2
+              data:
+                - ownerId: 4564
+                  firstName: Jane
+                  middleName: Helen
+                  lastName: Doe
+                  dateOfBirth: '1964-03-22'
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                  identifiers:
+                    - type: nationalId
+                      value: xxxxx4320
+                  contactMethods:
+                    - value: jane.doe@example.com
+                      type: email
+                    - value: '2025550164'
+                      type: phone
+                  relationship:
+                    equityPercentage: 48.5
+                    title: CFO
+                    isControlProng: true
+                    isAuthorizedSignatory: false
+                - ownerId: 12346
+                  firstName: Fred
+                  middleName: Jim
+                  lastName: Nerk
+                  dateOfBirth: '1980-01-19'
+                  address:
+                    address1: 2 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                  identifiers:
+                    - type: nationalId
+                      value: xxxxx9876
+                  contactMethods:
+                    - value: jane.doe@example.com
+                      type: email
+                  relationship:
+                    equityPercentage: 51.5
+                    title: CEO
+                    isControlProng: false
+                    isAuthorizedSignatory: true
+        - name: No records found
+          path-parameters:
+            processingAccountId: '38765'
+          query-parameters:
+            before: '2571'
+            after: '8516'
+          response:
+            body:
+              limit: 10
+              count: 0
+              hasMore: false
+              links:
+                - rel: previous
+                  method: get
+                  href: <uri>
+                - rel: next
+                  method: get
+                  href: <uri>
+              data:
+                - ownerId: 4564
+                  firstName: Jane
+                  middleName: Helen
+                  lastName: Doe
+                  dateOfBirth: '1964-03-22'
+                  address:
+                    address1: 1 Example Ave.
+                    address2: Example Address Line 2
+                    address3: Example Address Line 3
+                    city: Chicago
+                    state: Illinois
+                    country: US
+                    postalCode: '60056'
+                  identifiers:
+                    - type: nationalId
+                      value: xxxxx4320
+                  contactMethods:
+                    - value: jane.doe@example.com
+                      type: email
+                  relationship:
+                    equityPercentage: 48.5
+                    title: CFO
+                    isControlProng: true
+                    isAuthorizedSignatory: false
+    createReminder:
+      path: /processing-accounts/{processingAccountId}/reminders
+      method: POST
+      auth: true
+      docs: >
+        Use this method to prompt a merchant to sign their pricing agreement.  
+
+
+        You can create a reminder only if you requested the merchant’s signature
+        by email when you created the processing account for the merchant.  
+
+
+        To create a reminder, you need the processingAccountId. Our gateway
+        returned the processingAccountId in the response of the [Create Merchant
+        Platform](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create)
+        method or [Create Processing
+        Account](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create-processing-account)
+        method. 
+
+
+        **Note:** If you don’t know the processingAccountId, use our [List
+        Merchant Platform’s Processing
+        Accounts](https://docs.payroc.com/api/schema/boarding/merchant-platforms/list-processing-accounts)
+        method to search for the processing account.  
+
+
+        When you send a successful request, we send an email to the merchant
+        that prompts them to sign their pricing agreement.  
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Create reminder for processing account
+      request:
+        body: CreateReminderProcessingAccountsRequestBody
+        path-parameters:
+          processingAccountId:
+            type: string
+            docs: Unique identifier that we assigned to the processing account.
+        name: CreateReminderProcessingAccountsRequest
+        content-type: application/json
+      response:
+        docs: Successful request. We sent the email to the merchant.
+        type: CreateReminderProcessingAccountsResponse
+        status-code: 201
+      errors:
+        - root.BadRequestError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: Reminder created
+          path-parameters:
+            processingAccountId: '38765'
+          request:
+            type: pricingAgreement
+          response:
+            body:
+              reminderId: '1234567'
+              type: pricingAgreement
+    listTerminalOrders:
+      path: /processing-accounts/{processingAccountId}/terminal-orders
+      method: GET
+      auth: true
+      docs: >
+        Use this method to retrieve a
+        [paginated](https://docs.payroc.com/api/pagination) list of terminal
+        orders associated with a processing account.  
+
+
+        **Note:** If you want to view a specific terminal order and you have its
+        terminalOrderId, use our [Retrieve Terminal
+        Order](https://docs.payroc.com/api/schema/boarding/terminal-orders/retrieve)
+        method.  
+
+
+        Use the query parameters to filter the list of results that we return,
+        for example, to search for terminal orders by their status.  
+
+
+        To list the terminal orders for a processing account, you need its
+        processingAccountId. If you don't have the processingAccountId, use our
+        [List Merchant
+        Platforms](https://docs.payroc.com/api/schema/boarding/merchant-platforms/list)
+        method to search for a merchant platform and its processing accounts.
+
+
+        Our gateway returns the following information for each terminal order in
+        the list:  
+
+
+        - Status of the order  
+
+        - Items in the order  
+
+        - Training provider  
+
+        - Shipping information  
+
+
+        For each terminal order, we also return its terminalOrderId, which you
+        can use to perform follow-on actions.   
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: List terminal orders
+      request:
+        name: ListTerminalOrdersProcessingAccountsRequest
+        path-parameters:
+          processingAccountId:
+            type: string
+            docs: Unique identifier that we assigned to the processing account.
+        query-parameters:
+          status: optional<ListTerminalOrdersProcessingAccountsRequestStatus>
+          fromDateTime: optional<datetime>
+          toDateTime: optional<datetime>
+      response:
+        docs: >-
+          Successful request. Returns a list of terminal orders associated with
+          the processing account.
+        type: list<root.TerminalOrder>
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Paginated list of Terminal Orders
+          path-parameters:
+            processingAccountId: '38765'
+          query-parameters:
+            fromDateTime: '2024-09-08T12:00:00Z'
+            toDateTime: '2024-12-08T11:00:00Z'
+          response:
+            body:
+              - terminalOrderId: '12345'
+                status: open
+                trainingProvider: payroc
+                shipping:
+                  preferences:
+                    method: nextDay
+                    saturdayDelivery: true
+                  address:
+                    recipientName: Recipient Name
+                    businessName: Company Ltd
+                    addressLine1: 1 Example Ave.
+                    addressLine2: Example Address Line 2
+                    city: Chicago
+                    state: Illinois
+                    postalCode: '60056'
+                    email: example@mail.com
+                    phone: '2025550164'
+                orderItems:
+                  - links:
+                      - processingTerminalId: '1234001'
+                        link:
+                          href: >-
+                            https://api.payroc.com/v1/processing-terminals/1234001
+                          rel: processingTerminal
+                          method: get
+                    type: solution
+                    solutionTemplateId: Roc Services_DX8000
+                    solutionQuantity: 1
+                    deviceCondition: new
+                    solutionSetup:
+                      timezone: America/Chicago
+                      industryTemplateId: Retail
+                      gatewaySettings:
+                        merchantPortfolioId: Company Ltd
+                        merchantTemplateId: Company Ltd Merchant Template
+                        userTemplateId: Company Ltd User Template
+                        terminalTemplateId: Company Ltd Terminal Template
+                      applicationSettings:
+                        clerkPrompt: false
+                        security:
+                          refundPassword: true
+                          keyedSalePassword: false
+                          reversalPassword: true
+                      deviceSettings:
+                        numberOfMobileUsers: 2
+                        communicationType: wifi
+                      batchClosure:
+                        batchCloseTime: '23:40'
+                        batchCloseType: automatic
+                      receiptNotifications:
+                        emailReceipt: true
+                        smsReceipt: false
+                      taxes:
+                        - taxRate: 6
+                          taxLabel: Sales Tax
+                      tips:
+                        enabled: false
+                      tokenization: true
+                createdDate: '2024-07-02T12:00:00Z'
+                lastModifiedDate: '2024-07-02T12:00:00Z'
+    createTerminalOrder:
+      path: /processing-accounts/{processingAccountId}/terminal-orders
+      method: POST
+      auth: true
+      docs: >
+        Use this method to order and configure terminals for a processing
+        account.  
+
+
+        **Note**: You need the ID of the processing account before you can
+        create an order. If you don't know the processingAccountId, go to the
+        [Retrieve a Merchant
+        Platform](https://docs.payroc.com/api/schema/boarding/merchant-platforms/retrieve)
+        method.  
+
+
+        In the request, specify the gateway settings, device settings, and
+        application settings for the terminal.  
+
+
+        In the response, our gateway returns information about the terminal
+        order including its status and terminalOrderId that you can use to
+        [retrieve the terminal
+        order](https://docs.payroc.com/api/schema/boarding/terminal-orders/retrieve).  
+
+
+        **Note**: You can subscribe to the terminalOrder.status.changed event to
+        get notifications when we update the status of a terminal order. For
+        more information about how to subscribe to events, go to [Events
+        Subscriptions](https://docs.payroc.com/guides/integrate/event-subscriptions).  
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Create terminal order
+      request:
+        name: CreateTerminalOrder
+        path-parameters:
+          processingAccountId:
+            type: string
+            docs: Unique identifier that we assigned to the processing account.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the [UUID v4 format](https://www.rfc-editor.org/rfc/rfc4122) for
+              the identifier. For more information about the idempotency key, go
+              to [Idempotency](https://docs.payroc.com/api/idempotency).
+        body:
+          properties:
+            trainingProvider: optional<root.TrainingProvider>
+            shipping:
+              type: optional<CreateTerminalOrderShipping>
+              docs: >-
+                Object that contains the shipping details for the terminal
+                order. If you don't provide a shipping address, we use the Doing
+                Business As (DBA) address of the processing account.
+            orderItems:
+              docs: >-
+                Array of order items. Provide a minimum of 1 order item and a
+                maximum of 10 order items.
+              type: list<root.OrderItem>
+        content-type: application/json
+      response:
+        docs: Successful request. We created the terminal order.
+        type: root.TerminalOrder
+        status-code: 201
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: Terminal order
+          path-parameters:
+            processingAccountId: '38765'
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            trainingProvider: payroc
+            shipping:
+              preferences:
+                method: nextDay
+                saturdayDelivery: true
+              address:
+                recipientName: Recipient Name
+                businessName: Company Ltd
+                addressLine1: 1 Example Ave.
+                addressLine2: Example Address Line 2
+                city: Chicago
+                state: Illinois
+                postalCode: '60056'
+                email: example@mail.com
+                phone: '2025550164'
+            orderItems:
+              - type: solution
+                solutionTemplateId: Roc Services_DX8000
+                solutionQuantity: 1
+                deviceCondition: new
+                solutionSetup:
+                  timezone: America/Chicago
+                  industryTemplateId: Retail
+                  gatewaySettings:
+                    merchantPortfolioId: Company Ltd
+                    merchantTemplateId: Company Ltd Merchant Template
+                    userTemplateId: Company Ltd User Template
+                    terminalTemplateId: Company Ltd Terminal Template
+                  applicationSettings:
+                    clerkPrompt: false
+                    security:
+                      refundPassword: true
+                      keyedSalePassword: false
+                      reversalPassword: true
+                  deviceSettings:
+                    numberOfMobileUsers: 2
+                    communicationType: wifi
+                  batchClosure:
+                    batchCloseType: automatic
+                  receiptNotifications:
+                    emailReceipt: true
+                    smsReceipt: false
+                  taxes:
+                    - taxRate: 6
+                      taxLabel: Sales Tax
+                  tips:
+                    enabled: false
+                  tokenization: true
+          response:
+            body:
+              terminalOrderId: '12345'
+              status: open
+              trainingProvider: payroc
+              shipping:
+                preferences:
+                  method: nextDay
+                  saturdayDelivery: true
+                address:
+                  recipientName: Recipient Name
+                  businessName: Company Ltd
+                  addressLine1: 1 Example Ave.
+                  addressLine2: Example Address Line 2
+                  city: Chicago
+                  state: Illinois
+                  postalCode: '60056'
+                  email: example@mail.com
+                  phone: '2025550164'
+              orderItems:
+                - links:
+                    - processingTerminalId: processingTerminalId
+                      link:
+                        href: href
+                        rel: rel
+                        method: method
+                  type: solution
+                  solutionTemplateId: Roc Services_DX8000
+                  solutionQuantity: 1
+                  deviceCondition: new
+                  solutionSetup:
+                    timezone: America/Chicago
+                    industryTemplateId: Retail
+                    gatewaySettings:
+                      merchantPortfolioId: Company Ltd
+                      merchantTemplateId: Company Ltd Merchant Template
+                      userTemplateId: Company Ltd User Template
+                      terminalTemplateId: Company Ltd Terminal Template
+                    applicationSettings:
+                      clerkPrompt: false
+                      security:
+                        refundPassword: true
+                        keyedSalePassword: false
+                        reversalPassword: true
+                    deviceSettings:
+                      numberOfMobileUsers: 2
+                      communicationType: wifi
+                    batchClosure:
+                      batchCloseTime: '23:40'
+                      batchCloseType: automatic
+                    receiptNotifications:
+                      emailReceipt: true
+                      smsReceipt: false
+                    taxes:
+                      - taxRate: 6
+                        taxLabel: Sales Tax
+                    tips:
+                      enabled: false
+                    tokenization: true
+              createdDate: '2024-07-02T12:00:00Z'
+              lastModifiedDate: '2024-07-02T12:00:00Z'
+    listProcessingTerminals:
+      path: /processing-accounts/{processingAccountId}/processing-terminals
+      method: GET
+      auth: true
+      docs: >
+        Use this method to retrieve a
+        [paginated](https://docs.payroc.com/api/pagination) list of processing
+        terminals associated with a processing account.  
+
+
+        **Note:** If you want to view the details of a specific processing
+        terminal and you have its processingTerminalId, use our [Retrieve
+        Processing
+        Terminal](https://docs.payroc.com/api/schema/boarding/processing-terminals/retrieve)
+        method.  
+
+
+        To list the terminals for a processing account, you need its
+        processingAccountId. If you don't have the processingAccountId, use our
+        [List Merchant
+        Platforms](https://docs.payroc.com/api/schema/boarding/merchant-platforms/list)
+        method to search for a merchant platform and its processing accounts.   
+
+
+        Our gateway returns the following information for each processing
+        terminal in the list:  
+
+
+        - Status indicating whether the terminal is active or inactive.  
+
+        - Configuration settings, including gateway settings and application
+        settings.  
+
+        - Features, receipt settings, and security settings.  
+
+        - Devices that use the processing terminal's configuration.  
+
+
+        For each processing terminal, we also return its processingTerminalId,
+        which you can use to perform follow-on actions.  
+      pagination:
+        type: custom
+        results: $response.data
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: List processing terminals
+      request:
+        name: ListProcessingTerminalsProcessingAccountsRequest
+        path-parameters:
+          processingAccountId:
+            type: string
+            docs: Unique identifier that we assigned to the processing account.
+        query-parameters:
+          before:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results before. Typically, this is the first resource on the
+              previous page.
+          after:
+            type: optional<string>
+            docs: >-
+              Points to the resource identifier that you want to receive your
+              results after. Typically, this is the last resource on the
+              previous page.
+          limit:
+            type: optional<integer>
+            default: 10
+            docs: States the total amount of results the response is limited to.
+            validation:
+              max: 100
+      response:
+        docs: >-
+          Successful request. Returns a list of processing terminals associated
+          with the processing account.
+        type: root.PaginatedProcessingTerminals
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Paginated list of processing terminals
+          path-parameters:
+            processingAccountId: '38765'
+          query-parameters:
+            before: '2571'
+            after: '8516'
+          response:
+            body:
+              limit: 2
+              count: 2
+              hasMore: true
+              links:
+                - rel: previous
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/processing-accounts/38765/processing-terminals?before=1543&limit=2
+                - rel: next
+                  method: get
+                  href: >-
+                    https://api.payroc.com/v1/processing-accounts/38765/processing-terminals?after=87926&limit=2
+              data:
+                - processingTerminalId: '011234001'
+                  status: active
+                  timezone: Pacific/Midway
+                  program: Payroc Cloud
+                  gateway:
+                    gateway: payroc
+                    terminalTemplateId: Roc Services_DX8000
+                  batchClosure:
+                    batchCloseTime: '23:40'
+                    batchCloseType: automatic
+                  applicationSettings:
+                    invoiceNumberPrompt: true
+                    clerkPrompt: false
+                  features:
+                    tips:
+                      enabled: 'true'
+                    enhancedProcessing:
+                      enabled: true
+                      transactionDataLevel: level2
+                      shippingAddressMode: fullAddress
+                    ebt:
+                      enabled: true
+                      ebtType: foodStamp
+                      fnsNumber: '1234567890'
+                    pinDebitCashback: false
+                    recurringPayments: true
+                    paymentLinks:
+                      enabled: true
+                      logoUrl: LogoPayLink
+                      footerNotes: FooterNotesPayLink
+                    preAuthorizations: true
+                    offlinePayments: true
+                  taxes:
+                    - taxRate: 1.1
+                      taxLabel: taxLabel
+                  security:
+                    tokenization: true
+                    avsPrompt: true
+                    cvvPrompt: true
+                  devices:
+                    - manufacturer: manufacturer
+                      model: model
+                      serialNumber: serialNumber
+  source:
+    openapi: read-only/openapi/external/universal-api-v1.yaml
+types:
+  GetProcessingAccountPricingAgreementProcessingAccountsResponse:
+    discriminated: false
+    union:
+      - type: root.PricingAgreementUs40
+      - type: root.PricingAgreementUs50
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  CreateReminderProcessingAccountsRequestBody:
+    discriminant: type
+    base-properties: {}
+    union:
+      pricingAgreement: root.PricingAgreementReminder
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  CreateReminderProcessingAccountsResponse:
+    discriminant: type
+    base-properties: {}
+    union:
+      pricingAgreement: root.PricingAgreementReminder
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  ListTerminalOrdersProcessingAccountsRequestStatus:
+    enum:
+      - open
+      - held
+      - dispatched
+      - fulfilled
+      - cancelled
+    docs: Filter terminal orders by status.
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  CreateTerminalOrderShippingPreferencesMethod:
+    enum:
+      - nextDay
+      - ground
+    docs: |
+      Shipping method for the terminal order. Send one of the following values:
+        - `nextDay` - We schedule the order to be delivered the next day.
+        - `ground` - We ship the order with ground shipping.
+    default: nextDay
+    inline: true
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  CreateTerminalOrderShippingPreferences:
+    docs: Object that contains the shipping preferences for the terminal order.
+    properties:
+      method:
+        type: optional<CreateTerminalOrderShippingPreferencesMethod>
+        docs: >
+          Shipping method for the terminal order. Send one of the following
+          values:
+            - `nextDay` - We schedule the order to be delivered the next day.
+            - `ground` - We ship the order with ground shipping.
+        default: nextDay
+      saturdayDelivery:
+        type: optional<boolean>
+        docs: >-
+          Indicates if we can schedule the terminal order to be delivered on a
+          Saturday.
+        default: false
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+    inline: true
+  CreateTerminalOrderShippingAddress:
+    docs: Object that contains the shipping address for the terminal order.
+    properties:
+      recipientName:
+        type: string
+        docs: Name of the person receiving the shipment.
+        validation:
+          maxLength: 100
+      businessName:
+        type: optional<string>
+        docs: Name of the business receiving the shipment.
+        validation:
+          maxLength: 100
+      addressLine1:
+        type: string
+        docs: First line of the shipment address.
+        validation:
+          maxLength: 100
+      addressLine2:
+        type: optional<string>
+        docs: Second line of the shipment address.
+        validation:
+          maxLength: 100
+      city:
+        type: string
+        docs: City of the shipment address.
+        validation:
+          maxLength: 50
+      state:
+        type: string
+        docs: State of the shipment address.
+        validation:
+          maxLength: 30
+      postalCode:
+        type: string
+        docs: Postal code of the shipment address.
+        validation:
+          maxLength: 9
+      email:
+        type: string
+        docs: Contact email address for the shipment.
+        validation:
+          format: email
+          maxLength: 100
+      phone:
+        type: optional<string>
+        docs: Contact number for the shipment.
+        validation:
+          maxLength: 15
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+    inline: true
+  CreateTerminalOrderShipping:
+    docs: >-
+      Object that contains the shipping details for the terminal order. If you
+      don't provide a shipping address, we use the Doing Business As (DBA)
+      address of the processing account.
+    properties:
+      preferences:
+        type: optional<CreateTerminalOrderShippingPreferences>
+        docs: Object that contains the shipping preferences for the terminal order.
+      address:
+        type: optional<CreateTerminalOrderShippingAddress>
+        docs: Object that contains the shipping address for the terminal order.
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+    inline: true

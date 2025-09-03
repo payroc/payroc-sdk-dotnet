@@ -1,0 +1,225 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    retrieve:
+      path: /owners/{ownerId}
+      method: GET
+      auth: true
+      docs: >
+        Use this method to retrieve details about an owner of a processing
+        account or an owner associated with a funding recipient.  
+
+
+        To retrieve an owner, you need their ownerId. Our gateway returned the
+        ownerId in the response of the [Create Processing
+        Account](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create-processing-account)
+        method or the [Create Funding Recipient
+        Owner](https://docs.payroc.com/api/schema/funding/funding-recipients/create-owner)
+        method.  
+
+
+        **Note:** If you don't have the ownerId, use the [Retrieve Processing
+        Account](https://docs.payroc.com/api/schema/boarding/processing-accounts/retrieve)
+        method if you are searching for a processing account owner, or use the
+        [List Funding Recipient
+        Owners](https://docs.payroc.com/api/schema/funding/funding-recipients/list-owners)
+        method if you are searching for a funding recipient owner.  
+
+
+        Our gateway returns the following information about an owner:  
+
+        - Name, date of birth, and address.  
+
+        - Contact details, including their email address.  
+
+        - Relationship to the business, including whether they are a control
+        prong.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Retrieve owner
+      request:
+        name: RetrieveOwnersRequest
+        path-parameters:
+          ownerId:
+            type: integer
+            docs: Unique identifier that we assigned to the owner.
+      response:
+        docs: Successful request. Returns the requested owner.
+        type: root.Owner
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - name: Retrieve owner
+          path-parameters:
+            ownerId: 1
+          response:
+            body:
+              ownerId: 4564
+              firstName: Jane
+              middleName: Helen
+              lastName: Doe
+              dateOfBirth: '1964-03-22'
+              address:
+                address1: 1 Example Ave.
+                address2: Example Address Line 2
+                address3: Example Address Line 3
+                city: Chicago
+                state: Illinois
+                country: US
+                postalCode: '60056'
+              identifiers:
+                - type: nationalId
+                  value: xxxxx4320
+              contactMethods:
+                - value: jane.doe@example.com
+                  type: email
+              relationship:
+                equityPercentage: 48.5
+                title: CFO
+                isControlProng: true
+                isAuthorizedSignatory: false
+    update:
+      path: /owners/{ownerId}
+      method: PUT
+      auth: true
+      docs: >
+        > **Important:** You can't update the details of an owner of a
+        processing account.  
+
+
+        Use this method to update the details of an owner associated with a
+        funding recipient.  
+
+
+        To update an owner, you need their ownerId. Our gateway returned the
+        ownerId in the response of the [Create Funding
+        Recipient](https://docs.payroc.com/api/schema/funding/funding-recipients/create)
+        method and the [Create Funding Recipient
+        Owner](https://docs.payroc.com/api/schema/funding/funding-recipients/create-owner)
+        method.   
+
+
+        **Note:** If you don't have the ownerId, use the [List Funding Recipient
+        Owners](https://docs.payroc.com/api/schema/funding/funding-recipients/list-owners)
+        method, the [Retrieve Funding
+        Recipient](https://docs.payroc.com/api/schema/funding/funding-recipients/retrieve)
+        method, or the [List Funding
+        Recipients](https://docs.payroc.com/api/schema/funding/funding-recipients/list)
+        method to search for the funding recipient owner.  
+
+
+        You can update the following details about an owner:  
+
+
+        - Personal details, including their name, date of birth, and address.  
+
+        - Identification details, including their identification type and
+        number.  
+
+        - Contact details, including their email address.  
+
+        - Relationship to the business, including whether they are a control
+        prong.  
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Update owner
+      request:
+        body:
+          type: root.Owner
+        path-parameters:
+          ownerId:
+            type: integer
+            docs: Unique identifier that we assigned to the owner.
+        name: UpdateOwnersRequest
+        content-type: application/json
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Update owner
+          path-parameters:
+            ownerId: 1
+          request:
+            firstName: Jane
+            middleName: Helen
+            lastName: Doe
+            dateOfBirth: '1964-03-22'
+            address:
+              address1: 1 Example Ave.
+              address2: Example Address Line 2
+              address3: Example Address Line 3
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+            identifiers:
+              - type: nationalId
+                value: 000-00-4320
+            contactMethods:
+              - value: jane.doe@example.com
+                type: email
+            relationship:
+              equityPercentage: 48.5
+              title: CFO
+              isControlProng: true
+              isAuthorizedSignatory: false
+    delete:
+      path: /owners/{ownerId}
+      method: DELETE
+      auth: true
+      docs: >
+        > **Important:** You can't delete an owner of a processing account. 
+
+
+        Use this method to delete an owner associated with a funding recipient.
+        You can delete an owner only if the funding recipient has more than one
+        owner.  
+
+
+        To delete an owner, you need their ownerId. Our gateway returned the
+        ownerId in the response of the [Create Funding
+        Recipient](https://docs.payroc.com/api/schema/funding/funding-recipients/create)
+        method and the [Create Funding Recipient
+        Owner](https://docs.payroc.com/api/schema/funding/funding-recipients/create-owner)
+        method.  
+
+
+        **Note:** If you don't have the ownerId, use the [List Funding Recipient
+        Owners](https://docs.payroc.com/api/schema/funding/funding-recipients/list-owners)
+        method, the [Retrieve Funding
+        Recipient](https://docs.payroc.com/api/schema/funding/funding-recipients/retrieve)
+        method, or the [List Funding
+        Recipients](https://docs.payroc.com/api/schema/funding/funding-recipients/list)
+        method to search for the funding recipient owner.  
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Delete owner
+      request:
+        name: DeleteOwnersRequest
+        path-parameters:
+          ownerId:
+            type: integer
+            docs: Unique identifier that we assigned to the owner.
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            ownerId: 1
+  source:
+    openapi: read-only/openapi/external/universal-api-v1.yaml

@@ -1,0 +1,181 @@
+types:
+  FxRateInquiryChannel:
+    enum:
+      - pos
+      - web
+      - moto
+    docs: >-
+      Channel that the merchant used to receive payment details for the
+      transaction.
+    inline: true
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+  FxRateInquiryPaymentMethod:
+    discriminant: type
+    base-properties: {}
+    docs: Object that contains information about the customer's payment details.
+    union:
+      card:
+        type: root.CardPayload
+      secureToken:
+        type: root.SecureTokenPayload
+      digitalWallet:
+        type: root.DigitalWalletPayload
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    retrieveFxRates:
+      path: /fx-rates
+      method: POST
+      auth: true
+      docs: >
+        > **Important:** There are restrictions on which merchants can use this
+        method. For more information, go to [Dynamic Currency
+        Conversion](https://docs.payroc.com/knowledge/card-payments/dynamic-currency-conversion).  
+
+
+        Use this method to check if a card is eligible for Dynamic Currency
+        Conversion (DCC) and to retrieve the conversion rate for a transaction
+        amount. DCC provides a customer with the option to use their card's
+        currency instead of the merchant's currency, for example, in Ireland, an
+        American customer can pay in US dollars instead of Euros.  
+
+
+        The request includes the following:  
+
+
+        - **Payment method** - Card information, a secure token, or digital
+        wallet.  
+
+        - **Transaction information** - Amount and currency of the transaction
+        in the merchant's currency.  
+
+
+        If the card is eligible for DCC, our gateway returns the transaction
+        amount in the card's currency and a dccOffer object that contains
+        information about the conversion rate. The dccOffer object contains the
+        following fields that you need when you [run a
+        sale](https://docs.payroc.com/api/schema/payments/create) or
+        [unreferenced
+        refund](https://docs.payroc.com/api/schema/payments/refunds/create) with
+        DCC:  
+
+        - fxAmount  
+
+        - fxCurrency  
+
+        - fxRate  
+
+        - markup  
+
+        - accepted  
+
+        - offerReference  
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Verify DCC eligibility
+      request:
+        name: FxRateInquiry
+        body:
+          properties:
+            channel:
+              type: FxRateInquiryChannel
+              docs: >-
+                Channel that the merchant used to receive payment details for
+                the transaction.
+            processingTerminalId:
+              type: string
+              docs: Unique identifier that we assigned to the terminal.
+              validation:
+                minLength: 4
+                maxLength: 50
+            operator:
+              type: optional<string>
+              docs: Operator who ran the transaction.
+              validation:
+                minLength: 1
+                maxLength: 50
+            baseAmount:
+              type: long
+              docs: >-
+                Total amount of the transaction in the merchant’s currency. The
+                value is in the currency’s lowest denomination, for example,
+                cents.
+            baseCurrency: root.Currency
+            paymentMethod:
+              type: FxRateInquiryPaymentMethod
+              docs: >-
+                Object that contains information about the customer's payment
+                details.
+        content-type: application/json
+      response:
+        docs: >-
+          Successful request. Returns the currency conversion rate for the
+          transaction.
+        type: root.FxRate
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Fx-Rate
+          request:
+            channel: web
+            processingTerminalId: '1234001'
+            operator: Jane
+            baseAmount: 10000
+            baseCurrency: USD
+            paymentMethod:
+              cardDetails:
+                device:
+                  model: bbposChp
+                  serialNumber: '1850010868'
+                rawData: >-
+                  A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+                entryMethod: raw
+              type: card
+          response:
+            body:
+              processingTerminalId: '1234001'
+              operator: Jane
+              baseAmount: 10000
+              baseCurrency: EUR
+              inquiryResult:
+                dccOffered: true
+                causeOfRejection: Service unavailable
+              dccOffer:
+                accepted: true
+                offerReference: DCC123456789
+                fxAmount: 16125
+                fxCurrency: JPY
+                fxCurrencyCode: '392'
+                fxCurrencyExponent: 0
+                fxRate: 161.2542
+                markup: 3
+                markupText: 3.5% mark-up applied.
+                provider: FEXCO
+                source: REUTERS WHOLESALE INTERBANK
+              cardInfo:
+                type: MASTERCARD
+                cardNumber: 453985******7062
+                country: country
+                currency: AED
+                debit: true
+                surcharging:
+                  allowed: true
+                  amount: 87
+                  percentage: 3
+                  disclosure: A 3% surcharge is applied to cover processing fees.
+  source:
+    openapi: read-only/openapi/external/universal-api-v1.yaml

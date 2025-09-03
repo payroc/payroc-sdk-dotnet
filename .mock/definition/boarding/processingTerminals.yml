@@ -1,0 +1,184 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    retrieve:
+      path: /processing-terminals/{processingTerminalId}
+      method: GET
+      auth: true
+      docs: >
+        **Important:** You can retrieve a processing terminal only if the
+        terminal order was created using the Payroc API.
+
+
+        Use this method to retrieve information about a processing terminal.  
+
+
+        To retrieve a processing terminal, you need its processingTerminalId.
+        Our gateway returned the processingTerminalId in the response of the
+        [Create Terminal
+        Order](https://docs.payroc.com/api/schema/boarding/processing-accounts/create-terminal-order)
+        method.  
+
+
+        **Note:** If you don't have the processingTerminalId, use our [Retrieve
+        Terminal
+        Order](https://docs.payroc.com/api/schema/boarding/terminal-orders/retrieve)
+        method or our [List Processing
+        Terminals](https://docs.payroc.com/api/schema/boarding/processing-accounts/list-processing-terminals)
+        method to search for the processing terminal.  
+
+
+        Our gateway returns the following information about the processing
+        terminal:  
+
+
+        - Status indicating whether the terminal is active or inactive.  
+
+        - Configuration settings, including gateway settings and application
+        settings.  
+
+        - Features, receipt settings, and security settings.  
+
+        - Devices that use the processing terminal's configuration.  
+          
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Retrieve processing terminal
+      request:
+        name: RetrieveProcessingTerminalsRequest
+        path-parameters:
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that we assigned to the terminal.
+      response:
+        docs: Successful request. Returns the processing terminal.
+        type: root.ProcessingTerminal
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - name: Retrieve processing terminal
+          path-parameters:
+            processingTerminalId: '1234001'
+          response:
+            body:
+              processingTerminalId: '011234001'
+              status: active
+              timezone: Pacific/Midway
+              program: Payroc Cloud
+              gateway:
+                gateway: payroc
+                terminalTemplateId: Roc Services_DX8000
+              batchClosure:
+                batchCloseTime: '23:40'
+                batchCloseType: automatic
+              applicationSettings:
+                invoiceNumberPrompt: true
+                clerkPrompt: false
+              features:
+                tips:
+                  tipPrompt: true
+                  tipAdjust: true
+                  enabled: 'true'
+                enhancedProcessing:
+                  enabled: true
+                  transactionDataLevel: level2
+                  shippingAddressMode: fullAddress
+                ebt:
+                  enabled: true
+                  ebtType: foodStamp
+                  fnsNumber: '1234567890'
+                pinDebitCashback: false
+                recurringPayments: true
+                paymentLinks:
+                  enabled: true
+                  logoUrl: LogoPayLink
+                  footerNotes: FooterNotesPayLink
+                preAuthorizations: true
+                offlinePayments: true
+              taxes:
+                - taxRate: 1.1
+                  taxLabel: taxLabel
+              security:
+                tokenization: true
+                avsPrompt: true
+                avsLevel: fullAddress
+                cvvPrompt: true
+              receiptNotifications:
+                emailReceipt: true
+                smsReceipt: true
+              devices:
+                - manufacturer: manufacturer
+                  model: model
+                  serialNumber: serialNumber
+                  communicationType: bluetooth
+    retrieveHostConfiguration:
+      path: /processing-terminals/{processingTerminalId}/host-configurations
+      method: GET
+      auth: true
+      docs: >
+        Use this method to retrieve the host processor configuration of a
+        processing terminal. Integrate with this method only if you use your own
+        gateway and want to validate the processor configuration.  
+
+
+        Our gateway returns the configuration settings for the merchant and the
+        payment terminal.
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Retrieve host processor configuration
+      request:
+        name: RetrieveHostConfigurationProcessingTerminalsRequest
+        path-parameters:
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that we assigned to the terminal.
+      response:
+        docs: >-
+          Successful request. Returns the host configuration of the processing
+          terminal.
+        type: root.HostConfiguration
+        status-code: 200
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.NotAcceptableError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            processingTerminalId: '1234001'
+          response:
+            body:
+              processingTerminalId: '0123451001'
+              processingAccountId: '23451'
+              configuration:
+                merchant:
+                  posMid: '123456789101'
+                  chainNumber: '222222'
+                  settlementAgent: '0001'
+                  abaNumber: '967854108'
+                  binNumber: '888888'
+                  agentBankNumber: '000001'
+                  reimbursementAttribute: Z
+                  locationNumber: '000001'
+                terminal:
+                  terminalId: V500000
+                  terminalNumber: '1111'
+                  authenticationCode: A1B2C3
+                  sharingGroups: 3E7HULY8NQWZG
+                  motoAllowed: true
+                  internetAllowed: true
+                  cardPresentAllowed: true
+                processor: tsys
+  source:
+    openapi: read-only/openapi/external/universal-api-v1.yaml

@@ -1,0 +1,135 @@
+types:
+  HostedFieldsCreateSessionRequestScenario:
+    enum:
+      - payment
+      - tokenization
+    docs: >
+      Indicates if a merchant wants to take a payment or tokenize a customer's
+      payment details:  
+
+
+      - `payment` - The merchant wants to run a sale or run a sale and tokenize
+      in the same transaction.  
+
+      - `tokenization` - The merchant wants to save the customer's payment
+      details to take a payment later or to update a customer's payment details
+      that they've already saved.  
+    inline: true
+    source:
+      openapi: read-only/openapi/external/universal-api-v1.yaml
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      path: /processing-terminals/{processingTerminalId}/hosted-fields-sessions
+      method: POST
+      auth: true
+      docs: >
+        Use this method to create a Hosted Fields session token. You need to
+        generate a new session token each time you load Hosted Fields on a
+        webpage.  
+
+
+        In your request, you need to indicate whether the merchant is using
+        Hosted Fields to run a sale, save payment details, or update saved
+        payment details.  
+
+
+        In the response, our gateway returns the session token and the time that
+        it expires. You need the session token when you configure the JavaScript
+        for Hosted Fields.  
+
+
+        For more information about adding Hosted Fields to a webpage, go to
+        [Hosted
+        Fields](https://docs.payroc.com/guides/integrate/hosted-fields). 
+      source:
+        openapi: read-only/openapi/external/universal-api-v1.yaml
+      display-name: Create Hosted Fields session
+      request:
+        name: HostedFieldsCreateSessionRequest
+        path-parameters:
+          processingTerminalId:
+            type: string
+            docs: Unique identifier that we assigned to the terminal.
+        headers:
+          Idempotency-Key:
+            type: string
+            name: idempotencyKey
+            docs: >-
+              Unique identifier that you generate for each request. You must use
+              the [UUID v4 format](https://www.rfc-editor.org/rfc/rfc4122) for
+              the identifier. For more information about the idempotency key, go
+              to [Idempotency](https://docs.payroc.com/api/idempotency).
+        body:
+          properties:
+            libVersion:
+              type: string
+              docs: >
+                Version of the Hosted Fields JavaScript library that you are
+                using.  
+
+
+                The current production version is `1.6.0.172441`.
+              validation:
+                pattern: ^\d{1,2}.\d{1,2}.\d{1,2}(?:-beta)?.\d+$
+            scenario:
+              type: HostedFieldsCreateSessionRequestScenario
+              docs: >
+                Indicates if a merchant wants to take a payment or tokenize a
+                customer's payment details:  
+
+
+                - `payment` - The merchant wants to run a sale or run a sale and
+                tokenize in the same transaction.  
+
+                - `tokenization` - The merchant wants to save the customer's
+                payment details to take a payment later or to update a
+                customer's payment details that they've already saved.  
+            secureTokenId:
+              type: optional<string>
+              docs: >
+                Unique identifier that represents a customer's payment
+                details.  
+
+
+                If a merchant wants to update a customer's payment details that
+                are linked to a secure token, include the secureTokenId in your
+                request.  
+              validation:
+                minLength: 1
+                maxLength: 200
+        content-type: application/json
+      response:
+        docs: >-
+          Successful request. We created the session and returned a session
+          token.
+        type: root.HostedFieldsCreateSessionResponse
+        status-code: 201
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotAcceptableError
+        - root.ConflictError
+        - root.UnsupportedMediaTypeError
+        - root.InternalServerError
+      examples:
+        - name: Create session response
+          path-parameters:
+            processingTerminalId: '1234001'
+          headers:
+            Idempotency-Key: 8e03978e-40d5-43e8-bc93-6894a57f9324
+          request:
+            libVersion: 1.1.0.123456
+            scenario: payment
+          response:
+            body:
+              processingTerminalId: '1234001'
+              token: abcdef1234567890abcdef1234567890
+              expiresAt: '2025-07-02T13:30:00Z'
+  source:
+    openapi: read-only/openapi/external/universal-api-v1.yaml

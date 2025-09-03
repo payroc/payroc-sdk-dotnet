@@ -37,7 +37,7 @@ public record ListReportingSettlementAchDepositFeesRequest
     public required int AchDepositId { get; set; }
 
     /// <summary>
-    /// Unique identifier of the merchant.
+    /// Filter batches by the unique identifier that the processor assigned to the merchant.
     /// </summary>
     [JsonIgnore]
     public string? MerchantId { get; set; }

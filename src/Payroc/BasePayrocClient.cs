@@ -14,7 +14,8 @@ public partial class BasePayrocClient
     private readonly RawClient _client;
 
     public BasePayrocClient(
-        string? apiKey = null,
+        string? clientId = null,
+        string? clientSecret = null,
         ClientOptions? clientOptions = null
     )
     {
@@ -35,7 +36,8 @@ public partial class BasePayrocClient
             }
         }
         var tokenProvider = new OAuthTokenProvider(
-            apiKey,
+            clientId,
+            clientSecret,
             new AuthClient(new RawClient(clientOptions.Clone()))
         );
         clientOptions.Headers["Authorization"] = new Func<string>(() =>
