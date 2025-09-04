@@ -3,7 +3,7 @@ using Payroc.Core;
 namespace Payroc;
 
 public class PayrocClient(string? apiKey = null, ClientOptions? clientOptions = null)
-    : BasePayrocClient(apiKey, CreateClientOptions(clientOptions))
+    : BasePayrocClient(apiKey, null, CreateClientOptions(clientOptions))
 {
     private static ClientOptions CreateClientOptions(ClientOptions? clientOptions)
     {
