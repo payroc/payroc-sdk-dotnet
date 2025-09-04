@@ -32,7 +32,7 @@ public class RetrieveAuthorizationTest : BaseMockServerTest
                 }
               },
               "card": {
-                "cardNumber": "123456**********4124",
+                "cardNumber": "453985******7062",
                 "type": "visa",
                 "cvvPresenceIndicator": true,
                 "avsRequest": true,

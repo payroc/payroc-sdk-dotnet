@@ -15,7 +15,7 @@ public record PricingTemplate : IJsonOnDeserialized
     /// Unique identifier of the pricing intent.
     /// </summary>
     [JsonPropertyName("pricingIntentId")]
-    public required int PricingIntentId { get; set; }
+    public required string PricingIntentId { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

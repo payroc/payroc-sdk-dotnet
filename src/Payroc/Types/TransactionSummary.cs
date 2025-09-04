@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains summary information about the transaction.
+/// Object that contains summary information about the transaction that the dispute is linked to.
 /// </summary>
 [Serializable]
 public record TransactionSummary : IJsonOnDeserialized
@@ -15,7 +15,7 @@ public record TransactionSummary : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Unique identifier of the transaction. If we can't match a dispute to a transaction, we don't return 'transactionID' or a 'link' object.
+    /// Unique identifier of the transaction. If we can't match a dispute to a transaction, we don't return the transactionId or link object.
     /// </summary>
     [JsonPropertyName("transactionId")]
     public int? TransactionId { get; set; }
@@ -33,13 +33,13 @@ public record TransactionSummary : IJsonOnDeserialized
     public DateOnly? Date { get; set; }
 
     /// <summary>
-    /// Describes how the merchant received the payment details. If we can't match a dispute to a transaction, we don't return an 'entryMethod' object.
+    /// Describes how the merchant received the payment details. If we can't match a dispute to a transaction, we don't return an entryMethod object.
     /// </summary>
     [JsonPropertyName("entryMethod")]
     public TransactionSummaryEntryMethod? EntryMethod { get; set; }
 
     /// <summary>
-    /// Transaction amount. We return the value in the currency's lowest denomination, for example, cents.
+    /// Total amount of the transaction. The value is in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("amount")]
     public int? Amount { get; set; }

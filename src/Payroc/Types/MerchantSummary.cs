@@ -15,19 +15,19 @@ public record MerchantSummary : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Unique identifier of the merchant.
+    /// Unique identifier that the processor assigned to the merchant.
     /// </summary>
     [JsonPropertyName("merchantId")]
     public string? MerchantId { get; set; }
 
     /// <summary>
-    /// Legal name that the business operates as.
+    /// Trading name of the business.
     /// </summary>
     [JsonPropertyName("doingBusinessAs")]
     public string? DoingBusinessAs { get; set; }
 
     /// <summary>
-    /// Unique identifier of the processing account.
+    /// Unique identifier that we assigned to the processing account.
     /// </summary>
     [JsonPropertyName("processingAccountId")]
     public string? ProcessingAccountId { get; set; }

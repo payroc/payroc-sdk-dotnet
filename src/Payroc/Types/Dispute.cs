@@ -15,7 +15,7 @@ public record Dispute : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Unique identifier of the dispute.
+    /// Unique identifier that we assigned to the dispute.
     /// </summary>
     [JsonPropertyName("disputeId")]
     public int? DisputeId { get; set; }
@@ -26,6 +26,9 @@ public record Dispute : IJsonOnDeserialized
     [JsonPropertyName("disputeType")]
     public DisputeDisputeType? DisputeType { get; set; }
 
+    /// <summary>
+    /// Object that contains information about the current status of the dispute.
+    /// </summary>
     [JsonPropertyName("currentStatus")]
     public DisputeCurrentStatus? CurrentStatus { get; set; }
 
@@ -78,13 +81,13 @@ public record Dispute : IJsonOnDeserialized
     public bool? FirstDispute { get; set; }
 
     /// <summary>
-    /// Authorization code.
+    /// Authorization code of the transaction that the dispute is linked to.
     /// </summary>
     [JsonPropertyName("authorizationCode")]
     public string? AuthorizationCode { get; set; }
 
     /// <summary>
-    /// Currency of the dispute.
+    /// Currency of the transaction that the dispute is linked to. The value for the currency follows the [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) standard.
     /// </summary>
     [JsonPropertyName("currency")]
     public string? Currency { get; set; }

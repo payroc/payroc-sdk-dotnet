@@ -16,7 +16,7 @@ public record CreateProcessingAccount : IJsonOnDeserialized
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("processingAccountId")]
-    public int? ProcessingAccountId { get; set; }
+    public string? ProcessingAccountId { get; set; }
 
     /// <summary>
     /// Trading name of the business.

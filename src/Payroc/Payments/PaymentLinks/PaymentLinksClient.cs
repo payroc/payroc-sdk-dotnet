@@ -20,7 +20,20 @@ public partial class PaymentLinksClient
     public SharingEventsClient SharingEvents { get; }
 
     /// <summary>
-    /// Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of payment links for a processing terminal.
+    /// Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of payment links linked to a processing terminal.
+    ///
+    /// **Note:** If you want to view a specific payment link and you have its paymentLinkId, use our [Retrieve Payment Link](https://docs.payroc.com/api/schema/payments/payment-links/retrieve) method.
+    ///
+    /// Use query parameters to filter the list of results that we return, for example, to search for only active links or multi-use links.
+    ///
+    /// Our gateway returns the following information about each payment link in the list:
+    /// - **type** - Indicates whether the link can be used only once or if it can be used multiple times.
+    /// - **authType** - Indicates whether the transaction is a sale or a pre-authorization.
+    /// - **paymentMethods** - Indicates the payment method that the merchant accepts.
+    /// - **charge** - Indicates whether the merchant or the customer enters the amount for the transaction.
+    /// - **status** - Indicates if the payment link is active.
+    ///
+    /// For each payment link, we also return a paymentLinkId, which you can use for follow-on actions.
     /// </summary>
     /// <example><code>
     /// await client.Payments.PaymentLinks.ListAsync(
@@ -177,12 +190,17 @@ public partial class PaymentLinksClient
     }
 
     /// <summary>
-    /// Use this method to create a payment link that a customer can use to make a payment for goods or services. The request contains the following settings for the payment link:
+    /// Use this method to create a payment link that a customer can use to make a payment for goods or services.
+    ///
+    /// The request includes the following settings:
     /// - **type** - Indicates whether the link can be used only once or if it can be used multiple times.
     /// - **authType** - Indicates whether the transaction is a sale or a pre-authorization.
     /// - **paymentMethod** - Indicates the payment methods that the merchant accepts.
     /// - **charge** - Indicates whether the merchant or the customer enters the amount for the transaction.
-    /// The response contains a paymentLinkId that you can use to [share the payment link](#sharePaymentLink) or to [retrieve information about the link](#retrievePaymentLink).
+    ///
+    /// If your request is successful, our gateway returns a paymentLinkId, which you can use to perform follow-on actions.
+    ///
+    /// **Note:** To share the payment link with a customer, use our [Share Payment Link](https://docs.payroc.com/api/schema/payments/payment-links/sharing-events/share) method.
     /// </summary>
     /// <example><code>
     /// await client.Payments.PaymentLinks.CreateAsync(
@@ -316,7 +334,17 @@ public partial class PaymentLinksClient
 
     /// <summary>
     /// Use this method to retrieve information about a payment link.
-    /// You need the paymentLinkId that we sent to you when you created the payment link.
+    ///
+    /// To retrieve a payment link, you its paymentLinkId. Our gateway returned the paymentLinkId in the response of the [Create Payment Link](https://docs.payroc.com/api/schema/payments/payment-links/create) method.
+    ///
+    /// **Note:** If you don't have the paymentLinkId, use our [List Payment Links](https://docs.payroc.com/api/schema/payments/payment-links/list) method to search for the payment link.
+    ///
+    /// Our gateway returns the following information about the payment link:
+    /// - **type** - Indicates whether the link can be used only once or if it can be used multiple times.
+    /// - **authType** - Indicates whether the transaction is a sale or a pre-authorization.
+    /// - **paymentMethods** - Indicates the payment method that the merchant accepts.
+    /// - **charge** - Indicates whether the merchant or the customer enters the amount for the transaction.
+    /// - **status** - Indicates if the payment link is active.
     /// </summary>
     /// <example><code>
     /// await client.Payments.PaymentLinks.RetrieveAsync(
@@ -408,6 +436,10 @@ public partial class PaymentLinksClient
 
     /// <summary>
     /// Use this method to partially update a payment link. Structure your request to follow the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
+    ///
+    /// To update a payment link, you need its paymentLinkId, which we sent you in the response of the [Create Payment Link](https://docs.payroc.com/api/schema/payments/payment-links/create) method.
+    ///
+    /// **Note:** If you don't have the paymentLinkId, use our [List Payment Links](https://docs.payroc.com/api/schema/payments/payment-links/list) method to search for the payment link.
     ///
     /// You can update the following properties of a multi-use link:
     /// - **expiresOn parameter** - Expiration date of the link.
@@ -541,9 +573,13 @@ public partial class PaymentLinksClient
     }
 
     /// <summary>
-    /// Use this method to deactivate a payment link. If the merchant deactivates a payment link, they can't reactivate it. To take payment, the merchant must create a new payment link.
+    /// Use this method to deactivate a payment link.
     ///
-    /// **Note:** After the merchant deactivates a payment link, a customer can't use the link to make a payment.
+    /// To deactivate a payment link, you need its paymentLinkId. Our gateway returned the paymentLinkId in the response of the [Create Payment Link](https://docs.payroc.com/api/schema/payments/payment-links/create) method.
+    ///
+    /// **Note:** If you don't have the paymentLinkId, use our [List Payment Links](https://docs.payroc.com/api/schema/payments/payment-links/list) method to search for the payment link.
+    ///
+    /// If your request is successful, our gateway deactivates the payment link. The customer can't use the link to make a payment, and you can't reactivate the payment link.
     /// </summary>
     /// <example><code>
     /// await client.Payments.PaymentLinks.DeactivateAsync(

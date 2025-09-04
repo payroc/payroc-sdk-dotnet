@@ -8,6 +8,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Indicates whether the merchant or the customer enters the amount for the transaction.
+/// </summary>
 [JsonConverter(typeof(SingleUsePaymentLinkOrderCharge.JsonConverter))]
 [Serializable]
 public record SingleUsePaymentLinkOrderCharge

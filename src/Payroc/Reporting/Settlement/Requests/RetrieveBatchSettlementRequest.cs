@@ -7,7 +7,7 @@ namespace Payroc.Reporting.Settlement;
 public record RetrieveBatchSettlementRequest
 {
     /// <summary>
-    /// Unique identifier of the batch.
+    /// Unique identifier that we assigned to the batch.
     /// </summary>
     [JsonIgnore]
     public required int BatchId { get; set; }

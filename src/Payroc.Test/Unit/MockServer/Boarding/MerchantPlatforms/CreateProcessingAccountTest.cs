@@ -156,7 +156,7 @@ public class CreateProcessingAccountTest : BaseMockServerTest
                 ]
               },
               "pricing": {
-                "pricingIntentId": 6123,
+                "pricingIntentId": "6123",
                 "type": "intent"
               },
               "signature": {
@@ -543,7 +543,7 @@ public class CreateProcessingAccountTest : BaseMockServerTest
                         },
                     },
                     Pricing = new Pricing(
-                        new Pricing.Intent(new PricingTemplate { PricingIntentId = 6123 })
+                        new Pricing.Intent(new PricingTemplate { PricingIntentId = "6123" })
                     ),
                     Signature = new Signature(
                         new Signature.RequestedViaDirectLink(new SignatureByDirectLink())

@@ -25,7 +25,7 @@ public record RetrieveBalanceFundingActivityRequest
     public int? Limit { get; set; }
 
     /// <summary>
-    /// Unique identifier of the merchant.
+    /// Filter results by the unique identifier that the processor assigned to the merchant.
     /// </summary>
     [JsonIgnore]
     public string? MerchantId { get; set; }

@@ -15,31 +15,33 @@ public record CardSummary : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Card number. We mask the number except for the first six digits and the last four digits.
+    /// Masked card number. Our gateway shows only the first six digits and the last four digits of the card number, for example, `500165******0000`.
     /// </summary>
     [JsonPropertyName("cardNumber")]
     public string? CardNumber { get; set; }
 
     /// <summary>
-    /// Card type. If we can't match a dispute to a transaction, we don't return a 'type' object.
+    /// Card type, for example, Visa.
+    ///
+    /// **Note:** If we can’t match a dispute to a transaction, we don’t return a type object.
     /// </summary>
     [JsonPropertyName("type")]
     public CardSummaryType? Type { get; set; }
 
     /// <summary>
-    /// Indicates if the cardholder provided the CVV.
+    /// Indicates whether the cardholder provided the Card Verification Value (CVV).
     /// </summary>
     [JsonPropertyName("cvvPresenceIndicator")]
     public bool? CvvPresenceIndicator { get; set; }
 
     /// <summary>
-    /// Indicates if the AVS was used to verify the cardholder's address.
+    /// Indicates whether the merchant used the Address Verification Service (AVS) to verify the cardholder's address.
     /// </summary>
     [JsonPropertyName("avsRequest")]
     public bool? AvsRequest { get; set; }
 
     /// <summary>
-    /// Response from the AVS.
+    /// Response from the Address Verification Service (AVS).
     /// </summary>
     [JsonPropertyName("avsResponse")]
     public string? AvsResponse { get; set; }

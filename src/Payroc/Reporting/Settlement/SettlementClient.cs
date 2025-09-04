@@ -16,7 +16,16 @@ public partial class SettlementClient
     }
 
     /// <summary>
-    /// Retrieve batch data for a specific date.
+    /// Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of your merchants’ batches that were submitted to the processor on a specific date.
+    ///
+    /// **Note:** If you want to view a specific batch and you have its batchId, use our [Retrieve Batch](https://docs.payroc.com/api/schema/reporting/settlement/retrieve-batch) method.
+    ///
+    /// In your request, include the date that the batch was submitted. You can also use a query parameter to view the batches of a specific merchant.
+    ///
+    /// Our gateway returns the following information about each batch in the list:
+    ///
+    /// -	Transaction information, including the number of transactions and total value of sales.
+    /// -	Merchant information, including the merchant ID (MID) and the processing account that the batch is associated with.
     /// </summary>
     /// <example><code>
     /// await client.Reporting.Settlement.ListBatchesAsync(
@@ -135,7 +144,14 @@ public partial class SettlementClient
     }
 
     /// <summary>
-    /// Retrieve a specific batch.
+    /// Use this method to retrieve information about a batch.
+    ///
+    /// **Note:** To retrieve a batch, you need its batchId. If you don't have the batchId, use our [List Batches](https://docs.payroc.com/api/schema/reporting/settlement/list-batches) method to search for the batch.
+    ///
+    /// Our gateway returns the following information about the batch:
+    ///
+    /// -	Transaction information, including the number of transactions and total value of sales.
+    /// -	Merchant information, including the merchant ID (MID) and the processing account that the batch is associated with.
     /// </summary>
     /// <example><code>
     /// await client.Reporting.Settlement.RetrieveBatchAsync(
@@ -654,7 +670,15 @@ public partial class SettlementClient
     }
 
     /// <summary>
-    /// Retrieve a list of disputes.
+    /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of disputes.
+    ///
+    /// Use query parameters to filter the list of results that we return, for example, to search for disputes linked to a specific merchant.
+    ///
+    /// &gt; **Important:** You must provide a value for the date query parameter.
+    ///
+    /// Our gateway returns the following information about each dispute in the list:
+    /// - Its status, type, and description.
+    /// - Transaction that the dispute is linked to, including the transaction date, merchant who ran the transaction, and the payment method that the cardholder used.
     /// </summary>
     /// <example><code>
     /// await client.Reporting.Settlement.ListDisputesAsync(
@@ -773,7 +797,11 @@ public partial class SettlementClient
     }
 
     /// <summary>
-    /// Retrieve the status history for a specific dispute.
+    /// Use this method to return the status history of a dispute.
+    ///
+    /// To return the status history of a dispute, you need its disputeId. If you don't have the disputeId, use our [List Disputes](https://docs.payroc.com/api/schema/reporting/settlement/list-disputes) method to search for the dispute.
+    ///
+    /// Our gateway returns a list that contains each status change, the date it was changed, and its updated status.
     /// </summary>
     /// <example><code>
     /// await client.Reporting.Settlement.ListDisputesStatusesAsync(

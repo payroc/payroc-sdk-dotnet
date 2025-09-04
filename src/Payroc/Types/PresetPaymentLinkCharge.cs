@@ -15,7 +15,7 @@ public record PresetPaymentLinkCharge : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Total amount of the transaction in the currency's lowest denomination, for example, cents.
+    /// Total amount of the transaction. The value is in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("amount")]
     public required long Amount { get; set; }

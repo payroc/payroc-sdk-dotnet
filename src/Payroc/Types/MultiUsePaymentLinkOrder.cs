@@ -20,6 +20,9 @@ public record MultiUsePaymentLinkOrder : IJsonOnDeserialized
     [JsonPropertyName("description")]
     public string? Description { get; set; }
 
+    /// <summary>
+    /// Indicates whether the merchant or the customer enters the amount for the transaction.
+    /// </summary>
     [JsonPropertyName("charge")]
     public required MultiUsePaymentLinkOrderCharge Charge { get; set; }
 

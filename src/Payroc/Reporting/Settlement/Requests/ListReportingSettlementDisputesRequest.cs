@@ -25,13 +25,13 @@ public record ListReportingSettlementDisputesRequest
     public int? Limit { get; set; }
 
     /// <summary>
-    /// Date that the dispute was submitted.
+    /// Filter results by the date that the dispute was submitted.
     /// </summary>
     [JsonIgnore]
     public required DateOnly Date { get; set; }
 
     /// <summary>
-    /// Unique identifier of the merchant.
+    /// Filter results by the unique identifier that the processor assigned to the merchant.
     /// </summary>
     [JsonIgnore]
     public string? MerchantId { get; set; }
