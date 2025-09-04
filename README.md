@@ -150,6 +150,7 @@ var pager = await client.Payments.ListAsync(
         DateFrom = new DateTime(2024, 07, 01, 15, 30, 00, 000),
         DateTo = new DateTime(2024, 07, 03, 15, 30, 00, 000),
         SettlementDate = "2024-07-02",
+        PaymentLinkId = "JZURRJBUPS",
         Before = "2571",
         After = "8516",
     }
