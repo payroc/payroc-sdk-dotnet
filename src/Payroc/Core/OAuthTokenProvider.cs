@@ -10,13 +10,16 @@ public partial class OAuthTokenProvider
 
     private DateTime? _expiresAt;
 
-    private string _apiKey;
+    private string _clientId;
+
+    private string? _clientSecret;
 
     private AuthClient _client;
 
-    public OAuthTokenProvider(string apiKey, AuthClient client)
+    public OAuthTokenProvider(string clientId, string? clientSecret, AuthClient client)
     {
-        _apiKey = apiKey;
+        _clientId = clientId;
+        _clientSecret = clientSecret;
         _client = client;
     }
 
@@ -26,7 +29,7 @@ public partial class OAuthTokenProvider
         {
             var tokenResponse = await _client
                 .GetTokenAsync(
-                    new GetTokenAuthRequest { ApiKey = _apiKey }
+                    new GetTokenAuthRequest { ApiKey = _clientId }
                 )
                 .ConfigureAwait(false);
             _accessToken = tokenResponse.AccessToken;
