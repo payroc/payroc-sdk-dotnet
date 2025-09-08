@@ -1,4 +1,5 @@
 ﻿using Payroc;
+using Payroc.Payments.SecureTokens;
 using Payroc.TestHarness.Factory;
 
 Console.WriteLine("Starting Payroc SDK test harness...");
@@ -39,8 +40,8 @@ var pricingIntentId = "1602";
 var paymentId = "GCUFXZ8TS4"; // "C1RTVWFWPB"; // "GFL9F9AXXZ" ;
 
 // Retrieve Payment(s)
-var retrievedPayment = await client.Payments.RetrieveAsync(new() { PaymentId = paymentId });
-var payments = await client.Payments.ListAsync(new() { Limit = 5 });
+//var retrievedPayment = await client.Payments.RetrieveAsync(new() { PaymentId = paymentId });
+//var payments = await client.Payments.ListAsync(new() { Limit = 5 });
 
 // Payment Capture
 //var paymentCaptureRequest = PaymentCaptureFactory.Create(processingTerminalId, paymentId);
@@ -53,6 +54,13 @@ var payments = await client.Payments.ListAsync(new() { Limit = 5 });
 // Card Verification
 //var cardVerificationRequest = CardVerificationRequestFactory.Create(processingTerminalId);
 //var cardVerification = await client.Payments.Cards.VerifyAsync(cardVerificationRequest);
+
+var secureTokenRequest = TokenizationRequestFactory.Create(processingTerminalId);
+var secureToken = await client.Payments.SecureTokens.CreateAsync(secureTokenRequest);
+
+var retrievedToken = await client.Payments.SecureTokens.RetrieveAsync(new RetrieveSecureTokensRequest() { SecureTokenId = secureToken.SecureTokenId, ProcessingTerminalId = processingTerminalId });
+var accountType = retrievedToken.Source.AsAch()?.AccountType;
+var tokens = await client.Payments.SecureTokens.ListAsync(new() { ProcessingTerminalId = processingTerminalId, Limit = 5 });
 
 Console.WriteLine("Testing complete...");
 Console.ReadLine();
