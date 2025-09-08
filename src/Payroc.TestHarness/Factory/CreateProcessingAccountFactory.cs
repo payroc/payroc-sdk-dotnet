@@ -2,7 +2,7 @@
 
 public class CreateProcessingAccountFactory
 {
-    public static CreateProcessingAccount Create(int pricingIntentId = 1602)
+    public static CreateProcessingAccount Create(string pricingIntentId = "1602")
         => new()
         {
             Owners =

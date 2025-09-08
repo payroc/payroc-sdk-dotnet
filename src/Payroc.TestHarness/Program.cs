@@ -24,7 +24,7 @@ var processingTerminalId = "5984001";
 //var pricingIntent = await client.Boarding.PricingIntents.CreateAsync(createPricingIntentRequest);
 
 // Merchant account
-var pricingIntentId = 1602;
+var pricingIntentId = "1602";
 //var createMerchantAccountRequest = MerchantAccountFactory.Create(pricingIntentId);
 //var merchantPlatform = await client.Boarding.MerchantPlatforms.CreateAsync(createMerchantAccountRequest);
 
@@ -36,7 +36,11 @@ var pricingIntentId = 1602;
 // Payment
 //var paymentRequest = PaymentRequestFactory.Create(processingTerminalId);
 //var payment = await client.Payments.CreateAsync(paymentRequest);
-var paymentId = "C1RTVWFWPB"; // "GFL9F9AXXZ";
+var paymentId = "GCUFXZ8TS4"; // "C1RTVWFWPB"; // "GFL9F9AXXZ" ;
+
+// Retrieve Payment(s)
+var retrievedPayment = await client.Payments.RetrieveAsync(new() { PaymentId = paymentId });
+var payments = await client.Payments.ListAsync(new() { Limit = 5 });
 
 // Payment Capture
 //var paymentCaptureRequest = PaymentCaptureFactory.Create(processingTerminalId, paymentId);
