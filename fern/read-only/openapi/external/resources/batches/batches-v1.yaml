@@ -104,7 +104,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/batch'    
+                $ref: '#/components/schemas/batch'
+              example:
+                  $ref: './example-responses-v1.yaml#/components/examples/retrievedBatch'    
         '400':
           description: Validation error
           content:
