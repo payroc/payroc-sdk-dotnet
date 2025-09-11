@@ -21,7 +21,7 @@ public record TransactionResult : IJsonOnDeserialized
     public TransactionResultType? Type { get; set; }
 
     /// <summary>
-    /// Sub-type for EBT transactions
+    /// Indicates the subtype of EBT in the transaction.
     /// </summary>
     [JsonPropertyName("ebtType")]
     public TransactionResultEbtType? EbtType { get; set; }

@@ -103,7 +103,7 @@ public partial class BankAccountsClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(

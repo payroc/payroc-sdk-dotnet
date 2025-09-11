@@ -8,14 +8,14 @@ namespace Payroc;
 /// Object that contains the details of the payment card.
 /// </summary>
 [Serializable]
-public record Card : IJsonOnDeserialized
+public record RetrievedCard : IJsonOnDeserialized
 {
     [JsonExtensionData]
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Card brand of the card, for example, Visa.
+    /// Card brand that the card is linked to. For example, Visa.
     /// </summary>
     [JsonPropertyName("type")]
     public required string Type { get; set; }
@@ -24,7 +24,7 @@ public record Card : IJsonOnDeserialized
     /// Method that the device used to capture the card details.
     /// </summary>
     [JsonPropertyName("entryMethod")]
-    public required CardEntryMethod EntryMethod { get; set; }
+    public RetrievedCardEntryMethod? EntryMethod { get; set; }
 
     /// <summary>
     /// Cardholder’s name.

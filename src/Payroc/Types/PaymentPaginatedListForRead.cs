@@ -5,17 +5,17 @@ using Payroc.Core;
 namespace Payroc;
 
 [Serializable]
-public record SharingEventPaginatedList : IJsonOnDeserialized
+public record PaymentPaginatedListForRead : IJsonOnDeserialized
 {
     [JsonExtensionData]
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Array of sharing events for the payment link.
+    /// Array of transactions.
     /// </summary>
     [JsonPropertyName("data")]
-    public IEnumerable<PaymentLinkEmailShareEvent>? Data { get; set; }
+    public IEnumerable<RetrievedPayment>? Data { get; set; }
 
     /// <summary>
     /// Maximum number of results that we return for each page.

@@ -227,6 +227,10 @@ public partial class EventSubscriptionsClient
                                 throw new NotAcceptableError(
                                     JsonUtils.Deserialize<FourHundredSix>(responseBody)
                                 );
+                            case 409:
+                                throw new ConflictError(
+                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
+                                );
                             case 500:
                                 throw new InternalServerError(
                                     JsonUtils.Deserialize<FiveHundred>(responseBody)
@@ -543,6 +547,7 @@ public partial class EventSubscriptionsClient
     ///     new PartiallyUpdateEventSubscriptionsRequest
     ///     {
     ///         SubscriptionId = 1,
+    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
     ///         Body = new List&lt;PatchDocument&gt;()
     ///         {
     ///             new PatchDocument(new PatchDocument.Remove(new PatchRemove { Path = "path" })),
@@ -559,6 +564,12 @@ public partial class EventSubscriptionsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = new Headers(
+                    new Dictionary<string, string>()
+                    {
+                        { "Idempotency-Key", request.IdempotencyKey },
+                    }
+                );
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -570,6 +581,7 @@ public partial class EventSubscriptionsClient
                                 ValueConvert.ToPathParameterString(request.SubscriptionId)
                             ),
                             Body = request.Body,
+                            Headers = _headers,
                             ContentType = "application/json",
                             Options = options,
                         },
@@ -610,6 +622,10 @@ public partial class EventSubscriptionsClient
                             case 406:
                                 throw new NotAcceptableError(
                                     JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 409:
+                                throw new ConflictError(
+                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
                                 );
                             case 500:
                                 throw new InternalServerError(

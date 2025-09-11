@@ -33,7 +33,7 @@ public record CardSource : IJsonOnDeserialized
     public string? ExpiryDate { get; set; }
 
     /// <summary>
-    /// Card brand of the payment card, for example, Visa.
+    /// Card brand of the card, for example, Visa.
     /// </summary>
     [JsonPropertyName("cardType")]
     public string? CardType { get; set; }

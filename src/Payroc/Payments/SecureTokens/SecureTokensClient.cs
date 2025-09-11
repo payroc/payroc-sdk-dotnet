@@ -48,7 +48,7 @@ public partial class SecureTokensClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<PayrocPager<SecureToken>> ListAsync(
+    public async Task<PayrocPager<SecureTokenWithAccountType>> ListAsync(
         ListSecureTokensRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -140,7 +140,7 @@ public partial class SecureTokensClient
                                     );
                                 case 403:
                                     throw new ForbiddenError(
-                                        JsonUtils.Deserialize<object>(responseBody)
+                                        JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                     );
                                 case 406:
                                     throw new NotAcceptableError(
@@ -164,7 +164,7 @@ public partial class SecureTokensClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<SecureToken>(
+                    .CreateAsync<SecureTokenWithAccountType>(
                         new PayrocPagerContext()
                         {
                             SendRequest = sendRequest,
@@ -331,7 +331,7 @@ public partial class SecureTokensClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 406:
                                 throw new NotAcceptableError(
@@ -372,7 +372,7 @@ public partial class SecureTokensClient
     ///
     /// **Note:** If you don't have the secureTokenId, use our [List Secure Tokens](https://docs.payroc.com/api/schema/payments/secure-tokens/list) method to search for the secure token.
     ///
-    /// Our gateway returns information about the following for each secure token in the list:
+    /// Our gateway returns the following information about the secure token:
     ///
     ///   -	Payment details that the secure token represents.
     ///   -	Customer details, including shipping and billing addresses.
@@ -387,7 +387,7 @@ public partial class SecureTokensClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<SecureToken> RetrieveAsync(
+    public async Task<SecureTokenWithAccountType> RetrieveAsync(
         RetrieveSecureTokensRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -417,7 +417,7 @@ public partial class SecureTokensClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<SecureToken>(responseBody)!;
+                        return JsonUtils.Deserialize<SecureTokenWithAccountType>(responseBody)!;
                     }
                     catch (JsonException e)
                     {
@@ -441,7 +441,7 @@ public partial class SecureTokensClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -534,7 +534,7 @@ public partial class SecureTokensClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -666,7 +666,7 @@ public partial class SecureTokensClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -707,7 +707,7 @@ public partial class SecureTokensClient
     /// <summary>
     /// Use this method to update a secure token if you have a single-use token from Hosted Fields.
     ///
-    /// **Note:** If you don't have a single-use token, you can update saved payment details with our [Update Secure Token](https://docs.payroc.com/api/resources#updateSecureToken) method. For more information about our two options to update a secure token, go to [Update saved payment details](/guides/integrate/update-saved-payment-details).
+    /// **Note:** If you don't have a single-use token, you can update saved payment details with our [Update Secure Token](https://docs.payroc.com/api/resources#updateSecureToken) method. For more information about our two options to update a secure token, go to [Update saved payment details](https://docs.payroc.com/guides/integrate/update-saved-payment-details).
     /// </summary>
     /// <example><code>
     /// await client.Payments.SecureTokens.UpdateAccountAsync(
@@ -791,7 +791,7 @@ public partial class SecureTokensClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(

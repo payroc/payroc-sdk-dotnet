@@ -102,7 +102,7 @@ public partial class PaymentsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<PayrocPager<Payment>> ListAsync(
+    public async Task<PayrocPager<RetrievedPayment>> ListAsync(
         ListPaymentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -216,7 +216,7 @@ public partial class PaymentsClient
                                     );
                                 case 403:
                                     throw new ForbiddenError(
-                                        JsonUtils.Deserialize<object>(responseBody)
+                                        JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                     );
                                 case 406:
                                     throw new NotAcceptableError(
@@ -240,7 +240,7 @@ public partial class PaymentsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<Payment>(
+                    .CreateAsync<RetrievedPayment>(
                         new PayrocPagerContext()
                         {
                             SendRequest = sendRequest,
@@ -269,18 +269,18 @@ public partial class PaymentsClient
     /// **Payment methods**
     ///
     /// - **Cards** - Credit, debit, and EBT
-    /// - **Digital wallets** - [Apple Pay®](/guides/integrate/apple-pay) and [Google Pay®](/guides/integrate/google-pay)
+    /// - **Digital wallets** - [Apple Pay®](https://docs.payroc.com/guides/integrate/apple-pay) and [Google Pay®](https://docs.payroc.com/guides/integrate/google-pay)
     /// - **Tokens** - Secure tokens and single-use tokens
     ///
     /// **Features**
     ///
     /// Our Create Payment method also supports the following features:
     ///
-    /// - [Repeat payments](/guides/integrate/repeat-payments/use-your-own-software) - Run multiple payments as part of a payment schedule that you manage with your own software.
+    /// - [Repeat payments](https://docs.payroc.com/guides/integrate/repeat-payments/use-your-own-software) - Run multiple payments as part of a payment schedule that you manage with your own software.
     /// - **Offline sales** - Run a sale or a pre-authorization if the terminal loses its connection to our gateway.
-    /// - [Tokenization](h/guides/integrate/save-payment-details) - Save card details to use in future transactions.
-    /// - [3-D Secure](/guides/integrate/3-d-secure) - Verify the identity of the cardholder.
-    /// - [Custom fields](/guides/integrate/add-custom-fields) - Add your own data to a payment.
+    /// - [Tokenization](https://docs.payroc.com/guides/integrate/save-payment-details) - Save card details to use in future transactions.
+    /// - [3-D Secure](https://docs.payroc.com/guides/integrate/3-d-secure) - Verify the identity of the cardholder.
+    /// - [Custom fields](https://docs.payroc.com/guides/integrate/add-custom-fields) - Add your own data to a payment.
     /// - **Tips** - Add tips to the card payment.
     /// - **Taxes** - Add local taxes to the card payment.
     /// - **Surcharging** - Add a surcharge to the card payment.
@@ -417,7 +417,7 @@ public partial class PaymentsClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 406:
                                 throw new NotAcceptableError(
@@ -470,7 +470,7 @@ public partial class PaymentsClient
     /// <example><code>
     /// await client.Payments.RetrieveAsync(new RetrievePaymentsRequest { PaymentId = "M2MJOG6O2Y" });
     /// </code></example>
-    public async Task<Payment> RetrieveAsync(
+    public async Task<RetrievedPayment> RetrieveAsync(
         RetrievePaymentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -499,7 +499,7 @@ public partial class PaymentsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<Payment>(responseBody)!;
+                        return JsonUtils.Deserialize<RetrievedPayment>(responseBody)!;
                     }
                     catch (JsonException e)
                     {
@@ -523,7 +523,7 @@ public partial class PaymentsClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -648,7 +648,7 @@ public partial class PaymentsClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -700,7 +700,7 @@ public partial class PaymentsClient
     ///
     /// If your request is successful, our gateway takes the amount from the payment card.
     ///
-    /// **Note:** For more information about pre-authorizations and captures, go to [Run a pre-authorization](/guides/integrate/run-a-pre-authorization).
+    /// **Note:** For more information about pre-authorizations and captures, go to [Run a pre-authorization](https://docs.payroc.com/guides/integrate/run-a-pre-authorization).
     /// </summary>
     /// <example><code>
     /// await client.Payments.CaptureAsync(
@@ -786,7 +786,7 @@ public partial class PaymentsClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -905,7 +905,7 @@ public partial class PaymentsClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -1030,7 +1030,7 @@ public partial class PaymentsClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(

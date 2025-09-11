@@ -31,7 +31,7 @@ public record SwipedCardDetails : IJsonOnDeserialized
     public string? CardholderName { get; set; }
 
     /// <summary>
-    /// Cardholder's signature. For more information about how to format the signature, go to [How to send a signature to our gateway](/knowledge/basic-concepts/signature-capture).
+    /// Cardholder's signature. For more information about how to format the signature, go to [How to send a signature to our gateway](https://docs.payroc.com/knowledge/basic-concepts/signature-capture).
     /// </summary>
     [JsonPropertyName("cardholderSignature")]
     public string? CardholderSignature { get; set; }

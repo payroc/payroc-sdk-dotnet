@@ -118,7 +118,7 @@ public partial class SingleUseTokensClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 406:
                                 throw new NotAcceptableError(

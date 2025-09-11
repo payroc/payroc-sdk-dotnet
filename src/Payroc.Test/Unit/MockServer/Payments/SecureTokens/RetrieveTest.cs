@@ -103,7 +103,8 @@ public class RetrieveTest : BaseMockServerTest
         );
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<SecureToken>(mockResponse)).UsingDefaults()
+            Is.EqualTo(JsonUtils.Deserialize<SecureTokenWithAccountType>(mockResponse))
+                .UsingDefaults()
         );
     }
 }

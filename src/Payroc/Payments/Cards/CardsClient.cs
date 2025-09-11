@@ -16,7 +16,11 @@ public partial class CardsClient
     }
 
     /// <summary>
-    /// Verify that a card is valid. For banks that do not support verification, we charge a micro deposit that we void immediately.
+    /// Use this method to verify a customer’s card details.
+    ///
+    /// In the request, send the customer’s card details.
+    ///
+    /// In the response, our gateway indicates if the card details are valid and if you should use them in follow-on actions.
     /// </summary>
     /// <example><code>
     /// await client.Payments.Cards.VerifyAsync(
@@ -108,7 +112,7 @@ public partial class CardsClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -234,7 +238,7 @@ public partial class CardsClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -279,7 +283,7 @@ public partial class CardsClient
     ///
     /// - **Card details** - Information about the card, for example, the issuing bank and the masked card number.
     ///
-    /// - **Surcharging information** - If you apply a surcharge to transactions, our gateway checks that the card supports surcharging and returns information about the surcharge. For more information about surcharging, go to [Credit card surcharging](/knowledge/card-payments/credit-card-surcharging).
+    /// - **Surcharging information** - If you apply a surcharge to transactions, our gateway checks that the card supports surcharging and returns information about the surcharge. For more information about surcharging, go to [Credit card surcharging](https://docs.payroc.com/knowledge/card-payments/credit-card-surcharging).
     /// </summary>
     /// <example><code>
     /// await client.Payments.Cards.LookupBinAsync(
@@ -362,7 +366,7 @@ public partial class CardsClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(

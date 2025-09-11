@@ -146,7 +146,7 @@ public partial class PaymentLinksClient
                                     );
                                 case 403:
                                     throw new ForbiddenError(
-                                        JsonUtils.Deserialize<object>(responseBody)
+                                        JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                     );
                                 case 404:
                                     throw new NotFoundError(
@@ -294,7 +294,7 @@ public partial class PaymentLinksClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -335,7 +335,7 @@ public partial class PaymentLinksClient
     /// <summary>
     /// Use this method to retrieve information about a payment link.
     ///
-    /// To retrieve a payment link, you its paymentLinkId. Our gateway returned the paymentLinkId in the response of the [Create Payment Link](https://docs.payroc.com/api/schema/payments/payment-links/create) method.
+    /// To retrieve a payment link, you need its paymentLinkId. Our gateway returned the paymentLinkId in the response of the [Create Payment Link](https://docs.payroc.com/api/schema/payments/payment-links/create) method.
     ///
     /// **Note:** If you don't have the paymentLinkId, use our [List Payment Links](https://docs.payroc.com/api/schema/payments/payment-links/list) method to search for the payment link.
     ///
@@ -404,7 +404,7 @@ public partial class PaymentLinksClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -534,7 +534,7 @@ public partial class PaymentLinksClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -639,7 +639,7 @@ public partial class PaymentLinksClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(

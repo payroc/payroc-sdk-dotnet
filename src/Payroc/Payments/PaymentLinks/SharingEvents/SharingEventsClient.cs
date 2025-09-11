@@ -16,7 +16,17 @@ public partial class SharingEventsClient
     }
 
     /// <summary>
-    /// Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of sharing events for a payment link. A sharing event occurs when a merchant shares a payment link with a customer.
+    /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of sharing events for a payment link. A sharing event occurs when a merchant shares a payment link with a customer.
+    ///
+    /// To list the sharing events for a payment link, you need its paymentLinkId. Our gateway returned the paymentLinkId in the response of the [Create Payment Link](https://docs.payroc.com/api/schema/payments/payment-links/create) method.
+    ///
+    /// **Note:** If you don't have the paymentLinkId, use our [List Payment Links](https://docs.payroc.com/api/schema/payments/payment-links/list) method to search for the payment link.
+    ///
+    /// Use query parameters to filter the list of results that we return, for example, to search for links sent to a specific customer.
+    ///
+    /// Our gateway returns the following information for each sharing event in the list:
+    /// - Customer that the merchant sent the link to.
+    /// - Date that the merchant sent the link.
     /// </summary>
     /// <example><code>
     /// await client.Payments.PaymentLinks.SharingEvents.ListAsync(
@@ -102,7 +112,7 @@ public partial class SharingEventsClient
                                     );
                                 case 403:
                                     throw new ForbiddenError(
-                                        JsonUtils.Deserialize<object>(responseBody)
+                                        JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                     );
                                 case 404:
                                     throw new NotFoundError(
@@ -146,8 +156,15 @@ public partial class SharingEventsClient
     }
 
     /// <summary>
-    /// Use this method to email a payment link that the merchant has already created.
-    /// **Note:** To create a payment link, go to [Create payment link](#createPaymentLink).
+    /// Use this method to email a payment link to a customer.
+    ///
+    /// To email a payment link, you need its paymentLinkId. Our gateway returned the paymentLinkId in the response of the [Create Payment Link](https://docs.payroc.com/api/schema/payments/payment-links/create) method.
+    ///
+    /// **Note:** If you don't have the paymentLinkId, use our [List Payment Links](https://docs.payroc.com/api/schema/payments/payment-links/list) method to search for the payment link.
+    ///
+    /// In the request, you must provide the recipient's name and email address.
+    ///
+    /// In the response, our gateway returns a sharingEventId, which you can use to [List Payment Link Sharing Events](https://docs.payroc.com/api/schema/payments/payment-links/sharing-events/list).
     /// </summary>
     /// <example><code>
     /// await client.Payments.PaymentLinks.SharingEvents.ShareAsync(
@@ -235,7 +252,7 @@ public partial class SharingEventsClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(

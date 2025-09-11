@@ -104,7 +104,7 @@ public partial class SettlementClient
                                     );
                                 case 403:
                                     throw new ForbiddenError(
-                                        JsonUtils.Deserialize<object>(responseBody)
+                                        JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                     );
                                 case 406:
                                     throw new NotAcceptableError(
@@ -211,7 +211,7 @@ public partial class SettlementClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -327,7 +327,7 @@ public partial class SettlementClient
                                     );
                                 case 403:
                                     throw new ForbiddenError(
-                                        JsonUtils.Deserialize<object>(responseBody)
+                                        JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                     );
                                 case 406:
                                     throw new NotAcceptableError(
@@ -427,7 +427,7 @@ public partial class SettlementClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -539,7 +539,7 @@ public partial class SettlementClient
                                     );
                                 case 403:
                                     throw new ForbiddenError(
-                                        JsonUtils.Deserialize<object>(responseBody)
+                                        JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                     );
                                 case 406:
                                     throw new NotAcceptableError(
@@ -639,7 +639,7 @@ public partial class SettlementClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -757,7 +757,7 @@ public partial class SettlementClient
                                     );
                                 case 403:
                                     throw new ForbiddenError(
-                                        JsonUtils.Deserialize<object>(responseBody)
+                                        JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                     );
                                 case 406:
                                     throw new NotAcceptableError(
@@ -861,7 +861,7 @@ public partial class SettlementClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -971,7 +971,7 @@ public partial class SettlementClient
                                     );
                                 case 403:
                                     throw new ForbiddenError(
-                                        JsonUtils.Deserialize<object>(responseBody)
+                                        JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                     );
                                 case 406:
                                     throw new NotAcceptableError(
@@ -1071,7 +1071,7 @@ public partial class SettlementClient
                                 );
                             case 403:
                                 throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
+                                    JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                 );
                             case 404:
                                 throw new NotFoundError(
@@ -1183,7 +1183,7 @@ public partial class SettlementClient
                                     );
                                 case 403:
                                     throw new ForbiddenError(
-                                        JsonUtils.Deserialize<object>(responseBody)
+                                        JsonUtils.Deserialize<FourHundredThree>(responseBody)
                                     );
                                 case 406:
                                     throw new NotAcceptableError(

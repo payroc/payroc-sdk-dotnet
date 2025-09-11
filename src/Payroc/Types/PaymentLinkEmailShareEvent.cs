@@ -5,7 +5,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains the information to email a payment link.
+/// Object that contains the information about a sharing event that the merchant sent by email.
 /// </summary>
 [Serializable]
 public record PaymentLinkEmailShareEvent : IJsonOnDeserialized

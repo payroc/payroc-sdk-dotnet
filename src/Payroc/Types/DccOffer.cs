@@ -7,7 +7,7 @@ namespace Payroc;
 /// <summary>
 /// Object that contains information about the dynamic currency conversion (DCC) offer.
 ///
-/// For more information about DCC, go to [Dynamic Currency Conversion](/knowledge/card-payments/dynamic-currency-conversion).
+/// For more information about DCC, go to [Dynamic Currency Conversion](https://docs.payroc.com/knowledge/card-payments/dynamic-currency-conversion).
 /// </summary>
 [Serializable]
 public record DccOffer : IJsonOnDeserialized

@@ -5,17 +5,17 @@ using Payroc.Core;
 namespace Payroc;
 
 [Serializable]
-public record SharingEventPaginatedList : IJsonOnDeserialized
+public record SecureTokenPaginatedListWithAccountType : IJsonOnDeserialized
 {
     [JsonExtensionData]
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Array of sharing events for the payment link.
+    /// Array of saved payment details.
     /// </summary>
     [JsonPropertyName("data")]
-    public IEnumerable<PaymentLinkEmailShareEvent>? Data { get; set; }
+    public IEnumerable<SecureTokenWithAccountType>? Data { get; set; }
 
     /// <summary>
     /// Maximum number of results that we return for each page.

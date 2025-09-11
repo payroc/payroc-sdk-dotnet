@@ -15,7 +15,7 @@ public record CardInfo : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Card brand, for example, Visa.
+    /// Card brand of the card, for example, Visa.
     /// </summary>
     [JsonPropertyName("type")]
     public required string Type { get; set; }

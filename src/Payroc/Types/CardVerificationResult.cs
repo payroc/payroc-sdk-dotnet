@@ -27,9 +27,10 @@ public record CardVerificationResult : IJsonOnDeserialized
     public Card? Card { get; set; }
 
     /// <summary>
-    /// Indicates if we have verified the card details.
-    /// - `true` - The card details are valid.
-    /// - `false` - The card details are not valid.
+    /// Indicates if the card details are valid:
+    ///
+    /// - `true` - Card details are valid.
+    /// - `false` - Card details are not valid.
     /// </summary>
     [JsonPropertyName("verified")]
     public required bool Verified { get; set; }
