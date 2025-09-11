@@ -133,7 +133,7 @@ paths:
 
         - **Card details** - Information about the card, for example, the issuing bank and the masked card number.  
 
-        - **Surcharging information** - If you apply a surcharge to transactions, our gateway checks that the card supports surcharging and returns information about the surcharge. For more information about surcharging, go to [Credit card surcharging](/knowledge/card-payments/credit-card-surcharging). 
+        - **Surcharging information** - If you apply a surcharge to transactions, our gateway checks that the card supports surcharging and returns information about the surcharge. For more information about surcharging, go to [Credit card surcharging](https://docs.payroc.com/knowledge/card-payments/credit-card-surcharging). 
       operationId: binLookup
       requestBody:
         content:
