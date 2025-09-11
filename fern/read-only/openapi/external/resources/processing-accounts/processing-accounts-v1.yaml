@@ -284,7 +284,15 @@ paths:
                   $ref: './example-responses-v1.yaml#/components/examples/terminalOrderCreated'
         400:
           description: Bad request
-          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
         401:
           $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
         403:
@@ -298,6 +306,15 @@ paths:
               examples:
                 notFound:
                   $ref: '../../../common/responses/errors/404-v1.yaml#/components/examples/notFound'
+        409:
+          description: Conflict
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/409-v1.yaml#/components/schemas/409'
+              examples:
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
         500:
           $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500' 
     get:
@@ -453,6 +470,7 @@ paths:
 
       operationId: createReminder
       parameters:
+        - $ref: '../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey'
         - $ref: './parameters-v1.yaml#/components/parameters/processingAccountId'
       requestBody:
         content:
@@ -497,10 +515,21 @@ paths:
                   $ref: '../processing-accounts/example-responses-v1.yaml#/components/examples/contractAlreadySigned'
                 noPricingAgreementExistsForTheProcessingAccount:
                   $ref: '../processing-accounts/example-responses-v1.yaml#/components/examples/noPricingAgreementExistsForTheProcessingAccount'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
         '403':
           $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'   
         '404':
-          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'   
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '409':
+          description: Conflict
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/409-v1.yaml#/components/schemas/409'
+              examples:
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
         '500':
           $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'   
 
