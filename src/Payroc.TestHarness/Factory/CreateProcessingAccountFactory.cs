@@ -1,4 +1,6 @@
-﻿namespace Payroc.TestHarness.Factory;
+﻿// TODO: Re-instate once Boarding and Funding are available in SDK again
+/*
+namespace Payroc.TestHarness.Factory;
 
 public class CreateProcessingAccountFactory
 {
@@ -143,3 +145,4 @@ public class CreateProcessingAccountFactory
             ]
         };
 }
+*/

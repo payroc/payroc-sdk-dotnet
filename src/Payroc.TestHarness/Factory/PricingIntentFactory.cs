@@ -1,4 +1,6 @@
-﻿using Payroc.Boarding.PricingIntents;
+﻿// TODO: Re-instate once Boarding and Funding are available in SDK again
+/*
+using Payroc.Boarding.PricingIntents;
 
 namespace Payroc.TestHarness.Factory;
 
@@ -86,3 +88,4 @@ public class PricingIntentFactory
             }
         };
 }
+*/

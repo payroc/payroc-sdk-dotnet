@@ -12,6 +12,8 @@ public class AddressFactory
             Country = "US"            
         };
 
+    // TODO: Re-instate once Boarding and Funding are available in SDK again
+    /*
     public static LegalAddress CreateLegalAddress()
         => new()
         {
@@ -22,4 +24,5 @@ public class AddressFactory
             PostalCode = "60477",
             Type = "legalAddress"
         };
+    */
 }

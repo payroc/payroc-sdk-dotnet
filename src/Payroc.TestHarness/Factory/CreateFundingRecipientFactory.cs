@@ -1,4 +1,6 @@
-﻿using Payroc.Funding.FundingRecipients;
+﻿// TODO: Re-instate once Boarding and Funding are available in SDK again
+/*
+using Payroc.Funding.FundingRecipients;
 
 namespace Payroc.TestHarness.Factory;
 
@@ -84,3 +86,4 @@ public class CreateFundingRecipientFactory
             ]
         };
 }
+*/
