@@ -1,4 +1,6 @@
-﻿using Payroc.Boarding.MerchantPlatforms;
+﻿// TODO: Re-instate once Boarding and Funding are available in SDK again
+/*
+using Payroc.Boarding.MerchantPlatforms;
 
 namespace Payroc.TestHarness.Factory;
 
@@ -12,3 +14,4 @@ public class MerchantAccountFactory
             ProcessingAccounts = [ CreateProcessingAccountFactory.Create(pricingIntentId) ]
         };
 }
+*/
