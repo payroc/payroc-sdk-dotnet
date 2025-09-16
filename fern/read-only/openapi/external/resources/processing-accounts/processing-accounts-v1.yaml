@@ -109,11 +109,11 @@ paths:
       - Processing accounts
       summary: List contacts
       description: |
-        Use this method to retrieve a list of contacts for a processing account.    
+        Use this method to return a list of contacts for a processing account.    
 
-        **Note:** If you want to view a specific contact and you have their contactId, go to our [Retrieve Contact](https://docs.payroc.com/api/schema/boarding/contacts/retrieve) method.  
+        **Note:** If you want to view the details of a specific contact and you have their contactId, use our [Retrieve Contact](https://docs.payroc.com/api/schema/boarding/contacts/retrieve) method.  
 
-        To retrieve a list of contacts for a processing account, you need the processingAccountId. Our gateway returned the processingAccountId in the response of the [Create Merchant Platform](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create) method or the [Create Processing Account](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create-processing-account) method.  
+        To list contacts for a processing account, you need the processingAccountId. Our gateway returned the processingAccountId in the response of the [Create Merchant Platform](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create) method or the [Create Processing Account](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create-processing-account) method.  
 
         Our gateway returns the following information about each contact:  
 
@@ -205,7 +205,7 @@ paths:
       description: |
         Use this method to return a list of owners of a processing account.  
 
-        **Note:** If you want to retrieve the details of a specific owner and you have the ownerId, go to our [Retrieve Owner](https://docs.payroc.com/api/schema/boarding/owners/retrieve) method.  
+        **Note:** If you want to view the details of a specific owner and you have the ownerId, go to our [Retrieve Owner](https://docs.payroc.com/api/schema/boarding/owners/retrieve) method.  
 
         To list the owners of a processing account, you need its processingAccountId. If you don't have the processingAccountId, use our [List Merchant Platform's Processing Accounts](https://docs.payroc.com/api/schema/boarding/merchant-platforms/list-processing-accounts) method to search for the processing account.  
 
@@ -320,9 +320,9 @@ paths:
     get:
       summary: List terminal orders
       description: |
-        Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of terminal orders associated with a processing account.  
+        Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of terminal orders associated with a processing account.  
 
-        **Note:** If you want to view a specific terminal order and you have its terminalOrderId, use our [Retrieve Terminal Order](https://docs.payroc.com/api/schema/boarding/terminal-orders/retrieve) method.  
+        **Note:** If you want to view the details of a specific terminal order and you have its terminalOrderId, use our [Retrieve Terminal Order](https://docs.payroc.com/api/schema/boarding/terminal-orders/retrieve) method.  
 
         Use the query parameters to filter the list of results that we return, for example, to search for terminal orders by their status.  
 
@@ -407,7 +407,7 @@ paths:
     get:
       summary: List processing terminals
       description: |
-        Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of processing terminals associated with a processing account.  
+        Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of processing terminals associated with a processing account.  
 
         **Note:** If you want to view the details of a specific processing terminal and you have its processingTerminalId, use our [Retrieve Processing Terminal](https://docs.payroc.com/api/schema/boarding/processing-terminals/retrieve) method.  
 
@@ -956,6 +956,7 @@ components:
             - `rejected` - We rejected the application for the processing account.  
             - `terminated` - Processing account is closed.  
             - `cancelled` - Merchant withdrew the application for the processing account.  
+            **Note**: You can subscribe to our processingAccount.status.changed event to get notifications when we change the status of a processing account. For more information about how to subscribe to events, go to [Event Subscriptions](https://docs.payroc.com/guides/integrate/event-subscriptions).
           readOnly: true
           enum:
             - entered
@@ -1158,6 +1159,9 @@ components:
                 $ref: '../../../common/schemas/boarding/funding-account-summary-v1.yaml#/components/schemas/fundingAccountSummary'    
     createFunding:
       type: object
+      description: | 
+        Object that contains information about the funding schedule of the processing account.  
+        **Note**: You can subscribe to our processingAccount.funding.status.changed event to get notifications when we change the funding status of a processing account. For  more information about how to subscribe to events, go to [Event Subscriptions](https://docs.payroc.com/guides/integrate/event-subscriptions).  
       allOf:
         - $ref: '#/components/schemas/commonFunding'
         - type: object
@@ -1172,7 +1176,7 @@ components:
                 $ref: '../../../common/schemas/boarding/funding-account-v1.yaml#/components/schemas/fundingAccount'
     commonFunding:
       type: object
-      description: Object that contains information about the funding schedule of the processing account.
+      description: 
       properties:
         status:
           type: string

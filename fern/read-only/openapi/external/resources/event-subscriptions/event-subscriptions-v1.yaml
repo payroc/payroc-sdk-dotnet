@@ -33,9 +33,9 @@ paths:
       tags: [Event Subscriptions]
       summary: List event subscriptions
       description: | 
-        Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of event subscriptions that are linked to your ISV account.  
+        Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of event subscriptions that are linked to your ISV account.  
         
-        **Note:** If you want to view a specific event subscription and you have its id, use our [Retrieve Event Subscription](https://docs.payroc.com/api/schema/notifications/event-subscriptions/retrieve) method.  
+        **Note:** If you want to view the details of a specific event subscription and you have its id, use our [Retrieve Event Subscription](https://docs.payroc.com/api/schema/notifications/event-subscriptions/retrieve) method.  
 
         Use query parameters to filter the list of results that we return, for example, to search for subscriptions with a specific status or an event type.  
 

@@ -86,7 +86,7 @@ paths:
       description: |
         Use this method to return the status history of a dispute.  
 
-        To return the status history of a dispute, you need its disputeId. If you don't have the disputeId, use our [List Disputes](https://docs.payroc.com/api/schema/reporting/settlement/list-disputes) method to search for the dispute. 
+        To view the status history of a dispute, you need its disputeId. If you don't have the disputeId, use our [List Disputes](https://docs.payroc.com/api/schema/reporting/settlement/list-disputes) method to search for the dispute. 
 
         Our gateway returns a list that contains each status change, the date it was changed, and its updated status.  
       operationId: getdisputesStatuses
