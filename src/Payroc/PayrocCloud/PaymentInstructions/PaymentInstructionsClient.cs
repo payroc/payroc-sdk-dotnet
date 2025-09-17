@@ -146,7 +146,11 @@ public partial class PaymentInstructionsClient
     }
 
     /// <summary>
-    /// Retrieve the current status of a specific payment instruction.
+    /// Use this method to retrieve information about a payment instruction.
+    ///
+    /// To retrieve a payment instruction, you need its paymentInstructionId. Our gateway returned the paymentInstructionId in the response of the [Submit Payment Instruction](https://docs.payroc.com/api/schema/payroc-cloud/payment-instructions/submit) method.
+    ///
+    /// Our gateway returns the status of the payment instruction. If the payment device completed the payment instruction, the response also includes a link to the payment.
     /// </summary>
     /// <example><code>
     /// await client.PayrocCloud.PaymentInstructions.RetrieveAsync(

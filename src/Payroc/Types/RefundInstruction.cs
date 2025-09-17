@@ -12,7 +12,7 @@ public record RefundInstruction : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Unique identifier that our gateway assigned to the instruction.
+    /// Unique identifier that we assigned to the refund instruction.
     /// </summary>
     [JsonPropertyName("refundInstructionId")]
     public string? RefundInstructionId { get; set; }
@@ -29,6 +29,8 @@ public record RefundInstruction : IJsonOnDeserialized
 
     /// <summary>
     /// Description of the error that caused the instruction to fail.
+    ///
+    /// **Note:** We return this field only if the status is `failure`.
     /// </summary>
     [JsonPropertyName("errorMessage")]
     public string? ErrorMessage { get; set; }

@@ -26,6 +26,8 @@ public record DeviceInstruction : IJsonOnDeserialized
 
     /// <summary>
     /// Description of the error that caused the instruction to fail.
+    ///
+    /// **Note:** We return this field only if the status is `failure`.
     /// </summary>
     [JsonPropertyName("errorMessage")]
     public string? ErrorMessage { get; set; }

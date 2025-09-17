@@ -62,8 +62,8 @@ components:
       summary: Not found
       description: Resource could not be found
       value:
-        type: "https://docs.payroc.com/api/errors#not-found"
-        title: "Not found"
+        type: https://docs.payroc.com/api/errors#not-found
+        title: Not found
         status: 404
-        detail: "Resource not found"
+        detail: Resource not found
         resource: (The Type of the Resource)

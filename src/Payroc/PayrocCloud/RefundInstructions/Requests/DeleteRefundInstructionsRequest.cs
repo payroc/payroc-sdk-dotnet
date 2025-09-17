@@ -7,7 +7,7 @@ namespace Payroc.PayrocCloud.RefundInstructions;
 public record DeleteRefundInstructionsRequest
 {
     /// <summary>
-    /// Unique identifier of the refund instruction.
+    /// Unique identifier that we assigned to the refund instruction.
     /// </summary>
     [JsonIgnore]
     public required string RefundInstructionId { get; set; }

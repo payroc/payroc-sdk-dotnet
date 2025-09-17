@@ -24,13 +24,15 @@ public record SubscriptionPaginatedList : IJsonOnDeserialized
     public double? Limit { get; set; }
 
     /// <summary>
-    /// Number of results that we returned.
+    /// Number of results we returned on this page.
+    ///
+    /// **Note:** This might not be the total number of results that match your query.
     /// </summary>
     [JsonPropertyName("count")]
     public double? Count { get; set; }
 
     /// <summary>
-    /// Indicates that further results are available.
+    /// Indicates whether there is another page of results available.
     /// </summary>
     [JsonPropertyName("hasMore")]
     public bool? HasMore { get; set; }
