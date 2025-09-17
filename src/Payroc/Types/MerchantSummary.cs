@@ -30,7 +30,7 @@ public record MerchantSummary : IJsonOnDeserialized
     /// Unique identifier that we assigned to the processing account.
     /// </summary>
     [JsonPropertyName("processingAccountId")]
-    public string? ProcessingAccountId { get; set; }
+    public int? ProcessingAccountId { get; set; }
 
     [JsonPropertyName("link")]
     public Link? Link { get; set; }

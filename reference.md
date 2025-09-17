@@ -5100,7 +5100,11 @@ await client.PayrocCloud.PaymentInstructions.SubmitAsync(
 <dl>
 <dd>
 
-Retrieve the current status of a specific payment instruction.
+Use this method to retrieve information about a payment instruction.  
+
+To retrieve a payment instruction, you need its paymentInstructionId. Our gateway returned the paymentInstructionId in the response of the [Submit Payment Instruction](https://docs.payroc.com/api/schema/payroc-cloud/payment-instructions/submit) method.  
+
+Our gateway returns the status of the payment instruction. If the payment device completed the payment instruction, the response also includes a link to the payment.
 </dd>
 </dl>
 </dd>
@@ -5298,7 +5302,11 @@ await client.PayrocCloud.RefundInstructions.SubmitAsync(
 <dl>
 <dd>
 
-Retrieve the current status of a specific refund instruction.
+Use this method to retrieve information about a refund instruction.  
+
+To retrieve a refund instruction, you need its refundInstructionId. Our gateway returned the refundInstructionId in the response of the [Submit Refund Instruction](https://docs.payroc.com/api/schema/payroc-cloud/refund-instructions/submit) method.  
+
+Our gateway returns the status of the refund instruction. If the payment device completed the refund instruction, the response also includes a link to the refund.
 </dd>
 </dl>
 </dd>
@@ -5571,7 +5579,7 @@ await client.Reporting.Settlement.ListTransactionsAsync(
     {
         Before = "2571",
         After = "8516",
-        Date = new DateOnly(2024, 7, 1),
+        Date = new DateOnly(2024, 7, 2),
         BatchId = 1,
         MerchantId = "4525644354",
     }
@@ -5670,7 +5678,17 @@ await client.Reporting.Settlement.RetrieveTransactionAsync(
 <dl>
 <dd>
 
-Retrieve a list of authorizations.
+Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of authorizations.  
+
+Use query parameters to filter the list of results that we return, for example, to search for authorizations linked to a specific merchant.  
+
+> **Important:** You must provide a value for either the date query parameter or the batchId query parameter.  
+
+Our gateway returns the following information about each authorization in the list:
+- Authorization response from the issuing bank.
+- Amount that the issuing bank authorized.
+- Merchant that ran the authorization.
+- Details about the customer's card, the transaction, and the batch.
 </dd>
 </dl>
 </dd>
@@ -5690,7 +5708,7 @@ await client.Reporting.Settlement.ListAuthorizationsAsync(
     {
         Before = "2571",
         After = "8516",
-        Date = new DateOnly(2024, 7, 1),
+        Date = new DateOnly(2024, 7, 2),
         BatchId = 1,
         MerchantId = "4525644354",
     }

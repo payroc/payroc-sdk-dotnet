@@ -7,7 +7,7 @@ namespace Payroc.PayrocCloud.PaymentInstructions;
 public record DeletePaymentInstructionsRequest
 {
     /// <summary>
-    /// Unique identifier of the payment instruction.
+    /// Unique identifier that we assigned to the payment instruction.
     /// </summary>
     [JsonIgnore]
     public required string PaymentInstructionId { get; set; }

@@ -251,7 +251,7 @@ public partial class SettlementClient
     ///     {
     ///         Before = "2571",
     ///         After = "8516",
-    ///         Date = new DateOnly(2024, 7, 1),
+    ///         Date = new DateOnly(2024, 7, 2),
     ///         BatchId = 1,
     ///         MerchantId = "4525644354",
     ///     }
@@ -459,7 +459,17 @@ public partial class SettlementClient
     }
 
     /// <summary>
-    /// Retrieve a list of authorizations.
+    /// Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of authorizations.
+    ///
+    /// Use query parameters to filter the list of results that we return, for example, to search for authorizations linked to a specific merchant.
+    ///
+    /// &gt; **Important:** You must provide a value for either the date query parameter or the batchId query parameter.
+    ///
+    /// Our gateway returns the following information about each authorization in the list:
+    /// - Authorization response from the issuing bank.
+    /// - Amount that the issuing bank authorized.
+    /// - Merchant that ran the authorization.
+    /// - Details about the customer's card, the transaction, and the batch.
     /// </summary>
     /// <example><code>
     /// await client.Reporting.Settlement.ListAuthorizationsAsync(
@@ -467,7 +477,7 @@ public partial class SettlementClient
     ///     {
     ///         Before = "2571",
     ///         After = "8516",
-    ///         Date = new DateOnly(2024, 7, 1),
+    ///         Date = new DateOnly(2024, 7, 2),
     ///         BatchId = 1,
     ///         MerchantId = "4525644354",
     ///     }

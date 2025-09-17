@@ -15,7 +15,7 @@ public record Authorization : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Unique identifier of the authorization.
+    /// Unique identifier that we assigned to the authorization.
     /// </summary>
     [JsonPropertyName("authorizationId")]
     public int? AuthorizationId { get; set; }
@@ -33,7 +33,7 @@ public record Authorization : IJsonOnDeserialized
     public DateOnly? LastModifiedDate { get; set; }
 
     /// <summary>
-    /// Code that indicates the response for the authorization.
+    /// Response from the issuing bank for the authorization.
     /// </summary>
     [JsonPropertyName("authorizationResponse")]
     public AuthorizationAuthorizationResponse? AuthorizationResponse { get; set; }
@@ -45,7 +45,7 @@ public record Authorization : IJsonOnDeserialized
     public int? PreauthorizationRequestAmount { get; set; }
 
     /// <summary>
-    /// Currency of the authorization.
+    /// Currency of the authorization. The value for the currency follows the [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) standard.
     /// </summary>
     [JsonPropertyName("currency")]
     public string? Currency { get; set; }

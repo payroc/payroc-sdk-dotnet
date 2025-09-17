@@ -31,7 +31,7 @@ public class RetrieveAchDepositTest : BaseMockServerTest
               "merchant": {
                 "merchantId": "4525644354",
                 "doingBusinessAs": "Pizza Doe",
-                "processingAccountId": "38765",
+                "processingAccountId": 38765,
                 "link": {
                   "rel": "processingAccount",
                   "method": "get",

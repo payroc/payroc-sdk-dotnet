@@ -146,7 +146,11 @@ public partial class RefundInstructionsClient
     }
 
     /// <summary>
-    /// Retrieve the current status of a specific refund instruction.
+    /// Use this method to retrieve information about a refund instruction.
+    ///
+    /// To retrieve a refund instruction, you need its refundInstructionId. Our gateway returned the refundInstructionId in the response of the [Submit Refund Instruction](https://docs.payroc.com/api/schema/payroc-cloud/refund-instructions/submit) method.
+    ///
+    /// Our gateway returns the status of the refund instruction. If the payment device completed the refund instruction, the response also includes a link to the refund.
     /// </summary>
     /// <example><code>
     /// await client.PayrocCloud.RefundInstructions.RetrieveAsync(
