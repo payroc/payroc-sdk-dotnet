@@ -70,7 +70,7 @@ public partial class PaymentsClient
     /// <summary>
     /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of payments.
     ///
-    /// **Note:** If you want to view a specific payment and you have its paymentId, use our [Retrieve Payment](https://docs.payroc.com/api/schema/payments/retrieve) method.
+    /// **Note:** If you want to view the details of a specific payment and you have its paymentId, use our [Retrieve Payment](https://docs.payroc.com/api/schema/payments/retrieve) method.
     ///
     /// Use query parameters to filter the list of results that we return, for example, to search for payments for a customer, a tip mode, or a date range.
     ///

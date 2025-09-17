@@ -15,79 +15,79 @@ public record AchDeposit : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Unique identifier of the ACH deposit.
+    /// Unique identifier that we assigned to the ACH deposit.
     /// </summary>
     [JsonPropertyName("achDepositId")]
     public int? AchDepositId { get; set; }
 
     /// <summary>
-    /// Date that we sent the transaction to the cards brands for clearing. The format of this value is **YYYY-MM-DD**.
+    /// Date that we sent the transactions to the card brands for clearing. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("associationDate")]
     public DateOnly? AssociationDate { get; set; }
 
     /// <summary>
-    /// Date that the ACH deposit was processed. The format of this value is **YYYY-MM-DD**.
+    /// Date that we sent the ACH deposit. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("achDate")]
     public DateOnly? AchDate { get; set; }
 
     /// <summary>
-    /// Date that the payment was made. The format of this value is **YYYY-MM-DD**.
+    /// Date that the merchant received the ACH deposit. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("paymentDate")]
     public DateOnly? PaymentDate { get; set; }
 
     /// <summary>
-    /// Number of transactions included in the ACH deposit.
+    /// Number of transactions in the ACH deposit.
     /// </summary>
     [JsonPropertyName("transactions")]
     public int? Transactions { get; set; }
 
     /// <summary>
-    /// Total value of sales. We return the value in the currency's lowest denomination, for example, cents.
+    /// Amount of sales in the ACH deposit. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("sales")]
     public int? Sales { get; set; }
 
     /// <summary>
-    /// Total value of returns.
+    /// Amount of returns in the ACH deposit. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("returns")]
     public int? Returns { get; set; }
 
     /// <summary>
-    /// Total value of daily Fees.
+    /// Amount of fees that were applied to the transactions in the ACH deposit. We return the value in the currency's lowest denomination, for example cents.
     /// </summary>
     [JsonPropertyName("dailyFees")]
     public int? DailyFees { get; set; }
 
     /// <summary>
-    /// Total value of sales held for risk investigation.
+    /// Amount of funds that we held if the merchant was in full suspense. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("heldSales")]
     public int? HeldSales { get; set; }
 
     /// <summary>
-    /// Total value of adjustments made to the ACH deposit.
+    /// Amount of adjustments that we made to the ACH deposit. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("achAdjustment")]
     public int? AchAdjustment { get; set; }
 
     /// <summary>
-    /// Total value of funds witheld from the settled batch.
+    /// Amount of funds that we held as reserve from the ACH deposit. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("holdback")]
     public int? Holdback { get; set; }
 
     /// <summary>
-    /// Total value of funds released from a hold.
+    /// Amount of funds that we released from holdback. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("reserveRelease")]
     public int? ReserveRelease { get; set; }
 
     /// <summary>
-    /// Net ACH deposit value.
+    /// Total amount that we paid the merchant after fees and adjustments. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("netAmount")]
     public int? NetAmount { get; set; }

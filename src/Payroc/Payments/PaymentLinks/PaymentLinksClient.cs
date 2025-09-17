@@ -20,9 +20,9 @@ public partial class PaymentLinksClient
     public SharingEventsClient SharingEvents { get; }
 
     /// <summary>
-    /// Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of payment links linked to a processing terminal.
+    /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of payment links linked to a processing terminal.
     ///
-    /// **Note:** If you want to view a specific payment link and you have its paymentLinkId, use our [Retrieve Payment Link](https://docs.payroc.com/api/schema/payments/payment-links/retrieve) method.
+    /// **Note:** If you want to view the details of a specific payment link and you have its paymentLinkId, use our [Retrieve Payment Link](https://docs.payroc.com/api/schema/payments/payment-links/retrieve) method.
     ///
     /// Use query parameters to filter the list of results that we return, for example, to search for only active links or multi-use links.
     ///

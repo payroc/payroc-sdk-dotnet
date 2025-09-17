@@ -1,5 +1,3 @@
-// TODO: Re-instate once Boarding and Funding are available in SDK again
-/*
 using global::System.Threading.Tasks;
 using NUnit.Framework;
 using Payroc;
@@ -579,4 +577,3 @@ public class CreateProcessingAccountTest : BaseMockServerTest
         );
     }
 }
-*/

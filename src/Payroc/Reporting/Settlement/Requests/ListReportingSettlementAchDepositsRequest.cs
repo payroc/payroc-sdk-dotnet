@@ -25,7 +25,7 @@ public record ListReportingSettlementAchDepositsRequest
     public int? Limit { get; set; }
 
     /// <summary>
-    /// Date to retrieve results from.
+    /// Filter results by the date that the merchant received the ACH deposit.
     /// </summary>
     [JsonIgnore]
     public required DateOnly Date { get; set; }

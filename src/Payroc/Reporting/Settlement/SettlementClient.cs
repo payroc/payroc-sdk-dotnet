@@ -16,14 +16,15 @@ public partial class SettlementClient
     }
 
     /// <summary>
-    /// Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of your merchants’ batches that were submitted to the processor on a specific date.
+    /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of batches that your merchants submitted to the processor on a specific date.
     ///
-    /// **Note:** If you want to view a specific batch and you have its batchId, use our [Retrieve Batch](https://docs.payroc.com/api/schema/reporting/settlement/retrieve-batch) method.
+    /// **Note:** If you want to view the details of a specific batch and you have its batchId, use our [Retrieve Batch](https://docs.payroc.com/api/schema/reporting/settlement/retrieve-batch) method.
     ///
-    /// In your request, include the date that the batch was submitted. You can also use a query parameter to view the batches of a specific merchant.
+    /// Use query parameters to filter the list of results that we return, for example, to search for batches that were submitted by a specific merchant.
+    ///
+    /// &gt; **Important:** You must provide a value for the date query parameter.
     ///
     /// Our gateway returns the following information about each batch in the list:
-    ///
     /// -	Transaction information, including the number of transactions and total value of sales.
     /// -	Merchant information, including the merchant ID (MID) and the processing account that the batch is associated with.
     /// </summary>
@@ -799,7 +800,7 @@ public partial class SettlementClient
     /// <summary>
     /// Use this method to return the status history of a dispute.
     ///
-    /// To return the status history of a dispute, you need its disputeId. If you don't have the disputeId, use our [List Disputes](https://docs.payroc.com/api/schema/reporting/settlement/list-disputes) method to search for the dispute.
+    /// To view the status history of a dispute, you need its disputeId. If you don't have the disputeId, use our [List Disputes](https://docs.payroc.com/api/schema/reporting/settlement/list-disputes) method to search for the dispute.
     ///
     /// Our gateway returns a list that contains each status change, the date it was changed, and its updated status.
     /// </summary>
@@ -892,7 +893,18 @@ public partial class SettlementClient
     }
 
     /// <summary>
-    /// Retrieve a list of ACH deposits.
+    /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of ACH deposits that we paid to your merchants.
+    ///
+    /// **Note:** If you want to view the details of a specific ACH deposit and you have its achDepositId, use our [Retrieve ACH Deposit](https://docs.payroc.com/api/schema/reporting/settlement/retrieve-ach-deposit) method.
+    ///
+    /// Use query parameters to filter the list of results that we return, for example, to search for ACH deposits that we paid to a specific merchant.
+    ///
+    /// &gt; **Important:** You must provide a value for the date query parameter.
+    ///
+    /// Our gateway returns the following information about each ACH deposit in the list:
+    /// - Merchant that we sent the ACH deposit to.
+    /// - Total amount that we paid the merchant.
+    /// - Breakdown of sales, returns, and fees.
     /// </summary>
     /// <example><code>
     /// await client.Reporting.Settlement.ListAchDepositsAsync(
@@ -1011,7 +1023,15 @@ public partial class SettlementClient
     }
 
     /// <summary>
-    /// Retrieve a specific ACH deposit.
+    /// Use this method to retrieve information about an ACH deposit that we paid to a merchant.
+    ///
+    /// **Note:** To retrieve an ACH deposit, you need its achDepositId. If you don't have the achDepositId, use our [List ACH Deposits](https://docs.payroc.com/api/schema/reporting/settlement/list-ach-deposits) method to search for the ACH deposit.
+    ///
+    /// Our gateway returns the following information about the ACH deposit:
+    ///
+    /// - Merchant that we sent the ACH deposit to.
+    /// - Total amount that we paid the merchant.
+    /// - Breakdown of sales, returns, and fees.
     /// </summary>
     /// <example><code>
     /// await client.Reporting.Settlement.RetrieveAchDepositAsync(

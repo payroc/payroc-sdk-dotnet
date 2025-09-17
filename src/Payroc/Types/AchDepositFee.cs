@@ -15,12 +15,6 @@ public record AchDepositFee : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Unique identifier of the ACH deposit.
-    /// </summary>
-    [JsonPropertyName("achDepositId")]
-    public int? AchDepositId { get; set; }
-
-    /// <summary>
     /// Date that we sent the transaction to the cards brands for clearing. The format of this value is **YYYY-MM-DD**.
     /// </summary>
     [JsonPropertyName("associationDate")]
