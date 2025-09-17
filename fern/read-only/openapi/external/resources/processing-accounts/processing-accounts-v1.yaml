@@ -1176,7 +1176,6 @@ components:
                 $ref: '../../../common/schemas/boarding/funding-account-v1.yaml#/components/schemas/fundingAccount'
     commonFunding:
       type: object
-      description: 
       properties:
         status:
           type: string
