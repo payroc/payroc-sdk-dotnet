@@ -15,7 +15,7 @@ public record ListPaymentPlansRequest
     /// <summary>
     /// Return the previous page of results before the value that you specify.
     ///
-    /// You can’t send a before parameter in the same request as an after parameter.
+    /// You can’t send the before parameter in the same request as the after parameter.
     /// </summary>
     [JsonIgnore]
     public string? Before { get; set; }
@@ -23,7 +23,7 @@ public record ListPaymentPlansRequest
     /// <summary>
     /// Return the next page of results after the value that you specify.
     ///
-    /// You can’t send an after parameter in the same request as a before parameter.
+    /// You can’t send the after parameter in the same request as the before parameter.
     /// </summary>
     [JsonIgnore]
     public string? After { get; set; }

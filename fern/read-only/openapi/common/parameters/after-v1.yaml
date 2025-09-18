@@ -23,7 +23,7 @@ components:
       description: |
         Return the next page of results after the value that you specify.  
         
-        You can’t send an after parameter in the same request as a before parameter. 
+        You can’t send the after parameter in the same request as the before parameter. 
       schema:
         type: string
       examples:

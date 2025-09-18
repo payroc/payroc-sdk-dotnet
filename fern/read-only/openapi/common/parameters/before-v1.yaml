@@ -23,7 +23,7 @@ components:
       description: |
         Return the previous page of results before the value that you specify.  
 
-        You can’t send a before parameter in the same request as an after parameter. 
+        You can’t send the before parameter in the same request as the after parameter. 
       schema:
         type: string
       examples:
