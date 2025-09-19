@@ -122,6 +122,49 @@ catch (PayrocApiException e)
 }
 ```
 
+Here are the specific exceptions:
+
+- `BadRequestError`
+- `ConflictError`
+- `ContentTooLargeError`
+- `ForbiddenError`
+- `InternalServerError`
+- `NotAcceptableError`
+- `NotFoundError`
+- `UnauthorizedError`
+- `UnsupportedMediaTypeError`
+
+Catching a specific exception will allow reading the specific data structure, and easier reading of messages. For example:
+
+```csharp
+using Payroc;
+
+try
+{
+    var response = await client.Payments.CreateAsync(...);
+}
+catch (PayrocApiException e)
+{
+    // Specific handling of a specific error allows reading more detail
+    // Details has the overall message, e.g. "Validation error..."
+    System.Console.WriteLine(e.Body.Details);
+    
+    foreach(var error in e.Body.Errors)    
+    {
+        // These individual messages will list details, e.g. individual validation errors
+        System.Console.WriteLine(error.Message);
+    }
+
+    System.Console.WriteLine(e.StatusCode);
+}
+catch (PayrocApiException e)
+{
+    // Fallback to generic exception
+    System.Console.WriteLine(e.Body);
+    System.Console.WriteLine(e.StatusCode);
+}
+```
+
 ## Logging
 
 > [!WARNING]  
