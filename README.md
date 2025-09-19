@@ -14,6 +14,7 @@ The Payroc API .Net SDK provides convenient access to the Payroc API from .Net.
   - [Exception Handling](#exception-handling)
   - [Logging](#logging)
   - [Pagination](#pagination)
+  - [Request Parameters](#request-parameters)
   - [Polymorphic Types](#polymorphic-types)
     - [Creating Polymorphic Data](#creating-polymorphic-data)
     - [Handling Polymorphic Data](#handling-polymorphic-data)
@@ -189,38 +190,59 @@ catch (PayrocApiException e)
 
 ## Pagination
 
-List endpoints are paginated. The SDK provides an async enumerable so that you can simply loop over the items:
+List endpoints are paginated. The SDK provides an `IAsyncEnumerable` so that you can simply loop over the items. Note the `await` before the `foreach`:
 
 ```csharp
 using Payroc.Payments;
 using Payroc;
 
-var apiKey = Environment.GetEnvironmentVariable("PAYROC_API_KEY")
-    ?? throw new Exception("Payroc API Key not found");
-var client = new PayrocClient(apiKey);
-var pager = await client.Payments.ListAsync(
-    new ListPaymentsRequest
-    {
-        ProcessingTerminalId = "1234001",
-        OrderId = "OrderRef6543",
-        Operator = "Jane",
-        CardholderName = "Sarah%20Hazel%20Hopper",
-        First6 = "453985",
-        Last4 = "7062",
-        DateFrom = new DateTime(2024, 07, 01, 15, 30, 00, 000),
-        DateTo = new DateTime(2024, 07, 03, 15, 30, 00, 000),
-        SettlementDate = "2024-07-02",
-        PaymentLinkId = "JZURRJBUPS",
-        Before = "2571",
-        After = "8516",
-    }
-);
+var pager = await client.Payments.ListAsync(new() { ProcessingTerminalId = "1234001"});
 
 await foreach (var item in pager)
 {
     // do something with item
 }
 ```
+
+## Request Parameters
+
+Sometimes you need to filter results, for example, retrieving results from a given date. Raw API calls might use query parameters. The SDK equivalent pattern is setting the values in the request object itself.
+
+Examples of setting different query parameters via the request object:
+
+```csharp
+    new ListPaymentsRequest
+    {
+        ProcessingTerminalId = "1234001",
+        DateFrom = new DateTime(2024, 07, 01, 15, 30, 00, 000)
+    }
+```
+
+```csharp
+    new ListPaymentsRequest
+    {
+        ProcessingTerminalId = "1234001",
+        DateTo = new DateTime(2024, 07, 03, 15, 30, 00, 000)
+    }
+```
+
+```csharp
+    new ListPaymentsRequest
+    {
+        ProcessingTerminalId = "1234001",
+        After = "8516"
+    }
+```
+
+```csharp
+    new ListPaymentsRequest
+    {
+        ProcessingTerminalId = "1234001",
+        Before = "2571"
+    }
+```
+
+Inspect the code definition of your particular `...Request` object in your IDE to see what properties can be used for filtering.
 
 ## Polymorphic Types
 
