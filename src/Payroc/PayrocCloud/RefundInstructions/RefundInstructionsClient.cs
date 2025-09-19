@@ -246,6 +246,8 @@ public partial class RefundInstructionsClient
     /// <summary>
     /// Use this method to cancel a refund instruction.
     ///
+    /// You can cancel a refund instruction only if its status is `inProgress`. To retrieve the status of a refund instruction, use our [Retrieve Refund Instruction](https://docs.payroc.com/api/schema/payroc-cloud/refund-instructions/retrieve) method.
+    ///
     /// To cancel a refund instruction, you need its refundInstructionId. Our gateway returned the refundInstructionId in the response of the [Submit Refund Instruction](https://docs.payroc.com/api/schema/payroc-cloud/refund-instructions/submit) method.
     /// </summary>
     /// <example><code>

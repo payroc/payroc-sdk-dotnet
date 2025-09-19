@@ -246,7 +246,9 @@ public partial class PaymentInstructionsClient
     /// <summary>
     /// Use this method to cancel a payment instruction.
     ///
-    /// To cancel a payment instruction, you need its paymentInstructionId. Our gateway returned the paymentInstructionId in the response of the [Submit payment instruction](https://docs.payroc.com/api/schema/payroc-cloud/payment-instructions/submit) method.
+    /// You can cancel a payment instruction only if its status is `inProgress`. To retrieve the status of a payment instruction, use our [Retrieve Payment Instruction](https://docs.payroc.com/api/schema/payroc-cloud/payment-instructions/retrieve) method.
+    ///
+    /// To cancel a payment instruction, you need its paymentInstructionId. Our gateway returned the paymentInstructionId in the response of the [Submit Payment Instruction](https://docs.payroc.com/api/schema/payroc-cloud/payment-instructions/submit) method.
     /// </summary>
     /// <example><code>
     /// await client.PayrocCloud.PaymentInstructions.DeleteAsync(
