@@ -4,6 +4,23 @@
 
 The Payroc API .Net SDK provides convenient access to the Payroc API from .Net.
 
+## Contents
+
+- [Payroc API .Net SDK](#payroc-api-net-sdk)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [API Key](#api-key)
+    - [PayrocClient](#payrocclient)
+  - [Exception Handling](#exception-handling)
+  - [Logging](#logging)
+  - [Pagination](#pagination)
+  - [Polymorphic Types](#polymorphic-types)
+    - [Creating Polymorphic Data](#creating-polymorphic-data)
+    - [Handling Polymorphic Data](#handling-polymorphic-data)
+  - [Advanced](#advanced)
+    - [Timeouts](#timeouts)
+  - [References](#references)
+
 ## Installation
 
 ```sh
