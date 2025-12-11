@@ -1,0 +1,17 @@
+{
+  "cliVersion": "3.0.3",
+  "generatorName": "fernapi/fern-csharp-sdk",
+  "generatorVersion": "2.11.1",
+  "generatorConfig": {
+    "namespace": "Payroc",
+    "package-id": "Payroc",
+    "client-class-name": "BasePayrocClient",
+    "exported-client-class-name": "PayrocClient",
+    "base-exception-class-name": "PayrocException",
+    "base-api-exception-class-name": "PayrocApiException",
+    "environment-class-name": "PayrocEnvironment",
+    "explicit-namespaces": true,
+    "custom-pager-name": "PayrocPager",
+    "include-exception-handler": true
+  }
+}

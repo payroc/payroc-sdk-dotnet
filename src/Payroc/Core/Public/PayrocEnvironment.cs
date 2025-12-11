@@ -1,0 +1,39 @@
+namespace Payroc;
+
+[Serializable]
+public class PayrocEnvironment
+{
+    public static readonly PayrocEnvironment Production = new PayrocEnvironment
+    {
+        Api = "https://api.payroc.com/v1",
+        Identity = "https://identity.payroc.com",
+    };
+
+    public static readonly PayrocEnvironment Uat = new PayrocEnvironment
+    {
+        Api = "https://api.uat.payroc.com/v1",
+        Identity = "https://identity.uat.payroc.com",
+    };
+
+    /// <summary>
+    /// URL for the api service
+    /// </summary>
+    public string Api { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
+
+    /// <summary>
+    /// URL for the identity service
+    /// </summary>
+    public string Identity { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
+}

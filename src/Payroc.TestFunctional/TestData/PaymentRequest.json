@@ -1,0 +1,57 @@
+{
+  "channel": "web",
+  "processingTerminalId": "1234001",
+  "order": {
+    "amount": 4999,
+    "currency": "USD",
+    "orderId": "OrderRef6543",
+    "description": "Large Pepperoni Pizza"
+  },
+  "paymentMethod": {
+    "type": "card",
+    "cardDetails": {
+      "entryMethod": "keyed",
+      "keyedData": {
+        "dataFormat": "plainText",
+        "device": {
+          "model": "paxA80",
+          "serialNumber": "WPC202833004712"
+        },
+        "cardNumber": "4539858876047062",
+        "expiryDate": "1225"
+      }
+    }
+  },
+  "operator": "Jane",
+  "customer": {
+    "firstName": "Sarah",
+    "lastName": "Hopper",
+    "billingAddress": {
+      "address1": "1 Example Ave.",
+      "city": "Chicago",
+      "state": "Illinois",
+      "country": "US",
+      "postalCode": "60056",
+      "address2": "Example Address Line 2",
+      "address3": "Example Address Line 3"
+    },
+    "shippingAddress": {
+      "recipientName": "Sarah Hopper",
+      "address": {
+        "address1": "1 Example Ave.",
+        "city": "Chicago",
+        "state": "Illinois",
+        "country": "US",
+        "postalCode": "60056",
+        "address2": "Example Address Line 2",
+        "address3": "Example Address Line 3"
+      }
+    }
+  },
+  "customFields": [
+    {
+      "name": "yourCustomField",
+      "value": "abc123"
+    }
+  ]
+}

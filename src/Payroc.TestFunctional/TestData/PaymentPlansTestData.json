@@ -1,0 +1,284 @@
+{
+  "paymentPlansTestData": {
+    "createRequests": {
+      "basicRequest": {
+        "testName": "BasicCreateRequest",
+        "description": "Standard automatic monthly payment plan",
+        "idempotencyKey": "{{IDEMPOTENCY_KEY}}",
+        "processingTerminalId": "{{TERMINAL_ID}}",
+        "paymentPlan": {
+          "paymentPlanId": "{{PAYMENT_PLAN_ID}}",
+          "name": "Test Plan",
+          "currency": "USD",
+          "type": "automatic",
+          "frequency": "monthly",
+          "onUpdate": "update",
+          "onDelete": "complete",
+          "recurringOrder": {
+            "amount": 1000,
+            "description": "Monthly Subscription Fee"
+          }
+        }
+      },
+      "withSetupOrder": {
+        "testName": "CreateRequestWithSetupOrder",
+        "description": "Payment plan with an initial setup fee",
+        "idempotencyKey": "{{IDEMPOTENCY_KEY}}",
+        "processingTerminalId": "{{TERMINAL_ID}}",
+        "paymentPlan": {
+          "paymentPlanId": "{{PAYMENT_PLAN_ID}}",
+          "name": "Premium Plan with Setup",
+          "description": "Premium subscription with setup fee",
+          "currency": "USD",
+          "length": 12,
+          "type": "automatic",
+          "frequency": "monthly",
+          "onUpdate": "continue",
+          "onDelete": "complete",
+          "customFieldNames": ["membershipLevel", "promotionCode"],
+          "setupOrder": {
+            "amount": 2500,
+            "description": "One-time setup fee",
+            "breakdown": {
+              "subtotal": 2174,
+              "taxes": [
+                {
+                  "name": "Sales Tax",
+                  "rate": 15
+                }
+              ]
+            }
+          },
+          "recurringOrder": {
+            "amount": 4999,
+            "description": "Monthly Premium Subscription",
+            "breakdown": {
+              "subtotal": 4347,
+              "taxes": [
+                {
+                  "name": "Sales Tax",
+                  "rate": 15
+                }
+              ]
+            }
+          }
+        }
+      },
+      "manualPayment": {
+        "testName": "ManualPaymentPlanRequest",
+        "description": "Manual payment plan where merchant controls payments",
+        "idempotencyKey": "{{IDEMPOTENCY_KEY}}",
+        "processingTerminalId": "{{TERMINAL_ID}}",
+        "paymentPlan": {
+          "paymentPlanId": "{{PAYMENT_PLAN_ID}}",
+          "name": "Manual Payment Plan",
+          "description": "Flexible payment schedule managed by merchant",
+          "currency": "USD",
+          "type": "manual",
+          "frequency": "quarterly",
+          "onUpdate": "update",
+          "onDelete": "continue",
+          "recurringOrder": {
+            "amount": 14999,
+            "description": "Quarterly Manual Payment"
+          }
+        }
+      },
+      "weeklyPlan": {
+        "testName": "WeeklyPaymentPlanRequest",
+        "description": "Weekly automatic payment plan",
+        "idempotencyKey": "{{IDEMPOTENCY_KEY}}",
+        "processingTerminalId": "{{TERMINAL_ID}}",
+        "paymentPlan": {
+          "paymentPlanId": "{{PAYMENT_PLAN_ID}}",
+          "name": "Weekly Subscription",
+          "currency": "USD",
+          "type": "automatic",
+          "frequency": "weekly",
+          "onUpdate": "update",
+          "onDelete": "complete",
+          "recurringOrder": {
+            "amount": 299,
+            "description": "Weekly Service Fee"
+          }
+        }
+      },
+      "unlimitedPlan": {
+        "testName": "UnlimitedPaymentPlanRequest",
+        "description": "Unlimited payment plan that runs indefinitely",
+        "idempotencyKey": "{{IDEMPOTENCY_KEY}}",
+        "processingTerminalId": "{{TERMINAL_ID}}",
+        "paymentPlan": {
+          "paymentPlanId": "{{PAYMENT_PLAN_ID}}",
+          "name": "Unlimited Plan",
+          "currency": "USD",
+          "length": 0,
+          "type": "automatic",
+          "frequency": "monthly",
+          "onUpdate": "continue",
+          "onDelete": "complete",
+          "recurringOrder": {
+            "amount": 999,
+            "description": "Monthly Unlimited Access"
+          }
+        }
+      }
+    },
+    "patchRequests": {
+      "patchUpdateRequest": {
+        "testName": "BasicPatchUpdateRequest",
+        "description": "Update payment plan name and add description using JSON Patch",
+        "idempotencyKey": "{{IDEMPOTENCY_KEY}}",
+        "processingTerminalId": "{{TERMINAL_ID}}",
+        "paymentPlanId": "{{PAYMENT_PLAN_ID}}",
+        "patchOperations": [
+          {
+            "op": "replace",
+            "path": "/name",
+            "value": "Updated Test Plan Name"
+          },
+          {
+            "op": "add",
+            "path": "/description",
+            "value": "Updated description for the payment plan"
+          },
+          {
+            "op": "replace",
+            "path": "/recurringOrder/amount",
+            "value": 1500
+          }
+        ]
+      },
+      "patchRemoveDescription": {
+        "testName": "PatchRemoveDescriptionRequest",
+        "description": "Remove description from payment plan (only works if description exists)",
+        "idempotencyKey": "{{IDEMPOTENCY_KEY}}",
+        "processingTerminalId": "{{TERMINAL_ID}}",
+        "paymentPlanId": "{{PAYMENT_PLAN_ID}}",
+        "patchOperations": [
+          {
+            "op": "remove",
+            "path": "/description"
+          }
+        ]
+      }
+    },
+    "listRequests": {
+      "basicList": {
+        "testName": "BasicListRequest",
+        "description": "Standard list request with limit",
+        "processingTerminalId": "{{TERMINAL_ID}}",
+        "limit": 1
+      },
+      "paginatedList": {
+        "testName": "PaginatedListRequest",
+        "description": "List request with pagination parameters",
+        "processingTerminalId": "{{TERMINAL_ID}}",
+        "limit": 10,
+        "before": null,
+        "after": null
+      }
+    },
+    "expectedResponses": {
+      "listResponse": {
+        "testName": "ListResponseStructure",
+        "description": "Expected structure for List PaymentPlans response",
+        "structure": {
+          "hasNextPage": "boolean",
+          "hasPreviousPage": "boolean",
+          "currentPage": {
+            "items": [
+              {
+                "paymentPlanId": "string",
+                "processingTerminalId": "string",
+                "name": "string",
+                "description": "string|null",
+                "currency": "Currency enum",
+                "length": "number|null",
+                "type": "PaymentPlanBaseType enum",
+                "frequency": "PaymentPlanBaseFrequency enum",
+                "onUpdate": "PaymentPlanBaseOnUpdate enum",
+                "onDelete": "PaymentPlanBaseOnDelete enum",
+                "customFieldNames": "array|null",
+                "setupOrder": "PaymentPlanSetupOrder|null",
+                "recurringOrder": "PaymentPlanRecurringOrder|null"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "validationTestCases": {
+      "scenarios": [
+        {
+          "name": "EmptyPaymentPlanId",
+          "expectation": "Should fail validation",
+          "errorType": "ValidationError",
+          "paymentPlan": {
+            "paymentPlanId": "",
+            "name": "Test Plan",
+            "currency": "USD",
+            "type": "automatic",
+            "frequency": "monthly",
+            "onUpdate": "update",
+            "onDelete": "complete"
+          }
+        },
+        {
+          "name": "InvalidCurrency",
+          "expectation": "Should fail validation",
+          "errorType": "ValidationError",
+          "paymentPlan": {
+            "paymentPlanId": "{{PAYMENT_PLAN_ID}}",
+            "name": "Test Plan",
+            "currency": "INVALID",
+            "type": "automatic",
+            "frequency": "monthly",
+            "onUpdate": "update",
+            "onDelete": "complete"
+          }
+        },
+        {
+          "name": "NegativeRecurringAmount",
+          "expectation": "Should fail validation",
+          "errorType": "ValidationError",
+          "paymentPlan": {
+            "paymentPlanId": "{{PAYMENT_PLAN_ID}}",
+            "name": "Test Plan",
+            "currency": "USD",
+            "type": "automatic",
+            "frequency": "monthly",
+            "onUpdate": "update",
+            "onDelete": "complete",
+            "recurringOrder": {
+              "amount": -100,
+              "description": "Negative amount test"
+            }
+          }
+        },
+        {
+          "name": "NegativeSetupAmount",
+          "expectation": "Should fail validation",
+          "errorType": "ValidationError",
+          "paymentPlan": {
+            "paymentPlanId": "{{PAYMENT_PLAN_ID}}",
+            "name": "Test Plan",
+            "currency": "USD",
+            "type": "automatic",
+            "frequency": "monthly",
+            "onUpdate": "update",
+            "onDelete": "complete",
+            "setupOrder": {
+              "amount": -500,
+              "description": "Negative setup fee test"
+            },
+            "recurringOrder": {
+              "amount": 1000,
+              "description": "Valid recurring amount"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

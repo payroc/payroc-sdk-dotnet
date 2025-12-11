@@ -1,0 +1,49 @@
+{
+  "subscriptionId": "SubRef7654",
+  "paymentPlanId": "PlanRef8765",
+  "paymentMethod": {
+    "type": "secureToken",
+    "token": "296753123456"
+  },
+  "startDate": "2024-07-02",
+  "name": "Premium Club",
+  "description": "Premium Club subscription",
+  "setupOrder": {
+    "amount": 4999,
+    "breakdown": {
+      "subtotal": 4347,
+      "taxes": [
+        {
+          "type": "rate",
+          "rate": 5,
+          "name": "Sales Tax"
+        }
+      ]
+    },
+    "description": "Initial setup fee for Premium Club subscription",
+    "orderId": "OrderRef6543"
+  },
+  "recurringOrder": {
+    "amount": 4999,
+    "breakdown": {
+      "subtotal": 4347,
+      "taxes": [
+        {
+          "type": "rate",
+          "rate": 5,
+          "name": "Sales Tax"
+        }
+      ]
+    },
+    "description": "Monthly Premium Club subscription"
+  },
+  "endDate": "2025-07-01",
+  "length": 12,
+  "pauseCollectionFor": 0,
+  "customFields": [
+    {
+      "name": "yourCustomField",
+      "value": "abc123"
+    }
+  ]
+}

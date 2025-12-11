@@ -1,0 +1,16 @@
+{
+  "processingTerminalId": "1234001",
+  "operator": "Jane",
+  "amount": 4999,
+  "breakdown": {
+    "subtotal": 4999,
+    "dutyAmount": 499,
+    "freightAmount": 500,
+    "items": [
+      {
+        "quantity": 1,
+        "unitPrice": 4000
+      }
+    ]
+  }
+}

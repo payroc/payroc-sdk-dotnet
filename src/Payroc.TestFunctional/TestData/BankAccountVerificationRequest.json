@@ -1,0 +1,11 @@
+{
+  "processingTerminalId": "6072001",
+  "bankAccount": {
+    "type": "ach",
+    "accountType": "checking",
+    "secCode": "web",
+    "nameOnAccount": "Sarah Hazel Hopper",
+    "accountNumber": "11101010",
+    "routingNumber": "053200983"
+  }
+}
