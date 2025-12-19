@@ -1,0 +1,76 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Payroc.Core;
+
+namespace Payroc;
+
+/// <summary>
+/// Object that contains information about a refund.
+/// </summary>
+[Serializable]
+public record RefundSummary : IJsonOnDeserialized
+{
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
+    /// <summary>
+    /// Unique identifier of the refund.
+    /// </summary>
+    [JsonPropertyName("refundId")]
+    public required string RefundId { get; set; }
+
+    /// <summary>
+    /// Date and time that the refund was processed.
+    /// </summary>
+    [JsonPropertyName("dateTime")]
+    public required DateTime DateTime { get; set; }
+
+    [JsonPropertyName("currency")]
+    public required Currency Currency { get; set; }
+
+    /// <summary>
+    /// Amount of the refund. This value is in the currency’s lowest denomination, for example, cents.
+    /// </summary>
+    [JsonPropertyName("amount")]
+    public required long Amount { get; set; }
+
+    /// <summary>
+    /// Current status of the refund.
+    /// </summary>
+    [JsonPropertyName("status")]
+    public required RefundSummaryStatus Status { get; set; }
+
+    /// <summary>
+    /// Response from the processor.
+    /// - `A` - The processor approved the transaction.
+    /// - `D` - The processor declined the transaction.
+    /// - `E` - The processor received the transaction but will process the transaction later.
+    /// - `P` - The processor authorized a portion of the original amount of the transaction.
+    /// - `R` - The issuer declined the transaction and indicated that the customer should contact their bank.
+    /// - `C` - The issuer declined the transaction and indicated that the merchant should keep the card as it was reported lost or stolen.
+    /// </summary>
+    [JsonPropertyName("responseCode")]
+    public required RefundSummaryResponseCode ResponseCode { get; set; }
+
+    /// <summary>
+    /// Description of the response from the processor.
+    /// </summary>
+    [JsonPropertyName("responseMessage")]
+    public required string ResponseMessage { get; set; }
+
+    [JsonPropertyName("link")]
+    public Link? Link { get; set; }
+
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

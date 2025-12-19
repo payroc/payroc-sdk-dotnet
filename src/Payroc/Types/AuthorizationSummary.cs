@@ -1,0 +1,57 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Payroc.Core;
+
+namespace Payroc;
+
+/// <summary>
+/// Object that contains information about the authorization.
+/// </summary>
+[Serializable]
+public record AuthorizationSummary : IJsonOnDeserialized
+{
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
+    /// <summary>
+    /// Unique identifier of the authorization.
+    /// </summary>
+    [JsonPropertyName("authorizationId")]
+    public int? AuthorizationId { get; set; }
+
+    /// <summary>
+    /// Authorization code.
+    ///
+    /// **Note:** For returns, the card brands may not provide an authorization code.
+    /// </summary>
+    [JsonPropertyName("code")]
+    public string? Code { get; set; }
+
+    /// <summary>
+    /// Authorization amount. We return the value in the currency's lowest denomination, for example, cents.
+    /// </summary>
+    [JsonPropertyName("amount")]
+    public int? Amount { get; set; }
+
+    /// <summary>
+    /// Response code that indicates if the address matches the address registered to the customer.
+    /// </summary>
+    [JsonPropertyName("avsResponseCode")]
+    public string? AvsResponseCode { get; set; }
+
+    [JsonPropertyName("link")]
+    public Link? Link { get; set; }
+
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

@@ -1,0 +1,51 @@
+{
+  "key": "Your-Unique-Identifier",
+  "metadata": {
+    "yourCustomField": "abc123"
+  },
+  "country": "US",
+  "version": "5.0",
+  "base": {
+    "addressVerification": 5,
+    "annualFee": {
+      "billInMonth": "june",
+      "amount": 9900
+    },
+    "regulatoryAssistanceProgram": 15,
+    "pciNonCompliance": 4995,
+    "merchantAdvantage": 10,
+    "platinumSecurity": {
+      "billingFrequency": "monthly"
+
+    },
+    "maintenance": 500,
+    "minimum": 100,
+    "voiceAuthorization": 95,
+    "chargeback": 2500,
+    "retrieval": 1500,
+    "batch": 1500,
+    "earlyTermination": 57500
+  },
+  "processor": {
+    "card": {
+      "planType": "interchangePlus",
+      "fees": {
+        "mastercardVisaDiscover": {
+          "volume": 0.12,
+          "transaction": 0
+        },
+        "amex": {
+          "type": "optBlue",
+          "volume": 0.12,
+          "transaction": 0
+        }
+      }
+    }
+  },
+  "services": [
+    {
+      "name": "hardwareAdvantagePlan",
+      "enabled": true
+    }
+  ]
+}

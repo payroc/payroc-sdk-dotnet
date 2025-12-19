@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="src/Payroc.Test/Payroc.Test.csproj" />
+  <Project Path="src/Payroc/Payroc.csproj" />  
+  <Project Path="src/Payroc.TestFunctional/Payroc.TestFunctional.csproj" />
+  <Project Path="src/Payroc.TestHarness/Payroc.TestHarness.csproj" />
+</Solution>

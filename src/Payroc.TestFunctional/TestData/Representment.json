@@ -1,0 +1,12 @@
+{
+  "paymentMethod": 
+  {
+    "type": "ach",
+    "accountType": "checking",
+    "secCode": "tel",
+    "nameOnAccount": "Sarah Hopper",
+    "accountNumber": "11101010",
+    "routingNumber": "053200983"
+
+  }
+}

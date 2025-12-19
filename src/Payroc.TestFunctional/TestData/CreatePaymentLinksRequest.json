@@ -1,0 +1,22 @@
+{
+  "type": "multiUse",
+  "merchantReference": "LinkRef6543",
+  "order": {
+    "description": "Pie It Forward charitable trust donation",
+    "charge": {
+      "type": "prompt",
+      "currency": "USD"
+    }
+  },
+  "authType": "sale",
+  "paymentMethods": [
+    "card",
+    "bankTransfer"
+  ],
+  "customLabels": [
+    {
+      "element": "paymentButton",
+      "label": "SUPPORT US"
+    }
+  ]
+}

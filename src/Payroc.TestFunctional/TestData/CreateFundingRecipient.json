@@ -1,0 +1,63 @@
+{
+  "recipientType": "privateCorporation",
+  "taxId": "123456789",
+  "doingBusinessAs": "string",
+  "address": {
+    "address1": "1 Example Ave.",
+    "city": "Chicago",
+    "state": "Illinois",
+    "country": "US",
+    "postalCode": "60056"
+  },
+  "contactMethods": [
+    {
+      "type": "email",
+      "value": "jane.doe@example.com"
+    }
+  ],
+  "owners": [
+    {
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "dateOfBirth": "1964-03-22",
+      "address": {
+        "address1": "1 Example Ave.",
+        "city": "Chicago",
+        "state": "Illinois",
+        "country": "US",
+        "postalCode": "60056"
+      },
+      "identifiers": [
+        {
+          "type": "nationalId",
+          "value": "xxxxx4320"
+        }
+      ],
+      "contactMethods": [
+        {
+          "type": "email",
+          "value": "jane.doe@example.com"
+        }
+      ],
+      "relationship": {
+        "isControlProng": true
+      }
+    }
+  ],
+  "fundingAccounts": [
+    {
+      "type": "checking",
+      "use": "credit",
+      "nameOnAccount": "Jane Doe",
+      "paymentMethods": [
+        {
+          "type": "ach",
+          "value": {
+            "routingNumber": "123456789",
+            "accountNumber": "1234567890"
+          }
+        }
+      ]
+    }
+  ]
+}

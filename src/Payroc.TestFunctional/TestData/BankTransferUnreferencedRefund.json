@@ -1,0 +1,32 @@
+{
+  "processingTerminalId": "1234001",
+  "order": {
+    "orderId": "OrderRef6543",
+    "description": "Refund for order OrderRef6543",
+    "amount": 4999,
+    "currency": "USD"
+  },
+  "refundMethod": {
+    "type": "ach",
+    "accountType": "checking",
+    "secCode": "web",
+    "nameOnAccount": "Sarah Hazel Hopper",
+    "accountNumber": "1234567890",
+    "routingNumber": "123456789"
+  },
+  "customer": {
+    "notificationLanguage": "en",
+    "contactMethods": [
+      {
+        "type": "email",
+        "value": "sarah.hopper@example.com"
+      }
+    ]
+  },
+  "customFields": [
+    {
+      "name": "yourCustomField",
+      "value": "abc123"
+    }
+  ]
+}

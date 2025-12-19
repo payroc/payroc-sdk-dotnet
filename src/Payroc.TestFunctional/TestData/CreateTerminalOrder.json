@@ -1,0 +1,68 @@
+{
+  "orderItems": [
+    {
+      "type": "solution",
+      "solutionTemplateId": "VAR_Only_TSYS",
+      "solutionQuantity": 1,
+      "deviceCondition": "new",
+      "solutionSetup": {
+        "timezone": "America/Chicago",
+        "industryTemplateId": "Retail",
+        "gatewaySettings": {
+          "merchantPortfolioId": "Company Ltd",
+          "merchantTemplateId": "Company Ltd Merchant Template",
+          "userTemplateId": "Company Ltd User Template",
+          "terminalTemplateId": "Company Ltd Terminal Template"
+        },
+        "applicationSettings": {
+          "clerkPrompt": false,
+          "security": {
+            "refundPassword": true,
+            "keyedSalePassword": false,
+            "reversalPassword": true
+          }
+        },
+        "deviceSettings": {
+          "numberOfMobileUsers": 2,
+          "communicationType": "wifi"
+        },
+        "batchClosure": {
+          "batchCloseType": "automatic",
+          "batchCloseTime": "23:40"
+        },
+        "receiptNotifications": {
+          "emailReceipt": true,
+          "smsReceipt": false
+        },
+        "taxes": [
+          {
+            "taxRate": 6,
+            "taxLabel": "Sales Tax"
+          }
+        ],
+        "tips": {
+          "enabled": false
+        },
+        "tokenization": true
+      }
+    }
+  ],
+  "trainingProvider": "payroc",
+  "shipping": {
+    "preferences": {
+      "method": "nextDay",
+      "saturdayDelivery": true
+    },
+    "address": {
+      "recipientName": "Recipient Name",
+      "addressLine1": "1 Example Ave.",
+      "city": "Chicago",
+      "state": "Illinois",
+      "postalCode": "60056",
+      "email": "example@mail.com",
+      "businessName": "Company Ltd",
+      "addressLine2": "Example Address Line 2",
+      "phone": "2025550164"
+    }
+  }
+}

@@ -1,0 +1,211 @@
+{
+  "business": {
+    "name": "Example Corp",
+    "taxId": "12-3456789",
+    "organizationType": "privateCorporation",
+    "addresses": [
+      {
+        "type": "legalAddress",
+        "address1": "1 Example Ave.",
+        "address2": "Example Address Line 2",
+        "address3": "Example Address Line 3",
+        "city": "Chicago",
+        "state": "Illinois",
+        "country": "US",
+        "postalCode": "60056"
+      }
+    ],
+    "contactMethods": [
+      {
+        "type": "email",
+        "value": "jane.doe@example.com"
+      }
+    ],
+    "countryOfOperation": "US"
+  },
+  "processingAccounts": [
+    {
+      "doingBusinessAs": "Pizza Doe",
+      "owners": [
+        {
+          "firstName": "Jane",
+          "lastName": "Doe",
+          "dateOfBirth": "1964-03-22",
+          "address": {
+            "address1": "1 Example Ave.",
+            "city": "Chicago",
+            "state": "Illinois",
+            "country": "US",
+            "postalCode": "60056",
+            "address2": "Example Address Line 2",
+            "address3": "Example Address Line 3"
+          },
+          "identifiers": [
+            {
+              "type": "nationalId",
+              "value": "000-00-4320"
+            }
+          ],
+          "contactMethods": [
+            {
+              "type": "email",
+              "value": "jane.doe@example.com"
+            }
+          ],
+          "relationship": {
+            "isControlProng": true,
+            "equityPercentage": 100,
+            "title": "CFO",
+            "isAuthorizedSignatory": false
+          },
+          "middleName": "Helen"
+        }
+      ],
+      "businessType": "restaurant",
+      "categoryCode": 5999,
+      "merchandiseOrServiceSold": "Pizza",
+      "businessStartDate": "2020-01-01",
+      "timezone": "America/Chicago",
+      "address": {
+        "address1": "1 Example Ave.",
+        "address2": "Example Address Line 2",
+        "address3": "Example Address Line 3",
+        "city": "Chicago",
+        "state": "Illinois",
+        "country": "US",
+        "postalCode": "60056"
+      },
+      "contactMethods": [
+        {
+          "type": "email",
+          "value": "jane.doe@example.com"
+        }
+      ],
+      "processing": {
+        "transactionAmounts": {
+          "average": 5000,
+          "highest": 10000
+        },
+        "monthlyAmounts": {
+          "average": 50000,
+          "highest": 100000
+        },
+        "volumeBreakdown": {
+          "cardPresentKeyed": 47,
+          "cardPresentSwiped": 30,
+          "mailOrTelephone": 3,
+          "ecommerce": 20
+        },
+        "isSeasonal": true,
+        "monthsOfOperation": [
+          "jan",
+          "feb"
+        ],
+        "ach": {
+          "refunds": {
+            "writtenRefundPolicy": true,
+            "refundPolicyUrl": "www.example.com/refund-poilcy-url"
+          },
+          "estimatedMonthlyTransactions": 3000,
+          "limits": {
+            "singleTransaction": 10000,
+            "dailyDeposit": 200000,
+            "monthlyDeposit": 6000000
+          },
+          "naics": "5812",
+          "previouslyTerminatedForAch": false,
+          "transactionTypes": [
+            "prearrangedPayment",
+            "other"
+          ],
+          "transactionTypesOther": "anotherTransactionType"
+        },
+        "cardAcceptance": {
+          "debitOnly": false,
+          "hsaFsa": false,
+          "cardsAccepted": [
+            "visa",
+            "mastercard",
+            "amexoptblue"
+          ],
+          "specialityCards": {
+            "americanExpressDirect": {
+              "enabled": false,
+              "merchantNumber": "abc1234567"
+            },
+            "electronicBenefitsTransfer": {
+              "enabled": true,
+              "fnsNumber": "6789012"
+            },
+            "other": {
+              "wexMerchantNumber": "abc1234567",
+              "voyagerMerchantId": "abc1234567",
+              "fleetMerchantId": "abc1234567"
+            }
+          }
+        }
+      },
+      "funding": {
+        "acceleratedFundingFee": 1999,
+        "dailyDiscount": false,
+        "fundingAccounts": [
+          {
+            "type": "checking",
+            "use": "creditAndDebit",
+            "nameOnAccount": "Jane Doe",
+            "paymentMethods": [
+              {
+                "type": "ach",
+                "value": {
+                  "routingNumber": "123456789",
+                  "accountNumber": "1234567890"
+                }
+              }
+            ],
+            "metadata": {
+              "yourCustomField": "abc123"
+            }
+          }
+        ],
+        "fundingSchedule": "nextday"
+      },
+      "pricing": {
+        "type": "intent",
+        "pricingIntentId": "6123"
+      },
+      "signature": {
+        "type": "requestedViaDirectLink"
+      },
+      "website": "www.example.com",
+      "contacts": [
+        {
+          "type": "manager",
+          "firstName": "Jane",
+          "lastName": "Doe",
+          "identifiers": [
+            {
+              "type": "nationalId",
+              "value": "000-00-4320"
+            }
+          ],
+          "contactMethods": [
+            {
+              "type": "email",
+              "value": "jane.doe@example.com"
+            }
+          ],
+          "middleName": "Helen"
+        }
+      ],
+      "metadata": {
+        "customerId": "2345"
+      }
+    }
+  ],
+  "metadata": {
+
+    "customerId": "2345"
+
+  }
+
+}

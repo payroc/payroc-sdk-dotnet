@@ -1,0 +1,17 @@
+{
+  "channel": "web",
+  "source": {
+    "type": "card",
+    "cardDetails": {
+      "entryMethod": "keyed",
+      "keyedData": {
+        "dataFormat": "plainText",
+        "cardNumber": "4539858876047062",
+        "expiryDate": "1225",
+        "cvv": "234"
+      },
+      "cardholderName": "Sarah Hazel Hopper"
+    }
+  },
+  "operator": "Jane"
+}

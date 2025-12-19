@@ -1,0 +1,23 @@
+{
+  "adjustments": [
+    {
+      "type": "customer",
+      "shippingAddress": {
+        "recipientName": "Sarah Hopper",
+        "address": {
+          "address1": "1 Example Ave.",
+          "address2": "Example Address Line 2",
+          "address3": "Example Address Line 3",
+          "city": "Chicago",
+          "state": "Illinois",
+          "country": "US",
+          "postalCode": "60056"
+        }
+      }
+    },
+    {
+      "type": "order",
+      "amount": 3999
+    }
+  ]
+}

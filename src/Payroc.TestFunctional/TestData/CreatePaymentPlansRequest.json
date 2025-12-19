@@ -1,0 +1,42 @@
+{
+  "paymentPlanId": "PlanRef8765",
+  "name": "Premium Club",
+  "currency": "USD",
+  "type": "automatic",
+  "frequency": "monthly",
+  "onUpdate": "continue",
+  "onDelete": "complete",
+  "description": "Monthly Premium Club subscription",
+  "length": 12,
+  "customFieldNames": [
+    "yourCustomField"
+  ],
+  "setupOrder": {
+    "amount": 4999,
+    "breakdown": {
+      "subtotal": 4347,
+      "taxes": [
+        {
+          "name": "Sales Tax",
+          "rate": 5,
+          "type": "rate"
+        }
+      ]
+    },
+    "description": "Initial setup fee for Premium Club subscription"
+  },
+  "recurringOrder": {
+    "amount": 4999,
+    "breakdown": {
+      "subtotal": 4347,
+      "taxes": [
+        {
+          "name": "Sales Tax",
+          "rate": 5,
+          "type": "rate"
+        }
+      ]
+    },
+    "description": "Monthly Premium Club subscription"
+  }
+}

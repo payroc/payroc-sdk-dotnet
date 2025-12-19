@@ -1,0 +1,49 @@
+{
+  "processingTerminalId": "1234001",
+  "order": {
+    "amount": 4999,
+    "currency": "USD",
+    "orderId": "OrderRef6543",
+    "breakdown": {
+      "subtotal": 4347,
+      "taxes": [
+        {
+          "name": "Sales Tax",
+          "rate": 5,
+          "type": "rate"
+        }
+      ],
+      "tip": {
+        "type": "percentage",
+        "percentage": 10
+      }
+    },
+    "description": "Large Pepperoni Pizza"
+  },
+  "paymentMethod": {
+    "type": "ach",
+    "accountType": "checking",
+    "secCode": "web",
+    "nameOnAccount": "Sarah Hazel Hopper",
+    "accountNumber": "11101010",
+    "routingNumber": "053200983"
+  },
+  "customer": {
+    "notificationLanguage": "en",
+    "contactMethods": [
+      {
+        "type": "email",
+        "value": "joe@blogssoftware.com"
+      }
+    ]
+  },
+  "credentialOnFile": {
+    "tokenize": true
+  },
+  "customFields": [
+    {
+      "name": "yourCustomField",
+      "value": "abc123"
+    }
+  ]
+}

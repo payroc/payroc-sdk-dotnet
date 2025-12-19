@@ -1,0 +1,14 @@
+{
+  "adjustments": [
+    {
+        "type": "customer",
+        "contactMethods":[
+        {
+          "type": "mobile",
+          "value": "8445558735"
+        }
+      ]
+    }
+  ],
+  "operator": "Jane"
+}

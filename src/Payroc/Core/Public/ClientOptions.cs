@@ -1,0 +1,95 @@
+using Payroc.Core;
+
+namespace Payroc;
+
+[Serializable]
+public partial class ClientOptions
+{
+    /// <summary>
+    /// The http headers sent with the request.
+    /// </summary>
+    internal Headers Headers { get; init; } = new();
+
+    /// <summary>
+    /// A handler that will handle exceptions thrown by the client.
+    /// </summary>
+    internal ExceptionHandler ExceptionHandler { get; set; } = new ExceptionHandler(null);
+
+    /// <summary>
+    /// The Environment for the API.
+    /// </summary>
+    public PayrocEnvironment Environment { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    } = PayrocEnvironment.Production;
+
+    /// <summary>
+    /// The http client used to make requests.
+    /// </summary>
+    public HttpClient HttpClient { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    } = new HttpClient();
+
+    /// <summary>
+    /// Additional headers to be sent with HTTP requests.
+    /// Headers with matching keys will be overwritten by headers set on the request.
+    /// </summary>
+    public IEnumerable<KeyValuePair<string, string?>> AdditionalHeaders { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    } = [];
+
+    /// <summary>
+    /// The http client used to make requests.
+    /// </summary>
+    public int MaxRetries { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    } = 2;
+
+    /// <summary>
+    /// The timeout for the request.
+    /// </summary>
+    public TimeSpan Timeout { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    } = TimeSpan.FromSeconds(30);
+    
+    /// <summary>
+    /// Enable or disable telemetry. Defaults to true. Set to false to opt-out of error tracking.
+    /// </summary>
+    public bool Telemetry { get; set; } = true;
+
+    /// <summary>
+    /// Clones this and returns a new instance
+    /// </summary>
+    internal ClientOptions Clone()
+    {
+        return new ClientOptions
+        {
+            Environment = Environment,
+            HttpClient = HttpClient,
+            MaxRetries = MaxRetries,
+            Timeout = Timeout,
+            Telemetry =  Telemetry,
+            Headers = new Headers(new Dictionary<string, HeaderValue>(Headers)),
+            ExceptionHandler = ExceptionHandler.Clone(),
+        };
+    }
+}

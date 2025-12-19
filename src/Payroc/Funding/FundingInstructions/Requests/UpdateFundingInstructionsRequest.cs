@@ -1,0 +1,24 @@
+using System.Text.Json.Serialization;
+using Payroc;
+using Payroc.Core;
+
+namespace Payroc.Funding.FundingInstructions;
+
+[Serializable]
+public record UpdateFundingInstructionsRequest
+{
+    /// <summary>
+    /// Unique identifier that we assigned to the funding instruction.
+    /// </summary>
+    [JsonIgnore]
+    public required int InstructionId { get; set; }
+
+    [JsonIgnore]
+    public required Instruction Body { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}
