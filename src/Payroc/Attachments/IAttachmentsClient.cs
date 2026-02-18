@@ -16,7 +16,7 @@ public partial interface IAttachmentsClient
     /// - **type** - Type of attachment that you want to upload.
     /// - **description** - Short description of the attachment.
     ///
-    /// In the response, our gateway returns information about the attachment including its upload status and an attachmentId that you can use to [Retrieve the details of the Attachment](https://docs.payroc.com/api/schema/attachments/get-attachment).
+    /// In the response, our gateway returns information about the attachment including its upload status and an attachmentId that you can use to [Retrieve the details of the Attachment](https://docs.payroc.com/api/schema/attachments/retrieve).
     /// </summary>
     WithRawResponseTask<Attachment> UploadToProcessingAccountAsync(
         UploadAttachment request,
@@ -31,8 +31,8 @@ public partial interface IAttachmentsClient
     ///
     /// Our gateway returns information about the attachment, including its upload status and the entity that the attachment is linked to. Our gateway doesn't return the file that you uploaded.
     /// </summary>
-    WithRawResponseTask<Attachment> GetAttachmentAsync(
-        GetAttachmentRequest request,
+    WithRawResponseTask<Attachment> RetrieveAsync(
+        RetrieveAttachmentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

@@ -6,7 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Attachments;
 
 [TestFixture]
-public class GetAttachmentTest : BaseMockServerTest
+public class RetrieveTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
     public async Task MockServerTest()
@@ -42,8 +42,8 @@ public class GetAttachmentTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Attachments.GetAttachmentAsync(
-            new GetAttachmentRequest { AttachmentId = "12876" }
+        var response = await Client.Attachments.RetrieveAsync(
+            new RetrieveAttachmentsRequest { AttachmentId = "12876" }
         );
         JsonAssert.AreEqual(response, mockResponse);
     }

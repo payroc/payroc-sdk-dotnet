@@ -140,8 +140,8 @@ public partial class AttachmentsClient : IAttachmentsClient
             .ConfigureAwait(false);
     }
 
-    private async Task<WithRawResponse<Attachment>> GetAttachmentAsyncCore(
-        GetAttachmentRequest request,
+    private async Task<WithRawResponse<Attachment>> RetrieveAsyncCore(
+        RetrieveAttachmentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -258,7 +258,7 @@ public partial class AttachmentsClient : IAttachmentsClient
     /// - **type** - Type of attachment that you want to upload.
     /// - **description** - Short description of the attachment.
     ///
-    /// In the response, our gateway returns information about the attachment including its upload status and an attachmentId that you can use to [Retrieve the details of the Attachment](https://docs.payroc.com/api/schema/attachments/get-attachment).
+    /// In the response, our gateway returns information about the attachment including its upload status and an attachmentId that you can use to [Retrieve the details of the Attachment](https://docs.payroc.com/api/schema/attachments/retrieve).
     /// </summary>
     /// <example><code>
     /// await client.Attachments.UploadToProcessingAccountAsync(
@@ -292,16 +292,16 @@ public partial class AttachmentsClient : IAttachmentsClient
     /// Our gateway returns information about the attachment, including its upload status and the entity that the attachment is linked to. Our gateway doesn't return the file that you uploaded.
     /// </summary>
     /// <example><code>
-    /// await client.Attachments.GetAttachmentAsync(new GetAttachmentRequest { AttachmentId = "12876" });
+    /// await client.Attachments.RetrieveAsync(new RetrieveAttachmentsRequest { AttachmentId = "12876" });
     /// </code></example>
-    public WithRawResponseTask<Attachment> GetAttachmentAsync(
-        GetAttachmentRequest request,
+    public WithRawResponseTask<Attachment> RetrieveAsync(
+        RetrieveAttachmentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         return new WithRawResponseTask<Attachment>(
-            GetAttachmentAsyncCore(request, options, cancellationToken)
+            RetrieveAsyncCore(request, options, cancellationToken)
         );
     }
 }

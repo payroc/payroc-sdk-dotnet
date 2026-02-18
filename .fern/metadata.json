@@ -1,5 +1,5 @@
 {
-  "cliVersion": "3.78.0",
+  "cliVersion": "3.79.2",
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "2.20.5",
   "generatorConfig": {
@@ -14,5 +14,5 @@
     "custom-pager-name": "PayrocPager",
     "include-exception-handler": true
   },
-  "sdkVersion": "0.0.3696"
+  "sdkVersion": "0.0.3765"
 }
