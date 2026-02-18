@@ -9,7 +9,11 @@ using Payroc.Core;
 namespace Payroc.BankTransferPayments.Payments;
 
 /// <summary>
-/// Object that contains information about the customer's payment details.
+/// Polymorphic object that contains the customer's updated payment details.
+///
+/// The value of the type parameter determines which variant you should use:
+/// -	`ach` - Automated Clearing House (ACH) details
+/// -	`secureToken` - Secure token details
 /// </summary>
 [JsonConverter(typeof(RepresentmentPaymentMethod.JsonConverter))]
 [Serializable]

@@ -43,7 +43,7 @@ public record ProcessingAccount : IJsonOnDeserialized
     /// - `rejected` - We rejected the application for the processing account.
     /// - `terminated` - Processing account is closed.
     /// - `cancelled` - Merchant withdrew the application for the processing account.
-    /// **Note**: You can subscribe to our processingAccount.status.changed event to get notifications when we change the status of a processing account. For more information about how to subscribe to events, go to [Event Subscriptions](https://docs.payroc.com/guides/integrate/event-subscriptions).
+    /// **Note**: You can subscribe to our processingAccount.status.changed event to get notifications when we change the status of a processing account. For more information about how to subscribe to events, go to [Event Subscriptions](https://docs.payroc.com/guides/board-merchants/event-subscriptions).
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("status")]
@@ -95,11 +95,22 @@ public record ProcessingAccount : IJsonOnDeserialized
     [JsonPropertyName("timezone")]
     public required Timezone Timezone { get; set; }
 
+    /// <summary>
+    /// Polymorphic object that contains address information for the processing account.
+    /// </summary>
     [JsonPropertyName("address")]
     public required Address Address { get; set; }
 
     /// <summary>
-    /// Array of contactMethods objects for the processing account. At least one contactMethod must be an email address.
+    /// Array of polymorphic objects, which contain contact information.
+    ///
+    /// **Note:** You must provide an email address.
+    ///
+    /// The value of the type parameter determines which variant you should use:
+    /// -	`email` - Email address
+    /// -	`phone` - Phone number
+    /// -	`mobile` - Mobile number
+    /// -	`fax` - Fax number
     /// </summary>
     [JsonPropertyName("contactMethods")]
     public IEnumerable<ContactMethod> ContactMethods { get; set; } = new List<ContactMethod>();

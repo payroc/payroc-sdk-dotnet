@@ -1,9 +1,7 @@
 using NUnit.Framework;
-using OneOf;
-using Payroc;
 using Payroc.Boarding.ProcessingAccounts;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Boarding.ProcessingAccounts;
 
@@ -27,7 +25,6 @@ public class GetProcessingAccountPricingAgreementTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "amount": 1295,
                   "billingFrequency": "monthly"
                 },
                 "maintenance": 500,
@@ -40,14 +37,15 @@ public class GetProcessingAccountPricingAgreementTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "interchangePlus",
                   "fees": {
                     "mastercardVisaDiscover": {
                       "volume": 1.25
                     },
                     "amex": {
+                      "type": "optBlue",
                       "volume": 1.25,
-                      "transaction": 1,
-                      "type": "optBlue"
+                      "transaction": 1
                     },
                     "pinDebit": {
                       "additionalDiscount": 1.25,
@@ -58,8 +56,7 @@ public class GetProcessingAccountPricingAgreementTest : BaseMockServerTest
                       "enrollment": 1,
                       "creditToMerchant": 1.25
                     }
-                  },
-                  "planType": "interchangePlus"
+                  }
                 },
                 "ach": {
                   "fees": {
@@ -85,8 +82,8 @@ public class GetProcessingAccountPricingAgreementTest : BaseMockServerTest
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ]
             }
@@ -113,16 +110,6 @@ public class GetProcessingAccountPricingAgreementTest : BaseMockServerTest
                     ProcessingAccountId = "38765",
                 }
             );
-        Assert.That(
-            response.Value,
-            Is.EqualTo(
-                    JsonUtils
-                        .Deserialize<OneOf<PricingAgreementUs40, PricingAgreementUs50>>(
-                            mockResponse
-                        )
-                        .Value
-                )
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

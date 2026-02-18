@@ -14,6 +14,9 @@ public record Links : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    /// <summary>
+    /// Polymorphic object that contains information about the processing terminal that the order is linked to.
+    /// </summary>
     [JsonPropertyName("links")]
     public IEnumerable<ProcessingTerminalSummary>? Links_ { get; set; }
 

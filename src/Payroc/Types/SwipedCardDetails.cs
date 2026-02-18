@@ -21,6 +21,13 @@ public record SwipedCardDetails : IJsonOnDeserialized
     [JsonPropertyName("downgradeTo")]
     public SwipedCardDetailsDowngradeTo? DowngradeTo { get; set; }
 
+    /// <summary>
+    /// Polymorphic object that contains payment card details that a device captured from the magnetic strip.
+    ///
+    /// The value of the dataFormat parameter determines which variant you should use:
+    /// -	`encrypted` - Payment card details are encrypted.
+    /// -	`plainText` - Payment card details are in plain text.
+    /// </summary>
     [JsonPropertyName("swipedData")]
     public required SwipedCardDetailsSwipedData SwipedData { get; set; }
 
@@ -36,6 +43,9 @@ public record SwipedCardDetails : IJsonOnDeserialized
     [JsonPropertyName("cardholderSignature")]
     public string? CardholderSignature { get; set; }
 
+    /// <summary>
+    /// Polymorphic object that contains information about the customer's PIN.
+    /// </summary>
     [JsonPropertyName("pinDetails")]
     public SwipedCardDetailsPinDetails? PinDetails { get; set; }
 

@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using Payroc;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 using Payroc.Tokenization.SecureTokens;
 
 namespace Payroc.Test.Unit.MockServer.Tokenization.SecureTokens;
@@ -44,8 +44,8 @@ public class CreateTest : BaseMockServerTest
                 },
                 "contactMethods": [
                   {
-                    "value": "jane.doe@example.com",
-                    "type": "email"
+                    "type": "email",
+                    "value": "jane.doe@example.com"
                   }
                 ],
                 "notificationLanguage": "en"
@@ -55,15 +55,15 @@ public class CreateTest : BaseMockServerTest
                 "value": "104.18.24.203"
               },
               "source": {
+                "type": "card",
                 "cardDetails": {
+                  "entryMethod": "raw",
                   "device": {
                     "model": "bbposChp",
                     "serialNumber": "1850010868"
                   },
-                  "rawData": "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
-                  "entryMethod": "raw"
-                },
-                "type": "card"
+                  "rawData": "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF"
+                }
               },
               "customFields": [
                 {
@@ -107,16 +107,17 @@ public class CreateTest : BaseMockServerTest
                 },
                 "contactMethods": [
                   {
-                    "value": "jane.doe@example.com",
-                    "type": "email"
+                    "type": "email",
+                    "value": "jane.doe@example.com"
                   }
                 ],
                 "notificationLanguage": "en"
               },
               "source": {
+                "type": "card",
                 "cardholderName": "Sarah Hazel Hopper",
                 "cardNumber": "4539858876047062",
-                "expiryDate": "1225",
+                "expiryDate": "1230",
                 "cardType": "cardType",
                 "currency": "AED",
                 "debit": true,
@@ -125,8 +126,7 @@ public class CreateTest : BaseMockServerTest
                   "amount": 87,
                   "percentage": 3,
                   "disclosure": "A 3% surcharge is applied to cover processing fees."
-                },
-                "type": "card"
+                }
               },
               "token": "296753123456",
               "status": "notValidated",
@@ -231,9 +231,6 @@ public class CreateTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SecureToken>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

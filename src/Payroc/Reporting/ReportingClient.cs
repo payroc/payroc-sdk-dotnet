@@ -3,7 +3,7 @@ using Payroc.Reporting.Settlement;
 
 namespace Payroc.Reporting;
 
-public partial class ReportingClient
+public partial class ReportingClient : IReportingClient
 {
     private RawClient _client;
 
@@ -21,5 +21,5 @@ public partial class ReportingClient
         }
     }
 
-    public SettlementClient Settlement { get; }
+    public ISettlementClient Settlement { get; }
 }

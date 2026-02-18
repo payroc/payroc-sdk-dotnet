@@ -48,49 +48,49 @@ public record AchDeposit : IJsonOnDeserialized
     /// Amount of sales in the ACH deposit. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("sales")]
-    public int? Sales { get; set; }
+    public long? Sales { get; set; }
 
     /// <summary>
     /// Amount of returns in the ACH deposit. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("returns")]
-    public int? Returns { get; set; }
+    public long? Returns { get; set; }
 
     /// <summary>
     /// Amount of fees that were applied to the transactions in the ACH deposit. We return the value in the currency's lowest denomination, for example cents.
     /// </summary>
     [JsonPropertyName("dailyFees")]
-    public int? DailyFees { get; set; }
+    public long? DailyFees { get; set; }
 
     /// <summary>
     /// Amount of funds that we held if the merchant was in full suspense. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("heldSales")]
-    public int? HeldSales { get; set; }
+    public long? HeldSales { get; set; }
 
     /// <summary>
     /// Amount of adjustments that we made to the ACH deposit. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("achAdjustment")]
-    public int? AchAdjustment { get; set; }
+    public long? AchAdjustment { get; set; }
 
     /// <summary>
     /// Amount of funds that we held as reserve from the ACH deposit. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("holdback")]
-    public int? Holdback { get; set; }
+    public long? Holdback { get; set; }
 
     /// <summary>
     /// Amount of funds that we released from holdback. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("reserveRelease")]
-    public int? ReserveRelease { get; set; }
+    public long? ReserveRelease { get; set; }
 
     /// <summary>
     /// Total amount that we paid the merchant after fees and adjustments. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("netAmount")]
-    public int? NetAmount { get; set; }
+    public long? NetAmount { get; set; }
 
     [JsonPropertyName("merchant")]
     public MerchantSummary? Merchant { get; set; }

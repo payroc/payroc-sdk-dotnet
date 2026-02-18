@@ -50,7 +50,7 @@ public record ActivityRecord : IJsonOnDeserialized
     /// Total amount that we removed or added to the merchant's funding balance. The value is in the currency’s lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("amount")]
-    public required double Amount { get; set; }
+    public required long Amount { get; set; }
 
     /// <summary>
     /// Indicates if we moved funds into or out of the funding balance. Our gateway returns one of the following values:

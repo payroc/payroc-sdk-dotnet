@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using Payroc;
-using Payroc.Core;
 using Payroc.PaymentLinks.SharingEvents;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.PaymentLinks.SharingEvents;
 
@@ -29,9 +29,6 @@ public class ShareTest : BaseMockServerTest
         const string mockResponse = """
             {
               "sharingMethod": "email",
-              "sharingEventId": "GTZH5WVXK9",
-              "dateTime": "2024-07-02T15:30:00.000Z",
-              "merchantCopy": true,
               "message": "Dear Sarah,\n\nYou can pay for your order via the link below.\n",
               "recipients": [
                 {
@@ -81,10 +78,6 @@ public class ShareTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PaymentLinkEmailShareEvent>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -19,21 +19,21 @@ public record ListPaymentLinksRequest
     public string? MerchantReference { get; set; }
 
     /// <summary>
-    /// Filter results by the type of link. Send a value of &lt;code&gt;singleUse&lt;/code&gt; or &lt;code&gt;multiUse&lt;/code&gt;.
+    /// Filter results by the type of link. Send a value of <code>singleUse</code> or <code>multiUse</code>.
     /// </summary>
     [JsonIgnore]
     public ListPaymentLinksRequestLinkType? LinkType { get; set; }
 
     /// <summary>
     /// Filter results by the user that entered the amount. Send one of the following values:
-    /// - &lt;code&gt;prompt&lt;/code&gt; - Customer entered the amount.
-    /// - &lt;code&gt;preset&lt;/code&gt; - Merchant entered the amount.
+    /// - <code>prompt</code> - Customer entered the amount.
+    /// - <code>preset</code> - Merchant entered the amount.
     /// </summary>
     [JsonIgnore]
     public ListPaymentLinksRequestChargeType? ChargeType { get; set; }
 
     /// <summary>
-    /// Filter results by the status of the payment link. Send a value of &lt;code&gt;active&lt;/code&gt;, &lt;code&gt;completed&lt;/code&gt;,&lt;code&gt;deactived&lt;/code&gt;, or &lt;code&gt;expired&lt;/code&gt;.
+    /// Filter results by the status of the payment link. Send a value of <code>active</code>, <code>completed</code>,<code>deactived</code>, or <code>expired</code>.
     /// </summary>
     [JsonIgnore]
     public ListPaymentLinksRequestStatus? Status { get; set; }

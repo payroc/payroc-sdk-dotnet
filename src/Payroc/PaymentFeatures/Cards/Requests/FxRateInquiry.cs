@@ -35,7 +35,12 @@ public record FxRateInquiry
     public required Currency BaseCurrency { get; set; }
 
     /// <summary>
-    /// Object that contains information about the customer's payment details.
+    /// Polymorphic object that contains payment details.
+    ///
+    /// The value of the type parameter determines which variant you should use:
+    /// -	`card` - Payment card details
+    /// -	`secureToken` - Secure token details
+    /// -	`digitalWallet` - Digital wallet details
     /// </summary>
     [JsonPropertyName("paymentMethod")]
     public required FxRateInquiryPaymentMethod PaymentMethod { get; set; }

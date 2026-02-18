@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
-using Payroc.Core;
 using Payroc.Funding.FundingAccounts;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Funding.FundingAccounts;
 
@@ -14,32 +13,21 @@ public class RetrieveTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "fundingAccountId": 123,
-              "createdDate": "2024-07-02T15:30:00.000Z",
-              "lastModifiedDate": "2024-07-02T15:30:00.000Z",
-              "status": "pending",
               "type": "checking",
               "use": "credit",
               "nameOnAccount": "Jane Doe",
               "paymentMethods": [
                 {
+                  "type": "ach",
                   "value": {
                     "routingNumber": "123456789",
                     "accountNumber": "1234567890"
-                  },
-                  "type": "ach"
+                  }
                 }
               ],
               "metadata": {
                 "yourCustomField": "abc123"
-              },
-              "links": [
-                {
-                  "rel": "parent",
-                  "method": "get",
-                  "href": "https://api.payroc.com/v1/processing-accounts/4525644354"
-                }
-              ]
+              }
             }
             """;
 
@@ -57,9 +45,6 @@ public class RetrieveTest : BaseMockServerTest
         var response = await Client.Funding.FundingAccounts.RetrieveAsync(
             new RetrieveFundingAccountsRequest { FundingAccountId = 1 }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<FundingAccount>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

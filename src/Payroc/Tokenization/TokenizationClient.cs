@@ -4,7 +4,7 @@ using Payroc.Tokenization.SingleUseTokens;
 
 namespace Payroc.Tokenization;
 
-public partial class TokenizationClient
+public partial class TokenizationClient : ITokenizationClient
 {
     private RawClient _client;
 
@@ -23,7 +23,7 @@ public partial class TokenizationClient
         }
     }
 
-    public SecureTokensClient SecureTokens { get; }
+    public ISecureTokensClient SecureTokens { get; }
 
-    public SingleUseTokensClient SingleUseTokens { get; }
+    public ISingleUseTokensClient SingleUseTokens { get; }
 }

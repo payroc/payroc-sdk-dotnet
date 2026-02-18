@@ -39,13 +39,21 @@ public record Business : IJsonOnDeserialized
     public BusinessCountryOfOperation? CountryOfOperation { get; set; }
 
     /// <summary>
-    /// Object that contains the addresses for the business.
+    /// Array of polymorphic objects that contain address information for the business.
     /// </summary>
     [JsonPropertyName("addresses")]
     public IEnumerable<LegalAddress> Addresses { get; set; } = new List<LegalAddress>();
 
     /// <summary>
-    /// Array of contactMethod objects. One contact method must be an email address.
+    /// Array of polymorphic objects, which contain contact information.
+    ///
+    /// **Note:** You must provide an email address.
+    ///
+    /// The value of the type parameter determines which variant you should use:
+    /// -	`email` - Email address
+    /// -	`phone` - Phone number
+    /// -	`mobile` - Mobile number
+    /// -	`fax` - Fax number
     /// </summary>
     [JsonPropertyName("contactMethods")]
     public IEnumerable<ContactMethod> ContactMethods { get; set; } = new List<ContactMethod>();

@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
-using Payroc.Core;
 using Payroc.RepeatPayments.Subscriptions;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.RepeatPayments.Subscriptions;
 
@@ -49,15 +48,12 @@ public class DeactivateTest : BaseMockServerTest
                     "amount": 25
                   },
                   "surcharge": {
-                    "bypass": false,
-                    "amount": 217,
-                    "percentage": 5
+                    "bypass": false
                   },
                   "taxes": [
                     {
                       "name": "Sales Tax",
-                      "rate": 5,
-                      "amount": 190
+                      "rate": 5
                     }
                   ]
                 }
@@ -71,15 +67,12 @@ public class DeactivateTest : BaseMockServerTest
                     "amount": 25
                   },
                   "surcharge": {
-                    "bypass": false,
-                    "amount": 217,
-                    "percentage": 5
+                    "bypass": false
                   },
                   "taxes": [
                     {
                       "name": "Sales Tax",
-                      "rate": 5,
-                      "amount": 190
+                      "rate": 5
                     }
                   ]
                 }
@@ -126,9 +119,6 @@ public class DeactivateTest : BaseMockServerTest
                 SubscriptionId = "SubRef7654",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Subscription>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

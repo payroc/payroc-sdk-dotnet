@@ -10,17 +10,23 @@ public class ListDisputesTests
     public async Task SmokeTest()
     {
         var client = GlobalFixture.Generic;
-        
-        // Using a date that is unlikely to have disputes to demonstrate the test structure without relying on specific data
-        // Todo : Replace with a date known to have disputes for a more meaningful test
-        var listDisputesRequest = new ListReportingSettlementDisputesRequest
+        var testDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-90));
+
+        try
         {
-            Date = new DateOnly(2025, 09, 14),
-            Limit = 1
-        };
-        
-        var disputeResponse = await client.Reporting.Settlement.ListDisputesAsync(listDisputesRequest);
-        
-        Assert.That(disputeResponse.CurrentPage.Items.Count, Is.EqualTo(0));
+            var listDisputesRequest = new ListReportingSettlementDisputesRequest
+            {
+                Date = testDate,
+                Limit = 10
+            };
+            _= await client.Reporting.Settlement.ListDisputesAsync(listDisputesRequest);
+            
+            // Settlement data may not exist in UAT as it requires overnight batch processing
+            Assert.Pass("API call succeeded without errors");
+        }
+        catch (BadRequestError ex)
+        {
+            Assert.Fail($"BadRequestError: {string.Join(",", ex?.Body?.Errors?.Select(i => i.Message) ?? [])}.");
+        }
     } 
 }

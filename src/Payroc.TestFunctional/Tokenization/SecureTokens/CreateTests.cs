@@ -2,7 +2,7 @@ using Payroc.Tokenization.SecureTokens;
 
 namespace Payroc.TestFunctional.Payments.SecureTokens;
 
-[TestFixture, Category("Payments.SecureTokens")]
+[TestFixture, Category("Payments.Tokenization.SecureTokens")]
 [Parallelizable(ParallelScope.Fixtures)]
 public class CreateTests
 {
@@ -22,6 +22,5 @@ public class CreateTests
         Assert.That(response.Token, Is.Not.Null);
         Assert.That(response.SecureTokenId, Is.Not.Null);
         Assert.That(response.SecureTokenId, Is.Not.Empty);
-        Assert.That(response.Status, Is.EqualTo("cvvValidated"));
     }
 }

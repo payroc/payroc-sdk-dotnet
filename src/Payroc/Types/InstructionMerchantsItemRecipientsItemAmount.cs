@@ -18,7 +18,7 @@ public record InstructionMerchantsItemRecipientsItemAmount : IJsonOnDeserialized
     /// Amount of funds in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("value")]
-    public required double Value { get; set; }
+    public required int Value { get; set; }
 
     /// <summary>
     /// Currency of the value parameter.

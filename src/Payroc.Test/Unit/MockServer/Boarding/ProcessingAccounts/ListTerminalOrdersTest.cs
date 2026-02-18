@@ -1,9 +1,8 @@
 using System.Globalization;
 using NUnit.Framework;
-using Payroc;
 using Payroc.Boarding.ProcessingAccounts;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Boarding.ProcessingAccounts;
 
@@ -74,8 +73,8 @@ public class ListTerminalOrdersTest : BaseMockServerTest
                         "communicationType": "wifi"
                       },
                       "batchClosure": {
-                        "batchCloseTime": "23:40",
-                        "batchCloseType": "automatic"
+                        "batchCloseType": "automatic",
+                        "batchCloseTime": "23:40"
                       },
                       "receiptNotifications": {
                         "emailReceipt": true,
@@ -93,9 +92,7 @@ public class ListTerminalOrdersTest : BaseMockServerTest
                       "tokenization": true
                     }
                   }
-                ],
-                "createdDate": "2024-07-02T12:00:00.000Z",
-                "lastModifiedDate": "2024-07-02T12:00:00.000Z"
+                ]
               }
             ]
             """;
@@ -134,10 +131,6 @@ public class ListTerminalOrdersTest : BaseMockServerTest
                 ),
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<TerminalOrder>>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -1,7 +1,7 @@
 using NUnit.Framework;
-using Payroc.Core;
 using Payroc.PayrocCloud.Signatures;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.PayrocCloud.Signatures;
 
@@ -38,10 +38,6 @@ public class RetrieveTest : BaseMockServerTest
         var response = await Client.PayrocCloud.Signatures.RetrieveAsync(
             new RetrieveSignaturesRequest { SignatureId = "JDN4ILZB0T" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<RetrieveSignaturesResponse>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

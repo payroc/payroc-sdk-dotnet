@@ -4,7 +4,7 @@ using Payroc.PaymentFeatures.Cards;
 
 namespace Payroc.PaymentFeatures;
 
-public partial class PaymentFeaturesClient
+public partial class PaymentFeaturesClient : IPaymentFeaturesClient
 {
     private RawClient _client;
 
@@ -23,7 +23,7 @@ public partial class PaymentFeaturesClient
         }
     }
 
-    public CardsClient Cards { get; }
+    public ICardsClient Cards { get; }
 
-    public BankClient Bank { get; }
+    public IBankClient Bank { get; }
 }

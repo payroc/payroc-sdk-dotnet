@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using Payroc;
 using Payroc.BankTransferPayments.Refunds;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.BankTransferPayments.Refunds;
 
@@ -25,16 +25,16 @@ public class CreateTest : BaseMockServerTest
                 "notificationLanguage": "en",
                 "contactMethods": [
                   {
-                    "value": "jane.doe@example.com",
-                    "type": "email"
+                    "type": "email",
+                    "value": "jane.doe@example.com"
                   }
                 ]
               },
               "refundMethod": {
+                "type": "ach",
                 "nameOnAccount": "Shara Hazel Hopper",
                 "accountNumber": "1234567890",
-                "routingNumber": "123456789",
-                "type": "ach"
+                "routingNumber": "123456789"
               },
               "customFields": [
                 {
@@ -51,7 +51,6 @@ public class CreateTest : BaseMockServerTest
               "processingTerminalId": "1234001",
               "order": {
                 "orderId": "OrderRef6543",
-                "dateTime": "2024-07-02T15:30:00.000Z",
                 "description": "Refund for order OrderRef6543",
                 "amount": 4999,
                 "currency": "USD"
@@ -60,12 +59,13 @@ public class CreateTest : BaseMockServerTest
                 "notificationLanguage": "en",
                 "contactMethods": [
                   {
-                    "value": "jane.doe@example.com",
-                    "type": "email"
+                    "type": "email",
+                    "value": "jane.doe@example.com"
                   }
                 ]
               },
               "bankAccount": {
+                "type": "ach",
                 "secCode": "web",
                 "nameOnAccount": "Sarah Hazel Hopper",
                 "accountNumber": "123456789",
@@ -80,8 +80,7 @@ public class CreateTest : BaseMockServerTest
                     "method": "get",
                     "href": "<uri>"
                   }
-                },
-                "type": "ach"
+                }
               },
               "payment": {
                 "paymentId": "M2MJOG6O2Y",
@@ -172,9 +171,6 @@ public class CreateTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<BankTransferRefund>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -3,7 +3,7 @@ using Payroc.Notifications.EventSubscriptions;
 
 namespace Payroc.Notifications;
 
-public partial class NotificationsClient
+public partial class NotificationsClient : INotificationsClient
 {
     private RawClient _client;
 
@@ -21,5 +21,5 @@ public partial class NotificationsClient
         }
     }
 
-    public EventSubscriptionsClient EventSubscriptions { get; }
+    public IEventSubscriptionsClient EventSubscriptions { get; }
 }

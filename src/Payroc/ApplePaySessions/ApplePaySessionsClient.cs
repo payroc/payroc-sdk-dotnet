@@ -4,7 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.ApplePaySessions;
 
-public partial class ApplePaySessionsClient
+public partial class ApplePaySessionsClient : IApplePaySessionsClient
 {
     private RawClient _client;
 
@@ -21,24 +21,7 @@ public partial class ApplePaySessionsClient
         }
     }
 
-    /// <summary>
-    /// Use this method to start an Apple Pay session for your merchant.
-    ///
-    /// In the response, we return the startSessionObject that you send to Apple when you retrieve the cardholder's encrypted payment details.
-    ///
-    /// **Note:** For more information about how to integrate with Apple Pay, go to [Apple Pay](https://docs.payroc.com/guides/integrate/apple-pay).
-    /// </summary>
-    /// <example><code>
-    /// await client.ApplePaySessions.CreateAsync(
-    ///     new ApplePaySessions
-    ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         AppleDomainId = "DUHDZJHGYY",
-    ///         AppleValidationUrl = "https://apple-pay-gateway.apple.com/paymentservices/startSession",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<ApplePayResponseSession> CreateAsync(
+    private async Task<WithRawResponse<ApplePayResponseSession>> CreateAsyncCore(
         ApplePaySessions request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -47,6 +30,12 @@ public partial class ApplePaySessionsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -58,6 +47,7 @@ public partial class ApplePaySessionsClient
                                 ValueConvert.ToPathParameterString(request.ProcessingTerminalId)
                             ),
                             Body = request,
+                            Headers = _headers,
                             ContentType = "application/json",
                             Options = options,
                         },
@@ -69,14 +59,32 @@ public partial class ApplePaySessionsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<ApplePayResponseSession>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<ApplePayResponseSession>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<ApplePayResponseSession>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new PayrocException("Failed to deserialize response", e);
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
@@ -105,5 +113,33 @@ public partial class ApplePaySessionsClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Use this method to start an Apple Pay session for your merchant.
+    ///
+    /// In the response, we return the startSessionObject that you send to Apple when you retrieve the cardholder's encrypted payment details.
+    ///
+    /// **Note:** For more information about how to integrate with Apple Pay, go to [Apple Pay](https://docs.payroc.com/guides/take-payments/apple-pay).
+    /// </summary>
+    /// <example><code>
+    /// await client.ApplePaySessions.CreateAsync(
+    ///     new ApplePaySessions
+    ///     {
+    ///         ProcessingTerminalId = "1234001",
+    ///         AppleDomainId = "DUHDZJHGYY",
+    ///         AppleValidationUrl = "https://apple-pay-gateway.apple.com/paymentservices/startSession",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ApplePayResponseSession> CreateAsync(
+        ApplePaySessions request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ApplePayResponseSession>(
+            CreateAsyncCore(request, options, cancellationToken)
+        );
     }
 }

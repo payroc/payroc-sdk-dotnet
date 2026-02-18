@@ -30,13 +30,13 @@ public record MerchantBalance : IJsonOnDeserialized
     /// Amount of the funding balance that we have not yet sent to funding accounts. The value is in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("pending")]
-    public double? Pending { get; set; }
+    public int? Pending { get; set; }
 
     /// <summary>
     /// Amount of the funding balance that you can use in funding instructions. The value is in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("available")]
-    public double? Available { get; set; }
+    public int? Available { get; set; }
 
     /// <summary>
     /// Currency of the funding balance. We return a value of `USD`.

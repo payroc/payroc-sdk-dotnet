@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
-using Payroc.Core;
 using Payroc.Reporting.Settlement;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Reporting.Settlement;
 
@@ -39,10 +38,6 @@ public class ListDisputesStatusesTest : BaseMockServerTest
         var response = await Client.Reporting.Settlement.ListDisputesStatusesAsync(
             new ListDisputesStatusesSettlementRequest { DisputeId = 1 }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<DisputeStatus>>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

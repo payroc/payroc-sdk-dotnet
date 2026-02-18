@@ -1,7 +1,6 @@
 using NUnit.Framework;
-using Payroc;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.ApplePaySessions;
 
@@ -49,9 +48,6 @@ public class CreateTest : BaseMockServerTest
                     "https://apple-pay-gateway.apple.com/paymentservices/startSession",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<ApplePayResponseSession>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

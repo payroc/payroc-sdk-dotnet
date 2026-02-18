@@ -21,7 +21,11 @@ public record Tiered4Fees : IJsonOnDeserialized
     public required QualRatesWithPremium MastercardVisaDiscover { get; set; }
 
     /// <summary>
-    /// Object that contains the fees for American Express transactions.
+    /// Polymorphic object that contains fees for American Express transactions.
+    ///
+    /// The value of the type field determines which variant you should use:
+    /// -	`optBlue` - Amex OptBlue pricing program.
+    /// -	`direct` - Amex Direct pricing program.
     /// </summary>
     [JsonPropertyName("amex")]
     public Tiered4FeesAmex? Amex { get; set; }

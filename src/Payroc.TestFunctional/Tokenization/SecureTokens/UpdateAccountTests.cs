@@ -3,7 +3,7 @@ using Payroc.Tokenization.SingleUseTokens;
 
 namespace Payroc.TestFunctional.Payments.SecureTokens;
 
-[TestFixture, Category("Payments.SecureTokens")]
+[TestFixture, Category("Payments.Tokenization.SecureTokens")]
 [Parallelizable(ParallelScope.Fixtures)]
 public class UpdateAccountTests
 {

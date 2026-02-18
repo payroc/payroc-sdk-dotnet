@@ -42,7 +42,7 @@ public record TransactionSummary : IJsonOnDeserialized
     /// Total amount of the transaction. The value is in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("amount")]
-    public int? Amount { get; set; }
+    public long? Amount { get; set; }
 
     [JsonPropertyName("link")]
     public Link? Link { get; set; }

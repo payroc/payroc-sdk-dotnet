@@ -19,10 +19,10 @@ public class UpdateTest : BaseMockServerTest
               ],
               "notifications": [
                 {
+                  "type": "webhook",
                   "uri": "https://my-server/notification/endpoint",
                   "secret": "aBcD1234eFgH5678iJkL9012mNoP3456",
-                  "supportEmailAddress": "supportEmailAddress",
-                  "type": "webhook"
+                  "supportEmailAddress": "supportEmailAddress"
                 }
               ],
               "metadata": {

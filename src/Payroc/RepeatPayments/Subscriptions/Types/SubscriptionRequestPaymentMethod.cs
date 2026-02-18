@@ -9,7 +9,7 @@ using Payroc.Core;
 namespace Payroc.RepeatPayments.Subscriptions;
 
 /// <summary>
-/// Object that contains information about the customer's payment details.
+/// Polymorphic object that contains information about the secure token.
 /// </summary>
 [JsonConverter(typeof(SubscriptionRequestPaymentMethod.JsonConverter))]
 [Serializable]

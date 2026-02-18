@@ -1,6 +1,6 @@
 # Reference
 ## Payment links
-<details><summary><code>client.PaymentLinks.<a href="/src/Payroc/PaymentLinks/PaymentLinksClient.cs">ListAsync</a>(ListPaymentLinksRequest { ... }) -> PayrocPager<PaymentLinkPaginatedListDataItem></code></summary>
+<details><summary><code>client.PaymentLinks.<a href="/src/Payroc/PaymentLinks/PaymentLinksClient.cs">ListAsync</a>(ListPaymentLinksRequest { ... }) -> PayrocPager&lt;PaymentLinkPaginatedListDataItem&gt;</code></summary>
 <dl>
 <dd>
 
@@ -83,7 +83,7 @@ await client.PaymentLinks.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.PaymentLinks.<a href="/src/Payroc/PaymentLinks/PaymentLinksClient.cs">CreateAsync</a>(CreatePaymentLinksRequest { ... }) -> CreatePaymentLinksResponse</code></summary>
+<details><summary><code>client.PaymentLinks.<a href="/src/Payroc/PaymentLinks/PaymentLinksClient.cs">CreateAsync</a>(CreatePaymentLinksRequest { ... }) -> WithRawResponseTask&lt;CreatePaymentLinksResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -174,7 +174,7 @@ await client.PaymentLinks.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.PaymentLinks.<a href="/src/Payroc/PaymentLinks/PaymentLinksClient.cs">RetrieveAsync</a>(RetrievePaymentLinksRequest { ... }) -> RetrievePaymentLinksResponse</code></summary>
+<details><summary><code>client.PaymentLinks.<a href="/src/Payroc/PaymentLinks/PaymentLinksClient.cs">RetrieveAsync</a>(RetrievePaymentLinksRequest { ... }) -> WithRawResponseTask&lt;RetrievePaymentLinksResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -241,7 +241,7 @@ await client.PaymentLinks.RetrieveAsync(
 </dl>
 </details>
 
-<details><summary><code>client.PaymentLinks.<a href="/src/Payroc/PaymentLinks/PaymentLinksClient.cs">PartiallyUpdateAsync</a>(PartiallyUpdatePaymentLinksRequest { ... }) -> PartiallyUpdatePaymentLinksResponse</code></summary>
+<details><summary><code>client.PaymentLinks.<a href="/src/Payroc/PaymentLinks/PaymentLinksClient.cs">PartiallyUpdateAsync</a>(PartiallyUpdatePaymentLinksRequest { ... }) -> WithRawResponseTask&lt;PartiallyUpdatePaymentLinksResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -325,7 +325,7 @@ await client.PaymentLinks.PartiallyUpdateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.PaymentLinks.<a href="/src/Payroc/PaymentLinks/PaymentLinksClient.cs">DeactivateAsync</a>(DeactivatePaymentLinksRequest { ... }) -> DeactivatePaymentLinksResponse</code></summary>
+<details><summary><code>client.PaymentLinks.<a href="/src/Payroc/PaymentLinks/PaymentLinksClient.cs">DeactivateAsync</a>(DeactivatePaymentLinksRequest { ... }) -> WithRawResponseTask&lt;DeactivatePaymentLinksResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -388,7 +388,7 @@ await client.PaymentLinks.DeactivateAsync(
 </details>
 
 ## Hosted Fields
-<details><summary><code>client.HostedFields.<a href="/src/Payroc/HostedFields/HostedFieldsClient.cs">CreateAsync</a>(HostedFieldsCreateSessionRequest { ... }) -> HostedFieldsCreateSessionResponse</code></summary>
+<details><summary><code>client.HostedFields.<a href="/src/Payroc/HostedFields/HostedFieldsClient.cs">CreateAsync</a>(HostedFieldsCreateSessionRequest { ... }) -> WithRawResponseTask&lt;HostedFieldsCreateSessionResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -406,7 +406,7 @@ In your request, you need to indicate whether the merchant is using Hosted Field
 
 In the response, our gateway returns the session token and the time that it expires. You need the session token when you configure the JavaScript for Hosted Fields.  
 
-For more information about adding Hosted Fields to a webpage, go to [Hosted Fields](https://docs.payroc.com/guides/integrate/hosted-fields). 
+For more information about adding Hosted Fields to a webpage, go to [Hosted Fields](https://docs.payroc.com/guides/take-payments/hosted-fields). 
 </dd>
 </dl>
 </dd>
@@ -457,7 +457,7 @@ await client.HostedFields.CreateAsync(
 </details>
 
 ## ApplePaySessions
-<details><summary><code>client.ApplePaySessions.<a href="/src/Payroc/ApplePaySessions/ApplePaySessionsClient.cs">CreateAsync</a>(ApplePaySessions { ... }) -> ApplePayResponseSession</code></summary>
+<details><summary><code>client.ApplePaySessions.<a href="/src/Payroc/ApplePaySessions/ApplePaySessionsClient.cs">CreateAsync</a>(ApplePaySessions { ... }) -> WithRawResponseTask&lt;ApplePayResponseSession&gt;</code></summary>
 <dl>
 <dd>
 
@@ -473,7 +473,7 @@ Use this method to start an Apple Pay session for your merchant.
 
 In the response, we return the startSessionObject that you send to Apple when you retrieve the cardholder's encrypted payment details.  
 
-**Note:** For more information about how to integrate with Apple Pay, go to [Apple Pay](https://docs.payroc.com/guides/integrate/apple-pay).
+**Note:** For more information about how to integrate with Apple Pay, go to [Apple Pay](https://docs.payroc.com/guides/take-payments/apple-pay).
 </dd>
 </dl>
 </dd>
@@ -522,8 +522,142 @@ await client.ApplePaySessions.CreateAsync(
 </dl>
 </details>
 
+## Attachments
+<details><summary><code>client.Attachments.<a href="/src/Payroc/Attachments/AttachmentsClient.cs">UploadToProcessingAccountAsync</a>(UploadAttachment { ... }) -> WithRawResponseTask&lt;Attachment&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+> Before you upload an attachment, make sure that you follow local privacy regulations and get the merchant's consent to process their information.  
+
+**Note:** You need the ID of the processing account before you can upload an attachment. If you don't know the processingAccountId, go to the [Retrieve a Merchant Platform](https://docs.payroc.com/api/schema/boarding/merchant-platforms/retrieve) method.  
+
+The attachment must be an uncompressed file under 30MB in one of the following formats:
+- .bmp, csv, .doc, .docx, .gif, .htm, .html, .jpg, .jpeg, .msg, .pdf, .png, .ppt, .pptx, .tif, .tiff, .txt, .xls, .xlsx  
+
+In the request, include the attachment that you want to upload and the following information about the attachment:
+- **type** - Type of attachment that you want to upload.
+- **description** - Short description of the attachment.  
+
+In the response, our gateway returns information about the attachment including its upload status and an attachmentId that you can use to [Retrieve the details of the Attachment](https://docs.payroc.com/api/schema/attachments/get-attachment).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Attachments.UploadToProcessingAccountAsync(
+    new UploadAttachment
+    {
+        ProcessingAccountId = "38765",
+        IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+        Attachment = new UploadToProcessingAccountAttachmentsRequestAttachment
+        {
+            Type = UploadToProcessingAccountAttachmentsRequestAttachmentType.BankingEvidence,
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `UploadAttachment` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Attachments.<a href="/src/Payroc/Attachments/AttachmentsClient.cs">GetAttachmentAsync</a>(GetAttachmentRequest { ... }) -> WithRawResponseTask&lt;Attachment&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Use this method to retrieve the details of an attachment.  
+
+To retrieve the details of an attachment you need its attachmentId. Our gateway returned the attachmentId in the response of the method that you used to upload the attachment.  
+
+Our gateway returns information about the attachment, including its upload status and the entity that the attachment is linked to. Our gateway doesn't return the file that you uploaded.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Attachments.GetAttachmentAsync(new GetAttachmentRequest { AttachmentId = "12876" });
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `GetAttachmentRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Auth
-<details><summary><code>client.Auth.<a href="/src/Payroc/Auth/AuthClient.cs">RetrieveTokenAsync</a>(RetrieveTokenAuthRequest { ... }) -> GetTokenResponse</code></summary>
+<details><summary><code>client.Auth.<a href="/src/Payroc/Auth/AuthClient.cs">RetrieveTokenAsync</a>(RetrieveTokenAuthRequest { ... }) -> WithRawResponseTask&lt;GetTokenResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -578,7 +712,7 @@ await client.Auth.RetrieveTokenAsync(new RetrieveTokenAuthRequest { ApiKey = "x-
 </details>
 
 ## BankTransferPayments Payments
-<details><summary><code>client.BankTransferPayments.Payments.<a href="/src/Payroc/BankTransferPayments/Payments/PaymentsClient.cs">ListAsync</a>(ListPaymentsRequest { ... }) -> PayrocPager<BankTransferPayment></code></summary>
+<details><summary><code>client.BankTransferPayments.Payments.<a href="/src/Payroc/BankTransferPayments/Payments/PaymentsClient.cs">ListAsync</a>(ListPaymentsRequest { ... }) -> PayrocPager&lt;BankTransferPayment&gt;</code></summary>
 <dl>
 <dd>
 
@@ -665,7 +799,7 @@ await client.BankTransferPayments.Payments.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.BankTransferPayments.Payments.<a href="/src/Payroc/BankTransferPayments/Payments/PaymentsClient.cs">CreateAsync</a>(BankTransferPaymentRequest { ... }) -> BankTransferPayment</code></summary>
+<details><summary><code>client.BankTransferPayments.Payments.<a href="/src/Payroc/BankTransferPayments/Payments/PaymentsClient.cs">CreateAsync</a>(BankTransferPaymentRequest { ... }) -> WithRawResponseTask&lt;BankTransferPayment&gt;</code></summary>
 <dl>
 <dd>
 
@@ -786,7 +920,7 @@ await client.BankTransferPayments.Payments.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.BankTransferPayments.Payments.<a href="/src/Payroc/BankTransferPayments/Payments/PaymentsClient.cs">RetrieveAsync</a>(RetrievePaymentsRequest { ... }) -> BankTransferPayment</code></summary>
+<details><summary><code>client.BankTransferPayments.Payments.<a href="/src/Payroc/BankTransferPayments/Payments/PaymentsClient.cs">RetrieveAsync</a>(RetrievePaymentsRequest { ... }) -> WithRawResponseTask&lt;BankTransferPayment&gt;</code></summary>
 <dl>
 <dd>
 
@@ -855,7 +989,7 @@ await client.BankTransferPayments.Payments.RetrieveAsync(
 </dl>
 </details>
 
-<details><summary><code>client.BankTransferPayments.Payments.<a href="/src/Payroc/BankTransferPayments/Payments/PaymentsClient.cs">RepresentAsync</a>(Representment { ... }) -> BankTransferPayment</code></summary>
+<details><summary><code>client.BankTransferPayments.Payments.<a href="/src/Payroc/BankTransferPayments/Payments/PaymentsClient.cs">RepresentAsync</a>(Representment { ... }) -> WithRawResponseTask&lt;BankTransferPayment&gt;</code></summary>
 <dl>
 <dd>
 
@@ -935,7 +1069,7 @@ await client.BankTransferPayments.Payments.RepresentAsync(
 </details>
 
 ## BankTransferPayments Refunds
-<details><summary><code>client.BankTransferPayments.Refunds.<a href="/src/Payroc/BankTransferPayments/Refunds/RefundsClient.cs">ReversePaymentAsync</a>(ReversePaymentRefundsRequest { ... }) -> BankTransferPayment</code></summary>
+<details><summary><code>client.BankTransferPayments.Refunds.<a href="/src/Payroc/BankTransferPayments/Refunds/RefundsClient.cs">ReversePaymentAsync</a>(ReversePaymentRefundsRequest { ... }) -> WithRawResponseTask&lt;BankTransferPayment&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1001,7 +1135,7 @@ await client.BankTransferPayments.Refunds.ReversePaymentAsync(
 </dl>
 </details>
 
-<details><summary><code>client.BankTransferPayments.Refunds.<a href="/src/Payroc/BankTransferPayments/Refunds/RefundsClient.cs">RefundAsync</a>(BankTransferReferencedRefund { ... }) -> BankTransferPayment</code></summary>
+<details><summary><code>client.BankTransferPayments.Refunds.<a href="/src/Payroc/BankTransferPayments/Refunds/RefundsClient.cs">RefundAsync</a>(BankTransferReferencedRefund { ... }) -> WithRawResponseTask&lt;BankTransferPayment&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1073,7 +1207,7 @@ await client.BankTransferPayments.Refunds.RefundAsync(
 </dl>
 </details>
 
-<details><summary><code>client.BankTransferPayments.Refunds.<a href="/src/Payroc/BankTransferPayments/Refunds/RefundsClient.cs">ListAsync</a>(ListRefundsRequest { ... }) -> PayrocPager<BankTransferRefund></code></summary>
+<details><summary><code>client.BankTransferPayments.Refunds.<a href="/src/Payroc/BankTransferPayments/Refunds/RefundsClient.cs">ListAsync</a>(ListRefundsRequest { ... }) -> PayrocPager&lt;BankTransferRefund&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1157,7 +1291,7 @@ await client.BankTransferPayments.Refunds.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.BankTransferPayments.Refunds.<a href="/src/Payroc/BankTransferPayments/Refunds/RefundsClient.cs">CreateAsync</a>(BankTransferUnreferencedRefund { ... }) -> BankTransferRefund</code></summary>
+<details><summary><code>client.BankTransferPayments.Refunds.<a href="/src/Payroc/BankTransferPayments/Refunds/RefundsClient.cs">CreateAsync</a>(BankTransferUnreferencedRefund { ... }) -> WithRawResponseTask&lt;BankTransferRefund&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1259,7 +1393,7 @@ await client.BankTransferPayments.Refunds.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.BankTransferPayments.Refunds.<a href="/src/Payroc/BankTransferPayments/Refunds/RefundsClient.cs">RetrieveAsync</a>(RetrieveRefundsRequest { ... }) -> BankTransferRefund</code></summary>
+<details><summary><code>client.BankTransferPayments.Refunds.<a href="/src/Payroc/BankTransferPayments/Refunds/RefundsClient.cs">RetrieveAsync</a>(RetrieveRefundsRequest { ... }) -> WithRawResponseTask&lt;BankTransferRefund&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1326,7 +1460,7 @@ await client.BankTransferPayments.Refunds.RetrieveAsync(
 </dl>
 </details>
 
-<details><summary><code>client.BankTransferPayments.Refunds.<a href="/src/Payroc/BankTransferPayments/Refunds/RefundsClient.cs">ReverseRefundAsync</a>(ReverseRefundRefundsRequest { ... }) -> BankTransferRefund</code></summary>
+<details><summary><code>client.BankTransferPayments.Refunds.<a href="/src/Payroc/BankTransferPayments/Refunds/RefundsClient.cs">ReverseRefundAsync</a>(ReverseRefundRefundsRequest { ... }) -> WithRawResponseTask&lt;BankTransferRefund&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1393,7 +1527,7 @@ await client.BankTransferPayments.Refunds.ReverseRefundAsync(
 </details>
 
 ## Boarding Owners
-<details><summary><code>client.Boarding.Owners.<a href="/src/Payroc/Boarding/Owners/OwnersClient.cs">RetrieveAsync</a>(RetrieveOwnersRequest { ... }) -> Owner</code></summary>
+<details><summary><code>client.Boarding.Owners.<a href="/src/Payroc/Boarding/Owners/OwnersClient.cs">RetrieveAsync</a>(RetrieveOwnersRequest { ... }) -> WithRawResponseTask&lt;Owner&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1625,7 +1759,7 @@ await client.Boarding.Owners.DeleteAsync(new DeleteOwnersRequest { OwnerId = 1 }
 </details>
 
 ## Boarding PricingIntents
-<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">ListAsync</a>(ListPricingIntentsRequest { ... }) -> PayrocPager<PricingIntent50></code></summary>
+<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">ListAsync</a>(ListPricingIntentsRequest { ... }) -> PayrocPager&lt;PricingIntent50&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1695,7 +1829,7 @@ await client.Boarding.PricingIntents.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">CreateAsync</a>(CreatePricingIntentsRequest { ... }) -> PricingIntent50</code></summary>
+<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">CreateAsync</a>(CreatePricingIntentsRequest { ... }) -> WithRawResponseTask&lt;PricingIntent50&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1818,7 +1952,7 @@ await client.Boarding.PricingIntents.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">RetrieveAsync</a>(RetrievePricingIntentsRequest { ... }) -> PricingIntent50</code></summary>
+<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">RetrieveAsync</a>(RetrievePricingIntentsRequest { ... }) -> WithRawResponseTask&lt;PricingIntent50&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2090,7 +2224,7 @@ await client.Boarding.PricingIntents.DeleteAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">PartiallyUpdateAsync</a>(PartiallyUpdatePricingIntentsRequest { ... }) -> PricingIntent50</code></summary>
+<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">PartiallyUpdateAsync</a>(PartiallyUpdatePricingIntentsRequest { ... }) -> WithRawResponseTask&lt;PricingIntent50&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2169,7 +2303,7 @@ await client.Boarding.PricingIntents.PartiallyUpdateAsync(
 </details>
 
 ## Boarding MerchantPlatforms
-<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">ListAsync</a>(ListMerchantPlatformsRequest { ... }) -> PayrocPager<MerchantPlatform></code></summary>
+<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">ListAsync</a>(ListMerchantPlatformsRequest { ... }) -> PayrocPager&lt;MerchantPlatform&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2239,7 +2373,7 @@ await client.Boarding.MerchantPlatforms.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">CreateAsync</a>(CreateMerchantAccount { ... }) -> MerchantPlatform</code></summary>
+<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">CreateAsync</a>(CreateMerchantAccount { ... }) -> WithRawResponseTask&lt;MerchantPlatform&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2253,7 +2387,7 @@ await client.Boarding.MerchantPlatforms.ListAsync(
 
 Use this method to board a merchant with Payroc.  
 
-**Note**: This method is part of our Boarding solution. To help you understand how this method works with other Boarding methods, go to [Board a Merchant](https://docs.payroc.com/guides/integrate/boarding).  
+**Note**: This method is part of our Boarding solution. To help you understand how this method works with other Boarding methods, go to [Board a Merchant](https://docs.payroc.com/guides/board-merchants/boarding).  
 
 In the request, include the following information:  
 - Legal information, including its legal name and address.  
@@ -2552,7 +2686,7 @@ await client.Boarding.MerchantPlatforms.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">RetrieveAsync</a>(RetrieveMerchantPlatformsRequest { ... }) -> MerchantPlatform</code></summary>
+<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">RetrieveAsync</a>(RetrieveMerchantPlatformsRequest { ... }) -> WithRawResponseTask&lt;MerchantPlatform&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2617,7 +2751,7 @@ await client.Boarding.MerchantPlatforms.RetrieveAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">ListProcessingAccountsAsync</a>(ListBoardingMerchantPlatformProcessingAccountsRequest { ... }) -> PayrocPager<ProcessingAccount></code></summary>
+<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">ListProcessingAccountsAsync</a>(ListBoardingMerchantPlatformProcessingAccountsRequest { ... }) -> PayrocPager&lt;ProcessingAccount&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2693,7 +2827,7 @@ await client.Boarding.MerchantPlatforms.ListProcessingAccountsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">CreateProcessingAccountAsync</a>(CreateProcessingAccountMerchantPlatformsRequest { ... }) -> ProcessingAccount</code></summary>
+<details><summary><code>client.Boarding.MerchantPlatforms.<a href="/src/Payroc/Boarding/MerchantPlatforms/MerchantPlatformsClient.cs">CreateProcessingAccountAsync</a>(CreateProcessingAccountMerchantPlatformsRequest { ... }) -> WithRawResponseTask&lt;ProcessingAccount&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2963,7 +3097,7 @@ await client.Boarding.MerchantPlatforms.CreateProcessingAccountAsync(
 </details>
 
 ## Boarding ProcessingAccounts
-<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">RetrieveAsync</a>(RetrieveProcessingAccountsRequest { ... }) -> ProcessingAccount</code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">RetrieveAsync</a>(RetrieveProcessingAccountsRequest { ... }) -> WithRawResponseTask&lt;ProcessingAccount&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3030,7 +3164,7 @@ await client.Boarding.ProcessingAccounts.RetrieveAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListProcessingAccountFundingAccountsAsync</a>(ListProcessingAccountFundingAccountsRequest { ... }) -> IEnumerable<FundingAccount></code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListProcessingAccountFundingAccountsAsync</a>(ListProcessingAccountFundingAccountsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;FundingAccount&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3042,7 +3176,15 @@ await client.Boarding.ProcessingAccounts.RetrieveAsync(
 <dl>
 <dd>
 
-Retrieve a list of funding accounts associated with a processing account.
+Use this method to return a list of funding accounts linked to a processing acccount.  
+
+To retrieve a list of funding accounts for a processing account, you need the processingAccountId. Our gateway returned the processingAccountId in the response of the [Create Merchant Platform](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create) method or the [Create Proccessing Account](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create-processing-account) method.  
+
+Our gateway returns information about the following for each funding account in the list:  
+- Account information, including the name on the account and payment methods.  
+- Status, including whether we have approved or rejected the account.  
+
+For each funding account, we also return its fundingAccountId, which you can use to perform follow-on actions.  
 </dd>
 </dl>
 </dd>
@@ -3086,7 +3228,7 @@ await client.Boarding.ProcessingAccounts.ListProcessingAccountFundingAccountsAsy
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListContactsAsync</a>(ListContactsProcessingAccountsRequest { ... }) -> PaginatedContacts</code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListContactsAsync</a>(ListContactsProcessingAccountsRequest { ... }) -> WithRawResponseTask&lt;PaginatedContacts&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3159,7 +3301,7 @@ await client.Boarding.ProcessingAccounts.ListContactsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">GetProcessingAccountPricingAgreementAsync</a>(GetProcessingAccountPricingAgreementProcessingAccountsRequest { ... }) -> OneOf<PricingAgreementUs40, PricingAgreementUs50></code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">GetProcessingAccountPricingAgreementAsync</a>(GetProcessingAccountPricingAgreementProcessingAccountsRequest { ... }) -> WithRawResponseTask&lt;OneOf&lt;PricingAgreementUs40, PricingAgreementUs50&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3229,7 +3371,7 @@ await client.Boarding.ProcessingAccounts.GetProcessingAccountPricingAgreementAsy
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListOwnersAsync</a>(ListProcessingAccountOwnersRequest { ... }) -> PayrocPager<Owner></code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListOwnersAsync</a>(ListProcessingAccountOwnersRequest { ... }) -> PayrocPager&lt;Owner&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3301,7 +3443,7 @@ await client.Boarding.ProcessingAccounts.ListOwnersAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">CreateReminderAsync</a>(CreateReminderProcessingAccountsRequest { ... }) -> CreateReminderProcessingAccountsResponse</code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">CreateReminderAsync</a>(CreateReminderProcessingAccountsRequest { ... }) -> WithRawResponseTask&lt;CreateReminderProcessingAccountsResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3374,7 +3516,7 @@ await client.Boarding.ProcessingAccounts.CreateReminderAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListTerminalOrdersAsync</a>(ListTerminalOrdersProcessingAccountsRequest { ... }) -> IEnumerable<TerminalOrder></code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListTerminalOrdersAsync</a>(ListTerminalOrdersProcessingAccountsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;TerminalOrder&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3451,7 +3593,7 @@ await client.Boarding.ProcessingAccounts.ListTerminalOrdersAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">CreateTerminalOrderAsync</a>(CreateTerminalOrder { ... }) -> TerminalOrder</code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">CreateTerminalOrderAsync</a>(CreateTerminalOrder { ... }) -> WithRawResponseTask&lt;TerminalOrder&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3471,7 +3613,7 @@ In the request, specify the gateway settings, device settings, and application s
 
 In the response, our gateway returns information about the terminal order including its status and terminalOrderId that you can use to [retrieve the terminal order](https://docs.payroc.com/api/schema/boarding/terminal-orders/retrieve).  
 
-**Note**: You can subscribe to the terminalOrder.status.changed event to get notifications when we update the status of a terminal order. For more information about how to subscribe to events, go to [Events Subscriptions](https://docs.payroc.com/guides/integrate/event-subscriptions).  
+**Note**: You can subscribe to the terminalOrder.status.changed event to get notifications when we update the status of a terminal order. For more information about how to subscribe to events, go to [Events Subscriptions](https://docs.payroc.com/guides/board-merchants/event-subscriptions).  
 </dd>
 </dl>
 </dd>
@@ -3518,7 +3660,7 @@ await client.Boarding.ProcessingAccounts.CreateTerminalOrderAsync(
             {
                 Type = OrderItemType.Solution,
                 SolutionTemplateId = "Roc Services_DX8000",
-                SolutionQuantity = 1f,
+                SolutionQuantity = 1,
                 DeviceCondition = OrderItemDeviceCondition.New,
                 SolutionSetup = new OrderItemSolutionSetup
                 {
@@ -3543,7 +3685,7 @@ await client.Boarding.ProcessingAccounts.CreateTerminalOrderAsync(
                     },
                     DeviceSettings = new OrderItemSolutionSetupDeviceSettings
                     {
-                        NumberOfMobileUsers = 2f,
+                        NumberOfMobileUsers = 2,
                         CommunicationType =
                             OrderItemSolutionSetupDeviceSettingsCommunicationType.Wifi,
                     },
@@ -3596,7 +3738,7 @@ await client.Boarding.ProcessingAccounts.CreateTerminalOrderAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListProcessingTerminalsAsync</a>(ListProcessingTerminalsProcessingAccountsRequest { ... }) -> PayrocPager<ProcessingTerminal></code></summary>
+<details><summary><code>client.Boarding.ProcessingAccounts.<a href="/src/Payroc/Boarding/ProcessingAccounts/ProcessingAccountsClient.cs">ListProcessingTerminalsAsync</a>(ListProcessingTerminalsProcessingAccountsRequest { ... }) -> PayrocPager&lt;ProcessingTerminal&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3672,7 +3814,7 @@ await client.Boarding.ProcessingAccounts.ListProcessingTerminalsAsync(
 </details>
 
 ## Boarding ProcessingTerminals
-<details><summary><code>client.Boarding.ProcessingTerminals.<a href="/src/Payroc/Boarding/ProcessingTerminals/ProcessingTerminalsClient.cs">RetrieveAsync</a>(RetrieveProcessingTerminalsRequest { ... }) -> ProcessingTerminal</code></summary>
+<details><summary><code>client.Boarding.ProcessingTerminals.<a href="/src/Payroc/Boarding/ProcessingTerminals/ProcessingTerminalsClient.cs">RetrieveAsync</a>(RetrieveProcessingTerminalsRequest { ... }) -> WithRawResponseTask&lt;ProcessingTerminal&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3742,7 +3884,7 @@ await client.Boarding.ProcessingTerminals.RetrieveAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.ProcessingTerminals.<a href="/src/Payroc/Boarding/ProcessingTerminals/ProcessingTerminalsClient.cs">RetrieveHostConfigurationAsync</a>(RetrieveHostConfigurationProcessingTerminalsRequest { ... }) -> HostConfiguration</code></summary>
+<details><summary><code>client.Boarding.ProcessingTerminals.<a href="/src/Payroc/Boarding/ProcessingTerminals/ProcessingTerminalsClient.cs">RetrieveHostConfigurationAsync</a>(RetrieveHostConfigurationProcessingTerminalsRequest { ... }) -> WithRawResponseTask&lt;HostConfiguration&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3801,7 +3943,7 @@ await client.Boarding.ProcessingTerminals.RetrieveHostConfigurationAsync(
 </details>
 
 ## Boarding Contacts
-<details><summary><code>client.Boarding.Contacts.<a href="/src/Payroc/Boarding/Contacts/ContactsClient.cs">RetrieveAsync</a>(RetrieveContactsRequest { ... }) -> Contact</code></summary>
+<details><summary><code>client.Boarding.Contacts.<a href="/src/Payroc/Boarding/Contacts/ContactsClient.cs">RetrieveAsync</a>(RetrieveContactsRequest { ... }) -> WithRawResponseTask&lt;Contact&gt;</code></summary>
 <dl>
 <dd>
 
@@ -4012,7 +4154,7 @@ await client.Boarding.Contacts.DeleteAsync(new DeleteContactsRequest { ContactId
 </details>
 
 ## Boarding TerminalOrders
-<details><summary><code>client.Boarding.TerminalOrders.<a href="/src/Payroc/Boarding/TerminalOrders/TerminalOrdersClient.cs">RetrieveAsync</a>(RetrieveTerminalOrdersRequest { ... }) -> TerminalOrder</code></summary>
+<details><summary><code>client.Boarding.TerminalOrders.<a href="/src/Payroc/Boarding/TerminalOrders/TerminalOrdersClient.cs">RetrieveAsync</a>(RetrieveTerminalOrdersRequest { ... }) -> WithRawResponseTask&lt;TerminalOrder&gt;</code></summary>
 <dl>
 <dd>
 
@@ -4036,7 +4178,7 @@ Our gateway returns the following information about the terminal order:
 - Training provider  
 - Shipping information  
 
-**Note**: You can subscribe to our terminalOrder.status.changed event to get notifications when we update the status of a terminal order. For more information about how to subscribe to events, go to [Events Subscriptions](https://docs.payroc.com/guides/integrate/event-subscriptions).  
+**Note**: You can subscribe to our terminalOrder.status.changed event to get notifications when we update the status of a terminal order. For more information about how to subscribe to events, go to [Events Subscriptions](https://docs.payroc.com/guides/board-merchants/event-subscriptions).  
 </dd>
 </dl>
 </dd>
@@ -4081,7 +4223,7 @@ await client.Boarding.TerminalOrders.RetrieveAsync(
 </details>
 
 ## CardPayments Payments
-<details><summary><code>client.CardPayments.Payments.<a href="/src/Payroc/CardPayments/Payments/PaymentsClient.cs">ListAsync</a>(ListPaymentsRequest { ... }) -> PayrocPager<RetrievedPayment></code></summary>
+<details><summary><code>client.CardPayments.Payments.<a href="/src/Payroc/CardPayments/Payments/PaymentsClient.cs">ListAsync</a>(ListPaymentsRequest { ... }) -> PayrocPager&lt;RetrievedPayment&gt;</code></summary>
 <dl>
 <dd>
 
@@ -4167,7 +4309,7 @@ await client.CardPayments.Payments.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.CardPayments.Payments.<a href="/src/Payroc/CardPayments/Payments/PaymentsClient.cs">CreateAsync</a>(PaymentRequest { ... }) -> Payment</code></summary>
+<details><summary><code>client.CardPayments.Payments.<a href="/src/Payroc/CardPayments/Payments/PaymentsClient.cs">CreateAsync</a>(PaymentRequest { ... }) -> WithRawResponseTask&lt;Payment&gt;</code></summary>
 <dl>
 <dd>
 
@@ -4192,18 +4334,18 @@ In the response, our gateway returns information about the card payment and a pa
 **Payment methods** 
 
 - **Cards** - Credit, debit, and EBT
-- **Digital wallets** - [Apple Pay®](https://docs.payroc.com/guides/integrate/apple-pay) and [Google Pay®](https://docs.payroc.com/guides/integrate/google-pay) 
+- **Digital wallets** - [Apple Pay®](https://docs.payroc.com/guides/take-payments/apple-pay) and [Google Pay®](https://docs.payroc.com/guides/take-payments/google-pay) 
 - **Tokens** - Secure tokens and single-use tokens
 
 **Features** 
 
 Our Create Payment method also supports the following features: 
 
-- [Repeat payments](https://docs.payroc.com/guides/integrate/repeat-payments/use-your-own-software) - Run multiple payments as part of a payment schedule that you manage with your own software. 
+- [Repeat payments](https://docs.payroc.com/guides/take-payments/repeat-payments/use-your-own-software) - Run multiple payments as part of a payment schedule that you manage with your own software. 
 - **Offline sales** - Run a sale or a pre-authorization if the terminal loses its connection to our gateway. 
-- [Tokenization](https://docs.payroc.com/guides/integrate/save-payment-details) - Save card details to use in future transactions. 
-- [3-D Secure](https://docs.payroc.com/guides/integrate/3-d-secure) - Verify the identity of the cardholder. 
-- [Custom fields](https://docs.payroc.com/guides/integrate/add-custom-fields) - Add your own data to a payment. 
+- [Tokenization](https://docs.payroc.com/guides/take-payments/save-payment-details) - Save card details to use in future transactions. 
+- [3-D Secure](https://docs.payroc.com/guides/take-payments/3-d-secure) - Verify the identity of the cardholder. 
+- [Custom fields](https://docs.payroc.com/guides/take-payments/add-custom-fields) - Add your own data to a payment. 
 - **Tips** - Add tips to the card payment.  
 - **Taxes** - Add local taxes to the card payment. 
 - **Surcharging** - Add a surcharge to the card payment. 
@@ -4318,7 +4460,7 @@ await client.CardPayments.Payments.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.CardPayments.Payments.<a href="/src/Payroc/CardPayments/Payments/PaymentsClient.cs">RetrieveAsync</a>(RetrievePaymentsRequest { ... }) -> RetrievedPayment</code></summary>
+<details><summary><code>client.CardPayments.Payments.<a href="/src/Payroc/CardPayments/Payments/PaymentsClient.cs">RetrieveAsync</a>(RetrievePaymentsRequest { ... }) -> WithRawResponseTask&lt;RetrievedPayment&gt;</code></summary>
 <dl>
 <dd>
 
@@ -4387,7 +4529,7 @@ await client.CardPayments.Payments.RetrieveAsync(
 </dl>
 </details>
 
-<details><summary><code>client.CardPayments.Payments.<a href="/src/Payroc/CardPayments/Payments/PaymentsClient.cs">AdjustAsync</a>(PaymentAdjustment { ... }) -> Payment</code></summary>
+<details><summary><code>client.CardPayments.Payments.<a href="/src/Payroc/CardPayments/Payments/PaymentsClient.cs">AdjustAsync</a>(PaymentAdjustment { ... }) -> WithRawResponseTask&lt;Payment&gt;</code></summary>
 <dl>
 <dd>
 
@@ -4470,7 +4612,7 @@ await client.CardPayments.Payments.AdjustAsync(
 </dl>
 </details>
 
-<details><summary><code>client.CardPayments.Payments.<a href="/src/Payroc/CardPayments/Payments/PaymentsClient.cs">CaptureAsync</a>(PaymentCapture { ... }) -> Payment</code></summary>
+<details><summary><code>client.CardPayments.Payments.<a href="/src/Payroc/CardPayments/Payments/PaymentsClient.cs">CaptureAsync</a>(PaymentCapture { ... }) -> WithRawResponseTask&lt;Payment&gt;</code></summary>
 <dl>
 <dd>
 
@@ -4557,7 +4699,7 @@ await client.CardPayments.Payments.CaptureAsync(
 </details>
 
 ## CardPayments Refunds
-<details><summary><code>client.CardPayments.Refunds.<a href="/src/Payroc/CardPayments/Refunds/RefundsClient.cs">ReverseAsync</a>(PaymentReversal { ... }) -> Payment</code></summary>
+<details><summary><code>client.CardPayments.Refunds.<a href="/src/Payroc/CardPayments/Refunds/RefundsClient.cs">ReverseAsync</a>(PaymentReversal { ... }) -> WithRawResponseTask&lt;Payment&gt;</code></summary>
 <dl>
 <dd>
 
@@ -4624,7 +4766,7 @@ await client.CardPayments.Refunds.ReverseAsync(
 </dl>
 </details>
 
-<details><summary><code>client.CardPayments.Refunds.<a href="/src/Payroc/CardPayments/Refunds/RefundsClient.cs">CreateReferencedRefundAsync</a>(ReferencedRefund { ... }) -> Payment</code></summary>
+<details><summary><code>client.CardPayments.Refunds.<a href="/src/Payroc/CardPayments/Refunds/RefundsClient.cs">CreateReferencedRefundAsync</a>(ReferencedRefund { ... }) -> WithRawResponseTask&lt;Payment&gt;</code></summary>
 <dl>
 <dd>
 
@@ -4697,7 +4839,7 @@ await client.CardPayments.Refunds.CreateReferencedRefundAsync(
 </dl>
 </details>
 
-<details><summary><code>client.CardPayments.Refunds.<a href="/src/Payroc/CardPayments/Refunds/RefundsClient.cs">ListAsync</a>(ListRefundsRequest { ... }) -> PayrocPager<RetrievedRefund></code></summary>
+<details><summary><code>client.CardPayments.Refunds.<a href="/src/Payroc/CardPayments/Refunds/RefundsClient.cs">ListAsync</a>(ListRefundsRequest { ... }) -> PayrocPager&lt;RetrievedRefund&gt;</code></summary>
 <dl>
 <dd>
 
@@ -4779,7 +4921,7 @@ await client.CardPayments.Refunds.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.CardPayments.Refunds.<a href="/src/Payroc/CardPayments/Refunds/RefundsClient.cs">CreateUnreferencedRefundAsync</a>(UnreferencedRefund { ... }) -> RetrievedRefund</code></summary>
+<details><summary><code>client.CardPayments.Refunds.<a href="/src/Payroc/CardPayments/Refunds/RefundsClient.cs">CreateUnreferencedRefundAsync</a>(UnreferencedRefund { ... }) -> WithRawResponseTask&lt;RetrievedRefund&gt;</code></summary>
 <dl>
 <dd>
 
@@ -4882,7 +5024,7 @@ await client.CardPayments.Refunds.CreateUnreferencedRefundAsync(
 </dl>
 </details>
 
-<details><summary><code>client.CardPayments.Refunds.<a href="/src/Payroc/CardPayments/Refunds/RefundsClient.cs">RetrieveAsync</a>(RetrieveRefundsRequest { ... }) -> RetrievedRefund</code></summary>
+<details><summary><code>client.CardPayments.Refunds.<a href="/src/Payroc/CardPayments/Refunds/RefundsClient.cs">RetrieveAsync</a>(RetrieveRefundsRequest { ... }) -> WithRawResponseTask&lt;RetrievedRefund&gt;</code></summary>
 <dl>
 <dd>
 
@@ -4949,7 +5091,7 @@ await client.CardPayments.Refunds.RetrieveAsync(
 </dl>
 </details>
 
-<details><summary><code>client.CardPayments.Refunds.<a href="/src/Payroc/CardPayments/Refunds/RefundsClient.cs">AdjustAsync</a>(RefundAdjustment { ... }) -> RetrievedRefund</code></summary>
+<details><summary><code>client.CardPayments.Refunds.<a href="/src/Payroc/CardPayments/Refunds/RefundsClient.cs">AdjustAsync</a>(RefundAdjustment { ... }) -> WithRawResponseTask&lt;RetrievedRefund&gt;</code></summary>
 <dl>
 <dd>
 
@@ -5031,7 +5173,7 @@ await client.CardPayments.Refunds.AdjustAsync(
 </dl>
 </details>
 
-<details><summary><code>client.CardPayments.Refunds.<a href="/src/Payroc/CardPayments/Refunds/RefundsClient.cs">ReverseRefundAsync</a>(ReverseRefundRefundsRequest { ... }) -> RetrievedRefund</code></summary>
+<details><summary><code>client.CardPayments.Refunds.<a href="/src/Payroc/CardPayments/Refunds/RefundsClient.cs">ReverseRefundAsync</a>(ReverseRefundRefundsRequest { ... }) -> WithRawResponseTask&lt;RetrievedRefund&gt;</code></summary>
 <dl>
 <dd>
 
@@ -5098,7 +5240,7 @@ await client.CardPayments.Refunds.ReverseRefundAsync(
 </details>
 
 ## Funding FundingRecipients
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">ListAsync</a>(ListFundingRecipientsRequest { ... }) -> PayrocPager<FundingRecipient></code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">ListAsync</a>(ListFundingRecipientsRequest { ... }) -> PayrocPager&lt;FundingRecipient&gt;</code></summary>
 <dl>
 <dd>
 
@@ -5168,7 +5310,7 @@ await client.Funding.FundingRecipients.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">CreateAsync</a>(CreateFundingRecipient { ... }) -> FundingRecipient</code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">CreateAsync</a>(CreateFundingRecipient { ... }) -> WithRawResponseTask&lt;FundingRecipient&gt;</code></summary>
 <dl>
 <dd>
 
@@ -5210,11 +5352,13 @@ await client.Funding.FundingRecipients.CreateAsync(
     {
         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
         RecipientType = CreateFundingRecipientRecipientType.PrivateCorporation,
-        TaxId = "123456789",
-        DoingBusinessAs = "doingBusinessAs",
+        TaxId = "12-3456789",
+        DoingBusinessAs = "Pizza Doe",
         Address = new Address
         {
             Address1 = "1 Example Ave.",
+            Address2 = "Example Address Line 2",
+            Address3 = "Example Address Line 3",
             City = "Chicago",
             State = "Illinois",
             Country = "US",
@@ -5225,12 +5369,17 @@ await client.Funding.FundingRecipients.CreateAsync(
             new ContactMethod(
                 new ContactMethod.Email(new ContactMethodEmail { Value = "jane.doe@example.com" })
             ),
+            new ContactMethod(
+                new ContactMethod.Phone(new ContactMethodPhone { Value = "2025550164" })
+            ),
         },
+        Metadata = new Dictionary<string, string>() { { "yourCustomField", "abc123" } },
         Owners = new List<Owner>()
         {
             new Owner
             {
                 FirstName = "Jane",
+                MiddleName = "Helen",
                 LastName = "Doe",
                 DateOfBirth = new DateOnly(1964, 3, 22),
                 Address = new Address
@@ -5243,7 +5392,7 @@ await client.Funding.FundingRecipients.CreateAsync(
                 },
                 Identifiers = new List<Identifier>()
                 {
-                    new Identifier { Type = IdentifierType.NationalId, Value = "xxxxx4320" },
+                    new Identifier { Type = IdentifierType.NationalId, Value = "000-00-4320" },
                 },
                 ContactMethods = new List<ContactMethod>()
                 {
@@ -5252,8 +5401,17 @@ await client.Funding.FundingRecipients.CreateAsync(
                             new ContactMethodEmail { Value = "jane.doe@example.com" }
                         )
                     ),
+                    new ContactMethod(
+                        new ContactMethod.Phone(new ContactMethodPhone { Value = "2025550164" })
+                    ),
                 },
-                Relationship = new OwnerRelationship { IsControlProng = true },
+                Relationship = new OwnerRelationship
+                {
+                    EquityPercentage = 48.5f,
+                    Title = "CFO",
+                    IsControlProng = true,
+                    IsAuthorizedSignatory = false,
+                },
             },
         },
         FundingAccounts = new List<FundingAccount>()
@@ -5297,7 +5455,7 @@ await client.Funding.FundingRecipients.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">RetrieveAsync</a>(RetrieveFundingRecipientsRequest { ... }) -> FundingRecipient</code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">RetrieveAsync</a>(RetrieveFundingRecipientsRequest { ... }) -> WithRawResponseTask&lt;FundingRecipient&gt;</code></summary>
 <dl>
 <dd>
 
@@ -5406,11 +5564,13 @@ await client.Funding.FundingRecipients.UpdateAsync(
         Body = new FundingRecipient
         {
             RecipientType = FundingRecipientRecipientType.PrivateCorporation,
-            TaxId = "123456789",
-            DoingBusinessAs = "doingBusinessAs",
+            TaxId = "12-3456789",
+            DoingBusinessAs = "Doe Hot Dogs",
             Address = new Address
             {
-                Address1 = "1 Example Ave.",
+                Address1 = "2 Example Ave.",
+                Address2 = "Example Address Line 2",
+                Address3 = "Example Address Line 3",
                 City = "Chicago",
                 State = "Illinois",
                 Country = "US",
@@ -5423,6 +5583,37 @@ await client.Funding.FundingRecipients.UpdateAsync(
                         new ContactMethodEmail { Value = "jane.doe@example.com" }
                     )
                 ),
+                new ContactMethod(
+                    new ContactMethod.Phone(new ContactMethodPhone { Value = "2025550164" })
+                ),
+            },
+            Metadata = new Dictionary<string, string>() { { "responsiblePerson", "Jane Doe" } },
+            Owners = new List<FundingRecipientOwnersItem>()
+            {
+                new FundingRecipientOwnersItem
+                {
+                    OwnerId = 12346,
+                    Link = new FundingRecipientOwnersItemLink
+                    {
+                        Rel = "owner",
+                        Href = "https://api.payroc.com/v1/owners/12346",
+                        Method = "get",
+                    },
+                },
+            },
+            FundingAccounts = new List<FundingRecipientFundingAccountsItem>()
+            {
+                new FundingRecipientFundingAccountsItem
+                {
+                    FundingAccountId = 124,
+                    Status = FundingRecipientFundingAccountsItemStatus.Approved,
+                    Link = new FundingRecipientFundingAccountsItemLink
+                    {
+                        Rel = "fundingAccount",
+                        Href = "https://api.payroc.com/v1/funding-accounts/124",
+                        Method = "get",
+                    },
+                },
             },
         },
     }
@@ -5513,7 +5704,7 @@ await client.Funding.FundingRecipients.DeleteAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">ListAccountsAsync</a>(ListFundingRecipientFundingAccountsRequest { ... }) -> IEnumerable<FundingAccount></code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">ListAccountsAsync</a>(ListFundingRecipientFundingAccountsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;FundingAccount&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -5580,7 +5771,7 @@ await client.Funding.FundingRecipients.ListAccountsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">CreateAccountAsync</a>(CreateAccountFundingRecipientsRequest { ... }) -> FundingAccount</code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">CreateAccountAsync</a>(CreateAccountFundingRecipientsRequest { ... }) -> WithRawResponseTask&lt;FundingAccount&gt;</code></summary>
 <dl>
 <dd>
 
@@ -5625,13 +5816,14 @@ await client.Funding.FundingRecipients.CreateAccountAsync(
         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
         Body = new FundingAccount
         {
-            Type = FundingAccountType.Checking,
+            Type = FundingAccountType.Savings,
             Use = FundingAccountUse.Credit,
-            NameOnAccount = "Jane Doe",
+            NameOnAccount = "Fred Nerk",
             PaymentMethods = new List<PaymentMethodsItem>()
             {
                 new PaymentMethodsItem(new PaymentMethodsItem.Ach(new PaymentMethodAch())),
             },
+            Metadata = new Dictionary<string, string>() { { "responsiblePerson", "Jane Doe" } },
         },
     }
 );
@@ -5661,7 +5853,7 @@ await client.Funding.FundingRecipients.CreateAccountAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">ListOwnersAsync</a>(ListFundingRecipientOwnersRequest { ... }) -> IEnumerable<Owner></code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">ListOwnersAsync</a>(ListFundingRecipientOwnersRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;Owner&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -5728,7 +5920,7 @@ await client.Funding.FundingRecipients.ListOwnersAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">CreateOwnerAsync</a>(CreateOwnerFundingRecipientsRequest { ... }) -> Owner</code></summary>
+<details><summary><code>client.Funding.FundingRecipients.<a href="/src/Payroc/Funding/FundingRecipients/FundingRecipientsClient.cs">CreateOwnerAsync</a>(CreateOwnerFundingRecipientsRequest { ... }) -> WithRawResponseTask&lt;Owner&gt;</code></summary>
 <dl>
 <dd>
 
@@ -5774,12 +5966,13 @@ await client.Funding.FundingRecipients.CreateOwnerAsync(
         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
         Body = new Owner
         {
-            FirstName = "Jane",
-            LastName = "Doe",
-            DateOfBirth = new DateOnly(1964, 3, 22),
+            FirstName = "Fred",
+            MiddleName = "Jim",
+            LastName = "Nerk",
+            DateOfBirth = new DateOnly(1980, 1, 19),
             Address = new Address
             {
-                Address1 = "1 Example Ave.",
+                Address1 = "2 Example Ave.",
                 City = "Chicago",
                 State = "Illinois",
                 Country = "US",
@@ -5787,7 +5980,7 @@ await client.Funding.FundingRecipients.CreateOwnerAsync(
             },
             Identifiers = new List<Identifier>()
             {
-                new Identifier { Type = IdentifierType.NationalId, Value = "xxxxx4320" },
+                new Identifier { Type = IdentifierType.NationalId, Value = "000-00-9876" },
             },
             ContactMethods = new List<ContactMethod>()
             {
@@ -5796,8 +5989,17 @@ await client.Funding.FundingRecipients.CreateOwnerAsync(
                         new ContactMethodEmail { Value = "jane.doe@example.com" }
                     )
                 ),
+                new ContactMethod(
+                    new ContactMethod.Phone(new ContactMethodPhone { Value = "2025550164" })
+                ),
             },
-            Relationship = new OwnerRelationship { IsControlProng = true },
+            Relationship = new OwnerRelationship
+            {
+                EquityPercentage = 51.5f,
+                Title = "CEO",
+                IsControlProng = false,
+                IsAuthorizedSignatory = true,
+            },
         },
     }
 );
@@ -5828,7 +6030,7 @@ await client.Funding.FundingRecipients.CreateOwnerAsync(
 </details>
 
 ## Funding FundingAccounts
-<details><summary><code>client.Funding.FundingAccounts.<a href="/src/Payroc/Funding/FundingAccounts/FundingAccountsClient.cs">ListAsync</a>(ListFundingAccountsRequest { ... }) -> PayrocPager<FundingAccount></code></summary>
+<details><summary><code>client.Funding.FundingAccounts.<a href="/src/Payroc/Funding/FundingAccounts/FundingAccountsClient.cs">ListAsync</a>(ListFundingAccountsRequest { ... }) -> PayrocPager&lt;FundingAccount&gt;</code></summary>
 <dl>
 <dd>
 
@@ -5898,7 +6100,7 @@ await client.Funding.FundingAccounts.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingAccounts.<a href="/src/Payroc/Funding/FundingAccounts/FundingAccountsClient.cs">RetrieveAsync</a>(RetrieveFundingAccountsRequest { ... }) -> FundingAccount</code></summary>
+<details><summary><code>client.Funding.FundingAccounts.<a href="/src/Payroc/Funding/FundingAccounts/FundingAccountsClient.cs">RetrieveAsync</a>(RetrieveFundingAccountsRequest { ... }) -> WithRawResponseTask&lt;FundingAccount&gt;</code></summary>
 <dl>
 <dd>
 
@@ -6007,13 +6209,14 @@ await client.Funding.FundingAccounts.UpdateAsync(
         FundingAccountId = 1,
         Body = new FundingAccount
         {
-            Type = FundingAccountType.Checking,
+            Type = FundingAccountType.Savings,
             Use = FundingAccountUse.Credit,
-            NameOnAccount = "Jane Doe",
+            NameOnAccount = "Fred Nerk",
             PaymentMethods = new List<PaymentMethodsItem>()
             {
                 new PaymentMethodsItem(new PaymentMethodsItem.Ach(new PaymentMethodAch())),
             },
+            Metadata = new Dictionary<string, string>() { { "responsiblePerson", "Jane Doe" } },
         },
     }
 );
@@ -6106,7 +6309,7 @@ await client.Funding.FundingAccounts.DeleteAsync(
 </details>
 
 ## Funding FundingInstructions
-<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">ListAsync</a>(ListFundingInstructionsRequest { ... }) -> PayrocPager<ListFundingInstructionsResponseDataItem></code></summary>
+<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">ListAsync</a>(ListFundingInstructionsRequest { ... }) -> PayrocPager&lt;ListFundingInstructionsResponseDataItem&gt;</code></summary>
 <dl>
 <dd>
 
@@ -6179,7 +6382,7 @@ await client.Funding.FundingInstructions.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">CreateAsync</a>(CreateFundingInstructionsRequest { ... }) -> Instruction</code></summary>
+<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">CreateAsync</a>(CreateFundingInstructionsRequest { ... }) -> WithRawResponseTask&lt;Instruction&gt;</code></summary>
 <dl>
 <dd>
 
@@ -6219,7 +6422,34 @@ await client.Funding.FundingInstructions.CreateAsync(
     new CreateFundingInstructionsRequest
     {
         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-        Body = new Instruction(),
+        Body = new Instruction
+        {
+            Merchants = new List<InstructionMerchantsItem>()
+            {
+                new InstructionMerchantsItem
+                {
+                    MerchantId = "4525644354",
+                    Recipients = new List<InstructionMerchantsItemRecipientsItem>()
+                    {
+                        new InstructionMerchantsItemRecipientsItem
+                        {
+                            FundingAccountId = 123,
+                            PaymentMethod = InstructionMerchantsItemRecipientsItemPaymentMethod.Ach,
+                            Amount = new InstructionMerchantsItemRecipientsItemAmount
+                            {
+                                Value = 120000,
+                                Currency = InstructionMerchantsItemRecipientsItemAmountCurrency.Usd,
+                            },
+                            Metadata = new Dictionary<string, string>()
+                            {
+                                { "yourCustomField", "abc123" },
+                            },
+                        },
+                    },
+                },
+            },
+            Metadata = new Dictionary<string, string>() { { "yourCustomField", "abc123" } },
+        },
     }
 );
 ```
@@ -6248,7 +6478,7 @@ await client.Funding.FundingInstructions.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">RetrieveAsync</a>(RetrieveFundingInstructionsRequest { ... }) -> Instruction</code></summary>
+<details><summary><code>client.Funding.FundingInstructions.<a href="/src/Payroc/Funding/FundingInstructions/FundingInstructionsClient.cs">RetrieveAsync</a>(RetrieveFundingInstructionsRequest { ... }) -> WithRawResponseTask&lt;Instruction&gt;</code></summary>
 <dl>
 <dd>
 
@@ -6351,7 +6581,38 @@ You can modify the following information for the funding instruction:
 
 ```csharp
 await client.Funding.FundingInstructions.UpdateAsync(
-    new UpdateFundingInstructionsRequest { InstructionId = 1, Body = new Instruction() }
+    new UpdateFundingInstructionsRequest
+    {
+        InstructionId = 1,
+        Body = new Instruction
+        {
+            Merchants = new List<InstructionMerchantsItem>()
+            {
+                new InstructionMerchantsItem
+                {
+                    MerchantId = "9876543219",
+                    Recipients = new List<InstructionMerchantsItemRecipientsItem>()
+                    {
+                        new InstructionMerchantsItemRecipientsItem
+                        {
+                            FundingAccountId = 124,
+                            PaymentMethod = InstructionMerchantsItemRecipientsItemPaymentMethod.Ach,
+                            Amount = new InstructionMerchantsItemRecipientsItemAmount
+                            {
+                                Value = 69950,
+                                Currency = InstructionMerchantsItemRecipientsItemAmountCurrency.Usd,
+                            },
+                            Metadata = new Dictionary<string, string>()
+                            {
+                                { "supplier", "IT Support Services" },
+                            },
+                        },
+                    },
+                },
+            },
+            Metadata = new Dictionary<string, string>() { { "instructionCreatedBy", "Jane Doe" } },
+        },
+    }
 );
 ```
 </dd>
@@ -6442,7 +6703,7 @@ await client.Funding.FundingInstructions.DeleteAsync(
 </details>
 
 ## Funding FundingActivity
-<details><summary><code>client.Funding.FundingActivity.<a href="/src/Payroc/Funding/FundingActivity/FundingActivityClient.cs">RetrieveBalanceAsync</a>(RetrieveBalanceFundingActivityRequest { ... }) -> RetrieveBalanceFundingActivityResponse</code></summary>
+<details><summary><code>client.Funding.FundingActivity.<a href="/src/Payroc/Funding/FundingActivity/FundingActivityClient.cs">RetrieveBalanceAsync</a>(RetrieveBalanceFundingActivityRequest { ... }) -> WithRawResponseTask&lt;RetrieveBalanceFundingActivityResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -6511,7 +6772,7 @@ await client.Funding.FundingActivity.RetrieveBalanceAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Funding.FundingActivity.<a href="/src/Payroc/Funding/FundingActivity/FundingActivityClient.cs">ListAsync</a>(ListFundingActivityRequest { ... }) -> PayrocPager<ActivityRecord></code></summary>
+<details><summary><code>client.Funding.FundingActivity.<a href="/src/Payroc/Funding/FundingActivity/FundingActivityClient.cs">ListAsync</a>(ListFundingActivityRequest { ... }) -> PayrocPager&lt;ActivityRecord&gt;</code></summary>
 <dl>
 <dd>
 
@@ -6583,7 +6844,7 @@ await client.Funding.FundingActivity.ListAsync(
 </details>
 
 ## Notifications EventSubscriptions
-<details><summary><code>client.Notifications.EventSubscriptions.<a href="/src/Payroc/Notifications/EventSubscriptions/EventSubscriptionsClient.cs">ListAsync</a>(ListEventSubscriptionsRequest { ... }) -> PayrocPager<EventSubscription></code></summary>
+<details><summary><code>client.Notifications.EventSubscriptions.<a href="/src/Payroc/Notifications/EventSubscriptions/EventSubscriptionsClient.cs">ListAsync</a>(ListEventSubscriptionsRequest { ... }) -> PayrocPager&lt;EventSubscription&gt;</code></summary>
 <dl>
 <dd>
 
@@ -6655,7 +6916,7 @@ await client.Notifications.EventSubscriptions.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Notifications.EventSubscriptions.<a href="/src/Payroc/Notifications/EventSubscriptions/EventSubscriptionsClient.cs">CreateAsync</a>(CreateEventSubscriptionsRequest { ... }) -> EventSubscription</code></summary>
+<details><summary><code>client.Notifications.EventSubscriptions.<a href="/src/Payroc/Notifications/EventSubscriptions/EventSubscriptionsClient.cs">CreateAsync</a>(CreateEventSubscriptionsRequest { ... }) -> WithRawResponseTask&lt;EventSubscription&gt;</code></summary>
 <dl>
 <dd>
 
@@ -6737,7 +6998,7 @@ await client.Notifications.EventSubscriptions.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Notifications.EventSubscriptions.<a href="/src/Payroc/Notifications/EventSubscriptions/EventSubscriptionsClient.cs">RetrieveAsync</a>(RetrieveEventSubscriptionsRequest { ... }) -> EventSubscription</code></summary>
+<details><summary><code>client.Notifications.EventSubscriptions.<a href="/src/Payroc/Notifications/EventSubscriptions/EventSubscriptionsClient.cs">RetrieveAsync</a>(RetrieveEventSubscriptionsRequest { ... }) -> WithRawResponseTask&lt;EventSubscription&gt;</code></summary>
 <dl>
 <dd>
 
@@ -6753,7 +7014,7 @@ Use this method to retrieve the details of an event subscription.
 
 In your request, include the subscriptionId that we sent to you when we created the event subscription.  
   
-**Note:** If you don't know the subscriptionId of the event subscription, go to [List event subscriptions](#listEventSubscriptions).
+**Note:** If you don't know the subscriptionId of the event subscription, go to [List event subscriptions](https://docs.payroc.com/api/schema/notifications/event-subscriptions/list).
 </dd>
 </dl>
 </dd>
@@ -6947,7 +7208,7 @@ await client.Notifications.EventSubscriptions.DeleteAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Notifications.EventSubscriptions.<a href="/src/Payroc/Notifications/EventSubscriptions/EventSubscriptionsClient.cs">PartiallyUpdateAsync</a>(PartiallyUpdateEventSubscriptionsRequest { ... }) -> EventSubscription</code></summary>
+<details><summary><code>client.Notifications.EventSubscriptions.<a href="/src/Payroc/Notifications/EventSubscriptions/EventSubscriptionsClient.cs">PartiallyUpdateAsync</a>(PartiallyUpdateEventSubscriptionsRequest { ... }) -> WithRawResponseTask&lt;EventSubscription&gt;</code></summary>
 <dl>
 <dd>
 
@@ -7021,7 +7282,7 @@ await client.Notifications.EventSubscriptions.PartiallyUpdateAsync(
 </details>
 
 ## PaymentFeatures Cards
-<details><summary><code>client.PaymentFeatures.Cards.<a href="/src/Payroc/PaymentFeatures/Cards/CardsClient.cs">VerifyCardAsync</a>(CardVerificationRequest { ... }) -> CardVerificationResult</code></summary>
+<details><summary><code>client.PaymentFeatures.Cards.<a href="/src/Payroc/PaymentFeatures/Cards/CardsClient.cs">VerifyCardAsync</a>(CardVerificationRequest { ... }) -> WithRawResponseTask&lt;CardVerificationResult&gt;</code></summary>
 <dl>
 <dd>
 
@@ -7107,7 +7368,7 @@ await client.PaymentFeatures.Cards.VerifyCardAsync(
 </dl>
 </details>
 
-<details><summary><code>client.PaymentFeatures.Cards.<a href="/src/Payroc/PaymentFeatures/Cards/CardsClient.cs">ViewEbtBalanceAsync</a>(BalanceInquiry { ... }) -> Balance</code></summary>
+<details><summary><code>client.PaymentFeatures.Cards.<a href="/src/Payroc/PaymentFeatures/Cards/CardsClient.cs">ViewEbtBalanceAsync</a>(BalanceInquiry { ... }) -> WithRawResponseTask&lt;Balance&gt;</code></summary>
 <dl>
 <dd>
 
@@ -7191,7 +7452,7 @@ await client.PaymentFeatures.Cards.ViewEbtBalanceAsync(
 </dl>
 </details>
 
-<details><summary><code>client.PaymentFeatures.Cards.<a href="/src/Payroc/PaymentFeatures/Cards/CardsClient.cs">LookupBinAsync</a>(BinLookup { ... }) -> CardInfo</code></summary>
+<details><summary><code>client.PaymentFeatures.Cards.<a href="/src/Payroc/PaymentFeatures/Cards/CardsClient.cs">LookupBinAsync</a>(BinLookup { ... }) -> WithRawResponseTask&lt;CardInfo&gt;</code></summary>
 <dl>
 <dd>
 
@@ -7277,7 +7538,7 @@ await client.PaymentFeatures.Cards.LookupBinAsync(
 </dl>
 </details>
 
-<details><summary><code>client.PaymentFeatures.Cards.<a href="/src/Payroc/PaymentFeatures/Cards/CardsClient.cs">RetrieveFxRatesAsync</a>(FxRateInquiry { ... }) -> FxRate</code></summary>
+<details><summary><code>client.PaymentFeatures.Cards.<a href="/src/Payroc/PaymentFeatures/Cards/CardsClient.cs">RetrieveFxRatesAsync</a>(FxRateInquiry { ... }) -> WithRawResponseTask&lt;FxRate&gt;</code></summary>
 <dl>
 <dd>
 
@@ -7377,7 +7638,7 @@ await client.PaymentFeatures.Cards.RetrieveFxRatesAsync(
 </details>
 
 ## PaymentFeatures Bank
-<details><summary><code>client.PaymentFeatures.Bank.<a href="/src/Payroc/PaymentFeatures/Bank/BankClient.cs">VerifyAsync</a>(BankAccountVerificationRequest { ... }) -> BankAccountVerificationResult</code></summary>
+<details><summary><code>client.PaymentFeatures.Bank.<a href="/src/Payroc/PaymentFeatures/Bank/BankClient.cs">VerifyAsync</a>(BankAccountVerificationRequest { ... }) -> WithRawResponseTask&lt;BankAccountVerificationResult&gt;</code></summary>
 <dl>
 <dd>
 
@@ -7456,7 +7717,7 @@ await client.PaymentFeatures.Bank.VerifyAsync(
 </details>
 
 ## PaymentLinks SharingEvents
-<details><summary><code>client.PaymentLinks.SharingEvents.<a href="/src/Payroc/PaymentLinks/SharingEvents/SharingEventsClient.cs">ListAsync</a>(ListSharingEventsRequest { ... }) -> PayrocPager<PaymentLinkEmailShareEvent></code></summary>
+<details><summary><code>client.PaymentLinks.SharingEvents.<a href="/src/Payroc/PaymentLinks/SharingEvents/SharingEventsClient.cs">ListAsync</a>(ListSharingEventsRequest { ... }) -> PayrocPager&lt;PaymentLinkEmailShareEvent&gt;</code></summary>
 <dl>
 <dd>
 
@@ -7530,7 +7791,7 @@ await client.PaymentLinks.SharingEvents.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.PaymentLinks.SharingEvents.<a href="/src/Payroc/PaymentLinks/SharingEvents/SharingEventsClient.cs">ShareAsync</a>(ShareSharingEventsRequest { ... }) -> PaymentLinkEmailShareEvent</code></summary>
+<details><summary><code>client.PaymentLinks.SharingEvents.<a href="/src/Payroc/PaymentLinks/SharingEvents/SharingEventsClient.cs">ShareAsync</a>(ShareSharingEventsRequest { ... }) -> WithRawResponseTask&lt;PaymentLinkEmailShareEvent&gt;</code></summary>
 <dl>
 <dd>
 
@@ -7614,7 +7875,7 @@ await client.PaymentLinks.SharingEvents.ShareAsync(
 </details>
 
 ## PayrocCloud PaymentInstructions
-<details><summary><code>client.PayrocCloud.PaymentInstructions.<a href="/src/Payroc/PayrocCloud/PaymentInstructions/PaymentInstructionsClient.cs">SubmitAsync</a>(PaymentInstructionRequest { ... }) -> PaymentInstruction</code></summary>
+<details><summary><code>client.PayrocCloud.PaymentInstructions.<a href="/src/Payroc/PayrocCloud/PaymentInstructions/PaymentInstructionsClient.cs">SubmitAsync</a>(PaymentInstructionRequest { ... }) -> WithRawResponseTask&lt;PaymentInstruction&gt;</code></summary>
 <dl>
 <dd>
 
@@ -7693,7 +7954,7 @@ await client.PayrocCloud.PaymentInstructions.SubmitAsync(
 </dl>
 </details>
 
-<details><summary><code>client.PayrocCloud.PaymentInstructions.<a href="/src/Payroc/PayrocCloud/PaymentInstructions/PaymentInstructionsClient.cs">RetrieveAsync</a>(RetrievePaymentInstructionsRequest { ... }) -> PaymentInstruction</code></summary>
+<details><summary><code>client.PayrocCloud.PaymentInstructions.<a href="/src/Payroc/PayrocCloud/PaymentInstructions/PaymentInstructionsClient.cs">RetrieveAsync</a>(RetrievePaymentInstructionsRequest { ... }) -> WithRawResponseTask&lt;PaymentInstruction&gt;</code></summary>
 <dl>
 <dd>
 
@@ -7820,7 +8081,7 @@ await client.PayrocCloud.PaymentInstructions.DeleteAsync(
 </details>
 
 ## PayrocCloud RefundInstructions
-<details><summary><code>client.PayrocCloud.RefundInstructions.<a href="/src/Payroc/PayrocCloud/RefundInstructions/RefundInstructionsClient.cs">SubmitAsync</a>(RefundInstructionRequest { ... }) -> RefundInstruction</code></summary>
+<details><summary><code>client.PayrocCloud.RefundInstructions.<a href="/src/Payroc/PayrocCloud/RefundInstructions/RefundInstructionsClient.cs">SubmitAsync</a>(RefundInstructionRequest { ... }) -> WithRawResponseTask&lt;RefundInstruction&gt;</code></summary>
 <dl>
 <dd>
 
@@ -7899,7 +8160,7 @@ await client.PayrocCloud.RefundInstructions.SubmitAsync(
 </dl>
 </details>
 
-<details><summary><code>client.PayrocCloud.RefundInstructions.<a href="/src/Payroc/PayrocCloud/RefundInstructions/RefundInstructionsClient.cs">RetrieveAsync</a>(RetrieveRefundInstructionsRequest { ... }) -> RefundInstruction</code></summary>
+<details><summary><code>client.PayrocCloud.RefundInstructions.<a href="/src/Payroc/PayrocCloud/RefundInstructions/RefundInstructionsClient.cs">RetrieveAsync</a>(RetrieveRefundInstructionsRequest { ... }) -> WithRawResponseTask&lt;RefundInstruction&gt;</code></summary>
 <dl>
 <dd>
 
@@ -8023,7 +8284,7 @@ await client.PayrocCloud.RefundInstructions.DeleteAsync(
 </details>
 
 ## PayrocCloud SignatureInstructions
-<details><summary><code>client.PayrocCloud.SignatureInstructions.<a href="/src/Payroc/PayrocCloud/SignatureInstructions/SignatureInstructionsClient.cs">SubmitAsync</a>(SignatureInstructionRequest { ... }) -> SignatureInstruction</code></summary>
+<details><summary><code>client.PayrocCloud.SignatureInstructions.<a href="/src/Payroc/PayrocCloud/SignatureInstructions/SignatureInstructionsClient.cs">SubmitAsync</a>(SignatureInstructionRequest { ... }) -> WithRawResponseTask&lt;SignatureInstruction&gt;</code></summary>
 <dl>
 <dd>
 
@@ -8088,7 +8349,7 @@ await client.PayrocCloud.SignatureInstructions.SubmitAsync(
 </dl>
 </details>
 
-<details><summary><code>client.PayrocCloud.SignatureInstructions.<a href="/src/Payroc/PayrocCloud/SignatureInstructions/SignatureInstructionsClient.cs">RetrieveAsync</a>(RetrieveSignatureInstructionsRequest { ... }) -> SignatureInstruction</code></summary>
+<details><summary><code>client.PayrocCloud.SignatureInstructions.<a href="/src/Payroc/PayrocCloud/SignatureInstructions/SignatureInstructionsClient.cs">RetrieveAsync</a>(RetrieveSignatureInstructionsRequest { ... }) -> WithRawResponseTask&lt;SignatureInstruction&gt;</code></summary>
 <dl>
 <dd>
 
@@ -8213,7 +8474,7 @@ await client.PayrocCloud.SignatureInstructions.DeleteAsync(
 </details>
 
 ## PayrocCloud Signatures
-<details><summary><code>client.PayrocCloud.Signatures.<a href="/src/Payroc/PayrocCloud/Signatures/SignaturesClient.cs">RetrieveAsync</a>(RetrieveSignaturesRequest { ... }) -> RetrieveSignaturesResponse</code></summary>
+<details><summary><code>client.PayrocCloud.Signatures.<a href="/src/Payroc/PayrocCloud/Signatures/SignaturesClient.cs">RetrieveAsync</a>(RetrieveSignaturesRequest { ... }) -> WithRawResponseTask&lt;RetrieveSignaturesResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -8275,7 +8536,7 @@ await client.PayrocCloud.Signatures.RetrieveAsync(
 </details>
 
 ## RepeatPayments PaymentPlans
-<details><summary><code>client.RepeatPayments.PaymentPlans.<a href="/src/Payroc/RepeatPayments/PaymentPlans/PaymentPlansClient.cs">ListAsync</a>(ListPaymentPlansRequest { ... }) -> PayrocPager<PaymentPlan></code></summary>
+<details><summary><code>client.RepeatPayments.PaymentPlans.<a href="/src/Payroc/RepeatPayments/PaymentPlans/PaymentPlansClient.cs">ListAsync</a>(ListPaymentPlansRequest { ... }) -> PayrocPager&lt;PaymentPlan&gt;</code></summary>
 <dl>
 <dd>
 
@@ -8348,7 +8609,7 @@ await client.RepeatPayments.PaymentPlans.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.RepeatPayments.PaymentPlans.<a href="/src/Payroc/RepeatPayments/PaymentPlans/PaymentPlansClient.cs">CreateAsync</a>(CreatePaymentPlansRequest { ... }) -> PaymentPlan</code></summary>
+<details><summary><code>client.RepeatPayments.PaymentPlans.<a href="/src/Payroc/RepeatPayments/PaymentPlans/PaymentPlansClient.cs">CreateAsync</a>(CreatePaymentPlansRequest { ... }) -> WithRawResponseTask&lt;PaymentPlan&gt;</code></summary>
 <dl>
 <dd>
 
@@ -8362,7 +8623,7 @@ await client.RepeatPayments.PaymentPlans.ListAsync(
 
 Use this method to create a payment schedule that you can assign customers to.  
 
-**Note:** This method is part of our Repeat Payments feature. To help you understand how this method works with our Subscriptions endpoints, go to [Repeat Payments](https://docs.payroc.com/guides/integrate/repeat-payments).  
+**Note:** This method is part of our Repeat Payments feature. To help you understand how this method works with our Subscriptions endpoints, go to [Repeat Payments](https://docs.payroc.com/guides/take-payments/repeat-payments).  
 
 When you create a payment plan you need to provide a unique paymentPlanId that you use to run follow-on actions:  
 
@@ -8463,7 +8724,7 @@ await client.RepeatPayments.PaymentPlans.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.RepeatPayments.PaymentPlans.<a href="/src/Payroc/RepeatPayments/PaymentPlans/PaymentPlansClient.cs">RetrieveAsync</a>(RetrievePaymentPlansRequest { ... }) -> PaymentPlan</code></summary>
+<details><summary><code>client.RepeatPayments.PaymentPlans.<a href="/src/Payroc/RepeatPayments/PaymentPlans/PaymentPlansClient.cs">RetrieveAsync</a>(RetrievePaymentPlansRequest { ... }) -> WithRawResponseTask&lt;PaymentPlan&gt;</code></summary>
 <dl>
 <dd>
 
@@ -8605,7 +8866,7 @@ await client.RepeatPayments.PaymentPlans.DeleteAsync(
 </dl>
 </details>
 
-<details><summary><code>client.RepeatPayments.PaymentPlans.<a href="/src/Payroc/RepeatPayments/PaymentPlans/PaymentPlansClient.cs">PartiallyUpdateAsync</a>(PartiallyUpdatePaymentPlansRequest { ... }) -> PaymentPlan</code></summary>
+<details><summary><code>client.RepeatPayments.PaymentPlans.<a href="/src/Payroc/RepeatPayments/PaymentPlans/PaymentPlansClient.cs">PartiallyUpdateAsync</a>(PartiallyUpdatePaymentPlansRequest { ... }) -> WithRawResponseTask&lt;PaymentPlan&gt;</code></summary>
 <dl>
 <dd>
 
@@ -8683,7 +8944,7 @@ await client.RepeatPayments.PaymentPlans.PartiallyUpdateAsync(
 </details>
 
 ## RepeatPayments Subscriptions
-<details><summary><code>client.RepeatPayments.Subscriptions.<a href="/src/Payroc/RepeatPayments/Subscriptions/SubscriptionsClient.cs">ListAsync</a>(ListSubscriptionsRequest { ... }) -> PayrocPager<Subscription></code></summary>
+<details><summary><code>client.RepeatPayments.Subscriptions.<a href="/src/Payroc/RepeatPayments/Subscriptions/SubscriptionsClient.cs">ListAsync</a>(ListSubscriptionsRequest { ... }) -> PayrocPager&lt;Subscription&gt;</code></summary>
 <dl>
 <dd>
 
@@ -8766,7 +9027,7 @@ await client.RepeatPayments.Subscriptions.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.RepeatPayments.Subscriptions.<a href="/src/Payroc/RepeatPayments/Subscriptions/SubscriptionsClient.cs">CreateAsync</a>(SubscriptionRequest { ... }) -> Subscription</code></summary>
+<details><summary><code>client.RepeatPayments.Subscriptions.<a href="/src/Payroc/RepeatPayments/Subscriptions/SubscriptionsClient.cs">CreateAsync</a>(SubscriptionRequest { ... }) -> WithRawResponseTask&lt;Subscription&gt;</code></summary>
 <dl>
 <dd>
 
@@ -8780,7 +9041,7 @@ await client.RepeatPayments.Subscriptions.ListAsync(
 
 Use this method to assign a customer to a payment plan.  
 
-**Note:** This method is part of our Repeat Payments feature. To help you understand how this method works with our Payment plans endpoints, go to [Repeat Payments](https://docs.payroc.com/guides/integrate/repeat-payments).  
+**Note:** This method is part of our Repeat Payments feature. To help you understand how this method works with our Payment plans endpoints, go to [Repeat Payments](https://docs.payroc.com/guides/take-payments/repeat-payments).  
 
 When you create a subscription you need to provide a unique subscriptionId that you use to run follow-on actions:  
 
@@ -8880,7 +9141,7 @@ await client.RepeatPayments.Subscriptions.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.RepeatPayments.Subscriptions.<a href="/src/Payroc/RepeatPayments/Subscriptions/SubscriptionsClient.cs">RetrieveAsync</a>(RetrieveSubscriptionsRequest { ... }) -> Subscription</code></summary>
+<details><summary><code>client.RepeatPayments.Subscriptions.<a href="/src/Payroc/RepeatPayments/Subscriptions/SubscriptionsClient.cs">RetrieveAsync</a>(RetrieveSubscriptionsRequest { ... }) -> WithRawResponseTask&lt;Subscription&gt;</code></summary>
 <dl>
 <dd>
 
@@ -8954,7 +9215,7 @@ await client.RepeatPayments.Subscriptions.RetrieveAsync(
 </dl>
 </details>
 
-<details><summary><code>client.RepeatPayments.Subscriptions.<a href="/src/Payroc/RepeatPayments/Subscriptions/SubscriptionsClient.cs">PartiallyUpdateAsync</a>(PartiallyUpdateSubscriptionsRequest { ... }) -> Subscription</code></summary>
+<details><summary><code>client.RepeatPayments.Subscriptions.<a href="/src/Payroc/RepeatPayments/Subscriptions/SubscriptionsClient.cs">PartiallyUpdateAsync</a>(PartiallyUpdateSubscriptionsRequest { ... }) -> WithRawResponseTask&lt;Subscription&gt;</code></summary>
 <dl>
 <dd>
 
@@ -9038,7 +9299,7 @@ await client.RepeatPayments.Subscriptions.PartiallyUpdateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.RepeatPayments.Subscriptions.<a href="/src/Payroc/RepeatPayments/Subscriptions/SubscriptionsClient.cs">DeactivateAsync</a>(DeactivateSubscriptionsRequest { ... }) -> Subscription</code></summary>
+<details><summary><code>client.RepeatPayments.Subscriptions.<a href="/src/Payroc/RepeatPayments/Subscriptions/SubscriptionsClient.cs">DeactivateAsync</a>(DeactivateSubscriptionsRequest { ... }) -> WithRawResponseTask&lt;Subscription&gt;</code></summary>
 <dl>
 <dd>
 
@@ -9106,7 +9367,7 @@ await client.RepeatPayments.Subscriptions.DeactivateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.RepeatPayments.Subscriptions.<a href="/src/Payroc/RepeatPayments/Subscriptions/SubscriptionsClient.cs">ReactivateAsync</a>(ReactivateSubscriptionsRequest { ... }) -> Subscription</code></summary>
+<details><summary><code>client.RepeatPayments.Subscriptions.<a href="/src/Payroc/RepeatPayments/Subscriptions/SubscriptionsClient.cs">ReactivateAsync</a>(ReactivateSubscriptionsRequest { ... }) -> WithRawResponseTask&lt;Subscription&gt;</code></summary>
 <dl>
 <dd>
 
@@ -9174,7 +9435,7 @@ await client.RepeatPayments.Subscriptions.ReactivateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.RepeatPayments.Subscriptions.<a href="/src/Payroc/RepeatPayments/Subscriptions/SubscriptionsClient.cs">PayAsync</a>(SubscriptionPaymentRequest { ... }) -> SubscriptionPayment</code></summary>
+<details><summary><code>client.RepeatPayments.Subscriptions.<a href="/src/Payroc/RepeatPayments/Subscriptions/SubscriptionsClient.cs">PayAsync</a>(SubscriptionPaymentRequest { ... }) -> WithRawResponseTask&lt;SubscriptionPayment&gt;</code></summary>
 <dl>
 <dd>
 
@@ -9251,7 +9512,7 @@ await client.RepeatPayments.Subscriptions.PayAsync(
 </details>
 
 ## Reporting Settlement
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListBatchesAsync</a>(ListReportingSettlementBatchesRequest { ... }) -> PayrocPager<Batch></code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListBatchesAsync</a>(ListReportingSettlementBatchesRequest { ... }) -> PayrocPager&lt;Batch&gt;</code></summary>
 <dl>
 <dd>
 
@@ -9324,7 +9585,7 @@ await client.Reporting.Settlement.ListBatchesAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">RetrieveBatchAsync</a>(RetrieveBatchSettlementRequest { ... }) -> Batch</code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">RetrieveBatchAsync</a>(RetrieveBatchSettlementRequest { ... }) -> WithRawResponseTask&lt;Batch&gt;</code></summary>
 <dl>
 <dd>
 
@@ -9387,7 +9648,7 @@ await client.Reporting.Settlement.RetrieveBatchAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListTransactionsAsync</a>(ListReportingSettlementTransactionsRequest { ... }) -> PayrocPager<Transaction></code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListTransactionsAsync</a>(ListReportingSettlementTransactionsRequest { ... }) -> PayrocPager&lt;Transaction&gt;</code></summary>
 <dl>
 <dd>
 
@@ -9465,7 +9726,7 @@ await client.Reporting.Settlement.ListTransactionsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">RetrieveTransactionAsync</a>(RetrieveTransactionSettlementRequest { ... }) -> Transaction</code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">RetrieveTransactionAsync</a>(RetrieveTransactionSettlementRequest { ... }) -> WithRawResponseTask&lt;Transaction&gt;</code></summary>
 <dl>
 <dd>
 
@@ -9530,7 +9791,7 @@ await client.Reporting.Settlement.RetrieveTransactionAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListAuthorizationsAsync</a>(ListReportingSettlementAuthorizationsRequest { ... }) -> PayrocPager<Authorization></code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListAuthorizationsAsync</a>(ListReportingSettlementAuthorizationsRequest { ... }) -> PayrocPager&lt;Authorization&gt;</code></summary>
 <dl>
 <dd>
 
@@ -9604,7 +9865,7 @@ await client.Reporting.Settlement.ListAuthorizationsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">RetrieveAuthorizationAsync</a>(RetrieveAuthorizationSettlementRequest { ... }) -> Authorization</code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">RetrieveAuthorizationAsync</a>(RetrieveAuthorizationSettlementRequest { ... }) -> WithRawResponseTask&lt;Authorization&gt;</code></summary>
 <dl>
 <dd>
 
@@ -9668,7 +9929,7 @@ await client.Reporting.Settlement.RetrieveAuthorizationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListDisputesAsync</a>(ListReportingSettlementDisputesRequest { ... }) -> PayrocPager<Dispute></code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListDisputesAsync</a>(ListReportingSettlementDisputesRequest { ... }) -> PayrocPager&lt;Dispute&gt;</code></summary>
 <dl>
 <dd>
 
@@ -9739,7 +10000,7 @@ await client.Reporting.Settlement.ListDisputesAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListDisputesStatusesAsync</a>(ListDisputesStatusesSettlementRequest { ... }) -> IEnumerable<DisputeStatus></code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListDisputesStatusesAsync</a>(ListDisputesStatusesSettlementRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;DisputeStatus&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -9799,7 +10060,7 @@ await client.Reporting.Settlement.ListDisputesStatusesAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListAchDepositsAsync</a>(ListReportingSettlementAchDepositsRequest { ... }) -> PayrocPager<AchDeposit></code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListAchDepositsAsync</a>(ListReportingSettlementAchDepositsRequest { ... }) -> PayrocPager&lt;AchDeposit&gt;</code></summary>
 <dl>
 <dd>
 
@@ -9873,7 +10134,7 @@ await client.Reporting.Settlement.ListAchDepositsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">RetrieveAchDepositAsync</a>(RetrieveAchDepositSettlementRequest { ... }) -> AchDeposit</code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">RetrieveAchDepositAsync</a>(RetrieveAchDepositSettlementRequest { ... }) -> WithRawResponseTask&lt;AchDeposit&gt;</code></summary>
 <dl>
 <dd>
 
@@ -9937,7 +10198,7 @@ await client.Reporting.Settlement.RetrieveAchDepositAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListAchDepositFeesAsync</a>(ListReportingSettlementAchDepositFeesRequest { ... }) -> PayrocPager<AchDepositFee></code></summary>
+<details><summary><code>client.Reporting.Settlement.<a href="/src/Payroc/Reporting/Settlement/SettlementClient.cs">ListAchDepositFeesAsync</a>(ListReportingSettlementAchDepositFeesRequest { ... }) -> PayrocPager&lt;AchDepositFee&gt;</code></summary>
 <dl>
 <dd>
 
@@ -10004,7 +10265,7 @@ await client.Reporting.Settlement.ListAchDepositFeesAsync(
 </details>
 
 ## Tokenization SecureTokens
-<details><summary><code>client.Tokenization.SecureTokens.<a href="/src/Payroc/Tokenization/SecureTokens/SecureTokensClient.cs">ListAsync</a>(ListSecureTokensRequest { ... }) -> PayrocPager<SecureTokenWithAccountType></code></summary>
+<details><summary><code>client.Tokenization.SecureTokens.<a href="/src/Payroc/Tokenization/SecureTokens/SecureTokensClient.cs">ListAsync</a>(ListSecureTokensRequest { ... }) -> PayrocPager&lt;SecureTokenWithAccountType&gt;</code></summary>
 <dl>
 <dd>
 
@@ -10085,7 +10346,7 @@ await client.Tokenization.SecureTokens.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Tokenization.SecureTokens.<a href="/src/Payroc/Tokenization/SecureTokens/SecureTokensClient.cs">CreateAsync</a>(TokenizationRequest { ... }) -> SecureToken</code></summary>
+<details><summary><code>client.Tokenization.SecureTokens.<a href="/src/Payroc/Tokenization/SecureTokens/SecureTokensClient.cs">CreateAsync</a>(TokenizationRequest { ... }) -> WithRawResponseTask&lt;SecureToken&gt;</code></summary>
 <dl>
 <dd>
 
@@ -10223,7 +10484,7 @@ await client.Tokenization.SecureTokens.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Tokenization.SecureTokens.<a href="/src/Payroc/Tokenization/SecureTokens/SecureTokensClient.cs">RetrieveAsync</a>(RetrieveSecureTokensRequest { ... }) -> SecureTokenWithAccountType</code></summary>
+<details><summary><code>client.Tokenization.SecureTokens.<a href="/src/Payroc/Tokenization/SecureTokens/SecureTokensClient.cs">RetrieveAsync</a>(RetrieveSecureTokensRequest { ... }) -> WithRawResponseTask&lt;SecureTokenWithAccountType&gt;</code></summary>
 <dl>
 <dd>
 
@@ -10359,7 +10620,7 @@ await client.Tokenization.SecureTokens.DeleteAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Tokenization.SecureTokens.<a href="/src/Payroc/Tokenization/SecureTokens/SecureTokensClient.cs">PartiallyUpdateAsync</a>(PartiallyUpdateSecureTokensRequest { ... }) -> SecureToken</code></summary>
+<details><summary><code>client.Tokenization.SecureTokens.<a href="/src/Payroc/Tokenization/SecureTokens/SecureTokensClient.cs">PartiallyUpdateAsync</a>(PartiallyUpdateSecureTokensRequest { ... }) -> WithRawResponseTask&lt;SecureToken&gt;</code></summary>
 <dl>
 <dd>
 
@@ -10450,7 +10711,7 @@ await client.Tokenization.SecureTokens.PartiallyUpdateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Tokenization.SecureTokens.<a href="/src/Payroc/Tokenization/SecureTokens/SecureTokensClient.cs">UpdateAccountAsync</a>(UpdateAccountSecureTokensRequest { ... }) -> SecureToken</code></summary>
+<details><summary><code>client.Tokenization.SecureTokens.<a href="/src/Payroc/Tokenization/SecureTokens/SecureTokensClient.cs">UpdateAccountAsync</a>(UpdateAccountSecureTokensRequest { ... }) -> WithRawResponseTask&lt;SecureToken&gt;</code></summary>
 <dl>
 <dd>
 
@@ -10464,7 +10725,7 @@ await client.Tokenization.SecureTokens.PartiallyUpdateAsync(
 
 Use this method to update a secure token if you have a single-use token from Hosted Fields.  
 
-**Note:** If you don't have a single-use token, you can update saved payment details with our [Update Secure Token](https://docs.payroc.com/api/resources#updateSecureToken) method. For more information about our two options to update a secure token, go to [Update saved payment details](https://docs.payroc.com/guides/integrate/update-saved-payment-details).  
+**Note:** If you don't have a single-use token, you can update saved payment details with our [Update Secure Token](https://docs.payroc.com/api/resources#updateSecureToken) method. For more information about our two options to update a secure token, go to [Update saved payment details](https://docs.payroc.com/guides/take-payments/update-saved-payment-details).  
 </dd>
 </dl>
 </dd>
@@ -10523,7 +10784,7 @@ await client.Tokenization.SecureTokens.UpdateAccountAsync(
 </details>
 
 ## Tokenization SingleUseTokens
-<details><summary><code>client.Tokenization.SingleUseTokens.<a href="/src/Payroc/Tokenization/SingleUseTokens/SingleUseTokensClient.cs">CreateAsync</a>(SingleUseTokenRequest { ... }) -> SingleUseToken</code></summary>
+<details><summary><code>client.Tokenization.SingleUseTokens.<a href="/src/Payroc/Tokenization/SingleUseTokens/SingleUseTokensClient.cs">CreateAsync</a>(SingleUseTokenRequest { ... }) -> WithRawResponseTask&lt;SingleUseToken&gt;</code></summary>
 <dl>
 <dd>
 

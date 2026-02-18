@@ -1,4 +1,4 @@
-﻿namespace Payroc.TestHarness.Factory;
+namespace Payroc.TestHarness.Factory;
 
 public class AddressFactory
 {

@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
-using Payroc.Core;
 using Payroc.HostedFields;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.HostedFields;
 
@@ -22,8 +21,7 @@ public class CreateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "processingTerminalId": "1234001",
-              "token": "abcdef1234567890abcdef1234567890",
-              "expiresAt": "2025-07-02T13:30:00.000Z"
+              "token": "abcdef1234567890abcdef1234567890"
             }
             """;
 
@@ -53,10 +51,6 @@ public class CreateTest : BaseMockServerTest
                 Scenario = HostedFieldsCreateSessionRequestScenario.Payment,
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<HostedFieldsCreateSessionResponse>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

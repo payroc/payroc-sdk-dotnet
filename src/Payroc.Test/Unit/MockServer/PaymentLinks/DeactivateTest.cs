@@ -1,7 +1,7 @@
 using NUnit.Framework;
-using Payroc.Core;
 using Payroc.PaymentLinks;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.PaymentLinks;
 
@@ -13,13 +13,13 @@ public class DeactivateTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "paymentLinkId": "JZURRJBUPS",
+              "type": "multiUse",
               "merchantReference": "LinkRef6543",
               "order": {
                 "description": "Pie It Forward charitable trust donation",
                 "charge": {
-                  "currency": "AED",
-                  "type": "prompt"
+                  "type": "prompt",
+                  "currency": "AED"
                 }
               },
               "authType": "sale",
@@ -36,14 +36,11 @@ public class DeactivateTest : BaseMockServerTest
                 "paymentUrl": "https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206",
                 "paymentButton": "<a href=\"https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206\" \ntarget=\"_blank\" style=\"color: #ffffff; background-color: #6C7A89; font-size: 18px; font-family: Helvetica, Arial, sans-serif; \ntext-decoration: none; border-radius: 30px; padding: 14px 28px; display: inline-block;\">Pay Now</a>\n"
               },
-              "status": "active",
-              "createdOn": "2024-07-02",
               "expiresOn": "2024-08-02",
               "credentialOnFile": {
                 "tokenize": true,
                 "mitAgreement": "unscheduled"
-              },
-              "type": "multiUse"
+              }
             }
             """;
 
@@ -64,10 +61,6 @@ public class DeactivateTest : BaseMockServerTest
         var response = await Client.PaymentLinks.DeactivateAsync(
             new DeactivatePaymentLinksRequest { PaymentLinkId = "JZURRJBUPS" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<DeactivatePaymentLinksResponse>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

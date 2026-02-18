@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
 using Payroc.Boarding.Contacts;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Boarding.Contacts;
 
@@ -14,7 +13,6 @@ public class RetrieveTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "contactId": 1543,
               "type": "manager",
               "firstName": "Jane",
               "middleName": "Helen",
@@ -27,20 +25,20 @@ public class RetrieveTest : BaseMockServerTest
               ],
               "contactMethods": [
                 {
-                  "value": "jane.doe@example.com",
-                  "type": "email"
+                  "type": "email",
+                  "value": "jane.doe@example.com"
                 },
                 {
-                  "value": "2025550164",
-                  "type": "phone"
+                  "type": "phone",
+                  "value": "2025550164"
                 },
                 {
-                  "value": "8445557624",
-                  "type": "mobile"
+                  "type": "mobile",
+                  "value": "8445557624"
                 },
                 {
-                  "value": "2025550110",
-                  "type": "fax"
+                  "type": "fax",
+                  "value": "2025550110"
                 }
               ]
             }
@@ -58,9 +56,6 @@ public class RetrieveTest : BaseMockServerTest
         var response = await Client.Boarding.Contacts.RetrieveAsync(
             new RetrieveContactsRequest { ContactId = 1 }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Contact>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

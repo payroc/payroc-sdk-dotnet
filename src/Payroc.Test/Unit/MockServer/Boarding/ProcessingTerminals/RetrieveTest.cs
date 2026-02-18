@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
 using Payroc.Boarding.ProcessingTerminals;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Boarding.ProcessingTerminals;
 
@@ -23,8 +22,8 @@ public class RetrieveTest : BaseMockServerTest
                 "terminalTemplateId": "Roc Services_DX8000"
               },
               "batchClosure": {
-                "batchCloseTime": "23:40",
-                "batchCloseType": "automatic"
+                "batchCloseType": "automatic",
+                "batchCloseTime": "23:40"
               },
               "applicationSettings": {
                 "invoiceNumberPrompt": true,
@@ -32,16 +31,7 @@ public class RetrieveTest : BaseMockServerTest
               },
               "features": {
                 "tips": {
-                  "enabled": false,
-                  "tipPrompt": false,
-                  "tipAdjust": true,
-                  "suggestedTips": {
-                    "enabled": true,
-                    "tipPercentages": [
-                      "tipPercentages",
-                      "tipPercentages"
-                    ]
-                  }
+                  "enabled": false
                 },
                 "enhancedProcessing": {
                   "enabled": true,
@@ -51,7 +41,7 @@ public class RetrieveTest : BaseMockServerTest
                 "ebt": {
                   "enabled": true,
                   "ebtType": "foodStamp",
-                  "fnsNumber": "1234567890"
+                  "fnsNumber": "3456789"
                 },
                 "pinDebitCashback": false,
                 "recurringPayments": true,
@@ -65,25 +55,25 @@ public class RetrieveTest : BaseMockServerTest
               },
               "taxes": [
                 {
-                  "taxRate": 1.1,
-                  "taxLabel": "taxLabel"
+                  "taxRate": 6,
+                  "taxLabel": "Sales Tax"
                 }
               ],
               "security": {
-                "tokenization": true,
+                "tokenization": false,
                 "avsPrompt": true,
                 "avsLevel": "fullAddress",
                 "cvvPrompt": true
               },
               "receiptNotifications": {
                 "emailReceipt": true,
-                "smsReceipt": true
+                "smsReceipt": false
               },
               "devices": [
                 {
-                  "manufacturer": "manufacturer",
-                  "model": "model",
-                  "serialNumber": "serialNumber",
+                  "manufacturer": "Ingenico",
+                  "model": "Axium Dx4000 Tsys",
+                  "serialNumber": "DX400-1234",
                   "communicationType": "bluetooth"
                 }
               ]
@@ -107,9 +97,6 @@ public class RetrieveTest : BaseMockServerTest
         var response = await Client.Boarding.ProcessingTerminals.RetrieveAsync(
             new RetrieveProcessingTerminalsRequest { ProcessingTerminalId = "1234001" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<ProcessingTerminal>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
 using Payroc.Boarding.TerminalOrders;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Boarding.TerminalOrders;
 
@@ -72,8 +71,8 @@ public class RetrieveTest : BaseMockServerTest
                       "communicationType": "wifi"
                     },
                     "batchClosure": {
-                      "batchCloseTime": "23:40",
-                      "batchCloseType": "automatic"
+                      "batchCloseType": "automatic",
+                      "batchCloseTime": "23:40"
                     },
                     "receiptNotifications": {
                       "emailReceipt": true,
@@ -91,9 +90,7 @@ public class RetrieveTest : BaseMockServerTest
                     "tokenization": true
                   }
                 }
-              ],
-              "createdDate": "2020-09-08T12:00:00.000Z",
-              "lastModifiedDate": "2020-09-09T12:00:00.000Z"
+              ]
             }
             """;
 
@@ -114,9 +111,6 @@ public class RetrieveTest : BaseMockServerTest
         var response = await Client.Boarding.TerminalOrders.RetrieveAsync(
             new RetrieveTerminalOrdersRequest { TerminalOrderId = "12345" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<TerminalOrder>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

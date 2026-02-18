@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
 using Payroc.Boarding.MerchantPlatforms;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Boarding.MerchantPlatforms;
 
@@ -14,9 +13,6 @@ public class RetrieveTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "merchantPlatformId": "12345",
-              "createdDate": "2024-07-02T12:00:00.000Z",
-              "lastModifiedDate": "2024-07-02T12:00:00.000Z",
               "business": {
                 "name": "Example Corp",
                 "taxId": "xxxxx6789",
@@ -36,41 +32,14 @@ public class RetrieveTest : BaseMockServerTest
                 ],
                 "contactMethods": [
                   {
-                    "value": "jane.doe@example.com",
-                    "type": "email"
+                    "type": "email",
+                    "value": "jane.doe@example.com"
                   }
                 ]
               },
-              "processingAccounts": [
-                {
-                  "processingAccountId": "38765",
-                  "doingBusinessAs": "Pizza Doe",
-                  "status": "approved",
-                  "link": {
-                    "rel": "processingAccount",
-                    "href": "https://api.payroc.com/v1/processing-accounts/38765",
-                    "method": "get"
-                  },
-                  "signature": {
-                    "link": {
-                      "rel": "previous",
-                      "method": "get",
-                      "href": "<uri>"
-                    },
-                    "type": "requestedViaDirectLink"
-                  }
-                }
-              ],
               "metadata": {
                 "customerId": "2345"
-              },
-              "links": [
-                {
-                  "rel": "previous",
-                  "method": "get",
-                  "href": "<uri>"
-                }
-              ]
+              }
             }
             """;
 
@@ -91,9 +60,6 @@ public class RetrieveTest : BaseMockServerTest
         var response = await Client.Boarding.MerchantPlatforms.RetrieveAsync(
             new RetrieveMerchantPlatformsRequest { MerchantPlatformId = "12345" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<MerchantPlatform>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

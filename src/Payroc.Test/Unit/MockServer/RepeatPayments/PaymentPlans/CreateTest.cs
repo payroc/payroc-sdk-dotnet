@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using Payroc;
-using Payroc.Core;
 using Payroc.RepeatPayments.PaymentPlans;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.RepeatPayments.PaymentPlans;
 
@@ -58,7 +58,6 @@ public class CreateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "paymentPlanId": "PlanRef8765",
-              "processingTerminalId": "1234001",
               "name": "Premium Club",
               "description": "Monthly Premium Club subscription",
               "currency": "USD",
@@ -78,8 +77,7 @@ public class CreateTest : BaseMockServerTest
                   "taxes": [
                     {
                       "name": "Sales Tax",
-                      "rate": 5,
-                      "amount": 190
+                      "rate": 5
                     }
                   ]
                 }
@@ -92,8 +90,7 @@ public class CreateTest : BaseMockServerTest
                   "taxes": [
                     {
                       "name": "Sales Tax",
-                      "rate": 5,
-                      "amount": 190
+                      "rate": 5
                     }
                   ]
                 }
@@ -164,9 +161,6 @@ public class CreateTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PaymentPlan>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

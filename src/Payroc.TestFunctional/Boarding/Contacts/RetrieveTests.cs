@@ -14,11 +14,20 @@ public class RetrieveTests
         {
             ContactId = int.Parse(BoardingTestFixture.SharedContactId)
         };
-        
-        var contactsResponse = await client.Boarding.Contacts.RetrieveAsync(contactsRequest);
-        
-        Assert.That(contactsResponse.ContactId?.ToString(), Is.EqualTo(BoardingTestFixture.SharedContactId));
-        Assert.That(contactsResponse.FirstName, Is.Not.Null);
-        Assert.That(contactsResponse.LastName, Is.Not.Null);
+        try
+        {
+            var contactsResponse = await client.Boarding.Contacts.RetrieveAsync(contactsRequest);
+            Assert.That(contactsResponse.ContactId?.ToString(), Is.EqualTo(BoardingTestFixture.SharedContactId));
+            Assert.That(contactsResponse.FirstName, Is.Not.Null);
+            Assert.That(contactsResponse.LastName, Is.Not.Null);
+        }
+        catch (PayrocApiException ex)
+        {
+            Assert.Fail($"Exception thrown during RetrieveAsync: {ex}");
+        }
+        catch (Exception ex)
+        {
+            Assert.Fail($"Exception thrown during RetrieveAsync: {ex}");
+        }
     }
 }

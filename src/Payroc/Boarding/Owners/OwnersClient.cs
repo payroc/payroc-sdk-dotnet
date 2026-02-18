@@ -4,7 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.Boarding.Owners;
 
-public partial class OwnersClient
+public partial class OwnersClient : IOwnersClient
 {
     private RawClient _client;
 
@@ -21,22 +21,7 @@ public partial class OwnersClient
         }
     }
 
-    /// <summary>
-    /// Use this method to retrieve details about an owner of a processing account or an owner associated with a funding recipient.
-    ///
-    /// To retrieve an owner, you need their ownerId. Our gateway returned the ownerId in the response of the [Create Processing Account](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create-processing-account) method or the [Create Funding Recipient Owner](https://docs.payroc.com/api/schema/funding/funding-recipients/create-owner) method.
-    ///
-    /// **Note:** If you don't have the ownerId, use the [Retrieve Processing Account](https://docs.payroc.com/api/schema/boarding/processing-accounts/retrieve) method if you are searching for a processing account owner, or use the [List Funding Recipient Owners](https://docs.payroc.com/api/schema/funding/funding-recipients/list-owners) method if you are searching for a funding recipient owner.
-    ///
-    /// Our gateway returns the following information about an owner:
-    /// - Name, date of birth, and address.
-    /// - Contact details, including their email address.
-    /// - Relationship to the business, including whether they are a control prong or authorized signatory, and their equity stake in the business.
-    /// </summary>
-    /// <example><code>
-    /// await client.Boarding.Owners.RetrieveAsync(new RetrieveOwnersRequest { OwnerId = 1 });
-    /// </code></example>
-    public async Task<Owner> RetrieveAsync(
+    private async Task<WithRawResponse<Owner>> RetrieveAsyncCore(
         RetrieveOwnersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -45,6 +30,12 @@ public partial class OwnersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -55,6 +46,7 @@ public partial class OwnersClient
                                 "owners/{0}",
                                 ValueConvert.ToPathParameterString(request.OwnerId)
                             ),
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -65,14 +57,30 @@ public partial class OwnersClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<Owner>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<Owner>(responseBody)!;
+                        return new WithRawResponse<Owner>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new PayrocException("Failed to deserialize response", e);
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
@@ -113,6 +121,32 @@ public partial class OwnersClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Use this method to retrieve details about an owner of a processing account or an owner associated with a funding recipient.
+    ///
+    /// To retrieve an owner, you need their ownerId. Our gateway returned the ownerId in the response of the [Create Processing Account](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create-processing-account) method or the [Create Funding Recipient Owner](https://docs.payroc.com/api/schema/funding/funding-recipients/create-owner) method.
+    ///
+    /// **Note:** If you don't have the ownerId, use the [Retrieve Processing Account](https://docs.payroc.com/api/schema/boarding/processing-accounts/retrieve) method if you are searching for a processing account owner, or use the [List Funding Recipient Owners](https://docs.payroc.com/api/schema/funding/funding-recipients/list-owners) method if you are searching for a funding recipient owner.
+    ///
+    /// Our gateway returns the following information about an owner:
+    /// - Name, date of birth, and address.
+    /// - Contact details, including their email address.
+    /// - Relationship to the business, including whether they are a control prong or authorized signatory, and their equity stake in the business.
+    /// </summary>
+    /// <example><code>
+    /// await client.Boarding.Owners.RetrieveAsync(new RetrieveOwnersRequest { OwnerId = 1 });
+    /// </code></example>
+    public WithRawResponseTask<Owner> RetrieveAsync(
+        RetrieveOwnersRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Owner>(
+            RetrieveAsyncCore(request, options, cancellationToken)
+        );
     }
 
     /// <summary>
@@ -184,6 +218,12 @@ public partial class OwnersClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -195,6 +235,7 @@ public partial class OwnersClient
                                 ValueConvert.ToPathParameterString(request.OwnerId)
                             ),
                             Body = request.Body,
+                            Headers = _headers,
                             ContentType = "application/json",
                             Options = options,
                         },
@@ -272,6 +313,12 @@ public partial class OwnersClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -282,6 +329,7 @@ public partial class OwnersClient
                                 "owners/{0}",
                                 ValueConvert.ToPathParameterString(request.OwnerId)
                             ),
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken

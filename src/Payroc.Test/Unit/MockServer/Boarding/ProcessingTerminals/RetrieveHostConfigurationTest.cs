@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
 using Payroc.Boarding.ProcessingTerminals;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Boarding.ProcessingTerminals;
 
@@ -17,6 +16,7 @@ public class RetrieveHostConfigurationTest : BaseMockServerTest
               "processingTerminalId": "0123451001",
               "processingAccountId": "23451",
               "configuration": {
+                "processor": "tsys",
                 "merchant": {
                   "posMid": "123456789101",
                   "chainNumber": "222222",
@@ -35,8 +35,7 @@ public class RetrieveHostConfigurationTest : BaseMockServerTest
                   "motoAllowed": true,
                   "internetAllowed": true,
                   "cardPresentAllowed": true
-                },
-                "processor": "tsys"
+                }
               }
             }
             """;
@@ -61,9 +60,6 @@ public class RetrieveHostConfigurationTest : BaseMockServerTest
                 ProcessingTerminalId = "1234001",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<HostConfiguration>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

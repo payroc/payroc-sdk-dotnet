@@ -12,7 +12,11 @@ public record PaymentLinkPaginatedList : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Array of payment links.
+    /// Array of polymorphic objects that contains payment link information.
+    ///
+    /// The value of the type parameter determines which variant you should use:
+    /// -	'multiUse' - Create a link that the merchant can use to take multiple payments.
+    /// -	'singleUse' - Create a link that the merchant can use for only one payment.
     /// </summary>
     [JsonPropertyName("data")]
     public IEnumerable<PaymentLinkPaginatedListDataItem>? Data { get; set; }
@@ -21,7 +25,7 @@ public record PaymentLinkPaginatedList : IJsonOnDeserialized
     /// Maximum number of results that we return for each page.
     /// </summary>
     [JsonPropertyName("limit")]
-    public double? Limit { get; set; }
+    public int? Limit { get; set; }
 
     /// <summary>
     /// Number of results we returned on this page.
@@ -29,7 +33,7 @@ public record PaymentLinkPaginatedList : IJsonOnDeserialized
     /// **Note:** This might not be the total number of results that match your query.
     /// </summary>
     [JsonPropertyName("count")]
-    public double? Count { get; set; }
+    public int? Count { get; set; }
 
     /// <summary>
     /// Indicates whether there is another page of results available.

@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
-using Payroc.Core;
 using Payroc.Funding.FundingRecipients;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Funding.FundingRecipients;
 
@@ -14,10 +13,6 @@ public class RetrieveTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "recipientId": 234,
-              "status": "approved",
-              "createdDate": "2024-07-02T15:30:00.000Z",
-              "lastModifiedDate": "2024-07-02T15:30:00.000Z",
               "recipientType": "privateCorporation",
               "taxId": "123456789",
               "charityId": "charityId",
@@ -33,43 +28,13 @@ public class RetrieveTest : BaseMockServerTest
               },
               "contactMethods": [
                 {
-                  "value": "2025550164",
-                  "type": "phone"
+                  "type": "phone",
+                  "value": "2025550164"
                 }
               ],
               "metadata": {
                 "yourCustomField": "abc123"
-              },
-              "owners": [
-                {
-                  "ownerId": 4564,
-                  "link": {
-                    "rel": "owner",
-                    "href": "https://api.payroc.com/v1/owners/4564",
-                    "method": "get"
-                  }
-                }
-              ],
-              "fundingAccounts": [
-                {
-                  "fundingAccountId": 123,
-                  "status": "approved",
-                  "link": {
-                    "rel": "fundingAccount",
-                    "href": "https://api.payroc.com/v1/funding-accounts/123",
-                    "method": "get"
-                  }
-                },
-                {
-                  "fundingAccountId": 124,
-                  "status": "hold",
-                  "link": {
-                    "rel": "fundingAccount",
-                    "href": "https://api.payroc.com/v1/funding-accounts/124",
-                    "method": "get"
-                  }
-                }
-              ]
+              }
             }
             """;
 
@@ -90,9 +55,6 @@ public class RetrieveTest : BaseMockServerTest
         var response = await Client.Funding.FundingRecipients.RetrieveAsync(
             new RetrieveFundingRecipientsRequest { RecipientId = 1 }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<FundingRecipient>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

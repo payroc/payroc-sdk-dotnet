@@ -18,7 +18,7 @@ public record OrderItemSolutionSetupDeviceSettings : IJsonOnDeserialized
     /// Number of users that we need to set up for mobile solutions.
     /// </summary>
     [JsonPropertyName("numberOfMobileUsers")]
-    public float? NumberOfMobileUsers { get; set; }
+    public int? NumberOfMobileUsers { get; set; }
 
     /// <summary>
     /// Method of connection between a terminal or a peripheral device and the host.

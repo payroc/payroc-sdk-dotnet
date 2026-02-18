@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using Payroc.Auth;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Auth;
 
@@ -38,9 +38,6 @@ public class RetrieveTokenTest : BaseMockServerTest
         var response = await Client.Auth.RetrieveTokenAsync(
             new RetrieveTokenAuthRequest { ApiKey = "x-api-key" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<GetTokenResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

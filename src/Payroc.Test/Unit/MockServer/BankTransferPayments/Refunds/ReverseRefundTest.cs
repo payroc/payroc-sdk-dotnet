@@ -1,7 +1,6 @@
 using NUnit.Framework;
-using Payroc;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.BankTransferPayments.Refunds;
 
@@ -17,7 +16,6 @@ public class ReverseRefundTest : BaseMockServerTest
               "processingTerminalId": "1234001",
               "order": {
                 "orderId": "OrderRef6543",
-                "dateTime": "2024-07-02T15:30:00.000Z",
                 "description": "Refund for order OrderRef6543",
                 "amount": 4999,
                 "currency": "USD"
@@ -26,12 +24,13 @@ public class ReverseRefundTest : BaseMockServerTest
                 "notificationLanguage": "en",
                 "contactMethods": [
                   {
-                    "value": "jane.doe@example.com",
-                    "type": "email"
+                    "type": "email",
+                    "value": "jane.doe@example.com"
                   }
                 ]
               },
               "bankAccount": {
+                "type": "ach",
                 "secCode": "web",
                 "nameOnAccount": "Sarah Hazel Hopper",
                 "accountNumber": "123456789",
@@ -46,8 +45,7 @@ public class ReverseRefundTest : BaseMockServerTest
                     "method": "get",
                     "href": "<uri>"
                   }
-                },
-                "type": "ach"
+                }
               },
               "payment": {
                 "paymentId": "M2MJOG6O2Y",
@@ -103,9 +101,6 @@ public class ReverseRefundTest : BaseMockServerTest
                 IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<BankTransferRefund>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -4,7 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.Boarding.TerminalOrders;
 
-public partial class TerminalOrdersClient
+public partial class TerminalOrdersClient : ITerminalOrdersClient
 {
     private RawClient _client;
 
@@ -21,27 +21,7 @@ public partial class TerminalOrdersClient
         }
     }
 
-    /// <summary>
-    /// Use this method to retrieve information about a terminal order.
-    ///
-    /// To retrieve a terminal order, you need it's terminalOrderId. Our gateway returned the terminalOrderId in the response of the [Create Terminal Order](https://docs.payroc.com/api/schema/boarding/processing-accounts/create-terminal-order) method.
-    ///
-    /// **Note**: If you don't have the terminalOrderId, use our [List Terminal Orders](https://docs.payroc.com/api/schema/boarding/processing-accounts/list-terminal-orders) method to search for the terminal order.
-    ///
-    /// Our gateway returns the following information about the terminal order:
-    /// - Status of the order
-    /// - Items in the order
-    /// - Training provider
-    /// - Shipping information
-    ///
-    /// **Note**: You can subscribe to our terminalOrder.status.changed event to get notifications when we update the status of a terminal order. For more information about how to subscribe to events, go to [Events Subscriptions](https://docs.payroc.com/guides/integrate/event-subscriptions).
-    /// </summary>
-    /// <example><code>
-    /// await client.Boarding.TerminalOrders.RetrieveAsync(
-    ///     new RetrieveTerminalOrdersRequest { TerminalOrderId = "12345" }
-    /// );
-    /// </code></example>
-    public async Task<TerminalOrder> RetrieveAsync(
+    private async Task<WithRawResponse<TerminalOrder>> RetrieveAsyncCore(
         RetrieveTerminalOrdersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -50,6 +30,12 @@ public partial class TerminalOrdersClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -60,6 +46,7 @@ public partial class TerminalOrdersClient
                                 "terminal-orders/{0}",
                                 ValueConvert.ToPathParameterString(request.TerminalOrderId)
                             ),
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -70,14 +57,30 @@ public partial class TerminalOrdersClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<TerminalOrder>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<TerminalOrder>(responseBody)!;
+                        return new WithRawResponse<TerminalOrder>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new PayrocException("Failed to deserialize response", e);
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
@@ -122,5 +125,36 @@ public partial class TerminalOrdersClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Use this method to retrieve information about a terminal order.
+    ///
+    /// To retrieve a terminal order, you need it's terminalOrderId. Our gateway returned the terminalOrderId in the response of the [Create Terminal Order](https://docs.payroc.com/api/schema/boarding/processing-accounts/create-terminal-order) method.
+    ///
+    /// **Note**: If you don't have the terminalOrderId, use our [List Terminal Orders](https://docs.payroc.com/api/schema/boarding/processing-accounts/list-terminal-orders) method to search for the terminal order.
+    ///
+    /// Our gateway returns the following information about the terminal order:
+    /// - Status of the order
+    /// - Items in the order
+    /// - Training provider
+    /// - Shipping information
+    ///
+    /// **Note**: You can subscribe to our terminalOrder.status.changed event to get notifications when we update the status of a terminal order. For more information about how to subscribe to events, go to [Events Subscriptions](https://docs.payroc.com/guides/board-merchants/event-subscriptions).
+    /// </summary>
+    /// <example><code>
+    /// await client.Boarding.TerminalOrders.RetrieveAsync(
+    ///     new RetrieveTerminalOrdersRequest { TerminalOrderId = "12345" }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<TerminalOrder> RetrieveAsync(
+        RetrieveTerminalOrdersRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<TerminalOrder>(
+            RetrieveAsyncCore(request, options, cancellationToken)
+        );
     }
 }

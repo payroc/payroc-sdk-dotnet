@@ -14,6 +14,14 @@ public record KeyedCardDetails : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    /// <summary>
+    /// Polymorphic object that contains payment card details that the merchant manually entered into the device.
+    ///
+    /// The value of the dataFormat parameter determines which variant you should use:
+    /// -	`fullyEncrypted` - Some payment card details are encrypted.
+    /// -	`partiallyEncrypted` - Payment card details are in plain text.
+    /// -	`plainText` - All payment card details are encrypted.
+    /// </summary>
     [JsonPropertyName("keyedData")]
     public required KeyedCardDetailsKeyedData KeyedData { get; set; }
 
@@ -29,6 +37,9 @@ public record KeyedCardDetails : IJsonOnDeserialized
     [JsonPropertyName("cardholderSignature")]
     public string? CardholderSignature { get; set; }
 
+    /// <summary>
+    /// Polymorphic object that contains information about the customer's PIN.
+    /// </summary>
     [JsonPropertyName("pinDetails")]
     public KeyedCardDetailsPinDetails? PinDetails { get; set; }
 

@@ -4,7 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.Boarding.Contacts;
 
-public partial class ContactsClient
+public partial class ContactsClient : IContactsClient
 {
     private RawClient _client;
 
@@ -21,22 +21,7 @@ public partial class ContactsClient
         }
     }
 
-    /// <summary>
-    /// Use this method to retrieve details about a contact.
-    ///
-    /// To retrieve a contact, you need its contactId. Our gateway returned the contactId in the [Create Processing Account](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create-processing-account) method.
-    ///
-    /// **Note:** If you don't have the contactId, use the [List Contacts](https://docs.payroc.com/api/schema/boarding/processing-accounts/list-contacts) method to search for the contact.
-    ///
-    /// Our gateway returns the following information about a contact:
-    ///
-    /// -	Name and contact method, including their phone number or mobile number.
-    /// -	Role within the business, for example, if they are a manager.
-    /// </summary>
-    /// <example><code>
-    /// await client.Boarding.Contacts.RetrieveAsync(new RetrieveContactsRequest { ContactId = 1 });
-    /// </code></example>
-    public async Task<Contact> RetrieveAsync(
+    private async Task<WithRawResponse<Contact>> RetrieveAsyncCore(
         RetrieveContactsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -45,6 +30,12 @@ public partial class ContactsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -55,6 +46,7 @@ public partial class ContactsClient
                                 "contacts/{0}",
                                 ValueConvert.ToPathParameterString(request.ContactId)
                             ),
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -65,14 +57,30 @@ public partial class ContactsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<Contact>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<Contact>(responseBody)!;
+                        return new WithRawResponse<Contact>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new PayrocException("Failed to deserialize response", e);
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
@@ -113,6 +121,32 @@ public partial class ContactsClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Use this method to retrieve details about a contact.
+    ///
+    /// To retrieve a contact, you need its contactId. Our gateway returned the contactId in the [Create Processing Account](https://docs.payroc.com/api/schema/boarding/merchant-platforms/create-processing-account) method.
+    ///
+    /// **Note:** If you don't have the contactId, use the [List Contacts](https://docs.payroc.com/api/schema/boarding/processing-accounts/list-contacts) method to search for the contact.
+    ///
+    /// Our gateway returns the following information about a contact:
+    ///
+    /// -	Name and contact method, including their phone number or mobile number.
+    /// -	Role within the business, for example, if they are a manager.
+    /// </summary>
+    /// <example><code>
+    /// await client.Boarding.Contacts.RetrieveAsync(new RetrieveContactsRequest { ContactId = 1 });
+    /// </code></example>
+    public WithRawResponseTask<Contact> RetrieveAsync(
+        RetrieveContactsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Contact>(
+            RetrieveAsyncCore(request, options, cancellationToken)
+        );
     }
 
     /// <summary>
@@ -165,6 +199,12 @@ public partial class ContactsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -176,6 +216,7 @@ public partial class ContactsClient
                                 ValueConvert.ToPathParameterString(request.ContactId)
                             ),
                             Body = request.Body,
+                            Headers = _headers,
                             ContentType = "application/json",
                             Options = options,
                         },
@@ -251,6 +292,12 @@ public partial class ContactsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -261,6 +308,7 @@ public partial class ContactsClient
                                 "contacts/{0}",
                                 ValueConvert.ToPathParameterString(request.ContactId)
                             ),
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken

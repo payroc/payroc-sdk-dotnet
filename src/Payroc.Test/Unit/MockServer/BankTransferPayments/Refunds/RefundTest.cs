@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
 using Payroc.BankTransferPayments.Refunds;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.BankTransferPayments.Refunds;
 
@@ -25,7 +24,6 @@ public class RefundTest : BaseMockServerTest
               "processingTerminalId": "1234001",
               "order": {
                 "orderId": "OrderRef6543",
-                "dateTime": "2024-07-02T15:30:00.000Z",
                 "description": "Refund for order OrderRef6543",
                 "amount": 4999,
                 "currency": "USD",
@@ -39,8 +37,7 @@ public class RefundTest : BaseMockServerTest
                   "taxes": [
                     {
                       "name": "Sales Tax",
-                      "rate": 5,
-                      "amount": 217
+                      "rate": 5
                     }
                   ]
                 }
@@ -49,12 +46,13 @@ public class RefundTest : BaseMockServerTest
                 "notificationLanguage": "en",
                 "contactMethods": [
                   {
-                    "value": "jane.doe@example.com",
-                    "type": "email"
+                    "type": "email",
+                    "value": "jane.doe@example.com"
                   }
                 ]
               },
               "bankAccount": {
+                "type": "pad",
                 "nameOnAccount": "Sarah Hazel Hopper",
                 "accountNumber": "1234567890",
                 "transitNumber": "76543",
@@ -69,8 +67,7 @@ public class RefundTest : BaseMockServerTest
                     "method": "get",
                     "href": "<uri>"
                   }
-                },
-                "type": "pad"
+                }
               },
               "refunds": [
                 {
@@ -160,9 +157,6 @@ public class RefundTest : BaseMockServerTest
                 Description = "amount to refund",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<BankTransferPayment>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using Payroc;
-using Payroc.Core;
 using Payroc.PaymentFeatures.Bank;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.PaymentFeatures.Bank;
 
@@ -16,11 +16,11 @@ public class VerifyTest : BaseMockServerTest
             {
               "processingTerminalId": "1234001",
               "bankAccount": {
+                "type": "pad",
                 "nameOnAccount": "Sarah Hazel Hopper",
                 "accountNumber": "1234567890",
                 "transitNumber": "76543",
-                "institutionNumber": "543",
-                "type": "pad"
+                "institutionNumber": "543"
               }
             }
             """;
@@ -67,11 +67,7 @@ public class VerifyTest : BaseMockServerTest
                 ),
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<BankAccountVerificationResult>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -81,10 +77,10 @@ public class VerifyTest : BaseMockServerTest
             {
               "processingTerminalId": "1234001",
               "bankAccount": {
+                "type": "ach",
                 "nameOnAccount": "Shara Hazel Hopper",
                 "accountNumber": "1234567890",
-                "routingNumber": "123456789",
-                "type": "ach"
+                "routingNumber": "123456789"
               }
             }
             """;
@@ -130,10 +126,6 @@ public class VerifyTest : BaseMockServerTest
                 ),
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<BankAccountVerificationResult>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

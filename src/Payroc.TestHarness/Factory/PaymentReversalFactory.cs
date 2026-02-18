@@ -1,4 +1,4 @@
-﻿using Payroc.CardPayments.Refunds;
+using Payroc.CardPayments.Refunds;
 
 namespace Payroc.TestHarness.Factory;
 

@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using Payroc;
-using Payroc.Core;
 using Payroc.Funding.FundingRecipients;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Funding.FundingRecipients;
 
@@ -14,45 +14,37 @@ public class CreateAccountTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "type": "checking",
+              "type": "savings",
               "use": "credit",
-              "nameOnAccount": "Jane Doe",
+              "nameOnAccount": "Fred Nerk",
               "paymentMethods": [
                 {
                   "type": "ach"
                 }
-              ]
+              ],
+              "metadata": {
+                "responsiblePerson": "Jane Doe"
+              }
             }
             """;
 
         const string mockResponse = """
             {
-              "fundingAccountId": 123,
-              "createdDate": "2024-07-02T15:30:00.000Z",
-              "lastModifiedDate": "2024-07-02T15:30:00.000Z",
-              "status": "approved",
               "type": "checking",
               "use": "credit",
               "nameOnAccount": "Jane Doe",
               "paymentMethods": [
                 {
+                  "type": "ach",
                   "value": {
                     "routingNumber": "123456789",
                     "accountNumber": "1234567890"
-                  },
-                  "type": "ach"
+                  }
                 }
               ],
               "metadata": {
                 "yourCustomField": "abc123"
-              },
-              "links": [
-                {
-                  "rel": "parent",
-                  "method": "get",
-                  "href": "https://api.payroc.com/v1/funding-recipients/234"
-                }
-              ]
+              }
             }
             """;
 
@@ -80,19 +72,20 @@ public class CreateAccountTest : BaseMockServerTest
                 IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
                 Body = new FundingAccount
                 {
-                    Type = FundingAccountType.Checking,
+                    Type = FundingAccountType.Savings,
                     Use = FundingAccountUse.Credit,
-                    NameOnAccount = "Jane Doe",
+                    NameOnAccount = "Fred Nerk",
                     PaymentMethods = new List<PaymentMethodsItem>()
                     {
                         new PaymentMethodsItem(new PaymentMethodsItem.Ach(new PaymentMethodAch())),
                     },
+                    Metadata = new Dictionary<string, string>()
+                    {
+                        { "responsiblePerson", "Jane Doe" },
+                    },
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<FundingAccount>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

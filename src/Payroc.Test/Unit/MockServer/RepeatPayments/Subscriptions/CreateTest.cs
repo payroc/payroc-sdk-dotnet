@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using Payroc;
-using Payroc.Core;
 using Payroc.RepeatPayments.Subscriptions;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.RepeatPayments.Subscriptions;
 
@@ -17,8 +17,8 @@ public class CreateTest : BaseMockServerTest
               "subscriptionId": "SubRef7654",
               "paymentPlanId": "PlanRef8765",
               "paymentMethod": {
-                "token": "1234567890123456789",
-                "type": "secureToken"
+                "type": "secureToken",
+                "token": "1234567890123456789"
               },
               "name": "Premium Club",
               "description": "Premium Club subscription",
@@ -85,15 +85,12 @@ public class CreateTest : BaseMockServerTest
                     "amount": 25
                   },
                   "surcharge": {
-                    "bypass": false,
-                    "amount": 217,
-                    "percentage": 5
+                    "bypass": false
                   },
                   "taxes": [
                     {
                       "name": "Sales Tax",
-                      "rate": 5,
-                      "amount": 190
+                      "rate": 5
                     }
                   ]
                 }
@@ -107,15 +104,12 @@ public class CreateTest : BaseMockServerTest
                     "amount": 25
                   },
                   "surcharge": {
-                    "bypass": false,
-                    "amount": 217,
-                    "percentage": 5
+                    "bypass": false
                   },
                   "taxes": [
                     {
                       "name": "Sales Tax",
-                      "rate": 5,
-                      "amount": 190
+                      "rate": 5
                     }
                   ]
                 }
@@ -202,10 +196,7 @@ public class CreateTest : BaseMockServerTest
                 PauseCollectionFor = 0,
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Subscription>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -216,8 +207,8 @@ public class CreateTest : BaseMockServerTest
               "subscriptionId": "SubRef7654",
               "paymentPlanId": "PlanRef8765",
               "paymentMethod": {
-                "token": "1234567890123456789",
-                "type": "secureToken"
+                "type": "secureToken",
+                "token": "1234567890123456789"
               },
               "name": "Premium Club",
               "description": "Premium Club subscription",
@@ -284,15 +275,12 @@ public class CreateTest : BaseMockServerTest
                     "amount": 217
                   },
                   "surcharge": {
-                    "bypass": false,
-                    "amount": 50,
-                    "percentage": 2
+                    "bypass": false
                   },
                   "taxes": [
                     {
                       "name": "Sales Tax",
-                      "rate": 5,
-                      "amount": 190
+                      "rate": 5
                     }
                   ]
                 }
@@ -306,15 +294,12 @@ public class CreateTest : BaseMockServerTest
                     "amount": 217
                   },
                   "surcharge": {
-                    "bypass": false,
-                    "amount": 50,
-                    "percentage": 2
+                    "bypass": false
                   },
                   "taxes": [
                     {
                       "name": "Sales Tax",
-                      "rate": 5,
-                      "amount": 190
+                      "rate": 5
                     }
                   ]
                 }
@@ -401,9 +386,6 @@ public class CreateTest : BaseMockServerTest
                 PauseCollectionFor = 0,
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Subscription>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -18,7 +18,13 @@ public record CustomerAdjustment : IJsonOnDeserialized
     public Shipping? ShippingAddress { get; set; }
 
     /// <summary>
-    /// Customer's contact information.
+    /// Array of polymorphic objects, which contain contact information.
+    ///
+    /// The value of the type parameter determines which variant you should use:
+    /// -	`email` - Email address
+    /// -	`phone` - Phone number
+    /// -	`mobile` - Mobile number
+    /// -	`fax` - Fax number
     /// </summary>
     [JsonPropertyName("contactMethods")]
     public IEnumerable<ContactMethod>? ContactMethods { get; set; }

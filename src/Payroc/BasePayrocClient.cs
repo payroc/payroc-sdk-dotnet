@@ -1,4 +1,5 @@
 using Payroc.ApplePaySessions;
+using Payroc.Attachments;
 using Payroc.Auth;
 using Payroc.BankTransferPayments;
 using Payroc.Boarding;
@@ -16,18 +17,19 @@ using Payroc.Tokenization;
 
 namespace Payroc;
 
-public partial class BasePayrocClient
+public partial class BasePayrocClient : IBasePayrocClient
 {
     private readonly RawClient _client;
 
-    public BasePayrocClient(
-        string apiKey,
-        ClientOptions? clientOptions = null
-    )
+    public BasePayrocClient(string apiKey, ClientOptions? clientOptions = null)
     {
         try
         {
-            var defaultHeaders = new Headers(
+            clientOptions ??= new ClientOptions();
+            clientOptions.ExceptionHandler = new ExceptionHandler(
+                new PayrocExceptionInterceptor(clientOptions)
+            );
+            var platformHeaders = new Headers(
                 new Dictionary<string, string>()
                 {
                     { "X-Fern-Language", "C#" },
@@ -35,29 +37,29 @@ public partial class BasePayrocClient
                     { "X-Fern-SDK-Version", Version.Current },
                 }
             );
-            clientOptions ??= new ClientOptions();
-            clientOptions.ExceptionHandler = new ExceptionHandler(new PayrocExceptionInterceptor(clientOptions));
-            foreach (var header in defaultHeaders)
+            foreach (var header in platformHeaders)
             {
                 if (!clientOptions.Headers.ContainsKey(header.Key))
                 {
                     clientOptions.Headers[header.Key] = header.Value;
                 }
             }
+            var clientOptionsWithAuth = clientOptions.Clone();
             var inferredAuthProvider = new InferredAuthTokenProvider(
                 apiKey,
-                new AuthClient(new RawClient(clientOptions.Clone()))
+                new AuthClient(new RawClient(clientOptions))
             );
-            clientOptions.Headers["Authorization"] =
-                new Func<ValueTask<string>>(async () =>
+            clientOptionsWithAuth.Headers["Authorization"] =
+                new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
                     (await inferredAuthProvider.GetAuthHeadersAsync().ConfigureAwait(false))
                         .First()
                         .Value
                 );
-            _client = new RawClient(clientOptions);
+            _client = new RawClient(clientOptionsWithAuth);
             PaymentLinks = new PaymentLinksClient(_client);
             HostedFields = new HostedFieldsClient(_client);
             ApplePaySessions = new ApplePaySessionsClient(_client);
+            Attachments = new AttachmentsClient(_client);
             Auth = new AuthClient(_client);
             Funding = new FundingClient(_client);
             BankTransferPayments = new BankTransferPaymentsClient(_client);
@@ -72,37 +74,39 @@ public partial class BasePayrocClient
         }
         catch (Exception ex)
         {
-            var interceptor = new PayrocExceptionInterceptor(clientOptions ?? new ClientOptions());
+            var interceptor = new PayrocExceptionInterceptor(clientOptions);
             interceptor.Intercept(ex);
             throw;
         }
     }
 
-    public PaymentLinksClient PaymentLinks { get; }
+    public IPaymentLinksClient PaymentLinks { get; }
 
-    public HostedFieldsClient HostedFields { get; }
+    public IHostedFieldsClient HostedFields { get; }
 
-    public ApplePaySessionsClient ApplePaySessions { get; }
+    public IApplePaySessionsClient ApplePaySessions { get; }
 
-    public AuthClient Auth { get; }
+    public IAttachmentsClient Attachments { get; }
 
-    public FundingClient Funding { get; }
+    public IAuthClient Auth { get; }
 
-    public BankTransferPaymentsClient BankTransferPayments { get; }
+    public IFundingClient Funding { get; }
 
-    public BoardingClient Boarding { get; }
+    public IBankTransferPaymentsClient BankTransferPayments { get; }
 
-    public CardPaymentsClient CardPayments { get; }
+    public IBoardingClient Boarding { get; }
 
-    public NotificationsClient Notifications { get; }
+    public ICardPaymentsClient CardPayments { get; }
 
-    public PaymentFeaturesClient PaymentFeatures { get; }
+    public INotificationsClient Notifications { get; }
 
-    public PayrocCloudClient PayrocCloud { get; }
+    public IPaymentFeaturesClient PaymentFeatures { get; }
 
-    public RepeatPaymentsClient RepeatPayments { get; }
+    public IPayrocCloudClient PayrocCloud { get; }
 
-    public ReportingClient Reporting { get; }
+    public IRepeatPaymentsClient RepeatPayments { get; }
 
-    public TokenizationClient Tokenization { get; }
+    public IReportingClient Reporting { get; }
+
+    public ITokenizationClient Tokenization { get; }
 }

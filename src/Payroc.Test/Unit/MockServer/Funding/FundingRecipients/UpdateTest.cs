@@ -14,10 +14,12 @@ public class UpdateTest : BaseMockServerTest
         const string requestJson = """
             {
               "recipientType": "privateCorporation",
-              "taxId": "123456789",
-              "doingBusinessAs": "doingBusinessAs",
+              "taxId": "12-3456789",
+              "doingBusinessAs": "Doe Hot Dogs",
               "address": {
-                "address1": "1 Example Ave.",
+                "address1": "2 Example Ave.",
+                "address2": "Example Address Line 2",
+                "address3": "Example Address Line 3",
                 "city": "Chicago",
                 "state": "Illinois",
                 "country": "US",
@@ -25,10 +27,17 @@ public class UpdateTest : BaseMockServerTest
               },
               "contactMethods": [
                 {
-                  "value": "jane.doe@example.com",
-                  "type": "email"
+                  "type": "email",
+                  "value": "jane.doe@example.com"
+                },
+                {
+                  "type": "phone",
+                  "value": "2025550164"
                 }
-              ]
+              ],
+              "metadata": {
+                "responsiblePerson": "Jane Doe"
+              }
             }
             """;
 
@@ -51,11 +60,13 @@ public class UpdateTest : BaseMockServerTest
                     Body = new FundingRecipient
                     {
                         RecipientType = FundingRecipientRecipientType.PrivateCorporation,
-                        TaxId = "123456789",
-                        DoingBusinessAs = "doingBusinessAs",
+                        TaxId = "12-3456789",
+                        DoingBusinessAs = "Doe Hot Dogs",
                         Address = new Address
                         {
-                            Address1 = "1 Example Ave.",
+                            Address1 = "2 Example Ave.",
+                            Address2 = "Example Address Line 2",
+                            Address3 = "Example Address Line 3",
                             City = "Chicago",
                             State = "Illinois",
                             Country = "US",
@@ -68,6 +79,42 @@ public class UpdateTest : BaseMockServerTest
                                     new ContactMethodEmail { Value = "jane.doe@example.com" }
                                 )
                             ),
+                            new ContactMethod(
+                                new ContactMethod.Phone(
+                                    new ContactMethodPhone { Value = "2025550164" }
+                                )
+                            ),
+                        },
+                        Metadata = new Dictionary<string, string>()
+                        {
+                            { "responsiblePerson", "Jane Doe" },
+                        },
+                        Owners = new List<FundingRecipientOwnersItem>()
+                        {
+                            new FundingRecipientOwnersItem
+                            {
+                                OwnerId = 12346,
+                                Link = new FundingRecipientOwnersItemLink
+                                {
+                                    Rel = "owner",
+                                    Href = "https://api.payroc.com/v1/owners/12346",
+                                    Method = "get",
+                                },
+                            },
+                        },
+                        FundingAccounts = new List<FundingRecipientFundingAccountsItem>()
+                        {
+                            new FundingRecipientFundingAccountsItem
+                            {
+                                FundingAccountId = 124,
+                                Status = FundingRecipientFundingAccountsItemStatus.Approved,
+                                Link = new FundingRecipientFundingAccountsItemLink
+                                {
+                                    Rel = "fundingAccount",
+                                    Href = "https://api.payroc.com/v1/funding-accounts/124",
+                                    Method = "get",
+                                },
+                            },
                         },
                     },
                 }

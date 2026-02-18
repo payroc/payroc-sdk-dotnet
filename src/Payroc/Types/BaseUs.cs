@@ -45,7 +45,11 @@ public record BaseUs : IJsonOnDeserialized
     public int? MerchantAdvantage { get; set; }
 
     /// <summary>
-    /// Object that contains information about the Platinum Security fee.
+    /// Polymorphic object that contains billing details for Platinum Security.
+    ///
+    /// The value of the billingFrequency field determines which variant you should use:
+    /// -	`monthly` - We collect the fee for Platinum Security each month.
+    /// -	`annual` - We collect the fee for Platinum Security each year.
     /// </summary>
     [JsonPropertyName("platinumSecurity")]
     public BaseUsPlatinumSecurity? PlatinumSecurity { get; set; }

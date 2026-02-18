@@ -6,7 +6,7 @@ using Payroc.Funding.FundingRecipients;
 
 namespace Payroc.Funding;
 
-public partial class FundingClient
+public partial class FundingClient : IFundingClient
 {
     private RawClient _client;
 
@@ -27,11 +27,11 @@ public partial class FundingClient
         }
     }
 
-    public FundingRecipientsClient FundingRecipients { get; }
+    public IFundingRecipientsClient FundingRecipients { get; }
 
-    public FundingAccountsClient FundingAccounts { get; }
+    public IFundingAccountsClient FundingAccounts { get; }
 
-    public FundingInstructionsClient FundingInstructions { get; }
+    public IFundingInstructionsClient FundingInstructions { get; }
 
-    public FundingActivityClient FundingActivity { get; }
+    public IFundingActivityClient FundingActivity { get; }
 }

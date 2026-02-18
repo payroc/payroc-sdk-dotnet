@@ -20,7 +20,7 @@ public class RetrieveAchDepositTests
         Assert.That(response.CurrentPage.Items.Count, Is.EqualTo(1));
         var retrieveRequest = new RetrieveAchDepositSettlementRequest
         {
-            AchDepositId = response.CurrentPage.Items[0].AchDepositId ?? 0
+            AchDepositId = response.CurrentPage.Items.FirstOrDefault()?.AchDepositId ?? 0
         };
         
         var retrieveResponse = await client.Reporting.Settlement.RetrieveAchDepositAsync(retrieveRequest);

@@ -36,7 +36,7 @@ public class PayrocPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem>
     private HttpRequestMessage? _previousPageRequest;
 
     private readonly PayrocPagerContext _context;
-    private readonly Func<string>? _authHeaderFn;
+    private readonly HeaderValue? _authHeader;
 
     public bool HasNextPage { get; private set; }
     public bool HasPreviousPage { get; private set; }
@@ -60,10 +60,7 @@ public class PayrocPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem>
 
         if (context.ClientOptions.Headers.TryGetValue("Authorization", out var header))
         {
-            if (header.IsT1)
-            {
-                _authHeaderFn = header.AsT1;
-            }
+            _authHeader = header;
         }
     }
 
@@ -96,13 +93,14 @@ public class PayrocPager<TItem> : BiPager<TItem>, IAsyncEnumerable<TItem>
         CancellationToken cancellationToken = default
     )
     {
-        if (_authHeaderFn is not null)
+        if (_authHeader is not null)
         {
             if(request.Headers.Contains("Authorization"))
             {
                 request.Headers.Remove("Authorization");
             }
-            request.Headers.Add("Authorization", _authHeaderFn());
+            var authValue = await _authHeader.ResolveAsync().ConfigureAwait(false);
+            request.Headers.Add("Authorization", authValue);
         }
         var response = await _context.SendRequest(request, cancellationToken).ConfigureAwait(false);
         var (nextPageRequest, hasNextPage, previousPageRequest, hasPreviousPage, page) =

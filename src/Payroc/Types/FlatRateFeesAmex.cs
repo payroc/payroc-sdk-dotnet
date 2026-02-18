@@ -9,7 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains the fees for American Express transactions.
+/// Polymorphic object that contains fees for American Express transactions.
 /// </summary>
 [JsonConverter(typeof(FlatRateFeesAmex.JsonConverter))]
 [Serializable]

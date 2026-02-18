@@ -4,7 +4,7 @@ using Payroc.RepeatPayments.Subscriptions;
 
 namespace Payroc.RepeatPayments;
 
-public partial class RepeatPaymentsClient
+public partial class RepeatPaymentsClient : IRepeatPaymentsClient
 {
     private RawClient _client;
 
@@ -23,7 +23,7 @@ public partial class RepeatPaymentsClient
         }
     }
 
-    public PaymentPlansClient PaymentPlans { get; }
+    public IPaymentPlansClient PaymentPlans { get; }
 
-    public SubscriptionsClient Subscriptions { get; }
+    public ISubscriptionsClient Subscriptions { get; }
 }

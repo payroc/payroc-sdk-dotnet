@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
-using Payroc.Core;
 using Payroc.Reporting.Settlement;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Reporting.Settlement;
 
@@ -59,9 +58,6 @@ public class RetrieveAchDepositTest : BaseMockServerTest
         var response = await Client.Reporting.Settlement.RetrieveAchDepositAsync(
             new RetrieveAchDepositSettlementRequest { AchDepositId = 1 }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<AchDeposit>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

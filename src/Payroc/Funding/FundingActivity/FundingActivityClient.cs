@@ -4,7 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.Funding.FundingActivity;
 
-public partial class FundingActivityClient
+public partial class FundingActivityClient : IFundingActivityClient
 {
     private RawClient _client;
 
@@ -21,28 +21,9 @@ public partial class FundingActivityClient
         }
     }
 
-    /// <summary>
-    /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of funding balances available for each merchant linked to your account.
-    ///
-    /// Use query parameters to filter the list of results we return, for example, to search for the funding balance for a specific merchant.
-    ///
-    /// Our gateway returns the following information about each merchant in the list:
-    /// - Total funds for the merchant.
-    /// - Available funds that you can use for funding instructions.
-    /// - Pending funds that we have not yet sent to funding accounts.
-    /// </summary>
-    /// <example><code>
-    /// await client.Funding.FundingActivity.RetrieveBalanceAsync(
-    ///     new RetrieveBalanceFundingActivityRequest
-    ///     {
-    ///         Before = "2571",
-    ///         After = "8516",
-    ///         Limit = 1,
-    ///         MerchantId = "4525644354",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<RetrieveBalanceFundingActivityResponse> RetrieveBalanceAsync(
+    private async Task<
+        WithRawResponse<RetrieveBalanceFundingActivityResponse>
+    > RetrieveBalanceAsyncCore(
         RetrieveBalanceFundingActivityRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -51,23 +32,19 @@ public partial class FundingActivityClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                if (request.Before != null)
-                {
-                    _query["before"] = request.Before;
-                }
-                if (request.After != null)
-                {
-                    _query["after"] = request.After;
-                }
-                if (request.Limit != null)
-                {
-                    _query["limit"] = request.Limit.Value.ToString();
-                }
-                if (request.MerchantId != null)
-                {
-                    _query["merchantId"] = request.MerchantId;
-                }
+                var _queryString = new Payroc.Core.QueryStringBuilder.Builder(capacity: 4)
+                    .Add("before", request.Before)
+                    .Add("after", request.After)
+                    .Add("limit", request.Limit)
+                    .Add("merchantId", request.MerchantId)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -75,7 +52,8 @@ public partial class FundingActivityClient
                             BaseUrl = _client.Options.Environment.Api,
                             Method = HttpMethod.Get,
                             Path = "funding-balance",
-                            Query = _query,
+                            QueryString = _queryString,
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -86,16 +64,33 @@ public partial class FundingActivityClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<RetrieveBalanceFundingActivityResponse>(
-                            responseBody
-                        )!;
+                        var responseData =
+                            JsonUtils.Deserialize<RetrieveBalanceFundingActivityResponse>(
+                                responseBody
+                            )!;
+                        return new WithRawResponse<RetrieveBalanceFundingActivityResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new PayrocException("Failed to deserialize response", e);
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
@@ -139,6 +134,38 @@ public partial class FundingActivityClient
     }
 
     /// <summary>
+    /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of funding balances available for each merchant linked to your account.
+    ///
+    /// Use query parameters to filter the list of results we return, for example, to search for the funding balance for a specific merchant.
+    ///
+    /// Our gateway returns the following information about each merchant in the list:
+    /// - Total funds for the merchant.
+    /// - Available funds that you can use for funding instructions.
+    /// - Pending funds that we have not yet sent to funding accounts.
+    /// </summary>
+    /// <example><code>
+    /// await client.Funding.FundingActivity.RetrieveBalanceAsync(
+    ///     new RetrieveBalanceFundingActivityRequest
+    ///     {
+    ///         Before = "2571",
+    ///         After = "8516",
+    ///         Limit = 1,
+    ///         MerchantId = "4525644354",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<RetrieveBalanceFundingActivityResponse> RetrieveBalanceAsync(
+        RetrieveBalanceFundingActivityRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<RetrieveBalanceFundingActivityResponse>(
+            RetrieveBalanceAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
     /// Use this method to return a [paginated](https://docs.payroc.com/api/pagination) list of activity associated with your merchants' funding balances within a specific date range.
     ///
     /// Use query parameters to filter the list of results we return, for example, to view the activity for a specific merchant's funding balance.
@@ -170,32 +197,29 @@ public partial class FundingActivityClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                _query["dateFrom"] = request.DateFrom.ToString(Constants.DateFormat);
-                _query["dateTo"] = request.DateTo.ToString(Constants.DateFormat);
-                if (request.Before != null)
-                {
-                    _query["before"] = request.Before;
-                }
-                if (request.After != null)
-                {
-                    _query["after"] = request.After;
-                }
-                if (request.Limit != null)
-                {
-                    _query["limit"] = request.Limit.Value.ToString();
-                }
-                if (request.MerchantId != null)
-                {
-                    _query["merchantId"] = request.MerchantId;
-                }
+                var _queryString = new Payroc.Core.QueryStringBuilder.Builder(capacity: 6)
+                    .Add("before", request.Before)
+                    .Add("after", request.After)
+                    .Add("limit", request.Limit)
+                    .Add("dateFrom", request.DateFrom)
+                    .Add("dateTo", request.DateTo)
+                    .Add("merchantId", request.MerchantId)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var httpRequest = await _client.CreateHttpRequestAsync(
                     new JsonRequest
                     {
                         BaseUrl = _client.Options.Environment.Api,
                         Method = HttpMethod.Get,
                         Path = "funding-activity",
-                        Query = _query,
+                        QueryString = _queryString,
+                        Headers = _headers,
                         Options = options,
                     }
                 );

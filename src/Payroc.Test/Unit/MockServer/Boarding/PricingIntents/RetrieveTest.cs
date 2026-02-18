@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
 using Payroc.Boarding.PricingIntents;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Boarding.PricingIntents;
 
@@ -26,7 +25,6 @@ public class RetrieveTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "amount": 1295,
                   "billingFrequency": "monthly"
                 },
                 "maintenance": 500,
@@ -39,14 +37,15 @@ public class RetrieveTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "interchangePlus",
                   "fees": {
                     "mastercardVisaDiscover": {
                       "volume": 1.25
                     },
                     "amex": {
+                      "type": "optBlue",
                       "volume": 1.25,
-                      "transaction": 1,
-                      "type": "optBlue"
+                      "transaction": 1
                     },
                     "pinDebit": {
                       "additionalDiscount": 1.25,
@@ -57,8 +56,7 @@ public class RetrieveTest : BaseMockServerTest
                       "enrollment": 1,
                       "creditToMerchant": 1.25
                     }
-                  },
-                  "planType": "interchangePlus"
+                  }
                 },
                 "ach": {
                   "fees": {
@@ -84,14 +82,10 @@ public class RetrieveTest : BaseMockServerTest
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
-              "id": "5",
-              "createdDate": "2024-07-02T09:00:00.000Z",
-              "lastUpdatedDate": "2024-07-02T09:00:00.000Z",
-              "status": "pendingReview",
               "key": "string",
               "metadata": {
                 "yourCustomField": "abc123"
@@ -113,9 +107,6 @@ public class RetrieveTest : BaseMockServerTest
         var response = await Client.Boarding.PricingIntents.RetrieveAsync(
             new RetrievePricingIntentsRequest { PricingIntentId = "5" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PricingIntent50>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

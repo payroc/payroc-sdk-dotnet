@@ -4,7 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.Tokenization.SingleUseTokens;
 
-public partial class SingleUseTokensClient
+public partial class SingleUseTokensClient : ISingleUseTokensClient
 {
     private RawClient _client;
 
@@ -21,48 +21,7 @@ public partial class SingleUseTokensClient
         }
     }
 
-    /// <summary>
-    /// Use this method to create a single-use token that represents a customer’s payment details.
-    ///
-    /// A single-use token expires after 30 minutes and merchants can use them only once.
-    ///
-    /// **Note:** To create a reusable permanent token, go to [Create Secure Token](https://docs.payroc.com/api/schema/tokenization/secure-tokens/create).
-    ///
-    /// In the request, send the customer’s payment details. If the request is successful, our gateway returns a token that you can use in a follow-on action, for example, [run a sale](https://docs.payroc.com/api/schema/card-payments/payments/create).
-    /// </summary>
-    /// <example><code>
-    /// await client.Tokenization.SingleUseTokens.CreateAsync(
-    ///     new SingleUseTokenRequest
-    ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-    ///         Channel = SingleUseTokenRequestChannel.Web,
-    ///         Operator = "Jane",
-    ///         Source = new SingleUseTokenRequestSource(
-    ///             new SingleUseTokenRequestSource.Card(
-    ///                 new CardPayload
-    ///                 {
-    ///                     CardDetails = new CardPayloadCardDetails(
-    ///                         new CardPayloadCardDetails.Raw(
-    ///                             new RawCardDetails
-    ///                             {
-    ///                                 Device = new Device
-    ///                                 {
-    ///                                     Model = DeviceModel.BbposChp,
-    ///                                     SerialNumber = "1850010868",
-    ///                                 },
-    ///                                 RawData =
-    ///                                     "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
-    ///                             }
-    ///                         )
-    ///                     ),
-    ///                 }
-    ///             )
-    ///         ),
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<SingleUseToken> CreateAsync(
+    private async Task<WithRawResponse<SingleUseToken>> CreateAsyncCore(
         SingleUseTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -71,12 +30,13 @@ public partial class SingleUseTokensClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _headers = new Headers(
-                    new Dictionary<string, string>()
-                    {
-                        { "Idempotency-Key", request.IdempotencyKey },
-                    }
-                );
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add("Idempotency-Key", request.IdempotencyKey)
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -100,14 +60,30 @@ public partial class SingleUseTokensClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<SingleUseToken>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<SingleUseToken>(responseBody)!;
+                        return new WithRawResponse<SingleUseToken>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new PayrocException("Failed to deserialize response", e);
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
@@ -156,5 +132,57 @@ public partial class SingleUseTokensClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Use this method to create a single-use token that represents a customer’s payment details.
+    ///
+    /// A single-use token expires after 30 minutes and merchants can use them only once.
+    ///
+    /// **Note:** To create a reusable permanent token, go to [Create Secure Token](https://docs.payroc.com/api/schema/tokenization/secure-tokens/create).
+    ///
+    /// In the request, send the customer’s payment details. If the request is successful, our gateway returns a token that you can use in a follow-on action, for example, [run a sale](https://docs.payroc.com/api/schema/card-payments/payments/create).
+    /// </summary>
+    /// <example><code>
+    /// await client.Tokenization.SingleUseTokens.CreateAsync(
+    ///     new SingleUseTokenRequest
+    ///     {
+    ///         ProcessingTerminalId = "1234001",
+    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         Channel = SingleUseTokenRequestChannel.Web,
+    ///         Operator = "Jane",
+    ///         Source = new SingleUseTokenRequestSource(
+    ///             new SingleUseTokenRequestSource.Card(
+    ///                 new CardPayload
+    ///                 {
+    ///                     CardDetails = new CardPayloadCardDetails(
+    ///                         new CardPayloadCardDetails.Raw(
+    ///                             new RawCardDetails
+    ///                             {
+    ///                                 Device = new Device
+    ///                                 {
+    ///                                     Model = DeviceModel.BbposChp,
+    ///                                     SerialNumber = "1850010868",
+    ///                                 },
+    ///                                 RawData =
+    ///                                     "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
+    ///                             }
+    ///                         )
+    ///                     ),
+    ///                 }
+    ///             )
+    ///         ),
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<SingleUseToken> CreateAsync(
+        SingleUseTokenRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<SingleUseToken>(
+            CreateAsyncCore(request, options, cancellationToken)
+        );
     }
 }
