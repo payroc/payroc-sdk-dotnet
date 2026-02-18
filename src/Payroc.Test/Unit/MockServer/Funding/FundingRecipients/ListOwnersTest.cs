@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
-using Payroc.Core;
 using Payroc.Funding.FundingRecipients;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Funding.FundingRecipients;
 
@@ -15,7 +14,6 @@ public class ListOwnersTest : BaseMockServerTest
         const string mockResponse = """
             [
               {
-                "ownerId": 4564,
                 "firstName": "Jane",
                 "middleName": "Helen",
                 "lastName": "Doe",
@@ -37,8 +35,8 @@ public class ListOwnersTest : BaseMockServerTest
                 ],
                 "contactMethods": [
                   {
-                    "value": "jane.doe@example.com",
-                    "type": "email"
+                    "type": "email",
+                    "value": "jane.doe@example.com"
                   }
                 ],
                 "relationship": {
@@ -68,9 +66,6 @@ public class ListOwnersTest : BaseMockServerTest
         var response = await Client.Funding.FundingRecipients.ListOwnersAsync(
             new ListFundingRecipientOwnersRequest { RecipientId = 1 }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Owner>>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

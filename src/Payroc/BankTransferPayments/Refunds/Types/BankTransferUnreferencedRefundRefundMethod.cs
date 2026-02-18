@@ -9,7 +9,11 @@ using Payroc.Core;
 namespace Payroc.BankTransferPayments.Refunds;
 
 /// <summary>
-/// Object that contains information about how the merchant refunds the customer.
+/// Polymorphic object that contains payment details for the refund.
+///
+/// The value of the type parameter determines which variant you should use:
+/// -	`ach` - Automated Clearing House (ACH) details
+/// -	`secureToken` - Secure token details
 /// </summary>
 [JsonConverter(typeof(BankTransferUnreferencedRefundRefundMethod.JsonConverter))]
 [Serializable]

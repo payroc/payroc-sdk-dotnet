@@ -4,7 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.PaymentFeatures.Cards;
 
-public partial class CardsClient
+public partial class CardsClient : ICardsClient
 {
     private RawClient _client;
 
@@ -19,6 +19,461 @@ public partial class CardsClient
             client.Options.ExceptionHandler?.CaptureException(ex);
             throw;
         }
+    }
+
+    private async Task<WithRawResponse<CardVerificationResult>> VerifyCardAsyncCore(
+        CardVerificationRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add("Idempotency-Key", request.IdempotencyKey)
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.Environment.Api,
+                            Method = HttpMethod.Post,
+                            Path = "cards/verify",
+                            Body = request,
+                            Headers = _headers,
+                            ContentType = "application/json",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var responseData = JsonUtils.Deserialize<CardVerificationResult>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<CardVerificationResult>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
+                    }
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestError(
+                                    JsonUtils.Deserialize<FourHundred>(responseBody)
+                                );
+                            case 401:
+                                throw new UnauthorizedError(
+                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                );
+                            case 403:
+                                throw new ForbiddenError(
+                                    JsonUtils.Deserialize<object>(responseBody)
+                                );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 406:
+                                throw new NotAcceptableError(
+                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 409:
+                                throw new ConflictError(
+                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
+                                );
+                            case 415:
+                                throw new UnsupportedMediaTypeError(
+                                    JsonUtils.Deserialize<FourHundredFifteen>(responseBody)
+                                );
+                            case 500:
+                                throw new InternalServerError(
+                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new PayrocApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    private async Task<WithRawResponse<Balance>> ViewEbtBalanceAsyncCore(
+        BalanceInquiry request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.Environment.Api,
+                            Method = HttpMethod.Post,
+                            Path = "cards/balance",
+                            Body = request,
+                            Headers = _headers,
+                            ContentType = "application/json",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var responseData = JsonUtils.Deserialize<Balance>(responseBody)!;
+                        return new WithRawResponse<Balance>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
+                    }
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestError(
+                                    JsonUtils.Deserialize<FourHundred>(responseBody)
+                                );
+                            case 401:
+                                throw new UnauthorizedError(
+                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                );
+                            case 403:
+                                throw new ForbiddenError(
+                                    JsonUtils.Deserialize<object>(responseBody)
+                                );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 406:
+                                throw new NotAcceptableError(
+                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 409:
+                                throw new ConflictError(
+                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
+                                );
+                            case 415:
+                                throw new UnsupportedMediaTypeError(
+                                    JsonUtils.Deserialize<FourHundredFifteen>(responseBody)
+                                );
+                            case 500:
+                                throw new InternalServerError(
+                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new PayrocApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    private async Task<WithRawResponse<CardInfo>> LookupBinAsyncCore(
+        BinLookup request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.Environment.Api,
+                            Method = HttpMethod.Post,
+                            Path = "cards/bin-lookup",
+                            Body = request,
+                            Headers = _headers,
+                            ContentType = "application/json",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var responseData = JsonUtils.Deserialize<CardInfo>(responseBody)!;
+                        return new WithRawResponse<CardInfo>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
+                    }
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestError(
+                                    JsonUtils.Deserialize<FourHundred>(responseBody)
+                                );
+                            case 401:
+                                throw new UnauthorizedError(
+                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                );
+                            case 403:
+                                throw new ForbiddenError(
+                                    JsonUtils.Deserialize<object>(responseBody)
+                                );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 406:
+                                throw new NotAcceptableError(
+                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 409:
+                                throw new ConflictError(
+                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
+                                );
+                            case 415:
+                                throw new UnsupportedMediaTypeError(
+                                    JsonUtils.Deserialize<FourHundredFifteen>(responseBody)
+                                );
+                            case 500:
+                                throw new InternalServerError(
+                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new PayrocApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    private async Task<WithRawResponse<FxRate>> RetrieveFxRatesAsyncCore(
+        FxRateInquiry request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.Environment.Api,
+                            Method = HttpMethod.Post,
+                            Path = "fx-rates",
+                            Body = request,
+                            Headers = _headers,
+                            ContentType = "application/json",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var responseData = JsonUtils.Deserialize<FxRate>(responseBody)!;
+                        return new WithRawResponse<FxRate>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
+                    }
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestError(
+                                    JsonUtils.Deserialize<FourHundred>(responseBody)
+                                );
+                            case 401:
+                                throw new UnauthorizedError(
+                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                );
+                            case 403:
+                                throw new ForbiddenError(
+                                    JsonUtils.Deserialize<object>(responseBody)
+                                );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 406:
+                                throw new NotAcceptableError(
+                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 409:
+                                throw new ConflictError(
+                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
+                                );
+                            case 415:
+                                throw new UnsupportedMediaTypeError(
+                                    JsonUtils.Deserialize<FourHundredFifteen>(responseBody)
+                                );
+                            case 500:
+                                throw new InternalServerError(
+                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new PayrocApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <summary>
@@ -59,101 +514,15 @@ public partial class CardsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<CardVerificationResult> VerifyCardAsync(
+    public WithRawResponseTask<CardVerificationResult> VerifyCardAsync(
         CardVerificationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
-            {
-                var _headers = new Headers(
-                    new Dictionary<string, string>()
-                    {
-                        { "Idempotency-Key", request.IdempotencyKey },
-                    }
-                );
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.Environment.Api,
-                            Method = HttpMethod.Post,
-                            Path = "cards/verify",
-                            Body = request,
-                            Headers = _headers,
-                            ContentType = "application/json",
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<CardVerificationResult>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new PayrocException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        switch (response.StatusCode)
-                        {
-                            case 400:
-                                throw new BadRequestError(
-                                    JsonUtils.Deserialize<FourHundred>(responseBody)
-                                );
-                            case 401:
-                                throw new UnauthorizedError(
-                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
-                                );
-                            case 403:
-                                throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
-                                );
-                            case 404:
-                                throw new NotFoundError(
-                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
-                                );
-                            case 406:
-                                throw new NotAcceptableError(
-                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
-                                );
-                            case 409:
-                                throw new ConflictError(
-                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
-                                );
-                            case 415:
-                                throw new UnsupportedMediaTypeError(
-                                    JsonUtils.Deserialize<FourHundredFifteen>(responseBody)
-                                );
-                            case 500:
-                                throw new InternalServerError(
-                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
-                                );
-                        }
-                    }
-                    catch (JsonException)
-                    {
-                        // unable to map error response, throwing generic error
-                    }
-                    throw new PayrocApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
-            })
-            .ConfigureAwait(false);
+        return new WithRawResponseTask<CardVerificationResult>(
+            VerifyCardAsyncCore(request, options, cancellationToken)
+        );
     }
 
     /// <summary>
@@ -192,94 +561,15 @@ public partial class CardsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<Balance> ViewEbtBalanceAsync(
+    public WithRawResponseTask<Balance> ViewEbtBalanceAsync(
         BalanceInquiry request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
-            {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.Environment.Api,
-                            Method = HttpMethod.Post,
-                            Path = "cards/balance",
-                            Body = request,
-                            ContentType = "application/json",
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<Balance>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new PayrocException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        switch (response.StatusCode)
-                        {
-                            case 400:
-                                throw new BadRequestError(
-                                    JsonUtils.Deserialize<FourHundred>(responseBody)
-                                );
-                            case 401:
-                                throw new UnauthorizedError(
-                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
-                                );
-                            case 403:
-                                throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
-                                );
-                            case 404:
-                                throw new NotFoundError(
-                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
-                                );
-                            case 406:
-                                throw new NotAcceptableError(
-                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
-                                );
-                            case 409:
-                                throw new ConflictError(
-                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
-                                );
-                            case 415:
-                                throw new UnsupportedMediaTypeError(
-                                    JsonUtils.Deserialize<FourHundredFifteen>(responseBody)
-                                );
-                            case 500:
-                                throw new InternalServerError(
-                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
-                                );
-                        }
-                    }
-                    catch (JsonException)
-                    {
-                        // unable to map error response, throwing generic error
-                    }
-                    throw new PayrocApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
-            })
-            .ConfigureAwait(false);
+        return new WithRawResponseTask<Balance>(
+            ViewEbtBalanceAsyncCore(request, options, cancellationToken)
+        );
     }
 
     /// <summary>
@@ -320,94 +610,15 @@ public partial class CardsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<CardInfo> LookupBinAsync(
+    public WithRawResponseTask<CardInfo> LookupBinAsync(
         BinLookup request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
-            {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.Environment.Api,
-                            Method = HttpMethod.Post,
-                            Path = "cards/bin-lookup",
-                            Body = request,
-                            ContentType = "application/json",
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<CardInfo>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new PayrocException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        switch (response.StatusCode)
-                        {
-                            case 400:
-                                throw new BadRequestError(
-                                    JsonUtils.Deserialize<FourHundred>(responseBody)
-                                );
-                            case 401:
-                                throw new UnauthorizedError(
-                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
-                                );
-                            case 403:
-                                throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
-                                );
-                            case 404:
-                                throw new NotFoundError(
-                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
-                                );
-                            case 406:
-                                throw new NotAcceptableError(
-                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
-                                );
-                            case 409:
-                                throw new ConflictError(
-                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
-                                );
-                            case 415:
-                                throw new UnsupportedMediaTypeError(
-                                    JsonUtils.Deserialize<FourHundredFifteen>(responseBody)
-                                );
-                            case 500:
-                                throw new InternalServerError(
-                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
-                                );
-                        }
-                    }
-                    catch (JsonException)
-                    {
-                        // unable to map error response, throwing generic error
-                    }
-                    throw new PayrocApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
-            })
-            .ConfigureAwait(false);
+        return new WithRawResponseTask<CardInfo>(
+            LookupBinAsyncCore(request, options, cancellationToken)
+        );
     }
 
     /// <summary>
@@ -461,93 +672,14 @@ public partial class CardsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<FxRate> RetrieveFxRatesAsync(
+    public WithRawResponseTask<FxRate> RetrieveFxRatesAsync(
         FxRateInquiry request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
-            {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.Environment.Api,
-                            Method = HttpMethod.Post,
-                            Path = "fx-rates",
-                            Body = request,
-                            ContentType = "application/json",
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<FxRate>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new PayrocException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        switch (response.StatusCode)
-                        {
-                            case 400:
-                                throw new BadRequestError(
-                                    JsonUtils.Deserialize<FourHundred>(responseBody)
-                                );
-                            case 401:
-                                throw new UnauthorizedError(
-                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
-                                );
-                            case 403:
-                                throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
-                                );
-                            case 404:
-                                throw new NotFoundError(
-                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
-                                );
-                            case 406:
-                                throw new NotAcceptableError(
-                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
-                                );
-                            case 409:
-                                throw new ConflictError(
-                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
-                                );
-                            case 415:
-                                throw new UnsupportedMediaTypeError(
-                                    JsonUtils.Deserialize<FourHundredFifteen>(responseBody)
-                                );
-                            case 500:
-                                throw new InternalServerError(
-                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
-                                );
-                        }
-                    }
-                    catch (JsonException)
-                    {
-                        // unable to map error response, throwing generic error
-                    }
-                    throw new PayrocApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
-            })
-            .ConfigureAwait(false);
+        return new WithRawResponseTask<FxRate>(
+            RetrieveFxRatesAsyncCore(request, options, cancellationToken)
+        );
     }
 }

@@ -1,7 +1,6 @@
 using NUnit.Framework;
-using Payroc;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 using Payroc.Tokenization.SecureTokens;
 
 namespace Payroc.Test.Unit.MockServer.Tokenization.SecureTokens;
@@ -45,16 +44,17 @@ public class RetrieveTest : BaseMockServerTest
                 },
                 "contactMethods": [
                   {
-                    "value": "jane.doe@example.com",
-                    "type": "email"
+                    "type": "email",
+                    "value": "jane.doe@example.com"
                   }
                 ],
                 "notificationLanguage": "en"
               },
               "source": {
+                "type": "card",
                 "cardholderName": "Sarah Hazel Hopper",
                 "cardNumber": "4539858876047062",
-                "expiryDate": "1225",
+                "expiryDate": "1230",
                 "cardType": "cardType",
                 "currency": "AED",
                 "debit": true,
@@ -63,8 +63,7 @@ public class RetrieveTest : BaseMockServerTest
                   "amount": 87,
                   "percentage": 3,
                   "disclosure": "A 3% surcharge is applied to cover processing fees."
-                },
-                "type": "card"
+                }
               },
               "token": "296753123456",
               "status": "notValidated",
@@ -100,10 +99,6 @@ public class RetrieveTest : BaseMockServerTest
                 SecureTokenId = "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SecureTokenWithAccountType>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

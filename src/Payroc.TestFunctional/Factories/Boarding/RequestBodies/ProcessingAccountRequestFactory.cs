@@ -76,7 +76,7 @@ public class ProcessingAccountRequestFactory
             {
                 TransactionAmounts = new() { Average = 5000, Highest = 10000 },
                 MonthlyAmounts = new() { Average = 50000, Highest = 100000 },
-                VolumeBreakdown = new() {CardPresent = 1, MailOrTelephone = 3, Ecommerce = 20 },
+                VolumeBreakdown = new() { CardPresent = 77, MailOrTelephone = 3, Ecommerce = 20 },
                 IsSeasonal = false,
                 CardAcceptance = new()
                 {

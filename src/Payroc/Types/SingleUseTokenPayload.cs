@@ -28,6 +28,13 @@ public record SingleUseTokenPayload : IJsonOnDeserialized
     [JsonPropertyName("token")]
     public required string Token { get; set; }
 
+    /// <summary>
+    /// Polymorphic object that contains information about a customer's PIN.
+    ///
+    /// The value of the dataFormat parameter determines which variant you should use:
+    /// - `dukpt` - PIN information is encrypted.
+    /// - `raw` - PIN information is unencrypted.
+    /// </summary>
     [JsonPropertyName("pinDetails")]
     public SingleUseTokenPayloadPinDetails? PinDetails { get; set; }
 

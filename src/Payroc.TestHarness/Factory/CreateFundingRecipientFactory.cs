@@ -1,4 +1,4 @@
-﻿// TODO: Re-instate once Boarding and Funding are available in SDK again
+// TODO: Re-instate once Boarding and Funding are available in SDK again
 /*
 using Payroc.Funding.FundingRecipients;
 

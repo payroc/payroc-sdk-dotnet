@@ -29,7 +29,13 @@ public record BankTransferPaymentRequest
     public SchemasCredentialOnFile? CredentialOnFile { get; set; }
 
     /// <summary>
-    /// Object that contains information about the customer's payment details.
+    /// Polymorphic object that contains payment detail information.
+    ///
+    /// The value of the type parameter determines which variant you should use:
+    /// -	`ach` - Automated Clearing House (ACH) details
+    /// -	`pad` - Pre-authorized debit (PAD) details
+    /// -	`secureToken` - Secure token details
+    /// -	`singleUseToken` - Single-use token details
     /// </summary>
     [JsonPropertyName("paymentMethod")]
     public required BankTransferPaymentRequestPaymentMethod PaymentMethod { get; set; }

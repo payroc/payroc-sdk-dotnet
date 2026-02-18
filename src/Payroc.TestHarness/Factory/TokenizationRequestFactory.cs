@@ -1,4 +1,4 @@
-﻿using Payroc.Tokenization.SecureTokens;
+using Payroc.Tokenization.SecureTokens;
 
 namespace Payroc.TestHarness.Factory;
 

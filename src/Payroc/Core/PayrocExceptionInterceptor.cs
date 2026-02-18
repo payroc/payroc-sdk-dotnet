@@ -20,8 +20,10 @@ public class PayrocExceptionInterceptor : IExceptionInterceptor
         "token:",
     ];
 
-    public PayrocExceptionInterceptor(ClientOptions clientOptions)
+    public PayrocExceptionInterceptor(ClientOptions? clientOptions)
     {
+        clientOptions ??= new ClientOptions();
+
         if (!clientOptions.Telemetry)
         {
             return;

@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
 using Payroc.Boarding.Owners;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Boarding.Owners;
 
@@ -14,7 +13,6 @@ public class RetrieveTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "ownerId": 4564,
               "firstName": "Jane",
               "middleName": "Helen",
               "lastName": "Doe",
@@ -36,8 +34,8 @@ public class RetrieveTest : BaseMockServerTest
               ],
               "contactMethods": [
                 {
-                  "value": "jane.doe@example.com",
-                  "type": "email"
+                  "type": "email",
+                  "value": "jane.doe@example.com"
                 }
               ],
               "relationship": {
@@ -61,9 +59,6 @@ public class RetrieveTest : BaseMockServerTest
         var response = await Client.Boarding.Owners.RetrieveAsync(
             new RetrieveOwnersRequest { OwnerId = 1 }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Owner>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

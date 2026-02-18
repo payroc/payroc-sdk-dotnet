@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using Payroc;
-using Payroc.Core;
 using Payroc.PaymentFeatures.Cards;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.PaymentFeatures.Cards;
 
@@ -16,15 +16,15 @@ public class LookupBinTest : BaseMockServerTest
             {
               "processingTerminalId": "1234001",
               "card": {
+                "type": "card",
                 "cardDetails": {
+                  "entryMethod": "raw",
                   "device": {
                     "model": "bbposChp",
                     "serialNumber": "1850010868"
                   },
-                  "rawData": "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
-                  "entryMethod": "raw"
-                },
-                "type": "card"
+                  "rawData": "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF"
+                }
               }
             }
             """;
@@ -88,9 +88,6 @@ public class LookupBinTest : BaseMockServerTest
                 ),
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<CardInfo>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

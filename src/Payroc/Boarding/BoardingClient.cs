@@ -9,7 +9,7 @@ using Payroc.Core;
 
 namespace Payroc.Boarding;
 
-public partial class BoardingClient
+public partial class BoardingClient : IBoardingClient
 {
     private RawClient _client;
 
@@ -33,17 +33,17 @@ public partial class BoardingClient
         }
     }
 
-    public OwnersClient Owners { get; }
+    public IOwnersClient Owners { get; }
 
-    public PricingIntentsClient PricingIntents { get; }
+    public IPricingIntentsClient PricingIntents { get; }
 
-    public MerchantPlatformsClient MerchantPlatforms { get; }
+    public IMerchantPlatformsClient MerchantPlatforms { get; }
 
-    public ProcessingAccountsClient ProcessingAccounts { get; }
+    public IProcessingAccountsClient ProcessingAccounts { get; }
 
-    public ProcessingTerminalsClient ProcessingTerminals { get; }
+    public IProcessingTerminalsClient ProcessingTerminals { get; }
 
-    public ContactsClient Contacts { get; }
+    public IContactsClient Contacts { get; }
 
-    public TerminalOrdersClient TerminalOrders { get; }
+    public ITerminalOrdersClient TerminalOrders { get; }
 }

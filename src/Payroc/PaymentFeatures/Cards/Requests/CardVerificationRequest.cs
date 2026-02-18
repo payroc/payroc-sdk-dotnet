@@ -29,7 +29,7 @@ public record CardVerificationRequest
     public Customer? Customer { get; set; }
 
     /// <summary>
-    /// Object that contains information about the card.
+    /// Polymorphic object that contains payment details.
     /// </summary>
     [JsonPropertyName("card")]
     public required CardVerificationRequestCard Card { get; set; }

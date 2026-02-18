@@ -34,8 +34,8 @@ public class UpdateTest : BaseMockServerTest
               ],
               "contactMethods": [
                 {
-                  "value": "jane.doe@example.com",
-                  "type": "email"
+                  "type": "email",
+                  "value": "jane.doe@example.com"
                 }
               ],
               "relationship": {

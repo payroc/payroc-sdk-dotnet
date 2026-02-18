@@ -21,7 +21,7 @@ public class ListAchDepositTests
         _ = await client.Reporting.Settlement.ListAchDepositsAsync(request);
         var listAchFeesRequest = new ListReportingSettlementAchDepositFeesRequest
         {
-            AchDepositId = response.CurrentPage.Items[0].AchDepositId ?? 0,
+            AchDepositId = response.CurrentPage.Items.FirstOrDefault()?.AchDepositId ?? 0,
             Limit = 1
         };
         

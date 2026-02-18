@@ -8,6 +8,9 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Polymorphic object that contains information about the customer's PIN.
+/// </summary>
 [JsonConverter(typeof(SwipedCardDetailsPinDetails.JsonConverter))]
 [Serializable]
 public record SwipedCardDetailsPinDetails

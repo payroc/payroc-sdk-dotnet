@@ -39,25 +39,25 @@ public record Batch : IJsonOnDeserialized
     /// Total value of sales in the batch. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("saleAmount")]
-    public int? SaleAmount { get; set; }
+    public long? SaleAmount { get; set; }
 
     /// <summary>
     /// Total value of authorizations in the batch. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("heldAmount")]
-    public int? HeldAmount { get; set; }
+    public long? HeldAmount { get; set; }
 
     /// <summary>
     /// Total value of returns in the batch. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("returnAmount")]
-    public int? ReturnAmount { get; set; }
+    public long? ReturnAmount { get; set; }
 
     /// <summary>
     /// Total number of transactions in the batch.
     /// </summary>
     [JsonPropertyName("transactionCount")]
-    public int? TransactionCount { get; set; }
+    public long? TransactionCount { get; set; }
 
     /// <summary>
     /// Currency of the transactions in the batch. The value for the currency follows the [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) standard.

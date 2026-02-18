@@ -2,7 +2,7 @@ using Payroc.Core;
 
 namespace Payroc.BankTransferPayments;
 
-public partial class BankTransferPaymentsClient
+public partial class BankTransferPaymentsClient : IBankTransferPaymentsClient
 {
     private RawClient _client;
 
@@ -21,7 +21,7 @@ public partial class BankTransferPaymentsClient
         }
     }
 
-    public Payroc.BankTransferPayments.Payments.PaymentsClient Payments { get; }
+    public Payroc.BankTransferPayments.Payments.IPaymentsClient Payments { get; }
 
-    public Payroc.BankTransferPayments.Refunds.RefundsClient Refunds { get; }
+    public Payroc.BankTransferPayments.Refunds.IRefundsClient Refunds { get; }
 }

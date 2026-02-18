@@ -38,13 +38,21 @@ public record CreateFundingRecipient
     public required string DoingBusinessAs { get; set; }
 
     /// <summary>
-    /// Address of the funding recipient.
+    /// Polymorphic object that contains address information for a funding recipient.
     /// </summary>
     [JsonPropertyName("address")]
     public required Address Address { get; set; }
 
     /// <summary>
-    /// Array of contactMethod objects that you can use to add contact methods for the funding recipient. You must provide at least an email address.
+    /// Array of polymorphic objects, which contain contact information.
+    ///
+    /// **Note:** You must provide an email address.
+    ///
+    /// The value of the type parameter determines which variant you should use:
+    /// -	`email` - Email address
+    /// -	`phone` - Phone number
+    /// -	`mobile` - Mobile number
+    /// -	`fax` - Fax number
     /// </summary>
     [JsonPropertyName("contactMethods")]
     public IEnumerable<ContactMethod> ContactMethods { get; set; } = new List<ContactMethod>();

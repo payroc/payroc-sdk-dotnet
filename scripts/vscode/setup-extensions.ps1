@@ -1,4 +1,4 @@
-﻿# Setup VS Code Extensions for Payroc SDK Development (Windows PowerShell)
+# Setup VS Code Extensions for Payroc SDK Development (Windows PowerShell)
 # This script installs the recommended extensions for developing the Payroc .NET SDK
 
 Write-Host "Installing VS Code extensions for Payroc SDK development..." -ForegroundColor Green

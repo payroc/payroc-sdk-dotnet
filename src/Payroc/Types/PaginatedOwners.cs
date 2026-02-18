@@ -21,7 +21,7 @@ public record PaginatedOwners : IJsonOnDeserialized
     /// Maximum number of results that we return for each page.
     /// </summary>
     [JsonPropertyName("limit")]
-    public double? Limit { get; set; }
+    public int? Limit { get; set; }
 
     /// <summary>
     /// Number of results we returned on this page.
@@ -29,7 +29,7 @@ public record PaginatedOwners : IJsonOnDeserialized
     /// **Note:** This might not be the total number of results that match your query.
     /// </summary>
     [JsonPropertyName("count")]
-    public double? Count { get; set; }
+    public int? Count { get; set; }
 
     /// <summary>
     /// Indicates whether there is another page of results available.

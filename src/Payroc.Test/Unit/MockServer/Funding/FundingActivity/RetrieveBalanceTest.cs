@@ -1,7 +1,7 @@
 using NUnit.Framework;
-using Payroc.Core;
 using Payroc.Funding.FundingActivity;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Funding.FundingActivity;
 
@@ -74,11 +74,7 @@ public class RetrieveBalanceTest : BaseMockServerTest
                 MerchantId = "4525644354",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<RetrieveBalanceFundingActivityResponse>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -140,10 +136,6 @@ public class RetrieveBalanceTest : BaseMockServerTest
                 MerchantId = "4525644354",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<RetrieveBalanceFundingActivityResponse>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

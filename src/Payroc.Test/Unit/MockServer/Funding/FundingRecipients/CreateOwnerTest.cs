@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using Payroc;
-using Payroc.Core;
 using Payroc.Funding.FundingRecipients;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Funding.FundingRecipients;
 
@@ -14,11 +14,12 @@ public class CreateOwnerTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "firstName": "Jane",
-              "lastName": "Doe",
-              "dateOfBirth": "1964-03-22",
+              "firstName": "Fred",
+              "middleName": "Jim",
+              "lastName": "Nerk",
+              "dateOfBirth": "1980-01-19",
               "address": {
-                "address1": "1 Example Ave.",
+                "address1": "2 Example Ave.",
                 "city": "Chicago",
                 "state": "Illinois",
                 "country": "US",
@@ -27,24 +28,30 @@ public class CreateOwnerTest : BaseMockServerTest
               "identifiers": [
                 {
                   "type": "nationalId",
-                  "value": "xxxxx4320"
+                  "value": "000-00-9876"
                 }
               ],
               "contactMethods": [
                 {
-                  "value": "jane.doe@example.com",
-                  "type": "email"
+                  "type": "email",
+                  "value": "jane.doe@example.com"
+                },
+                {
+                  "type": "phone",
+                  "value": "2025550164"
                 }
               ],
               "relationship": {
-                "isControlProng": true
+                "equityPercentage": 51.5,
+                "title": "CEO",
+                "isControlProng": false,
+                "isAuthorizedSignatory": true
               }
             }
             """;
 
         const string mockResponse = """
             {
-              "ownerId": 4564,
               "firstName": "Jane",
               "middleName": "Helen",
               "lastName": "Doe",
@@ -66,8 +73,8 @@ public class CreateOwnerTest : BaseMockServerTest
               ],
               "contactMethods": [
                 {
-                  "value": "jane.doe@example.com",
-                  "type": "email"
+                  "type": "email",
+                  "value": "jane.doe@example.com"
                 }
               ],
               "relationship": {
@@ -103,12 +110,13 @@ public class CreateOwnerTest : BaseMockServerTest
                 IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
                 Body = new Owner
                 {
-                    FirstName = "Jane",
-                    LastName = "Doe",
-                    DateOfBirth = new DateOnly(1964, 3, 22),
+                    FirstName = "Fred",
+                    MiddleName = "Jim",
+                    LastName = "Nerk",
+                    DateOfBirth = new DateOnly(1980, 1, 19),
                     Address = new Address
                     {
-                        Address1 = "1 Example Ave.",
+                        Address1 = "2 Example Ave.",
                         City = "Chicago",
                         State = "Illinois",
                         Country = "US",
@@ -116,7 +124,7 @@ public class CreateOwnerTest : BaseMockServerTest
                     },
                     Identifiers = new List<Identifier>()
                     {
-                        new Identifier { Type = IdentifierType.NationalId, Value = "xxxxx4320" },
+                        new Identifier { Type = IdentifierType.NationalId, Value = "000-00-9876" },
                     },
                     ContactMethods = new List<ContactMethod>()
                     {
@@ -125,14 +133,20 @@ public class CreateOwnerTest : BaseMockServerTest
                                 new ContactMethodEmail { Value = "jane.doe@example.com" }
                             )
                         ),
+                        new ContactMethod(
+                            new ContactMethod.Phone(new ContactMethodPhone { Value = "2025550164" })
+                        ),
                     },
-                    Relationship = new OwnerRelationship { IsControlProng = true },
+                    Relationship = new OwnerRelationship
+                    {
+                        EquityPercentage = 51.5f,
+                        Title = "CEO",
+                        IsControlProng = false,
+                        IsAuthorizedSignatory = true,
+                    },
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Owner>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

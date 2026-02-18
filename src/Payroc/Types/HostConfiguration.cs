@@ -27,7 +27,7 @@ public record HostConfiguration : IJsonOnDeserialized
     public string? ProcessingAccountId { get; set; }
 
     /// <summary>
-    /// Object that contains the host processor configuration.
+    /// Polymorphic object that contains the host processor configuration.
     /// </summary>
     [JsonPropertyName("configuration")]
     public required HostConfigurationConfiguration Configuration { get; set; }

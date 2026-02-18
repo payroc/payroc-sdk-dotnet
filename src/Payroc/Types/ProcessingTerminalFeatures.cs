@@ -16,7 +16,11 @@ public record ProcessingTerminalFeatures : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Object that contains the tip settings for the processing terminal.
+    /// Polymorphic object that indicates if the terminal accepts tips.
+    ///
+    /// The value of the enabled field determines which variant you should use:
+    /// -	`true` - Terminal allows tips.
+    /// -	`false` - Terminal doesn't allow tips.
     /// </summary>
     [JsonPropertyName("tips")]
     public OneOf<TipProcessingEnabled, TipProcessingDisabled>? Tips { get; set; }
@@ -28,7 +32,11 @@ public record ProcessingTerminalFeatures : IJsonOnDeserialized
     public required ProcessingTerminalFeaturesEnhancedProcessing EnhancedProcessing { get; set; }
 
     /// <summary>
-    /// Object that contains details about EBT transactions.
+    /// Polymorphic object that indicates if the terminal accepts EBT transactions.
+    ///
+    /// The value of the enabled field determines which variant you should use:
+    /// -	`true` - Terminal allows EBT transactions.
+    /// -	`false` - Terminal doesn't allow EBT transactions.
     /// </summary>
     [JsonPropertyName("ebt")]
     public required OneOf<EbtEnabled, EbtDisabled> Ebt { get; set; }
@@ -40,7 +48,7 @@ public record ProcessingTerminalFeatures : IJsonOnDeserialized
     public required bool PinDebitCashback { get; set; }
 
     /// <summary>
-    /// Indicates if the terminal can run repeat payments. For more information about repeat payments, go to [Payment Plans](https://docs.payroc.com/guides/integrate/repeat-payments).
+    /// Indicates if the terminal can run repeat payments. For more information about repeat payments, go to [Payment Plans](https://docs.payroc.com/guides/take-payments/repeat-payments).
     /// </summary>
     [JsonPropertyName("recurringPayments")]
     public bool? RecurringPayments { get; set; }

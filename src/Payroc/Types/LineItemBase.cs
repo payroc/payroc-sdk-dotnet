@@ -39,7 +39,7 @@ public record LineItemBase : IJsonOnDeserialized
     /// Price of each unit.
     /// </summary>
     [JsonPropertyName("unitPrice")]
-    public required double UnitPrice { get; set; }
+    public required long UnitPrice { get; set; }
 
     /// <summary>
     /// Number of units.

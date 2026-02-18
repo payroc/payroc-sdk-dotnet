@@ -16,10 +16,10 @@ public class GlobalFixture
         TerminalIdNoAvs = GetEnv("TERMINAL_ID_NO_AVS");
     }
 
-    private static PayrocClient CreateClient(string apiKey) 
+    private static PayrocClient CreateClient(string apiKey)
         => new(apiKey, new ClientOptions { Environment = PayrocEnvironment.Uat });
 
-    private static string GetEnv(string name) 
-        => Environment.GetEnvironmentVariable(name) 
+    private static string GetEnv(string name)
+        => Environment.GetEnvironmentVariable(name)
             ?? throw new InvalidOperationException($"Environment variable '{name}' is not set.");
 }

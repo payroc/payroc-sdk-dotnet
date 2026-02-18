@@ -2,7 +2,7 @@ using Payroc.Core;
 
 namespace Payroc.CardPayments;
 
-public partial class CardPaymentsClient
+public partial class CardPaymentsClient : ICardPaymentsClient
 {
     private RawClient _client;
 
@@ -21,7 +21,7 @@ public partial class CardPaymentsClient
         }
     }
 
-    public Payroc.CardPayments.Payments.PaymentsClient Payments { get; }
+    public Payroc.CardPayments.Payments.IPaymentsClient Payments { get; }
 
-    public Payroc.CardPayments.Refunds.RefundsClient Refunds { get; }
+    public Payroc.CardPayments.Refunds.IRefundsClient Refunds { get; }
 }

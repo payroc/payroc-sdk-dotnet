@@ -1,4 +1,4 @@
-﻿#pragma warning disable CS0219 // Variable is assigned but its value is never used
+#pragma warning disable CS0219 // Variable is assigned but its value is never used
 using Payroc;
 using Payroc.TestHarness.Factory;
 using Payroc.Tokenization.SecureTokens;

@@ -1,4 +1,4 @@
-﻿namespace Payroc.TestHarness.Debugging;
+namespace Payroc.TestHarness.Debugging;
 
 public static class DebugPayload
 {

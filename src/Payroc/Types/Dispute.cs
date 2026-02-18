@@ -66,13 +66,13 @@ public record Dispute : IJsonOnDeserialized
     /// Dispute amount. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("disputeAmount")]
-    public int? DisputeAmount { get; set; }
+    public long? DisputeAmount { get; set; }
 
     /// <summary>
     /// Value of the fees for the dispute. We return the value in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("feeAmount")]
-    public int? FeeAmount { get; set; }
+    public long? FeeAmount { get; set; }
 
     /// <summary>
     /// Indicates if this is the first dispute for the transaction.

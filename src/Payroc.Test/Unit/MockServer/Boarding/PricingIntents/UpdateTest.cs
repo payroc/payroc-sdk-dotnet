@@ -37,10 +37,10 @@ public class UpdateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "interchangePlus",
                   "fees": {
                     "mastercardVisaDiscover": {}
-                  },
-                  "planType": "interchangePlus"
+                  }
                 },
                 "ach": {
                   "fees": {
@@ -66,8 +66,8 @@ public class UpdateTest : BaseMockServerTest
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
               "key": "Your-Unique-Identifier",

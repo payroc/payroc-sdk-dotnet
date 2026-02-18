@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using Payroc;
 using Payroc.Boarding.ProcessingAccounts;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Boarding.ProcessingAccounts;
 
@@ -142,8 +142,8 @@ public class CreateTerminalOrderTest : BaseMockServerTest
                       "communicationType": "wifi"
                     },
                     "batchClosure": {
-                      "batchCloseTime": "23:40",
-                      "batchCloseType": "automatic"
+                      "batchCloseType": "automatic",
+                      "batchCloseTime": "23:40"
                     },
                     "receiptNotifications": {
                       "emailReceipt": true,
@@ -161,9 +161,7 @@ public class CreateTerminalOrderTest : BaseMockServerTest
                     "tokenization": true
                   }
                 }
-              ],
-              "createdDate": "2024-07-02T12:00:00.000Z",
-              "lastModifiedDate": "2024-07-02T12:00:00.000Z"
+              ]
             }
             """;
 
@@ -216,7 +214,7 @@ public class CreateTerminalOrderTest : BaseMockServerTest
                     {
                         Type = OrderItemType.Solution,
                         SolutionTemplateId = "Roc Services_DX8000",
-                        SolutionQuantity = 1f,
+                        SolutionQuantity = 1,
                         DeviceCondition = OrderItemDeviceCondition.New,
                         SolutionSetup = new OrderItemSolutionSetup
                         {
@@ -241,7 +239,7 @@ public class CreateTerminalOrderTest : BaseMockServerTest
                             },
                             DeviceSettings = new OrderItemSolutionSetupDeviceSettings
                             {
-                                NumberOfMobileUsers = 2f,
+                                NumberOfMobileUsers = 2,
                                 CommunicationType =
                                     OrderItemSolutionSetupDeviceSettingsCommunicationType.Wifi,
                             },
@@ -270,9 +268,6 @@ public class CreateTerminalOrderTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<TerminalOrder>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

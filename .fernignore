@@ -2,7 +2,6 @@
 src/Payroc/Payroc.Custom.props
 src/Payroc/Core/Public/ClientOptions.cs
 src/Payroc/PayrocClient.cs
-src/Payroc/BasePayrocClient.cs
 src/Payroc/Core/PayrocPager.cs
 src/Payroc/Core/PayrocExceptionInterceptor.cs
 src/Payroc.Test/Unit/PayrocPagerTest.cs
@@ -17,10 +16,13 @@ src/Payroc.Test/Core/Pagination/OffsetPagerHeaderPropagationTest.cs
 src/Payroc.Test/Core/Pagination/CursorPagerHeaderPropagationTest.cs
 src/Payroc.TestHarness
 src/Payroc.TestFunctional
-scripts
+pipelines/
+scripts/
 Payroc.slnx
-.github
+.github/CODEOWNERS
 .gitignore
+.previewignore
+SECURITY.md
 LICENSE
 README.md
 CONTRIBUTING.md

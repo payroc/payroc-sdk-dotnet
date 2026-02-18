@@ -19,6 +19,9 @@ public record ShareSharingEventsRequest
     [JsonIgnore]
     public required string IdempotencyKey { get; set; }
 
+    /// <summary>
+    /// Polymorphic object that contains information about how to share a payment link.
+    /// </summary>
     [JsonIgnore]
     public required PaymentLinkEmailShareEvent Body { get; set; }
 

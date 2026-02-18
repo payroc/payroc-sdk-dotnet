@@ -57,7 +57,7 @@ public record PaymentSummary : IJsonOnDeserialized
     /// Response description from the processor.
     /// </summary>
     [JsonPropertyName("responseMessage")]
-    public required string ResponseMessage { get; set; }
+    public string? ResponseMessage { get; set; }
 
     [JsonPropertyName("link")]
     public Link? Link { get; set; }

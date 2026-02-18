@@ -1,4 +1,4 @@
-﻿namespace Payroc.TestHarness.Factory;
+namespace Payroc.TestHarness.Factory;
 
 public class CardPayloadFactory
 {
@@ -14,7 +14,7 @@ public class CardPayloadFactory
                         Model = DeviceModel.PaxA80,
                         SerialNumber = "WPC202833004712"
                     },
-                    ExpiryDate = "1225",
+                    ExpiryDate = "1230",
                     CardNumber = "4539858876047062"
                 })
             })

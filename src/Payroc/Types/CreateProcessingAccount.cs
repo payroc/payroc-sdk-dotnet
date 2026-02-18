@@ -66,11 +66,22 @@ public record CreateProcessingAccount : IJsonOnDeserialized
     [JsonPropertyName("timezone")]
     public required Timezone Timezone { get; set; }
 
+    /// <summary>
+    /// Polymorphic object that contains address information for the processing account.
+    /// </summary>
     [JsonPropertyName("address")]
     public required Address Address { get; set; }
 
     /// <summary>
-    /// Array of contactMethod objects. One contact method must be an email address.
+    /// Array of polymorphic objects, which contain contact information.
+    ///
+    /// **Note:** You must provide an email address.
+    ///
+    /// The value of the type parameter determines which variant you should use:
+    /// -	`email` - Email address
+    /// -	`phone` - Phone number
+    /// -	`mobile` - Mobile number
+    /// -	`fax` - Fax number.
     /// </summary>
     [JsonPropertyName("contactMethods")]
     public IEnumerable<ContactMethod> ContactMethods { get; set; } = new List<ContactMethod>();

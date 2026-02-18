@@ -4,7 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.HostedFields;
 
-public partial class HostedFieldsClient
+public partial class HostedFieldsClient : IHostedFieldsClient
 {
     private RawClient _client;
 
@@ -21,27 +21,7 @@ public partial class HostedFieldsClient
         }
     }
 
-    /// <summary>
-    /// Use this method to create a Hosted Fields session token. You need to generate a new session token each time you load Hosted Fields on a webpage.
-    ///
-    /// In your request, you need to indicate whether the merchant is using Hosted Fields to run a sale, save payment details, or update saved payment details.
-    ///
-    /// In the response, our gateway returns the session token and the time that it expires. You need the session token when you configure the JavaScript for Hosted Fields.
-    ///
-    /// For more information about adding Hosted Fields to a webpage, go to [Hosted Fields](https://docs.payroc.com/guides/integrate/hosted-fields).
-    /// </summary>
-    /// <example><code>
-    /// await client.HostedFields.CreateAsync(
-    ///     new HostedFieldsCreateSessionRequest
-    ///     {
-    ///         ProcessingTerminalId = "1234001",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-    ///         LibVersion = "1.1.0.123456",
-    ///         Scenario = HostedFieldsCreateSessionRequestScenario.Payment,
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<HostedFieldsCreateSessionResponse> CreateAsync(
+    private async Task<WithRawResponse<HostedFieldsCreateSessionResponse>> CreateAsyncCore(
         HostedFieldsCreateSessionRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -50,12 +30,13 @@ public partial class HostedFieldsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _headers = new Headers(
-                    new Dictionary<string, string>()
-                    {
-                        { "Idempotency-Key", request.IdempotencyKey },
-                    }
-                );
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add("Idempotency-Key", request.IdempotencyKey)
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -79,16 +60,32 @@ public partial class HostedFieldsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<HostedFieldsCreateSessionResponse>(
+                        var responseData = JsonUtils.Deserialize<HostedFieldsCreateSessionResponse>(
                             responseBody
                         )!;
+                        return new WithRawResponse<HostedFieldsCreateSessionResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new PayrocException("Failed to deserialize response", e);
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
@@ -137,5 +134,36 @@ public partial class HostedFieldsClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Use this method to create a Hosted Fields session token. You need to generate a new session token each time you load Hosted Fields on a webpage.
+    ///
+    /// In your request, you need to indicate whether the merchant is using Hosted Fields to run a sale, save payment details, or update saved payment details.
+    ///
+    /// In the response, our gateway returns the session token and the time that it expires. You need the session token when you configure the JavaScript for Hosted Fields.
+    ///
+    /// For more information about adding Hosted Fields to a webpage, go to [Hosted Fields](https://docs.payroc.com/guides/take-payments/hosted-fields).
+    /// </summary>
+    /// <example><code>
+    /// await client.HostedFields.CreateAsync(
+    ///     new HostedFieldsCreateSessionRequest
+    ///     {
+    ///         ProcessingTerminalId = "1234001",
+    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         LibVersion = "1.1.0.123456",
+    ///         Scenario = HostedFieldsCreateSessionRequestScenario.Payment,
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<HostedFieldsCreateSessionResponse> CreateAsync(
+        HostedFieldsCreateSessionRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<HostedFieldsCreateSessionResponse>(
+            CreateAsyncCore(request, options, cancellationToken)
+        );
     }
 }

@@ -13,14 +13,17 @@ public class UpdateTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "type": "checking",
+              "type": "savings",
               "use": "credit",
-              "nameOnAccount": "Jane Doe",
+              "nameOnAccount": "Fred Nerk",
               "paymentMethods": [
                 {
                   "type": "ach"
                 }
-              ]
+              ],
+              "metadata": {
+                "responsiblePerson": "Jane Doe"
+              }
             }
             """;
 
@@ -42,14 +45,18 @@ public class UpdateTest : BaseMockServerTest
                     FundingAccountId = 1,
                     Body = new FundingAccount
                     {
-                        Type = FundingAccountType.Checking,
+                        Type = FundingAccountType.Savings,
                         Use = FundingAccountUse.Credit,
-                        NameOnAccount = "Jane Doe",
+                        NameOnAccount = "Fred Nerk",
                         PaymentMethods = new List<PaymentMethodsItem>()
                         {
                             new PaymentMethodsItem(
                                 new PaymentMethodsItem.Ach(new PaymentMethodAch())
                             ),
+                        },
+                        Metadata = new Dictionary<string, string>()
+                        {
+                            { "responsiblePerson", "Jane Doe" },
                         },
                     },
                 }

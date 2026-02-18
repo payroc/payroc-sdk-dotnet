@@ -43,7 +43,7 @@ public record EventSubscription : IJsonOnDeserialized
     public IEnumerable<string> EventTypes { get; set; } = new List<string>();
 
     /// <summary>
-    /// Array of notifications objects. Each object contains information about how we contact you when an event occurs.
+    /// Array of polymorphic notification objects that contain information about how we contact you when an event occurs.
     /// </summary>
     [JsonPropertyName("notifications")]
     public IEnumerable<Notification> Notifications { get; set; } = new List<Notification>();

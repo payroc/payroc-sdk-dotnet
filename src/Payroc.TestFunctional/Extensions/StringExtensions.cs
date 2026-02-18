@@ -1,4 +1,4 @@
-﻿namespace Payroc.TestFunctional.Extensions;
+namespace Payroc.TestFunctional.Extensions;
 
 public static class StringExtensions
 {

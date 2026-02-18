@@ -1,4 +1,4 @@
-﻿using Payroc.PaymentFeatures.Cards;
+using Payroc.PaymentFeatures.Cards;
 
 namespace Payroc.TestHarness.Factory;
 

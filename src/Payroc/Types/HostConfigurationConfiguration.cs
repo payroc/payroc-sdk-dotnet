@@ -9,7 +9,7 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains the host processor configuration.
+/// Polymorphic object that contains the host processor configuration.
 /// </summary>
 [JsonConverter(typeof(HostConfigurationConfiguration.JsonConverter))]
 [Serializable]

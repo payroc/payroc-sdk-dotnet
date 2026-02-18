@@ -9,7 +9,11 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains information about the bank account.
+/// Polymorphic object that contains bank account information.
+///
+/// The value of the type field determines which variant you should use:
+/// -	`ach` - Automated Clearing House (ACH) details
+/// -	`pad` - Pre-authorized debit (PAD) details
 /// </summary>
 [JsonConverter(typeof(BankTransferRefundBankAccount.JsonConverter))]
 [Serializable]

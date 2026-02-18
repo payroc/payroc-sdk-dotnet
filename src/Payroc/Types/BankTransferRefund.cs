@@ -30,7 +30,11 @@ public record BankTransferRefund : IJsonOnDeserialized
     public BankTransferCustomer? Customer { get; set; }
 
     /// <summary>
-    /// Object that contains information about the bank account.
+    /// Polymorphic object that contains bank account information.
+    ///
+    /// The value of the type field determines which variant you should use:
+    /// -	`ach` - Automated Clearing House (ACH) details
+    /// -	`pad` - Pre-authorized debit (PAD) details
     /// </summary>
     [JsonPropertyName("bankAccount")]
     public required BankTransferRefundBankAccount BankAccount { get; set; }

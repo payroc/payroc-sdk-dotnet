@@ -32,7 +32,7 @@ public record SubscriptionRequest
     public required string PaymentPlanId { get; set; }
 
     /// <summary>
-    /// Object that contains information about the customer's payment details.
+    /// Polymorphic object that contains information about the secure token.
     /// </summary>
     [JsonPropertyName("paymentMethod")]
     public required SubscriptionRequestPaymentMethod PaymentMethod { get; set; }

@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using Payroc;
-using Payroc.Core;
 using Payroc.PayrocCloud.RefundInstructions;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.PayrocCloud.RefundInstructions;
 
@@ -78,9 +78,6 @@ public class SubmitTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<RefundInstruction>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

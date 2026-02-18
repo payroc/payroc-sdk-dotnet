@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using Payroc;
 using Payroc.Boarding.PricingIntents;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Boarding.PricingIntents;
 
@@ -38,16 +38,16 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "interchangePlus",
                   "fees": {
                     "mastercardVisaDiscover": {}
-                  },
-                  "planType": "interchangePlus"
+                  }
                 }
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
               "key": "Your-Unique-Identifier",
@@ -71,7 +71,6 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "amount": 1295,
                   "billingFrequency": "monthly"
                 },
                 "maintenance": 500,
@@ -84,14 +83,15 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "interchangePlus",
                   "fees": {
                     "mastercardVisaDiscover": {
                       "volume": 1.25
                     },
                     "amex": {
+                      "type": "optBlue",
                       "volume": 1.25,
-                      "transaction": 1,
-                      "type": "optBlue"
+                      "transaction": 1
                     },
                     "pinDebit": {
                       "additionalDiscount": 1.25,
@@ -102,8 +102,7 @@ public class CreateTest : BaseMockServerTest
                       "enrollment": 1,
                       "creditToMerchant": 1.25
                     }
-                  },
-                  "planType": "interchangePlus"
+                  }
                 },
                 "ach": {
                   "fees": {
@@ -129,14 +128,10 @@ public class CreateTest : BaseMockServerTest
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
-              "id": "5",
-              "createdDate": "2024-07-02T09:00:00.000Z",
-              "lastUpdatedDate": "2024-07-02T09:00:00.000Z",
-              "status": "pendingReview",
               "key": "string",
               "metadata": {
                 "yourCustomField": "abc123"
@@ -218,10 +213,7 @@ public class CreateTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PricingIntent50>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -253,14 +245,14 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "interchangePlusPlus",
                   "fees": {
                     "mastercardVisaDiscover": {
                       "qualifiedRate": {},
                       "midQualRate": {},
                       "nonQualRate": {}
                     }
-                  },
-                  "planType": "interchangePlusPlus"
+                  }
                 },
                 "ach": {
                   "fees": {
@@ -278,8 +270,8 @@ public class CreateTest : BaseMockServerTest
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
               "key": "Your-Unique-Identifier",
@@ -303,7 +295,6 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "amount": 1295,
                   "billingFrequency": "monthly"
                 },
                 "maintenance": 500,
@@ -316,14 +307,15 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "interchangePlus",
                   "fees": {
                     "mastercardVisaDiscover": {
                       "volume": 1.25
                     },
                     "amex": {
+                      "type": "optBlue",
                       "volume": 1.25,
-                      "transaction": 1,
-                      "type": "optBlue"
+                      "transaction": 1
                     },
                     "pinDebit": {
                       "additionalDiscount": 1.25,
@@ -334,8 +326,7 @@ public class CreateTest : BaseMockServerTest
                       "enrollment": 1,
                       "creditToMerchant": 1.25
                     }
-                  },
-                  "planType": "interchangePlus"
+                  }
                 },
                 "ach": {
                   "fees": {
@@ -361,14 +352,10 @@ public class CreateTest : BaseMockServerTest
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
-              "id": "5",
-              "createdDate": "2024-07-02T09:00:00.000Z",
-              "lastUpdatedDate": "2024-07-02T09:00:00.000Z",
-              "status": "pendingReview",
               "key": "string",
               "metadata": {
                 "yourCustomField": "abc123"
@@ -470,10 +457,7 @@ public class CreateTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PricingIntent50>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -505,14 +489,14 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "tiered3",
                   "fees": {
                     "mastercardVisaDiscover": {
                       "qualifiedRate": {},
                       "midQualRate": {},
                       "nonQualRate": {}
                     }
-                  },
-                  "planType": "tiered3"
+                  }
                 },
                 "ach": {
                   "fees": {
@@ -538,8 +522,8 @@ public class CreateTest : BaseMockServerTest
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
               "key": "Your-Unique-Identifier",
@@ -563,7 +547,6 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "amount": 1295,
                   "billingFrequency": "monthly"
                 },
                 "maintenance": 500,
@@ -576,14 +559,15 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "interchangePlus",
                   "fees": {
                     "mastercardVisaDiscover": {
                       "volume": 1.25
                     },
                     "amex": {
+                      "type": "optBlue",
                       "volume": 1.25,
-                      "transaction": 1,
-                      "type": "optBlue"
+                      "transaction": 1
                     },
                     "pinDebit": {
                       "additionalDiscount": 1.25,
@@ -594,8 +578,7 @@ public class CreateTest : BaseMockServerTest
                       "enrollment": 1,
                       "creditToMerchant": 1.25
                     }
-                  },
-                  "planType": "interchangePlus"
+                  }
                 },
                 "ach": {
                   "fees": {
@@ -621,14 +604,10 @@ public class CreateTest : BaseMockServerTest
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
-              "id": "5",
-              "createdDate": "2024-07-02T09:00:00.000Z",
-              "lastUpdatedDate": "2024-07-02T09:00:00.000Z",
-              "status": "pendingReview",
               "key": "string",
               "metadata": {
                 "yourCustomField": "abc123"
@@ -740,10 +719,7 @@ public class CreateTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PricingIntent50>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -775,6 +751,7 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "tiered4",
                   "fees": {
                     "mastercardVisaDiscover": {
                       "qualifiedRate": {},
@@ -782,8 +759,7 @@ public class CreateTest : BaseMockServerTest
                       "nonQualRate": {},
                       "premiumRate": {}
                     }
-                  },
-                  "planType": "tiered4"
+                  }
                 },
                 "ach": {
                   "fees": {
@@ -809,8 +785,8 @@ public class CreateTest : BaseMockServerTest
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
               "key": "Your-Unique-Identifier",
@@ -834,7 +810,6 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "amount": 1295,
                   "billingFrequency": "monthly"
                 },
                 "maintenance": 500,
@@ -847,14 +822,15 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "interchangePlus",
                   "fees": {
                     "mastercardVisaDiscover": {
                       "volume": 1.25
                     },
                     "amex": {
+                      "type": "optBlue",
                       "volume": 1.25,
-                      "transaction": 1,
-                      "type": "optBlue"
+                      "transaction": 1
                     },
                     "pinDebit": {
                       "additionalDiscount": 1.25,
@@ -865,8 +841,7 @@ public class CreateTest : BaseMockServerTest
                       "enrollment": 1,
                       "creditToMerchant": 1.25
                     }
-                  },
-                  "planType": "interchangePlus"
+                  }
                 },
                 "ach": {
                   "fees": {
@@ -892,14 +867,10 @@ public class CreateTest : BaseMockServerTest
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
-              "id": "5",
-              "createdDate": "2024-07-02T09:00:00.000Z",
-              "lastUpdatedDate": "2024-07-02T09:00:00.000Z",
-              "status": "pendingReview",
               "key": "string",
               "metadata": {
                 "yourCustomField": "abc123"
@@ -1012,10 +983,7 @@ public class CreateTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PricingIntent50>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -1047,6 +1015,7 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "tiered6",
                   "fees": {
                     "mastercardVisaDiscover": {
                       "qualifiedRate": {},
@@ -1056,8 +1025,7 @@ public class CreateTest : BaseMockServerTest
                       "regulatedCheckCard": {},
                       "unregulatedCheckCard": {}
                     }
-                  },
-                  "planType": "tiered6"
+                  }
                 },
                 "ach": {
                   "fees": {
@@ -1083,8 +1051,8 @@ public class CreateTest : BaseMockServerTest
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
               "key": "Your-Unique-Identifier",
@@ -1108,7 +1076,6 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "amount": 1295,
                   "billingFrequency": "monthly"
                 },
                 "maintenance": 500,
@@ -1121,14 +1088,15 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "interchangePlus",
                   "fees": {
                     "mastercardVisaDiscover": {
                       "volume": 1.25
                     },
                     "amex": {
+                      "type": "optBlue",
                       "volume": 1.25,
-                      "transaction": 1,
-                      "type": "optBlue"
+                      "transaction": 1
                     },
                     "pinDebit": {
                       "additionalDiscount": 1.25,
@@ -1139,8 +1107,7 @@ public class CreateTest : BaseMockServerTest
                       "enrollment": 1,
                       "creditToMerchant": 1.25
                     }
-                  },
-                  "planType": "interchangePlus"
+                  }
                 },
                 "ach": {
                   "fees": {
@@ -1166,14 +1133,10 @@ public class CreateTest : BaseMockServerTest
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
-              "id": "5",
-              "createdDate": "2024-07-02T09:00:00.000Z",
-              "lastUpdatedDate": "2024-07-02T09:00:00.000Z",
-              "status": "pendingReview",
               "key": "string",
               "metadata": {
                 "yourCustomField": "abc123"
@@ -1289,10 +1252,7 @@ public class CreateTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PricingIntent50>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -1324,16 +1284,16 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "flatRate",
                   "fees": {
                     "standardCards": {}
-                  },
-                  "planType": "flatRate"
+                  }
                 }
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
               "key": "Your-Unique-Identifier",
@@ -1357,7 +1317,6 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "amount": 1295,
                   "billingFrequency": "monthly"
                 },
                 "maintenance": 500,
@@ -1370,14 +1329,15 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "interchangePlus",
                   "fees": {
                     "mastercardVisaDiscover": {
                       "volume": 1.25
                     },
                     "amex": {
+                      "type": "optBlue",
                       "volume": 1.25,
-                      "transaction": 1,
-                      "type": "optBlue"
+                      "transaction": 1
                     },
                     "pinDebit": {
                       "additionalDiscount": 1.25,
@@ -1388,8 +1348,7 @@ public class CreateTest : BaseMockServerTest
                       "enrollment": 1,
                       "creditToMerchant": 1.25
                     }
-                  },
-                  "planType": "interchangePlus"
+                  }
                 },
                 "ach": {
                   "fees": {
@@ -1415,14 +1374,10 @@ public class CreateTest : BaseMockServerTest
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
-              "id": "5",
-              "createdDate": "2024-07-02T09:00:00.000Z",
-              "lastUpdatedDate": "2024-07-02T09:00:00.000Z",
-              "status": "pendingReview",
               "key": "string",
               "metadata": {
                 "yourCustomField": "abc123"
@@ -1501,10 +1456,7 @@ public class CreateTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PricingIntent50>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -1536,17 +1488,17 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "consumerChoice",
                   "fees": {
                     "monthlySubscription": 1,
                     "volume": 1.25
-                  },
-                  "planType": "consumerChoice"
+                  }
                 }
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
               "key": "Your-Unique-Identifier",
@@ -1570,7 +1522,6 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "amount": 1295,
                   "billingFrequency": "monthly"
                 },
                 "maintenance": 500,
@@ -1583,14 +1534,15 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "interchangePlus",
                   "fees": {
                     "mastercardVisaDiscover": {
                       "volume": 1.25
                     },
                     "amex": {
+                      "type": "optBlue",
                       "volume": 1.25,
-                      "transaction": 1,
-                      "type": "optBlue"
+                      "transaction": 1
                     },
                     "pinDebit": {
                       "additionalDiscount": 1.25,
@@ -1601,8 +1553,7 @@ public class CreateTest : BaseMockServerTest
                       "enrollment": 1,
                       "creditToMerchant": 1.25
                     }
-                  },
-                  "planType": "interchangePlus"
+                  }
                 },
                 "ach": {
                   "fees": {
@@ -1628,14 +1579,10 @@ public class CreateTest : BaseMockServerTest
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
-              "id": "5",
-              "createdDate": "2024-07-02T09:00:00.000Z",
-              "lastUpdatedDate": "2024-07-02T09:00:00.000Z",
-              "status": "pendingReview",
               "key": "string",
               "metadata": {
                 "yourCustomField": "abc123"
@@ -1718,10 +1665,7 @@ public class CreateTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PricingIntent50>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -1753,6 +1697,7 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "rewardPayChoice",
                   "fees": {
                     "monthlySubscription": 1,
                     "debit": {
@@ -1760,14 +1705,13 @@ public class CreateTest : BaseMockServerTest
                       "transaction": 1
                     },
                     "credit": {}
-                  },
-                  "planType": "rewardPayChoice"
+                  }
                 }
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
               "key": "Your-Unique-Identifier",
@@ -1791,7 +1735,6 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "amount": 1295,
                   "billingFrequency": "monthly"
                 },
                 "maintenance": 500,
@@ -1804,14 +1747,15 @@ public class CreateTest : BaseMockServerTest
               },
               "processor": {
                 "card": {
+                  "planType": "interchangePlus",
                   "fees": {
                     "mastercardVisaDiscover": {
                       "volume": 1.25
                     },
                     "amex": {
+                      "type": "optBlue",
                       "volume": 1.25,
-                      "transaction": 1,
-                      "type": "optBlue"
+                      "transaction": 1
                     },
                     "pinDebit": {
                       "additionalDiscount": 1.25,
@@ -1822,8 +1766,7 @@ public class CreateTest : BaseMockServerTest
                       "enrollment": 1,
                       "creditToMerchant": 1.25
                     }
-                  },
-                  "planType": "interchangePlus"
+                  }
                 },
                 "ach": {
                   "fees": {
@@ -1849,14 +1792,10 @@ public class CreateTest : BaseMockServerTest
               },
               "services": [
                 {
-                  "enabled": true,
-                  "name": "hardwareAdvantagePlan"
+                  "name": "hardwareAdvantagePlan",
+                  "enabled": true
                 }
               ],
-              "id": "5",
-              "createdDate": "2024-07-02T09:00:00.000Z",
-              "lastUpdatedDate": "2024-07-02T09:00:00.000Z",
-              "status": "pendingReview",
               "key": "string",
               "metadata": {
                 "yourCustomField": "abc123"
@@ -1944,9 +1883,6 @@ public class CreateTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PricingIntent50>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

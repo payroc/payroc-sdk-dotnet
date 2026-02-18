@@ -31,10 +31,10 @@ public record BankTransferResult : IJsonOnDeserialized
     /// **Note:** The amount is negative for a refund.
     /// </summary>
     [JsonPropertyName("authorizedAmount")]
-    public double? AuthorizedAmount { get; set; }
+    public long? AuthorizedAmount { get; set; }
 
     [JsonPropertyName("currency")]
-    public Currency? Currency { get; set; }
+    public required Currency Currency { get; set; }
 
     /// <summary>
     /// Response from the processor.
@@ -42,13 +42,13 @@ public record BankTransferResult : IJsonOnDeserialized
     /// - `D` - The processor declined the transaction.
     /// </summary>
     [JsonPropertyName("responseCode")]
-    public string? ResponseCode { get; set; }
+    public required string ResponseCode { get; set; }
 
     /// <summary>
     /// Description of the response from the processor.
     /// </summary>
     [JsonPropertyName("responseMessage")]
-    public required string ResponseMessage { get; set; }
+    public string? ResponseMessage { get; set; }
 
     /// <summary>
     /// Original response code that the processor sent.

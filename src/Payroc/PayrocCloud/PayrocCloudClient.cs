@@ -6,7 +6,7 @@ using Payroc.PayrocCloud.Signatures;
 
 namespace Payroc.PayrocCloud;
 
-public partial class PayrocCloudClient
+public partial class PayrocCloudClient : IPayrocCloudClient
 {
     private RawClient _client;
 
@@ -27,11 +27,11 @@ public partial class PayrocCloudClient
         }
     }
 
-    public PaymentInstructionsClient PaymentInstructions { get; }
+    public IPaymentInstructionsClient PaymentInstructions { get; }
 
-    public RefundInstructionsClient RefundInstructions { get; }
+    public IRefundInstructionsClient RefundInstructions { get; }
 
-    public SignatureInstructionsClient SignatureInstructions { get; }
+    public ISignatureInstructionsClient SignatureInstructions { get; }
 
-    public SignaturesClient Signatures { get; }
+    public ISignaturesClient Signatures { get; }
 }

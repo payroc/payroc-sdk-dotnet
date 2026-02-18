@@ -4,7 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.PaymentLinks.SharingEvents;
 
-public partial class SharingEventsClient
+public partial class SharingEventsClient : ISharingEventsClient
 {
     private RawClient _client;
 
@@ -19,6 +19,125 @@ public partial class SharingEventsClient
             client.Options.ExceptionHandler?.CaptureException(ex);
             throw;
         }
+    }
+
+    private async Task<WithRawResponse<PaymentLinkEmailShareEvent>> ShareAsyncCore(
+        ShareSharingEventsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add("Idempotency-Key", request.IdempotencyKey)
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.Environment.Api,
+                            Method = HttpMethod.Post,
+                            Path = string.Format(
+                                "payment-links/{0}/sharing-events",
+                                ValueConvert.ToPathParameterString(request.PaymentLinkId)
+                            ),
+                            Body = request.Body,
+                            Headers = _headers,
+                            ContentType = "application/json",
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var responseData = JsonUtils.Deserialize<PaymentLinkEmailShareEvent>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<PaymentLinkEmailShareEvent>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
+                    }
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        switch (response.StatusCode)
+                        {
+                            case 400:
+                                throw new BadRequestError(
+                                    JsonUtils.Deserialize<FourHundred>(responseBody)
+                                );
+                            case 401:
+                                throw new UnauthorizedError(
+                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
+                                );
+                            case 403:
+                                throw new ForbiddenError(
+                                    JsonUtils.Deserialize<object>(responseBody)
+                                );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 406:
+                                throw new NotAcceptableError(
+                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
+                                );
+                            case 409:
+                                throw new ConflictError(
+                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
+                                );
+                            case 415:
+                                throw new UnsupportedMediaTypeError(
+                                    JsonUtils.Deserialize<FourHundredFifteen>(responseBody)
+                                );
+                            case 500:
+                                throw new InternalServerError(
+                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
+                                );
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // unable to map error response, throwing generic error
+                    }
+                    throw new PayrocApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
     }
 
     /// <summary>
@@ -56,27 +175,20 @@ public partial class SharingEventsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _query = new Dictionary<string, object>();
-                if (request.RecipientName != null)
-                {
-                    _query["recipientName"] = request.RecipientName;
-                }
-                if (request.RecipientEmail != null)
-                {
-                    _query["recipientEmail"] = request.RecipientEmail;
-                }
-                if (request.Before != null)
-                {
-                    _query["before"] = request.Before;
-                }
-                if (request.After != null)
-                {
-                    _query["after"] = request.After;
-                }
-                if (request.Limit != null)
-                {
-                    _query["limit"] = request.Limit.Value.ToString();
-                }
+                var _queryString = new Payroc.Core.QueryStringBuilder.Builder(capacity: 5)
+                    .Add("recipientName", request.RecipientName)
+                    .Add("recipientEmail", request.RecipientEmail)
+                    .Add("before", request.Before)
+                    .Add("after", request.After)
+                    .Add("limit", request.Limit)
+                    .MergeAdditional(options?.AdditionalQueryParameters)
+                    .Build();
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var httpRequest = await _client.CreateHttpRequestAsync(
                     new JsonRequest
                     {
@@ -86,7 +198,8 @@ public partial class SharingEventsClient
                             "payment-links/{0}/sharing-events",
                             ValueConvert.ToPathParameterString(request.PaymentLinkId)
                         ),
-                        Query = _query,
+                        QueryString = _queryString,
+                        Headers = _headers,
                         Options = options,
                     }
                 );
@@ -197,103 +310,14 @@ public partial class SharingEventsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<PaymentLinkEmailShareEvent> ShareAsync(
+    public WithRawResponseTask<PaymentLinkEmailShareEvent> ShareAsync(
         ShareSharingEventsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
-            {
-                var _headers = new Headers(
-                    new Dictionary<string, string>()
-                    {
-                        { "Idempotency-Key", request.IdempotencyKey },
-                    }
-                );
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.Environment.Api,
-                            Method = HttpMethod.Post,
-                            Path = string.Format(
-                                "payment-links/{0}/sharing-events",
-                                ValueConvert.ToPathParameterString(request.PaymentLinkId)
-                            ),
-                            Body = request.Body,
-                            Headers = _headers,
-                            ContentType = "application/json",
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<PaymentLinkEmailShareEvent>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new PayrocException("Failed to deserialize response", e);
-                    }
-                }
-
-                {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        switch (response.StatusCode)
-                        {
-                            case 400:
-                                throw new BadRequestError(
-                                    JsonUtils.Deserialize<FourHundred>(responseBody)
-                                );
-                            case 401:
-                                throw new UnauthorizedError(
-                                    JsonUtils.Deserialize<FourHundredOne>(responseBody)
-                                );
-                            case 403:
-                                throw new ForbiddenError(
-                                    JsonUtils.Deserialize<object>(responseBody)
-                                );
-                            case 404:
-                                throw new NotFoundError(
-                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
-                                );
-                            case 406:
-                                throw new NotAcceptableError(
-                                    JsonUtils.Deserialize<FourHundredSix>(responseBody)
-                                );
-                            case 409:
-                                throw new ConflictError(
-                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
-                                );
-                            case 415:
-                                throw new UnsupportedMediaTypeError(
-                                    JsonUtils.Deserialize<FourHundredFifteen>(responseBody)
-                                );
-                            case 500:
-                                throw new InternalServerError(
-                                    JsonUtils.Deserialize<FiveHundred>(responseBody)
-                                );
-                        }
-                    }
-                    catch (JsonException)
-                    {
-                        // unable to map error response, throwing generic error
-                    }
-                    throw new PayrocApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
-                }
-            })
-            .ConfigureAwait(false);
+        return new WithRawResponseTask<PaymentLinkEmailShareEvent>(
+            ShareAsyncCore(request, options, cancellationToken)
+        );
     }
 }

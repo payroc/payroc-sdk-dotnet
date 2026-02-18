@@ -21,7 +21,7 @@ public record FlatRateFees : IJsonOnDeserialized
     public required ProcessorFee StandardCards { get; set; }
 
     /// <summary>
-    /// Object that contains the fees for American Express transactions.
+    /// Polymorphic object that contains fees for American Express transactions.
     /// </summary>
     [JsonPropertyName("amex")]
     public FlatRateFeesAmex? Amex { get; set; }

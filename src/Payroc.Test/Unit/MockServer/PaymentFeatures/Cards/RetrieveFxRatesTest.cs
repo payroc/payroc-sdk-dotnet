@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using Payroc;
-using Payroc.Core;
 using Payroc.PaymentFeatures.Cards;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.PaymentFeatures.Cards;
 
@@ -20,15 +20,15 @@ public class RetrieveFxRatesTest : BaseMockServerTest
               "baseAmount": 10000,
               "baseCurrency": "USD",
               "paymentMethod": {
+                "type": "card",
                 "cardDetails": {
+                  "entryMethod": "raw",
                   "device": {
                     "model": "bbposChp",
                     "serialNumber": "1850010868"
                   },
-                  "rawData": "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF",
-                  "entryMethod": "raw"
-                },
-                "type": "card"
+                  "rawData": "A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF"
+                }
               }
             }
             """;
@@ -44,17 +44,11 @@ public class RetrieveFxRatesTest : BaseMockServerTest
                 "causeOfRejection": "Service unavailable"
               },
               "dccOffer": {
-                "accepted": true,
                 "offerReference": "DCC123456789",
                 "fxAmount": 16125,
                 "fxCurrency": "JPY",
-                "fxCurrencyCode": "392",
-                "fxCurrencyExponent": 0,
                 "fxRate": 161.2542,
-                "markup": 3,
-                "markupText": "3.5% mark-up applied.",
-                "provider": "FEXCO",
-                "source": "REUTERS WHOLESALE INTERBANK"
+                "markup": 3
               },
               "cardInfo": {
                 "type": "MASTERCARD",
@@ -119,9 +113,6 @@ public class RetrieveFxRatesTest : BaseMockServerTest
                 ),
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<FxRate>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -12,7 +12,12 @@ public record SecureTokenWithAccountType : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Object that contains information about the payment method that we tokenized.
+    /// Polymorphic object that contains the payment method that we tokenized.
+    ///
+    /// The value of the type parameter determines which variant you should use:
+    /// -	`ach` - Automated Clearing House (ACH) details
+    /// -	`pad` - Pre-authorized debit (PAD) details
+    /// -	`card` - Payment card details
     /// </summary>
     [JsonPropertyName("source")]
     public SecureTokenWithAccountTypeSource? Source { get; set; }

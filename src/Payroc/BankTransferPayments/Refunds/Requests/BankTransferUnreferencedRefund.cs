@@ -26,7 +26,11 @@ public record BankTransferUnreferencedRefund
     public BankTransferCustomer? Customer { get; set; }
 
     /// <summary>
-    /// Object that contains information about how the merchant refunds the customer.
+    /// Polymorphic object that contains payment details for the refund.
+    ///
+    /// The value of the type parameter determines which variant you should use:
+    /// -	`ach` - Automated Clearing House (ACH) details
+    /// -	`secureToken` - Secure token details
     /// </summary>
     [JsonPropertyName("refundMethod")]
     public required BankTransferUnreferencedRefundRefundMethod RefundMethod { get; set; }

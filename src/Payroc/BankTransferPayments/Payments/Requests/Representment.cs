@@ -19,7 +19,11 @@ public record Representment
     public required string IdempotencyKey { get; set; }
 
     /// <summary>
-    /// Object that contains information about the customer's payment details.
+    /// Polymorphic object that contains the customer's updated payment details.
+    ///
+    /// The value of the type parameter determines which variant you should use:
+    /// -	`ach` - Automated Clearing House (ACH) details
+    /// -	`secureToken` - Secure token details
     /// </summary>
     [JsonPropertyName("paymentMethod")]
     public RepresentmentPaymentMethod? PaymentMethod { get; set; }

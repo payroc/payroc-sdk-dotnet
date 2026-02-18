@@ -36,7 +36,11 @@ public record ItemizedBreakdownRequest : IJsonOnDeserialized
     public IEnumerable<LineItemRequest>? Items { get; set; }
 
     /// <summary>
-    /// List of taxes.
+    /// Array of polymorphic tax objects, which contain information about a tax.
+    ///
+    /// The value of the type parameter determines which variant you should use:
+    /// -	`amount` - Tax is a fixed amount.
+    /// -	`rate` - Tax is a percentage.
     /// </summary>
     [JsonPropertyName("taxes")]
     public IEnumerable<Tax>? Taxes { get; set; }

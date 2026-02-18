@@ -26,7 +26,11 @@ public record BalanceInquiry
     public Customer? Customer { get; set; }
 
     /// <summary>
-    /// Object that contains information about the card.
+    /// Polymorphic object that contains payment details.
+    ///
+    /// The value of the type parameter determines which variant you should use:
+    /// -	`card` - Payment card details
+    /// -	`singleUseToken` - Single-use token details
     /// </summary>
     [JsonPropertyName("card")]
     public required BalanceInquiryCard Card { get; set; }

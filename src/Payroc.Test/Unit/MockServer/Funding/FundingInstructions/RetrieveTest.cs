@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
-using Payroc.Core;
 using Payroc.Funding.FundingInstructions;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Funding.FundingInstructions;
 
@@ -14,10 +13,6 @@ public class RetrieveTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "instructionId": 64643131,
-              "createdDate": "2024-07-02T15:30:00.000Z",
-              "lastModifiedDate": "2024-07-02T15:30:00.000Z",
-              "status": "accepted",
               "merchants": [
                 {
                   "merchantId": "4525644354",
@@ -32,12 +27,7 @@ public class RetrieveTest : BaseMockServerTest
                         "yourCustomField": "abc123"
                       }
                     }
-                  ],
-                  "link": {
-                    "rel": "merchant",
-                    "method": "get",
-                    "href": "https://api.payroc.com/v1/processing-accounts/4525644354"
-                  }
+                  ]
                 }
               ],
               "metadata": {
@@ -63,9 +53,6 @@ public class RetrieveTest : BaseMockServerTest
         var response = await Client.Funding.FundingInstructions.RetrieveAsync(
             new RetrieveFundingInstructionsRequest { InstructionId = 1 }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Instruction>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
 using Payroc.Boarding.ProcessingAccounts;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Boarding.ProcessingAccounts;
 
@@ -14,23 +13,7 @@ public class RetrieveTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "processingAccountId": "38765",
-              "createdDate": "2024-07-02T12:00:00.000Z",
-              "lastModifiedDate": "2024-07-02T12:00:00.000Z",
-              "status": "approved",
               "doingBusinessAs": "Pizza Doe",
-              "owners": [
-                {
-                  "ownerId": 4564,
-                  "firstName": "Jane",
-                  "lastName": "Doe",
-                  "link": {
-                    "rel": "owner",
-                    "href": "https://api.payroc.com/v1/owners/1543",
-                    "method": "get"
-                  }
-                }
-              ],
               "website": "www.example.com",
               "businessType": "restaurant",
               "categoryCode": 5999,
@@ -48,12 +31,11 @@ public class RetrieveTest : BaseMockServerTest
               },
               "contactMethods": [
                 {
-                  "value": "jane.doe@example.com",
-                  "type": "email"
+                  "type": "email",
+                  "value": "jane.doe@example.com"
                 }
               ],
               "processing": {
-                "merchantId": "444412365478965",
                 "transactionAmounts": {
                   "average": 5000,
                   "highest": 10000
@@ -116,21 +98,9 @@ public class RetrieveTest : BaseMockServerTest
                 }
               },
               "funding": {
-                "status": "enabled",
                 "fundingSchedule": "nextday",
                 "acceleratedFundingFee": 1999,
-                "dailyDiscount": false,
-                "fundingAccounts": [
-                  {
-                    "fundingAccountId": 123,
-                    "status": "pending",
-                    "link": {
-                      "rel": "fundingAccount",
-                      "method": "get",
-                      "href": "https://api.payroc.com/v1/funding-accounts/123"
-                    }
-                  }
-                ]
+                "dailyDiscount": false
               },
               "pricing": {
                 "link": {
@@ -139,25 +109,13 @@ public class RetrieveTest : BaseMockServerTest
                   "method": "get"
                 }
               },
-              "contacts": [
-                {
-                  "contactId": 1543,
-                  "firstName": "Jane",
-                  "lastName": "Doe",
-                  "link": {
-                    "rel": "contact",
-                    "href": "https://api.payroc.com/v1/contacts/1543",
-                    "method": "get"
-                  }
-                }
-              ],
               "signature": {
+                "type": "requestedViaDirectLink",
                 "link": {
                   "rel": "previous",
                   "method": "get",
                   "href": "<uri>"
-                },
-                "type": "requestedViaDirectLink"
+                }
               },
               "metadata": {
                 "customerId": "2345"
@@ -189,9 +147,6 @@ public class RetrieveTest : BaseMockServerTest
         var response = await Client.Boarding.ProcessingAccounts.RetrieveAsync(
             new RetrieveProcessingAccountsRequest { ProcessingAccountId = "38765" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<ProcessingAccount>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

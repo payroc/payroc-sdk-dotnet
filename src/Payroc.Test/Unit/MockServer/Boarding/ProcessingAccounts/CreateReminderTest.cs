@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using Payroc;
 using Payroc.Boarding.ProcessingAccounts;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Boarding.ProcessingAccounts;
 
@@ -20,7 +20,6 @@ public class CreateReminderTest : BaseMockServerTest
 
         const string mockResponse = """
             {
-              "reminderId": "1234567",
               "type": "pricingAgreement"
             }
             """;
@@ -54,12 +53,6 @@ public class CreateReminderTest : BaseMockServerTest
                 ),
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(
-                    JsonUtils.Deserialize<CreateReminderProcessingAccountsResponse>(mockResponse)
-                )
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

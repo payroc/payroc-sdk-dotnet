@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
-using Payroc.Core;
 using Payroc.Reporting.Settlement;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Reporting.Settlement;
 
@@ -18,14 +17,14 @@ public class RetrieveTransactionTest : BaseMockServerTest
               "type": "capture",
               "date": "2024-07-02",
               "amount": 4999,
-              "entryMethod": "barcodeRead",
+              "entryMethod": "ecommerce",
               "createdDate": "2024-07-02",
               "lastModifiedDate": "2024-07-02",
-              "status": "fullSuspense",
+              "status": "paid",
               "cashbackAmount": 0,
               "interchange": {
-                "basisPoint": 150,
-                "transactionFee": 50
+                "basisPoint": 0,
+                "transactionFee": 0
               },
               "currency": "USD",
               "merchant": {
@@ -45,17 +44,17 @@ public class RetrieveTransactionTest : BaseMockServerTest
                 "link": {
                   "rel": "achDeposit",
                   "method": "get",
-                  "href": "https://api.payroc.com/v1/ach-deposits/99?merchantId=4525644354"
+                  "href": "https://api.payroc.com/v1/ach-deposits/99"
                 }
               },
               "batch": {
-                "batchId": 1234,
+                "batchId": 12,
                 "date": "2024-07-02",
                 "cycle": "am",
                 "link": {
-                  "rel": "previous",
+                  "rel": "batch",
                   "method": "get",
-                  "href": "<uri>"
+                  "href": "https://api.payroc.com/v1/batches/12"
                 }
               },
               "card": {
@@ -63,17 +62,17 @@ public class RetrieveTransactionTest : BaseMockServerTest
                 "type": "visa",
                 "cvvPresenceIndicator": true,
                 "avsRequest": true,
-                "avsResponse": "avsResponse"
+                "avsResponse": ""
               },
               "authorization": {
                 "authorizationId": 303101,
                 "code": "A1B2C3",
                 "amount": 4999,
-                "avsResponseCode": "Y",
+                "avsResponseCode": "",
                 "link": {
-                  "rel": "previous",
+                  "rel": "authorization",
                   "method": "get",
-                  "href": "<uri>"
+                  "href": "https://api.payroc.com/v1/authorizations/303101"
                 }
               }
             }
@@ -91,9 +90,6 @@ public class RetrieveTransactionTest : BaseMockServerTest
         var response = await Client.Reporting.Settlement.RetrieveTransactionAsync(
             new RetrieveTransactionSettlementRequest { TransactionId = 1 }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Transaction>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

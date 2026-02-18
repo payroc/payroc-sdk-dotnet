@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using Payroc;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 using Payroc.Tokenization.SecureTokens;
 
 namespace Payroc.Test.Unit.MockServer.Tokenization.SecureTokens;
@@ -14,8 +14,8 @@ public class UpdateAccountTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "token": "abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890",
-              "type": "singleUseToken"
+              "type": "singleUseToken",
+              "token": "abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890"
             }
             """;
 
@@ -52,16 +52,17 @@ public class UpdateAccountTest : BaseMockServerTest
                 },
                 "contactMethods": [
                   {
-                    "value": "jane.doe@example.com",
-                    "type": "email"
+                    "type": "email",
+                    "value": "jane.doe@example.com"
                   }
                 ],
                 "notificationLanguage": "en"
               },
               "source": {
+                "type": "card",
                 "cardholderName": "Sarah Hazel Hopper",
                 "cardNumber": "4539858876047062",
-                "expiryDate": "1225",
+                "expiryDate": "1230",
                 "cardType": "cardType",
                 "currency": "AED",
                 "debit": true,
@@ -70,8 +71,7 @@ public class UpdateAccountTest : BaseMockServerTest
                   "amount": 87,
                   "percentage": 3,
                   "disclosure": "A 3% surcharge is applied to cover processing fees."
-                },
-                "type": "card"
+                }
               },
               "token": "296753123456",
               "status": "notValidated",
@@ -120,9 +120,6 @@ public class UpdateAccountTest : BaseMockServerTest
                 ),
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SecureToken>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

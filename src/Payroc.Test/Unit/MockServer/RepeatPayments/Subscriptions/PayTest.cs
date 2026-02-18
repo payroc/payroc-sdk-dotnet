@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using Payroc;
-using Payroc.Core;
 using Payroc.RepeatPayments.Subscriptions;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.RepeatPayments.Subscriptions;
 
@@ -99,9 +99,6 @@ public class PayTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SubscriptionPayment>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

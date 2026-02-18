@@ -53,7 +53,7 @@ public record OrderItem : IJsonOnDeserialized
     /// Quantity of the solution.
     /// </summary>
     [JsonPropertyName("solutionQuantity")]
-    public float? SolutionQuantity { get; set; }
+    public int? SolutionQuantity { get; set; }
 
     /// <summary>
     /// Indicates if the order contains a new item or a refurbished item.

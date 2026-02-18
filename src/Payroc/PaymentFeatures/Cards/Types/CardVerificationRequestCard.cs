@@ -9,7 +9,7 @@ using Payroc.Core;
 namespace Payroc.PaymentFeatures.Cards;
 
 /// <summary>
-/// Object that contains information about the card.
+/// Polymorphic object that contains payment details.
 /// </summary>
 [JsonConverter(typeof(CardVerificationRequestCard.JsonConverter))]
 [Serializable]

@@ -53,7 +53,7 @@ public record TerminalOrderOrderItemsItem : IJsonOnDeserialized
     /// Quantity of the solution.
     /// </summary>
     [JsonPropertyName("solutionQuantity")]
-    public float? SolutionQuantity { get; set; }
+    public int? SolutionQuantity { get; set; }
 
     /// <summary>
     /// Indicates if the order contains a new item or a refurbished item.
@@ -67,6 +67,9 @@ public record TerminalOrderOrderItemsItem : IJsonOnDeserialized
     [JsonPropertyName("solutionSetup")]
     public OrderItemSolutionSetup? SolutionSetup { get; set; }
 
+    /// <summary>
+    /// Polymorphic object that contains information about the processing terminal that the order is linked to.
+    /// </summary>
     [JsonPropertyName("links")]
     public IEnumerable<ProcessingTerminalSummary>? Links { get; set; }
 

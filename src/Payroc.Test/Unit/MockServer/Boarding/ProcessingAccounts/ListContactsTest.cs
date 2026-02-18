@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
 using Payroc.Boarding.ProcessingAccounts;
-using Payroc.Core;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Boarding.ProcessingAccounts;
 
@@ -31,7 +30,6 @@ public class ListContactsTest : BaseMockServerTest
               ],
               "data": [
                 {
-                  "contactId": 1543,
                   "type": "manager",
                   "firstName": "Jane",
                   "middleName": "Helen",
@@ -44,21 +42,20 @@ public class ListContactsTest : BaseMockServerTest
                   ],
                   "contactMethods": [
                     {
-                      "value": "2025550164",
-                      "type": "phone"
+                      "type": "phone",
+                      "value": "2025550164"
                     },
                     {
-                      "value": "8445557624",
-                      "type": "mobile"
+                      "type": "mobile",
+                      "value": "8445557624"
                     },
                     {
-                      "value": "jane.doe@example.com",
-                      "type": "email"
+                      "type": "email",
+                      "value": "jane.doe@example.com"
                     }
                   ]
                 },
                 {
-                  "contactId": 87926,
                   "type": "representative",
                   "firstName": "Fred",
                   "middleName": "Jim",
@@ -71,16 +68,16 @@ public class ListContactsTest : BaseMockServerTest
                   ],
                   "contactMethods": [
                     {
-                      "value": "2025550164",
-                      "type": "phone"
+                      "type": "phone",
+                      "value": "2025550164"
                     },
                     {
-                      "value": "8445557624",
-                      "type": "mobile"
+                      "type": "mobile",
+                      "value": "8445557624"
                     },
                     {
-                      "value": "jane.doe@example.com",
-                      "type": "email"
+                      "type": "email",
+                      "value": "jane.doe@example.com"
                     }
                   ]
                 }
@@ -114,10 +111,7 @@ public class ListContactsTest : BaseMockServerTest
                 Limit = 1,
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PaginatedContacts>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
@@ -142,7 +136,6 @@ public class ListContactsTest : BaseMockServerTest
               ],
               "data": [
                 {
-                  "contactId": 1543,
                   "type": "manager",
                   "firstName": "Jane",
                   "middleName": "Helen",
@@ -155,8 +148,8 @@ public class ListContactsTest : BaseMockServerTest
                   ],
                   "contactMethods": [
                     {
-                      "value": "jane.doe@example.com",
-                      "type": "email"
+                      "type": "email",
+                      "value": "jane.doe@example.com"
                     }
                   ]
                 }
@@ -190,9 +183,6 @@ public class ListContactsTest : BaseMockServerTest
                 Limit = 1,
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<PaginatedContacts>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

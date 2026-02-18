@@ -4,7 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.PayrocCloud.PaymentInstructions;
 
-public partial class PaymentInstructionsClient
+public partial class PaymentInstructionsClient : IPaymentInstructionsClient
 {
     private RawClient _client;
 
@@ -21,38 +21,7 @@ public partial class PaymentInstructionsClient
         }
     }
 
-    /// <summary>
-    /// Use this method to submit an instruction request to initiate a sale on a payment device.
-    ///
-    /// In the request, include the order amount and currency.
-    ///
-    /// When you send a successful request, our gateway returns information about the payment instruction and a paymentInstructionId, which you need for the following methods:
-    /// - [Retrieve payment instruction](https://docs.payroc.com/api/schema/payroc-cloud/payment-instructions/retrieve) - View the details of the payment instruction.
-    /// - [Cancel payment instruction](https://docs.payroc.com/api/schema/payroc-cloud/payment-instructions/delete) - Cancel the payment instruction.
-    /// </summary>
-    /// <example><code>
-    /// await client.PayrocCloud.PaymentInstructions.SubmitAsync(
-    ///     new PaymentInstructionRequest
-    ///     {
-    ///         SerialNumber = "1850010868",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-    ///         Operator = "Jane",
-    ///         ProcessingTerminalId = "1234001",
-    ///         Order = new PaymentInstructionOrder
-    ///         {
-    ///             OrderId = "OrderRef6543",
-    ///             Amount = 4999,
-    ///             Currency = Currency.Usd,
-    ///         },
-    ///         CustomizationOptions = new CustomizationOptions
-    ///         {
-    ///             EntryMethod = CustomizationOptionsEntryMethod.DeviceRead,
-    ///         },
-    ///         AutoCapture = true,
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<PaymentInstruction> SubmitAsync(
+    private async Task<WithRawResponse<PaymentInstruction>> SubmitAsyncCore(
         PaymentInstructionRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -61,12 +30,13 @@ public partial class PaymentInstructionsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _headers = new Headers(
-                    new Dictionary<string, string>()
-                    {
-                        { "Idempotency-Key", request.IdempotencyKey },
-                    }
-                );
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add("Idempotency-Key", request.IdempotencyKey)
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -90,14 +60,30 @@ public partial class PaymentInstructionsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<PaymentInstruction>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<PaymentInstruction>(responseBody)!;
+                        return new WithRawResponse<PaymentInstruction>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new PayrocException("Failed to deserialize response", e);
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
@@ -152,22 +138,7 @@ public partial class PaymentInstructionsClient
             .ConfigureAwait(false);
     }
 
-    /// <summary>
-    /// Use this method to retrieve information about a payment instruction.
-    ///
-    /// To retrieve a payment instruction, you need its paymentInstructionId. Our gateway returned the paymentInstructionId in the response of the [Submit Payment Instruction](https://docs.payroc.com/api/schema/payroc-cloud/payment-instructions/submit) method.
-    ///
-    /// Our gateway returns the status of the payment instruction. If the payment device completed the payment instruction, the response also includes a link to the payment.
-    /// </summary>
-    /// <example><code>
-    /// await client.PayrocCloud.PaymentInstructions.RetrieveAsync(
-    ///     new RetrievePaymentInstructionsRequest
-    ///     {
-    ///         PaymentInstructionId = "e743a9165d134678a9100ebba3b29597",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<PaymentInstruction> RetrieveAsync(
+    private async Task<WithRawResponse<PaymentInstruction>> RetrieveAsyncCore(
         RetrievePaymentInstructionsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -176,6 +147,12 @@ public partial class PaymentInstructionsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -186,6 +163,7 @@ public partial class PaymentInstructionsClient
                                 "payment-instructions/{0}",
                                 ValueConvert.ToPathParameterString(request.PaymentInstructionId)
                             ),
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -196,14 +174,30 @@ public partial class PaymentInstructionsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<PaymentInstruction>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<PaymentInstruction>(responseBody)!;
+                        return new WithRawResponse<PaymentInstruction>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new PayrocException("Failed to deserialize response", e);
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
@@ -251,6 +245,74 @@ public partial class PaymentInstructionsClient
     }
 
     /// <summary>
+    /// Use this method to submit an instruction request to initiate a sale on a payment device.
+    ///
+    /// In the request, include the order amount and currency.
+    ///
+    /// When you send a successful request, our gateway returns information about the payment instruction and a paymentInstructionId, which you need for the following methods:
+    /// - [Retrieve payment instruction](https://docs.payroc.com/api/schema/payroc-cloud/payment-instructions/retrieve) - View the details of the payment instruction.
+    /// - [Cancel payment instruction](https://docs.payroc.com/api/schema/payroc-cloud/payment-instructions/delete) - Cancel the payment instruction.
+    /// </summary>
+    /// <example><code>
+    /// await client.PayrocCloud.PaymentInstructions.SubmitAsync(
+    ///     new PaymentInstructionRequest
+    ///     {
+    ///         SerialNumber = "1850010868",
+    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         Operator = "Jane",
+    ///         ProcessingTerminalId = "1234001",
+    ///         Order = new PaymentInstructionOrder
+    ///         {
+    ///             OrderId = "OrderRef6543",
+    ///             Amount = 4999,
+    ///             Currency = Currency.Usd,
+    ///         },
+    ///         CustomizationOptions = new CustomizationOptions
+    ///         {
+    ///             EntryMethod = CustomizationOptionsEntryMethod.DeviceRead,
+    ///         },
+    ///         AutoCapture = true,
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<PaymentInstruction> SubmitAsync(
+        PaymentInstructionRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<PaymentInstruction>(
+            SubmitAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Use this method to retrieve information about a payment instruction.
+    ///
+    /// To retrieve a payment instruction, you need its paymentInstructionId. Our gateway returned the paymentInstructionId in the response of the [Submit Payment Instruction](https://docs.payroc.com/api/schema/payroc-cloud/payment-instructions/submit) method.
+    ///
+    /// Our gateway returns the status of the payment instruction. If the payment device completed the payment instruction, the response also includes a link to the payment.
+    /// </summary>
+    /// <example><code>
+    /// await client.PayrocCloud.PaymentInstructions.RetrieveAsync(
+    ///     new RetrievePaymentInstructionsRequest
+    ///     {
+    ///         PaymentInstructionId = "e743a9165d134678a9100ebba3b29597",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<PaymentInstruction> RetrieveAsync(
+        RetrievePaymentInstructionsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<PaymentInstruction>(
+            RetrieveAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
     /// Use this method to cancel a payment instruction.
     ///
     /// You can cancel a payment instruction only if its status is `inProgress`. To retrieve the status of a payment instruction, use our [Retrieve Payment Instruction](https://docs.payroc.com/api/schema/payroc-cloud/payment-instructions/retrieve) method.
@@ -274,6 +336,12 @@ public partial class PaymentInstructionsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -284,6 +352,7 @@ public partial class PaymentInstructionsClient
                                 "payment-instructions/{0}",
                                 ValueConvert.ToPathParameterString(request.PaymentInstructionId)
                             ),
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken

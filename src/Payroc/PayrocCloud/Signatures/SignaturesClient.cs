@@ -4,7 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.PayrocCloud.Signatures;
 
-public partial class SignaturesClient
+public partial class SignaturesClient : ISignaturesClient
 {
     private RawClient _client;
 
@@ -21,20 +21,7 @@ public partial class SignaturesClient
         }
     }
 
-    /// <summary>
-    /// Use this method to retrieve a signature that a payment device captured using Payroc Cloud.
-    ///
-    /// Our gateway returns the following information about the signature:
-    /// - Image of the signature
-    /// - Format of the image
-    /// - Date that the device captured the image
-    /// </summary>
-    /// <example><code>
-    /// await client.PayrocCloud.Signatures.RetrieveAsync(
-    ///     new RetrieveSignaturesRequest { SignatureId = "JDN4ILZB0T" }
-    /// );
-    /// </code></example>
-    public async Task<RetrieveSignaturesResponse> RetrieveAsync(
+    private async Task<WithRawResponse<RetrieveSignaturesResponse>> RetrieveAsyncCore(
         RetrieveSignaturesRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -43,6 +30,12 @@ public partial class SignaturesClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -53,6 +46,7 @@ public partial class SignaturesClient
                                 "signatures/{0}",
                                 ValueConvert.ToPathParameterString(request.SignatureId)
                             ),
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -63,14 +57,32 @@ public partial class SignaturesClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<RetrieveSignaturesResponse>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<RetrieveSignaturesResponse>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<RetrieveSignaturesResponse>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new PayrocException("Failed to deserialize response", e);
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
@@ -115,5 +127,29 @@ public partial class SignaturesClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Use this method to retrieve a signature that a payment device captured using Payroc Cloud.
+    ///
+    /// Our gateway returns the following information about the signature:
+    /// - Image of the signature
+    /// - Format of the image
+    /// - Date that the device captured the image
+    /// </summary>
+    /// <example><code>
+    /// await client.PayrocCloud.Signatures.RetrieveAsync(
+    ///     new RetrieveSignaturesRequest { SignatureId = "JDN4ILZB0T" }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<RetrieveSignaturesResponse> RetrieveAsync(
+        RetrieveSignaturesRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<RetrieveSignaturesResponse>(
+            RetrieveAsyncCore(request, options, cancellationToken)
+        );
     }
 }

@@ -9,7 +9,13 @@ using Payroc.Core;
 namespace Payroc.PaymentFeatures.Cards;
 
 /// <summary>
-/// Object that contains information about the card.
+/// Polymorphic object that contains payment details.
+///
+/// The value of the type parameter determines which variant you should use:
+/// -	`card` - Payment card details
+/// -	`cardBin` - Bank identification number (BIN) of the payment card
+/// -	`secureToken` - Secure token details
+/// -	`digitalWallet` - Digital wallet details
 /// </summary>
 [JsonConverter(typeof(BinLookupCard.JsonConverter))]
 [Serializable]

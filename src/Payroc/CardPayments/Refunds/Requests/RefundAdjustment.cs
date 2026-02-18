@@ -25,7 +25,11 @@ public record RefundAdjustment
     public string? Operator { get; set; }
 
     /// <summary>
-    /// Array of objects that contain information about the adjustments to the refund.
+    /// Array of polymorphic objects that contain information about adjustments to the refund.
+    ///
+    /// The value of the type parameter determines which variant you should use:
+    /// -	`status` - Status of the transaction.
+    /// -	`customer` - Customer's contact information and shipping address.
     /// </summary>
     [JsonPropertyName("adjustments")]
     public IEnumerable<RefundAdjustmentAdjustmentsItem> Adjustments { get; set; } =

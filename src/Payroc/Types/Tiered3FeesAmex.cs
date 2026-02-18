@@ -9,7 +9,11 @@ using Payroc.Core;
 namespace Payroc;
 
 /// <summary>
-/// Object that contains the fees for American Express transactions.
+/// Polymorphic object that contains fees for American Express transactions.
+///
+/// The value of the type field determines which variant you should use:
+/// -	`optBlue` - Amex OptBlue pricing program.
+/// -	`direct` - Amex Direct pricing program.
 /// </summary>
 [JsonConverter(typeof(Tiered3FeesAmex.JsonConverter))]
 [Serializable]

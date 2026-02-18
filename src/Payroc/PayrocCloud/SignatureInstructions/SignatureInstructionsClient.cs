@@ -4,7 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.PayrocCloud.SignatureInstructions;
 
-public partial class SignatureInstructionsClient
+public partial class SignatureInstructionsClient : ISignatureInstructionsClient
 {
     private RawClient _client;
 
@@ -21,24 +21,7 @@ public partial class SignatureInstructionsClient
         }
     }
 
-    /// <summary>
-    /// Use this method to submit an instruction to capture a customer's signature on a payment device.
-    ///
-    /// Our gateway returns information about the signature instruction and a signatureInstructionId, which you need for the following methods:
-    /// - [Retrieve signature instruction](https://docs.payroc.com/api/schema/payroc-cloud/signature-instructions/retrieve) - View the details of the signature instruction.
-    /// - [Cancel signature instruction](https://docs.payroc.com/api/schema/payroc-cloud/signature-instructions/delete) - Cancel the signature instruction.
-    /// </summary>
-    /// <example><code>
-    /// await client.PayrocCloud.SignatureInstructions.SubmitAsync(
-    ///     new SignatureInstructionRequest
-    ///     {
-    ///         SerialNumber = "1850010868",
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-    ///         ProcessingTerminalId = "1234001",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<SignatureInstruction> SubmitAsync(
+    private async Task<WithRawResponse<SignatureInstruction>> SubmitAsyncCore(
         SignatureInstructionRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -47,12 +30,13 @@ public partial class SignatureInstructionsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _headers = new Headers(
-                    new Dictionary<string, string>()
-                    {
-                        { "Idempotency-Key", request.IdempotencyKey },
-                    }
-                );
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add("Idempotency-Key", request.IdempotencyKey)
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -76,14 +60,32 @@ public partial class SignatureInstructionsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<SignatureInstruction>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<SignatureInstruction>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<SignatureInstruction>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new PayrocException("Failed to deserialize response", e);
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
@@ -138,22 +140,7 @@ public partial class SignatureInstructionsClient
             .ConfigureAwait(false);
     }
 
-    /// <summary>
-    /// Use this method to retrieve information about a signature instruction.
-    ///
-    /// To retrieve a signature instruction, you need its signatureInstructionId. Our gateway returned the signatureInstructionId in the response of the [Submit Signature Instruction](https://docs.payroc.com/api/schema/payroc-cloud/signature-instructions/submit) method.
-    ///
-    /// Our gateway returns the status of the instruction. If the payment device completed the instruction, the response also includes a link to retrieve the signature.
-    /// </summary>
-    /// <example><code>
-    /// await client.PayrocCloud.SignatureInstructions.RetrieveAsync(
-    ///     new RetrieveSignatureInstructionsRequest
-    ///     {
-    ///         SignatureInstructionId = "a37439165d134678a9100ebba3b29597",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<SignatureInstruction> RetrieveAsync(
+    private async Task<WithRawResponse<SignatureInstruction>> RetrieveAsyncCore(
         RetrieveSignatureInstructionsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -162,6 +149,12 @@ public partial class SignatureInstructionsClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -172,6 +165,7 @@ public partial class SignatureInstructionsClient
                                 "signature-instructions/{0}",
                                 ValueConvert.ToPathParameterString(request.SignatureInstructionId)
                             ),
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken
@@ -182,14 +176,32 @@ public partial class SignatureInstructionsClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<SignatureInstruction>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<SignatureInstruction>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<SignatureInstruction>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new PayrocException("Failed to deserialize response", e);
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
@@ -237,6 +249,60 @@ public partial class SignatureInstructionsClient
     }
 
     /// <summary>
+    /// Use this method to submit an instruction to capture a customer's signature on a payment device.
+    ///
+    /// Our gateway returns information about the signature instruction and a signatureInstructionId, which you need for the following methods:
+    /// - [Retrieve signature instruction](https://docs.payroc.com/api/schema/payroc-cloud/signature-instructions/retrieve) - View the details of the signature instruction.
+    /// - [Cancel signature instruction](https://docs.payroc.com/api/schema/payroc-cloud/signature-instructions/delete) - Cancel the signature instruction.
+    /// </summary>
+    /// <example><code>
+    /// await client.PayrocCloud.SignatureInstructions.SubmitAsync(
+    ///     new SignatureInstructionRequest
+    ///     {
+    ///         SerialNumber = "1850010868",
+    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "1234001",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<SignatureInstruction> SubmitAsync(
+        SignatureInstructionRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<SignatureInstruction>(
+            SubmitAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Use this method to retrieve information about a signature instruction.
+    ///
+    /// To retrieve a signature instruction, you need its signatureInstructionId. Our gateway returned the signatureInstructionId in the response of the [Submit Signature Instruction](https://docs.payroc.com/api/schema/payroc-cloud/signature-instructions/submit) method.
+    ///
+    /// Our gateway returns the status of the instruction. If the payment device completed the instruction, the response also includes a link to retrieve the signature.
+    /// </summary>
+    /// <example><code>
+    /// await client.PayrocCloud.SignatureInstructions.RetrieveAsync(
+    ///     new RetrieveSignatureInstructionsRequest
+    ///     {
+    ///         SignatureInstructionId = "a37439165d134678a9100ebba3b29597",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<SignatureInstruction> RetrieveAsync(
+        RetrieveSignatureInstructionsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<SignatureInstruction>(
+            RetrieveAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
     /// Use this method to cancel a signature instruction.
     ///
     /// To cancel a signature instruction, you need its signatureInstructionId. Our gateway returned the signatureInstructionId in the response of the [Submit signature instruction](https://docs.payroc.com/api/schema/payroc-cloud/signature-instructions/submit) method.
@@ -258,6 +324,12 @@ public partial class SignatureInstructionsClient
         await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -268,6 +340,7 @@ public partial class SignatureInstructionsClient
                                 "signature-instructions/{0}",
                                 ValueConvert.ToPathParameterString(request.SignatureInstructionId)
                             ),
+                            Headers = _headers,
                             Options = options,
                         },
                         cancellationToken

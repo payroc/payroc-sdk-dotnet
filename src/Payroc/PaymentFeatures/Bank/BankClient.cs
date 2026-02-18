@@ -4,7 +4,7 @@ using Payroc.Core;
 
 namespace Payroc.PaymentFeatures.Bank;
 
-public partial class BankClient
+public partial class BankClient : IBankClient
 {
     private RawClient _client;
 
@@ -21,36 +21,7 @@ public partial class BankClient
         }
     }
 
-    /// <summary>
-    /// Use this method to verify a customer's bank account details.
-    ///
-    /// In the request, send the customer's bank account details. Our gateway can verify the following types of bank details:
-    /// - Automated Clearing House (ACH) details
-    /// - Pre-Authorized Debit (PAD) details
-    ///
-    /// In the response, our gateway indicates if the account details are valid and if you should use them in follow-on actions.
-    /// </summary>
-    /// <example><code>
-    /// await client.PaymentFeatures.Bank.VerifyAsync(
-    ///     new BankAccountVerificationRequest
-    ///     {
-    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-    ///         ProcessingTerminalId = "1234001",
-    ///         BankAccount = new BankAccountVerificationRequestBankAccount(
-    ///             new BankAccountVerificationRequestBankAccount.Pad(
-    ///                 new PadPayload
-    ///                 {
-    ///                     NameOnAccount = "Sarah Hazel Hopper",
-    ///                     AccountNumber = "1234567890",
-    ///                     TransitNumber = "76543",
-    ///                     InstitutionNumber = "543",
-    ///                 }
-    ///             )
-    ///         ),
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task<BankAccountVerificationResult> VerifyAsync(
+    private async Task<WithRawResponse<BankAccountVerificationResult>> VerifyAsyncCore(
         BankAccountVerificationRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -59,12 +30,13 @@ public partial class BankClient
         return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var _headers = new Headers(
-                    new Dictionary<string, string>()
-                    {
-                        { "Idempotency-Key", request.IdempotencyKey },
-                    }
-                );
+                var _headers = await new Payroc.Core.HeadersBuilder.Builder()
+                    .Add("Idempotency-Key", request.IdempotencyKey)
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
                 var response = await _client
                     .SendRequestAsync(
                         new JsonRequest
@@ -85,14 +57,32 @@ public partial class BankClient
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
                     {
-                        return JsonUtils.Deserialize<BankAccountVerificationResult>(responseBody)!;
+                        var responseData = JsonUtils.Deserialize<BankAccountVerificationResult>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<BankAccountVerificationResult>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
                     }
                     catch (JsonException e)
                     {
-                        throw new PayrocException("Failed to deserialize response", e);
+                        throw new PayrocApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
                     }
                 }
-
                 {
                     var responseBody = await response.Raw.Content.ReadAsStringAsync();
                     try
@@ -145,5 +135,45 @@ public partial class BankClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Use this method to verify a customer's bank account details.
+    ///
+    /// In the request, send the customer's bank account details. Our gateway can verify the following types of bank details:
+    /// - Automated Clearing House (ACH) details
+    /// - Pre-Authorized Debit (PAD) details
+    ///
+    /// In the response, our gateway indicates if the account details are valid and if you should use them in follow-on actions.
+    /// </summary>
+    /// <example><code>
+    /// await client.PaymentFeatures.Bank.VerifyAsync(
+    ///     new BankAccountVerificationRequest
+    ///     {
+    ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
+    ///         ProcessingTerminalId = "1234001",
+    ///         BankAccount = new BankAccountVerificationRequestBankAccount(
+    ///             new BankAccountVerificationRequestBankAccount.Pad(
+    ///                 new PadPayload
+    ///                 {
+    ///                     NameOnAccount = "Sarah Hazel Hopper",
+    ///                     AccountNumber = "1234567890",
+    ///                     TransitNumber = "76543",
+    ///                     InstitutionNumber = "543",
+    ///                 }
+    ///             )
+    ///         ),
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<BankAccountVerificationResult> VerifyAsync(
+        BankAccountVerificationRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<BankAccountVerificationResult>(
+            VerifyAsyncCore(request, options, cancellationToken)
+        );
     }
 }

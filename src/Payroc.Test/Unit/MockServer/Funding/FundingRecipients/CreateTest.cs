@@ -1,8 +1,8 @@
 using NUnit.Framework;
 using Payroc;
-using Payroc.Core;
 using Payroc.Funding.FundingRecipients;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Funding.FundingRecipients;
 
@@ -15,10 +15,12 @@ public class CreateTest : BaseMockServerTest
         const string requestJson = """
             {
               "recipientType": "privateCorporation",
-              "taxId": "123456789",
-              "doingBusinessAs": "doingBusinessAs",
+              "taxId": "12-3456789",
+              "doingBusinessAs": "Pizza Doe",
               "address": {
                 "address1": "1 Example Ave.",
+                "address2": "Example Address Line 2",
+                "address3": "Example Address Line 3",
                 "city": "Chicago",
                 "state": "Illinois",
                 "country": "US",
@@ -26,13 +28,21 @@ public class CreateTest : BaseMockServerTest
               },
               "contactMethods": [
                 {
-                  "value": "jane.doe@example.com",
-                  "type": "email"
+                  "type": "email",
+                  "value": "jane.doe@example.com"
+                },
+                {
+                  "type": "phone",
+                  "value": "2025550164"
                 }
               ],
+              "metadata": {
+                "yourCustomField": "abc123"
+              },
               "owners": [
                 {
                   "firstName": "Jane",
+                  "middleName": "Helen",
                   "lastName": "Doe",
                   "dateOfBirth": "1964-03-22",
                   "address": {
@@ -45,17 +55,24 @@ public class CreateTest : BaseMockServerTest
                   "identifiers": [
                     {
                       "type": "nationalId",
-                      "value": "xxxxx4320"
+                      "value": "000-00-4320"
                     }
                   ],
                   "contactMethods": [
                     {
-                      "value": "jane.doe@example.com",
-                      "type": "email"
+                      "type": "email",
+                      "value": "jane.doe@example.com"
+                    },
+                    {
+                      "type": "phone",
+                      "value": "2025550164"
                     }
                   ],
                   "relationship": {
-                    "isControlProng": true
+                    "equityPercentage": 48.5,
+                    "title": "CFO",
+                    "isControlProng": true,
+                    "isAuthorizedSignatory": false
                   }
                 }
               ],
@@ -76,10 +93,6 @@ public class CreateTest : BaseMockServerTest
 
         const string mockResponse = """
             {
-              "recipientId": 234,
-              "status": "approved",
-              "createdDate": "2024-07-02T15:30:00.000Z",
-              "lastModifiedDate": "2024-07-02T15:30:00.000Z",
               "recipientType": "privateCorporation",
               "taxId": "123456789",
               "charityId": "charityId",
@@ -95,43 +108,13 @@ public class CreateTest : BaseMockServerTest
               },
               "contactMethods": [
                 {
-                  "value": "jane.doe@example.com",
-                  "type": "email"
+                  "type": "email",
+                  "value": "jane.doe@example.com"
                 }
               ],
               "metadata": {
                 "yourCustomField": "abc123"
-              },
-              "owners": [
-                {
-                  "ownerId": 4564,
-                  "link": {
-                    "rel": "owner",
-                    "href": "https://api.payroc.com/v1/owners/4564",
-                    "method": "get"
-                  }
-                }
-              ],
-              "fundingAccounts": [
-                {
-                  "fundingAccountId": 123,
-                  "status": "approved",
-                  "link": {
-                    "rel": "fundingAccount",
-                    "href": "https://api.payroc.com/v1/funding-accounts/123",
-                    "method": "get"
-                  }
-                },
-                {
-                  "fundingAccountId": 124,
-                  "status": "rejected",
-                  "link": {
-                    "rel": "fundingAccount",
-                    "href": "https://api.payroc.com/v1/funding-accounts/124",
-                    "method": "get"
-                  }
-                }
-              ]
+              }
             }
             """;
 
@@ -157,11 +140,13 @@ public class CreateTest : BaseMockServerTest
             {
                 IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
                 RecipientType = CreateFundingRecipientRecipientType.PrivateCorporation,
-                TaxId = "123456789",
-                DoingBusinessAs = "doingBusinessAs",
+                TaxId = "12-3456789",
+                DoingBusinessAs = "Pizza Doe",
                 Address = new Address
                 {
                     Address1 = "1 Example Ave.",
+                    Address2 = "Example Address Line 2",
+                    Address3 = "Example Address Line 3",
                     City = "Chicago",
                     State = "Illinois",
                     Country = "US",
@@ -174,12 +159,17 @@ public class CreateTest : BaseMockServerTest
                             new ContactMethodEmail { Value = "jane.doe@example.com" }
                         )
                     ),
+                    new ContactMethod(
+                        new ContactMethod.Phone(new ContactMethodPhone { Value = "2025550164" })
+                    ),
                 },
+                Metadata = new Dictionary<string, string>() { { "yourCustomField", "abc123" } },
                 Owners = new List<Owner>()
                 {
                     new Owner
                     {
                         FirstName = "Jane",
+                        MiddleName = "Helen",
                         LastName = "Doe",
                         DateOfBirth = new DateOnly(1964, 3, 22),
                         Address = new Address
@@ -195,7 +185,7 @@ public class CreateTest : BaseMockServerTest
                             new Identifier
                             {
                                 Type = IdentifierType.NationalId,
-                                Value = "xxxxx4320",
+                                Value = "000-00-4320",
                             },
                         },
                         ContactMethods = new List<ContactMethod>()
@@ -205,8 +195,19 @@ public class CreateTest : BaseMockServerTest
                                     new ContactMethodEmail { Value = "jane.doe@example.com" }
                                 )
                             ),
+                            new ContactMethod(
+                                new ContactMethod.Phone(
+                                    new ContactMethodPhone { Value = "2025550164" }
+                                )
+                            ),
                         },
-                        Relationship = new OwnerRelationship { IsControlProng = true },
+                        Relationship = new OwnerRelationship
+                        {
+                            EquityPercentage = 48.5f,
+                            Title = "CFO",
+                            IsControlProng = true,
+                            IsAuthorizedSignatory = false,
+                        },
                     },
                 },
                 FundingAccounts = new List<FundingAccount>()
@@ -226,9 +227,6 @@ public class CreateTest : BaseMockServerTest
                 },
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<FundingRecipient>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

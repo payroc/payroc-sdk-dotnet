@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
-using Payroc.Core;
 using Payroc.Reporting.Settlement;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.Reporting.Settlement;
 
@@ -18,10 +17,10 @@ public class RetrieveBatchTest : BaseMockServerTest
               "date": "2024-07-02",
               "createdDate": "2024-07-02",
               "lastModifiedDate": "2024-07-02",
-              "saleAmount": 1,
-              "heldAmount": 1,
-              "returnAmount": 1,
-              "transactionCount": 1,
+              "saleAmount": 1000000,
+              "heldAmount": 1000000,
+              "returnAmount": 1000000,
+              "transactionCount": 1000000,
               "currency": "currency",
               "merchant": {
                 "merchantId": "4525644354",
@@ -60,9 +59,6 @@ public class RetrieveBatchTest : BaseMockServerTest
         var response = await Client.Reporting.Settlement.RetrieveBatchAsync(
             new RetrieveBatchSettlementRequest { BatchId = 1 }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Batch>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

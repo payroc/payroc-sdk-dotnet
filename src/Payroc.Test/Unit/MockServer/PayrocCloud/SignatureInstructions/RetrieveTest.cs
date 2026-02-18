@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Payroc;
-using Payroc.Core;
 using Payroc.PayrocCloud.SignatureInstructions;
 using Payroc.Test.Unit.MockServer;
+using Payroc.Test.Utils;
 
 namespace Payroc.Test.Unit.MockServer.PayrocCloud.SignatureInstructions;
 
@@ -45,9 +44,6 @@ public class RetrieveTest : BaseMockServerTest
                 SignatureInstructionId = "a37439165d134678a9100ebba3b29597",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SignatureInstruction>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

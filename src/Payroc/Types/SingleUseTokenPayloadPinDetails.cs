@@ -8,6 +8,13 @@ using Payroc.Core;
 
 namespace Payroc;
 
+/// <summary>
+/// Polymorphic object that contains information about a customer's PIN.
+///
+/// The value of the dataFormat parameter determines which variant you should use:
+/// - `dukpt` - PIN information is encrypted.
+/// - `raw` - PIN information is unencrypted.
+/// </summary>
 [JsonConverter(typeof(SingleUseTokenPayloadPinDetails.JsonConverter))]
 [Serializable]
 public record SingleUseTokenPayloadPinDetails
