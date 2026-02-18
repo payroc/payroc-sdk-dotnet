@@ -3,5 +3,5 @@ namespace Payroc;
 [Serializable]
 internal class Version
 {
-    public const string Current = "0.0.3696";
+    public const string Current = "0.0.3765";
 }

@@ -546,7 +546,7 @@ In the request, include the attachment that you want to upload and the following
 - **type** - Type of attachment that you want to upload.
 - **description** - Short description of the attachment.  
 
-In the response, our gateway returns information about the attachment including its upload status and an attachmentId that you can use to [Retrieve the details of the Attachment](https://docs.payroc.com/api/schema/attachments/get-attachment).
+In the response, our gateway returns information about the attachment including its upload status and an attachmentId that you can use to [Retrieve the details of the Attachment](https://docs.payroc.com/api/schema/attachments/retrieve).
 </dd>
 </dl>
 </dd>
@@ -598,7 +598,7 @@ await client.Attachments.UploadToProcessingAccountAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Attachments.<a href="/src/Payroc/Attachments/AttachmentsClient.cs">GetAttachmentAsync</a>(GetAttachmentRequest { ... }) -> WithRawResponseTask&lt;Attachment&gt;</code></summary>
+<details><summary><code>client.Attachments.<a href="/src/Payroc/Attachments/AttachmentsClient.cs">RetrieveAsync</a>(RetrieveAttachmentsRequest { ... }) -> WithRawResponseTask&lt;Attachment&gt;</code></summary>
 <dl>
 <dd>
 
@@ -629,7 +629,7 @@ Our gateway returns information about the attachment, including its upload statu
 <dd>
 
 ```csharp
-await client.Attachments.GetAttachmentAsync(new GetAttachmentRequest { AttachmentId = "12876" });
+await client.Attachments.RetrieveAsync(new RetrieveAttachmentsRequest { AttachmentId = "12876" });
 ```
 </dd>
 </dl>
@@ -644,7 +644,7 @@ await client.Attachments.GetAttachmentAsync(new GetAttachmentRequest { Attachmen
 <dl>
 <dd>
 
-**request:** `GetAttachmentRequest` 
+**request:** `RetrieveAttachmentsRequest` 
     
 </dd>
 </dl>

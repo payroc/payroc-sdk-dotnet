@@ -4,7 +4,7 @@ using Payroc.Core;
 namespace Payroc.Attachments;
 
 [Serializable]
-public record GetAttachmentRequest
+public record RetrieveAttachmentsRequest
 {
     /// <summary>
     /// Unique identifier of the attachment
