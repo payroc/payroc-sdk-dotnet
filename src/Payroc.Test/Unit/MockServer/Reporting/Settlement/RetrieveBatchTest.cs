@@ -13,15 +13,15 @@ public class RetrieveBatchTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "batchId": 123,
+              "batchId": 65,
               "date": "2024-07-02",
               "createdDate": "2024-07-02",
               "lastModifiedDate": "2024-07-02",
-              "saleAmount": 1000000,
-              "heldAmount": 1000000,
-              "returnAmount": 1000000,
-              "transactionCount": 1000000,
-              "currency": "currency",
+              "saleAmount": 100,
+              "heldAmount": 0,
+              "returnAmount": 0,
+              "transactionCount": 10,
+              "currency": "USD",
               "merchant": {
                 "merchantId": "4525644354",
                 "doingBusinessAs": "Pizza Doe",
@@ -36,12 +36,12 @@ public class RetrieveBatchTest : BaseMockServerTest
                 {
                   "rel": "transactions",
                   "method": "get",
-                  "href": "https://api.payroc.com/v1/transactions?batchId=123"
+                  "href": "https://api.payroc.com/v1/transactions?batchId=65"
                 },
                 {
                   "rel": "authorizations",
                   "method": "get",
-                  "href": "https://api.payroc.com/v1/authorizations?batchId=123"
+                  "href": "https://api.payroc.com/v1/authorizations?batchId=65"
                 }
               ]
             }
