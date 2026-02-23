@@ -44,7 +44,7 @@ public class RetrieveFxRatesTest : BaseMockServerTest
                 "causeOfRejection": "Service unavailable"
               },
               "dccOffer": {
-                "offerReference": "DCC123456789",
+                "offerReference": "3396977e-40b9-4b26-8a3f-c25bc1280ee2",
                 "fxAmount": 16125,
                 "fxCurrency": "JPY",
                 "fxRate": 161.2542,
