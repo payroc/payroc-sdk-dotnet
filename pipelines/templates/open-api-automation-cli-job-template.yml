@@ -43,6 +43,8 @@ jobs:
   dependsOn: ${{ parameters.dependsOn }}
   pool:
     name: onprem-linux-elksdx
+  workspace:
+    clean: all
 
   steps:
     - checkout: none
@@ -74,9 +76,18 @@ jobs:
       displayName: Pull Docker Image
 
     - script: |
+        # Use branch name for container naming (sanitize special characters)
+        BRANCH_NAME=$(echo "$(Build.SourceBranchName)" | sed 's/[^a-zA-Z0-9._-]/-/g')
+        CONTAINER_NAME="${{ parameters.containerNamePrefix }}-${{ parameters.jobName }}-$BRANCH_NAME"
+        echo "##vso[task.setvariable variable=CONTAINER_NAME]$CONTAINER_NAME"
+        docker rm -f "$CONTAINER_NAME" 2>/dev/null || true
+      displayName: 'Cleanup & Generate Unique Name'
+      condition: always()
+
+    - script: |
         echo "Running CLI container..."
         
-        cmd="docker run --rm --name \"${{ parameters.containerNamePrefix }}-${{ parameters.jobName }}\" \
+        cmd="docker run --rm --name \"$(CONTAINER_NAME)\" \
           -e \"GITHUB_BOT_USERNAME=$GITHUB_BOT_USERNAME\" \
           -e \"GITHUB_BOT_TOKEN=$GITHUB_BOT_TOKEN\" \
           -e \"GITHUB_AUTHOR_NAME=$GITHUB_AUTHOR_NAME\" \
@@ -88,6 +99,7 @@ jobs:
           -e \"PAYROC_API_KEY_PAYMENTS=$PAYROC_API_KEY_PAYMENTS\" \
           -e \"TERMINAL_ID_AVS=$TERMINAL_ID_AVS\" \
           -e \"TERMINAL_ID_NO_AVS=$TERMINAL_ID_NO_AVS\" \
+          -e \"NUGET_API_KEY=$NUGET_API_KEY\" \
           \"${{ parameters.artifactoryRepo }}/${{ parameters.imageName }}:${{ parameters.imageTag }}\" \
           \"${{ parameters.cliCommand }}\" \
           --environment=Prod"
@@ -122,4 +134,5 @@ jobs:
         PAYROC_API_KEY_PAYMENTS: $(PAYROC_API_KEY_PAYMENTS)
         TERMINAL_ID_AVS: $(TERMINAL_ID_AVS)
         TERMINAL_ID_NO_AVS: $(TERMINAL_ID_NO_AVS)
+        NUGET_API_KEY: $(NUGET_API_KEY)
       displayName: Run CLI Command
