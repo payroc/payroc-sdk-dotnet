@@ -18,7 +18,7 @@ public record BankTransferRefundOrder : IJsonOnDeserialized
     /// Unique identifier that the merchant assigned to the transaction.
     /// </summary>
     [JsonPropertyName("orderId")]
-    public string? OrderId { get; set; }
+    public required string OrderId { get; set; }
 
     /// <summary>
     /// Date and time that we processed the transaction. We return this value in the ISO 8601 format.
@@ -31,16 +31,16 @@ public record BankTransferRefundOrder : IJsonOnDeserialized
     /// Description of the refund.
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; set; }
+    public required string Description { get; set; }
 
     /// <summary>
     /// Total amount of the transaction. The value is in the currency's lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("amount")]
-    public long? Amount { get; set; }
+    public required long Amount { get; set; }
 
     [JsonPropertyName("currency")]
-    public Currency? Currency { get; set; }
+    public required Currency Currency { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

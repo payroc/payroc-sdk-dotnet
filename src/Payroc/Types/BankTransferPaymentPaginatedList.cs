@@ -15,7 +15,7 @@ public record BankTransferPaymentPaginatedList : IJsonOnDeserialized
     /// Array of payments.
     /// </summary>
     [JsonPropertyName("data")]
-    public IEnumerable<BankTransferPayment>? Data { get; set; }
+    public IEnumerable<BankTransferPayment> Data { get; set; } = new List<BankTransferPayment>();
 
     /// <summary>
     /// Maximum number of results that we return for each page.

@@ -4,7 +4,7 @@ namespace Payroc.BankTransferPayments;
 
 public partial class BankTransferPaymentsClient : IBankTransferPaymentsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal BankTransferPaymentsClient(RawClient client)
     {

@@ -6,6 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.PayrocCloud.RefundInstructions;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RetrieveTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -15,11 +16,6 @@ public class RetrieveTest : BaseMockServerTest
             {
               "status": "completed",
               "errorMessage": "errorMessage",
-              "link": {
-                "rel": "refund",
-                "method": "GET",
-                "href": "https://api.payroc.com/v1/refunds/CD3HN88U9F"
-              },
               "refundInstructionId": "a37439165d134678a9100ebba3b29597"
             }
             """;

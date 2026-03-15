@@ -6,6 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Boarding.ProcessingAccounts;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ListProcessingAccountFundingAccountsTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -5,6 +5,7 @@ using Payroc.Test.Unit.MockServer;
 namespace Payroc.Test.Unit.MockServer.Funding.FundingInstructions;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class DeleteTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

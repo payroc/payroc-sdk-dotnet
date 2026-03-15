@@ -7,6 +7,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.RepeatPayments.Subscriptions;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -54,23 +55,13 @@ public class CreateTest : BaseMockServerTest
               "processingTerminalId": "1234001",
               "paymentPlan": {
                 "paymentPlanId": "PlanRef8765",
-                "name": "Monthly Premium Club subscription",
-                "link": {
-                  "rel": "self",
-                  "method": "GET",
-                  "href": "https://api.payroc.com/v1/processing-terminals/1234001/payment-plans/PlanRef8765"
-                }
+                "name": "Monthly Premium Club subscription"
               },
               "secureToken": {
                 "secureTokenId": "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
                 "customerName": "Sarah Hazel Hopper",
                 "token": "296753123456",
-                "status": "notValidated",
-                "link": {
-                  "rel": "self",
-                  "method": "GET",
-                  "href": "https://api.payroc.com/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
-                }
+                "status": "notValidated"
               },
               "name": "Premium Club",
               "description": "Premium Club subscription",
@@ -81,9 +72,6 @@ public class CreateTest : BaseMockServerTest
                 "description": "Initial setup fee for Premium Club subscription",
                 "breakdown": {
                   "subtotal": 4347,
-                  "convenienceFee": {
-                    "amount": 25
-                  },
                   "surcharge": {
                     "bypass": false
                   },
@@ -100,9 +88,6 @@ public class CreateTest : BaseMockServerTest
                 "description": "Premium Club subscription",
                 "breakdown": {
                   "subtotal": 4347,
-                  "convenienceFee": {
-                    "amount": 25
-                  },
                   "surcharge": {
                     "bypass": false
                   },
@@ -244,23 +229,13 @@ public class CreateTest : BaseMockServerTest
               "processingTerminalId": "1234001",
               "paymentPlan": {
                 "paymentPlanId": "PlanRef8765",
-                "name": "Monthly Premium Club subscription",
-                "link": {
-                  "rel": "self",
-                  "method": "GET",
-                  "href": "https://api.payroc.com/v1/processing-terminals/1234001/payment-plans/PlanRef8765"
-                }
+                "name": "Monthly Premium Club subscription"
               },
               "secureToken": {
                 "secureTokenId": "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
                 "customerName": "Sarah Hazel Hopper",
                 "token": "296753123456",
-                "status": "notValidated",
-                "link": {
-                  "rel": "self",
-                  "method": "GET",
-                  "href": "https://api.payroc.com/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
-                }
+                "status": "notValidated"
               },
               "name": "Premium Club",
               "description": "Premium Club subscription",
@@ -271,9 +246,6 @@ public class CreateTest : BaseMockServerTest
                 "description": "Initial setup fee for Premium Club subscription",
                 "breakdown": {
                   "subtotal": 4347,
-                  "convenienceFee": {
-                    "amount": 217
-                  },
                   "surcharge": {
                     "bypass": false
                   },
@@ -290,9 +262,6 @@ public class CreateTest : BaseMockServerTest
                 "description": "Premium Club subscription",
                 "breakdown": {
                   "subtotal": 4347,
-                  "convenienceFee": {
-                    "amount": 217
-                  },
                   "surcharge": {
                     "bypass": false
                   },

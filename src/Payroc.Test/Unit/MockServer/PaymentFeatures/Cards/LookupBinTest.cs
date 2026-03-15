@@ -7,6 +7,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.PaymentFeatures.Cards;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class LookupBinTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

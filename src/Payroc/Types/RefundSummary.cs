@@ -59,6 +59,7 @@ public record RefundSummary : IJsonOnDeserialized
     [JsonPropertyName("responseMessage")]
     public required string ResponseMessage { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

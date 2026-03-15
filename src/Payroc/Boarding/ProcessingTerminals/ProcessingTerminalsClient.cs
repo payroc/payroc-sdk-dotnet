@@ -6,7 +6,7 @@ namespace Payroc.Boarding.ProcessingTerminals;
 
 public partial class ProcessingTerminalsClient : IProcessingTerminalsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ProcessingTerminalsClient(RawClient client)
     {
@@ -54,7 +54,9 @@ public partial class ProcessingTerminalsClient : IProcessingTerminalsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<ProcessingTerminal>(responseBody)!;
@@ -82,7 +84,9 @@ public partial class ProcessingTerminalsClient : IProcessingTerminalsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -160,7 +164,9 @@ public partial class ProcessingTerminalsClient : IProcessingTerminalsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<HostConfiguration>(responseBody)!;
@@ -188,7 +194,9 @@ public partial class ProcessingTerminalsClient : IProcessingTerminalsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)

@@ -42,6 +42,7 @@ public record SecureTokenSummary : IJsonOnDeserialized
     [JsonPropertyName("status")]
     public required SecureTokenSummaryStatus Status { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

@@ -191,13 +191,24 @@ public record ProcessingTerminalBatchClosure
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'batchCloseType' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("batchCloseType");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "automatic" => json.Deserialize<Payroc.SchemasAutomaticBatchClose?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize Payroc.SchemasAutomaticBatchClose"
-                    ),
-                "manual" => json.Deserialize<Payroc.SchemasManualBatchClose?>(options)
+                "automatic" =>
+                    jsonWithoutDiscriminator.Deserialize<Payroc.SchemasAutomaticBatchClose?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize Payroc.SchemasAutomaticBatchClose"
+                        ),
+                "manual" => jsonWithoutDiscriminator.Deserialize<Payroc.SchemasManualBatchClose?>(
+                    options
+                )
                     ?? throw new JsonException(
                         "Failed to deserialize Payroc.SchemasManualBatchClose"
                     ),

@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<PricingAgreementUs40Version>))]
+[JsonConverter(typeof(PricingAgreementUs40Version.PricingAgreementUs40VersionSerializer))]
 [Serializable]
 public readonly record struct PricingAgreementUs40Version : IStringEnum
 {
@@ -49,6 +50,33 @@ public readonly record struct PricingAgreementUs40Version : IStringEnum
     public static explicit operator string(PricingAgreementUs40Version value) => value.Value;
 
     public static explicit operator PricingAgreementUs40Version(string value) => new(value);
+
+    internal class PricingAgreementUs40VersionSerializer
+        : JsonConverter<PricingAgreementUs40Version>
+    {
+        public override PricingAgreementUs40Version Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new PricingAgreementUs40Version(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            PricingAgreementUs40Version value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

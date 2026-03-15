@@ -6,6 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Boarding.ProcessingAccounts;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetProcessingAccountPricingAgreementTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -25,7 +26,8 @@ public class GetProcessingAccountPricingAgreementTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,

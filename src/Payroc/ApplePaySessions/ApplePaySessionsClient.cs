@@ -6,7 +6,7 @@ namespace Payroc.ApplePaySessions;
 
 public partial class ApplePaySessionsClient : IApplePaySessionsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ApplePaySessionsClient(RawClient client)
     {
@@ -56,7 +56,9 @@ public partial class ApplePaySessionsClient : IApplePaySessionsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<ApplePayResponseSession>(
@@ -86,7 +88,9 @@ public partial class ApplePaySessionsClient : IApplePaySessionsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)

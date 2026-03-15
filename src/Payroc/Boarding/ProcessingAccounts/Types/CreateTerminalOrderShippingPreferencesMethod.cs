@@ -1,9 +1,12 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.Boarding.ProcessingAccounts;
 
-[JsonConverter(typeof(StringEnumSerializer<CreateTerminalOrderShippingPreferencesMethod>))]
+[JsonConverter(
+    typeof(CreateTerminalOrderShippingPreferencesMethod.CreateTerminalOrderShippingPreferencesMethodSerializer)
+)]
 [Serializable]
 public readonly record struct CreateTerminalOrderShippingPreferencesMethod : IStringEnum
 {
@@ -59,6 +62,33 @@ public readonly record struct CreateTerminalOrderShippingPreferencesMethod : ISt
 
     public static explicit operator CreateTerminalOrderShippingPreferencesMethod(string value) =>
         new(value);
+
+    internal class CreateTerminalOrderShippingPreferencesMethodSerializer
+        : JsonConverter<CreateTerminalOrderShippingPreferencesMethod>
+    {
+        public override CreateTerminalOrderShippingPreferencesMethod Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new CreateTerminalOrderShippingPreferencesMethod(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            CreateTerminalOrderShippingPreferencesMethod value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

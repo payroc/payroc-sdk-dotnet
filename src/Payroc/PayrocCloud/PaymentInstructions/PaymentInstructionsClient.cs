@@ -6,7 +6,7 @@ namespace Payroc.PayrocCloud.PaymentInstructions;
 
 public partial class PaymentInstructionsClient : IPaymentInstructionsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PaymentInstructionsClient(RawClient client)
     {
@@ -57,7 +57,9 @@ public partial class PaymentInstructionsClient : IPaymentInstructionsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<PaymentInstruction>(responseBody)!;
@@ -85,7 +87,9 @@ public partial class PaymentInstructionsClient : IPaymentInstructionsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -171,7 +175,9 @@ public partial class PaymentInstructionsClient : IPaymentInstructionsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<PaymentInstruction>(responseBody)!;
@@ -199,7 +205,9 @@ public partial class PaymentInstructionsClient : IPaymentInstructionsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -363,7 +371,9 @@ public partial class PaymentInstructionsClient : IPaymentInstructionsClient
                     return;
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)

@@ -183,12 +183,19 @@ public record Pricing
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "intent" => json.Deserialize<Payroc.PricingTemplate?>(options)
+                "intent" => jsonWithoutDiscriminator.Deserialize<Payroc.PricingTemplate?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.PricingTemplate"),
-                "agreement" => json.Deserialize<Payroc.PricingAgreement?>(options)
-                    ?? throw new JsonException("Failed to deserialize Payroc.PricingAgreement"),
+                "agreement" => jsonWithoutDiscriminator.Deserialize<Payroc.PricingAgreement?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize Payroc.PricingAgreement"),
                 _ => json.Deserialize<object?>(options),
             };
             return new Pricing(discriminator, value);

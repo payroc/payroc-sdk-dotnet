@@ -1,0 +1,37 @@
+{
+  "channel": "web",
+  "processingTerminalId": "5834011",
+  "operator": "Postman",
+  "paymentMethod": {
+    "type": "pad",
+    "nameOnAccount": "McBain Wolfcastle",
+    "accountNumber": "76328754",
+    "transitNumber": "12345",
+    "institutionNumber": "543",
+    "accountType": "checking"
+  },
+  "order": {
+    "orderId": "91",
+    "description": "Table",
+    "currency": "CAD",
+    "amount": 164
+  },
+  "customer": {
+    "firstName": "Delmer",
+    "lastName": "Ernser",
+    "billingAddress": {
+      "address1": "1156 Dicki Road",
+      "address2": "billing address2",
+      "city": "Eileenfort",
+      "state": "California",
+      "country": "US",
+      "postalCode": 90005
+    },
+    "contactMethods": [
+      {
+        "type": "email",
+        "value": "jane.doe@example.com"
+      }
+    ]
+  }
+}

@@ -266,15 +266,22 @@ public record ContactMethod
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "email" => json.Deserialize<Payroc.ContactMethodEmail?>(options)
+                "email" => jsonWithoutDiscriminator.Deserialize<Payroc.ContactMethodEmail?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.ContactMethodEmail"),
-                "phone" => json.Deserialize<Payroc.ContactMethodPhone?>(options)
+                "phone" => jsonWithoutDiscriminator.Deserialize<Payroc.ContactMethodPhone?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.ContactMethodPhone"),
-                "mobile" => json.Deserialize<Payroc.ContactMethodMobile?>(options)
-                    ?? throw new JsonException("Failed to deserialize Payroc.ContactMethodMobile"),
-                "fax" => json.Deserialize<Payroc.ContactMethodFax?>(options)
+                "mobile" => jsonWithoutDiscriminator.Deserialize<Payroc.ContactMethodMobile?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize Payroc.ContactMethodMobile"),
+                "fax" => jsonWithoutDiscriminator.Deserialize<Payroc.ContactMethodFax?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.ContactMethodFax"),
                 _ => json.Deserialize<object?>(options),
             };

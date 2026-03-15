@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<SwipedCardDetailsDowngradeTo>))]
+[JsonConverter(typeof(SwipedCardDetailsDowngradeTo.SwipedCardDetailsDowngradeToSerializer))]
 [Serializable]
 public readonly record struct SwipedCardDetailsDowngradeTo : IStringEnum
 {
@@ -51,6 +52,33 @@ public readonly record struct SwipedCardDetailsDowngradeTo : IStringEnum
     public static explicit operator string(SwipedCardDetailsDowngradeTo value) => value.Value;
 
     public static explicit operator SwipedCardDetailsDowngradeTo(string value) => new(value);
+
+    internal class SwipedCardDetailsDowngradeToSerializer
+        : JsonConverter<SwipedCardDetailsDowngradeTo>
+    {
+        public override SwipedCardDetailsDowngradeTo Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new SwipedCardDetailsDowngradeTo(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            SwipedCardDetailsDowngradeTo value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

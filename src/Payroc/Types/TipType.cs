@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<TipType>))]
+[JsonConverter(typeof(TipType.TipTypeSerializer))]
 [Serializable]
 public readonly record struct TipType : IStringEnum
 {
@@ -49,6 +50,32 @@ public readonly record struct TipType : IStringEnum
     public static explicit operator string(TipType value) => value.Value;
 
     public static explicit operator TipType(string value) => new(value);
+
+    internal class TipTypeSerializer : JsonConverter<TipType>
+    {
+        public override TipType Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new TipType(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            TipType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

@@ -183,11 +183,18 @@ public record Tiered4FeesAmex
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "optBlue" => json.Deserialize<Payroc.Tiered4AmexOptBlue?>(options)
-                    ?? throw new JsonException("Failed to deserialize Payroc.Tiered4AmexOptBlue"),
-                "direct" => json.Deserialize<Payroc.Tiered4AmexDirect?>(options)
+                "optBlue" => jsonWithoutDiscriminator.Deserialize<Payroc.Tiered4AmexOptBlue?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize Payroc.Tiered4AmexOptBlue"),
+                "direct" => jsonWithoutDiscriminator.Deserialize<Payroc.Tiered4AmexDirect?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.Tiered4AmexDirect"),
                 _ => json.Deserialize<object?>(options),
             };

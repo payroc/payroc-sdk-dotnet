@@ -6,7 +6,7 @@ namespace Payroc.PayrocCloud.Signatures;
 
 public partial class SignaturesClient : ISignaturesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal SignaturesClient(RawClient client)
     {
@@ -54,7 +54,9 @@ public partial class SignaturesClient : ISignaturesClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<RetrieveSignaturesResponse>(
@@ -84,7 +86,9 @@ public partial class SignaturesClient : ISignaturesClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)

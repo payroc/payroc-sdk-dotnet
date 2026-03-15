@@ -6,6 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Reporting.Settlement;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RetrieveAchDepositTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -29,12 +30,7 @@ public class RetrieveAchDepositTest : BaseMockServerTest
               "merchant": {
                 "merchantId": "4525644354",
                 "doingBusinessAs": "Pizza Doe",
-                "processingAccountId": 38765,
-                "link": {
-                  "rel": "processingAccount",
-                  "method": "get",
-                  "href": "https://api.payroc.com/v1/processing-accounts/38765"
-                }
+                "processingAccountId": 38765
               },
               "links": [
                 {

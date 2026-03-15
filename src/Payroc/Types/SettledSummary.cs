@@ -32,6 +32,7 @@ public record SettledSummary : IJsonOnDeserialized
     [JsonPropertyName("achDepositId")]
     public int? AchDepositId { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

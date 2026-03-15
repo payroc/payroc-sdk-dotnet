@@ -6,6 +6,7 @@ using Payroc.Test.Unit.MockServer;
 namespace Payroc.Test.Unit.MockServer.Boarding.PricingIntents;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class UpdateTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -14,7 +15,7 @@ public class UpdateTest : BaseMockServerTest
         const string requestJson = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -93,10 +94,10 @@ public class UpdateTest : BaseMockServerTest
                 new UpdatePricingIntentsRequest
                 {
                     PricingIntentId = "5",
-                    Body = new PricingIntent50
+                    Body = new PricingIntent52
                     {
-                        Country = PricingAgreementUs50Country.Us,
-                        Version = PricingAgreementUs50Version.Five0,
+                        Country = PricingAgreementUs52Country.Us,
+                        Version = PricingAgreementUs52Version.Five2,
                         Base = new BaseUs
                         {
                             AddressVerification = 5,
@@ -109,7 +110,7 @@ public class UpdateTest : BaseMockServerTest
                             PciNonCompliance = 4995,
                             MerchantAdvantage = 10,
                             PlatinumSecurity = new BaseUsPlatinumSecurity(
-                                new BaseUsPlatinumSecurity.Monthly(new BaseUsMonthly())
+                                new BaseUsPlatinumSecurity.Monthly(new PlatinumSecurityMonthly())
                             ),
                             Maintenance = 500,
                             Minimum = 100,
@@ -119,13 +120,13 @@ public class UpdateTest : BaseMockServerTest
                             Batch = 1500,
                             EarlyTermination = 57500,
                         },
-                        Processor = new PricingAgreementUs50Processor
+                        Processor = new PricingAgreementUs52Processor
                         {
-                            Card = new PricingAgreementUs50ProcessorCard(
-                                new PricingAgreementUs50ProcessorCard.InterchangePlus(
-                                    new InterchangePlus
+                            Card = new PricingAgreementUs52ProcessorCard(
+                                new PricingAgreementUs52ProcessorCard.InterchangePlus(
+                                    new InterchangePlusUs52
                                     {
-                                        Fees = new InterchangePlusFees
+                                        Fees = new InterchangePlusUs52Fees
                                         {
                                             MastercardVisaDiscover = new ProcessorFee(),
                                         },
@@ -148,9 +149,9 @@ public class UpdateTest : BaseMockServerTest
                                 },
                             },
                         },
-                        Gateway = new GatewayUs50
+                        Gateway = new GatewayUs52
                         {
-                            Fees = new GatewayUs50Fees
+                            Fees = new GatewayUs52Fees
                             {
                                 Monthly = 2000,
                                 Setup = 5000,

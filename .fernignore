@@ -16,6 +16,8 @@ src/Payroc.Test/Core/Pagination/OffsetPagerHeaderPropagationTest.cs
 src/Payroc.Test/Core/Pagination/CursorPagerHeaderPropagationTest.cs
 src/Payroc.TestHarness
 src/Payroc.TestFunctional
+src/Payroc.TestCommon
+src/Payroc.TestNuget
 pipelines/
 scripts/
 Payroc.slnx

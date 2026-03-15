@@ -6,6 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Reporting.Settlement;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RetrieveAuthorizationTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -22,12 +23,7 @@ public class RetrieveAuthorizationTest : BaseMockServerTest
               "batch": {
                 "batchId": 12,
                 "date": "2024-07-02",
-                "cycle": "am",
-                "link": {
-                  "rel": "batch",
-                  "method": "get",
-                  "href": "https://api.payroc.com/v1/batches/12"
-                }
+                "cycle": "am"
               },
               "card": {
                 "cardNumber": "453985******7062",
@@ -39,24 +35,14 @@ public class RetrieveAuthorizationTest : BaseMockServerTest
               "merchant": {
                 "merchantId": "4525644354",
                 "doingBusinessAs": "Pizza Doe",
-                "processingAccountId": 38765,
-                "link": {
-                  "rel": "processingAccount",
-                  "method": "get",
-                  "href": "https://api.payroc.com/v1/processing-accounts/38765"
-                }
+                "processingAccountId": 38765
               },
               "transaction": {
                 "transactionId": 442233,
                 "type": "capture",
                 "date": "2024-07-02",
                 "entryMethod": "swiped",
-                "amount": 100,
-                "link": {
-                  "rel": "transaction",
-                  "method": "get",
-                  "href": "https://api.payroc.com/v1/transactions/12345"
-                }
+                "amount": 100
               }
             }
             """;

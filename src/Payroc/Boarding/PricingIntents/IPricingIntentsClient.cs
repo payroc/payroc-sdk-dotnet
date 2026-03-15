@@ -17,7 +17,7 @@ public partial interface IPricingIntentsClient
     ///
     /// For each pricing intent, we also return its pricingIntentId which you can use to perform follow-on actions.
     /// </summary>
-    Task<PayrocPager<PricingIntent50>> ListAsync(
+    Task<PayrocPager<PricingIntent52>> ListAsync(
         ListPricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -39,7 +39,7 @@ public partial interface IPricingIntentsClient
     /// -	[Delete Pricing Intent](https://docs.payroc.com/api/schema/boarding/pricing-intents/delete) - Delete a pricing intent.
     /// -	[Partially Update Pricing Intent](https://docs.payroc.com/api/schema/boarding/pricing-intents/partially-update) - Partially update the details of a pricing intent.
     /// </summary>
-    WithRawResponseTask<PricingIntent50> CreateAsync(
+    WithRawResponseTask<PricingIntent52> CreateAsync(
         CreatePricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -57,7 +57,7 @@ public partial interface IPricingIntentsClient
     /// - Information about the fees, including the base fees, gateway fees, and processor fees.
     /// - Status of the pricing intent, including whether we approved the pricing intent.
     /// </summary>
-    WithRawResponseTask<PricingIntent50> RetrieveAsync(
+    WithRawResponseTask<PricingIntent52> RetrieveAsync(
         RetrievePricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -112,7 +112,7 @@ public partial interface IPricingIntentsClient
     /// - Custom name for the pricing intent.
     /// - Additional services that merchants can sign up for.
     /// </summary>
-    WithRawResponseTask<PricingIntent50> PartiallyUpdateAsync(
+    WithRawResponseTask<PricingIntent52> PartiallyUpdateAsync(
         PartiallyUpdatePricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

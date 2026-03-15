@@ -6,6 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.PayrocCloud.SignatureInstructions;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RetrieveTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -15,11 +16,6 @@ public class RetrieveTest : BaseMockServerTest
             {
               "status": "completed",
               "errorMessage": "errorMessage",
-              "link": {
-                "rel": "signature",
-                "method": "GET",
-                "href": "https://api.payroc.com/v1/signatures/M2MJOG6O2Y"
-              },
               "signatureInstructionId": "a37439165d134678a9100ebba3b29597"
             }
             """;

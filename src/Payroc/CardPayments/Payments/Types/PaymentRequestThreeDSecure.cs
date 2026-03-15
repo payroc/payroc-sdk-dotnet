@@ -191,14 +191,22 @@ public record PaymentRequestThreeDSecure
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'serviceProvider' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("serviceProvider");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "gateway" => json.Deserialize<Payroc.GatewayThreeDSecure?>(options)
-                    ?? throw new JsonException("Failed to deserialize Payroc.GatewayThreeDSecure"),
-                "thirdParty" => json.Deserialize<Payroc.ThirdPartyThreeDSecure?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize Payroc.ThirdPartyThreeDSecure"
-                    ),
+                "gateway" => jsonWithoutDiscriminator.Deserialize<Payroc.GatewayThreeDSecure?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize Payroc.GatewayThreeDSecure"),
+                "thirdParty" =>
+                    jsonWithoutDiscriminator.Deserialize<Payroc.ThirdPartyThreeDSecure?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize Payroc.ThirdPartyThreeDSecure"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new PaymentRequestThreeDSecure(discriminator, value);

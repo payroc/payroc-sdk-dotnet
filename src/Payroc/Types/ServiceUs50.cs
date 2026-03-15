@@ -135,12 +135,19 @@ public record ServiceUs50
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'name' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("name");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "hardwareAdvantagePlan" => json.Deserialize<Payroc.HardwareAdvantagePlan?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize Payroc.HardwareAdvantagePlan"
-                    ),
+                "hardwareAdvantagePlan" =>
+                    jsonWithoutDiscriminator.Deserialize<Payroc.HardwareAdvantagePlan?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize Payroc.HardwareAdvantagePlan"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new ServiceUs50(discriminator, value);

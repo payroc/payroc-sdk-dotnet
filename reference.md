@@ -1759,7 +1759,7 @@ await client.Boarding.Owners.DeleteAsync(new DeleteOwnersRequest { OwnerId = 1 }
 </details>
 
 ## Boarding PricingIntents
-<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">ListAsync</a>(ListPricingIntentsRequest { ... }) -> PayrocPager&lt;PricingIntent50&gt;</code></summary>
+<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">ListAsync</a>(ListPricingIntentsRequest { ... }) -> PayrocPager&lt;PricingIntent52&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1829,7 +1829,7 @@ await client.Boarding.PricingIntents.ListAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">CreateAsync</a>(CreatePricingIntentsRequest { ... }) -> WithRawResponseTask&lt;PricingIntent50&gt;</code></summary>
+<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">CreateAsync</a>(CreatePricingIntentsRequest { ... }) -> WithRawResponseTask&lt;PricingIntent52&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1873,10 +1873,10 @@ await client.Boarding.PricingIntents.CreateAsync(
     new CreatePricingIntentsRequest
     {
         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-        Body = new PricingIntent50
+        Body = new PricingIntent52
         {
-            Country = PricingAgreementUs50Country.Us,
-            Version = PricingAgreementUs50Version.Five0,
+            Country = PricingAgreementUs52Country.Us,
+            Version = PricingAgreementUs52Version.Five2,
             Base = new BaseUs
             {
                 AddressVerification = 5,
@@ -1889,7 +1889,7 @@ await client.Boarding.PricingIntents.CreateAsync(
                 PciNonCompliance = 4995,
                 MerchantAdvantage = 10,
                 PlatinumSecurity = new BaseUsPlatinumSecurity(
-                    new BaseUsPlatinumSecurity.Monthly(new BaseUsMonthly())
+                    new BaseUsPlatinumSecurity.Monthly(new PlatinumSecurityMonthly())
                 ),
                 Maintenance = 500,
                 Minimum = 100,
@@ -1899,13 +1899,13 @@ await client.Boarding.PricingIntents.CreateAsync(
                 Batch = 1500,
                 EarlyTermination = 57500,
             },
-            Processor = new PricingAgreementUs50Processor
+            Processor = new PricingAgreementUs52Processor
             {
-                Card = new PricingAgreementUs50ProcessorCard(
-                    new PricingAgreementUs50ProcessorCard.InterchangePlus(
-                        new InterchangePlus
+                Card = new PricingAgreementUs52ProcessorCard(
+                    new PricingAgreementUs52ProcessorCard.InterchangePlus(
+                        new InterchangePlusUs52
                         {
-                            Fees = new InterchangePlusFees
+                            Fees = new InterchangePlusUs52Fees
                             {
                                 MastercardVisaDiscover = new ProcessorFee(),
                             },
@@ -1952,7 +1952,7 @@ await client.Boarding.PricingIntents.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">RetrieveAsync</a>(RetrievePricingIntentsRequest { ... }) -> WithRawResponseTask&lt;PricingIntent50&gt;</code></summary>
+<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">RetrieveAsync</a>(RetrievePricingIntentsRequest { ... }) -> WithRawResponseTask&lt;PricingIntent52&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2058,10 +2058,10 @@ await client.Boarding.PricingIntents.UpdateAsync(
     new UpdatePricingIntentsRequest
     {
         PricingIntentId = "5",
-        Body = new PricingIntent50
+        Body = new PricingIntent52
         {
-            Country = PricingAgreementUs50Country.Us,
-            Version = PricingAgreementUs50Version.Five0,
+            Country = PricingAgreementUs52Country.Us,
+            Version = PricingAgreementUs52Version.Five2,
             Base = new BaseUs
             {
                 AddressVerification = 5,
@@ -2074,7 +2074,7 @@ await client.Boarding.PricingIntents.UpdateAsync(
                 PciNonCompliance = 4995,
                 MerchantAdvantage = 10,
                 PlatinumSecurity = new BaseUsPlatinumSecurity(
-                    new BaseUsPlatinumSecurity.Monthly(new BaseUsMonthly())
+                    new BaseUsPlatinumSecurity.Monthly(new PlatinumSecurityMonthly())
                 ),
                 Maintenance = 500,
                 Minimum = 100,
@@ -2084,13 +2084,13 @@ await client.Boarding.PricingIntents.UpdateAsync(
                 Batch = 1500,
                 EarlyTermination = 57500,
             },
-            Processor = new PricingAgreementUs50Processor
+            Processor = new PricingAgreementUs52Processor
             {
-                Card = new PricingAgreementUs50ProcessorCard(
-                    new PricingAgreementUs50ProcessorCard.InterchangePlus(
-                        new InterchangePlus
+                Card = new PricingAgreementUs52ProcessorCard(
+                    new PricingAgreementUs52ProcessorCard.InterchangePlus(
+                        new InterchangePlusUs52
                         {
-                            Fees = new InterchangePlusFees
+                            Fees = new InterchangePlusUs52Fees
                             {
                                 MastercardVisaDiscover = new ProcessorFee(),
                             },
@@ -2113,9 +2113,9 @@ await client.Boarding.PricingIntents.UpdateAsync(
                     },
                 },
             },
-            Gateway = new GatewayUs50
+            Gateway = new GatewayUs52
             {
-                Fees = new GatewayUs50Fees
+                Fees = new GatewayUs52Fees
                 {
                     Monthly = 2000,
                     Setup = 5000,
@@ -2224,7 +2224,7 @@ await client.Boarding.PricingIntents.DeleteAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">PartiallyUpdateAsync</a>(PartiallyUpdatePricingIntentsRequest { ... }) -> WithRawResponseTask&lt;PricingIntent50&gt;</code></summary>
+<details><summary><code>client.Boarding.PricingIntents.<a href="/src/Payroc/Boarding/PricingIntents/PricingIntentsClient.cs">PartiallyUpdateAsync</a>(PartiallyUpdatePricingIntentsRequest { ... }) -> WithRawResponseTask&lt;PricingIntent52&gt;</code></summary>
 <dl>
 <dd>
 
@@ -10872,3 +10872,4 @@ await client.Tokenization.SingleUseTokens.CreateAsync(
 </dd>
 </dl>
 </details>
+

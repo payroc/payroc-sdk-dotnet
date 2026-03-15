@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.CardPayments.Refunds;
 
-[JsonConverter(typeof(StringEnumSerializer<UnreferencedRefundChannel>))]
+[JsonConverter(typeof(UnreferencedRefundChannel.UnreferencedRefundChannelSerializer))]
 [Serializable]
 public readonly record struct UnreferencedRefundChannel : IStringEnum
 {
@@ -51,6 +52,32 @@ public readonly record struct UnreferencedRefundChannel : IStringEnum
     public static explicit operator string(UnreferencedRefundChannel value) => value.Value;
 
     public static explicit operator UnreferencedRefundChannel(string value) => new(value);
+
+    internal class UnreferencedRefundChannelSerializer : JsonConverter<UnreferencedRefundChannel>
+    {
+        public override UnreferencedRefundChannel Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new UnreferencedRefundChannel(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            UnreferencedRefundChannel value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

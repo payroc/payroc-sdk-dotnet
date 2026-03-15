@@ -5,6 +5,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.ApplePaySessions;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

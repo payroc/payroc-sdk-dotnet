@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<InstructionStatus>))]
+[JsonConverter(typeof(InstructionStatus.InstructionStatusSerializer))]
 [Serializable]
 public readonly record struct InstructionStatus : IStringEnum
 {
@@ -53,6 +54,32 @@ public readonly record struct InstructionStatus : IStringEnum
     public static explicit operator string(InstructionStatus value) => value.Value;
 
     public static explicit operator InstructionStatus(string value) => new(value);
+
+    internal class InstructionStatusSerializer : JsonConverter<InstructionStatus>
+    {
+        public override InstructionStatus Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new InstructionStatus(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            InstructionStatus value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

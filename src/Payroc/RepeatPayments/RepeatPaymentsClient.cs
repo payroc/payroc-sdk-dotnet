@@ -6,7 +6,7 @@ namespace Payroc.RepeatPayments;
 
 public partial class RepeatPaymentsClient : IRepeatPaymentsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal RepeatPaymentsClient(RawClient client)
     {

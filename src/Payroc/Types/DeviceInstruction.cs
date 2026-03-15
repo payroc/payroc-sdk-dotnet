@@ -32,6 +32,7 @@ public record DeviceInstruction : IJsonOnDeserialized
     [JsonPropertyName("errorMessage")]
     public string? ErrorMessage { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

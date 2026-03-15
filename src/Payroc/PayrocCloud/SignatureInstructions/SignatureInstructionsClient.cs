@@ -6,7 +6,7 @@ namespace Payroc.PayrocCloud.SignatureInstructions;
 
 public partial class SignatureInstructionsClient : ISignatureInstructionsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal SignatureInstructionsClient(RawClient client)
     {
@@ -57,7 +57,9 @@ public partial class SignatureInstructionsClient : ISignatureInstructionsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<SignatureInstruction>(
@@ -87,7 +89,9 @@ public partial class SignatureInstructionsClient : ISignatureInstructionsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -173,7 +177,9 @@ public partial class SignatureInstructionsClient : ISignatureInstructionsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<SignatureInstruction>(
@@ -203,7 +209,9 @@ public partial class SignatureInstructionsClient : ISignatureInstructionsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -351,7 +359,9 @@ public partial class SignatureInstructionsClient : ISignatureInstructionsClient
                     return;
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)

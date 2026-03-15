@@ -18,7 +18,7 @@ public record PaymentOrderBase : IJsonOnDeserialized
     /// A unique identifier assigned by the merchant.
     /// </summary>
     [JsonPropertyName("orderId")]
-    public string? OrderId { get; set; }
+    public required string OrderId { get; set; }
 
     /// <summary>
     /// Date and time that the processor processed the transaction. Our gateway returns this value in the ISO 8601 format.
@@ -37,10 +37,10 @@ public record PaymentOrderBase : IJsonOnDeserialized
     /// Total amount of the transaction. The value is in the currency’s lowest denomination, for example, cents.
     /// </summary>
     [JsonPropertyName("amount")]
-    public long? Amount { get; set; }
+    public required long Amount { get; set; }
 
     [JsonPropertyName("currency")]
-    public Currency? Currency { get; set; }
+    public required Currency Currency { get; set; }
 
     [JsonPropertyName("dccOffer")]
     public DccOffer? DccOffer { get; set; }

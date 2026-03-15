@@ -6,6 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Reporting.Settlement;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RetrieveTransactionTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -30,32 +31,17 @@ public class RetrieveTransactionTest : BaseMockServerTest
               "merchant": {
                 "merchantId": "4525644354",
                 "doingBusinessAs": "Pizza Doe",
-                "processingAccountId": 38765,
-                "link": {
-                  "rel": "processingAccount",
-                  "method": "get",
-                  "href": "https://api.payroc.com/v1/processing-accounts/38765"
-                }
+                "processingAccountId": 38765
               },
               "settled": {
                 "settledBy": "3rd party",
                 "achDate": "2024-07-02",
-                "achDepositId": 99,
-                "link": {
-                  "rel": "achDeposit",
-                  "method": "get",
-                  "href": "https://api.payroc.com/v1/ach-deposits/99"
-                }
+                "achDepositId": 99
               },
               "batch": {
                 "batchId": 12,
                 "date": "2024-07-02",
-                "cycle": "am",
-                "link": {
-                  "rel": "batch",
-                  "method": "get",
-                  "href": "https://api.payroc.com/v1/batches/12"
-                }
+                "cycle": "am"
               },
               "card": {
                 "cardNumber": "453985******7062",
@@ -68,12 +54,7 @@ public class RetrieveTransactionTest : BaseMockServerTest
                 "authorizationId": 303101,
                 "code": "A1B2C3",
                 "amount": 4999,
-                "avsResponseCode": "",
-                "link": {
-                  "rel": "authorization",
-                  "method": "get",
-                  "href": "https://api.payroc.com/v1/authorizations/303101"
-                }
+                "avsResponseCode": ""
               }
             }
             """;

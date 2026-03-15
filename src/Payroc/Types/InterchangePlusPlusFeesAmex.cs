@@ -187,16 +187,28 @@ public record InterchangePlusPlusFeesAmex
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "optBlue" => json.Deserialize<Payroc.InterchangePlusPlusAmexOptBlue?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize Payroc.InterchangePlusPlusAmexOptBlue"
-                    ),
-                "direct" => json.Deserialize<Payroc.InterchangePlusPlusAmexDirect?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize Payroc.InterchangePlusPlusAmexDirect"
-                    ),
+                "optBlue" =>
+                    jsonWithoutDiscriminator.Deserialize<Payroc.InterchangePlusPlusAmexOptBlue?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize Payroc.InterchangePlusPlusAmexOptBlue"
+                        ),
+                "direct" =>
+                    jsonWithoutDiscriminator.Deserialize<Payroc.InterchangePlusPlusAmexDirect?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize Payroc.InterchangePlusPlusAmexDirect"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new InterchangePlusPlusFeesAmex(discriminator, value);

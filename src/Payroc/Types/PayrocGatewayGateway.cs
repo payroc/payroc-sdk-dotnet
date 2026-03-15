@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<PayrocGatewayGateway>))]
+[JsonConverter(typeof(PayrocGatewayGateway.PayrocGatewayGatewaySerializer))]
 [Serializable]
 public readonly record struct PayrocGatewayGateway : IStringEnum
 {
@@ -49,6 +50,32 @@ public readonly record struct PayrocGatewayGateway : IStringEnum
     public static explicit operator string(PayrocGatewayGateway value) => value.Value;
 
     public static explicit operator PayrocGatewayGateway(string value) => new(value);
+
+    internal class PayrocGatewayGatewaySerializer : JsonConverter<PayrocGatewayGateway>
+    {
+        public override PayrocGatewayGateway Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new PayrocGatewayGateway(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            PayrocGatewayGateway value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

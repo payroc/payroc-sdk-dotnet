@@ -5,6 +5,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.BankTransferPayments.Refunds;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RetrieveTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -39,12 +40,7 @@ public class RetrieveTest : BaseMockServerTest
                   "secureTokenId": "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
                   "customerName": "Sarah Hazel Hopper",
                   "token": "296753123456",
-                  "status": "notValidated",
-                  "link": {
-                    "rel": "previous",
-                    "method": "get",
-                    "href": "<uri>"
-                  }
+                  "status": "notValidated"
                 }
               },
               "payment": {
@@ -54,21 +50,7 @@ public class RetrieveTest : BaseMockServerTest
                 "amount": 4999,
                 "status": "ready",
                 "responseCode": "A",
-                "responseMessage": "Transaction approved",
-                "link": {
-                  "rel": "previous",
-                  "method": "get",
-                  "href": "<uri>"
-                }
-              },
-              "transactionResult": {
-                "type": "unreferencedRefund",
-                "status": "ready",
-                "authorizedAmount": -4999,
-                "currency": "USD",
-                "responseCode": "A",
-                "responseMessage": "NoError",
-                "processorResponseCode": "0"
+                "responseMessage": "Transaction approved"
               },
               "customFields": [
                 {

@@ -195,13 +195,24 @@ public record TokenizationRequestThreeDSecure
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "gatewayThreeDSecure" => json.Deserialize<Payroc.GatewayThreeDSecure?>(options)
-                    ?? throw new JsonException("Failed to deserialize Payroc.GatewayThreeDSecure"),
-                "thirdPartyThreeDSecure" => json.Deserialize<Payroc.ThirdPartyThreeDSecure?>(
-                    options
-                ) ?? throw new JsonException("Failed to deserialize Payroc.ThirdPartyThreeDSecure"),
+                "gatewayThreeDSecure" =>
+                    jsonWithoutDiscriminator.Deserialize<Payroc.GatewayThreeDSecure?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize Payroc.GatewayThreeDSecure"
+                        ),
+                "thirdPartyThreeDSecure" =>
+                    jsonWithoutDiscriminator.Deserialize<Payroc.ThirdPartyThreeDSecure?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize Payroc.ThirdPartyThreeDSecure"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new TokenizationRequestThreeDSecure(discriminator, value);

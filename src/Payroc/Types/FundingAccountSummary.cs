@@ -28,6 +28,7 @@ public record FundingAccountSummary : IJsonOnDeserialized
     /// <summary>
     /// Object that contains HATEOAS links for the funding accounts that are linked to the processing account.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

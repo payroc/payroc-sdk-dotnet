@@ -6,6 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Funding.FundingActivity;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RetrieveBalanceTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

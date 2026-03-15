@@ -7,6 +7,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.PaymentFeatures.Bank;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class VerifyTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

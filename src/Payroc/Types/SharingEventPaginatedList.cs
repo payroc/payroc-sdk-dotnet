@@ -15,7 +15,8 @@ public record SharingEventPaginatedList : IJsonOnDeserialized
     /// Array of polymorphic objects that contain information about how the merchant shared a payment link.
     /// </summary>
     [JsonPropertyName("data")]
-    public IEnumerable<PaymentLinkEmailShareEvent>? Data { get; set; }
+    public IEnumerable<PaymentLinkEmailShareEvent> Data { get; set; } =
+        new List<PaymentLinkEmailShareEvent>();
 
     /// <summary>
     /// Maximum number of results that we return for each page.

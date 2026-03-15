@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<SingleUseTokenPayloadSecCode>))]
+[JsonConverter(typeof(SingleUseTokenPayloadSecCode.SingleUseTokenPayloadSecCodeSerializer))]
 [Serializable]
 public readonly record struct SingleUseTokenPayloadSecCode : IStringEnum
 {
@@ -55,6 +56,33 @@ public readonly record struct SingleUseTokenPayloadSecCode : IStringEnum
     public static explicit operator string(SingleUseTokenPayloadSecCode value) => value.Value;
 
     public static explicit operator SingleUseTokenPayloadSecCode(string value) => new(value);
+
+    internal class SingleUseTokenPayloadSecCodeSerializer
+        : JsonConverter<SingleUseTokenPayloadSecCode>
+    {
+        public override SingleUseTokenPayloadSecCode Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new SingleUseTokenPayloadSecCode(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            SingleUseTokenPayloadSecCode value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

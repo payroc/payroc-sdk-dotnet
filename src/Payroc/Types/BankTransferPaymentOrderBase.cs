@@ -18,7 +18,7 @@ public record BankTransferPaymentOrderBase : IJsonOnDeserialized
     /// A unique identifier assigned by the merchant.
     /// </summary>
     [JsonPropertyName("orderId")]
-    public string? OrderId { get; set; }
+    public required string OrderId { get; set; }
 
     /// <summary>
     /// The processing date and time of the transaction represented as per [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
@@ -37,10 +37,10 @@ public record BankTransferPaymentOrderBase : IJsonOnDeserialized
     /// The total amount in the currency's lowest denomination. For example, cents.
     /// </summary>
     [JsonPropertyName("amount")]
-    public long? Amount { get; set; }
+    public required long Amount { get; set; }
 
     [JsonPropertyName("currency")]
-    public Currency? Currency { get; set; }
+    public required Currency Currency { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

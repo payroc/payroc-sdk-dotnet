@@ -6,7 +6,7 @@ namespace Payroc.Funding.FundingInstructions;
 
 public partial class FundingInstructionsClient : IFundingInstructionsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal FundingInstructionsClient(RawClient client)
     {
@@ -54,7 +54,9 @@ public partial class FundingInstructionsClient : IFundingInstructionsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<Instruction>(responseBody)!;
@@ -82,7 +84,9 @@ public partial class FundingInstructionsClient : IFundingInstructionsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -160,7 +164,9 @@ public partial class FundingInstructionsClient : IFundingInstructionsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<Instruction>(responseBody)!;
@@ -188,7 +194,9 @@ public partial class FundingInstructionsClient : IFundingInstructionsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -306,7 +314,9 @@ public partial class FundingInstructionsClient : IFundingInstructionsClient
                     }
 
                     {
-                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        var responseBody = await response
+                            .Raw.Content.ReadAsStringAsync(cancellationToken)
+                            .ConfigureAwait(false);
                         try
                         {
                             switch (response.StatusCode)
@@ -534,7 +544,9 @@ public partial class FundingInstructionsClient : IFundingInstructionsClient
                     return;
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -625,7 +637,9 @@ public partial class FundingInstructionsClient : IFundingInstructionsClient
                     return;
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)

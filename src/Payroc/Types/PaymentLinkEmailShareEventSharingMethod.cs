@@ -1,9 +1,12 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<PaymentLinkEmailShareEventSharingMethod>))]
+[JsonConverter(
+    typeof(PaymentLinkEmailShareEventSharingMethod.PaymentLinkEmailShareEventSharingMethodSerializer)
+)]
 [Serializable]
 public readonly record struct PaymentLinkEmailShareEventSharingMethod : IStringEnum
 {
@@ -51,6 +54,33 @@ public readonly record struct PaymentLinkEmailShareEventSharingMethod : IStringE
 
     public static explicit operator PaymentLinkEmailShareEventSharingMethod(string value) =>
         new(value);
+
+    internal class PaymentLinkEmailShareEventSharingMethodSerializer
+        : JsonConverter<PaymentLinkEmailShareEventSharingMethod>
+    {
+        public override PaymentLinkEmailShareEventSharingMethod Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new PaymentLinkEmailShareEventSharingMethod(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            PaymentLinkEmailShareEventSharingMethod value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

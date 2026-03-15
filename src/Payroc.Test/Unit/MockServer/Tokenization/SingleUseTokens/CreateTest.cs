@@ -7,6 +7,7 @@ using Payroc.Tokenization.SingleUseTokens;
 namespace Payroc.Test.Unit.MockServer.Tokenization.SingleUseTokens;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

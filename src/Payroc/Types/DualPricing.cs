@@ -24,6 +24,7 @@ public record DualPricing : IJsonOnDeserialized
     /// Object that contains information about the choice rate.
     /// **Note:** For requests, if the value for **offered** is `true`, you must send this object in the request.
     /// </summary>
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("choiceRate")]
     public ChoiceRate? ChoiceRate { get; set; }
 

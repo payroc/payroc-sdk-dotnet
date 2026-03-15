@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<IpAddressType>))]
+[JsonConverter(typeof(IpAddressType.IpAddressTypeSerializer))]
 [Serializable]
 public readonly record struct IpAddressType : IStringEnum
 {
@@ -51,6 +52,32 @@ public readonly record struct IpAddressType : IStringEnum
     public static explicit operator string(IpAddressType value) => value.Value;
 
     public static explicit operator IpAddressType(string value) => new(value);
+
+    internal class IpAddressTypeSerializer : JsonConverter<IpAddressType>
+    {
+        public override IpAddressType Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new IpAddressType(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            IpAddressType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

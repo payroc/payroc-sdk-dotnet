@@ -40,6 +40,7 @@ public record AuthorizationSummary : IJsonOnDeserialized
     [JsonPropertyName("avsResponseCode")]
     public string? AvsResponseCode { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

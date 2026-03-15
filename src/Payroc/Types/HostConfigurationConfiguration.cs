@@ -130,9 +130,15 @@ public record HostConfigurationConfiguration
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'processor' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("processor");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "tsys" => json.Deserialize<Payroc.Tsys?>(options)
+                "tsys" => jsonWithoutDiscriminator.Deserialize<Payroc.Tsys?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.Tsys"),
                 _ => json.Deserialize<object?>(options),
             };

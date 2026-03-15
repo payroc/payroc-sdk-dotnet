@@ -6,7 +6,7 @@ namespace Payroc.Auth;
 
 public partial class AuthClient : IAuthClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal AuthClient(RawClient client)
     {
@@ -52,7 +52,9 @@ public partial class AuthClient : IAuthClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<GetTokenResponse>(responseBody)!;
@@ -80,7 +82,9 @@ public partial class AuthClient : IAuthClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     throw new PayrocApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,

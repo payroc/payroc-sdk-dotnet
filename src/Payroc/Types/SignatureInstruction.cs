@@ -15,7 +15,7 @@ public record SignatureInstruction : IJsonOnDeserialized
     /// Unique identifier that our gateway assigned to the instruction.
     /// </summary>
     [JsonPropertyName("signatureInstructionId")]
-    public string? SignatureInstructionId { get; set; }
+    public required string SignatureInstructionId { get; set; }
 
     /// <summary>
     /// Indicates the current status of the instruction.
@@ -35,6 +35,7 @@ public record SignatureInstruction : IJsonOnDeserialized
     [JsonPropertyName("errorMessage")]
     public string? ErrorMessage { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

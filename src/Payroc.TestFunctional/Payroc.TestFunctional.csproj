@@ -25,17 +25,19 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Using Include="NUnit.Framework" />
+		<Using Include="Payroc.TestCommon" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Payroc\Payroc.csproj" />
 	</ItemGroup>
+	<!-- Shared test definitions from TestCommon/Tests -->
 	<ItemGroup>
-		<None Update="TestData\**\*.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="RepeatPayments\" />
-	  <Folder Include="Tokenization\" />
+		<Compile Remove="..\Payroc.TestCommon\**\*.cs" />
+		<Compile Include="..\Payroc.TestCommon\**\*.cs" Link="%(RecursiveDir)%(Filename)%(Extension)" />
+		<Compile Remove="..\Payroc.TestCommon\obj\**" />
+		<Compile Remove="obj\**" />
+		<EmbeddedResource Remove="obj\**" />
+		<None Remove="obj\**" />
+		<None Include="..\Payroc.TestCommon\TestData\**\*.*" Link="TestData\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
 </Project>

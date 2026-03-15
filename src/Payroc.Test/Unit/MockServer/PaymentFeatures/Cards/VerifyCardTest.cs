@@ -7,6 +7,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.PaymentFeatures.Cards;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class VerifyCardTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -45,12 +46,7 @@ public class VerifyCardTest : BaseMockServerTest
                   "secureTokenId": "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
                   "customerName": "Sarah Hazel Hopper",
                   "token": "296753123456",
-                  "status": "notValidated",
-                  "link": {
-                    "rel": "previous",
-                    "method": "get",
-                    "href": "<uri>"
-                  }
+                  "status": "notValidated"
                 },
                 "securityChecks": {
                   "cvvResult": "M",

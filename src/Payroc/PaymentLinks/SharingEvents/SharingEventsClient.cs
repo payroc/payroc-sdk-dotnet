@@ -6,7 +6,7 @@ namespace Payroc.PaymentLinks.SharingEvents;
 
 public partial class SharingEventsClient : ISharingEventsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal SharingEventsClient(RawClient client)
     {
@@ -57,7 +57,9 @@ public partial class SharingEventsClient : ISharingEventsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<PaymentLinkEmailShareEvent>(
@@ -87,7 +89,9 @@ public partial class SharingEventsClient : ISharingEventsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -217,7 +221,9 @@ public partial class SharingEventsClient : ISharingEventsClient
                     }
 
                     {
-                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        var responseBody = await response
+                            .Raw.Content.ReadAsStringAsync(cancellationToken)
+                            .ConfigureAwait(false);
                         try
                         {
                             switch (response.StatusCode)

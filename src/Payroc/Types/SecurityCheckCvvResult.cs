@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<SecurityCheckCvvResult>))]
+[JsonConverter(typeof(SecurityCheckCvvResult.SecurityCheckCvvResultSerializer))]
 [Serializable]
 public readonly record struct SecurityCheckCvvResult : IStringEnum
 {
@@ -55,6 +56,32 @@ public readonly record struct SecurityCheckCvvResult : IStringEnum
     public static explicit operator string(SecurityCheckCvvResult value) => value.Value;
 
     public static explicit operator SecurityCheckCvvResult(string value) => new(value);
+
+    internal class SecurityCheckCvvResultSerializer : JsonConverter<SecurityCheckCvvResult>
+    {
+        public override SecurityCheckCvvResult Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new SecurityCheckCvvResult(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            SecurityCheckCvvResult value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

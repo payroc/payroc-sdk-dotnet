@@ -6,7 +6,7 @@ namespace Payroc.Funding.FundingAccounts;
 
 public partial class FundingAccountsClient : IFundingAccountsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal FundingAccountsClient(RawClient client)
     {
@@ -54,7 +54,9 @@ public partial class FundingAccountsClient : IFundingAccountsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<FundingAccount>(responseBody)!;
@@ -82,7 +84,9 @@ public partial class FundingAccountsClient : IFundingAccountsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -191,7 +195,9 @@ public partial class FundingAccountsClient : IFundingAccountsClient
                     }
 
                     {
-                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        var responseBody = await response
+                            .Raw.Content.ReadAsStringAsync(cancellationToken)
+                            .ConfigureAwait(false);
                         try
                         {
                             switch (response.StatusCode)
@@ -344,7 +350,9 @@ public partial class FundingAccountsClient : IFundingAccountsClient
                     return;
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -439,7 +447,9 @@ public partial class FundingAccountsClient : IFundingAccountsClient
                     return;
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)

@@ -7,6 +7,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Boarding.MerchantPlatforms;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateProcessingAccountTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

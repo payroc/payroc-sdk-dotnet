@@ -34,7 +34,7 @@ public record BankTransferResult : IJsonOnDeserialized
     public long? AuthorizedAmount { get; set; }
 
     [JsonPropertyName("currency")]
-    public required Currency Currency { get; set; }
+    public Currency? Currency { get; set; }
 
     /// <summary>
     /// Response from the processor.

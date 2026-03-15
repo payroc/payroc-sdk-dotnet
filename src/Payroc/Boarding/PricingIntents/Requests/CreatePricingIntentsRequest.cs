@@ -14,7 +14,7 @@ public record CreatePricingIntentsRequest
     public required string IdempotencyKey { get; set; }
 
     [JsonIgnore]
-    public required PricingIntent50 Body { get; set; }
+    public required PricingIntent52 Body { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

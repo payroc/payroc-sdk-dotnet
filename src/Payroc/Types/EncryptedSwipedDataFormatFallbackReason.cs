@@ -1,9 +1,12 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<EncryptedSwipedDataFormatFallbackReason>))]
+[JsonConverter(
+    typeof(EncryptedSwipedDataFormatFallbackReason.EncryptedSwipedDataFormatFallbackReasonSerializer)
+)]
 [Serializable]
 public readonly record struct EncryptedSwipedDataFormatFallbackReason : IStringEnum
 {
@@ -61,6 +64,33 @@ public readonly record struct EncryptedSwipedDataFormatFallbackReason : IStringE
 
     public static explicit operator EncryptedSwipedDataFormatFallbackReason(string value) =>
         new(value);
+
+    internal class EncryptedSwipedDataFormatFallbackReasonSerializer
+        : JsonConverter<EncryptedSwipedDataFormatFallbackReason>
+    {
+        public override EncryptedSwipedDataFormatFallbackReason Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new EncryptedSwipedDataFormatFallbackReason(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            EncryptedSwipedDataFormatFallbackReason value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

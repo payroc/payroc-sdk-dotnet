@@ -6,7 +6,7 @@ namespace Payroc.Boarding.PricingIntents;
 
 public partial class PricingIntentsClient : IPricingIntentsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PricingIntentsClient(RawClient client)
     {
@@ -21,7 +21,7 @@ public partial class PricingIntentsClient : IPricingIntentsClient
         }
     }
 
-    private async Task<WithRawResponse<PricingIntent50>> CreateAsyncCore(
+    private async Task<WithRawResponse<PricingIntent52>> CreateAsyncCore(
         CreatePricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -54,11 +54,13 @@ public partial class PricingIntentsClient : IPricingIntentsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
-                        var responseData = JsonUtils.Deserialize<PricingIntent50>(responseBody)!;
-                        return new WithRawResponse<PricingIntent50>()
+                        var responseData = JsonUtils.Deserialize<PricingIntent52>(responseBody)!;
+                        return new WithRawResponse<PricingIntent52>()
                         {
                             Data = responseData,
                             RawResponse = new RawResponse()
@@ -82,7 +84,9 @@ public partial class PricingIntentsClient : IPricingIntentsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -127,7 +131,7 @@ public partial class PricingIntentsClient : IPricingIntentsClient
             .ConfigureAwait(false);
     }
 
-    private async Task<WithRawResponse<PricingIntent50>> RetrieveAsyncCore(
+    private async Task<WithRawResponse<PricingIntent52>> RetrieveAsyncCore(
         RetrievePricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -160,11 +164,13 @@ public partial class PricingIntentsClient : IPricingIntentsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
-                        var responseData = JsonUtils.Deserialize<PricingIntent50>(responseBody)!;
-                        return new WithRawResponse<PricingIntent50>()
+                        var responseData = JsonUtils.Deserialize<PricingIntent52>(responseBody)!;
+                        return new WithRawResponse<PricingIntent52>()
                         {
                             Data = responseData,
                             RawResponse = new RawResponse()
@@ -188,7 +194,9 @@ public partial class PricingIntentsClient : IPricingIntentsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -229,7 +237,7 @@ public partial class PricingIntentsClient : IPricingIntentsClient
             .ConfigureAwait(false);
     }
 
-    private async Task<WithRawResponse<PricingIntent50>> PartiallyUpdateAsyncCore(
+    private async Task<WithRawResponse<PricingIntent52>> PartiallyUpdateAsyncCore(
         PartiallyUpdatePricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -265,11 +273,13 @@ public partial class PricingIntentsClient : IPricingIntentsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
-                        var responseData = JsonUtils.Deserialize<PricingIntent50>(responseBody)!;
-                        return new WithRawResponse<PricingIntent50>()
+                        var responseData = JsonUtils.Deserialize<PricingIntent52>(responseBody)!;
+                        return new WithRawResponse<PricingIntent52>()
                         {
                             Data = responseData,
                             RawResponse = new RawResponse()
@@ -293,7 +303,9 @@ public partial class PricingIntentsClient : IPricingIntentsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -364,7 +376,7 @@ public partial class PricingIntentsClient : IPricingIntentsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<PayrocPager<PricingIntent50>> ListAsync(
+    public async Task<PayrocPager<PricingIntent52>> ListAsync(
         ListPricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -410,7 +422,9 @@ public partial class PricingIntentsClient : IPricingIntentsClient
                     }
 
                     {
-                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        var responseBody = await response
+                            .Raw.Content.ReadAsStringAsync(cancellationToken)
+                            .ConfigureAwait(false);
                         try
                         {
                             switch (response.StatusCode)
@@ -445,7 +459,7 @@ public partial class PricingIntentsClient : IPricingIntentsClient
                     }
                 };
                 return await PayrocPagerFactory
-                    .CreateAsync<PricingIntent50>(
+                    .CreateAsync<PricingIntent52>(
                         new PayrocPagerContext()
                         {
                             SendRequest = sendRequest,
@@ -481,10 +495,10 @@ public partial class PricingIntentsClient : IPricingIntentsClient
     ///     new CreatePricingIntentsRequest
     ///     {
     ///         IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-    ///         Body = new PricingIntent50
+    ///         Body = new PricingIntent52
     ///         {
-    ///             Country = PricingAgreementUs50Country.Us,
-    ///             Version = PricingAgreementUs50Version.Five0,
+    ///             Country = PricingAgreementUs52Country.Us,
+    ///             Version = PricingAgreementUs52Version.Five2,
     ///             Base = new BaseUs
     ///             {
     ///                 AddressVerification = 5,
@@ -497,7 +511,7 @@ public partial class PricingIntentsClient : IPricingIntentsClient
     ///                 PciNonCompliance = 4995,
     ///                 MerchantAdvantage = 10,
     ///                 PlatinumSecurity = new BaseUsPlatinumSecurity(
-    ///                     new BaseUsPlatinumSecurity.Monthly(new BaseUsMonthly())
+    ///                     new BaseUsPlatinumSecurity.Monthly(new PlatinumSecurityMonthly())
     ///                 ),
     ///                 Maintenance = 500,
     ///                 Minimum = 100,
@@ -507,13 +521,13 @@ public partial class PricingIntentsClient : IPricingIntentsClient
     ///                 Batch = 1500,
     ///                 EarlyTermination = 57500,
     ///             },
-    ///             Processor = new PricingAgreementUs50Processor
+    ///             Processor = new PricingAgreementUs52Processor
     ///             {
-    ///                 Card = new PricingAgreementUs50ProcessorCard(
-    ///                     new PricingAgreementUs50ProcessorCard.InterchangePlus(
-    ///                         new InterchangePlus
+    ///                 Card = new PricingAgreementUs52ProcessorCard(
+    ///                     new PricingAgreementUs52ProcessorCard.InterchangePlus(
+    ///                         new InterchangePlusUs52
     ///                         {
-    ///                             Fees = new InterchangePlusFees
+    ///                             Fees = new InterchangePlusUs52Fees
     ///                             {
     ///                                 MastercardVisaDiscover = new ProcessorFee(),
     ///                             },
@@ -535,13 +549,13 @@ public partial class PricingIntentsClient : IPricingIntentsClient
     ///     }
     /// );
     /// </code></example>
-    public WithRawResponseTask<PricingIntent50> CreateAsync(
+    public WithRawResponseTask<PricingIntent52> CreateAsync(
         CreatePricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<PricingIntent50>(
+        return new WithRawResponseTask<PricingIntent52>(
             CreateAsyncCore(request, options, cancellationToken)
         );
     }
@@ -563,13 +577,13 @@ public partial class PricingIntentsClient : IPricingIntentsClient
     ///     new RetrievePricingIntentsRequest { PricingIntentId = "5" }
     /// );
     /// </code></example>
-    public WithRawResponseTask<PricingIntent50> RetrieveAsync(
+    public WithRawResponseTask<PricingIntent52> RetrieveAsync(
         RetrievePricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<PricingIntent50>(
+        return new WithRawResponseTask<PricingIntent52>(
             RetrieveAsyncCore(request, options, cancellationToken)
         );
     }
@@ -592,10 +606,10 @@ public partial class PricingIntentsClient : IPricingIntentsClient
     ///     new UpdatePricingIntentsRequest
     ///     {
     ///         PricingIntentId = "5",
-    ///         Body = new PricingIntent50
+    ///         Body = new PricingIntent52
     ///         {
-    ///             Country = PricingAgreementUs50Country.Us,
-    ///             Version = PricingAgreementUs50Version.Five0,
+    ///             Country = PricingAgreementUs52Country.Us,
+    ///             Version = PricingAgreementUs52Version.Five2,
     ///             Base = new BaseUs
     ///             {
     ///                 AddressVerification = 5,
@@ -608,7 +622,7 @@ public partial class PricingIntentsClient : IPricingIntentsClient
     ///                 PciNonCompliance = 4995,
     ///                 MerchantAdvantage = 10,
     ///                 PlatinumSecurity = new BaseUsPlatinumSecurity(
-    ///                     new BaseUsPlatinumSecurity.Monthly(new BaseUsMonthly())
+    ///                     new BaseUsPlatinumSecurity.Monthly(new PlatinumSecurityMonthly())
     ///                 ),
     ///                 Maintenance = 500,
     ///                 Minimum = 100,
@@ -618,13 +632,13 @@ public partial class PricingIntentsClient : IPricingIntentsClient
     ///                 Batch = 1500,
     ///                 EarlyTermination = 57500,
     ///             },
-    ///             Processor = new PricingAgreementUs50Processor
+    ///             Processor = new PricingAgreementUs52Processor
     ///             {
-    ///                 Card = new PricingAgreementUs50ProcessorCard(
-    ///                     new PricingAgreementUs50ProcessorCard.InterchangePlus(
-    ///                         new InterchangePlus
+    ///                 Card = new PricingAgreementUs52ProcessorCard(
+    ///                     new PricingAgreementUs52ProcessorCard.InterchangePlus(
+    ///                         new InterchangePlusUs52
     ///                         {
-    ///                             Fees = new InterchangePlusFees
+    ///                             Fees = new InterchangePlusUs52Fees
     ///                             {
     ///                                 MastercardVisaDiscover = new ProcessorFee(),
     ///                             },
@@ -647,9 +661,9 @@ public partial class PricingIntentsClient : IPricingIntentsClient
     ///                     },
     ///                 },
     ///             },
-    ///             Gateway = new GatewayUs50
+    ///             Gateway = new GatewayUs52
     ///             {
-    ///                 Fees = new GatewayUs50Fees
+    ///                 Fees = new GatewayUs52Fees
     ///                 {
     ///                     Monthly = 2000,
     ///                     Setup = 5000,
@@ -709,7 +723,9 @@ public partial class PricingIntentsClient : IPricingIntentsClient
                     return;
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -804,7 +820,9 @@ public partial class PricingIntentsClient : IPricingIntentsClient
                     return;
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -871,13 +889,13 @@ public partial class PricingIntentsClient : IPricingIntentsClient
     ///     }
     /// );
     /// </code></example>
-    public WithRawResponseTask<PricingIntent50> PartiallyUpdateAsync(
+    public WithRawResponseTask<PricingIntent52> PartiallyUpdateAsync(
         PartiallyUpdatePricingIntentsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<PricingIntent50>(
+        return new WithRawResponseTask<PricingIntent52>(
             PartiallyUpdateAsyncCore(request, options, cancellationToken)
         );
     }

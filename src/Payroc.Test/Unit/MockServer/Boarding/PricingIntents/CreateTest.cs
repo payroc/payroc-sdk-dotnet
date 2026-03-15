@@ -7,6 +7,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Boarding.PricingIntents;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -15,7 +16,7 @@ public class CreateTest : BaseMockServerTest
         const string requestJson = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -60,7 +61,7 @@ public class CreateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -71,7 +72,8 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -97,10 +99,6 @@ public class CreateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -123,7 +121,9 @@ public class CreateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [
@@ -160,10 +160,10 @@ public class CreateTest : BaseMockServerTest
             new CreatePricingIntentsRequest
             {
                 IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-                Body = new PricingIntent50
+                Body = new PricingIntent52
                 {
-                    Country = PricingAgreementUs50Country.Us,
-                    Version = PricingAgreementUs50Version.Five0,
+                    Country = PricingAgreementUs52Country.Us,
+                    Version = PricingAgreementUs52Version.Five2,
                     Base = new BaseUs
                     {
                         AddressVerification = 5,
@@ -176,7 +176,7 @@ public class CreateTest : BaseMockServerTest
                         PciNonCompliance = 4995,
                         MerchantAdvantage = 10,
                         PlatinumSecurity = new BaseUsPlatinumSecurity(
-                            new BaseUsPlatinumSecurity.Monthly(new BaseUsMonthly())
+                            new BaseUsPlatinumSecurity.Monthly(new PlatinumSecurityMonthly())
                         ),
                         Maintenance = 500,
                         Minimum = 100,
@@ -186,13 +186,13 @@ public class CreateTest : BaseMockServerTest
                         Batch = 1500,
                         EarlyTermination = 57500,
                     },
-                    Processor = new PricingAgreementUs50Processor
+                    Processor = new PricingAgreementUs52Processor
                     {
-                        Card = new PricingAgreementUs50ProcessorCard(
-                            new PricingAgreementUs50ProcessorCard.InterchangePlus(
-                                new InterchangePlus
+                        Card = new PricingAgreementUs52ProcessorCard(
+                            new PricingAgreementUs52ProcessorCard.InterchangePlus(
+                                new InterchangePlusUs52
                                 {
-                                    Fees = new InterchangePlusFees
+                                    Fees = new InterchangePlusUs52Fees
                                     {
                                         MastercardVisaDiscover = new ProcessorFee(),
                                     },
@@ -222,7 +222,7 @@ public class CreateTest : BaseMockServerTest
         const string requestJson = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -284,7 +284,7 @@ public class CreateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -295,7 +295,8 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -321,10 +322,6 @@ public class CreateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -347,7 +344,9 @@ public class CreateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [
@@ -384,10 +383,10 @@ public class CreateTest : BaseMockServerTest
             new CreatePricingIntentsRequest
             {
                 IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-                Body = new PricingIntent50
+                Body = new PricingIntent52
                 {
-                    Country = PricingAgreementUs50Country.Us,
-                    Version = PricingAgreementUs50Version.Five0,
+                    Country = PricingAgreementUs52Country.Us,
+                    Version = PricingAgreementUs52Version.Five2,
                     Base = new BaseUs
                     {
                         AddressVerification = 5,
@@ -400,7 +399,7 @@ public class CreateTest : BaseMockServerTest
                         PciNonCompliance = 4995,
                         MerchantAdvantage = 10,
                         PlatinumSecurity = new BaseUsPlatinumSecurity(
-                            new BaseUsPlatinumSecurity.Monthly(new BaseUsMonthly())
+                            new BaseUsPlatinumSecurity.Monthly(new PlatinumSecurityMonthly())
                         ),
                         Maintenance = 500,
                         Minimum = 100,
@@ -410,13 +409,13 @@ public class CreateTest : BaseMockServerTest
                         Batch = 1500,
                         EarlyTermination = 57500,
                     },
-                    Processor = new PricingAgreementUs50Processor
+                    Processor = new PricingAgreementUs52Processor
                     {
-                        Card = new PricingAgreementUs50ProcessorCard(
-                            new PricingAgreementUs50ProcessorCard.InterchangePlusPlus(
-                                new InterchangePlusPlus
+                        Card = new PricingAgreementUs52ProcessorCard(
+                            new PricingAgreementUs52ProcessorCard.InterchangePlusPlus(
+                                new InterchangePlusPlusUs52
                                 {
-                                    Fees = new InterchangePlusPlusFees
+                                    Fees = new InterchangePlusPlusUs52Fees
                                     {
                                         MastercardVisaDiscover = new QualRates
                                         {
@@ -466,7 +465,7 @@ public class CreateTest : BaseMockServerTest
         const string requestJson = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -536,7 +535,7 @@ public class CreateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -547,7 +546,8 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -573,10 +573,6 @@ public class CreateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -599,7 +595,9 @@ public class CreateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [
@@ -636,10 +634,10 @@ public class CreateTest : BaseMockServerTest
             new CreatePricingIntentsRequest
             {
                 IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-                Body = new PricingIntent50
+                Body = new PricingIntent52
                 {
-                    Country = PricingAgreementUs50Country.Us,
-                    Version = PricingAgreementUs50Version.Five0,
+                    Country = PricingAgreementUs52Country.Us,
+                    Version = PricingAgreementUs52Version.Five2,
                     Base = new BaseUs
                     {
                         AddressVerification = 5,
@@ -652,7 +650,7 @@ public class CreateTest : BaseMockServerTest
                         PciNonCompliance = 4995,
                         MerchantAdvantage = 10,
                         PlatinumSecurity = new BaseUsPlatinumSecurity(
-                            new BaseUsPlatinumSecurity.Monthly(new BaseUsMonthly())
+                            new BaseUsPlatinumSecurity.Monthly(new PlatinumSecurityMonthly())
                         ),
                         Maintenance = 500,
                         Minimum = 100,
@@ -662,10 +660,10 @@ public class CreateTest : BaseMockServerTest
                         Batch = 1500,
                         EarlyTermination = 57500,
                     },
-                    Processor = new PricingAgreementUs50Processor
+                    Processor = new PricingAgreementUs52Processor
                     {
-                        Card = new PricingAgreementUs50ProcessorCard(
-                            new PricingAgreementUs50ProcessorCard.Tiered3(
+                        Card = new PricingAgreementUs52ProcessorCard(
+                            new PricingAgreementUs52ProcessorCard.Tiered3(
                                 new Tiered3
                                 {
                                     Fees = new Tiered3Fees
@@ -696,9 +694,9 @@ public class CreateTest : BaseMockServerTest
                             },
                         },
                     },
-                    Gateway = new GatewayUs50
+                    Gateway = new GatewayUs52
                     {
-                        Fees = new GatewayUs50Fees
+                        Fees = new GatewayUs52Fees
                         {
                             Monthly = 2000,
                             Setup = 5000,
@@ -728,7 +726,7 @@ public class CreateTest : BaseMockServerTest
         const string requestJson = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -799,7 +797,7 @@ public class CreateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -810,7 +808,8 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -836,10 +835,6 @@ public class CreateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -862,7 +857,9 @@ public class CreateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [
@@ -899,10 +896,10 @@ public class CreateTest : BaseMockServerTest
             new CreatePricingIntentsRequest
             {
                 IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-                Body = new PricingIntent50
+                Body = new PricingIntent52
                 {
-                    Country = PricingAgreementUs50Country.Us,
-                    Version = PricingAgreementUs50Version.Five0,
+                    Country = PricingAgreementUs52Country.Us,
+                    Version = PricingAgreementUs52Version.Five2,
                     Base = new BaseUs
                     {
                         AddressVerification = 5,
@@ -915,7 +912,7 @@ public class CreateTest : BaseMockServerTest
                         PciNonCompliance = 4995,
                         MerchantAdvantage = 10,
                         PlatinumSecurity = new BaseUsPlatinumSecurity(
-                            new BaseUsPlatinumSecurity.Monthly(new BaseUsMonthly())
+                            new BaseUsPlatinumSecurity.Monthly(new PlatinumSecurityMonthly())
                         ),
                         Maintenance = 500,
                         Minimum = 100,
@@ -925,10 +922,10 @@ public class CreateTest : BaseMockServerTest
                         Batch = 1500,
                         EarlyTermination = 57500,
                     },
-                    Processor = new PricingAgreementUs50Processor
+                    Processor = new PricingAgreementUs52Processor
                     {
-                        Card = new PricingAgreementUs50ProcessorCard(
-                            new PricingAgreementUs50ProcessorCard.Tiered4(
+                        Card = new PricingAgreementUs52ProcessorCard(
+                            new PricingAgreementUs52ProcessorCard.Tiered4(
                                 new Tiered4
                                 {
                                     Fees = new Tiered4Fees
@@ -960,9 +957,9 @@ public class CreateTest : BaseMockServerTest
                             },
                         },
                     },
-                    Gateway = new GatewayUs50
+                    Gateway = new GatewayUs52
                     {
-                        Fees = new GatewayUs50Fees
+                        Fees = new GatewayUs52Fees
                         {
                             Monthly = 2000,
                             Setup = 5000,
@@ -992,7 +989,7 @@ public class CreateTest : BaseMockServerTest
         const string requestJson = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -1065,7 +1062,7 @@ public class CreateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -1076,7 +1073,8 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -1102,10 +1100,6 @@ public class CreateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -1128,7 +1122,9 @@ public class CreateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [
@@ -1165,10 +1161,10 @@ public class CreateTest : BaseMockServerTest
             new CreatePricingIntentsRequest
             {
                 IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-                Body = new PricingIntent50
+                Body = new PricingIntent52
                 {
-                    Country = PricingAgreementUs50Country.Us,
-                    Version = PricingAgreementUs50Version.Five0,
+                    Country = PricingAgreementUs52Country.Us,
+                    Version = PricingAgreementUs52Version.Five2,
                     Base = new BaseUs
                     {
                         AddressVerification = 5,
@@ -1181,7 +1177,7 @@ public class CreateTest : BaseMockServerTest
                         PciNonCompliance = 4995,
                         MerchantAdvantage = 10,
                         PlatinumSecurity = new BaseUsPlatinumSecurity(
-                            new BaseUsPlatinumSecurity.Monthly(new BaseUsMonthly())
+                            new BaseUsPlatinumSecurity.Monthly(new PlatinumSecurityMonthly())
                         ),
                         Maintenance = 500,
                         Minimum = 100,
@@ -1191,10 +1187,10 @@ public class CreateTest : BaseMockServerTest
                         Batch = 1500,
                         EarlyTermination = 57500,
                     },
-                    Processor = new PricingAgreementUs50Processor
+                    Processor = new PricingAgreementUs52Processor
                     {
-                        Card = new PricingAgreementUs50ProcessorCard(
-                            new PricingAgreementUs50ProcessorCard.Tiered6(
+                        Card = new PricingAgreementUs52ProcessorCard(
+                            new PricingAgreementUs52ProcessorCard.Tiered6(
                                 new Tiered6
                                 {
                                     Fees = new Tiered6Fees
@@ -1229,9 +1225,9 @@ public class CreateTest : BaseMockServerTest
                             },
                         },
                     },
-                    Gateway = new GatewayUs50
+                    Gateway = new GatewayUs52
                     {
-                        Fees = new GatewayUs50Fees
+                        Fees = new GatewayUs52Fees
                         {
                             Monthly = 2000,
                             Setup = 5000,
@@ -1261,7 +1257,7 @@ public class CreateTest : BaseMockServerTest
         const string requestJson = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -1306,7 +1302,7 @@ public class CreateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -1317,7 +1313,8 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -1343,10 +1340,6 @@ public class CreateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -1369,7 +1362,9 @@ public class CreateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [
@@ -1406,10 +1401,10 @@ public class CreateTest : BaseMockServerTest
             new CreatePricingIntentsRequest
             {
                 IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-                Body = new PricingIntent50
+                Body = new PricingIntent52
                 {
-                    Country = PricingAgreementUs50Country.Us,
-                    Version = PricingAgreementUs50Version.Five0,
+                    Country = PricingAgreementUs52Country.Us,
+                    Version = PricingAgreementUs52Version.Five2,
                     Base = new BaseUs
                     {
                         AddressVerification = 5,
@@ -1422,7 +1417,7 @@ public class CreateTest : BaseMockServerTest
                         PciNonCompliance = 4995,
                         MerchantAdvantage = 10,
                         PlatinumSecurity = new BaseUsPlatinumSecurity(
-                            new BaseUsPlatinumSecurity.Monthly(new BaseUsMonthly())
+                            new BaseUsPlatinumSecurity.Monthly(new PlatinumSecurityMonthly())
                         ),
                         Maintenance = 500,
                         Minimum = 0,
@@ -1432,10 +1427,10 @@ public class CreateTest : BaseMockServerTest
                         Batch = 0,
                         EarlyTermination = 57500,
                     },
-                    Processor = new PricingAgreementUs50Processor
+                    Processor = new PricingAgreementUs52Processor
                     {
-                        Card = new PricingAgreementUs50ProcessorCard(
-                            new PricingAgreementUs50ProcessorCard.FlatRate(
+                        Card = new PricingAgreementUs52ProcessorCard(
+                            new PricingAgreementUs52ProcessorCard.FlatRate(
                                 new FlatRate
                                 {
                                     Fees = new FlatRateFees { StandardCards = new ProcessorFee() },
@@ -1465,7 +1460,7 @@ public class CreateTest : BaseMockServerTest
         const string requestJson = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -1511,7 +1506,7 @@ public class CreateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -1522,7 +1517,8 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -1548,10 +1544,6 @@ public class CreateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -1574,7 +1566,9 @@ public class CreateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [
@@ -1611,10 +1605,10 @@ public class CreateTest : BaseMockServerTest
             new CreatePricingIntentsRequest
             {
                 IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-                Body = new PricingIntent50
+                Body = new PricingIntent52
                 {
-                    Country = PricingAgreementUs50Country.Us,
-                    Version = PricingAgreementUs50Version.Five0,
+                    Country = PricingAgreementUs52Country.Us,
+                    Version = PricingAgreementUs52Version.Five2,
                     Base = new BaseUs
                     {
                         AddressVerification = 5,
@@ -1627,7 +1621,7 @@ public class CreateTest : BaseMockServerTest
                         PciNonCompliance = 4995,
                         MerchantAdvantage = 10,
                         PlatinumSecurity = new BaseUsPlatinumSecurity(
-                            new BaseUsPlatinumSecurity.Monthly(new BaseUsMonthly())
+                            new BaseUsPlatinumSecurity.Monthly(new PlatinumSecurityMonthly())
                         ),
                         Maintenance = 500,
                         Minimum = 100,
@@ -1637,10 +1631,10 @@ public class CreateTest : BaseMockServerTest
                         Batch = 1500,
                         EarlyTermination = 57500,
                     },
-                    Processor = new PricingAgreementUs50Processor
+                    Processor = new PricingAgreementUs52Processor
                     {
-                        Card = new PricingAgreementUs50ProcessorCard(
-                            new PricingAgreementUs50ProcessorCard.ConsumerChoice(
+                        Card = new PricingAgreementUs52ProcessorCard(
+                            new PricingAgreementUs52ProcessorCard.ConsumerChoice(
                                 new ConsumerChoice
                                 {
                                     Fees = new ConsumerChoiceFees
@@ -1674,7 +1668,7 @@ public class CreateTest : BaseMockServerTest
         const string requestJson = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -1724,7 +1718,7 @@ public class CreateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -1735,7 +1729,8 @@ public class CreateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -1761,10 +1756,6 @@ public class CreateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -1787,7 +1778,9 @@ public class CreateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [
@@ -1824,10 +1817,10 @@ public class CreateTest : BaseMockServerTest
             new CreatePricingIntentsRequest
             {
                 IdempotencyKey = "8e03978e-40d5-43e8-bc93-6894a57f9324",
-                Body = new PricingIntent50
+                Body = new PricingIntent52
                 {
-                    Country = PricingAgreementUs50Country.Us,
-                    Version = PricingAgreementUs50Version.Five0,
+                    Country = PricingAgreementUs52Country.Us,
+                    Version = PricingAgreementUs52Version.Five2,
                     Base = new BaseUs
                     {
                         AddressVerification = 5,
@@ -1840,7 +1833,7 @@ public class CreateTest : BaseMockServerTest
                         PciNonCompliance = 4995,
                         MerchantAdvantage = 10,
                         PlatinumSecurity = new BaseUsPlatinumSecurity(
-                            new BaseUsPlatinumSecurity.Monthly(new BaseUsMonthly())
+                            new BaseUsPlatinumSecurity.Monthly(new PlatinumSecurityMonthly())
                         ),
                         Maintenance = 500,
                         Minimum = 100,
@@ -1850,10 +1843,10 @@ public class CreateTest : BaseMockServerTest
                         Batch = 1500,
                         EarlyTermination = 57500,
                     },
-                    Processor = new PricingAgreementUs50Processor
+                    Processor = new PricingAgreementUs52Processor
                     {
-                        Card = new PricingAgreementUs50ProcessorCard(
-                            new PricingAgreementUs50ProcessorCard.RewardPayChoice(
+                        Card = new PricingAgreementUs52ProcessorCard(
+                            new PricingAgreementUs52ProcessorCard.RewardPayChoice(
                                 new RewardPayChoice
                                 {
                                     Fees = new RewardPayChoiceFees

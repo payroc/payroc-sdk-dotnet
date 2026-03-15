@@ -32,6 +32,7 @@ public record BatchSummary : IJsonOnDeserialized
     [JsonPropertyName("cycle")]
     public string? Cycle { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

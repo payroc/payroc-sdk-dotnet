@@ -1,9 +1,12 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.RepeatPayments.Subscriptions;
 
-[JsonConverter(typeof(StringEnumSerializer<ListSubscriptionsRequestFrequency>))]
+[JsonConverter(
+    typeof(ListSubscriptionsRequestFrequency.ListSubscriptionsRequestFrequencySerializer)
+)]
 [Serializable]
 public readonly record struct ListSubscriptionsRequestFrequency : IStringEnum
 {
@@ -57,6 +60,33 @@ public readonly record struct ListSubscriptionsRequestFrequency : IStringEnum
     public static explicit operator string(ListSubscriptionsRequestFrequency value) => value.Value;
 
     public static explicit operator ListSubscriptionsRequestFrequency(string value) => new(value);
+
+    internal class ListSubscriptionsRequestFrequencySerializer
+        : JsonConverter<ListSubscriptionsRequestFrequency>
+    {
+        public override ListSubscriptionsRequestFrequency Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new ListSubscriptionsRequestFrequency(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ListSubscriptionsRequestFrequency value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

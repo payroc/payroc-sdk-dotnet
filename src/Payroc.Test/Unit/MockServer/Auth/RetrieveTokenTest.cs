@@ -6,6 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Auth;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RetrieveTokenTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

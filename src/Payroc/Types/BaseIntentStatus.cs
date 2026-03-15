@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<BaseIntentStatus>))]
+[JsonConverter(typeof(BaseIntentStatus.BaseIntentStatusSerializer))]
 [Serializable]
 public readonly record struct BaseIntentStatus : IStringEnum
 {
@@ -53,6 +54,32 @@ public readonly record struct BaseIntentStatus : IStringEnum
     public static explicit operator string(BaseIntentStatus value) => value.Value;
 
     public static explicit operator BaseIntentStatus(string value) => new(value);
+
+    internal class BaseIntentStatusSerializer : JsonConverter<BaseIntentStatus>
+    {
+        public override BaseIntentStatus Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new BaseIntentStatus(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            BaseIntentStatus value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

@@ -6,6 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.BankTransferPayments.Refunds;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ReversePaymentTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -54,12 +55,7 @@ public class ReversePaymentTest : BaseMockServerTest
                   "secureTokenId": "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
                   "customerName": "Sarah Hazel Hopper",
                   "token": "296753123456",
-                  "status": "notValidated",
-                  "link": {
-                    "rel": "previous",
-                    "method": "get",
-                    "href": "<uri>"
-                  }
+                  "status": "notValidated"
                 }
               },
               "refunds": [
@@ -70,12 +66,7 @@ public class ReversePaymentTest : BaseMockServerTest
                   "amount": 4999,
                   "status": "ready",
                   "responseCode": "A",
-                  "responseMessage": "Transaction refunded",
-                  "link": {
-                    "rel": "previous",
-                    "method": "get",
-                    "href": "<uri>"
-                  }
+                  "responseMessage": "Transaction refunded"
                 }
               ],
               "returns": [
@@ -84,12 +75,7 @@ public class ReversePaymentTest : BaseMockServerTest
                   "date": "2024-07-02",
                   "returnCode": "R11",
                   "returnReason": "Customer advises not authorized",
-                  "represented": false,
-                  "link": {
-                    "rel": "previous",
-                    "method": "get",
-                    "href": "<uri>"
-                  }
+                  "represented": false
                 }
               ],
               "representment": {
@@ -99,21 +85,7 @@ public class ReversePaymentTest : BaseMockServerTest
                 "amount": 4999,
                 "status": "ready",
                 "responseCode": "A",
-                "responseMessage": "Transaction approved",
-                "link": {
-                  "rel": "previous",
-                  "method": "get",
-                  "href": "<uri>"
-                }
-              },
-              "transactionResult": {
-                "type": "payment",
-                "status": "reversal",
-                "authorizedAmount": 4999,
-                "currency": "USD",
-                "responseCode": "A",
-                "responseMessage": "Payment Approved",
-                "processorResponseCode": "A"
+                "responseMessage": "Transaction approved"
               },
               "customFields": [
                 {

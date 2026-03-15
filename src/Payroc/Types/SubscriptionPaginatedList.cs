@@ -15,7 +15,7 @@ public record SubscriptionPaginatedList : IJsonOnDeserialized
     /// Array of subscriptions.
     /// </summary>
     [JsonPropertyName("data")]
-    public IEnumerable<Subscription>? Data { get; set; }
+    public IEnumerable<Subscription> Data { get; set; } = new List<Subscription>();
 
     /// <summary>
     /// Maximum number of results that we return for each page.

@@ -6,6 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.PaymentLinks;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class DeactivateTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -32,10 +33,6 @@ public class DeactivateTest : BaseMockServerTest
                   "label": "SUPPORT US"
                 }
               ],
-              "assets": {
-                "paymentUrl": "https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206",
-                "paymentButton": "<a href=\"https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206\" \ntarget=\"_blank\" style=\"color: #ffffff; background-color: #6C7A89; font-size: 18px; font-family: Helvetica, Arial, sans-serif; \ntext-decoration: none; border-radius: 30px; padding: 14px 28px; display: inline-block;\">Pay Now</a>\n"
-              },
               "expiresOn": "2024-08-02",
               "credentialOnFile": {
                 "tokenize": true,

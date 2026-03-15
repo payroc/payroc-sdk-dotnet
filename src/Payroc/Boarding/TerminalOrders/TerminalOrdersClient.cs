@@ -6,7 +6,7 @@ namespace Payroc.Boarding.TerminalOrders;
 
 public partial class TerminalOrdersClient : ITerminalOrdersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal TerminalOrdersClient(RawClient client)
     {
@@ -54,7 +54,9 @@ public partial class TerminalOrdersClient : ITerminalOrdersClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<TerminalOrder>(responseBody)!;
@@ -82,7 +84,9 @@ public partial class TerminalOrdersClient : ITerminalOrdersClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)

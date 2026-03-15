@@ -44,6 +44,7 @@ public record FourHundredNine : IJsonOnDeserialized
     [JsonPropertyName("errors")]
     public IEnumerable<FourHundredNineErrorsItem>? Errors { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

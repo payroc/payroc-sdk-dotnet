@@ -285,18 +285,29 @@ public record PaymentRequestPaymentMethod
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "card" => json.Deserialize<Payroc.CardPayload?>(options)
+                "card" => jsonWithoutDiscriminator.Deserialize<Payroc.CardPayload?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.CardPayload"),
-                "secureToken" => json.Deserialize<Payroc.SecureTokenPayload?>(options)
-                    ?? throw new JsonException("Failed to deserialize Payroc.SecureTokenPayload"),
-                "digitalWallet" => json.Deserialize<Payroc.DigitalWalletPayload?>(options)
-                    ?? throw new JsonException("Failed to deserialize Payroc.DigitalWalletPayload"),
-                "singleUseToken" => json.Deserialize<Payroc.SingleUseTokenPayload?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize Payroc.SingleUseTokenPayload"
-                    ),
+                "secureToken" => jsonWithoutDiscriminator.Deserialize<Payroc.SecureTokenPayload?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize Payroc.SecureTokenPayload"),
+                "digitalWallet" =>
+                    jsonWithoutDiscriminator.Deserialize<Payroc.DigitalWalletPayload?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize Payroc.DigitalWalletPayload"
+                        ),
+                "singleUseToken" =>
+                    jsonWithoutDiscriminator.Deserialize<Payroc.SingleUseTokenPayload?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize Payroc.SingleUseTokenPayload"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new PaymentRequestPaymentMethod(discriminator, value);

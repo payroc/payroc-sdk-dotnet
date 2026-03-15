@@ -6,7 +6,7 @@ namespace Payroc.Boarding.Owners;
 
 public partial class OwnersClient : IOwnersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal OwnersClient(RawClient client)
     {
@@ -54,7 +54,9 @@ public partial class OwnersClient : IOwnersClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<Owner>(responseBody)!;
@@ -82,7 +84,9 @@ public partial class OwnersClient : IOwnersClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -247,7 +251,9 @@ public partial class OwnersClient : IOwnersClient
                     return;
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -340,7 +346,9 @@ public partial class OwnersClient : IOwnersClient
                     return;
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)

@@ -5,6 +5,7 @@ using Payroc.Test.Unit.MockServer;
 namespace Payroc.Test.Unit.MockServer.Notifications.EventSubscriptions;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class DeleteTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
