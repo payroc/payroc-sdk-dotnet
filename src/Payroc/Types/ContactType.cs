@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<ContactType>))]
+[JsonConverter(typeof(ContactType.ContactTypeSerializer))]
 [Serializable]
 public readonly record struct ContactType : IStringEnum
 {
@@ -53,6 +54,32 @@ public readonly record struct ContactType : IStringEnum
     public static explicit operator string(ContactType value) => value.Value;
 
     public static explicit operator ContactType(string value) => new(value);
+
+    internal class ContactTypeSerializer : JsonConverter<ContactType>
+    {
+        public override ContactType Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new ContactType(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ContactType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

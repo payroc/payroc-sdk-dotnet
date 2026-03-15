@@ -1,5 +1,7 @@
 # Payroc API .Net SDK
 
+[![NuGet](https://img.shields.io/nuget/v/Payroc)](https://www.nuget.org/packages/Payroc)
+
 The Payroc API .Net SDK provides convenient access to the Payroc API from .Net.
 
 ## Contents

@@ -59,6 +59,7 @@ public record PaymentSummary : IJsonOnDeserialized
     [JsonPropertyName("responseMessage")]
     public string? ResponseMessage { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

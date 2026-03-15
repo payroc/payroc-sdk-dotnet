@@ -6,7 +6,7 @@ namespace Payroc.Tokenization.SecureTokens;
 
 public partial class SecureTokensClient : ISecureTokensClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal SecureTokensClient(RawClient client)
     {
@@ -57,7 +57,9 @@ public partial class SecureTokensClient : ISecureTokensClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<SecureToken>(responseBody)!;
@@ -85,7 +87,9 @@ public partial class SecureTokensClient : ISecureTokensClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -168,7 +172,9 @@ public partial class SecureTokensClient : ISecureTokensClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<SecureTokenWithAccountType>(
@@ -198,7 +204,9 @@ public partial class SecureTokensClient : ISecureTokensClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -280,7 +288,9 @@ public partial class SecureTokensClient : ISecureTokensClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<SecureToken>(responseBody)!;
@@ -308,7 +318,9 @@ public partial class SecureTokensClient : ISecureTokensClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -398,7 +410,9 @@ public partial class SecureTokensClient : ISecureTokensClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<SecureToken>(responseBody)!;
@@ -426,7 +440,9 @@ public partial class SecureTokensClient : ISecureTokensClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -572,7 +588,9 @@ public partial class SecureTokensClient : ISecureTokensClient
                     }
 
                     {
-                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        var responseBody = await response
+                            .Raw.Content.ReadAsStringAsync(cancellationToken)
+                            .ConfigureAwait(false);
                         try
                         {
                             switch (response.StatusCode)
@@ -815,7 +833,9 @@ public partial class SecureTokensClient : ISecureTokensClient
                     return;
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)

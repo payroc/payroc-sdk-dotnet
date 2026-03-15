@@ -18,7 +18,7 @@ public record PaginatedPricingIntent : IJsonOnDeserialized
     /// Array of pricing intent objects.
     /// </summary>
     [JsonPropertyName("data")]
-    public IEnumerable<PricingIntent50>? Data { get; set; }
+    public IEnumerable<PricingIntent52>? Data { get; set; }
 
     /// <summary>
     /// Maximum number of results that we return for each page.

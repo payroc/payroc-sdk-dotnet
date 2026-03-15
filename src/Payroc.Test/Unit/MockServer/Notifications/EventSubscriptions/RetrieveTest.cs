@@ -6,6 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Notifications.EventSubscriptions;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RetrieveTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

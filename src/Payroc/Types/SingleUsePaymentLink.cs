@@ -51,6 +51,7 @@ public record SingleUsePaymentLink : IJsonOnDeserialized
     [JsonPropertyName("customLabels")]
     public IEnumerable<CustomLabel>? CustomLabels { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("assets")]
     public PaymentLinkAssets? Assets { get; set; }
 

@@ -7,6 +7,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Boarding.ProcessingAccounts;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ListTerminalOrdersTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -1,9 +1,12 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<AuthorizationAuthorizationResponse>))]
+[JsonConverter(
+    typeof(AuthorizationAuthorizationResponse.AuthorizationAuthorizationResponseSerializer)
+)]
 [Serializable]
 public readonly record struct AuthorizationAuthorizationResponse : IStringEnum
 {
@@ -378,6 +381,33 @@ public readonly record struct AuthorizationAuthorizationResponse : IStringEnum
     public static explicit operator string(AuthorizationAuthorizationResponse value) => value.Value;
 
     public static explicit operator AuthorizationAuthorizationResponse(string value) => new(value);
+
+    internal class AuthorizationAuthorizationResponseSerializer
+        : JsonConverter<AuthorizationAuthorizationResponse>
+    {
+        public override AuthorizationAuthorizationResponse Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new AuthorizationAuthorizationResponse(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            AuthorizationAuthorizationResponse value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

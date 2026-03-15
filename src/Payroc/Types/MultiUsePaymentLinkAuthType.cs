@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<MultiUsePaymentLinkAuthType>))]
+[JsonConverter(typeof(MultiUsePaymentLinkAuthType.MultiUsePaymentLinkAuthTypeSerializer))]
 [Serializable]
 public readonly record struct MultiUsePaymentLinkAuthType : IStringEnum
 {
@@ -53,6 +54,33 @@ public readonly record struct MultiUsePaymentLinkAuthType : IStringEnum
     public static explicit operator string(MultiUsePaymentLinkAuthType value) => value.Value;
 
     public static explicit operator MultiUsePaymentLinkAuthType(string value) => new(value);
+
+    internal class MultiUsePaymentLinkAuthTypeSerializer
+        : JsonConverter<MultiUsePaymentLinkAuthType>
+    {
+        public override MultiUsePaymentLinkAuthType Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new MultiUsePaymentLinkAuthType(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            MultiUsePaymentLinkAuthType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

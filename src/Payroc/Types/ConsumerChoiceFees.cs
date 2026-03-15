@@ -35,6 +35,12 @@ public record ConsumerChoiceFees : IJsonOnDeserialized
     [JsonPropertyName("specialityCards")]
     public SpecialityCards? SpecialityCards { get; set; }
 
+    /// <summary>
+    /// Percentage of the total transaction amount that the processor charges the merchant.
+    /// </summary>
+    [JsonPropertyName("merchantChargePercentage")]
+    public double? MerchantChargePercentage { get; set; }
+
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
 

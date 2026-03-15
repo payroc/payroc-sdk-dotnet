@@ -6,7 +6,7 @@ namespace Payroc.CardPayments.Payments;
 
 public partial class PaymentsClient : IPaymentsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PaymentsClient(RawClient client)
     {
@@ -54,7 +54,9 @@ public partial class PaymentsClient : IPaymentsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<Payment>(responseBody)!;
@@ -82,7 +84,9 @@ public partial class PaymentsClient : IPaymentsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -164,7 +168,9 @@ public partial class PaymentsClient : IPaymentsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<RetrievedPayment>(responseBody)!;
@@ -192,7 +198,9 @@ public partial class PaymentsClient : IPaymentsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -273,7 +281,9 @@ public partial class PaymentsClient : IPaymentsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<Payment>(responseBody)!;
@@ -301,7 +311,9 @@ public partial class PaymentsClient : IPaymentsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -390,7 +402,9 @@ public partial class PaymentsClient : IPaymentsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<Payment>(responseBody)!;
@@ -418,7 +432,9 @@ public partial class PaymentsClient : IPaymentsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -570,7 +586,9 @@ public partial class PaymentsClient : IPaymentsClient
                     }
 
                     {
-                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        var responseBody = await response
+                            .Raw.Content.ReadAsStringAsync(cancellationToken)
+                            .ConfigureAwait(false);
                         try
                         {
                             switch (response.StatusCode)

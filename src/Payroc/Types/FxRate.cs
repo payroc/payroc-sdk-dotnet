@@ -41,8 +41,9 @@ public record FxRate : IJsonOnDeserialized
     [JsonPropertyName("dccOffer")]
     public DccOffer? DccOffer { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("cardInfo")]
-    public required CardInfo CardInfo { get; set; }
+    public CardInfo? CardInfo { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

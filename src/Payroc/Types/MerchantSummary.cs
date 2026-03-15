@@ -32,6 +32,7 @@ public record MerchantSummary : IJsonOnDeserialized
     [JsonPropertyName("processingAccountId")]
     public int? ProcessingAccountId { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

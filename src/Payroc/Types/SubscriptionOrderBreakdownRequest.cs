@@ -26,6 +26,7 @@ public record SubscriptionOrderBreakdownRequest : IJsonOnDeserialized
     [JsonPropertyName("subtotal")]
     public required long Subtotal { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("convenienceFee")]
     public ConvenienceFee? ConvenienceFee { get; set; }
 

@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<DigitalWalletPayloadAccountType>))]
+[JsonConverter(typeof(DigitalWalletPayloadAccountType.DigitalWalletPayloadAccountTypeSerializer))]
 [Serializable]
 public readonly record struct DigitalWalletPayloadAccountType : IStringEnum
 {
@@ -51,6 +52,33 @@ public readonly record struct DigitalWalletPayloadAccountType : IStringEnum
     public static explicit operator string(DigitalWalletPayloadAccountType value) => value.Value;
 
     public static explicit operator DigitalWalletPayloadAccountType(string value) => new(value);
+
+    internal class DigitalWalletPayloadAccountTypeSerializer
+        : JsonConverter<DigitalWalletPayloadAccountType>
+    {
+        public override DigitalWalletPayloadAccountType Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new DigitalWalletPayloadAccountType(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            DigitalWalletPayloadAccountType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

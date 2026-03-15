@@ -239,22 +239,33 @@ public record KeyedCardDetailsKeyedData
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'dataFormat' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("dataFormat");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "fullyEncrypted" => json.Deserialize<Payroc.FullyEncryptedKeyedDataFormat?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize Payroc.FullyEncryptedKeyedDataFormat"
-                    ),
-                "partiallyEncrypted" => json.Deserialize<Payroc.PartiallyEncryptedKeyedDataFormat?>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize Payroc.PartiallyEncryptedKeyedDataFormat"
-                    ),
-                "plainText" => json.Deserialize<Payroc.PlainTextKeyedDataFormat?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize Payroc.PlainTextKeyedDataFormat"
-                    ),
+                "fullyEncrypted" =>
+                    jsonWithoutDiscriminator.Deserialize<Payroc.FullyEncryptedKeyedDataFormat?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize Payroc.FullyEncryptedKeyedDataFormat"
+                        ),
+                "partiallyEncrypted" =>
+                    jsonWithoutDiscriminator.Deserialize<Payroc.PartiallyEncryptedKeyedDataFormat?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize Payroc.PartiallyEncryptedKeyedDataFormat"
+                        ),
+                "plainText" =>
+                    jsonWithoutDiscriminator.Deserialize<Payroc.PlainTextKeyedDataFormat?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize Payroc.PlainTextKeyedDataFormat"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new KeyedCardDetailsKeyedData(discriminator, value);

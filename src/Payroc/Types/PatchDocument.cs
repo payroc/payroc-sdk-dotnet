@@ -359,19 +359,25 @@ public record PatchDocument
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'op' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("op");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "add" => json.Deserialize<Payroc.PatchAdd?>(options)
+                "add" => jsonWithoutDiscriminator.Deserialize<Payroc.PatchAdd?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.PatchAdd"),
-                "remove" => json.Deserialize<Payroc.PatchRemove?>(options)
+                "remove" => jsonWithoutDiscriminator.Deserialize<Payroc.PatchRemove?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.PatchRemove"),
-                "replace" => json.Deserialize<Payroc.PatchReplace?>(options)
+                "replace" => jsonWithoutDiscriminator.Deserialize<Payroc.PatchReplace?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.PatchReplace"),
-                "move" => json.Deserialize<Payroc.PatchMove?>(options)
+                "move" => jsonWithoutDiscriminator.Deserialize<Payroc.PatchMove?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.PatchMove"),
-                "copy" => json.Deserialize<Payroc.PatchCopy?>(options)
+                "copy" => jsonWithoutDiscriminator.Deserialize<Payroc.PatchCopy?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.PatchCopy"),
-                "test" => json.Deserialize<Payroc.PatchTest?>(options)
+                "test" => jsonWithoutDiscriminator.Deserialize<Payroc.PatchTest?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.PatchTest"),
                 _ => json.Deserialize<object?>(options),
             };

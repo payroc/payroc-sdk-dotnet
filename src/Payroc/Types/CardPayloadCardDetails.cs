@@ -279,15 +279,21 @@ public record CardPayloadCardDetails
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'entryMethod' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("entryMethod");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "raw" => json.Deserialize<Payroc.RawCardDetails?>(options)
+                "raw" => jsonWithoutDiscriminator.Deserialize<Payroc.RawCardDetails?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.RawCardDetails"),
-                "icc" => json.Deserialize<Payroc.IccCardDetails?>(options)
+                "icc" => jsonWithoutDiscriminator.Deserialize<Payroc.IccCardDetails?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.IccCardDetails"),
-                "keyed" => json.Deserialize<Payroc.KeyedCardDetails?>(options)
+                "keyed" => jsonWithoutDiscriminator.Deserialize<Payroc.KeyedCardDetails?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.KeyedCardDetails"),
-                "swiped" => json.Deserialize<Payroc.SwipedCardDetails?>(options)
+                "swiped" => jsonWithoutDiscriminator.Deserialize<Payroc.SwipedCardDetails?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.SwipedCardDetails"),
                 _ => json.Deserialize<object?>(options),
             };

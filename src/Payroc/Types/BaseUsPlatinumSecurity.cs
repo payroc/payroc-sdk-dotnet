@@ -65,28 +65,28 @@ public record BaseUsPlatinumSecurity
     public bool IsAnnual => BillingFrequency == "annual";
 
     /// <summary>
-    /// Returns the value as a <see cref="Payroc.BaseUsMonthly"/> if <see cref="BillingFrequency"/> is 'monthly', otherwise throws an exception.
+    /// Returns the value as a <see cref="Payroc.PlatinumSecurityMonthly"/> if <see cref="BillingFrequency"/> is 'monthly', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="BillingFrequency"/> is not 'monthly'.</exception>
-    public Payroc.BaseUsMonthly AsMonthly() =>
+    public Payroc.PlatinumSecurityMonthly AsMonthly() =>
         IsMonthly
-            ? (Payroc.BaseUsMonthly)Value!
+            ? (Payroc.PlatinumSecurityMonthly)Value!
             : throw new System.Exception(
                 "BaseUsPlatinumSecurity.BillingFrequency is not 'monthly'"
             );
 
     /// <summary>
-    /// Returns the value as a <see cref="Payroc.BaseUsAnnual"/> if <see cref="BillingFrequency"/> is 'annual', otherwise throws an exception.
+    /// Returns the value as a <see cref="Payroc.PlatinumSecurityAnnual"/> if <see cref="BillingFrequency"/> is 'annual', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="BillingFrequency"/> is not 'annual'.</exception>
-    public Payroc.BaseUsAnnual AsAnnual() =>
+    public Payroc.PlatinumSecurityAnnual AsAnnual() =>
         IsAnnual
-            ? (Payroc.BaseUsAnnual)Value!
+            ? (Payroc.PlatinumSecurityAnnual)Value!
             : throw new System.Exception("BaseUsPlatinumSecurity.BillingFrequency is not 'annual'");
 
     public T Match<T>(
-        Func<Payroc.BaseUsMonthly, T> onMonthly,
-        Func<Payroc.BaseUsAnnual, T> onAnnual,
+        Func<Payroc.PlatinumSecurityMonthly, T> onMonthly,
+        Func<Payroc.PlatinumSecurityAnnual, T> onAnnual,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -99,8 +99,8 @@ public record BaseUsPlatinumSecurity
     }
 
     public void Visit(
-        Action<Payroc.BaseUsMonthly> onMonthly,
-        Action<Payroc.BaseUsAnnual> onAnnual,
+        Action<Payroc.PlatinumSecurityMonthly> onMonthly,
+        Action<Payroc.PlatinumSecurityAnnual> onAnnual,
         Action<string, object?> onUnknown_
     )
     {
@@ -119,13 +119,13 @@ public record BaseUsPlatinumSecurity
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Payroc.BaseUsMonthly"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="Payroc.PlatinumSecurityMonthly"/> and returns true if successful.
     /// </summary>
-    public bool TryAsMonthly(out Payroc.BaseUsMonthly? value)
+    public bool TryAsMonthly(out Payroc.PlatinumSecurityMonthly? value)
     {
         if (BillingFrequency == "monthly")
         {
-            value = (Payroc.BaseUsMonthly)Value!;
+            value = (Payroc.PlatinumSecurityMonthly)Value!;
             return true;
         }
         value = null;
@@ -133,13 +133,13 @@ public record BaseUsPlatinumSecurity
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="Payroc.BaseUsAnnual"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="Payroc.PlatinumSecurityAnnual"/> and returns true if successful.
     /// </summary>
-    public bool TryAsAnnual(out Payroc.BaseUsAnnual? value)
+    public bool TryAsAnnual(out Payroc.PlatinumSecurityAnnual? value)
     {
         if (BillingFrequency == "annual")
         {
-            value = (Payroc.BaseUsAnnual)Value!;
+            value = (Payroc.PlatinumSecurityAnnual)Value!;
             return true;
         }
         value = null;
@@ -187,12 +187,23 @@ public record BaseUsPlatinumSecurity
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'billingFrequency' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("billingFrequency");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "monthly" => json.Deserialize<Payroc.BaseUsMonthly?>(options)
-                    ?? throw new JsonException("Failed to deserialize Payroc.BaseUsMonthly"),
-                "annual" => json.Deserialize<Payroc.BaseUsAnnual?>(options)
-                    ?? throw new JsonException("Failed to deserialize Payroc.BaseUsAnnual"),
+                "monthly" => jsonWithoutDiscriminator.Deserialize<Payroc.PlatinumSecurityMonthly?>(
+                    options
+                )
+                    ?? throw new JsonException(
+                        "Failed to deserialize Payroc.PlatinumSecurityMonthly"
+                    ),
+                "annual" => jsonWithoutDiscriminator.Deserialize<Payroc.PlatinumSecurityAnnual?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize Payroc.PlatinumSecurityAnnual"),
                 _ => json.Deserialize<object?>(options),
             };
             return new BaseUsPlatinumSecurity(discriminator, value);
@@ -222,17 +233,17 @@ public record BaseUsPlatinumSecurity
     [Serializable]
     public struct Monthly
     {
-        public Monthly(Payroc.BaseUsMonthly value)
+        public Monthly(Payroc.PlatinumSecurityMonthly value)
         {
             Value = value;
         }
 
-        internal Payroc.BaseUsMonthly Value { get; set; }
+        internal Payroc.PlatinumSecurityMonthly Value { get; set; }
 
         public override string ToString() => Value.ToString() ?? "null";
 
         public static implicit operator BaseUsPlatinumSecurity.Monthly(
-            Payroc.BaseUsMonthly value
+            Payroc.PlatinumSecurityMonthly value
         ) => new(value);
     }
 
@@ -242,16 +253,17 @@ public record BaseUsPlatinumSecurity
     [Serializable]
     public struct Annual
     {
-        public Annual(Payroc.BaseUsAnnual value)
+        public Annual(Payroc.PlatinumSecurityAnnual value)
         {
             Value = value;
         }
 
-        internal Payroc.BaseUsAnnual Value { get; set; }
+        internal Payroc.PlatinumSecurityAnnual Value { get; set; }
 
         public override string ToString() => Value.ToString() ?? "null";
 
-        public static implicit operator BaseUsPlatinumSecurity.Annual(Payroc.BaseUsAnnual value) =>
-            new(value);
+        public static implicit operator BaseUsPlatinumSecurity.Annual(
+            Payroc.PlatinumSecurityAnnual value
+        ) => new(value);
     }
 }

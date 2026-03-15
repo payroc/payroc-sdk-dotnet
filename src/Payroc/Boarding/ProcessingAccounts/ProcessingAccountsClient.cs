@@ -7,7 +7,7 @@ namespace Payroc.Boarding.ProcessingAccounts;
 
 public partial class ProcessingAccountsClient : IProcessingAccountsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ProcessingAccountsClient(RawClient client)
     {
@@ -55,7 +55,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<ProcessingAccount>(responseBody)!;
@@ -83,7 +85,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -163,7 +167,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<IEnumerable<FundingAccount>>(
@@ -193,7 +199,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -278,7 +286,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<PaginatedContacts>(responseBody)!;
@@ -306,7 +316,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -382,7 +394,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<
@@ -414,7 +428,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -497,7 +513,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData =
@@ -528,7 +546,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -609,7 +629,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<IEnumerable<TerminalOrder>>(
@@ -639,7 +661,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -720,7 +744,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<TerminalOrder>(responseBody)!;
@@ -748,7 +774,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -996,7 +1024,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     }
 
                     {
-                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        var responseBody = await response
+                            .Raw.Content.ReadAsStringAsync(cancellationToken)
+                            .ConfigureAwait(false);
                         try
                         {
                             switch (response.StatusCode)
@@ -1310,7 +1340,9 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                     }
 
                     {
-                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        var responseBody = await response
+                            .Raw.Content.ReadAsStringAsync(cancellationToken)
+                            .ConfigureAwait(false);
                         try
                         {
                             switch (response.StatusCode)

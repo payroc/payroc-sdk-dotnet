@@ -7,6 +7,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Boarding.PricingIntents;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class PartiallyUpdateTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -32,7 +33,7 @@ public class PartiallyUpdateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -43,7 +44,8 @@ public class PartiallyUpdateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -69,10 +71,6 @@ public class PartiallyUpdateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -95,7 +93,9 @@ public class PartiallyUpdateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [
@@ -159,7 +159,7 @@ public class PartiallyUpdateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -170,7 +170,8 @@ public class PartiallyUpdateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -196,10 +197,6 @@ public class PartiallyUpdateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -222,7 +219,9 @@ public class PartiallyUpdateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [
@@ -284,7 +283,7 @@ public class PartiallyUpdateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -295,7 +294,8 @@ public class PartiallyUpdateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -321,10 +321,6 @@ public class PartiallyUpdateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -347,7 +343,9 @@ public class PartiallyUpdateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [
@@ -409,7 +407,7 @@ public class PartiallyUpdateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -420,7 +418,8 @@ public class PartiallyUpdateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -446,10 +445,6 @@ public class PartiallyUpdateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -472,7 +467,9 @@ public class PartiallyUpdateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [
@@ -535,7 +532,7 @@ public class PartiallyUpdateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -546,7 +543,8 @@ public class PartiallyUpdateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -572,10 +570,6 @@ public class PartiallyUpdateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -598,7 +592,9 @@ public class PartiallyUpdateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [
@@ -663,7 +659,7 @@ public class PartiallyUpdateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -674,7 +670,8 @@ public class PartiallyUpdateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -700,10 +697,6 @@ public class PartiallyUpdateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -726,7 +719,9 @@ public class PartiallyUpdateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [
@@ -790,7 +785,7 @@ public class PartiallyUpdateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -801,7 +796,8 @@ public class PartiallyUpdateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -827,10 +823,6 @@ public class PartiallyUpdateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -853,7 +845,9 @@ public class PartiallyUpdateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [
@@ -937,7 +931,7 @@ public class PartiallyUpdateTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -948,7 +942,8 @@ public class PartiallyUpdateTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -974,10 +969,6 @@ public class PartiallyUpdateTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -1000,7 +991,9 @@ public class PartiallyUpdateTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [

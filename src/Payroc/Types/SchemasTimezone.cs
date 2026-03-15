@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<SchemasTimezone>))]
+[JsonConverter(typeof(SchemasTimezone.SchemasTimezoneSerializer))]
 [Serializable]
 public readonly record struct SchemasTimezone : IStringEnum
 {
@@ -67,6 +68,32 @@ public readonly record struct SchemasTimezone : IStringEnum
     public static explicit operator string(SchemasTimezone value) => value.Value;
 
     public static explicit operator SchemasTimezone(string value) => new(value);
+
+    internal class SchemasTimezoneSerializer : JsonConverter<SchemasTimezone>
+    {
+        public override SchemasTimezone Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new SchemasTimezone(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            SchemasTimezone value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

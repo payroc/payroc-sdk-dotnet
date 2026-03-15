@@ -7,6 +7,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.PaymentFeatures.Cards;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RetrieveFxRatesTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -49,19 +50,6 @@ public class RetrieveFxRatesTest : BaseMockServerTest
                 "fxCurrency": "JPY",
                 "fxRate": 161.2542,
                 "markup": 3
-              },
-              "cardInfo": {
-                "type": "MASTERCARD",
-                "cardNumber": "453985******7062",
-                "country": "country",
-                "currency": "AED",
-                "debit": true,
-                "surcharging": {
-                  "allowed": true,
-                  "amount": 87,
-                  "percentage": 3,
-                  "disclosure": "A 3% surcharge is applied to cover processing fees."
-                }
               }
             }
             """;

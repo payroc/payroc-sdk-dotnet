@@ -15,7 +15,8 @@ public record SecureTokenPaginatedListWithAccountType : IJsonOnDeserialized
     /// Array of saved payment details.
     /// </summary>
     [JsonPropertyName("data")]
-    public IEnumerable<SecureTokenWithAccountType>? Data { get; set; }
+    public IEnumerable<SecureTokenWithAccountType> Data { get; set; } =
+        new List<SecureTokenWithAccountType>();
 
     /// <summary>
     /// Maximum number of results that we return for each page.

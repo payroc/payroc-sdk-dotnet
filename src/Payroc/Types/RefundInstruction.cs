@@ -15,7 +15,7 @@ public record RefundInstruction : IJsonOnDeserialized
     /// Unique identifier that we assigned to the refund instruction.
     /// </summary>
     [JsonPropertyName("refundInstructionId")]
-    public string? RefundInstructionId { get; set; }
+    public required string RefundInstructionId { get; set; }
 
     /// <summary>
     /// Indicates the current status of the instruction.
@@ -35,6 +35,7 @@ public record RefundInstruction : IJsonOnDeserialized
     [JsonPropertyName("errorMessage")]
     public string? ErrorMessage { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

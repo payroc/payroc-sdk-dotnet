@@ -6,6 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Funding.FundingAccounts;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RetrieveTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

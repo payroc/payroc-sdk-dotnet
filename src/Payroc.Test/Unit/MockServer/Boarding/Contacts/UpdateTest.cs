@@ -6,6 +6,7 @@ using Payroc.Test.Unit.MockServer;
 namespace Payroc.Test.Unit.MockServer.Boarding.Contacts;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class UpdateTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

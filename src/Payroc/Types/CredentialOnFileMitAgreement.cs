@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<CredentialOnFileMitAgreement>))]
+[JsonConverter(typeof(CredentialOnFileMitAgreement.CredentialOnFileMitAgreementSerializer))]
 [Serializable]
 public readonly record struct CredentialOnFileMitAgreement : IStringEnum
 {
@@ -53,6 +54,33 @@ public readonly record struct CredentialOnFileMitAgreement : IStringEnum
     public static explicit operator string(CredentialOnFileMitAgreement value) => value.Value;
 
     public static explicit operator CredentialOnFileMitAgreement(string value) => new(value);
+
+    internal class CredentialOnFileMitAgreementSerializer
+        : JsonConverter<CredentialOnFileMitAgreement>
+    {
+        public override CredentialOnFileMitAgreement Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new CredentialOnFileMitAgreement(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            CredentialOnFileMitAgreement value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

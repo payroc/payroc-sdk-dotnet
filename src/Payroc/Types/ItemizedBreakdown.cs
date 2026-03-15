@@ -26,6 +26,7 @@ public record ItemizedBreakdown : IJsonOnDeserialized
     [JsonPropertyName("freightAmount")]
     public long? FreightAmount { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("convenienceFee")]
     public ConvenienceFee? ConvenienceFee { get; set; }
 

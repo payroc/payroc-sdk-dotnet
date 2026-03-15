@@ -1,10 +1,11 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.Attachments;
 
 [JsonConverter(
-    typeof(StringEnumSerializer<UploadToProcessingAccountAttachmentsRequestAttachmentType>)
+    typeof(UploadToProcessingAccountAttachmentsRequestAttachmentType.UploadToProcessingAccountAttachmentsRequestAttachmentTypeSerializer)
 )]
 [Serializable]
 public readonly record struct UploadToProcessingAccountAttachmentsRequestAttachmentType
@@ -86,6 +87,33 @@ public readonly record struct UploadToProcessingAccountAttachmentsRequestAttachm
     public static explicit operator UploadToProcessingAccountAttachmentsRequestAttachmentType(
         string value
     ) => new(value);
+
+    internal class UploadToProcessingAccountAttachmentsRequestAttachmentTypeSerializer
+        : JsonConverter<UploadToProcessingAccountAttachmentsRequestAttachmentType>
+    {
+        public override UploadToProcessingAccountAttachmentsRequestAttachmentType Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new UploadToProcessingAccountAttachmentsRequestAttachmentType(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            UploadToProcessingAccountAttachmentsRequestAttachmentType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

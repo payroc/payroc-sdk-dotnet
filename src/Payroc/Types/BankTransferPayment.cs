@@ -59,8 +59,9 @@ public record BankTransferPayment : IJsonOnDeserialized
     [JsonPropertyName("representment")]
     public PaymentSummary? Representment { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("transactionResult")]
-    public required BankTransferResult TransactionResult { get; set; }
+    public BankTransferResult? TransactionResult { get; set; }
 
     /// <summary>
     /// Array of customField objects.

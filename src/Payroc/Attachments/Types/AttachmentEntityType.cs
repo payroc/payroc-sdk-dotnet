@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.Attachments;
 
-[JsonConverter(typeof(StringEnumSerializer<AttachmentEntityType>))]
+[JsonConverter(typeof(AttachmentEntityType.AttachmentEntityTypeSerializer))]
 [Serializable]
 public readonly record struct AttachmentEntityType : IStringEnum
 {
@@ -49,6 +50,32 @@ public readonly record struct AttachmentEntityType : IStringEnum
     public static explicit operator string(AttachmentEntityType value) => value.Value;
 
     public static explicit operator AttachmentEntityType(string value) => new(value);
+
+    internal class AttachmentEntityTypeSerializer : JsonConverter<AttachmentEntityType>
+    {
+        public override AttachmentEntityType Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new AttachmentEntityType(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            AttachmentEntityType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

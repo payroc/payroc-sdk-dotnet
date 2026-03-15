@@ -7,6 +7,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.RepeatPayments.PaymentPlans;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class PartiallyUpdateTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

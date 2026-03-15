@@ -191,16 +191,24 @@ public record SwipedCardDetailsSwipedData
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'dataFormat' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("dataFormat");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "encrypted" => json.Deserialize<Payroc.EncryptedSwipedDataFormat?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize Payroc.EncryptedSwipedDataFormat"
-                    ),
-                "plainText" => json.Deserialize<Payroc.PlainTextSwipedDataFormat?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize Payroc.PlainTextSwipedDataFormat"
-                    ),
+                "encrypted" =>
+                    jsonWithoutDiscriminator.Deserialize<Payroc.EncryptedSwipedDataFormat?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize Payroc.EncryptedSwipedDataFormat"
+                        ),
+                "plainText" =>
+                    jsonWithoutDiscriminator.Deserialize<Payroc.PlainTextSwipedDataFormat?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize Payroc.PlainTextSwipedDataFormat"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new SwipedCardDetailsSwipedData(discriminator, value);

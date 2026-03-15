@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<PaymentPlanBaseType>))]
+[JsonConverter(typeof(PaymentPlanBaseType.PaymentPlanBaseTypeSerializer))]
 [Serializable]
 public readonly record struct PaymentPlanBaseType : IStringEnum
 {
@@ -51,6 +52,32 @@ public readonly record struct PaymentPlanBaseType : IStringEnum
     public static explicit operator string(PaymentPlanBaseType value) => value.Value;
 
     public static explicit operator PaymentPlanBaseType(string value) => new(value);
+
+    internal class PaymentPlanBaseTypeSerializer : JsonConverter<PaymentPlanBaseType>
+    {
+        public override PaymentPlanBaseType Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new PaymentPlanBaseType(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            PaymentPlanBaseType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

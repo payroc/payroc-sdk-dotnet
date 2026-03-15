@@ -1,9 +1,12 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.Funding.FundingRecipients;
 
-[JsonConverter(typeof(StringEnumSerializer<CreateFundingRecipientRecipientType>))]
+[JsonConverter(
+    typeof(CreateFundingRecipientRecipientType.CreateFundingRecipientRecipientTypeSerializer)
+)]
 [Serializable]
 public readonly record struct CreateFundingRecipientRecipientType : IStringEnum
 {
@@ -76,6 +79,33 @@ public readonly record struct CreateFundingRecipientRecipientType : IStringEnum
         value.Value;
 
     public static explicit operator CreateFundingRecipientRecipientType(string value) => new(value);
+
+    internal class CreateFundingRecipientRecipientTypeSerializer
+        : JsonConverter<CreateFundingRecipientRecipientType>
+    {
+        public override CreateFundingRecipientRecipientType Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new CreateFundingRecipientRecipientType(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            CreateFundingRecipientRecipientType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

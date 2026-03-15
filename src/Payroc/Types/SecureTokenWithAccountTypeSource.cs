@@ -235,17 +235,27 @@ public record SecureTokenWithAccountTypeSource
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "ach" => json.Deserialize<Payroc.AchSourceWithAccountType?>(options)
+                "ach" => jsonWithoutDiscriminator.Deserialize<Payroc.AchSourceWithAccountType?>(
+                    options
+                )
                     ?? throw new JsonException(
                         "Failed to deserialize Payroc.AchSourceWithAccountType"
                     ),
-                "pad" => json.Deserialize<Payroc.PadSourceWithAccountType?>(options)
+                "pad" => jsonWithoutDiscriminator.Deserialize<Payroc.PadSourceWithAccountType?>(
+                    options
+                )
                     ?? throw new JsonException(
                         "Failed to deserialize Payroc.PadSourceWithAccountType"
                     ),
-                "card" => json.Deserialize<Payroc.CardSource?>(options)
+                "card" => jsonWithoutDiscriminator.Deserialize<Payroc.CardSource?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.CardSource"),
                 _ => json.Deserialize<object?>(options),
             };

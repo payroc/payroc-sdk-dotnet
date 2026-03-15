@@ -15,7 +15,7 @@ public record PaymentInstruction : IJsonOnDeserialized
     /// Unique identifier that we assigned to the payment instruction.
     /// </summary>
     [JsonPropertyName("paymentInstructionId")]
-    public string? PaymentInstructionId { get; set; }
+    public required string PaymentInstructionId { get; set; }
 
     /// <summary>
     /// Indicates the current status of the instruction.
@@ -35,6 +35,7 @@ public record PaymentInstruction : IJsonOnDeserialized
     [JsonPropertyName("errorMessage")]
     public string? ErrorMessage { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

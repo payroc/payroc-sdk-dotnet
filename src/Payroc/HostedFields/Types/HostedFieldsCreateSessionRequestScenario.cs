@@ -1,9 +1,12 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.HostedFields;
 
-[JsonConverter(typeof(StringEnumSerializer<HostedFieldsCreateSessionRequestScenario>))]
+[JsonConverter(
+    typeof(HostedFieldsCreateSessionRequestScenario.HostedFieldsCreateSessionRequestScenarioSerializer)
+)]
 [Serializable]
 public readonly record struct HostedFieldsCreateSessionRequestScenario : IStringEnum
 {
@@ -59,6 +62,33 @@ public readonly record struct HostedFieldsCreateSessionRequestScenario : IString
 
     public static explicit operator HostedFieldsCreateSessionRequestScenario(string value) =>
         new(value);
+
+    internal class HostedFieldsCreateSessionRequestScenarioSerializer
+        : JsonConverter<HostedFieldsCreateSessionRequestScenario>
+    {
+        public override HostedFieldsCreateSessionRequestScenario Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new HostedFieldsCreateSessionRequestScenario(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            HostedFieldsCreateSessionRequestScenario value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

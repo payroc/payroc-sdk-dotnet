@@ -8,7 +8,7 @@ namespace Payroc.Funding;
 
 public partial class FundingClient : IFundingClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal FundingClient(RawClient client)
     {

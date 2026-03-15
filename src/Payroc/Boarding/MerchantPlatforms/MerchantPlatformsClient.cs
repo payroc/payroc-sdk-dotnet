@@ -6,7 +6,7 @@ namespace Payroc.Boarding.MerchantPlatforms;
 
 public partial class MerchantPlatformsClient : IMerchantPlatformsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal MerchantPlatformsClient(RawClient client)
     {
@@ -54,7 +54,9 @@ public partial class MerchantPlatformsClient : IMerchantPlatformsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<MerchantPlatform>(responseBody)!;
@@ -82,7 +84,9 @@ public partial class MerchantPlatformsClient : IMerchantPlatformsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -160,7 +164,9 @@ public partial class MerchantPlatformsClient : IMerchantPlatformsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<MerchantPlatform>(responseBody)!;
@@ -188,7 +194,9 @@ public partial class MerchantPlatformsClient : IMerchantPlatformsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -269,7 +277,9 @@ public partial class MerchantPlatformsClient : IMerchantPlatformsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<ProcessingAccount>(responseBody)!;
@@ -297,7 +307,9 @@ public partial class MerchantPlatformsClient : IMerchantPlatformsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)
@@ -410,7 +422,9 @@ public partial class MerchantPlatformsClient : IMerchantPlatformsClient
                     }
 
                     {
-                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        var responseBody = await response
+                            .Raw.Content.ReadAsStringAsync(cancellationToken)
+                            .ConfigureAwait(false);
                         try
                         {
                             switch (response.StatusCode)
@@ -842,7 +856,9 @@ public partial class MerchantPlatformsClient : IMerchantPlatformsClient
                     }
 
                     {
-                        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                        var responseBody = await response
+                            .Raw.Content.ReadAsStringAsync(cancellationToken)
+                            .ConfigureAwait(false);
                         try
                         {
                             switch (response.StatusCode)

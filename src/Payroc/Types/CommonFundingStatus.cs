@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<CommonFundingStatus>))]
+[JsonConverter(typeof(CommonFundingStatus.CommonFundingStatusSerializer))]
 [Serializable]
 public readonly record struct CommonFundingStatus : IStringEnum
 {
@@ -51,6 +52,32 @@ public readonly record struct CommonFundingStatus : IStringEnum
     public static explicit operator string(CommonFundingStatus value) => value.Value;
 
     public static explicit operator CommonFundingStatus(string value) => new(value);
+
+    internal class CommonFundingStatusSerializer : JsonConverter<CommonFundingStatus>
+    {
+        public override CommonFundingStatus Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new CommonFundingStatus(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            CommonFundingStatus value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

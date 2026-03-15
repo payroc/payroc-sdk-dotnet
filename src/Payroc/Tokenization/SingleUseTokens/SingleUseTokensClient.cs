@@ -6,7 +6,7 @@ namespace Payroc.Tokenization.SingleUseTokens;
 
 public partial class SingleUseTokensClient : ISingleUseTokensClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal SingleUseTokensClient(RawClient client)
     {
@@ -57,7 +57,9 @@ public partial class SingleUseTokensClient : ISingleUseTokensClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<SingleUseToken>(responseBody)!;
@@ -85,7 +87,9 @@ public partial class SingleUseTokensClient : ISingleUseTokensClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)

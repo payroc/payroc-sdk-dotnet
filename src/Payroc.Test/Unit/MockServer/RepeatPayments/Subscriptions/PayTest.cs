@@ -7,6 +7,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.RepeatPayments.Subscriptions;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class PayTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -34,23 +35,13 @@ public class PayTest : BaseMockServerTest
                 "amount": 4999,
                 "status": "ready",
                 "responseCode": "A",
-                "responseMessage": "Transaction approved",
-                "link": {
-                  "rel": "self",
-                  "method": "GET",
-                  "href": "https://api.payroc.com/v1/bank-transfer-payments/M2MJOG6O2Y"
-                }
+                "responseMessage": "Transaction approved"
               },
               "secureToken": {
                 "secureTokenId": "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
                 "customerName": "Sarah Hazel Hopper",
                 "token": "296753123456",
-                "status": "notValidated",
-                "link": {
-                  "rel": "self",
-                  "method": "GET",
-                  "href": "https://api.payroc.com/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa"
-                }
+                "status": "notValidated"
               },
               "currentState": {
                 "status": "active",

@@ -6,7 +6,7 @@ namespace Payroc.HostedFields;
 
 public partial class HostedFieldsClient : IHostedFieldsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal HostedFieldsClient(RawClient client)
     {
@@ -57,7 +57,9 @@ public partial class HostedFieldsClient : IHostedFieldsClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<HostedFieldsCreateSessionResponse>(
@@ -87,7 +89,9 @@ public partial class HostedFieldsClient : IHostedFieldsClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         switch (response.StatusCode)

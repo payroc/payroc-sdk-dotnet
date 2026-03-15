@@ -7,6 +7,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.PaymentLinks.SharingEvents;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ShareTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

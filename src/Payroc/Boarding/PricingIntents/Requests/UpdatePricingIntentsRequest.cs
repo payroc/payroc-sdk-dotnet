@@ -14,7 +14,7 @@ public record UpdatePricingIntentsRequest
     public required string PricingIntentId { get; set; }
 
     [JsonIgnore]
-    public required PricingIntent50 Body { get; set; }
+    public required PricingIntent52 Body { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

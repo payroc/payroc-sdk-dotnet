@@ -547,27 +547,38 @@ public record PricingAgreementUs40ProcessorCard
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'planType' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("planType");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "interchangePlus" => json.Deserialize<Payroc.InterchangePlus?>(options)
-                    ?? throw new JsonException("Failed to deserialize Payroc.InterchangePlus"),
-                "interchangePlusTiered3" => json.Deserialize<Payroc.InterchangePlusTiered3?>(
+                "interchangePlus" => jsonWithoutDiscriminator.Deserialize<Payroc.InterchangePlus?>(
                     options
-                ) ?? throw new JsonException("Failed to deserialize Payroc.InterchangePlusTiered3"),
-                "tiered3" => json.Deserialize<Payroc.Tiered3?>(options)
+                ) ?? throw new JsonException("Failed to deserialize Payroc.InterchangePlus"),
+                "interchangePlusTiered3" =>
+                    jsonWithoutDiscriminator.Deserialize<Payroc.InterchangePlusTiered3?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize Payroc.InterchangePlusTiered3"
+                        ),
+                "tiered3" => jsonWithoutDiscriminator.Deserialize<Payroc.Tiered3?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.Tiered3"),
-                "tiered4" => json.Deserialize<Payroc.Tiered4?>(options)
+                "tiered4" => jsonWithoutDiscriminator.Deserialize<Payroc.Tiered4?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.Tiered4"),
-                "tiered6" => json.Deserialize<Payroc.Tiered6?>(options)
+                "tiered6" => jsonWithoutDiscriminator.Deserialize<Payroc.Tiered6?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.Tiered6"),
-                "flatRate" => json.Deserialize<Payroc.FlatRate?>(options)
+                "flatRate" => jsonWithoutDiscriminator.Deserialize<Payroc.FlatRate?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.FlatRate"),
-                "consumerChoice" => json.Deserialize<Payroc.ConsumerChoice?>(options)
-                    ?? throw new JsonException("Failed to deserialize Payroc.ConsumerChoice"),
-                "rewardPay" => json.Deserialize<Payroc.RewardPay?>(options)
+                "consumerChoice" => jsonWithoutDiscriminator.Deserialize<Payroc.ConsumerChoice?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize Payroc.ConsumerChoice"),
+                "rewardPay" => jsonWithoutDiscriminator.Deserialize<Payroc.RewardPay?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.RewardPay"),
-                "rewardPayChoice" => json.Deserialize<Payroc.RewardPayChoice?>(options)
-                    ?? throw new JsonException("Failed to deserialize Payroc.RewardPayChoice"),
+                "rewardPayChoice" => jsonWithoutDiscriminator.Deserialize<Payroc.RewardPayChoice?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize Payroc.RewardPayChoice"),
                 _ => json.Deserialize<object?>(options),
             };
             return new PricingAgreementUs40ProcessorCard(discriminator, value);

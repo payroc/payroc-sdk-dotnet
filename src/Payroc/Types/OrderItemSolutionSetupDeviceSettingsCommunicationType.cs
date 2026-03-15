@@ -1,9 +1,12 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<OrderItemSolutionSetupDeviceSettingsCommunicationType>))]
+[JsonConverter(
+    typeof(OrderItemSolutionSetupDeviceSettingsCommunicationType.OrderItemSolutionSetupDeviceSettingsCommunicationTypeSerializer)
+)]
 [Serializable]
 public readonly record struct OrderItemSolutionSetupDeviceSettingsCommunicationType : IStringEnum
 {
@@ -71,6 +74,33 @@ public readonly record struct OrderItemSolutionSetupDeviceSettingsCommunicationT
     public static explicit operator OrderItemSolutionSetupDeviceSettingsCommunicationType(
         string value
     ) => new(value);
+
+    internal class OrderItemSolutionSetupDeviceSettingsCommunicationTypeSerializer
+        : JsonConverter<OrderItemSolutionSetupDeviceSettingsCommunicationType>
+    {
+        public override OrderItemSolutionSetupDeviceSettingsCommunicationType Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new OrderItemSolutionSetupDeviceSettingsCommunicationType(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            OrderItemSolutionSetupDeviceSettingsCommunicationType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

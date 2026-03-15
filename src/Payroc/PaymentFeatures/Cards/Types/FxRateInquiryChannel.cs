@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.PaymentFeatures.Cards;
 
-[JsonConverter(typeof(StringEnumSerializer<FxRateInquiryChannel>))]
+[JsonConverter(typeof(FxRateInquiryChannel.FxRateInquiryChannelSerializer))]
 [Serializable]
 public readonly record struct FxRateInquiryChannel : IStringEnum
 {
@@ -53,6 +54,32 @@ public readonly record struct FxRateInquiryChannel : IStringEnum
     public static explicit operator string(FxRateInquiryChannel value) => value.Value;
 
     public static explicit operator FxRateInquiryChannel(string value) => new(value);
+
+    internal class FxRateInquiryChannelSerializer : JsonConverter<FxRateInquiryChannel>
+    {
+        public override FxRateInquiryChannel Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new FxRateInquiryChannel(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            FxRateInquiryChannel value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

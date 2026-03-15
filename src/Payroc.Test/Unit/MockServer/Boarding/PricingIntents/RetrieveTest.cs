@@ -6,6 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Boarding.PricingIntents;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RetrieveTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -14,7 +15,7 @@ public class RetrieveTest : BaseMockServerTest
         const string mockResponse = """
             {
               "country": "US",
-              "version": "5.0",
+              "version": "5.2",
               "base": {
                 "addressVerification": 5,
                 "annualFee": {
@@ -25,7 +26,8 @@ public class RetrieveTest : BaseMockServerTest
                 "pciNonCompliance": 4995,
                 "merchantAdvantage": 10,
                 "platinumSecurity": {
-                  "billingFrequency": "monthly"
+                  "billingFrequency": "monthly",
+                  "amount": 1295
                 },
                 "maintenance": 500,
                 "minimum": 100,
@@ -51,10 +53,6 @@ public class RetrieveTest : BaseMockServerTest
                       "additionalDiscount": 1.25,
                       "transaction": 1,
                       "monthlyAccess": 1
-                    },
-                    "enhancedInterchange": {
-                      "enrollment": 1,
-                      "creditToMerchant": 1.25
                     }
                   }
                 },
@@ -77,7 +75,9 @@ public class RetrieveTest : BaseMockServerTest
                   "monthly": 1000,
                   "setup": 25000,
                   "perTransaction": 0,
-                  "perDeviceMonthly": 0
+                  "perDeviceMonthly": 0,
+                  "3dSecurePerTransaction": 1,
+                  "tapToPayPerTransaction": 1
                 }
               },
               "services": [

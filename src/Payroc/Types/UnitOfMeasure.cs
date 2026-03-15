@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<UnitOfMeasure>))]
+[JsonConverter(typeof(UnitOfMeasure.UnitOfMeasureSerializer))]
 [Serializable]
 public readonly record struct UnitOfMeasure : IStringEnum
 {
@@ -479,6 +480,32 @@ public readonly record struct UnitOfMeasure : IStringEnum
     public static explicit operator string(UnitOfMeasure value) => value.Value;
 
     public static explicit operator UnitOfMeasure(string value) => new(value);
+
+    internal class UnitOfMeasureSerializer : JsonConverter<UnitOfMeasure>
+    {
+        public override UnitOfMeasure Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new UnitOfMeasure(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            UnitOfMeasure value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

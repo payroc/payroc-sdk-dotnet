@@ -18,7 +18,7 @@ public record EncryptionCapableDevice : IJsonOnDeserialized
     /// Key serial number.
     /// </summary>
     [JsonPropertyName("dataKsn")]
-    public string? DataKsn { get; set; }
+    public required string DataKsn { get; set; }
 
     /// <summary>
     /// Model of the device that the merchant used to process the transaction.

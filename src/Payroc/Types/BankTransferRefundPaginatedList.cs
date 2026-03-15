@@ -15,7 +15,7 @@ public record BankTransferRefundPaginatedList : IJsonOnDeserialized
     /// Array of refund transactions.
     /// </summary>
     [JsonPropertyName("data")]
-    public IEnumerable<BankTransferRefund>? Data { get; set; }
+    public IEnumerable<BankTransferRefund> Data { get; set; } = new List<BankTransferRefund>();
 
     /// <summary>
     /// Maximum number of results that we return for each page.

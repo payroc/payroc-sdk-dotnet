@@ -11,7 +11,7 @@ namespace Payroc.Boarding;
 
 public partial class BoardingClient : IBoardingClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal BoardingClient(RawClient client)
     {

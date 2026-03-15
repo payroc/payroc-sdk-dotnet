@@ -5,7 +5,7 @@ namespace Payroc.Notifications;
 
 public partial class NotificationsClient : INotificationsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal NotificationsClient(RawClient client)
     {

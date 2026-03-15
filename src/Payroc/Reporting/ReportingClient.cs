@@ -5,7 +5,7 @@ namespace Payroc.Reporting;
 
 public partial class ReportingClient : IReportingClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ReportingClient(RawClient client)
     {

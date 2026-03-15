@@ -276,16 +276,24 @@ public record PaymentAdjustmentAdjustmentsItem
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "order" => json.Deserialize<Payroc.OrderAdjustment?>(options)
+                "order" => jsonWithoutDiscriminator.Deserialize<Payroc.OrderAdjustment?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.OrderAdjustment"),
-                "status" => json.Deserialize<Payroc.StatusAdjustment?>(options)
+                "status" => jsonWithoutDiscriminator.Deserialize<Payroc.StatusAdjustment?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.StatusAdjustment"),
-                "customer" => json.Deserialize<Payroc.CustomerAdjustment?>(options)
-                    ?? throw new JsonException("Failed to deserialize Payroc.CustomerAdjustment"),
-                "signature" => json.Deserialize<Payroc.SignatureAdjustment?>(options)
-                    ?? throw new JsonException("Failed to deserialize Payroc.SignatureAdjustment"),
+                "customer" => jsonWithoutDiscriminator.Deserialize<Payroc.CustomerAdjustment?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize Payroc.CustomerAdjustment"),
+                "signature" => jsonWithoutDiscriminator.Deserialize<Payroc.SignatureAdjustment?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize Payroc.SignatureAdjustment"),
                 _ => json.Deserialize<object?>(options),
             };
             return new PaymentAdjustmentAdjustmentsItem(discriminator, value);

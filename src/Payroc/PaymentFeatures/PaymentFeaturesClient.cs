@@ -6,7 +6,7 @@ namespace Payroc.PaymentFeatures;
 
 public partial class PaymentFeaturesClient : IPaymentFeaturesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PaymentFeaturesClient(RawClient client)
     {

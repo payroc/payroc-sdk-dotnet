@@ -189,11 +189,17 @@ public record SingleUseTokenPayloadPinDetails
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'dataFormat' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("dataFormat");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "dukpt" => json.Deserialize<Payroc.DukptPinDetails?>(options)
+                "dukpt" => jsonWithoutDiscriminator.Deserialize<Payroc.DukptPinDetails?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.DukptPinDetails"),
-                "raw" => json.Deserialize<Payroc.RawPinDetails?>(options)
+                "raw" => jsonWithoutDiscriminator.Deserialize<Payroc.RawPinDetails?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.RawPinDetails"),
                 _ => json.Deserialize<object?>(options),
             };

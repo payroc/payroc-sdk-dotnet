@@ -130,9 +130,15 @@ public record SingleUseTokenPaymentMethod
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "card" => json.Deserialize<Payroc.CardPayload?>(options)
+                "card" => jsonWithoutDiscriminator.Deserialize<Payroc.CardPayload?>(options)
                     ?? throw new JsonException("Failed to deserialize Payroc.CardPayload"),
                 _ => json.Deserialize<object?>(options),
             };

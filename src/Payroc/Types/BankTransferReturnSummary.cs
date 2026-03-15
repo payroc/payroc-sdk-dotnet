@@ -44,6 +44,7 @@ public record BankTransferReturnSummary : IJsonOnDeserialized
     [JsonPropertyName("represented")]
     public required bool Represented { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

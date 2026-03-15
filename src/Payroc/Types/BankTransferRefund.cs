@@ -42,8 +42,9 @@ public record BankTransferRefund : IJsonOnDeserialized
     [JsonPropertyName("payment")]
     public PaymentSummary? Payment { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("transactionResult")]
-    public required BankTransferResult TransactionResult { get; set; }
+    public BankTransferResult? TransactionResult { get; set; }
 
     /// <summary>
     /// Array of customField objects.

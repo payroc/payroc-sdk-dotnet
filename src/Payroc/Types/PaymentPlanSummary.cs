@@ -23,6 +23,7 @@ public record PaymentPlanSummary : IJsonOnDeserialized
     [JsonPropertyName("name")]
     public required string Name { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

@@ -7,6 +7,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.CardPayments.Payments;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class AdjustTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
@@ -63,12 +64,7 @@ public class AdjustTest : BaseMockServerTest
                     "bypass": false
                   },
                   "dualPricing": {
-                    "offered": false,
-                    "choiceRate": {
-                      "applied": true,
-                      "rate": 2.5,
-                      "amount": 75
-                    }
+                    "offered": false
                   },
                   "taxes": [
                     {
@@ -78,9 +74,6 @@ public class AdjustTest : BaseMockServerTest
                   ],
                   "dutyAmount": 0,
                   "freightAmount": 0,
-                  "convenienceFee": {
-                    "amount": 25
-                  },
                   "items": [
                     {
                       "commodityCode": "5812-0111",
@@ -144,12 +137,7 @@ public class AdjustTest : BaseMockServerTest
                   "secureTokenId": "MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa",
                   "customerName": "Sarah Hazel Hopper",
                   "token": "296753123456",
-                  "status": "notValidated",
-                  "link": {
-                    "rel": "previous",
-                    "method": "get",
-                    "href": "<uri>"
-                  }
+                  "status": "notValidated"
                 },
                 "securityChecks": {
                   "cvvResult": "M",
@@ -186,12 +174,7 @@ public class AdjustTest : BaseMockServerTest
                   "amount": 4999,
                   "status": "ready",
                   "responseCode": "A",
-                  "responseMessage": "Transaction refunded",
-                  "link": {
-                    "rel": "previous",
-                    "method": "get",
-                    "href": "<uri>"
-                  }
+                  "responseMessage": "Transaction refunded"
                 }
               ],
               "supportedOperations": [

@@ -1,10 +1,11 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
 [JsonConverter(
-    typeof(StringEnumSerializer<ProcessingTerminalFeaturesEnhancedProcessingTransactionDataLevel>)
+    typeof(ProcessingTerminalFeaturesEnhancedProcessingTransactionDataLevel.ProcessingTerminalFeaturesEnhancedProcessingTransactionDataLevelSerializer)
 )]
 [Serializable]
 public readonly record struct ProcessingTerminalFeaturesEnhancedProcessingTransactionDataLevel
@@ -66,6 +67,35 @@ public readonly record struct ProcessingTerminalFeaturesEnhancedProcessingTransa
     public static explicit operator ProcessingTerminalFeaturesEnhancedProcessingTransactionDataLevel(
         string value
     ) => new(value);
+
+    internal class ProcessingTerminalFeaturesEnhancedProcessingTransactionDataLevelSerializer
+        : JsonConverter<ProcessingTerminalFeaturesEnhancedProcessingTransactionDataLevel>
+    {
+        public override ProcessingTerminalFeaturesEnhancedProcessingTransactionDataLevel Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new ProcessingTerminalFeaturesEnhancedProcessingTransactionDataLevel(
+                stringValue
+            );
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ProcessingTerminalFeaturesEnhancedProcessingTransactionDataLevel value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

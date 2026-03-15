@@ -6,6 +6,7 @@ using Payroc.Test.Utils;
 namespace Payroc.Test.Unit.MockServer.Reporting.Settlement;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ListDisputesStatusesTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

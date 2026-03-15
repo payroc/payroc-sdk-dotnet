@@ -4,7 +4,7 @@ namespace Payroc.CardPayments;
 
 public partial class CardPaymentsClient : ICardPaymentsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal CardPaymentsClient(RawClient client)
     {

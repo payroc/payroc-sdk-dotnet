@@ -15,7 +15,7 @@ public record PaymentPaginatedListForRead : IJsonOnDeserialized
     /// Array of transactions.
     /// </summary>
     [JsonPropertyName("data")]
-    public IEnumerable<RetrievedPayment>? Data { get; set; }
+    public IEnumerable<RetrievedPayment> Data { get; set; } = new List<RetrievedPayment>();
 
     /// <summary>
     /// Maximum number of results that we return for each page.

@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<AchPayloadAccountType>))]
+[JsonConverter(typeof(AchPayloadAccountType.AchPayloadAccountTypeSerializer))]
 [Serializable]
 public readonly record struct AchPayloadAccountType : IStringEnum
 {
@@ -51,6 +52,32 @@ public readonly record struct AchPayloadAccountType : IStringEnum
     public static explicit operator string(AchPayloadAccountType value) => value.Value;
 
     public static explicit operator AchPayloadAccountType(string value) => new(value);
+
+    internal class AchPayloadAccountTypeSerializer : JsonConverter<AchPayloadAccountType>
+    {
+        public override AchPayloadAccountType Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new AchPayloadAccountType(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            AchPayloadAccountType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

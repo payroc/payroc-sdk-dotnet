@@ -6,7 +6,7 @@ namespace Payroc.Tokenization;
 
 public partial class TokenizationClient : ITokenizationClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal TokenizationClient(RawClient client)
     {

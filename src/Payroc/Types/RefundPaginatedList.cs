@@ -18,7 +18,7 @@ public record RefundPaginatedList : IJsonOnDeserialized
     /// Array of refund objects.
     /// </summary>
     [JsonPropertyName("data")]
-    public IEnumerable<RetrievedRefund>? Data { get; set; }
+    public IEnumerable<RetrievedRefund> Data { get; set; } = new List<RetrievedRefund>();
 
     /// <summary>
     /// Maximum number of results that we return for each page.

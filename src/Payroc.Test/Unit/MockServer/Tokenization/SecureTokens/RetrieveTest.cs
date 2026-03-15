@@ -6,6 +6,7 @@ using Payroc.Tokenization.SecureTokens;
 namespace Payroc.Test.Unit.MockServer.Tokenization.SecureTokens;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RetrieveTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

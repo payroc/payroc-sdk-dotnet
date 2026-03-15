@@ -44,6 +44,7 @@ public record TransactionSummary : IJsonOnDeserialized
     [JsonPropertyName("amount")]
     public long? Amount { get; set; }
 
+    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("link")]
     public Link? Link { get; set; }
 

@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
 
-[JsonConverter(typeof(StringEnumSerializer<ThirdPartyThreeDSecureEci>))]
+[JsonConverter(typeof(ThirdPartyThreeDSecureEci.ThirdPartyThreeDSecureEciSerializer))]
 [Serializable]
 public readonly record struct ThirdPartyThreeDSecureEci : IStringEnum
 {
@@ -55,6 +56,32 @@ public readonly record struct ThirdPartyThreeDSecureEci : IStringEnum
     public static explicit operator string(ThirdPartyThreeDSecureEci value) => value.Value;
 
     public static explicit operator ThirdPartyThreeDSecureEci(string value) => new(value);
+
+    internal class ThirdPartyThreeDSecureEciSerializer : JsonConverter<ThirdPartyThreeDSecureEci>
+    {
+        public override ThirdPartyThreeDSecureEci Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new ThirdPartyThreeDSecureEci(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ThirdPartyThreeDSecureEci value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

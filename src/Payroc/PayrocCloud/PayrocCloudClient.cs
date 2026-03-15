@@ -8,7 +8,7 @@ namespace Payroc.PayrocCloud;
 
 public partial class PayrocCloudClient : IPayrocCloudClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PayrocCloudClient(RawClient client)
     {

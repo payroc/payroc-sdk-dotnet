@@ -19,7 +19,8 @@ public record PaymentLinkPaginatedList : IJsonOnDeserialized
     /// -	'singleUse' - Create a link that the merchant can use for only one payment.
     /// </summary>
     [JsonPropertyName("data")]
-    public IEnumerable<PaymentLinkPaginatedListDataItem>? Data { get; set; }
+    public IEnumerable<PaymentLinkPaginatedListDataItem> Data { get; set; } =
+        new List<PaymentLinkPaginatedListDataItem>();
 
     /// <summary>
     /// Maximum number of results that we return for each page.
