@@ -23,9 +23,38 @@ dotnet build
 ### Project Structure
 
 - `src/Payroc/` - Main SDK library
-- `src/Payroc.Test/` - Unit tests
-- `src/Payroc.TestFunctional/` - Functional tests
+- `src/Payroc.Test/` - Unit tests with mocked dependencies
+- `src/Payroc.TestCommon/` - Shared test infrastructure and test definitions
+- `src/Payroc.TestSmoke/` - Single smoke test for quick API validation
+- `src/Payroc.TestFunctional/` - Comprehensive integration tests (~125 files)
 - `src/Payroc.TestHarness/` - Test harness for debugging
+
+#### Test Organization
+
+The test suite uses a **file linking architecture** to maintain a single source of truth:
+
+```
+src/
+├── Payroc.TestCommon/          # Shared test infrastructure
+│   ├── Tests/
+│   │   ├── CardPayments/Refunds/CreateTests.cs  # Contains SmokeTest() method
+│   │   └── [All other tests]   # ~125 test files total
+│   ├── Factories/              # Test data factories
+│   ├── TestData/               # JSON test data files
+│   ├── GlobalFixture.cs
+│   ├── TestClients.cs
+│   └── Data.cs
+│
+├── Payroc.TestSmoke/           # Links to single test file
+└── Payroc.TestFunctional/      # Links to all test files
+```
+
+**Benefits:**
+- ✅ Single source of truth for all test code
+- ✅ No code duplication
+- ✅ Easy maintenance - update once in `TestCommon`
+- ✅ Ultra-fast smoke test for quick validation
+- ✅ Comprehensive functional tests for thorough testing
 
 ## Testing
 
@@ -74,7 +103,13 @@ Run only unit tests:
 dotnet test src/Payroc.Test/Payroc.Test.csproj
 ```
 
-Run only functional tests:
+Run smoke test (ultra-fast):
+
+```bash
+dotnet test src/Payroc.TestSmoke/Payroc.TestSmoke.csproj
+```
+
+Run functional tests:
 
 ```bash
 dotnet test src/Payroc.TestFunctional/Payroc.TestFunctional.csproj
@@ -88,6 +123,75 @@ dotnet test /p:CollectCoverage=true
 
 ### Test Categories
 
-- **Unit Tests** (`src/Payroc.Test/`) - Fast, isolated tests for individual components
-- **Functional Tests** (`src/Payroc.TestFunctional/`) - Integration tests that validate end-to-end functionality
-- **Test Harness** (`src/Payroc.TestHarness/`) - Debugging and manual testing utility
+#### Unit Tests (`Payroc.Test`)
+- **Purpose**: Fast, isolated tests for individual components
+- **Dependencies**: Uses WireMock for HTTP mocking
+- **Location**: `src/Payroc.Test/`
+- **Examples**: JSON serialization, pagination, query builders, error handling
+
+#### Smoke Test (`Payroc.TestSmoke`)
+- **Purpose**: Ultra-fast validation that core API functionality works
+- **Location**: Links to `TestCommon/Tests/CardPayments/Refunds/CreateTests.cs`
+- **Count**: 1 test method (`SmokeTest()` in CreateTests.cs)
+- **Test**: Creates an unreferenced refund to validate basic API connectivity
+- **Environment**: Makes real API calls to UAT
+- **Why this test**: Exercises multiple critical paths in one call:
+  - API authentication (OAuth token retrieval)
+  - Request serialization (JSON encoding)
+  - HTTP communication (POST request)
+  - Payment processing (UAT backend)
+  - Response deserialization (JSON decoding)
+  - Transaction status validation (business logic)
+- **Based on**: Ruby SDK smoke test at `test/integration/card_payments/refunds/create_test.rb`
+- **Note**: This same test is also included in TestFunctional (duplicated via file linking)
+
+#### Functional Tests (`Payroc.TestFunctional`)
+- **Purpose**: Comprehensive testing of all API endpoints, scenarios, and workflows
+- **Location**: Links to `TestCommon/Tests/` (all test files)
+- **Count**: ~126 test files covering all API endpoints (includes the smoke test)
+- **Environment**: Makes real API calls to UAT
+- **Coverage**:
+  - All API endpoint operations (Create, Retrieve, Update, Delete, List)
+  - Payment processing scenarios (approvals, declines, refunds, captures)
+  - Different payment methods (card, bank transfer, tokens)
+  - Boarding and merchant management
+  - Funding and settlement operations
+  - Event subscriptions and notifications
+  - Payment links and repeat payments
+  - Includes the smoke test for complete coverage
+
+#### Test Harness (`Payroc.TestHarness`)
+- **Purpose**: Debugging and manual testing utility
+- **Location**: `src/Payroc.TestHarness/`
+
+### Environment Configuration
+
+Integration tests (Smoke and Functional) require the following environment variables:
+
+- `PAYROC_API_KEY_GENERIC` or `PAYROC_API_KEY` - API key for generic operations
+- `PAYROC_API_KEY_PAYMENTS` - API key for payment operations
+- `TERMINAL_ID_AVS` - Terminal ID with AVS enabled
+- `TERMINAL_ID_NO_AVS` - Terminal ID without AVS
+- `TERMINAL_ID_AVS_PAYMENTS_BANK_TRANSFER` - Bank transfer terminal ID
+- `TERMINAL_ID_AVS_PAYMENTS_BANK_TRANSFER_PAD` - Bank transfer PAD terminal ID
+
+**Test Execution Details:**
+- **Environment**: UAT (User Acceptance Testing)
+- **Test Framework**: NUnit 4.4.0
+- **Target Framework**: .NET 8.0
+- **Parallelization**: Enabled at fixture scope
+- **Test Type**: Integration tests making real API calls to UAT
+
+### Adding New Tests
+
+**Note**: The smoke test is the `SmokeTest()` method in `CardPayments/Refunds/CreateTests.cs`. This test is included in both TestSmoke (for fast validation) and TestFunctional (for comprehensive coverage). All new tests should be functional tests added to the Tests folder.
+
+#### Adding a Functional Test
+1. Create test file in `TestCommon/Tests/[Category]/[Feature]/`
+2. Use descriptive test method names (e.g., `Payments_Create_Retrieve_Decline()`)
+3. Test automatically included in `Payroc.TestFunctional`
+
+#### Adding a Unit Test
+1. Create test file in `Payroc.Test/[Category]/`
+2. Use WireMock to mock HTTP responses
+3. Follow existing patterns for test organization

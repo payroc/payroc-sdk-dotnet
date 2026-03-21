@@ -11,7 +11,7 @@ public class PartiallyUpdateTests
 {
     [Test]
     [Ignore("recurringOrder is null in partiallyUpdateAsync response")]
-    public async Task SmokeTest()
+    public async Task Subscriptions_PartiallyUpdate_Success()
     {
         var client = GlobalFixture.Payments;
         var tokenRequest = Data.Get<TokenizationRequest>(

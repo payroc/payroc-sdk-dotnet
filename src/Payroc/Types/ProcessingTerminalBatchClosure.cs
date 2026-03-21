@@ -233,6 +233,27 @@ public record ProcessingTerminalBatchClosure
             json["batchCloseType"] = value.BatchCloseType;
             json.WriteTo(writer, options);
         }
+
+        public override ProcessingTerminalBatchClosure ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new ProcessingTerminalBatchClosure(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            ProcessingTerminalBatchClosure value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.BatchCloseType);
+        }
     }
 
     /// <summary>

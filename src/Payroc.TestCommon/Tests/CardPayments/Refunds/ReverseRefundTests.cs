@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.CardPayments.Refunds;
 public class ReverseRefundTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task CardPaymentRefunds_ReverseRefund_Success()
     {
         var client = GlobalFixture.Payments;
         var createRefundRequest = Data.Get<UnreferencedRefund>(

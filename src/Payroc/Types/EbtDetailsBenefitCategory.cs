@@ -77,6 +77,29 @@ public readonly record struct EbtDetailsBenefitCategory : IStringEnum
         {
             writer.WriteStringValue(value.Value);
         }
+
+        public override EbtDetailsBenefitCategory ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new EbtDetailsBenefitCategory(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            EbtDetailsBenefitCategory value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
     }
 
     /// <summary>

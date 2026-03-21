@@ -104,6 +104,29 @@ public readonly record struct ListTerminalOrdersProcessingAccountsRequestStatus 
         {
             writer.WriteStringValue(value.Value);
         }
+
+        public override ListTerminalOrdersProcessingAccountsRequestStatus ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new ListTerminalOrdersProcessingAccountsRequestStatus(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            ListTerminalOrdersProcessingAccountsRequestStatus value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
     }
 
     /// <summary>

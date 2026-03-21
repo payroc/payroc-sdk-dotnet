@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.Boarding.ProcessingAccounts;
 public class ListProcessingTerminalsTests
 {
      [Test]
-    public async Task SmokeTest()
+    public async Task ProcessingAccounts_ListProcessingTerminals_Success()
     {
         var client = GlobalFixture.Payments;
         var listProcessingTerminalsRequest = new ListProcessingTerminalsProcessingAccountsRequest()

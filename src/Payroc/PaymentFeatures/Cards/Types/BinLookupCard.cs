@@ -318,6 +318,27 @@ public record BinLookupCard
             json["type"] = value.Type;
             json.WriteTo(writer, options);
         }
+
+        public override BinLookupCard ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new BinLookupCard(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            BinLookupCard value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
+        }
     }
 
     /// <summary>

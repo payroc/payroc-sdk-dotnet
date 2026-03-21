@@ -5,6 +5,7 @@ namespace Payroc.TestCommon.Tests.EventSubscriptions;
 
 [TestFixture, Category("Notifications.EventSubscriptions")]
 [Parallelizable(ParallelScope.Fixtures)]
+[Ignore("API Key config issue - need event supported")]
 public class EventSubscriptionLifecycleTests
 {
     [Test]

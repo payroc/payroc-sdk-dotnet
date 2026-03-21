@@ -226,6 +226,27 @@ public record InterchangePlusPlusUs52FeesAmex
             json["type"] = value.Type;
             json.WriteTo(writer, options);
         }
+
+        public override InterchangePlusPlusUs52FeesAmex ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new InterchangePlusPlusUs52FeesAmex(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            InterchangePlusPlusUs52FeesAmex value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
+        }
     }
 
     /// <summary>

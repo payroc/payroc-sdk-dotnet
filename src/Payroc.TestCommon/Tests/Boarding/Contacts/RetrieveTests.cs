@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.Boarding.Contacts;
 public class RetrieveTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task Contacts_Retrieve_Success()
     {
         var client = GlobalFixture.Payments;
         var contactsRequest = new RetrieveContactsRequest

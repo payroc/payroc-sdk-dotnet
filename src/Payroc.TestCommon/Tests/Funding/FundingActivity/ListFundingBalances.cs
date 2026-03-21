@@ -10,7 +10,7 @@ public class ListFundingBalances
 {
     [Test]
     [Ignore("Data issues: Failing KYC checks - needs investigation")]
-    public async Task SmokeTest()
+    public async Task FundingActivity_ListFundingBalances_Success()
     {
         var client = GlobalFixture.Payments;
         var request = Data.Get<CreateFundingRecipient>([

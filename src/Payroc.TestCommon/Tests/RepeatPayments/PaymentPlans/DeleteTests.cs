@@ -8,7 +8,7 @@ namespace Payroc.TestCommon.Tests.RepeatPayments.PaymentPlans;
 public class DeleteTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task PaymentPlans_Delete_Success()
     {
         var client = GlobalFixture.Payments;
         var createRequest =  Data.Get<CreatePaymentPlansRequest>([

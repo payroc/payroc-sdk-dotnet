@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.Boarding.ProcessingAccounts;
 public class RetrieveProcessingAccountTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task ProcessingAccounts_RetrieveProcessingAccount_Success()
     {
         var client = GlobalFixture.Payments;
         var retrieveRequest = new RetrieveProcessingAccountsRequest

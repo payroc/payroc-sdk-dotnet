@@ -11,7 +11,7 @@ public class CreateTests
 {
     [Test]
     [Ignore("Data issues: Failing KYC checks - needs investigation")]
-    public async Task SmokeTest()
+    public async Task FundingInstructions_Create_Success()
     {
         var client = GlobalFixture.Payments;
         var request = Data.Get<CreateFundingRecipient>([

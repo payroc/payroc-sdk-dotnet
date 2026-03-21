@@ -9,7 +9,7 @@ namespace Payroc.TestCommon.Tests.Boarding.Contacts;
 public class DeleteTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task Contacts_Delete_Success()
     {
         var client = GlobalFixture.Payments;
         var pricingIntentBody = Payroc.TestCommon.Factories.Boarding.RequestBodies.PricingIntentFactory.Create();

@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.Boarding.PricingIntents;
 public class RetrieveTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task PricingIntents_Retrieve_Success()
     {
         var client = GlobalFixture.Payments;
         var retrieveRequest = new RetrievePricingIntentsRequest

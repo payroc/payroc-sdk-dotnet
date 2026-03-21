@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.Boarding.Owners;
 public class RetrieveTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task Owners_Retrieve_Success()
     {
         var client = GlobalFixture.Payments;
         var ownersRequest = new RetrieveOwnersRequest

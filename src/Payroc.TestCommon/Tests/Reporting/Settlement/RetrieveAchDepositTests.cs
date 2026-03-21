@@ -8,9 +8,9 @@ public class RetrieveAchDepositTests
 {
     [Test]
     [Ignore("Data Issues: Internal Server Error 500: Could possibly be do to bad api key, or other server side issues")]
-    public async Task SmokeTest()
+    public async Task Settlement_RetrieveAchDeposit_Success()
     {
-        var client = GlobalFixture.Generic;
+        var client = GlobalFixture.Payments;
         var request = new ListReportingSettlementAchDepositsRequest
         {
             Date = new DateOnly(2024, 07, 02),

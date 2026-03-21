@@ -6,7 +6,6 @@ public static class TestClients
 {
     public static readonly PayrocClient Generic;
     public static readonly PayrocClient Payments;
-    public static readonly PayrocClient PaymentsBank;
     public static readonly string TerminalIdAvs;
     public static readonly string TerminalIdNoAvs;
     public static readonly string TerminalIdBank;
@@ -16,7 +15,6 @@ public static class TestClients
     {
         Generic = CreateClient(GetEnvWithFallback("PAYROC_API_KEY_GENERIC"));
         Payments = CreateClient(GetEnvWithFallback("PAYROC_API_KEY_PAYMENTS"));
-        PaymentsBank = CreateClient(GetEnvWithFallback("PAYROC_API_KEY_PAYMENTS_BANK_TRANSFER"));
         TerminalIdAvs = GetEnv("TERMINAL_ID_AVS");
         TerminalIdNoAvs = GetEnv("TERMINAL_ID_NO_AVS");
         TerminalIdBank = GetEnv("TERMINAL_ID_AVS_PAYMENTS_BANK_TRANSFER");

@@ -7,9 +7,9 @@ namespace Payroc.TestCommon.Tests.Reporting.Settlement;
 public class RetrieveTransactionTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task Settlement_RetrieveTransaction_Success()
     {
-        var client = GlobalFixture.Generic;
+        var client = GlobalFixture.Payments;
         var testDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-90));
 
         try

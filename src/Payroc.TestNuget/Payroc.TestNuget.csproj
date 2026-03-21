@@ -22,7 +22,8 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
-		<PackageReference Include="Payroc" Version="0.0.3933" />
+		<PackageReference Include="Payroc" Version="0.0.3934" />
+		<PackageReference Include="WireMock.Net" Version="1.7.4" />
 	</ItemGroup>
 	<ItemGroup>
 		<Using Include="NUnit.Framework" />

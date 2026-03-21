@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.HostedFields;
 public class CreateTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task HostedFields_Create_Success()
     {
         var client = GlobalFixture.Payments;
         var request = Data.Get<HostedFieldsCreateSessionRequest>([

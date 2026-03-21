@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.PaymentFeatures.Cards;
 public class CardVerificationTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task Cards_CardVerification_Success()
     {
         var client = GlobalFixture.Payments;
         var request = Data.Get<CardVerificationRequest>([

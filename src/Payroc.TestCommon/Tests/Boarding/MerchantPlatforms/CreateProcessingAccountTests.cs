@@ -9,7 +9,7 @@ namespace Payroc.TestCommon.Tests.Boarding.MerchantPlatforms;
 public class CreateProcessingAccountTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task MerchantPlatforms_CreateProcessingAccount_Success()
     {
         var client = GlobalFixture.Payments;
         var pricingIntentBody = Payroc.TestCommon.Factories.Boarding.RequestBodies.PricingIntentFactory.Create();

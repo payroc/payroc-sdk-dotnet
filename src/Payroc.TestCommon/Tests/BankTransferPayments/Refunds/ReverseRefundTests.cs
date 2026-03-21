@@ -8,9 +8,9 @@ public class ReverseRefundTests
 {
     [Test]
     [Ignore("Data Errors: ReverseRefunds will not work with a transaction with a declined status.")]
-    public async Task SmokeTest()
+    public async Task BankTransferRefunds_ReverseRefund_Success()
     {
-        var client = GlobalFixture.PaymentsBank;
+        var client = GlobalFixture.Payments;
         var refundRequest = Data.Get<BankTransferUnreferencedRefund>(
         [
             ( i => i.IdempotencyKey, Guid.NewGuid().ToString() ),

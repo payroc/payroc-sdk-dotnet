@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.Payments.SecureTokens;
 public class DeleteTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task SecureTokens_Delete_Success()
     {
         var client = GlobalFixture.Payments;
         var request = Data.Get<TokenizationRequest>(

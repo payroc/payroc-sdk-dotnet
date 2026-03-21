@@ -546,6 +546,27 @@ public record PricingAgreementUs52ProcessorCard
             json["planType"] = value.PlanType;
             json.WriteTo(writer, options);
         }
+
+        public override PricingAgreementUs52ProcessorCard ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new PricingAgreementUs52ProcessorCard(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            PricingAgreementUs52ProcessorCard value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.PlanType);
+        }
     }
 
     /// <summary>

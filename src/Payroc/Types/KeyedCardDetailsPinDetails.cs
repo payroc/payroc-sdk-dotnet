@@ -160,6 +160,27 @@ public record KeyedCardDetailsPinDetails
             json["dataFormat"] = value.DataFormat;
             json.WriteTo(writer, options);
         }
+
+        public override KeyedCardDetailsPinDetails ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new KeyedCardDetailsPinDetails(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            KeyedCardDetailsPinDetails value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.DataFormat);
+        }
     }
 
     /// <summary>

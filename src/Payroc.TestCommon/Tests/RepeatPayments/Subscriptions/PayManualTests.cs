@@ -10,7 +10,7 @@ namespace Payroc.TestCommon.Tests.RepeatPayments.Subscriptions;
 public class PayManualTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task Subscriptions_PayManual_Success()
     {
         var client = GlobalFixture.Payments;
         var tokenRequest = Data.Get<TokenizationRequest>(

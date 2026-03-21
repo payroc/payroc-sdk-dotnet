@@ -7,14 +7,14 @@ namespace Payroc.TestCommon.Tests.Payments.SecureTokens;
 public class CreateTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task SecureTokens_Create_Success()
     {
         var client = GlobalFixture.Payments;
         var request = Data.Get<TokenizationRequest>(
         [
             ( i => i.IdempotencyKey, Guid.NewGuid().ToString() ),
             ( i => i.ProcessingTerminalId, GlobalFixture.TerminalIdAvs )
-        ]);;
+        ]);
 
         var response = await client.Tokenization.SecureTokens.CreateAsync(request);
 

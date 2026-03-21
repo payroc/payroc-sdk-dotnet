@@ -1,8 +1,20 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../.editorconfig" />
+    <File Path="../.fernignore" />
+    <File Path="../.gitignore" />
+    <File Path="../.previewignore" />
+    <File Path="../CONTRIBUTING.md" />
+    <File Path="../LICENSE" />
+    <File Path="../README.md" />
+    <File Path="../reference.md" />
+    <File Path="../SECURITY.md" />
+  </Folder>
   <Project Path="Payroc.Test/Payroc.Test.csproj" />
-  <Project Path="Payroc/Payroc.csproj" />  
   <Project Path="Payroc.TestCommon/Payroc.TestCommon.csproj" />
+  <Project Path="Payroc.TestSmoke/Payroc.TestSmoke.csproj" />
   <Project Path="Payroc.TestFunctional/Payroc.TestFunctional.csproj" />
-  <Project Path="Payroc.TestNuget/Payroc.TestNuget.csproj" />
   <Project Path="Payroc.TestHarness/Payroc.TestHarness.csproj" />
+  <Project Path="Payroc.TestNuget/Payroc.TestNuget.csproj" />
+  <Project Path="Payroc/Payroc.csproj" />
 </Solution>

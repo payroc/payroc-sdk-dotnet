@@ -8,9 +8,9 @@ public class RepresentTests
 {
     [Test]
     [Ignore("Data Issues: BankTransferPayments use PAD transactions. Representment does not currently work for PAD transactions. Will re-enable once this is resolved.")]
-    public async Task SmokeTest()
+    public async Task BankTransferPayments_Represent_Success()
     {
-        var client = GlobalFixture.PaymentsBank;
+        var client = GlobalFixture.Payments;
         var createRequest = Data.Get<BankTransferPaymentRequest>(
         [
             ( i => i.IdempotencyKey, Guid.NewGuid().ToString() ),

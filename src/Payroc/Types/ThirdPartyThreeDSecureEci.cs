@@ -81,6 +81,29 @@ public readonly record struct ThirdPartyThreeDSecureEci : IStringEnum
         {
             writer.WriteStringValue(value.Value);
         }
+
+        public override ThirdPartyThreeDSecureEci ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new ThirdPartyThreeDSecureEci(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            ThirdPartyThreeDSecureEci value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
     }
 
     /// <summary>

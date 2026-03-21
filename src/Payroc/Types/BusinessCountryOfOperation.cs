@@ -75,6 +75,29 @@ public readonly record struct BusinessCountryOfOperation : IStringEnum
         {
             writer.WriteStringValue(value.Value);
         }
+
+        public override BusinessCountryOfOperation ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new BusinessCountryOfOperation(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            BusinessCountryOfOperation value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
     }
 
     /// <summary>

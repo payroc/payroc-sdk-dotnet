@@ -225,6 +225,27 @@ public record BaseUsPlatinumSecurity
             json["billingFrequency"] = value.BillingFrequency;
             json.WriteTo(writer, options);
         }
+
+        public override BaseUsPlatinumSecurity ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new BaseUsPlatinumSecurity(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            BaseUsPlatinumSecurity value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.BillingFrequency);
+        }
     }
 
     /// <summary>

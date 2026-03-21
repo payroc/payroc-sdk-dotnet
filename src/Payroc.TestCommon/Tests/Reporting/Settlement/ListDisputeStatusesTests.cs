@@ -7,9 +7,9 @@ namespace Payroc.TestCommon.Tests.Reporting.Settlement;
 public class ListDisputeStatusesTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task Settlement_ListDisputeStatuses_Success()
     {
-        var client = GlobalFixture.Generic;
+        var client = GlobalFixture.Payments;
         
         // Using a dispute ID that is unlikely to exist to demonstrate the test structure without relying on specific data
         // Todo : Replace with a valid DisputeId for a more meaningful test

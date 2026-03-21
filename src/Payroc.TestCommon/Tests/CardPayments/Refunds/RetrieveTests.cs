@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.CardPayments.Refunds;
 public class RetrieveTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task CardPaymentRefunds_Retrieve_Success()
     {
         var client = GlobalFixture.Payments;
         var createRefundRequest = Data.Get<UnreferencedRefund>(

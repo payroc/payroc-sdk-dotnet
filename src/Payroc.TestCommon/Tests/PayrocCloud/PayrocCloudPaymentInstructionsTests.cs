@@ -10,7 +10,7 @@ public class PayrocCloudPaymentInstructionsTests
 
     [Test]
     [Ignore("PayrocCloud")]
-    public async Task SmokeTest()
+    public async Task PayrocCloud_PayrocCloudPaymentInstructions_Success()
     {
         var client = GlobalFixture.Payments;
 

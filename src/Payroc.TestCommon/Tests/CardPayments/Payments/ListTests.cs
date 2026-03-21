@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.CardPayments.Payments;
 public class ListTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task CardPayments_List_Success()
     {
         var client = GlobalFixture.Payments;
         var paymentRequest = Data.Get<PaymentRequest>(

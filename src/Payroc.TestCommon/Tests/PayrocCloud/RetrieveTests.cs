@@ -8,7 +8,7 @@ public class RetrieveTests
 {
     [Test]
     [Ignore("Data Errors: NotFoundError for existing SignatureId")]
-    public async Task SmokeTest()
+    public async Task PayrocCloud_Retrieve_Success()
     {
         var client = GlobalFixture.Payments;
         var request = new RetrieveSignaturesRequest

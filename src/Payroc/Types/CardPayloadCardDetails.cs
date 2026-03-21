@@ -318,6 +318,27 @@ public record CardPayloadCardDetails
             json["entryMethod"] = value.EntryMethod;
             json.WriteTo(writer, options);
         }
+
+        public override CardPayloadCardDetails ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new CardPayloadCardDetails(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            CardPayloadCardDetails value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.EntryMethod);
+        }
     }
 
     /// <summary>

@@ -78,6 +78,29 @@ public readonly record struct SwipedCardDetailsDowngradeTo : IStringEnum
         {
             writer.WriteStringValue(value.Value);
         }
+
+        public override SwipedCardDetailsDowngradeTo ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new SwipedCardDetailsDowngradeTo(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            SwipedCardDetailsDowngradeTo value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
     }
 
     /// <summary>
