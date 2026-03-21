@@ -125,6 +125,7 @@ jobs:
           -e \"TERMINAL_ID_NO_AVS=$TERMINAL_ID_NO_AVS\" \
           -e \"TERMINAL_ID_AVS_PAYMENTS_BANK_TRANSFER_PAD=$TERMINAL_ID_AVS_PAYMENTS_BANK_TRANSFER_PAD\" \
           -e \"TERMINAL_ID_AVS_PAYMENTS_BANK_TRANSFER=$TERMINAL_ID_AVS_PAYMENTS_BANK_TRANSFER\" \
+          -e \"NUGET_API_KEY=$NUGET_API_KEY\" \
           \"${{ parameters.dockerRegistry }}/${{ parameters.imageName }}:${{ parameters.imageTag }}\" \
           \"${{ parameters.cliCommand }}\" \
           --environment=Prod"

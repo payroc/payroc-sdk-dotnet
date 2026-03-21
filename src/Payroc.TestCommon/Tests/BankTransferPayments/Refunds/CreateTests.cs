@@ -7,9 +7,10 @@ namespace Payroc.TestCommon.Tests.Payments.BankTransferRefunds;
 public class CreateTests
 {
     [Test]
-    public async Task SmokeTest()
+    [Ignore("No ACH-capable terminal available - need bank transfer terminal config")]
+    public async Task BankTransferRefunds_Create_Success()
     {
-        var client = GlobalFixture.PaymentsBank;
+        var client = GlobalFixture.Payments;
         var request = Data.Get<BankTransferUnreferencedRefund>(
         [
             ( i => i.IdempotencyKey, Guid.NewGuid().ToString() ),

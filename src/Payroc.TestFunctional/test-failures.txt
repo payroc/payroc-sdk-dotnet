@@ -1,0 +1,403 @@
+
+  SmokeTest: Data Issues: Currently failing due to TerminalOrders not returning a ProcessingTerminalId. This is due to having to use a non-physical device due to not being able link a 
+paymentIntent to a terminal.Also using an already known existing processingTerminalId throws a Json Deserialization error for batchClosure.
+  SmokeTest: Data Issue: Terminal does not have host processor configuration available in test environment.
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data Issues: Currently failing due to TerminalOrders not returning a ProcessingTerminalId. This is due to having to use a non-physical device due to not being able link a paymentIntent to 
+a terminal.Also using an already known existing processingTerminalId throws a Json Deserialization error for batchClosure.
+    Standard Output Messages:
+   Data Issues: Currently failing due to TerminalOrders not returning a ProcessingTerminalId. This is due to having to use a non-physical device due to not being able link a paymentIntent to a 
+terminal.Also using an already known existing processingTerminalId throws a Json Deserialization error for batchClosure.
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data Issue: Terminal does not have host processor configuration available in test environment.
+    Standard Output Messages:
+   Data Issue: Terminal does not have host processor configuration available in test environment.
+  
+    Passed SmokeTest [645 ms]
+    Passed SmokeTest [740 ms]
+    Passed SmokeTest [896 ms]
+    Passed SmokeTest [934 ms]
+    Passed SmokeTest [1 s]
+    Passed SmokeTest [1 s]
+  SmokeTest: Data Issues: FrobiddenError: Forbidden, status: 403, detail: You do not have the required permissions to perform this action, instance: https://api.uat.payroc.com/v1/owners/126330
+  SmokeTest: Data Issues: FrobiddenError: Forbidden, status: 403, detail: You do not have the required permissions to perform this action, instance: https://api.uat.payroc.com/v1/owners/126330
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data Issues: FrobiddenError: Forbidden, status: 403, detail: You do not have the required permissions to perform this action, instance: https://api.uat.payroc.com/v1/owners/126330
+    Standard Output Messages:
+   Data Issues: FrobiddenError: Forbidden, status: 403, detail: You do not have the required permissions to perform this action, instance: https://api.uat.payroc.com/v1/owners/126330
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data Issues: FrobiddenError: Forbidden, status: 403, detail: You do not have the required permissions to perform this action, instance: https://api.uat.payroc.com/v1/owners/126330
+    Standard Output Messages:
+   Data Issues: FrobiddenError: Forbidden, status: 403, detail: You do not have the required permissions to perform this action, instance: https://api.uat.payroc.com/v1/owners/126330
+  
+    Passed SmokeTest [817 ms]
+    Passed SmokeTest [1 s]
+    Passed SmokeTest [1 s]
+    Passed SmokeTest [1 s]
+    Passed SmokeTest [1 s]
+    Passed SmokeTest [22 s]
+    Passed SmokeTest [24 s]
+  SmokeTest: Data Issues: BankTransferPayments use PAD transactions. Representment does not currently work for PAD transactions. Will re-enable once this is resolved.
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data Issues: BankTransferPayments use PAD transactions. Representment does not currently work for PAD transactions. Will re-enable once this is resolved.
+    Standard Output Messages:
+   Data Issues: BankTransferPayments use PAD transactions. Representment does not currently work for PAD transactions. Will re-enable once this is resolved.
+  
+  SmokeTest: API Key config issue - need event supported
+  SmokeTest: API Key config issue - need event supported
+  SmokeTest: API Key config issue - need event supported
+  SmokeTest: API Key config issue - need event supported
+  SmokeTest: API Key config issue - need event supported
+  SmokeTest: API Key config issue - need event supported
+  SmokeTest: Data issues: Failing KYC checks - needs investigation
+  SmokeTest: Data issues: Failing KYC checks - needs investigation
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     API Key config issue - need event supported
+    Standard Output Messages:
+   API Key config issue - need event supported
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     API Key config issue - need event supported
+    Standard Output Messages:
+   API Key config issue - need event supported
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     API Key config issue - need event supported
+    Standard Output Messages:
+   API Key config issue - need event supported
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     API Key config issue - need event supported
+    Standard Output Messages:
+   API Key config issue - need event supported
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     API Key config issue - need event supported
+    Standard Output Messages:
+   API Key config issue - need event supported
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     API Key config issue - need event supported
+    Standard Output Messages:
+   API Key config issue - need event supported
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+  SmokeTest: Data issues: Failing KYC checks - needs investigation
+  SmokeTest: Data issues: Failing KYC checks - needs investigation
+  SmokeTest: Data issues: Failing KYC checks - needs investigation
+  SmokeTest: Data issues: Failing KYC checks - needs investigation
+  SmokeTest: Data issues: Failing KYC checks - needs investigation
+  SmokeTest: Data issues: Failing KYC checks - needs investigation
+  SmokeTest: Data issues: Failing KYC checks - needs investigation
+  SmokeTest: Data issues: Failing KYC checks - needs investigation
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+  SmokeTest: Data issues: Failing KYC checks - needs investigation
+  SmokeTest: Data issues: Failing KYC checks - needs investigation
+  SmokeTest: Data issues: Failing KYC checks - needs investigation
+  SmokeTest: Data issues: Failing KYC checks - needs investigation
+  SmokeTest: Data issues: Failing KYC checks - needs investigation
+  SmokeTest: Data Errors: Processing terminal does not support bank transfers.
+  SmokeTest: OneTimeSetUp: Data Errors: Processing terminal does not support Gateway Managed certs
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data Errors: Processing terminal does not support bank transfers.
+    Standard Output Messages:
+   Data Errors: Processing terminal does not support bank transfers.
+  
+    Skipped SmokeTest [8 ms]
+>   Error Message:
+     OneTimeSetUp: Data Errors: Processing terminal does not support Gateway Managed certs
+    Standard Output Messages:
+   OneTimeSetUp: Data Errors: Processing terminal does not support Gateway Managed certs
+  
+  Create_Patch_Update_Get_Delete_Lifecycle: OneTimeSetUp: API Key config issue - need event supported
+  SmokeTest: Data Errors: BadRequestError: Invalid Sharing Group: null must be 30 or less alphaNumeric characters!
+    Skipped Create_Patch_Update_Get_Delete_Lifecycle [7 ms]
+>   Error Message:
+     OneTimeSetUp: API Key config issue - need event supported
+    Standard Output Messages:
+   OneTimeSetUp: API Key config issue - need event supported
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data Errors: BadRequestError: Invalid Sharing Group: null must be 30 or less alphaNumeric characters!
+    Standard Output Messages:
+   Data Errors: BadRequestError: Invalid Sharing Group: null must be 30 or less alphaNumeric characters!
+  
+    Passed SmokeTest [415 ms]
+    Passed SmokeTest [747 ms]
+    Passed SmokeTest [992 ms]
+    Passed SmokeTest [1 s]
+    Passed SmokeTest [1 s]
+    Passed SmokeTest [1 s]
+  
+    Passed SmokeTest [1 s]
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data Errors: ReverseRefunds will not work with a transaction with a declined status.
+    Standard Output Messages:
+   Data Errors: ReverseRefunds will not work with a transaction with a declined status.
+  
+    Passed SmokeTest [830 ms]
+    Passed SmokeTest [709 ms]
+    Passed Payments_Create_Cvv_Fail [1 s]
+>   Failed SmokeTest [441 ms]
+>   Error Message:
+     Exception occurred: BadRequestError
+    Stack Trace:
+       at Payroc.TestCommon.Tests.Payments.BankTransferRefunds.CreateTests.SmokeTest() in C:\Source\payroc-sdk-dotnet\src\Payroc.TestCommon\Tests\BankTransferPayments\Refunds\CreateTests.cs:line 
+26
+     at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()
+     at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)
+     at NUnit.Framework.Internal.AsyncToSyncAdapter.Await[TResult](TestExecutionContext context, Func`1 invoke)
+     at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(TestExecutionContext context, Func`1 invoke)
+     at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(TestExecutionContext context)
+     at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(TestExecutionContext context)
+     at NUnit.Framework.Internal.Execution.SimpleWorkItem.<>c__DisplayClass3_0.<PerformWork>b__0()
+  SmokeTest: PayrocCloud
+    Passed SmokeTest [1 s]
+    Passed SmokeTest [1 s]
+>   Failed SmokeTest [502 ms]
+>   Error Message:
+     Payroc.BadRequestError : BadRequestError
+    Stack Trace:
+       at Payroc.Core.ExceptionHandler.TryCatchAsync[T](Func`1 func) in C:\Source\payroc-sdk-dotnet\src\Payroc\Core\ExceptionHandler.cs:line 85
+     at Payroc.BankTransferPayments.Refunds.RefundsClient.CreateAsyncCore(BankTransferUnreferencedRefund request, RequestOptions options, CancellationToken cancellationToken) in 
+C:\Source\payroc-sdk-dotnet\src\Payroc\BankTransferPayments\Refunds\RefundsClient.cs:line 274
+     at Payroc.WithRawResponseTask`1.Awaiter.GetResult() in C:\Source\payroc-sdk-dotnet\src\Payroc\Core\Public\WithRawResponseTask.cs:line 73
+     at Payroc.TestCommon.Tests.Payments.BankTransferRefunds.ListTests.SmokeTest() in C:\Source\payroc-sdk-dotnet\src\Payroc.TestCommon\Tests\BankTransferPayments\Refunds\ListTests.cs:line 18
+     at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()
+     at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)
+     at NUnit.Framework.Internal.AsyncToSyncAdapter.Await[TResult](TestExecutionContext context, Func`1 invoke)
+     at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(TestExecutionContext context, Func`1 invoke)
+      Info: Envelope queued up: '0f400ae7ad764149bd0cabb346b17e8a'
+  
+  
+>   Failed SmokeTest [449 ms]
+>   Error Message:
+     Payroc.BadRequestError : BadRequestError
+    Stack Trace:
+       at Payroc.Core.ExceptionHandler.TryCatchAsync[T](Func`1 func) in C:\Source\payroc-sdk-dotnet\src\Payroc\Core\ExceptionHandler.cs:line 85
+     at Payroc.BankTransferPayments.Refunds.RefundsClient.CreateAsyncCore(BankTransferUnreferencedRefund request, RequestOptions options, CancellationToken cancellationToken) in 
+C:\Source\payroc-sdk-dotnet\src\Payroc\BankTransferPayments\Refunds\RefundsClient.cs:line 274
+     at Payroc.WithRawResponseTask`1.Awaiter.GetResult() in C:\Source\payroc-sdk-dotnet\src\Payroc\Core\Public\WithRawResponseTask.cs:line 73
+     at Payroc.TestCommon.Tests.Payments.BankTransferRefunds.RetrieveTests.SmokeTest() in 
+C:\Source\payroc-sdk-dotnet\src\Payroc.TestCommon\Tests\BankTransferPayments\Refunds\RetrieveTests.cs:line 18
+     at NUnit.Framework.Internal.TaskAwaitAdapter.GenericAdapter`1.BlockUntilCompleted()
+     at NUnit.Framework.Internal.MessagePumpStrategy.NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)
+     at NUnit.Framework.Internal.AsyncToSyncAdapter.Await[TResult](TestExecutionContext context, Func`1 invoke)
+     at NUnit.Framework.Internal.AsyncToSyncAdapter.Await(TestExecutionContext context, Func`1 invoke)
+  
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     PayrocCloud
+    Standard Output Messages:
+   PayrocCloud
+  
+  SmokeTest: Data Errors: NotFoundError for existing SignatureId
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data Errors: NotFoundError for existing SignatureId
+    Standard Output Messages:
+   Data Errors: NotFoundError for existing SignatureId
+  
+    Passed SmokeTest [1 s]
+    Passed SmokeTest [1 s]
+    Passed SmokeTestAvs [2 s]
+    Passed Payments_ICC_Payload [2 s]
+    Passed SmokeTest [368 ms]
+    Passed SmokeTest [2 s]
+    Passed SmokeTest [2 s]
+    Passed SmokeTest [1 s]
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     recurringOrder is null in partiallyUpdateAsync response
+    Standard Output Messages:
+   recurringOrder is null in partiallyUpdateAsync response
+  
+    Passed SmokeTest [2 s]
+    Passed SmokeTest [1 s]
+    Passed SmokeTest [1 s]
+  SmokeTest: Data Issues: Internal Server Error 500: Could possibly be do to bad api key, or other server side issues
+  SmokeTest: Data Issues: Internal Server Error 500: Could possibly be do to bad api key, or other server side issues
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data Issues: Internal Server Error 500: Could possibly be do to bad api key, or other server side issues
+    Standard Output Messages:
+   Data Issues: Internal Server Error 500: Could possibly be do to bad api key, or other server side issues
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data Issues: Internal Server Error 500: Could possibly be do to bad api key, or other server side issues
+    Standard Output Messages:
+   Data Issues: Internal Server Error 500: Could possibly be do to bad api key, or other server side issues
+  
+    Passed SmokeTest [784 ms]
+    Passed SmokeTest [2 s]
+    Passed Payments_Create_Retrieve_Lifecycle [2 s]
+    Passed SmokeTest [2 s]
+  SmokeTest: Data Issues: Internal Server Error 500: Could possibly be do to bad api key, or other server side issues
+  SmokeTest: Data Issues: No settlement batches in UAT due to periodic data wipes.
+    Passed SmokeTest [743 ms]
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data Issues: Internal Server Error 500: Could possibly be do to bad api key, or other server side issues
+    Standard Output Messages:
+   Data Issues: Internal Server Error 500: Could possibly be do to bad api key, or other server side issues
+  
+    Passed SmokeTest [750 ms]
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data Issues: No settlement batches in UAT due to periodic data wipes.
+    Standard Output Messages:
+   Data Issues: No settlement batches in UAT due to periodic data wipes.
+  
+    Passed SmokeTestNoAvs [967 ms]
+    Passed SmokeTest [1 s]
+    Passed SmokeTest [3 s]
+  SmokeTest: API call succeeded without errors
+  SmokeTest: API call succeeded without errors
+  SmokeTest: API call succeeded without errors
+  NUnit Adapter 5.1.0.0: Test execution complete
+    Passed SmokeTest [5 s]
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+    Skipped SmokeTest [< 1 ms]
+>   Error Message:
+     Data issues: Failing KYC checks - needs investigation
+    Standard Output Messages:
+   Data issues: Failing KYC checks - needs investigation
+  
+  
+> Test Run Failed.
+  Total tests: 131
+       Passed: 85
+>      Failed: 3
+      Skipped: 43
+   Total time: 4.2675 Minutes
+
+

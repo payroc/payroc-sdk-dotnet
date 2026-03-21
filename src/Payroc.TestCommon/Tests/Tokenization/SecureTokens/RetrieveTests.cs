@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.Payments.SecureTokens;
 public class RetrieveTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task SecureTokens_Retrieve_Success()
     {
         var client = GlobalFixture.Payments;
         var createRequest = Data.Get<TokenizationRequest>(

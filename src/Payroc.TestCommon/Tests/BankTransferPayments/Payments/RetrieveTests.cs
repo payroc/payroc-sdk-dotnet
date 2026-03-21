@@ -9,9 +9,9 @@ namespace Payroc.TestCommon.Tests.BankTransferPayments.Payments;
 public class RetrieveTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task BankTransferPayments_Retrieve_Success()
     {
-        var client = GlobalFixture.PaymentsBank;
+        var client = GlobalFixture.Payments;
         var createRequest = Data.Get<BankTransferPaymentRequest>(
         [
             ( i => i.IdempotencyKey, Guid.NewGuid().ToString() ),

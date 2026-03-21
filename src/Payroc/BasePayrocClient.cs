@@ -35,7 +35,7 @@ public partial class BasePayrocClient : IBasePayrocClient
                     { "X-Fern-Language", "C#" },
                     { "X-Fern-SDK-Name", "Payroc" },
                     { "X-Fern-SDK-Version", Version.Current },
-                    { "User-Agent", "Payroc/0.0.3934" },
+                    { "User-Agent", "Payroc/0.0.3935" },
                 }
             );
             foreach (var header in platformHeaders)

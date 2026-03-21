@@ -30,10 +30,18 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Payroc\Payroc.csproj" />
 	</ItemGroup>
-	<!-- Shared test definitions from TestCommon/Tests -->
 	<ItemGroup>
-		<Compile Remove="..\Payroc.TestCommon\**\*.cs" />
-		<Compile Include="..\Payroc.TestCommon\**\*.cs" Link="%(RecursiveDir)%(Filename)%(Extension)" />
+		<Compile Include="..\Payroc.TestCommon\GlobalFixture.cs" Link="GlobalFixture.cs" />
+		<Compile Include="..\Payroc.TestCommon\TestClients.cs" Link="TestClients.cs" />
+		<Compile Include="..\Payroc.TestCommon\Data.cs" Link="Data.cs" />
+		<Compile Include="..\Payroc.TestCommon\Extensions\**\*.cs" Link="Extensions\%(RecursiveDir)%(Filename)%(Extension)" />
+		<Compile Include="..\Payroc.TestCommon\Factories\**\*.cs" Link="Factories\%(RecursiveDir)%(Filename)%(Extension)" />
+		<Compile Include="..\Payroc.TestCommon\HelperMethods\**\*.cs" Link="HelperMethods\%(RecursiveDir)%(Filename)%(Extension)" />
+		<Compile Include="..\Payroc.TestCommon\Json\**\*.cs" Link="Json\%(RecursiveDir)%(Filename)%(Extension)" />
+		<Compile Include="..\Payroc.TestCommon\Validation\**\*.cs" Link="Validation\%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\Payroc.TestCommon\Tests\**\*.cs" Exclude="..\Payroc.TestCommon\Tests\Smoke\**\*.cs" Link="Tests\%(RecursiveDir)%(Filename)%(Extension)" />
 		<Compile Remove="..\Payroc.TestCommon\obj\**" />
 		<Compile Remove="obj\**" />
 		<EmbeddedResource Remove="obj\**" />

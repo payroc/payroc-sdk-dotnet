@@ -8,7 +8,7 @@ public class VerifyTests
 {
     [Test]
     [Ignore("Data Errors: Processing terminal does not support bank transfers.")]
-    public async Task SmokeTest()
+    public async Task Bank_Verify_Success()
     {
         var client = GlobalFixture.Payments;
         var request = Data.Get<BankAccountVerificationRequest>([

@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.Boarding.PricingIntents;
 public class DeleteTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task PricingIntents_Delete_Success()
     {
         var client = GlobalFixture.Payments;
         var pricingIntentRequest = Data.Get<CreatePricingIntentsRequest>(

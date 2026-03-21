@@ -76,6 +76,29 @@ public readonly record struct PricingAgreementUs50Version : IStringEnum
         {
             writer.WriteStringValue(value.Value);
         }
+
+        public override PricingAgreementUs50Version ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new PricingAgreementUs50Version(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            PricingAgreementUs50Version value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
     }
 
     /// <summary>

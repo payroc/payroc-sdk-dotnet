@@ -8,7 +8,7 @@ namespace Payroc.TestCommon.Tests.PaymentLinks;
 public class RetrieveTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task PaymentLinks_Retrieve_Success()
     {
         var client = GlobalFixture.Payments;
         var createRequest =Data.Get<CreatePaymentLinksRequest>([

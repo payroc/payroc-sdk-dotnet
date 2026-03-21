@@ -10,7 +10,7 @@ namespace Payroc.TestCommon.Tests.RepeatPayments.Subscriptions;
 public class DeactivateTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task Subscriptions_Deactivate_Success()
     {
         var client = GlobalFixture.Payments;
         var tokenRequest = Data.Get<TokenizationRequest>(

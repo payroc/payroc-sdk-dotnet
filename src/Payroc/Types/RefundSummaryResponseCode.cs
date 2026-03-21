@@ -85,6 +85,29 @@ public readonly record struct RefundSummaryResponseCode : IStringEnum
         {
             writer.WriteStringValue(value.Value);
         }
+
+        public override RefundSummaryResponseCode ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new RefundSummaryResponseCode(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            RefundSummaryResponseCode value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
     }
 
     /// <summary>

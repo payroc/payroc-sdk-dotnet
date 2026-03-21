@@ -8,9 +8,9 @@ public class RetrieveBatchTests
 {
     [Test]
     [Ignore("Data Issues: No settlement batches in UAT due to periodic data wipes.")]
-    public async Task SmokeTest()
+    public async Task Settlement_RetrieveBatch_Success()
     {
-        var client = GlobalFixture.Generic;
+        var client = GlobalFixture.Payments;
         var testDate = DateOnly.FromDateTime(DateTime.Today.AddDays(-90));
 
         try

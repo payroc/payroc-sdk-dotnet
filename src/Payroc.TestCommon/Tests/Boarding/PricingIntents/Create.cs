@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.Boarding.PricingIntents;
 public class Create
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task PricingIntents_Create_Success()
     {
         var client = GlobalFixture.Payments;
         var pricingIntentRequest = Data.Get<CreatePricingIntentsRequest>(

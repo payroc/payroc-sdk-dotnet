@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.Boarding.TerminalOrders;
 public class RetrieveTests
 { 
     [Test]
-    public async Task SmokeTest()
+    public async Task TerminalOrders_Retrieve_Success()
     {
         var client = GlobalFixture.Payments;
         var retrieveRequest = new RetrieveTerminalOrdersRequest

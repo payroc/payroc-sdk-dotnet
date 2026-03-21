@@ -8,7 +8,7 @@ public class ViewEBTBalanceTests
 {
     [Test]
     [Ignore("Data Errors: BadRequestError: Invalid Sharing Group: null must be 30 or less alphaNumeric characters!")]
-    public async Task SmokeTest()
+    public async Task Cards_ViewEBTBalance_Success()
     {
         try
         {

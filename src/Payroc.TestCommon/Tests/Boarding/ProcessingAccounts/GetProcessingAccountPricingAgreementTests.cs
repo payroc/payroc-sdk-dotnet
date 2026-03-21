@@ -10,7 +10,7 @@ namespace Payroc.TestCommon.Tests.Boarding.ProcessingAccounts;
 public class GetProcessingAccountPricingAgreementTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task ProcessingAccounts_GetProcessingAccountPricingAgreement_Success()
     {
         var client = GlobalFixture.Payments;
         var pricingIntentBody = Payroc.TestCommon.Factories.Boarding.RequestBodies.PricingIntentFactory.Create();

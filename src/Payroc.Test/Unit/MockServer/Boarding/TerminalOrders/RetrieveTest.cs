@@ -38,7 +38,7 @@ public class RetrieveTest : BaseMockServerTest
                 {
                   "links": [
                     {
-                      "processingTerminalId": "processingTerminalId",
+                      "processingTerminalId": "38765",
                       "link": {
                         "href": "https://api.payroc.com/v1/processing-terminals/38765",
                         "rel": "processingTerminal",

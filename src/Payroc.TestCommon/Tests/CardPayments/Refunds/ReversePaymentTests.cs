@@ -8,7 +8,7 @@ namespace Payroc.TestCommon.Tests.CardPayments.Refunds;
 public class ReversePaymentTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task CardPaymentRefunds_ReversePayment_Success()
     {
         var client = GlobalFixture.Payments;
         var paymentRequest = Data.Get<PaymentRequest>(

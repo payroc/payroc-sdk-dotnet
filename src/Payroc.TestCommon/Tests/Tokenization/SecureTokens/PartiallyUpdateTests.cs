@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.Payments.SecureTokens;
 public class PartiallyUpdateTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task SecureTokens_PartiallyUpdate_Success()
     {
         try
         {

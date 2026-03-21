@@ -78,6 +78,29 @@ public readonly record struct CustomerNotificationLanguage : IStringEnum
         {
             writer.WriteStringValue(value.Value);
         }
+
+        public override CustomerNotificationLanguage ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new CustomerNotificationLanguage(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            CustomerNotificationLanguage value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
     }
 
     /// <summary>

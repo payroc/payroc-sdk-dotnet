@@ -10,7 +10,7 @@ namespace Payroc.TestCommon.Tests.Boarding.Contacts;
 public class UpdateTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task Contacts_Update_Success()
     {
         var client = GlobalFixture.Payments;
         var pricingIntentBody = Payroc.TestCommon.Factories.Boarding.RequestBodies.PricingIntentFactory.Create();

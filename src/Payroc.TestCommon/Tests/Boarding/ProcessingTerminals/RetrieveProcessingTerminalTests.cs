@@ -10,7 +10,7 @@ public class RetrieveProcessingTerminalTests
     [Ignore("Data Issues: Currently failing due to TerminalOrders not returning a ProcessingTerminalId. " +
             "This is due to having to use a non-physical device due to not being able link a paymentIntent to a terminal." +
             "Also using an already known existing processingTerminalId throws a Json Deserialization error for batchClosure.")]
-    public async Task SmokeTest()
+    public async Task ProcessingTerminals_RetrieveProcessingTerminal_Success()
     {
         var client = GlobalFixture.Payments;
         var retrieveRequest = new RetrieveProcessingTerminalsRequest

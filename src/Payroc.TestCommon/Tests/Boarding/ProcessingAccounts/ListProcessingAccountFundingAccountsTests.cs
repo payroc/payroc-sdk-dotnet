@@ -8,7 +8,7 @@ namespace Payroc.TestCommon.Tests.Boarding.ProcessingAccounts;
 public class ListProcessingAccountFundingAccountsTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task ProcessingAccounts_ListProcessingAccountFundingAccounts_Success()
     {
         var client = GlobalFixture.Payments;
         var listFundingAccountsRequest = new ListProcessingAccountFundingAccountsRequest

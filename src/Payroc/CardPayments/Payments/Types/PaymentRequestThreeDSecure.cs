@@ -228,6 +228,27 @@ public record PaymentRequestThreeDSecure
             json["serviceProvider"] = value.ServiceProvider;
             json.WriteTo(writer, options);
         }
+
+        public override PaymentRequestThreeDSecure ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new PaymentRequestThreeDSecure(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            PaymentRequestThreeDSecure value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.ServiceProvider);
+        }
     }
 
     /// <summary>

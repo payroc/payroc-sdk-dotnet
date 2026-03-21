@@ -221,6 +221,27 @@ public record OrderItemSolutionSetupBatchClosure
             json["batchCloseType"] = value.BatchCloseType;
             json.WriteTo(writer, options);
         }
+
+        public override OrderItemSolutionSetupBatchClosure ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new OrderItemSolutionSetupBatchClosure(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            OrderItemSolutionSetupBatchClosure value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.BatchCloseType);
+        }
     }
 
     /// <summary>

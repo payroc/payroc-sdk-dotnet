@@ -6,7 +6,7 @@ namespace Payroc.TestCommon.Tests.ApplePaySessions;
 public class StartTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task ApplePaySessions_Start_Success()
     {
         var client = GlobalFixture.Payments;
         var request = Data.Get<Payroc.ApplePaySessions.ApplePaySessions>([

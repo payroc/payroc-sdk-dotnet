@@ -8,7 +8,7 @@ public class RetrieveHostProcessorConfiguration
 { 
     [Test]
     [Ignore("Data Issue: Terminal does not have host processor configuration available in test environment.")]
-    public async Task SmokeTest()
+    public async Task ProcessingTerminals_RetrieveHostProcessorConfiguration_Success()
     {
         var client = GlobalFixture.Payments;
         var retrieveRequest = new RetrieveHostConfigurationProcessingTerminalsRequest

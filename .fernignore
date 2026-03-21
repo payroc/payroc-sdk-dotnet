@@ -11,10 +11,12 @@ src/Payroc.Test/Unit/ReadmeCompilationTest.cs
 src/Payroc.slnx
 src/Payroc.Test/Utils/JsonDataPropertyReader.cs
 src/Payroc.Test/Core/PayrocExceptionInterceptorTests.cs
+src/Payroc.Test/Core/Regression
 src/Payroc.Test/Core/Pagination/PayrocPagerHeaderPropagationTest.cs
 src/Payroc.Test/Core/Pagination/OffsetPagerHeaderPropagationTest.cs
 src/Payroc.Test/Core/Pagination/CursorPagerHeaderPropagationTest.cs
 src/Payroc.TestHarness
+src/Payroc.TestSmoke
 src/Payroc.TestFunctional
 src/Payroc.TestCommon
 src/Payroc.TestNuget

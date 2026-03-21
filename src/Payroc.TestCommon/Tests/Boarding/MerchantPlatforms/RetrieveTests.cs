@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.Boarding.MerchantPlatforms;
 public class RetrieveTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task MerchantPlatforms_Retrieve_Success()
     {
         var client = GlobalFixture.Payments;
         var retrieveRequest = new RetrieveMerchantPlatformsRequest

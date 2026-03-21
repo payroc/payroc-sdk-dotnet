@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+		<DefineConstants>WINDOWS</DefineConstants>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="coverlet.collector" Version="6.0.4">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="FluentAssertions" Version="8.7.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+		<PackageReference Include="NUnit" Version="4.4.0" />
+		<PackageReference Include="NUnit.Analyzers" Version="4.10.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<Using Include="NUnit.Framework" />
+		<Using Include="Payroc.TestCommon" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Payroc\Payroc.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\Payroc.TestCommon\GlobalFixture.cs" Link="GlobalFixture.cs" />
+		<Compile Include="..\Payroc.TestCommon\TestClients.cs" Link="TestClients.cs" />
+		<Compile Include="..\Payroc.TestCommon\Data.cs" Link="Data.cs" />
+		<Compile Include="..\Payroc.TestCommon\Extensions\**\*.cs" Link="Extensions\%(RecursiveDir)%(Filename)%(Extension)" />
+		<Compile Include="..\Payroc.TestCommon\Factories\**\*.cs" Link="Factories\%(RecursiveDir)%(Filename)%(Extension)" />
+		<Compile Include="..\Payroc.TestCommon\HelperMethods\**\*.cs" Link="HelperMethods\%(RecursiveDir)%(Filename)%(Extension)" />
+		<Compile Include="..\Payroc.TestCommon\Json\**\*.cs" Link="Json\%(RecursiveDir)%(Filename)%(Extension)" />
+		<Compile Include="..\Payroc.TestCommon\Validation\**\*.cs" Link="Validation\%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\Payroc.TestCommon\Tests\CardPayments\Refunds\CreateTests.cs" Link="Tests\CardPayments\Refunds\CreateTests.cs" />
+		<Compile Remove="..\Payroc.TestCommon\obj\**" />
+		<Compile Remove="obj\**" />
+		<EmbeddedResource Remove="obj\**" />
+		<None Remove="obj\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\Payroc.TestCommon\TestData\**\*.*" Link="TestData\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
+</Project>

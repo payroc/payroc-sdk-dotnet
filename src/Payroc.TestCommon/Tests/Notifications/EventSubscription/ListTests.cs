@@ -8,7 +8,8 @@ namespace Payroc.TestCommon.Tests.EventSubscriptions;
 public class ListTests
 {
     [Test]
-    public async Task SmokeTest()
+    [Ignore("API Key config issue - need event supported")]
+    public async Task EventSubscription_List_Success()
     {
         var client = GlobalFixture.Payments;
         var request = new CreateEventSubscriptionsRequest()

@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.Payments.SingleUseTokens;
 public class CreateTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task SingleUseTokens_Create_Success()
     {
         var client = GlobalFixture.Payments;
         var request = Data.Get<SingleUseTokenRequest>(

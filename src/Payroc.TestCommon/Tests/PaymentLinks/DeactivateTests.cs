@@ -8,7 +8,7 @@ namespace Payroc.TestCommon.Tests.PaymentLinks;
 public class DeactivateTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task PaymentLinks_Deactivate_Success()
     {
         var client = GlobalFixture.Payments;
         var createRequest = Data.Get<CreatePaymentLinksRequest>([

@@ -12,7 +12,7 @@ public class DeleteTests
     [Ignore("Data Issues: FrobiddenError: Forbidden, status: 403, detail: " +
             "You do not have the required permissions to perform this action, instance: " +
             "https://api.uat.payroc.com/v1/owners/126330")]
-    public async Task SmokeTest()
+    public async Task Owners_Delete_Success()
     {
         var client = GlobalFixture.Payments;
         var pricingIntentBody = Payroc.TestCommon.Factories.Boarding.RequestBodies.PricingIntentFactory.Create();

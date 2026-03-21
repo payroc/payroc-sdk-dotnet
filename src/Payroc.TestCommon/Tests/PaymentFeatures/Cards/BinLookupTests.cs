@@ -7,7 +7,7 @@ namespace Payroc.TestCommon.Tests.PaymentFeatures.Cards;
 public class BinLookupTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task Cards_BinLookup_Success()
     {
         var client = GlobalFixture.Payments;
         var request = Data.Get<BinLookup>([

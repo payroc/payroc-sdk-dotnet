@@ -86,6 +86,29 @@ public readonly record struct ProcessingAccountBusinessType : IStringEnum
         {
             writer.WriteStringValue(value.Value);
         }
+
+        public override ProcessingAccountBusinessType ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new ProcessingAccountBusinessType(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            ProcessingAccountBusinessType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
+        }
     }
 
     /// <summary>

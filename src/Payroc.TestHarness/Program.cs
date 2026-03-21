@@ -5,19 +5,22 @@ using Payroc.Tokenization.SecureTokens;
 
 Console.WriteLine("Starting Payroc SDK test harness...");
 
-var apiKey = Environment.GetEnvironmentVariable("PAYROC_API_KEY")
-    ?? throw new Exception("Payroc API Key not found");
+var apiKey = Environment.GetEnvironmentVariable("PAYROC_API_KEY_PAYMENTS") ?? throw new Exception("Payroc API Key not set");
 
 var client = new PayrocClient(
     apiKey,
-    new ClientOptions
+    new()
     {
         Environment = PayrocEnvironment.Uat
     }
 );
 
-var processingTerminalId = "5984001";
-
+#region Test IDs
+var processingTerminalId = Environment.GetEnvironmentVariable("TERMINAL_ID_AVS") ?? throw new Exception("Terminal Id not set");
+var pricingIntentId = "1602";
+var paymentId = "GCUFXZ8TS4";
+#endregion
+#region Other examples
 // Debug Json
 // JsonTester.TestJson<PricingIntent50>(DebugPayload.DataUnderTest);
 
@@ -26,9 +29,8 @@ var processingTerminalId = "5984001";
 //var pricingIntent = await client.Boarding.PricingIntents.CreateAsync(createPricingIntentRequest);
 
 // Merchant account
-var pricingIntentId = "1602";
-                              //var createMerchantAccountRequest = MerchantAccountFactory.Create(pricingIntentId);
-                              //var merchantPlatform = await client.Boarding.MerchantPlatforms.CreateAsync(createMerchantAccountRequest);
+//var createMerchantAccountRequest = MerchantAccountFactory.Create(pricingIntentId);
+//var merchantPlatform = await client.Boarding.MerchantPlatforms.CreateAsync(createMerchantAccountRequest);
 
 // Funding Recipient
 // "Entity has been rejected due to failing KYC checks"
@@ -38,7 +40,6 @@ var pricingIntentId = "1602";
 // Payment
 //var paymentRequest = PaymentRequestFactory.Create(processingTerminalId);
 //var payment = await client.Payments.CreateAsync(paymentRequest);
-var paymentId = "GCUFXZ8TS4"; // "C1RTVWFWPB"; // "GFL9F9AXXZ" ;
 
 // Retrieve Payment(s)
 //var retrievedPayment = await client.Payments.RetrieveAsync(new() { PaymentId = paymentId });
@@ -55,13 +56,29 @@ var paymentId = "GCUFXZ8TS4"; // "C1RTVWFWPB"; // "GFL9F9AXXZ" ;
 // Card Verification
 //var cardVerificationRequest = CardVerificationRequestFactory.Create(processingTerminalId);
 //var cardVerification = await client.Payments.Cards.VerifyAsync(cardVerificationRequest);
+#endregion
 
+// Create a secure token
 var secureTokenRequest = TokenizationRequestFactory.Create(processingTerminalId);
 var secureToken = await client.Tokenization.SecureTokens.CreateAsync(secureTokenRequest);
+Console.WriteLine("Token created");
 
-var retrievedToken = await client.Tokenization.SecureTokens.RetrieveAsync(new RetrieveSecureTokensRequest() { SecureTokenId = secureToken.SecureTokenId, ProcessingTerminalId = processingTerminalId });
-var accountType = retrievedToken?.Source?.AsAch()?.AccountType;
-var tokens = await client.Tokenization.SecureTokens.ListAsync(new() { ProcessingTerminalId = processingTerminalId, Limit = 5 });
+// Retrieve a secure token
+var retrievedToken = await client.Tokenization.SecureTokens.RetrieveAsync(
+    new RetrieveSecureTokensRequest
+    {
+        SecureTokenId = secureToken.SecureTokenId,
+        ProcessingTerminalId = processingTerminalId
+    });
+var cardholderName = retrievedToken?.Source?.AsCard()?.CardholderName;
+Console.WriteLine("Token: {0} has cardholder name {1}", secureToken.SecureTokenId, cardholderName);
 
-Console.WriteLine("Testing complete...");
+// List secure tokens
+var tokenPager = await client.Tokenization.SecureTokens.ListAsync(new() { ProcessingTerminalId = processingTerminalId, Limit = 5 });
+await foreach (var i in tokenPager)
+{
+    Console.WriteLine("Retrieved Token: {0}", i.Token);
+}
+
+Console.WriteLine("Done.");
 Console.ReadLine();

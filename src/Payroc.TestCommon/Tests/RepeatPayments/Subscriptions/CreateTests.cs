@@ -10,7 +10,7 @@ namespace Payroc.TestCommon.Tests.RepeatPayments.Subscriptions;
 public class CreateTests
 {
     [Test]
-    public async Task SmokeTest()
+    public async Task Subscriptions_Create_Success()
     {
         try
         {
