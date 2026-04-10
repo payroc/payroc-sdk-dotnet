@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -92,7 +92,7 @@ public record ContactMethod
     public Payroc.ContactMethodEmail AsEmail() =>
         IsEmail
             ? (Payroc.ContactMethodEmail)Value!
-            : throw new System.Exception("ContactMethod.Type is not 'email'");
+            : throw new global::System.Exception("ContactMethod.Type is not 'email'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.ContactMethodPhone"/> if <see cref="Type"/> is 'phone', otherwise throws an exception.
@@ -101,7 +101,7 @@ public record ContactMethod
     public Payroc.ContactMethodPhone AsPhone() =>
         IsPhone
             ? (Payroc.ContactMethodPhone)Value!
-            : throw new System.Exception("ContactMethod.Type is not 'phone'");
+            : throw new global::System.Exception("ContactMethod.Type is not 'phone'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.ContactMethodMobile"/> if <see cref="Type"/> is 'mobile', otherwise throws an exception.
@@ -110,7 +110,7 @@ public record ContactMethod
     public Payroc.ContactMethodMobile AsMobile() =>
         IsMobile
             ? (Payroc.ContactMethodMobile)Value!
-            : throw new System.Exception("ContactMethod.Type is not 'mobile'");
+            : throw new global::System.Exception("ContactMethod.Type is not 'mobile'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.ContactMethodFax"/> if <see cref="Type"/> is 'fax', otherwise throws an exception.
@@ -119,7 +119,7 @@ public record ContactMethod
     public Payroc.ContactMethodFax AsFax() =>
         IsFax
             ? (Payroc.ContactMethodFax)Value!
-            : throw new System.Exception("ContactMethod.Type is not 'fax'");
+            : throw new global::System.Exception("ContactMethod.Type is not 'fax'");
 
     public T Match<T>(
         Func<Payroc.ContactMethodEmail, T> onEmail,
@@ -236,12 +236,12 @@ public record ContactMethod
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ContactMethod>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(ContactMethod).IsAssignableFrom(typeToConvert);
 
         public override ContactMethod Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -309,7 +309,7 @@ public record ContactMethod
 
         public override ContactMethod ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

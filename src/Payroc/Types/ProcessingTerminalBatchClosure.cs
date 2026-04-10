@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -71,7 +71,7 @@ public record ProcessingTerminalBatchClosure
     public Payroc.SchemasAutomaticBatchClose AsAutomatic() =>
         IsAutomatic
             ? (Payroc.SchemasAutomaticBatchClose)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "ProcessingTerminalBatchClosure.BatchCloseType is not 'automatic'"
             );
 
@@ -82,7 +82,7 @@ public record ProcessingTerminalBatchClosure
     public Payroc.SchemasManualBatchClose AsManual() =>
         IsManual
             ? (Payroc.SchemasManualBatchClose)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "ProcessingTerminalBatchClosure.BatchCloseType is not 'manual'"
             );
 
@@ -161,12 +161,12 @@ public record ProcessingTerminalBatchClosure
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ProcessingTerminalBatchClosure>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(ProcessingTerminalBatchClosure).IsAssignableFrom(typeToConvert);
 
         public override ProcessingTerminalBatchClosure Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -236,7 +236,7 @@ public record ProcessingTerminalBatchClosure
 
         public override ProcessingTerminalBatchClosure ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

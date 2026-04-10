@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -53,7 +53,9 @@ public record HostConfigurationConfiguration
     public Payroc.Tsys AsTsys() =>
         IsTsys
             ? (Payroc.Tsys)Value!
-            : throw new System.Exception("HostConfigurationConfiguration.Processor is not 'tsys'");
+            : throw new global::System.Exception(
+                "HostConfigurationConfiguration.Processor is not 'tsys'"
+            );
 
     public T Match<T>(Func<Payroc.Tsys, T> onTsys, Func<string, object?, T> onUnknown_)
     {
@@ -100,12 +102,12 @@ public record HostConfigurationConfiguration
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<HostConfigurationConfiguration>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(HostConfigurationConfiguration).IsAssignableFrom(typeToConvert);
 
         public override HostConfigurationConfiguration Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -163,7 +165,7 @@ public record HostConfigurationConfiguration
 
         public override HostConfigurationConfiguration ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

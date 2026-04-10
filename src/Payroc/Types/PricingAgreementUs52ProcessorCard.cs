@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -157,7 +157,7 @@ public record PricingAgreementUs52ProcessorCard
     public Payroc.InterchangePlusUs52 AsInterchangePlus() =>
         IsInterchangePlus
             ? (Payroc.InterchangePlusUs52)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PricingAgreementUs52ProcessorCard.PlanType is not 'interchangePlus'"
             );
 
@@ -168,7 +168,7 @@ public record PricingAgreementUs52ProcessorCard
     public Payroc.InterchangePlusPlusUs52 AsInterchangePlusPlus() =>
         IsInterchangePlusPlus
             ? (Payroc.InterchangePlusPlusUs52)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PricingAgreementUs52ProcessorCard.PlanType is not 'interchangePlusPlus'"
             );
 
@@ -179,7 +179,7 @@ public record PricingAgreementUs52ProcessorCard
     public Payroc.Tiered3 AsTiered3() =>
         IsTiered3
             ? (Payroc.Tiered3)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PricingAgreementUs52ProcessorCard.PlanType is not 'tiered3'"
             );
 
@@ -190,7 +190,7 @@ public record PricingAgreementUs52ProcessorCard
     public Payroc.Tiered4 AsTiered4() =>
         IsTiered4
             ? (Payroc.Tiered4)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PricingAgreementUs52ProcessorCard.PlanType is not 'tiered4'"
             );
 
@@ -201,7 +201,7 @@ public record PricingAgreementUs52ProcessorCard
     public Payroc.Tiered6 AsTiered6() =>
         IsTiered6
             ? (Payroc.Tiered6)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PricingAgreementUs52ProcessorCard.PlanType is not 'tiered6'"
             );
 
@@ -212,7 +212,7 @@ public record PricingAgreementUs52ProcessorCard
     public Payroc.FlatRate AsFlatRate() =>
         IsFlatRate
             ? (Payroc.FlatRate)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PricingAgreementUs52ProcessorCard.PlanType is not 'flatRate'"
             );
 
@@ -223,7 +223,7 @@ public record PricingAgreementUs52ProcessorCard
     public Payroc.ConsumerChoice AsConsumerChoice() =>
         IsConsumerChoice
             ? (Payroc.ConsumerChoice)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PricingAgreementUs52ProcessorCard.PlanType is not 'consumerChoice'"
             );
 
@@ -234,7 +234,7 @@ public record PricingAgreementUs52ProcessorCard
     public Payroc.RewardPayChoice AsRewardPayChoice() =>
         IsRewardPayChoice
             ? (Payroc.RewardPayChoice)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PricingAgreementUs52ProcessorCard.PlanType is not 'rewardPayChoice'"
             );
 
@@ -457,12 +457,12 @@ public record PricingAgreementUs52ProcessorCard
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<PricingAgreementUs52ProcessorCard>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(PricingAgreementUs52ProcessorCard).IsAssignableFrom(typeToConvert);
 
         public override PricingAgreementUs52ProcessorCard Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -549,7 +549,7 @@ public record PricingAgreementUs52ProcessorCard
 
         public override PricingAgreementUs52ProcessorCard ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

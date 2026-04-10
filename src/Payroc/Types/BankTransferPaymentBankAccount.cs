@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -70,7 +70,9 @@ public record BankTransferPaymentBankAccount
     public Payroc.AchBankAccount AsAch() =>
         IsAch
             ? (Payroc.AchBankAccount)Value!
-            : throw new System.Exception("BankTransferPaymentBankAccount.Type is not 'ach'");
+            : throw new global::System.Exception(
+                "BankTransferPaymentBankAccount.Type is not 'ach'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.PadBankAccount"/> if <see cref="Type"/> is 'pad', otherwise throws an exception.
@@ -79,7 +81,9 @@ public record BankTransferPaymentBankAccount
     public Payroc.PadBankAccount AsPad() =>
         IsPad
             ? (Payroc.PadBankAccount)Value!
-            : throw new System.Exception("BankTransferPaymentBankAccount.Type is not 'pad'");
+            : throw new global::System.Exception(
+                "BankTransferPaymentBankAccount.Type is not 'pad'"
+            );
 
     public T Match<T>(
         Func<Payroc.AchBankAccount, T> onAch,
@@ -156,12 +160,12 @@ public record BankTransferPaymentBankAccount
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<BankTransferPaymentBankAccount>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(BankTransferPaymentBankAccount).IsAssignableFrom(typeToConvert);
 
         public override BankTransferPaymentBankAccount Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -222,7 +226,7 @@ public record BankTransferPaymentBankAccount
 
         public override BankTransferPaymentBankAccount ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

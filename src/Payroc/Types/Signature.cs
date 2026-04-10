@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -71,7 +71,7 @@ public record Signature
     public Payroc.SignatureByDirectLink AsRequestedViaDirectLink() =>
         IsRequestedViaDirectLink
             ? (Payroc.SignatureByDirectLink)Value!
-            : throw new System.Exception("Signature.Type is not 'requestedViaDirectLink'");
+            : throw new global::System.Exception("Signature.Type is not 'requestedViaDirectLink'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.SignatureByEmail"/> if <see cref="Type"/> is 'requestedViaEmail', otherwise throws an exception.
@@ -80,7 +80,7 @@ public record Signature
     public Payroc.SignatureByEmail AsRequestedViaEmail() =>
         IsRequestedViaEmail
             ? (Payroc.SignatureByEmail)Value!
-            : throw new System.Exception("Signature.Type is not 'requestedViaEmail'");
+            : throw new global::System.Exception("Signature.Type is not 'requestedViaEmail'");
 
     public T Match<T>(
         Func<Payroc.SignatureByDirectLink, T> onRequestedViaDirectLink,
@@ -153,12 +153,12 @@ public record Signature
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Signature>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Signature).IsAssignableFrom(typeToConvert);
 
         public override Signature Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -226,7 +226,7 @@ public record Signature
 
         public override Signature ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

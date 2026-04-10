@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.Boarding.PricingIntents;

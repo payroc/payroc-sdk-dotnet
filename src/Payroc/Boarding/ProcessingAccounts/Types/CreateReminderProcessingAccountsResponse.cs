@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.Boarding.ProcessingAccounts;
@@ -52,7 +52,7 @@ public record CreateReminderProcessingAccountsResponse
     public Payroc.PricingAgreementReminder AsPricingAgreement() =>
         IsPricingAgreement
             ? (Payroc.PricingAgreementReminder)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "CreateReminderProcessingAccountsResponse.Type is not 'pricingAgreement'"
             );
 
@@ -107,12 +107,12 @@ public record CreateReminderProcessingAccountsResponse
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<CreateReminderProcessingAccountsResponse>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(CreateReminderProcessingAccountsResponse).IsAssignableFrom(typeToConvert);
 
         public override CreateReminderProcessingAccountsResponse Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -173,7 +173,7 @@ public record CreateReminderProcessingAccountsResponse
 
         public override CreateReminderProcessingAccountsResponse ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

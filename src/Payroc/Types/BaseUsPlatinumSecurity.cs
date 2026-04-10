@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -71,7 +71,7 @@ public record BaseUsPlatinumSecurity
     public Payroc.PlatinumSecurityMonthly AsMonthly() =>
         IsMonthly
             ? (Payroc.PlatinumSecurityMonthly)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "BaseUsPlatinumSecurity.BillingFrequency is not 'monthly'"
             );
 
@@ -82,7 +82,9 @@ public record BaseUsPlatinumSecurity
     public Payroc.PlatinumSecurityAnnual AsAnnual() =>
         IsAnnual
             ? (Payroc.PlatinumSecurityAnnual)Value!
-            : throw new System.Exception("BaseUsPlatinumSecurity.BillingFrequency is not 'annual'");
+            : throw new global::System.Exception(
+                "BaseUsPlatinumSecurity.BillingFrequency is not 'annual'"
+            );
 
     public T Match<T>(
         Func<Payroc.PlatinumSecurityMonthly, T> onMonthly,
@@ -157,12 +159,12 @@ public record BaseUsPlatinumSecurity
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<BaseUsPlatinumSecurity>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(BaseUsPlatinumSecurity).IsAssignableFrom(typeToConvert);
 
         public override BaseUsPlatinumSecurity Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -228,7 +230,7 @@ public record BaseUsPlatinumSecurity
 
         public override BaseUsPlatinumSecurity ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

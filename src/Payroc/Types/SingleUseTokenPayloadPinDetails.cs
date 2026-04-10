@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -71,7 +71,7 @@ public record SingleUseTokenPayloadPinDetails
     public Payroc.DukptPinDetails AsDukpt() =>
         IsDukpt
             ? (Payroc.DukptPinDetails)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "SingleUseTokenPayloadPinDetails.DataFormat is not 'dukpt'"
             );
 
@@ -82,7 +82,9 @@ public record SingleUseTokenPayloadPinDetails
     public Payroc.RawPinDetails AsRaw() =>
         IsRaw
             ? (Payroc.RawPinDetails)Value!
-            : throw new System.Exception("SingleUseTokenPayloadPinDetails.DataFormat is not 'raw'");
+            : throw new global::System.Exception(
+                "SingleUseTokenPayloadPinDetails.DataFormat is not 'raw'"
+            );
 
     public T Match<T>(
         Func<Payroc.DukptPinDetails, T> onDukpt,
@@ -159,12 +161,12 @@ public record SingleUseTokenPayloadPinDetails
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SingleUseTokenPayloadPinDetails>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SingleUseTokenPayloadPinDetails).IsAssignableFrom(typeToConvert);
 
         public override SingleUseTokenPayloadPinDetails Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -225,7 +227,7 @@ public record SingleUseTokenPayloadPinDetails
 
         public override SingleUseTokenPayloadPinDetails ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

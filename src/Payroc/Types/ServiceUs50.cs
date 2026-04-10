@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -53,7 +53,7 @@ public record ServiceUs50
     public Payroc.HardwareAdvantagePlan AsHardwareAdvantagePlan() =>
         IsHardwareAdvantagePlan
             ? (Payroc.HardwareAdvantagePlan)Value!
-            : throw new System.Exception("ServiceUs50.Name is not 'hardwareAdvantagePlan'");
+            : throw new global::System.Exception("ServiceUs50.Name is not 'hardwareAdvantagePlan'");
 
     public T Match<T>(
         Func<Payroc.HardwareAdvantagePlan, T> onHardwareAdvantagePlan,
@@ -105,12 +105,12 @@ public record ServiceUs50
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ServiceUs50>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(ServiceUs50).IsAssignableFrom(typeToConvert);
 
         public override ServiceUs50 Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -171,7 +171,7 @@ public record ServiceUs50
 
         public override ServiceUs50 ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

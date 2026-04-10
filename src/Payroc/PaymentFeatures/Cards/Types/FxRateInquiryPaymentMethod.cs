@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.PaymentFeatures.Cards;
@@ -86,7 +86,7 @@ public record FxRateInquiryPaymentMethod
     public Payroc.CardPayload AsCard() =>
         IsCard
             ? (Payroc.CardPayload)Value!
-            : throw new System.Exception("FxRateInquiryPaymentMethod.Type is not 'card'");
+            : throw new global::System.Exception("FxRateInquiryPaymentMethod.Type is not 'card'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.SecureTokenPayload"/> if <see cref="Type"/> is 'secureToken', otherwise throws an exception.
@@ -95,7 +95,9 @@ public record FxRateInquiryPaymentMethod
     public Payroc.SecureTokenPayload AsSecureToken() =>
         IsSecureToken
             ? (Payroc.SecureTokenPayload)Value!
-            : throw new System.Exception("FxRateInquiryPaymentMethod.Type is not 'secureToken'");
+            : throw new global::System.Exception(
+                "FxRateInquiryPaymentMethod.Type is not 'secureToken'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.DigitalWalletPayload"/> if <see cref="Type"/> is 'digitalWallet', otherwise throws an exception.
@@ -104,7 +106,9 @@ public record FxRateInquiryPaymentMethod
     public Payroc.DigitalWalletPayload AsDigitalWallet() =>
         IsDigitalWallet
             ? (Payroc.DigitalWalletPayload)Value!
-            : throw new System.Exception("FxRateInquiryPaymentMethod.Type is not 'digitalWallet'");
+            : throw new global::System.Exception(
+                "FxRateInquiryPaymentMethod.Type is not 'digitalWallet'"
+            );
 
     public T Match<T>(
         Func<Payroc.CardPayload, T> onCard,
@@ -205,12 +209,12 @@ public record FxRateInquiryPaymentMethod
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<FxRateInquiryPaymentMethod>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(FxRateInquiryPaymentMethod).IsAssignableFrom(typeToConvert);
 
         public override FxRateInquiryPaymentMethod Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -278,7 +282,7 @@ public record FxRateInquiryPaymentMethod
 
         public override FxRateInquiryPaymentMethod ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

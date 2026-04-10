@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -86,7 +86,9 @@ public record SecureTokenWithAccountTypeSource
     public Payroc.AchSourceWithAccountType AsAch() =>
         IsAch
             ? (Payroc.AchSourceWithAccountType)Value!
-            : throw new System.Exception("SecureTokenWithAccountTypeSource.Type is not 'ach'");
+            : throw new global::System.Exception(
+                "SecureTokenWithAccountTypeSource.Type is not 'ach'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.PadSourceWithAccountType"/> if <see cref="Type"/> is 'pad', otherwise throws an exception.
@@ -95,7 +97,9 @@ public record SecureTokenWithAccountTypeSource
     public Payroc.PadSourceWithAccountType AsPad() =>
         IsPad
             ? (Payroc.PadSourceWithAccountType)Value!
-            : throw new System.Exception("SecureTokenWithAccountTypeSource.Type is not 'pad'");
+            : throw new global::System.Exception(
+                "SecureTokenWithAccountTypeSource.Type is not 'pad'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.CardSource"/> if <see cref="Type"/> is 'card', otherwise throws an exception.
@@ -104,7 +108,9 @@ public record SecureTokenWithAccountTypeSource
     public Payroc.CardSource AsCard() =>
         IsCard
             ? (Payroc.CardSource)Value!
-            : throw new System.Exception("SecureTokenWithAccountTypeSource.Type is not 'card'");
+            : throw new global::System.Exception(
+                "SecureTokenWithAccountTypeSource.Type is not 'card'"
+            );
 
     public T Match<T>(
         Func<Payroc.AchSourceWithAccountType, T> onAch,
@@ -205,12 +211,12 @@ public record SecureTokenWithAccountTypeSource
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SecureTokenWithAccountTypeSource>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SecureTokenWithAccountTypeSource).IsAssignableFrom(typeToConvert);
 
         public override SecureTokenWithAccountTypeSource Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -282,7 +288,7 @@ public record SecureTokenWithAccountTypeSource
 
         public override SecureTokenWithAccountTypeSource ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

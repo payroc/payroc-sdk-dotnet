@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -64,7 +64,9 @@ public record PaymentLinkPaginatedListDataItem
     public Payroc.MultiUsePaymentLink AsMultiUse() =>
         IsMultiUse
             ? (Payroc.MultiUsePaymentLink)Value!
-            : throw new System.Exception("PaymentLinkPaginatedListDataItem.Type is not 'multiUse'");
+            : throw new global::System.Exception(
+                "PaymentLinkPaginatedListDataItem.Type is not 'multiUse'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.SingleUsePaymentLink"/> if <see cref="Type"/> is 'singleUse', otherwise throws an exception.
@@ -73,7 +75,7 @@ public record PaymentLinkPaginatedListDataItem
     public Payroc.SingleUsePaymentLink AsSingleUse() =>
         IsSingleUse
             ? (Payroc.SingleUsePaymentLink)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PaymentLinkPaginatedListDataItem.Type is not 'singleUse'"
             );
 
@@ -152,12 +154,12 @@ public record PaymentLinkPaginatedListDataItem
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<PaymentLinkPaginatedListDataItem>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(PaymentLinkPaginatedListDataItem).IsAssignableFrom(typeToConvert);
 
         public override PaymentLinkPaginatedListDataItem Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -220,7 +222,7 @@ public record PaymentLinkPaginatedListDataItem
 
         public override PaymentLinkPaginatedListDataItem ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

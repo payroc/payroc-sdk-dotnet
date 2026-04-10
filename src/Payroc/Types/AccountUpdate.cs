@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -53,7 +53,7 @@ public record AccountUpdate
     public Payroc.SingleUseTokenAccountUpdate AsSingleUseToken() =>
         IsSingleUseToken
             ? (Payroc.SingleUseTokenAccountUpdate)Value!
-            : throw new System.Exception("AccountUpdate.Type is not 'singleUseToken'");
+            : throw new global::System.Exception("AccountUpdate.Type is not 'singleUseToken'");
 
     public T Match<T>(
         Func<Payroc.SingleUseTokenAccountUpdate, T> onSingleUseToken,
@@ -104,12 +104,12 @@ public record AccountUpdate
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<AccountUpdate>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(AccountUpdate).IsAssignableFrom(typeToConvert);
 
         public override AccountUpdate Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -172,7 +172,7 @@ public record AccountUpdate
 
         public override AccountUpdate ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.PaymentFeatures.Bank;
@@ -75,7 +75,7 @@ public record BankAccountVerificationRequestBankAccount
     public Payroc.AchPayload AsAch() =>
         IsAch
             ? (Payroc.AchPayload)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "BankAccountVerificationRequestBankAccount.Type is not 'ach'"
             );
 
@@ -86,7 +86,7 @@ public record BankAccountVerificationRequestBankAccount
     public Payroc.PadPayload AsPad() =>
         IsPad
             ? (Payroc.PadPayload)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "BankAccountVerificationRequestBankAccount.Type is not 'pad'"
             );
 
@@ -165,12 +165,12 @@ public record BankAccountVerificationRequestBankAccount
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<BankAccountVerificationRequestBankAccount>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(BankAccountVerificationRequestBankAccount).IsAssignableFrom(typeToConvert);
 
         public override BankAccountVerificationRequestBankAccount Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -231,7 +231,7 @@ public record BankAccountVerificationRequestBankAccount
 
         public override BankAccountVerificationRequestBankAccount ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

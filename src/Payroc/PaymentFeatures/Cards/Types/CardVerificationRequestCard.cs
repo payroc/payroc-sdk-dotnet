@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.PaymentFeatures.Cards;
@@ -53,7 +53,7 @@ public record CardVerificationRequestCard
     public Payroc.CardPayload AsCard() =>
         IsCard
             ? (Payroc.CardPayload)Value!
-            : throw new System.Exception("CardVerificationRequestCard.Type is not 'card'");
+            : throw new global::System.Exception("CardVerificationRequestCard.Type is not 'card'");
 
     public T Match<T>(Func<Payroc.CardPayload, T> onCard, Func<string, object?, T> onUnknown_)
     {
@@ -100,12 +100,12 @@ public record CardVerificationRequestCard
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<CardVerificationRequestCard>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(CardVerificationRequestCard).IsAssignableFrom(typeToConvert);
 
         public override CardVerificationRequestCard Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -163,7 +163,7 @@ public record CardVerificationRequestCard
 
         public override CardVerificationRequestCard ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

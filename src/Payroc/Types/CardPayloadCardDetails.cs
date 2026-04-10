@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -101,7 +101,7 @@ public record CardPayloadCardDetails
     public Payroc.RawCardDetails AsRaw() =>
         IsRaw
             ? (Payroc.RawCardDetails)Value!
-            : throw new System.Exception("CardPayloadCardDetails.EntryMethod is not 'raw'");
+            : throw new global::System.Exception("CardPayloadCardDetails.EntryMethod is not 'raw'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.IccCardDetails"/> if <see cref="EntryMethod"/> is 'icc', otherwise throws an exception.
@@ -110,7 +110,7 @@ public record CardPayloadCardDetails
     public Payroc.IccCardDetails AsIcc() =>
         IsIcc
             ? (Payroc.IccCardDetails)Value!
-            : throw new System.Exception("CardPayloadCardDetails.EntryMethod is not 'icc'");
+            : throw new global::System.Exception("CardPayloadCardDetails.EntryMethod is not 'icc'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.KeyedCardDetails"/> if <see cref="EntryMethod"/> is 'keyed', otherwise throws an exception.
@@ -119,7 +119,9 @@ public record CardPayloadCardDetails
     public Payroc.KeyedCardDetails AsKeyed() =>
         IsKeyed
             ? (Payroc.KeyedCardDetails)Value!
-            : throw new System.Exception("CardPayloadCardDetails.EntryMethod is not 'keyed'");
+            : throw new global::System.Exception(
+                "CardPayloadCardDetails.EntryMethod is not 'keyed'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.SwipedCardDetails"/> if <see cref="EntryMethod"/> is 'swiped', otherwise throws an exception.
@@ -128,7 +130,9 @@ public record CardPayloadCardDetails
     public Payroc.SwipedCardDetails AsSwiped() =>
         IsSwiped
             ? (Payroc.SwipedCardDetails)Value!
-            : throw new System.Exception("CardPayloadCardDetails.EntryMethod is not 'swiped'");
+            : throw new global::System.Exception(
+                "CardPayloadCardDetails.EntryMethod is not 'swiped'"
+            );
 
     public T Match<T>(
         Func<Payroc.RawCardDetails, T> onRaw,
@@ -249,12 +253,12 @@ public record CardPayloadCardDetails
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<CardPayloadCardDetails>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(CardPayloadCardDetails).IsAssignableFrom(typeToConvert);
 
         public override CardPayloadCardDetails Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -321,7 +325,7 @@ public record CardPayloadCardDetails
 
         public override CardPayloadCardDetails ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

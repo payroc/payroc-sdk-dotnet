@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -71,7 +71,9 @@ public record InterchangePlusTiered3FeesAmex
     public Payroc.InterchangePlusTiered3AmexOptBlue AsOptBlue() =>
         IsOptBlue
             ? (Payroc.InterchangePlusTiered3AmexOptBlue)Value!
-            : throw new System.Exception("InterchangePlusTiered3FeesAmex.Type is not 'optBlue'");
+            : throw new global::System.Exception(
+                "InterchangePlusTiered3FeesAmex.Type is not 'optBlue'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.InterchangePlusTiered3AmexDirect"/> if <see cref="Type"/> is 'direct', otherwise throws an exception.
@@ -80,7 +82,9 @@ public record InterchangePlusTiered3FeesAmex
     public Payroc.InterchangePlusTiered3AmexDirect AsDirect() =>
         IsDirect
             ? (Payroc.InterchangePlusTiered3AmexDirect)Value!
-            : throw new System.Exception("InterchangePlusTiered3FeesAmex.Type is not 'direct'");
+            : throw new global::System.Exception(
+                "InterchangePlusTiered3FeesAmex.Type is not 'direct'"
+            );
 
     public T Match<T>(
         Func<Payroc.InterchangePlusTiered3AmexOptBlue, T> onOptBlue,
@@ -157,12 +161,12 @@ public record InterchangePlusTiered3FeesAmex
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<InterchangePlusTiered3FeesAmex>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(InterchangePlusTiered3FeesAmex).IsAssignableFrom(typeToConvert);
 
         public override InterchangePlusTiered3FeesAmex Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -233,7 +237,7 @@ public record InterchangePlusTiered3FeesAmex
 
         public override InterchangePlusTiered3FeesAmex ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

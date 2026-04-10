@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.BankTransferPayments.Payments;
@@ -71,7 +71,7 @@ public record RepresentmentPaymentMethod
     public Payroc.AchPayload AsAch() =>
         IsAch
             ? (Payroc.AchPayload)Value!
-            : throw new System.Exception("RepresentmentPaymentMethod.Type is not 'ach'");
+            : throw new global::System.Exception("RepresentmentPaymentMethod.Type is not 'ach'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.SecureTokenPayload"/> if <see cref="Type"/> is 'secureToken', otherwise throws an exception.
@@ -80,7 +80,9 @@ public record RepresentmentPaymentMethod
     public Payroc.SecureTokenPayload AsSecureToken() =>
         IsSecureToken
             ? (Payroc.SecureTokenPayload)Value!
-            : throw new System.Exception("RepresentmentPaymentMethod.Type is not 'secureToken'");
+            : throw new global::System.Exception(
+                "RepresentmentPaymentMethod.Type is not 'secureToken'"
+            );
 
     public T Match<T>(
         Func<Payroc.AchPayload, T> onAch,
@@ -157,12 +159,12 @@ public record RepresentmentPaymentMethod
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<RepresentmentPaymentMethod>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(RepresentmentPaymentMethod).IsAssignableFrom(typeToConvert);
 
         public override RepresentmentPaymentMethod Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -224,7 +226,7 @@ public record RepresentmentPaymentMethod
 
         public override RepresentmentPaymentMethod ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

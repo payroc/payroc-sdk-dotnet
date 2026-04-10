@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -86,7 +86,7 @@ public record SecureTokenSource
     public Payroc.AchSource AsAch() =>
         IsAch
             ? (Payroc.AchSource)Value!
-            : throw new System.Exception("SecureTokenSource.Type is not 'ach'");
+            : throw new global::System.Exception("SecureTokenSource.Type is not 'ach'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.PadSource"/> if <see cref="Type"/> is 'pad', otherwise throws an exception.
@@ -95,7 +95,7 @@ public record SecureTokenSource
     public Payroc.PadSource AsPad() =>
         IsPad
             ? (Payroc.PadSource)Value!
-            : throw new System.Exception("SecureTokenSource.Type is not 'pad'");
+            : throw new global::System.Exception("SecureTokenSource.Type is not 'pad'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.CardSource"/> if <see cref="Type"/> is 'card', otherwise throws an exception.
@@ -104,7 +104,7 @@ public record SecureTokenSource
     public Payroc.CardSource AsCard() =>
         IsCard
             ? (Payroc.CardSource)Value!
-            : throw new System.Exception("SecureTokenSource.Type is not 'card'");
+            : throw new global::System.Exception("SecureTokenSource.Type is not 'card'");
 
     public T Match<T>(
         Func<Payroc.AchSource, T> onAch,
@@ -199,12 +199,12 @@ public record SecureTokenSource
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SecureTokenSource>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SecureTokenSource).IsAssignableFrom(typeToConvert);
 
         public override SecureTokenSource Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -268,7 +268,7 @@ public record SecureTokenSource
 
         public override SecureTokenSource ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -1,3 +1,4 @@
+using Payroc.PayrocCloud.ClosedLoopReads;
 using Payroc.PayrocCloud.PaymentInstructions;
 using Payroc.PayrocCloud.RefundInstructions;
 using Payroc.PayrocCloud.SignatureInstructions;
@@ -11,4 +12,5 @@ public partial interface IPayrocCloudClient
     public IRefundInstructionsClient RefundInstructions { get; }
     public ISignatureInstructionsClient SignatureInstructions { get; }
     public ISignaturesClient Signatures { get; }
+    public IClosedLoopReadsClient ClosedLoopReads { get; }
 }

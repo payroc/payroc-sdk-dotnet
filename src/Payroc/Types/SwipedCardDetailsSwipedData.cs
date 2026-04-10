@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -71,7 +71,7 @@ public record SwipedCardDetailsSwipedData
     public Payroc.EncryptedSwipedDataFormat AsEncrypted() =>
         IsEncrypted
             ? (Payroc.EncryptedSwipedDataFormat)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "SwipedCardDetailsSwipedData.DataFormat is not 'encrypted'"
             );
 
@@ -82,7 +82,7 @@ public record SwipedCardDetailsSwipedData
     public Payroc.PlainTextSwipedDataFormat AsPlainText() =>
         IsPlainText
             ? (Payroc.PlainTextSwipedDataFormat)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "SwipedCardDetailsSwipedData.DataFormat is not 'plainText'"
             );
 
@@ -161,12 +161,12 @@ public record SwipedCardDetailsSwipedData
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SwipedCardDetailsSwipedData>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SwipedCardDetailsSwipedData).IsAssignableFrom(typeToConvert);
 
         public override SwipedCardDetailsSwipedData Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -233,7 +233,7 @@ public record SwipedCardDetailsSwipedData
 
         public override SwipedCardDetailsSwipedData ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

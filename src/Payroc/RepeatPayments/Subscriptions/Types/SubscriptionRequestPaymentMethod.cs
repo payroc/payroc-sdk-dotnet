@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.RepeatPayments.Subscriptions;
@@ -53,7 +53,7 @@ public record SubscriptionRequestPaymentMethod
     public Payroc.SecureTokenPayload AsSecureToken() =>
         IsSecureToken
             ? (Payroc.SecureTokenPayload)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "SubscriptionRequestPaymentMethod.Type is not 'secureToken'"
             );
 
@@ -108,12 +108,12 @@ public record SubscriptionRequestPaymentMethod
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SubscriptionRequestPaymentMethod>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SubscriptionRequestPaymentMethod).IsAssignableFrom(typeToConvert);
 
         public override SubscriptionRequestPaymentMethod Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -172,7 +172,7 @@ public record SubscriptionRequestPaymentMethod
 
         public override SubscriptionRequestPaymentMethod ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

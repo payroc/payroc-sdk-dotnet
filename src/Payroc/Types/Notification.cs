@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -50,7 +50,7 @@ public record Notification
     public Payroc.Webhook AsWebhook() =>
         IsWebhook
             ? (Payroc.Webhook)Value!
-            : throw new System.Exception("Notification.Type is not 'webhook'");
+            : throw new global::System.Exception("Notification.Type is not 'webhook'");
 
     public T Match<T>(Func<Payroc.Webhook, T> onWebhook, Func<string, object?, T> onUnknown_)
     {
@@ -95,12 +95,12 @@ public record Notification
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Notification>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Notification).IsAssignableFrom(typeToConvert);
 
         public override Notification Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -158,7 +158,7 @@ public record Notification
 
         public override Notification ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

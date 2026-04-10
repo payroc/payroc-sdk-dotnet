@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -67,7 +67,9 @@ public record InterchangePlusUs52FeesAmex
     public Payroc.InterchangePlusAmexOptBlue AsOptBlue() =>
         IsOptBlue
             ? (Payroc.InterchangePlusAmexOptBlue)Value!
-            : throw new System.Exception("InterchangePlusUs52FeesAmex.Type is not 'optBlue'");
+            : throw new global::System.Exception(
+                "InterchangePlusUs52FeesAmex.Type is not 'optBlue'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.InterchangePlusAmexDirect"/> if <see cref="Type"/> is 'direct', otherwise throws an exception.
@@ -76,7 +78,9 @@ public record InterchangePlusUs52FeesAmex
     public Payroc.InterchangePlusAmexDirect AsDirect() =>
         IsDirect
             ? (Payroc.InterchangePlusAmexDirect)Value!
-            : throw new System.Exception("InterchangePlusUs52FeesAmex.Type is not 'direct'");
+            : throw new global::System.Exception(
+                "InterchangePlusUs52FeesAmex.Type is not 'direct'"
+            );
 
     public T Match<T>(
         Func<Payroc.InterchangePlusAmexOptBlue, T> onOptBlue,
@@ -153,12 +157,12 @@ public record InterchangePlusUs52FeesAmex
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<InterchangePlusUs52FeesAmex>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(InterchangePlusUs52FeesAmex).IsAssignableFrom(typeToConvert);
 
         public override InterchangePlusUs52FeesAmex Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -228,7 +232,7 @@ public record InterchangePlusUs52FeesAmex
 
         public override InterchangePlusUs52FeesAmex ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
