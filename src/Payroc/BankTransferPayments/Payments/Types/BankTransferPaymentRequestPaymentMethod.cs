@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.BankTransferPayments.Payments;
@@ -109,7 +109,7 @@ public record BankTransferPaymentRequestPaymentMethod
     public Payroc.AchPayload AsAch() =>
         IsAch
             ? (Payroc.AchPayload)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "BankTransferPaymentRequestPaymentMethod.Type is not 'ach'"
             );
 
@@ -120,7 +120,7 @@ public record BankTransferPaymentRequestPaymentMethod
     public Payroc.PadPayload AsPad() =>
         IsPad
             ? (Payroc.PadPayload)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "BankTransferPaymentRequestPaymentMethod.Type is not 'pad'"
             );
 
@@ -131,7 +131,7 @@ public record BankTransferPaymentRequestPaymentMethod
     public Payroc.SecureTokenPayload AsSecureToken() =>
         IsSecureToken
             ? (Payroc.SecureTokenPayload)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "BankTransferPaymentRequestPaymentMethod.Type is not 'secureToken'"
             );
 
@@ -142,7 +142,7 @@ public record BankTransferPaymentRequestPaymentMethod
     public Payroc.SingleUseTokenPayload AsSingleUseToken() =>
         IsSingleUseToken
             ? (Payroc.SingleUseTokenPayload)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "BankTransferPaymentRequestPaymentMethod.Type is not 'singleUseToken'"
             );
 
@@ -269,12 +269,12 @@ public record BankTransferPaymentRequestPaymentMethod
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<BankTransferPaymentRequestPaymentMethod>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(BankTransferPaymentRequestPaymentMethod).IsAssignableFrom(typeToConvert);
 
         public override BankTransferPaymentRequestPaymentMethod Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -345,7 +345,7 @@ public record BankTransferPaymentRequestPaymentMethod
 
         public override BankTransferPaymentRequestPaymentMethod ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

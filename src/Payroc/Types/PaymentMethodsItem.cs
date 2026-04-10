@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -50,7 +50,7 @@ public record PaymentMethodsItem
     public Payroc.PaymentMethodAch AsAch() =>
         IsAch
             ? (Payroc.PaymentMethodAch)Value!
-            : throw new System.Exception("PaymentMethodsItem.Type is not 'ach'");
+            : throw new global::System.Exception("PaymentMethodsItem.Type is not 'ach'");
 
     public T Match<T>(Func<Payroc.PaymentMethodAch, T> onAch, Func<string, object?, T> onUnknown_)
     {
@@ -95,12 +95,12 @@ public record PaymentMethodsItem
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<PaymentMethodsItem>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(PaymentMethodsItem).IsAssignableFrom(typeToConvert);
 
         public override PaymentMethodsItem Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -158,7 +158,7 @@ public record PaymentMethodsItem
 
         public override PaymentMethodsItem ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -71,7 +71,7 @@ public record Tiered6FeesAmex
     public Payroc.Tiered6AmexOptBlue AsOptBlue() =>
         IsOptBlue
             ? (Payroc.Tiered6AmexOptBlue)Value!
-            : throw new System.Exception("Tiered6FeesAmex.Type is not 'optBlue'");
+            : throw new global::System.Exception("Tiered6FeesAmex.Type is not 'optBlue'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.Tiered6AmexDirect"/> if <see cref="Type"/> is 'direct', otherwise throws an exception.
@@ -80,7 +80,7 @@ public record Tiered6FeesAmex
     public Payroc.Tiered6AmexDirect AsDirect() =>
         IsDirect
             ? (Payroc.Tiered6AmexDirect)Value!
-            : throw new System.Exception("Tiered6FeesAmex.Type is not 'direct'");
+            : throw new global::System.Exception("Tiered6FeesAmex.Type is not 'direct'");
 
     public T Match<T>(
         Func<Payroc.Tiered6AmexOptBlue, T> onOptBlue,
@@ -153,12 +153,12 @@ public record Tiered6FeesAmex
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Tiered6FeesAmex>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Tiered6FeesAmex).IsAssignableFrom(typeToConvert);
 
         public override Tiered6FeesAmex Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -220,7 +220,7 @@ public record Tiered6FeesAmex
 
         public override Tiered6FeesAmex ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

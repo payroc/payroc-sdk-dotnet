@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -53,7 +53,9 @@ public record KeyedCardDetailsPinDetails
     public Payroc.DukptPinDetails AsDukpt() =>
         IsDukpt
             ? (Payroc.DukptPinDetails)Value!
-            : throw new System.Exception("KeyedCardDetailsPinDetails.DataFormat is not 'dukpt'");
+            : throw new global::System.Exception(
+                "KeyedCardDetailsPinDetails.DataFormat is not 'dukpt'"
+            );
 
     public T Match<T>(Func<Payroc.DukptPinDetails, T> onDukpt, Func<string, object?, T> onUnknown_)
     {
@@ -100,12 +102,12 @@ public record KeyedCardDetailsPinDetails
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<KeyedCardDetailsPinDetails>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(KeyedCardDetailsPinDetails).IsAssignableFrom(typeToConvert);
 
         public override KeyedCardDetailsPinDetails Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -163,7 +165,7 @@ public record KeyedCardDetailsPinDetails
 
         public override KeyedCardDetailsPinDetails ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

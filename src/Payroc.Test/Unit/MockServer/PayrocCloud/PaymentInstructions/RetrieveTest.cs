@@ -10,7 +10,41 @@ namespace Payroc.Test.Unit.MockServer.PayrocCloud.PaymentInstructions;
 public class RetrieveTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest()
+    public async Task MockServerTest_1()
+    {
+        const string mockResponse = """
+            {
+              "status": "completed",
+              "errorMessage": "errorMessage",
+              "paymentInstructionId": "a37439165d134678a9100ebba3b29597"
+            }
+            """;
+
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/payment-instructions/e743a9165d134678a9100ebba3b29597")
+                    .UsingGet()
+            )
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse)
+            );
+
+        var response = await Client.PayrocCloud.PaymentInstructions.RetrieveAsync(
+            new RetrievePaymentInstructionsRequest
+            {
+                PaymentInstructionId = "e743a9165d134678a9100ebba3b29597",
+            }
+        );
+        JsonAssert.AreEqual(response, mockResponse);
+    }
+
+    [NUnit.Framework.Test]
+    public async Task MockServerTest_2()
     {
         const string mockResponse = """
             {

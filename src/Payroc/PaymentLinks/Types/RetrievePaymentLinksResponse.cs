@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.PaymentLinks;
@@ -64,7 +64,9 @@ public record RetrievePaymentLinksResponse
     public Payroc.MultiUsePaymentLink AsMultiUse() =>
         IsMultiUse
             ? (Payroc.MultiUsePaymentLink)Value!
-            : throw new System.Exception("RetrievePaymentLinksResponse.Type is not 'multiUse'");
+            : throw new global::System.Exception(
+                "RetrievePaymentLinksResponse.Type is not 'multiUse'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.SingleUsePaymentLink"/> if <see cref="Type"/> is 'singleUse', otherwise throws an exception.
@@ -73,7 +75,9 @@ public record RetrievePaymentLinksResponse
     public Payroc.SingleUsePaymentLink AsSingleUse() =>
         IsSingleUse
             ? (Payroc.SingleUsePaymentLink)Value!
-            : throw new System.Exception("RetrievePaymentLinksResponse.Type is not 'singleUse'");
+            : throw new global::System.Exception(
+                "RetrievePaymentLinksResponse.Type is not 'singleUse'"
+            );
 
     public T Match<T>(
         Func<Payroc.MultiUsePaymentLink, T> onMultiUse,
@@ -150,12 +154,12 @@ public record RetrievePaymentLinksResponse
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<RetrievePaymentLinksResponse>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(RetrievePaymentLinksResponse).IsAssignableFrom(typeToConvert);
 
         public override RetrievePaymentLinksResponse Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -218,7 +222,7 @@ public record RetrievePaymentLinksResponse
 
         public override RetrievePaymentLinksResponse ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

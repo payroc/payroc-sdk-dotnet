@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -71,7 +71,9 @@ public record SingleUsePaymentLinkOrderCharge
     public Payroc.PromptPaymentLinkCharge AsPrompt() =>
         IsPrompt
             ? (Payroc.PromptPaymentLinkCharge)Value!
-            : throw new System.Exception("SingleUsePaymentLinkOrderCharge.Type is not 'prompt'");
+            : throw new global::System.Exception(
+                "SingleUsePaymentLinkOrderCharge.Type is not 'prompt'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.PresetPaymentLinkCharge"/> if <see cref="Type"/> is 'preset', otherwise throws an exception.
@@ -80,7 +82,9 @@ public record SingleUsePaymentLinkOrderCharge
     public Payroc.PresetPaymentLinkCharge AsPreset() =>
         IsPreset
             ? (Payroc.PresetPaymentLinkCharge)Value!
-            : throw new System.Exception("SingleUsePaymentLinkOrderCharge.Type is not 'preset'");
+            : throw new global::System.Exception(
+                "SingleUsePaymentLinkOrderCharge.Type is not 'preset'"
+            );
 
     public T Match<T>(
         Func<Payroc.PromptPaymentLinkCharge, T> onPrompt,
@@ -157,12 +161,12 @@ public record SingleUsePaymentLinkOrderCharge
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SingleUsePaymentLinkOrderCharge>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SingleUsePaymentLinkOrderCharge).IsAssignableFrom(typeToConvert);
 
         public override SingleUsePaymentLinkOrderCharge Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -231,7 +235,7 @@ public record SingleUsePaymentLinkOrderCharge
 
         public override SingleUsePaymentLinkOrderCharge ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

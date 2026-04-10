@@ -1,5 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -18,7 +18,7 @@ public record OrderItemSolutionSetupTaxesItem : IJsonOnDeserialized
     /// Rate of tax that the terminal applies to each transaction.
     /// </summary>
     [JsonPropertyName("taxRate")]
-    public required float TaxRate { get; set; }
+    public required double TaxRate { get; set; }
 
     /// <summary>
     /// Short description of the tax rate, for example, "Sales Tax".

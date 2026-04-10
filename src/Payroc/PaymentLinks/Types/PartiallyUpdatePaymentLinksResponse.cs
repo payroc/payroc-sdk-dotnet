@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.PaymentLinks;
@@ -64,7 +64,7 @@ public record PartiallyUpdatePaymentLinksResponse
     public Payroc.MultiUsePaymentLink AsMultiUse() =>
         IsMultiUse
             ? (Payroc.MultiUsePaymentLink)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PartiallyUpdatePaymentLinksResponse.Type is not 'multiUse'"
             );
 
@@ -75,7 +75,7 @@ public record PartiallyUpdatePaymentLinksResponse
     public Payroc.SingleUsePaymentLink AsSingleUse() =>
         IsSingleUse
             ? (Payroc.SingleUsePaymentLink)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PartiallyUpdatePaymentLinksResponse.Type is not 'singleUse'"
             );
 
@@ -154,12 +154,12 @@ public record PartiallyUpdatePaymentLinksResponse
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<PartiallyUpdatePaymentLinksResponse>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(PartiallyUpdatePaymentLinksResponse).IsAssignableFrom(typeToConvert);
 
         public override PartiallyUpdatePaymentLinksResponse Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -222,7 +222,7 @@ public record PartiallyUpdatePaymentLinksResponse
 
         public override PartiallyUpdatePaymentLinksResponse ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

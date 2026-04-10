@@ -1,4 +1,5 @@
 using Payroc.Core;
+using Payroc.PayrocCloud.ClosedLoopReads;
 using Payroc.PayrocCloud.PaymentInstructions;
 using Payroc.PayrocCloud.RefundInstructions;
 using Payroc.PayrocCloud.SignatureInstructions;
@@ -19,6 +20,7 @@ public partial class PayrocCloudClient : IPayrocCloudClient
             RefundInstructions = new RefundInstructionsClient(_client);
             SignatureInstructions = new SignatureInstructionsClient(_client);
             Signatures = new SignaturesClient(_client);
+            ClosedLoopReads = new ClosedLoopReadsClient(_client);
         }
         catch (Exception ex)
         {
@@ -34,4 +36,6 @@ public partial class PayrocCloudClient : IPayrocCloudClient
     public ISignatureInstructionsClient SignatureInstructions { get; }
 
     public ISignaturesClient Signatures { get; }
+
+    public IClosedLoopReadsClient ClosedLoopReads { get; }
 }

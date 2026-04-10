@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.CardPayments.Payments;
@@ -71,7 +71,7 @@ public record PaymentRequestThreeDSecure
     public Payroc.GatewayThreeDSecure AsGateway() =>
         IsGateway
             ? (Payroc.GatewayThreeDSecure)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PaymentRequestThreeDSecure.ServiceProvider is not 'gateway'"
             );
 
@@ -82,7 +82,7 @@ public record PaymentRequestThreeDSecure
     public Payroc.ThirdPartyThreeDSecure AsThirdParty() =>
         IsThirdParty
             ? (Payroc.ThirdPartyThreeDSecure)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PaymentRequestThreeDSecure.ServiceProvider is not 'thirdParty'"
             );
 
@@ -161,12 +161,12 @@ public record PaymentRequestThreeDSecure
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<PaymentRequestThreeDSecure>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(PaymentRequestThreeDSecure).IsAssignableFrom(typeToConvert);
 
         public override PaymentRequestThreeDSecure Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -231,7 +231,7 @@ public record PaymentRequestThreeDSecure
 
         public override PaymentRequestThreeDSecure ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

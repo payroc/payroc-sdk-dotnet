@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -123,7 +123,7 @@ public record PatchDocument
     public Payroc.PatchAdd AsAdd() =>
         IsAdd
             ? (Payroc.PatchAdd)Value!
-            : throw new System.Exception("PatchDocument.Op is not 'add'");
+            : throw new global::System.Exception("PatchDocument.Op is not 'add'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.PatchRemove"/> if <see cref="Op"/> is 'remove', otherwise throws an exception.
@@ -132,7 +132,7 @@ public record PatchDocument
     public Payroc.PatchRemove AsRemove() =>
         IsRemove
             ? (Payroc.PatchRemove)Value!
-            : throw new System.Exception("PatchDocument.Op is not 'remove'");
+            : throw new global::System.Exception("PatchDocument.Op is not 'remove'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.PatchReplace"/> if <see cref="Op"/> is 'replace', otherwise throws an exception.
@@ -141,7 +141,7 @@ public record PatchDocument
     public Payroc.PatchReplace AsReplace() =>
         IsReplace
             ? (Payroc.PatchReplace)Value!
-            : throw new System.Exception("PatchDocument.Op is not 'replace'");
+            : throw new global::System.Exception("PatchDocument.Op is not 'replace'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.PatchMove"/> if <see cref="Op"/> is 'move', otherwise throws an exception.
@@ -150,7 +150,7 @@ public record PatchDocument
     public Payroc.PatchMove AsMove() =>
         IsMove
             ? (Payroc.PatchMove)Value!
-            : throw new System.Exception("PatchDocument.Op is not 'move'");
+            : throw new global::System.Exception("PatchDocument.Op is not 'move'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.PatchCopy"/> if <see cref="Op"/> is 'copy', otherwise throws an exception.
@@ -159,7 +159,7 @@ public record PatchDocument
     public Payroc.PatchCopy AsCopy() =>
         IsCopy
             ? (Payroc.PatchCopy)Value!
-            : throw new System.Exception("PatchDocument.Op is not 'copy'");
+            : throw new global::System.Exception("PatchDocument.Op is not 'copy'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.PatchTest"/> if <see cref="Op"/> is 'test', otherwise throws an exception.
@@ -168,7 +168,7 @@ public record PatchDocument
     public Payroc.PatchTest AsTest() =>
         IsTest
             ? (Payroc.PatchTest)Value!
-            : throw new System.Exception("PatchDocument.Op is not 'test'");
+            : throw new global::System.Exception("PatchDocument.Op is not 'test'");
 
     public T Match<T>(
         Func<Payroc.PatchAdd, T> onAdd,
@@ -329,12 +329,12 @@ public record PatchDocument
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<PatchDocument>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(PatchDocument).IsAssignableFrom(typeToConvert);
 
         public override PatchDocument Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -407,7 +407,7 @@ public record PatchDocument
 
         public override PatchDocument ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

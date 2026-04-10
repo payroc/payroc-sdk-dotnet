@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -71,14 +71,16 @@ public record Tax
     public Payroc.TaxAmount AsAmount() =>
         IsAmount
             ? (Payroc.TaxAmount)Value!
-            : throw new System.Exception("Tax.Type is not 'amount'");
+            : throw new global::System.Exception("Tax.Type is not 'amount'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.TaxRate"/> if <see cref="Type"/> is 'rate', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'rate'.</exception>
     public Payroc.TaxRate AsRate() =>
-        IsRate ? (Payroc.TaxRate)Value! : throw new System.Exception("Tax.Type is not 'rate'");
+        IsRate
+            ? (Payroc.TaxRate)Value!
+            : throw new global::System.Exception("Tax.Type is not 'rate'");
 
     public T Match<T>(
         Func<Payroc.TaxAmount, T> onAmount,
@@ -151,12 +153,12 @@ public record Tax
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Tax>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Tax).IsAssignableFrom(typeToConvert);
 
         public override Tax Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -213,7 +215,7 @@ public record Tax
 
         public override Tax ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

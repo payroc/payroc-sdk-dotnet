@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.CardPayments.Payments;
@@ -92,7 +92,9 @@ public record PaymentAdjustmentAdjustmentsItem
     public Payroc.OrderAdjustment AsOrder() =>
         IsOrder
             ? (Payroc.OrderAdjustment)Value!
-            : throw new System.Exception("PaymentAdjustmentAdjustmentsItem.Type is not 'order'");
+            : throw new global::System.Exception(
+                "PaymentAdjustmentAdjustmentsItem.Type is not 'order'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.StatusAdjustment"/> if <see cref="Type"/> is 'status', otherwise throws an exception.
@@ -101,7 +103,9 @@ public record PaymentAdjustmentAdjustmentsItem
     public Payroc.StatusAdjustment AsStatus() =>
         IsStatus
             ? (Payroc.StatusAdjustment)Value!
-            : throw new System.Exception("PaymentAdjustmentAdjustmentsItem.Type is not 'status'");
+            : throw new global::System.Exception(
+                "PaymentAdjustmentAdjustmentsItem.Type is not 'status'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.CustomerAdjustment"/> if <see cref="Type"/> is 'customer', otherwise throws an exception.
@@ -110,7 +114,9 @@ public record PaymentAdjustmentAdjustmentsItem
     public Payroc.CustomerAdjustment AsCustomer() =>
         IsCustomer
             ? (Payroc.CustomerAdjustment)Value!
-            : throw new System.Exception("PaymentAdjustmentAdjustmentsItem.Type is not 'customer'");
+            : throw new global::System.Exception(
+                "PaymentAdjustmentAdjustmentsItem.Type is not 'customer'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.SignatureAdjustment"/> if <see cref="Type"/> is 'signature', otherwise throws an exception.
@@ -119,7 +125,7 @@ public record PaymentAdjustmentAdjustmentsItem
     public Payroc.SignatureAdjustment AsSignature() =>
         IsSignature
             ? (Payroc.SignatureAdjustment)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PaymentAdjustmentAdjustmentsItem.Type is not 'signature'"
             );
 
@@ -246,12 +252,12 @@ public record PaymentAdjustmentAdjustmentsItem
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<PaymentAdjustmentAdjustmentsItem>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(PaymentAdjustmentAdjustmentsItem).IsAssignableFrom(typeToConvert);
 
         public override PaymentAdjustmentAdjustmentsItem Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -320,7 +326,7 @@ public record PaymentAdjustmentAdjustmentsItem
 
         public override PaymentAdjustmentAdjustmentsItem ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -1,5 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -25,6 +25,12 @@ public record CustomizationOptions : IJsonOnDeserialized
     /// </summary>
     [JsonPropertyName("entryMethod")]
     public CustomizationOptionsEntryMethod? EntryMethod { get; set; }
+
+    /// <summary>
+    /// Polymorphic object that indicates the type of closed-loop card that the merchant accepts.
+    /// </summary>
+    [JsonPropertyName("closedLoopOptions")]
+    public CustomizationOptionsClosedLoopOptions? ClosedLoopOptions { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

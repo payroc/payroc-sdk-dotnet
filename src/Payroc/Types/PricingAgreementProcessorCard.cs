@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -151,7 +151,7 @@ public record PricingAgreementProcessorCard
     public Payroc.InterchangePlusUs52 AsInterchangePlus() =>
         IsInterchangePlus
             ? (Payroc.InterchangePlusUs52)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PricingAgreementProcessorCard.PlanType is not 'interchangePlus'"
             );
 
@@ -162,7 +162,7 @@ public record PricingAgreementProcessorCard
     public Payroc.InterchangePlusPlusUs52 AsInterchangePlusPlus() =>
         IsInterchangePlusPlus
             ? (Payroc.InterchangePlusPlusUs52)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PricingAgreementProcessorCard.PlanType is not 'interchangePlusPlus'"
             );
 
@@ -173,7 +173,9 @@ public record PricingAgreementProcessorCard
     public Payroc.Tiered3 AsTiered3() =>
         IsTiered3
             ? (Payroc.Tiered3)Value!
-            : throw new System.Exception("PricingAgreementProcessorCard.PlanType is not 'tiered3'");
+            : throw new global::System.Exception(
+                "PricingAgreementProcessorCard.PlanType is not 'tiered3'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.Tiered4"/> if <see cref="PlanType"/> is 'tiered4', otherwise throws an exception.
@@ -182,7 +184,9 @@ public record PricingAgreementProcessorCard
     public Payroc.Tiered4 AsTiered4() =>
         IsTiered4
             ? (Payroc.Tiered4)Value!
-            : throw new System.Exception("PricingAgreementProcessorCard.PlanType is not 'tiered4'");
+            : throw new global::System.Exception(
+                "PricingAgreementProcessorCard.PlanType is not 'tiered4'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.Tiered6"/> if <see cref="PlanType"/> is 'tiered6', otherwise throws an exception.
@@ -191,7 +195,9 @@ public record PricingAgreementProcessorCard
     public Payroc.Tiered6 AsTiered6() =>
         IsTiered6
             ? (Payroc.Tiered6)Value!
-            : throw new System.Exception("PricingAgreementProcessorCard.PlanType is not 'tiered6'");
+            : throw new global::System.Exception(
+                "PricingAgreementProcessorCard.PlanType is not 'tiered6'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.FlatRate"/> if <see cref="PlanType"/> is 'flatRate', otherwise throws an exception.
@@ -200,7 +206,7 @@ public record PricingAgreementProcessorCard
     public Payroc.FlatRate AsFlatRate() =>
         IsFlatRate
             ? (Payroc.FlatRate)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PricingAgreementProcessorCard.PlanType is not 'flatRate'"
             );
 
@@ -211,7 +217,7 @@ public record PricingAgreementProcessorCard
     public Payroc.ConsumerChoice AsConsumerChoice() =>
         IsConsumerChoice
             ? (Payroc.ConsumerChoice)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PricingAgreementProcessorCard.PlanType is not 'consumerChoice'"
             );
 
@@ -222,7 +228,7 @@ public record PricingAgreementProcessorCard
     public Payroc.RewardPayChoice AsRewardPayChoice() =>
         IsRewardPayChoice
             ? (Payroc.RewardPayChoice)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "PricingAgreementProcessorCard.PlanType is not 'rewardPayChoice'"
             );
 
@@ -445,12 +451,12 @@ public record PricingAgreementProcessorCard
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<PricingAgreementProcessorCard>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(PricingAgreementProcessorCard).IsAssignableFrom(typeToConvert);
 
         public override PricingAgreementProcessorCard Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -537,7 +543,7 @@ public record PricingAgreementProcessorCard
 
         public override PricingAgreementProcessorCard ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -53,7 +53,7 @@ public record SingleUseTokenPaymentMethod
     public Payroc.CardPayload AsCard() =>
         IsCard
             ? (Payroc.CardPayload)Value!
-            : throw new System.Exception("SingleUseTokenPaymentMethod.Type is not 'card'");
+            : throw new global::System.Exception("SingleUseTokenPaymentMethod.Type is not 'card'");
 
     public T Match<T>(Func<Payroc.CardPayload, T> onCard, Func<string, object?, T> onUnknown_)
     {
@@ -100,12 +100,12 @@ public record SingleUseTokenPaymentMethod
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SingleUseTokenPaymentMethod>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SingleUseTokenPaymentMethod).IsAssignableFrom(typeToConvert);
 
         public override SingleUseTokenPaymentMethod Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -163,7 +163,7 @@ public record SingleUseTokenPaymentMethod
 
         public override SingleUseTokenPaymentMethod ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

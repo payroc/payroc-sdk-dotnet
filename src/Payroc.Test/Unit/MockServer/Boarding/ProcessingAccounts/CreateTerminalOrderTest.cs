@@ -258,7 +258,7 @@ public class CreateTerminalOrderTest : BaseMockServerTest
                             {
                                 new OrderItemSolutionSetupTaxesItem
                                 {
-                                    TaxRate = 6f,
+                                    TaxRate = 6,
                                     TaxLabel = "Sales Tax",
                                 },
                             },

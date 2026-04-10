@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.Tokenization.SecureTokens;
@@ -75,7 +75,7 @@ public record TokenizationRequestThreeDSecure
     public Payroc.GatewayThreeDSecure AsGatewayThreeDSecure() =>
         IsGatewayThreeDSecure
             ? (Payroc.GatewayThreeDSecure)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "TokenizationRequestThreeDSecure.Type is not 'gatewayThreeDSecure'"
             );
 
@@ -86,7 +86,7 @@ public record TokenizationRequestThreeDSecure
     public Payroc.ThirdPartyThreeDSecure AsThirdPartyThreeDSecure() =>
         IsThirdPartyThreeDSecure
             ? (Payroc.ThirdPartyThreeDSecure)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "TokenizationRequestThreeDSecure.Type is not 'thirdPartyThreeDSecure'"
             );
 
@@ -165,12 +165,12 @@ public record TokenizationRequestThreeDSecure
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TokenizationRequestThreeDSecure>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(TokenizationRequestThreeDSecure).IsAssignableFrom(typeToConvert);
 
         public override TokenizationRequestThreeDSecure Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -240,7 +240,7 @@ public record TokenizationRequestThreeDSecure
 
         public override TokenizationRequestThreeDSecure ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

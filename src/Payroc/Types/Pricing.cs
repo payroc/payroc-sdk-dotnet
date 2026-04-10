@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -71,7 +71,7 @@ public record Pricing
     public Payroc.PricingTemplate AsIntent() =>
         IsIntent
             ? (Payroc.PricingTemplate)Value!
-            : throw new System.Exception("Pricing.Type is not 'intent'");
+            : throw new global::System.Exception("Pricing.Type is not 'intent'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.PricingAgreement"/> if <see cref="Type"/> is 'agreement', otherwise throws an exception.
@@ -80,7 +80,7 @@ public record Pricing
     public Payroc.PricingAgreement AsAgreement() =>
         IsAgreement
             ? (Payroc.PricingAgreement)Value!
-            : throw new System.Exception("Pricing.Type is not 'agreement'");
+            : throw new global::System.Exception("Pricing.Type is not 'agreement'");
 
     public T Match<T>(
         Func<Payroc.PricingTemplate, T> onIntent,
@@ -153,12 +153,12 @@ public record Pricing
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Pricing>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Pricing).IsAssignableFrom(typeToConvert);
 
         public override Pricing Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -220,7 +220,7 @@ public record Pricing
 
         public override Pricing ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

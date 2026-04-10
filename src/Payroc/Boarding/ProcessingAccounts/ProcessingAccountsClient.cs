@@ -1,4 +1,4 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using OneOf;
 using Payroc;
 using Payroc.Core;
@@ -1239,11 +1239,7 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
     ///                     },
     ///                     Taxes = new List&lt;OrderItemSolutionSetupTaxesItem&gt;()
     ///                     {
-    ///                         new OrderItemSolutionSetupTaxesItem
-    ///                         {
-    ///                             TaxRate = 6f,
-    ///                             TaxLabel = "Sales Tax",
-    ///                         },
+    ///                         new OrderItemSolutionSetupTaxesItem { TaxRate = 6, TaxLabel = "Sales Tax" },
     ///                     },
     ///                     Tips = new OrderItemSolutionSetupTips { Enabled = false },
     ///                     Tokenization = true,

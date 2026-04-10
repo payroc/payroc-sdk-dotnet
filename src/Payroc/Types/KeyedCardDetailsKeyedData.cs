@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -86,7 +86,7 @@ public record KeyedCardDetailsKeyedData
     public Payroc.FullyEncryptedKeyedDataFormat AsFullyEncrypted() =>
         IsFullyEncrypted
             ? (Payroc.FullyEncryptedKeyedDataFormat)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "KeyedCardDetailsKeyedData.DataFormat is not 'fullyEncrypted'"
             );
 
@@ -97,7 +97,7 @@ public record KeyedCardDetailsKeyedData
     public Payroc.PartiallyEncryptedKeyedDataFormat AsPartiallyEncrypted() =>
         IsPartiallyEncrypted
             ? (Payroc.PartiallyEncryptedKeyedDataFormat)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "KeyedCardDetailsKeyedData.DataFormat is not 'partiallyEncrypted'"
             );
 
@@ -108,7 +108,9 @@ public record KeyedCardDetailsKeyedData
     public Payroc.PlainTextKeyedDataFormat AsPlainText() =>
         IsPlainText
             ? (Payroc.PlainTextKeyedDataFormat)Value!
-            : throw new System.Exception("KeyedCardDetailsKeyedData.DataFormat is not 'plainText'");
+            : throw new global::System.Exception(
+                "KeyedCardDetailsKeyedData.DataFormat is not 'plainText'"
+            );
 
     public T Match<T>(
         Func<Payroc.FullyEncryptedKeyedDataFormat, T> onFullyEncrypted,
@@ -209,12 +211,12 @@ public record KeyedCardDetailsKeyedData
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<KeyedCardDetailsKeyedData>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(KeyedCardDetailsKeyedData).IsAssignableFrom(typeToConvert);
 
         public override KeyedCardDetailsKeyedData Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -291,7 +293,7 @@ public record KeyedCardDetailsKeyedData
 
         public override KeyedCardDetailsKeyedData ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

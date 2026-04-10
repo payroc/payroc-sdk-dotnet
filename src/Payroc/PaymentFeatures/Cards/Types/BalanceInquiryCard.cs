@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.PaymentFeatures.Cards;
@@ -71,7 +71,7 @@ public record BalanceInquiryCard
     public Payroc.CardPayload AsCard() =>
         IsCard
             ? (Payroc.CardPayload)Value!
-            : throw new System.Exception("BalanceInquiryCard.Type is not 'card'");
+            : throw new global::System.Exception("BalanceInquiryCard.Type is not 'card'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.SingleUseTokenPayload"/> if <see cref="Type"/> is 'singleUseToken', otherwise throws an exception.
@@ -80,7 +80,7 @@ public record BalanceInquiryCard
     public Payroc.SingleUseTokenPayload AsSingleUseToken() =>
         IsSingleUseToken
             ? (Payroc.SingleUseTokenPayload)Value!
-            : throw new System.Exception("BalanceInquiryCard.Type is not 'singleUseToken'");
+            : throw new global::System.Exception("BalanceInquiryCard.Type is not 'singleUseToken'");
 
     public T Match<T>(
         Func<Payroc.CardPayload, T> onCard,
@@ -154,12 +154,12 @@ public record BalanceInquiryCard
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<BalanceInquiryCard>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(BalanceInquiryCard).IsAssignableFrom(typeToConvert);
 
         public override BalanceInquiryCard Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -223,7 +223,7 @@ public record BalanceInquiryCard
 
         public override BalanceInquiryCard ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

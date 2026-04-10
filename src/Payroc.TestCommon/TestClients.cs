@@ -22,7 +22,29 @@ public static class TestClients
     }
 
     private static PayrocClient CreateClient(string apiKey)
-        => new(apiKey, new ClientOptions { Environment = PayrocEnvironment.Uat });
+    {
+        var environment = GetCustomEnvironment();
+        return new PayrocClient(apiKey, new ClientOptions { Environment = environment });
+    }
+
+    private static PayrocEnvironment GetCustomEnvironment()
+    {
+        var apiBaseUrl = Environment.GetEnvironmentVariable("PAYROC_API_BASE_URL");
+        var identityBaseUrl = Environment.GetEnvironmentVariable("PAYROC_IDENTITY_BASE_URL");
+
+        // If custom URLs are provided, use them
+        if (!string.IsNullOrEmpty(apiBaseUrl) && !string.IsNullOrEmpty(identityBaseUrl))
+        {
+            return new PayrocEnvironment
+            {
+                Api = apiBaseUrl,
+                Identity = identityBaseUrl
+            };
+        }
+
+        // Otherwise, fall back to UAT
+        return PayrocEnvironment.Uat;
+    }
 
     private static string GetEnv(string name)
         => Environment.GetEnvironmentVariable(name)

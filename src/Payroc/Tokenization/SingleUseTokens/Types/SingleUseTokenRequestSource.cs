@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.Tokenization.SingleUseTokens;
@@ -86,7 +86,7 @@ public record SingleUseTokenRequestSource
     public Payroc.AchPayload AsAch() =>
         IsAch
             ? (Payroc.AchPayload)Value!
-            : throw new System.Exception("SingleUseTokenRequestSource.Type is not 'ach'");
+            : throw new global::System.Exception("SingleUseTokenRequestSource.Type is not 'ach'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.PadPayload"/> if <see cref="Type"/> is 'pad', otherwise throws an exception.
@@ -95,7 +95,7 @@ public record SingleUseTokenRequestSource
     public Payroc.PadPayload AsPad() =>
         IsPad
             ? (Payroc.PadPayload)Value!
-            : throw new System.Exception("SingleUseTokenRequestSource.Type is not 'pad'");
+            : throw new global::System.Exception("SingleUseTokenRequestSource.Type is not 'pad'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.CardPayload"/> if <see cref="Type"/> is 'card', otherwise throws an exception.
@@ -104,7 +104,7 @@ public record SingleUseTokenRequestSource
     public Payroc.CardPayload AsCard() =>
         IsCard
             ? (Payroc.CardPayload)Value!
-            : throw new System.Exception("SingleUseTokenRequestSource.Type is not 'card'");
+            : throw new global::System.Exception("SingleUseTokenRequestSource.Type is not 'card'");
 
     public T Match<T>(
         Func<Payroc.AchPayload, T> onAch,
@@ -205,12 +205,12 @@ public record SingleUseTokenRequestSource
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<SingleUseTokenRequestSource>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(SingleUseTokenRequestSource).IsAssignableFrom(typeToConvert);
 
         public override SingleUseTokenRequestSource Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -274,7 +274,7 @@ public record SingleUseTokenRequestSource
 
         public override SingleUseTokenRequestSource ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

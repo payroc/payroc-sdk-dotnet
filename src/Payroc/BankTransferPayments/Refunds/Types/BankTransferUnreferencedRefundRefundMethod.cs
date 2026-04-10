@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.BankTransferPayments.Refunds;
@@ -75,7 +75,7 @@ public record BankTransferUnreferencedRefundRefundMethod
     public Payroc.AchPayload AsAch() =>
         IsAch
             ? (Payroc.AchPayload)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "BankTransferUnreferencedRefundRefundMethod.Type is not 'ach'"
             );
 
@@ -86,7 +86,7 @@ public record BankTransferUnreferencedRefundRefundMethod
     public Payroc.SecureTokenPayload AsSecureToken() =>
         IsSecureToken
             ? (Payroc.SecureTokenPayload)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "BankTransferUnreferencedRefundRefundMethod.Type is not 'secureToken'"
             );
 
@@ -165,12 +165,12 @@ public record BankTransferUnreferencedRefundRefundMethod
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<BankTransferUnreferencedRefundRefundMethod>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(BankTransferUnreferencedRefundRefundMethod).IsAssignableFrom(typeToConvert);
 
         public override BankTransferUnreferencedRefundRefundMethod Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -232,7 +232,7 @@ public record BankTransferUnreferencedRefundRefundMethod
 
         public override BankTransferUnreferencedRefundRefundMethod ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.Attachments;
@@ -7,7 +7,7 @@ namespace Payroc.Attachments;
 public record RetrieveAttachmentsRequest
 {
     /// <summary>
-    /// Unique identifier of the attachment
+    /// Unique identifier of the attachment.
     /// </summary>
     [JsonIgnore]
     public required string AttachmentId { get; set; }

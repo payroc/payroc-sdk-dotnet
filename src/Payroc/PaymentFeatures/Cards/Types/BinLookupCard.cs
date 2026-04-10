@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc.PaymentFeatures.Cards;
@@ -101,7 +101,7 @@ public record BinLookupCard
     public Payroc.CardPayload AsCard() =>
         IsCard
             ? (Payroc.CardPayload)Value!
-            : throw new System.Exception("BinLookupCard.Type is not 'card'");
+            : throw new global::System.Exception("BinLookupCard.Type is not 'card'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.CardBinPayload"/> if <see cref="Type"/> is 'cardBin', otherwise throws an exception.
@@ -110,7 +110,7 @@ public record BinLookupCard
     public Payroc.CardBinPayload AsCardBin() =>
         IsCardBin
             ? (Payroc.CardBinPayload)Value!
-            : throw new System.Exception("BinLookupCard.Type is not 'cardBin'");
+            : throw new global::System.Exception("BinLookupCard.Type is not 'cardBin'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.SecureTokenPayload"/> if <see cref="Type"/> is 'secureToken', otherwise throws an exception.
@@ -119,7 +119,7 @@ public record BinLookupCard
     public Payroc.SecureTokenPayload AsSecureToken() =>
         IsSecureToken
             ? (Payroc.SecureTokenPayload)Value!
-            : throw new System.Exception("BinLookupCard.Type is not 'secureToken'");
+            : throw new global::System.Exception("BinLookupCard.Type is not 'secureToken'");
 
     /// <summary>
     /// Returns the value as a <see cref="Payroc.DigitalWalletPayload"/> if <see cref="Type"/> is 'digitalWallet', otherwise throws an exception.
@@ -128,7 +128,7 @@ public record BinLookupCard
     public Payroc.DigitalWalletPayload AsDigitalWallet() =>
         IsDigitalWallet
             ? (Payroc.DigitalWalletPayload)Value!
-            : throw new System.Exception("BinLookupCard.Type is not 'digitalWallet'");
+            : throw new global::System.Exception("BinLookupCard.Type is not 'digitalWallet'");
 
     public T Match<T>(
         Func<Payroc.CardPayload, T> onCard,
@@ -245,12 +245,12 @@ public record BinLookupCard
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<BinLookupCard>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(BinLookupCard).IsAssignableFrom(typeToConvert);
 
         public override BinLookupCard Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -321,7 +321,7 @@ public record BinLookupCard
 
         public override BinLookupCard ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

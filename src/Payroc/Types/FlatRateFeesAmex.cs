@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using Payroc.Core;
 
 namespace Payroc;
@@ -53,7 +53,7 @@ public record FlatRateFeesAmex
     public Payroc.FlatRateAmexDirect AsDirect() =>
         IsDirect
             ? (Payroc.FlatRateAmexDirect)Value!
-            : throw new System.Exception("FlatRateFeesAmex.Type is not 'direct'");
+            : throw new global::System.Exception("FlatRateFeesAmex.Type is not 'direct'");
 
     public T Match<T>(
         Func<Payroc.FlatRateAmexDirect, T> onDirect,
@@ -104,12 +104,12 @@ public record FlatRateFeesAmex
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<FlatRateFeesAmex>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(FlatRateFeesAmex).IsAssignableFrom(typeToConvert);
 
         public override FlatRateFeesAmex Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -168,7 +168,7 @@ public record FlatRateFeesAmex
 
         public override FlatRateFeesAmex ReadAsPropertyName(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
