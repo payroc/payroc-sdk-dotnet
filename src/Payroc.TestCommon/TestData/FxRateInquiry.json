@@ -1,5 +1,6 @@
 {
   "channel": "web",
+  "operator": "Jane",
   "processingTerminalId": "1234001",
   "baseAmount": 10000,
   "baseCurrency": "USD",
@@ -8,13 +9,12 @@
     "accountType": "checking",
     "cardDetails": {
       "entryMethod": "keyed",
+      "cardholderName": "Sarah Hazel Hopper",
       "keyedData": {
         "dataFormat": "plainText",
         "cardNumber": "4539858876047062",
         "expiryDate": "1230"
-      },
-      "cardholderName": "Sarah Hazel Hopper"
+      }
     }
-  },
-  "operator": "Jane"
+  }
 }

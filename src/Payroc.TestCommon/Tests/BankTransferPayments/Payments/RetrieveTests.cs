@@ -1,6 +1,8 @@
 
 
+using Payroc;
 using Payroc.BankTransferPayments.Payments;
+using Payroc.TestCommon.HelperMethods.BankTransfer;
 
 namespace Payroc.TestCommon.Tests.BankTransferPayments.Payments;
 
@@ -18,6 +20,11 @@ public class RetrieveTests
             ( i => i.ProcessingTerminalId, GlobalFixture.TerminalIdBankPad )
         ]);
         createRequest.Order.OrderId = Guid.NewGuid().ToString().Substring(0,23);
+        createRequest.Order.Currency = Currency.Cad;
+        createRequest.Order.Breakdown = null;
+        createRequest.CredentialOnFile = null;
+        createRequest.CustomFields = null;
+        createRequest.PaymentMethod = PadPaymentMethodFactory.Create();
         var createResponse = await client.BankTransferPayments.Payments.CreateAsync(createRequest);
         var retrieveRequest = new RetrievePaymentsRequest
         {

@@ -1,0 +1,17 @@
+[
+  {
+    "op": "replace",
+    "path": "/processor/card/fees/mastercardVisaDiscover/volume",
+    "value": 1.5
+  },
+  {
+    "op": "replace",
+    "path": "/gateway/fees/additionalServiceMonthly",
+    "value": 16
+  },
+  {
+    "op": "replace",
+    "path": "/base/addressVerification",
+    "value": 6
+  }
+]

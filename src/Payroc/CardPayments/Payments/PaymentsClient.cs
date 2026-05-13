@@ -514,6 +514,22 @@ public partial class PaymentsClient : IPaymentsClient
     ///         First6 = "453985",
     ///         Last4 = "7062",
     ///         Tender = ListPaymentsRequestTender.Ebt,
+    ///         TipMode = new List&lt;ListPaymentsRequestTipModeItem&gt;()
+    ///         {
+    ///             ListPaymentsRequestTipModeItem.NoTip,
+    ///             ListPaymentsRequestTipModeItem.Prompted,
+    ///         },
+    ///         Type = new List&lt;Payroc.CardPayments.Payments.ListPaymentsRequestTypeItem&gt;()
+    ///         {
+    ///             Payroc.CardPayments.Payments.ListPaymentsRequestTypeItem.Sale,
+    ///             Payroc.CardPayments.Payments.ListPaymentsRequestTypeItem.PreAuthorization,
+    ///         },
+    ///         Status = new List&lt;Payroc.CardPayments.Payments.ListPaymentsRequestStatusItem&gt;()
+    ///         {
+    ///             Payroc.CardPayments.Payments.ListPaymentsRequestStatusItem.Accepted,
+    ///             Payroc.CardPayments.Payments.ListPaymentsRequestStatusItem.Ready,
+    ///             Payroc.CardPayments.Payments.ListPaymentsRequestStatusItem.Complete,
+    ///         },
     ///         DateFrom = new DateTime(2024, 07, 01, 15, 30, 00, 000),
     ///         DateTo = new DateTime(2024, 07, 03, 15, 30, 00, 000),
     ///         SettlementState = Payroc.CardPayments.Payments.ListPaymentsRequestSettlementState.Settled,

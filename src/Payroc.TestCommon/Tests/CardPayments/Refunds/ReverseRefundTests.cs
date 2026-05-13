@@ -16,11 +16,11 @@ public class ReverseRefundTests
             ( i => i.ProcessingTerminalId, GlobalFixture.TerminalIdAvs )
         ]);
         var createdRefundResponse = await client.CardPayments.Refunds.CreateUnreferencedRefundAsync(createRefundRequest);
-        var reverseRefundRequest = Data.Get<ReverseRefundRefundsRequest>(
-        [
-            ( i => i.IdempotencyKey, Guid.NewGuid().ToString() ),
-            ( i => i.RefundId, createdRefundResponse.RefundId )
-        ]);
+        var reverseRefundRequest = new ReverseRefundRefundsRequest
+        {
+            IdempotencyKey = Guid.NewGuid().ToString(),
+            RefundId = createdRefundResponse.RefundId,
+        };
 
         var reversedRefundResponse = await client.CardPayments.Refunds.ReverseRefundAsync(reverseRefundRequest);
 

@@ -13,6 +13,7 @@ public class CreateTests
         var request = Data.Get<HostedFieldsCreateSessionRequest>([
             (i => i.ProcessingTerminalId, GlobalFixture.TerminalIdAvs),
             (i => i.IdempotencyKey, Guid.NewGuid().ToString()),
+            (i => i.LibVersion, "1.6.0.172429"),
         ]);
         
         var response = await client.HostedFields.CreateAsync(request);

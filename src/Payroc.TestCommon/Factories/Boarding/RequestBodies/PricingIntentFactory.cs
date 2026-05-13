@@ -6,7 +6,7 @@ public static class PricingIntentFactory
     {
         return new PricingIntent52
         {
-            Version = PricingAgreementUs52Version.FromCustom("5.0"),
+            Version = PricingAgreementUs52Version.Five2,
             Key = Guid.NewGuid().ToString(),
             Country = PricingAgreementUs52Country.Us,
             Base = new()

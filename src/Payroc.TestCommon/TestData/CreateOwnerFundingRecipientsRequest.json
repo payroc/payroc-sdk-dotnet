@@ -1,0 +1,35 @@
+{
+  "firstName": "Fred",
+  "middleName": "Jim",
+  "lastName": "Nerk",
+  "dateOfBirth": "1980-01-19",
+  "address": {
+    "address1": "2 Example Ave.",
+    "city": "Chicago",
+    "state": "Illinois",
+    "country": "US",
+    "postalCode": "60056"
+  },
+  "identifiers": [
+    {
+      "type": "nationalId",
+      "value": "000-00-9876"
+    }
+  ],
+  "contactMethods": [
+    {
+      "type": "email",
+      "value": "fred.nerk@example.com"
+    },
+    {
+      "type": "phone",
+      "value": "2025550110"
+    }
+  ],
+  "relationship": {
+    "equityPercentage": 51.5,
+    "title": "CEO",
+    "isControlProng": false,
+    "isAuthorizedSignatory": true
+  }
+}

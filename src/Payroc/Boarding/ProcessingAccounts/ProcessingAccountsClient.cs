@@ -335,6 +335,10 @@ public partial class ProcessingAccountsClient : IProcessingAccountsClient
                                 throw new ForbiddenError(
                                     JsonUtils.Deserialize<object>(responseBody)
                                 );
+                            case 404:
+                                throw new NotFoundError(
+                                    JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
                             case 406:
                                 throw new NotAcceptableError(
                                     JsonUtils.Deserialize<FourHundredSix>(responseBody)

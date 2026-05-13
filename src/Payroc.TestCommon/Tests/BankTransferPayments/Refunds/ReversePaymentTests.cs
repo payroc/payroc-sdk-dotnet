@@ -1,5 +1,7 @@
+using Payroc;
 using Payroc.BankTransferPayments.Payments;
 using Payroc.BankTransferPayments.Refunds;
+using Payroc.TestCommon.HelperMethods.BankTransfer;
 
 namespace Payroc.TestCommon.Tests.Payments.BankTransferPayments;
 
@@ -17,12 +19,17 @@ public class ReversePaymentTests
             ( i => i.ProcessingTerminalId, GlobalFixture.TerminalIdBankPad )
         ]);
         createRequest.Order.OrderId = Guid.NewGuid().ToString().Substring(0,23);
+        createRequest.Order.Currency = Currency.Cad;
+        createRequest.Order.Breakdown = null;
+        createRequest.CredentialOnFile = null;
+        createRequest.CustomFields = null;
+        createRequest.PaymentMethod = PadPaymentMethodFactory.Create();
         var createResponse = await client.BankTransferPayments.Payments.CreateAsync(createRequest);
-        var reverseRequest = Data.Get<ReversePaymentRefundsRequest>(
-            [
-                ( i => i.IdempotencyKey, Guid.NewGuid().ToString() ),
-                ( i => i.PaymentId, createResponse.PaymentId ),
-            ]);
+        var reverseRequest = new ReversePaymentRefundsRequest
+        {
+            IdempotencyKey = Guid.NewGuid().ToString(),
+            PaymentId = createResponse.PaymentId,
+        };
         
         try
         {

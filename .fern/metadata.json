@@ -1,7 +1,7 @@
 {
-  "cliVersion": "4.54.1",
+  "cliVersion": "5.18.1",
   "generatorName": "fernapi/fern-csharp-sdk",
-  "generatorVersion": "2.54.6",
+  "generatorVersion": "2.65.1",
   "generatorConfig": {
     "namespace": "Payroc",
     "package-id": "Payroc",
@@ -14,6 +14,8 @@
     "custom-pager-name": "PayrocPager",
     "include-exception-handler": true
   },
-  "originGitCommit": "8113a1f2670a641a81d5c8e5c2f7c6e51403b64d",
+  "originGitCommit": "e342b48175def5a034f9a88e6582b2dc1b54ad44",
+  "originGitCommitIsDirty": false,
+  "invokedBy": "manual",
   "sdkVersion": "0.0.3936"
 }

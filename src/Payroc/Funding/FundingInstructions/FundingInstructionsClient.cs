@@ -567,6 +567,10 @@ public partial class FundingInstructionsClient : IFundingInstructionsClient
                                 throw new NotFoundError(
                                     JsonUtils.Deserialize<FourHundredFour>(responseBody)
                                 );
+                            case 409:
+                                throw new ConflictError(
+                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
+                                );
                             case 500:
                                 throw new InternalServerError(
                                     JsonUtils.Deserialize<FiveHundred>(responseBody)
@@ -659,6 +663,10 @@ public partial class FundingInstructionsClient : IFundingInstructionsClient
                             case 404:
                                 throw new NotFoundError(
                                     JsonUtils.Deserialize<FourHundredFour>(responseBody)
+                                );
+                            case 409:
+                                throw new ConflictError(
+                                    JsonUtils.Deserialize<FourHundredNine>(responseBody)
                                 );
                             case 500:
                                 throw new InternalServerError(

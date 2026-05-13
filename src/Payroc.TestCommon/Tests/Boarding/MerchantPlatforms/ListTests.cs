@@ -1,5 +1,6 @@
 using Payroc.Boarding.MerchantPlatforms;
 using Payroc.Boarding.PricingIntents;
+using Payroc.TestCommon.HelperMethods.Boarding;
 
 namespace Payroc.TestCommon.Tests.Boarding.MerchantPlatforms;
 
@@ -27,6 +28,7 @@ public class ListTests
         {
             PricingIntentId = pricingIntentResponse.Id ?? throw new Exception("Pricing Intent ID is null")
         });
+        MerchantAccountHelper.ApplyStableCardAcceptance(merchantAccountRequest);
         var merchantAccountResponse = await client.Boarding.MerchantPlatforms.CreateAsync(merchantAccountRequest);
         var merchantAccountRequest2 = Data.Get<CreateMerchantAccount>(
         [
@@ -37,6 +39,7 @@ public class ListTests
         {
             PricingIntentId = pricingIntentResponse.Id ?? throw new Exception("Pricing Intent ID is null")
         });
+        MerchantAccountHelper.ApplyStableCardAcceptance(merchantAccountRequest2);
         _ = await client.Boarding.MerchantPlatforms.CreateAsync(merchantAccountRequest2);
         var listRequest = new ListMerchantPlatformsRequest
         {

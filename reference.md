@@ -759,6 +759,14 @@ await client.BankTransferPayments.Payments.ListAsync(
         OrderId = "OrderRef6543",
         NameOnAccount = "Sarah%20Hazel%20Hopper",
         Last4 = "7890",
+        Type = new List<Payroc.BankTransferPayments.Payments.ListPaymentsRequestTypeItem>()
+        {
+            Payroc.BankTransferPayments.Payments.ListPaymentsRequestTypeItem.Payment,
+        },
+        Status = new List<Payroc.BankTransferPayments.Payments.ListPaymentsRequestStatusItem>()
+        {
+            Payroc.BankTransferPayments.Payments.ListPaymentsRequestStatusItem.Ready,
+        },
         DateFrom = new DateTime(2024, 07, 01, 00, 00, 00, 000),
         DateTo = new DateTime(2024, 07, 31, 23, 59, 59, 000),
         SettlementState = Payroc
@@ -1252,6 +1260,11 @@ await client.BankTransferPayments.Refunds.ListAsync(
         OrderId = "OrderRef6543",
         NameOnAccount = "Sarah%20Hazel%20Hopper",
         Last4 = "7062",
+        Type = new List<ListRefundsRequestTypeItem>() { ListRefundsRequestTypeItem.Refund },
+        Status = new List<Payroc.BankTransferPayments.Refunds.ListRefundsRequestStatusItem>()
+        {
+            Payroc.BankTransferPayments.Refunds.ListRefundsRequestStatusItem.Ready,
+        },
         DateFrom = new DateTime(2024, 07, 01, 00, 00, 00, 000),
         DateTo = new DateTime(2024, 07, 31, 23, 59, 59, 000),
         SettlementState = Payroc
@@ -4269,6 +4282,22 @@ await client.CardPayments.Payments.ListAsync(
         First6 = "453985",
         Last4 = "7062",
         Tender = ListPaymentsRequestTender.Ebt,
+        TipMode = new List<ListPaymentsRequestTipModeItem>()
+        {
+            ListPaymentsRequestTipModeItem.NoTip,
+            ListPaymentsRequestTipModeItem.Prompted,
+        },
+        Type = new List<Payroc.CardPayments.Payments.ListPaymentsRequestTypeItem>()
+        {
+            Payroc.CardPayments.Payments.ListPaymentsRequestTypeItem.Sale,
+            Payroc.CardPayments.Payments.ListPaymentsRequestTypeItem.PreAuthorization,
+        },
+        Status = new List<Payroc.CardPayments.Payments.ListPaymentsRequestStatusItem>()
+        {
+            Payroc.CardPayments.Payments.ListPaymentsRequestStatusItem.Accepted,
+            Payroc.CardPayments.Payments.ListPaymentsRequestStatusItem.Ready,
+            Payroc.CardPayments.Payments.ListPaymentsRequestStatusItem.Complete,
+        },
         DateFrom = new DateTime(2024, 07, 01, 15, 30, 00, 000),
         DateTo = new DateTime(2024, 07, 03, 15, 30, 00, 000),
         SettlementState = Payroc.CardPayments.Payments.ListPaymentsRequestSettlementState.Settled,
@@ -4882,6 +4911,12 @@ await client.CardPayments.Refunds.ListAsync(
         First6 = "453985",
         Last4 = "7062",
         Tender = ListRefundsRequestTender.Ebt,
+        Status = new List<Payroc.CardPayments.Refunds.ListRefundsRequestStatusItem>()
+        {
+            Payroc.CardPayments.Refunds.ListRefundsRequestStatusItem.Accepted,
+            Payroc.CardPayments.Refunds.ListRefundsRequestStatusItem.Ready,
+            Payroc.CardPayments.Refunds.ListRefundsRequestStatusItem.Complete,
+        },
         DateFrom = new DateTime(2024, 07, 01, 15, 30, 00, 000),
         DateTo = new DateTime(2024, 07, 03, 15, 30, 00, 000),
         SettlementState = Payroc.CardPayments.Refunds.ListRefundsRequestSettlementState.Settled,

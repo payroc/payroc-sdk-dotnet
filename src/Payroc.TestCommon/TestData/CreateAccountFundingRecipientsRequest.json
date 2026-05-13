@@ -1,0 +1,17 @@
+{
+  "type": "savings",
+  "use": "credit",
+  "nameOnAccount": "Fred Nerk",
+  "paymentMethods": [
+    {
+      "type": "ach",
+      "value": {
+        "routingNumber": "123123123",
+        "accountNumber": "987654321"
+      }
+    }
+  ],
+  "metadata": {
+    "responsiblePerson": "Jane Doe"
+  }
+}

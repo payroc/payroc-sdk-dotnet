@@ -1,0 +1,17 @@
+[
+  {
+    "op": "replace",
+    "path": "/currency",
+    "value": "USD"
+  },
+  {
+    "op": "replace",
+    "path": "/setupOrder/amount",
+    "value": 2999
+  },
+  {
+    "op": "replace",
+    "path": "/frequency",
+    "value": "yearly"
+  }
+]

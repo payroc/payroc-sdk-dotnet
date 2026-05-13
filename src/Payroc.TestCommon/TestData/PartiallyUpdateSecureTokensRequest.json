@@ -1,0 +1,17 @@
+[
+  {
+    "op": "replace",
+    "path": "/customer/lastName",
+    "value": "Reed"
+  },
+  {
+    "op": "replace",
+    "path": "/shippingAddress/recipientName",
+    "value": "Sarah Reed"
+  },
+  {
+    "op": "replace",
+    "path": "/source/cardDetails/cardholderName",
+    "value": "Sarah Reed"
+  }
+]

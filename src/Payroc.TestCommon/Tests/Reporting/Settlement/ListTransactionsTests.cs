@@ -7,6 +7,7 @@ namespace Payroc.TestCommon.Tests.Reporting.Settlement;
 public class ListTransactionsTests
 {
     [Test]
+    [Ignore("Data Issues: No settlement transactions in UAT due to periodic data wipes.")]
     public async Task Settlement_ListTransactions_Success()
     {
         var client = GlobalFixture.Payments;

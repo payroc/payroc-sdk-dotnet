@@ -2,6 +2,7 @@ using Payroc.Boarding.MerchantPlatforms;
 using Payroc.Boarding.PricingIntents;
 using Payroc.Boarding.ProcessingAccounts;
 using Payroc.TestCommon.Factories.Boarding.RequestBodies;
+using Payroc.TestCommon.HelperMethods.Boarding;
 
 namespace Payroc.TestCommon.Tests.Boarding.ProcessingAccounts;
 
@@ -29,6 +30,7 @@ public class CreateTerminalOrderTests
         {
             PricingIntentId = pricingIntentResponse.Id ?? throw new Exception("Pricing Intent ID is null")
         });
+        MerchantAccountHelper.ApplyStableCardAcceptance(merchantAccountRequest);
         var merchantAccountResponse = await client.Boarding.MerchantPlatforms.CreateAsync(merchantAccountRequest);
         var processingAccountRequest = new CreateProcessingAccountMerchantPlatformsRequest
         {
@@ -41,6 +43,9 @@ public class CreateTerminalOrderTests
             ( i => i.IdempotencyKey,  Guid.NewGuid().ToString() ),
             ( i => i.ProcessingAccountId, processingAccountResponse.ProcessingAccountId ?? string.Empty )
         ]);
+        var terminalOrderItem = createTerminalOrderRequest.OrderItems.FirstOrDefault();
+        if (terminalOrderItem != null)
+            terminalOrderItem.SolutionTemplateId = "VAR_Only_TSYS";
 
         var terminalOrderResponse =  await client.Boarding.ProcessingAccounts.CreateTerminalOrderAsync(createTerminalOrderRequest);
 

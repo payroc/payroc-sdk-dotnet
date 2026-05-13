@@ -3,13 +3,13 @@
   "operator": "Jane",
   "amount": 4999,
   "breakdown": {
-    "subtotal": 4999,
     "dutyAmount": 499,
     "freightAmount": 500,
+    "subtotal": 4999,
     "items": [
       {
-        "quantity": 1,
-        "unitPrice": 4000
+        "unitPrice": 4000,
+        "quantity": 1
       }
     ]
   }

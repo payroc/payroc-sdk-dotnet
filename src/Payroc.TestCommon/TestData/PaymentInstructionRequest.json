@@ -1,0 +1,13 @@
+{
+  "operator": "Jane",
+  "processingTerminalId": "1234001",
+  "order": {
+    "orderId": "OrderRef6543",
+    "currency": "USD",
+    "amount": 4999
+  },
+  "customizationOptions": {
+    "entryMethod": "deviceRead"
+  },
+  "autoCapture": true
+}
