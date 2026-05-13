@@ -1,6 +1,7 @@
 using Payroc.Boarding.MerchantPlatforms;
 using Payroc.Boarding.PricingIntents;
 using Payroc.TestCommon.Factories.Boarding.RequestBodies;
+using Payroc.TestCommon.HelperMethods.Boarding;
 
 namespace Payroc.TestCommon.Tests.Boarding.Owners;
 
@@ -31,6 +32,7 @@ public class DeleteTests
         {
             PricingIntentId = pricingIntentResponse.Id ?? throw new Exception("Pricing Intent ID is null")
         });
+        MerchantAccountHelper.ApplyStableCardAcceptance(merchantAccountRequest);
         var merchantAccountResponse = await client.Boarding.MerchantPlatforms.CreateAsync(merchantAccountRequest);
         var processingAccountRequest = new CreateProcessingAccountMerchantPlatformsRequest
         {

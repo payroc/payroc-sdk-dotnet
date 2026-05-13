@@ -1,7 +1,9 @@
+using Payroc;
 using Payroc.Boarding.MerchantPlatforms;
 using Payroc.Boarding.PricingIntents;
 using Payroc.Boarding.ProcessingAccounts;
 using Payroc.TestCommon.Factories.Boarding.RequestBodies;
+using Payroc.TestCommon.HelperMethods.Boarding;
 
 namespace Payroc.TestCommon.Tests.Boarding;
 
@@ -37,10 +39,18 @@ public class BoardingTestFixture
                 (i => i.IdempotencyKey, Guid.NewGuid().ToString())
             ]);
             merchantRequest.Business.TaxId = Payroc.TestCommon.HelperMethods.Boarding.TaxCodeGenerator.Generate();
+            // UAT enforces uniqueness on owner/contact nationalId. The hardcoded SSN in CreateMerchantAccount.json
+            // persists between runs, causing ConflictError (409) on the second run. Generate a unique value each run.
+            var uniqueSsn = $"{Random.Shared.Next(100, 999):D3}-{Random.Shared.Next(10, 99):D2}-{Random.Shared.Next(1000, 9999):D4}";
+            var ownerIdentifier = merchantRequest.ProcessingAccounts.First().Owners?.FirstOrDefault()?.Identifiers?.FirstOrDefault(i => i.Type == IdentifierType.NationalId);
+            if (ownerIdentifier != null) ownerIdentifier.Value = uniqueSsn;
+            var contactIdentifier = merchantRequest.ProcessingAccounts.First().Contacts?.FirstOrDefault()?.Identifiers?.FirstOrDefault(i => i.Type == IdentifierType.NationalId);
+            if (contactIdentifier != null) contactIdentifier.Value = uniqueSsn;
             merchantRequest.ProcessingAccounts.First().Pricing = new Pricing.Intent(new PricingTemplate
             {
                 PricingIntentId = SharedPricingIntentId
             });
+            MerchantAccountHelper.ApplyStableCardAcceptance(merchantRequest);
             var merchant = await client.Boarding.MerchantPlatforms.CreateAsync(merchantRequest);
             SharedMerchantPlatformId = merchant.MerchantPlatformId ?? throw new Exception("Failed to create shared MerchantPlatform");
 
@@ -61,6 +71,10 @@ public class BoardingTestFixture
                 (i => i.IdempotencyKey, Guid.NewGuid().ToString()),
                 (i => i.ProcessingAccountId, SharedProcessingAccountId)
             ]);
+            // Pin to a solutionTemplateId known to be accepted by the UAT API.
+            var terminalOrderItem = terminalOrderRequest.OrderItems.FirstOrDefault();
+            if (terminalOrderItem != null)
+                terminalOrderItem.SolutionTemplateId = "VAR_Only_TSYS";
             var terminalOrder = await client.Boarding.ProcessingAccounts.CreateTerminalOrderAsync(terminalOrderRequest);
             SharedTerminalOrderId = terminalOrder.TerminalOrderId ?? throw new Exception("Failed to create shared TerminalOrder");
         }

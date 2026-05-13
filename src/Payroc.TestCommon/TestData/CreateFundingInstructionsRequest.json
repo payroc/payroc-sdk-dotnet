@@ -1,0 +1,23 @@
+{
+  "merchants": [
+    {
+      "merchantId": "4525644354",
+      "recipients": [
+        {
+          "fundingAccountId": 123,
+          "paymentMethod": "ACH",
+          "amount": {
+            "value": 120000,
+            "currency": "USD"
+          },
+          "metadata": {
+            "yourCustomField": "abc123"
+          }
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "yourCustomField": "abc123"
+  }
+}

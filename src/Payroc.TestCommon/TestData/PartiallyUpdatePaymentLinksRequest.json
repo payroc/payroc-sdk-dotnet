@@ -1,0 +1,7 @@
+[
+  {
+    "op": "replace",
+    "path": "/expiresOn",
+    "value": "2024-10-25"
+  }
+]

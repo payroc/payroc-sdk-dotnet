@@ -1,0 +1,11 @@
+{
+  "sharingMethod": "email",
+  "merchantCopy": true,
+  "message": "Dear Sarah,\n\nYour insurance is expiring this month.\nPlease, pay the renewal fee by the end of the month to renew it.\n",
+  "recipients": [
+    {
+      "name": "Sarah Hazel Hopper",
+      "email": "sarah.hopper@example.com"
+    }
+  ]
+}

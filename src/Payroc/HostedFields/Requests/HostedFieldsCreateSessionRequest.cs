@@ -21,7 +21,7 @@ public record HostedFieldsCreateSessionRequest
     /// <summary>
     /// Version of the Hosted Fields JavaScript library that you are using.
     ///
-    /// The current production version is `1.6.0.172441`.
+    /// The current production version is `1.7.0.261471`.
     /// </summary>
     [JsonPropertyName("libVersion")]
     public required string LibVersion { get; set; }

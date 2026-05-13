@@ -1,3 +1,5 @@
+using System.Net;
+using System.Net.Http;
 using NUnit.Framework;
 using Payroc.Core;
 using SystemTask = global::System.Threading.Tasks.Task;
@@ -42,7 +44,7 @@ public class OffsetPagerHeaderPropagationTest
                 requestCount++;
                 capturedOptions.Add(options);
                 responses.MoveNext();
-                return SystemTask.FromResult(responses.Current);
+                return SystemTask.FromResult(Wrap(responses.Current));
             },
             request => request?.Pagination?.Page ?? 0,
             (request, offset) =>
@@ -112,7 +114,7 @@ public class OffsetPagerHeaderPropagationTest
                     authHeadersFromOptions.Add($"Bearer {options.ApiKey}");
                 }
                 responses.MoveNext();
-                return SystemTask.FromResult(responses.Current);
+                return SystemTask.FromResult(Wrap(responses.Current));
             },
             request => request?.Pagination?.Page ?? 0,
             (request, offset) =>
@@ -164,7 +166,7 @@ public class OffsetPagerHeaderPropagationTest
                 requestCount++;
                 Assert.That(options, Is.Null);
                 responses.MoveNext();
-                return SystemTask.FromResult(responses.Current);
+                return SystemTask.FromResult(Wrap(responses.Current));
             },
             request => request?.Pagination?.Page ?? 0,
             (request, offset) =>
@@ -222,7 +224,7 @@ public class OffsetPagerHeaderPropagationTest
             {
                 capturedOptionsInPages.Add(options?.CustomHeader);
                 responses.MoveNext();
-                return SystemTask.FromResult(responses.Current);
+                return SystemTask.FromResult(Wrap(responses.Current));
             },
             request => request?.Pagination?.Page ?? 0,
             (request, offset) =>
@@ -273,4 +275,16 @@ public class OffsetPagerHeaderPropagationTest
         public string? CustomHeader { get; set; }
         public string? ApiKey { get; set; }
     }
+
+    private static WithRawResponse<T> Wrap<T>(T data) =>
+        new()
+        {
+            Data = data,
+            RawResponse = new RawResponse
+            {
+                StatusCode = HttpStatusCode.OK,
+                Url = new Uri("https://api.payroc.com/test"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(new HttpResponseMessage()),
+            },
+        };
 }

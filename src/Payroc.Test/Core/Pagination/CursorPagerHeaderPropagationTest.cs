@@ -1,3 +1,5 @@
+using System.Net;
+using System.Net.Http;
 using NUnit.Framework;
 using Payroc.Core;
 using SystemTask = global::System.Threading.Tasks.Task;
@@ -52,7 +54,7 @@ public class CursorPagerHeaderPropagationTest
                 requestCount++;
                 capturedOptions.Add(options);
                 responses.MoveNext();
-                return SystemTask.FromResult(responses.Current);
+                return SystemTask.FromResult(Wrap(responses.Current));
             },
             (request, cursor) => request.Cursor = cursor,
             response => response?.Cursor?.Next,
@@ -127,7 +129,7 @@ public class CursorPagerHeaderPropagationTest
                     authHeadersFromOptions.Add($"Bearer {options.AuthToken}");
                 }
                 responses.MoveNext();
-                return SystemTask.FromResult(responses.Current);
+                return SystemTask.FromResult(Wrap(responses.Current));
             },
             (request, cursor) => request.Cursor = cursor,
             response => response?.Cursor?.Next,
@@ -179,7 +181,7 @@ public class CursorPagerHeaderPropagationTest
                 requestCount++;
                 Assert.That(options, Is.Null);
                 responses.MoveNext();
-                return SystemTask.FromResult(responses.Current);
+                return SystemTask.FromResult(Wrap(responses.Current));
             },
             (request, cursor) => request.Cursor = cursor,
             response => response?.Cursor?.Next,
@@ -241,7 +243,7 @@ public class CursorPagerHeaderPropagationTest
             {
                 capturedOptionsInPages.Add(options?.CorrelationId);
                 responses.MoveNext();
-                return SystemTask.FromResult(responses.Current);
+                return SystemTask.FromResult(Wrap(responses.Current));
             },
             (request, cursor) => request.Cursor = cursor,
             response => response?.Cursor?.Next,
@@ -315,7 +317,7 @@ public class CursorPagerHeaderPropagationTest
                     apiVersions.Add(options.ApiVersion ?? "");
                 }
                 responses.MoveNext();
-                return SystemTask.FromResult(responses.Current);
+                return SystemTask.FromResult(Wrap(responses.Current));
             },
             (request, cursor) => request.Cursor = cursor,
             response => response?.Cursor?.Next,
@@ -367,4 +369,16 @@ public class CursorPagerHeaderPropagationTest
         public string? IdempotencyKey { get; set; }
         public string? ApiVersion { get; set; }
     }
+
+    private static WithRawResponse<T> Wrap<T>(T data) =>
+        new()
+        {
+            Data = data,
+            RawResponse = new RawResponse
+            {
+                StatusCode = HttpStatusCode.OK,
+                Url = new Uri("https://api.payroc.com/test"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(new HttpResponseMessage()),
+            },
+        };
 }

@@ -4,7 +4,7 @@
     "yourCustomField": "abc123"
   },
   "country": "US",
-  "version": "5.0",
+  "version": "5.2",
   "base": {
     "addressVerification": 5,
     "annualFee": {
@@ -45,10 +45,6 @@
         },
         "electronicBenefitsTransfer": {
           "transaction": 10
-        },
-        "enhancedInterchange": {
-          "enrollment": 1000,
-          "creditToMerchant": 5.25
         },
         "specialityCards": {
           "transaction": 10

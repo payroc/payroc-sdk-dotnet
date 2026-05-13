@@ -694,6 +694,11 @@ public partial class RefundsClient : IRefundsClient
     ///         OrderId = "OrderRef6543",
     ///         NameOnAccount = "Sarah%20Hazel%20Hopper",
     ///         Last4 = "7062",
+    ///         Type = new List&lt;ListRefundsRequestTypeItem&gt;() { ListRefundsRequestTypeItem.Refund },
+    ///         Status = new List&lt;Payroc.BankTransferPayments.Refunds.ListRefundsRequestStatusItem&gt;()
+    ///         {
+    ///             Payroc.BankTransferPayments.Refunds.ListRefundsRequestStatusItem.Ready,
+    ///         },
     ///         DateFrom = new DateTime(2024, 07, 01, 00, 00, 00, 000),
     ///         DateTo = new DateTime(2024, 07, 31, 23, 59, 59, 000),
     ///         SettlementState = Payroc

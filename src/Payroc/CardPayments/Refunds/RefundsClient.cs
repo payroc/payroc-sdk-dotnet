@@ -817,6 +817,12 @@ public partial class RefundsClient : IRefundsClient
     ///         First6 = "453985",
     ///         Last4 = "7062",
     ///         Tender = ListRefundsRequestTender.Ebt,
+    ///         Status = new List&lt;Payroc.CardPayments.Refunds.ListRefundsRequestStatusItem&gt;()
+    ///         {
+    ///             Payroc.CardPayments.Refunds.ListRefundsRequestStatusItem.Accepted,
+    ///             Payroc.CardPayments.Refunds.ListRefundsRequestStatusItem.Ready,
+    ///             Payroc.CardPayments.Refunds.ListRefundsRequestStatusItem.Complete,
+    ///         },
     ///         DateFrom = new DateTime(2024, 07, 01, 15, 30, 00, 000),
     ///         DateTo = new DateTime(2024, 07, 03, 15, 30, 00, 000),
     ///         SettlementState = Payroc.CardPayments.Refunds.ListRefundsRequestSettlementState.Settled,

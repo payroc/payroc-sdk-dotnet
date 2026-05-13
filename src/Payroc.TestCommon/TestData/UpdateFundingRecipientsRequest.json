@@ -1,0 +1,48 @@
+{
+  "recipientType": "privateCorporation",
+  "taxId": "12-3456789",
+  "doingBusinessAs": "Doe Hot Dogs",
+  "address": {
+    "address1": "2 Example Ave.",
+    "address2": "Example Address Line 2",
+    "address3": "Example Address Line 3",
+    "city": "Chicago",
+    "state": "Illinois",
+    "country": "US",
+    "postalCode": "60056"
+  },
+  "contactMethods": [
+    {
+      "type": "email",
+      "value": "fred.nerk@example.com"
+    },
+    {
+      "type": "phone",
+      "value": "2025550110"
+    }
+  ],
+  "owners": [
+    {
+      "ownerId": 12346,
+      "link": {
+        "rel": "owner",
+        "href": "https://api.payroc.com/v1/owners/12346",
+        "method": "get"
+      }
+    }
+  ],
+  "fundingAccounts": [
+    {
+      "fundingAccountId": 124,
+      "status": "approved",
+      "link": {
+        "rel": "fundingAccount",
+        "href": "https://api.payroc.com/v1/funding-accounts/124",
+        "method": "get"
+      }
+    }
+  ],
+  "metadata": {
+    "responsiblePerson": "Jane Doe"
+  }
+}

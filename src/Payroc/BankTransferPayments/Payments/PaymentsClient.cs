@@ -396,6 +396,14 @@ public partial class PaymentsClient : IPaymentsClient
     ///         OrderId = "OrderRef6543",
     ///         NameOnAccount = "Sarah%20Hazel%20Hopper",
     ///         Last4 = "7890",
+    ///         Type = new List&lt;Payroc.BankTransferPayments.Payments.ListPaymentsRequestTypeItem&gt;()
+    ///         {
+    ///             Payroc.BankTransferPayments.Payments.ListPaymentsRequestTypeItem.Payment,
+    ///         },
+    ///         Status = new List&lt;Payroc.BankTransferPayments.Payments.ListPaymentsRequestStatusItem&gt;()
+    ///         {
+    ///             Payroc.BankTransferPayments.Payments.ListPaymentsRequestStatusItem.Ready,
+    ///         },
     ///         DateFrom = new DateTime(2024, 07, 01, 00, 00, 00, 000),
     ///         DateTo = new DateTime(2024, 07, 31, 23, 59, 59, 000),
     ///         SettlementState = Payroc

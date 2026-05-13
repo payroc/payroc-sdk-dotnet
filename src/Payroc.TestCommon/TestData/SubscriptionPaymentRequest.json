@@ -1,9 +1,8 @@
 {
+  "operator": "Jane",
   "order": {
-    "amount": 105,
+    "amount": 4999,
     "description": "Monthly Premium Club subscription",
     "orderId": "OrderRef6543"
-  },
-  "operator": "Jane"
+  }
 }
-

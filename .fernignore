@@ -32,3 +32,6 @@ README.md
 CONTRIBUTING.md
 CLAUDE.md
 **/CLAUDE.md
+
+# Prevent Fern from regenerating GitHub Actions workflows
+.github/workflows/**

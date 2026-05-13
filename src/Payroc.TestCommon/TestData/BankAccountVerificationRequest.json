@@ -1,11 +1,11 @@
 {
-  "processingTerminalId": "6072001",
+  "processingTerminalId": "1234001",
   "bankAccount": {
-    "type": "ach",
+    "type": "pad",
     "accountType": "checking",
-    "secCode": "web",
     "nameOnAccount": "Sarah Hazel Hopper",
-    "accountNumber": "11101010",
-    "routingNumber": "053200983"
+    "accountNumber": "1234567890",
+    "transitNumber": "76543",
+    "institutionNumber": "543"
   }
 }
